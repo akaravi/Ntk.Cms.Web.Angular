@@ -19,6 +19,8 @@ import { UserOffcanvasComponent } from './offcanvas/user-offcanvas/user-offcanva
 import { CoreModule } from '../../../core';
 import { ScrollTopComponent } from './scroll-top/scroll-top.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
+import { CmsTokenAccessAdminComponent } from 'src/app/shared/cmsTokenAccessAdmin/cmsTokenAccessAdmin.component';
+import { FormsModule } from '@angular/forms';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -26,6 +28,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
 @NgModule({
   declarations: [
+    CmsTokenAccessAdminComponent,
     SearchDropdownInnerComponent,
     NotificationsDropdownInnerComponent,
     QuickActionsDropdownInnerComponent,
@@ -41,7 +44,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ScrollTopComponent,
     ToolbarComponent,
   ],
-  imports: [CommonModule, InlineSVGModule, PerfectScrollbarModule, CoreModule],
+  imports: [FormsModule ,CommonModule, InlineSVGModule, PerfectScrollbarModule, CoreModule],
   providers: [
     {
       provide: PERFECT_SCROLLBAR_CONFIG,
@@ -49,6 +52,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     },
   ],
   exports: [
+    CmsTokenAccessAdminComponent,
     SearchDropdownInnerComponent,
     NotificationsDropdownInnerComponent,
     QuickActionsDropdownInnerComponent,
