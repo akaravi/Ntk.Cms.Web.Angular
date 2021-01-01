@@ -39,13 +39,13 @@
             <!-- begin::1 Level -->
             <li *ngFor="let firstItem of resultCoreCpMainMenu.ListItems" class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" routerLinkActive="menu-item-open">
                 <a *ngIf="firstItem.Children.length===0" class="menu-link" routerLink="{{firstItem.RouteAddressLink}}" routerLinkActive="active">
-                    <span class="menu-text">{{firstItem.Title}}</span>
+                    <span [style.color]="firstItem.Color?.length>0 ? firstItem.Color:''" class="menu-text"><i [ngClass]="firstItem.Icon" aria-hidden="true"></i>&nbsp;&nbsp;{{firstItem.Title}}</span>
                 </a>
                 <a *ngIf="firstItem.Children.length>0" class="menu-link menu-toggle" routerLinkActive="active">
                     <!--          <span [inlineSVG]="'./assets/media/svg/icons/Design/Cap-2.svg'" cacheSVG="true"-->
                     <!--            class="svg-icon menu-icon">-->
                     <!--          </span>-->
-                    <span class="menu-text">{{firstItem.Title}}</span>
+                    <span [style.color]="firstItem.Color?.length>0 ? firstItem.Color:''" class="menu-text"><i [ngClass]="firstItem.Icon" aria-hidden="true"></i>&nbsp;&nbsp;{{firstItem.Title}}</span>
                     <i class="menu-arrow"></i>
                 </a>
                 <div *ngFor="let secondItem of firstItem.Children" class="menu-submenu">
@@ -61,13 +61,13 @@
                         <!-- begin::2 Level -->
                         <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" routerLinkActive="menu-item-open">
                             <a *ngIf="secondItem.Children.length===0" class="menu-link" routerLink="{{secondItem.RouteAddressLink}}" routerLinkActive="active">
-                                <span class="menu-text">{{secondItem.Title}}</span>
+                                <span [style.color]="secondItem.Color?.length>0 ? secondItem.Color:''" class="menu-text"><i [ngClass]="secondItem.Icon" aria-hidden="true"></i>&nbsp;&nbsp;{{secondItem.Title}}</span>
                             </a>
                             <a *ngIf="secondItem.Children.length>0" class="menu-link menu-toggle"  routerLinkActive="active">
                                 <i class="menu-bullet menu-bullet-dot">
                                     <span></span>
                                 </i>
-                                <span class="menu-text">{{secondItem.Title}}</span>
+                                <span [style.color]="secondItem.Color?.length>0 ? secondItem.Color:''" class="menu-text"><i [ngClass]="secondItem.Icon" aria-hidden="true"></i>&nbsp;&nbsp;{{secondItem.Title}}</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div *ngFor="let thirdItem of secondItem.Children" class="menu-submenu">
@@ -80,7 +80,7 @@
                                             <i class="menu-bullet menu-bullet-dot">
                                                 <span></span>
                                             </i>
-                                            <span class="menu-text">{{thirdItem.Title}}</span>
+                                            <span [style.color]="thirdItem.Color?.length>0 ? thirdItem.Color:''" class="menu-text"><i [ngClass]="thirdItem.Icon" aria-hidden="true"></i>&nbsp;&nbsp;{{thirdItem.Title}}</span>
                                         </a>
                                     </li>
                                 </ul>
