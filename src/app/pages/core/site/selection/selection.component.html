@@ -1,0 +1,58 @@
+<ng-template #firstSite>
+  <app-core-site-add-first [dateInput]="{onActionAddFirstSite:clickSelectSite}"></app-core-site-add-first>
+</ng-template>
+<div *ngIf="dataModel && dataModel.ListItems && dataModel.ListItems.length > 0; else firstSite">
+  <div *ngIf="dataModel" class=" container ">
+    <div class="row">
+      <div *ngFor="let item of dataModel.ListItems" style="margin-left: 10px;">
+        <div (click)="clickSelectSite(item.Id)" class="card card-custom card-stretch gutter-b cursor-pointer"
+             style="top: 15px;width: fit-content;">
+          <div class="card-body d-flex flex-column">
+            <div class="flex-grow-1 pb-5">
+              <div class="d-flex align-items-center pr-2 mb-6 text-right">
+                      <span class="text-muted font-weight-bold font-size-lg flex-grow-1">
+                          {{item.Title}}
+                      </span>
+                <div class="symbol symbol-50">
+                        <span class="symbol-label bg-light-light">
+                          <img src="{{item.MainImageSrc}}" class="h-90px align-self-center custom" alt="">
+                      </span>
+                </div>
+              </div>
+              <p class="text-dark font-weight-bolder text-hover-primary font-size-h4 text-right">
+                دامنه
+              </p>
+              <p class="text-dark-50 font-weight-normal font-size-lg mt-6">
+                {{item.CurrentSiteDomainUrl}}
+              </p>
+            </div>
+            <div>
+              <p class="text-dark font-weight-bolder text-hover-primary font-size-h4 text-right">
+                تاریخ ثبت
+              </p>
+              <p class="text-dark-50 font-weight-normal font-size-lg mt-6">
+                {{item.CreatedDate}}
+              </p>
+            </div>
+            <div>
+              <p class="text-dark font-weight-bolder text-hover-primary font-size-h4 text-right">
+                تاریخ انقضا
+              </p>
+              <p class="text-dark-50 font-weight-normal font-size-lg mt-6">
+                {{item.ExpireDate}}
+              </p>
+            </div>
+            <div class="d-flex align-items-center">
+              <a class="symbol symbol-45 symbol-light mr-3">
+                <div class="symbol-label">
+                  <img src="assets/media/svg/avatars/001-boy.svg" class="h-75 align-self-end" alt="">
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

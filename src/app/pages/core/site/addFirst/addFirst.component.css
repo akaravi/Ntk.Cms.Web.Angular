@@ -1,0 +1,35 @@
+.example-compact{
+  width: 1000px;;
+  margin-right: 95px;
+  margin-top: 160px;
+}
+.card-footer{
+  background: white;
+}
+.set-select{
+  margin: 0 16px 25px 16px;
+}
+@media (max-width: 1200px) {
+  .example-compact{
+    width: 700px;;
+    margin-right: 95px;
+  }
+}
+@media (max-width: 992px) {
+  .example-compact{
+    width: 500px;;
+    margin-right: 95px;
+  }
+}
+@media (max-width: 760px) {
+  .example-compact{
+    width: unset;
+    margin-right: 0;
+  }
+}
+.text-wrap{
+  direction: ltr;
+  padding: 18px;
+  color: blue;
+  font-size: large;
+}
