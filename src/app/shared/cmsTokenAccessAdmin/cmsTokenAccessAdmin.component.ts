@@ -17,8 +17,8 @@ export class CmsTokenAccessAdminComponent implements OnInit {
 
   TokenInfo: TokenInfoModel = new TokenInfoModel();
   loadingStatus = false;
-  SiteId: number = 0;
-  UserId: number = 0;
+  SiteId: number ;
+  UserId: number ;
 
   constructor(
     public coreAuthService: CoreAuthService,
