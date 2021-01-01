@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { LayoutService } from '../../../../_metronic/core';
-import { CoreAuthService, CoreCpMainMenuService } from 'ntk-cms-api';
+import { CoreAuthService, CoreCpMainMenuModel, CoreCpMainMenuService, ErrorExceptionResult } from 'ntk-cms-api';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -24,11 +24,11 @@ export class AsideComponent implements OnInit {
   asideMenuScroll = 1;
   asideSelfMinimizeToggle = false;
 
-  menuList: any;
-  firstChildItem: Array<any> = [];
-  secondChildItem: Array<any> = [];
-  thirdChildItem: Array<any> = [];
-
+  // menuList: any;
+  // firstChildItem: Array<any> = [];
+  // secondChildItem: Array<any> = [];
+  // thirdChildItem: Array<any> = [];
+   resultCoreCpMainMenu: ErrorExceptionResult<CoreCpMainMenuModel> = new ErrorExceptionResult<CoreCpMainMenuModel>();
   constructor(
     private layout: LayoutService,
     private loc: Location,
@@ -39,7 +39,7 @@ export class AsideComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.menuList = this.activatedRoute.snapshot.data.menuList;
+    // this.menuList = this.activatedRoute.snapshot.data.menuList;
     this.DataGetCpMenu();
     // load view settings
     this.disableAsideSelfDisplay = this.layout.getProp('aside.self.display') === false;
@@ -69,47 +69,34 @@ export class AsideComponent implements OnInit {
   }
 
   DataGetCpMenu(): void {
-    this.firstChildItem = [];
-    this.secondChildItem = [];
-    this.thirdChildItem = [];
+    // this.firstChildItem = [];
+    // this.secondChildItem = [];
+    // this.thirdChildItem = [];
     this.coreCpMainMenuService.ServiceGetAllMenu(null).subscribe(
       (next) => {
-        if (next.IsSuccess) {
-          next.ListItems.forEach((firstRes) => {
-            this.firstChildItem.push({ firstTitle: firstRes.Title, parentId: firstRes.Id });
-            if (typeof firstRes.Children !== 'undefined') {
-              firstRes.Children.forEach((secondRes) => {
-                this.secondChildItem.push({
-                  secondTitle: secondRes.Title,
-                  secondParentId: secondRes.Id,
-                  firstChildId: secondRes.LinkParentId
-                });
-                if (typeof secondRes.Children !== 'undefined' && secondRes.Children.length !== 0) {
-                  secondRes.Children.forEach((thirdRes) => {
-                    this.thirdChildItem.push({ thirdTitle: thirdRes.Title, secondChildId: thirdRes.LinkParentId });
-                  });
-                }
-              });
-            }
-          });
-        }
+        this.resultCoreCpMainMenu = next;
+        this.resultCoreCpMainMenu.ListItems[0].LinkParentId
+        // if (next.IsSuccess) {
+        //   next.ListItems.forEach((firstRes) => {
+        //     this.firstChildItem.push({ firstTitle: firstRes.Title, parentId: firstRes.Id });
+        //     if (typeof firstRes.Children !== 'undefined') {
+        //       firstRes.Children.forEach((secondRes) => {
+        //         this.secondChildItem.push({
+        //           secondTitle: secondRes.Title,
+        //           secondParentId: secondRes.Id,
+        //           firstChildId: secondRes.LinkParentId
+        //         });
+        //         if (typeof secondRes.Children !== 'undefined' && secondRes.Children.length !== 0) {
+        //           secondRes.Children.forEach((thirdRes) => {
+        //             this.thirdChildItem.push({ thirdTitle: thirdRes.Title, secondChildId: thirdRes.LinkParentId });
+        //           });
+        //         }
+        //       });
+        //     }
+        //   });
+        // }
       }
     );
-    // this.menuList.ListItems.forEach((firstRes) => {
-    //   this.firstChildItem.push({firstTitle: firstRes.Title, parentId: firstRes.Id});
-    //   if (typeof firstRes.Children !== 'undefined') {
-    //     firstRes.Children.forEach((secondRes) => {
-    //       this.secondChildItem.push({
-    //         secondTitle: secondRes.Title,
-    //         secondParentId: secondRes.Id,
-    //         firstChildId: secondRes.LinkParentId});
-    //       if (typeof secondRes.Children !== 'undefined' && secondRes.Children.length !== 0) {
-    //         secondRes.Children.forEach((thirdRes) => {
-    //           this.thirdChildItem.push({thirdTitle: thirdRes.Title, secondChildId: thirdRes.LinkParentId});
-    //         });
-    //       }
-    //     });
-    //   }
-    // });
+
   }
 }

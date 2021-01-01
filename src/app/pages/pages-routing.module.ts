@@ -1,13 +1,11 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {LayoutComponent} from './_layout/layout.component';
-import {AsideResolver} from './_layout/components/aside/aside.resolver';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { LayoutComponent } from './_layout/layout.component';
 
 const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
-    // resolve: {menuList: AsideResolver},
     children: [
       {
         path: 'dashboard',
@@ -17,9 +15,7 @@ const routes: Routes = [
       {
         path: 'site',
         loadChildren: () =>
-          import('../pages/core/site/site.module').then(
-            (m) => m.SiteModule
-          ),
+          import('../pages/core/site/site.module').then((m) => m.SiteModule),
       },
       {
         path: 'news',

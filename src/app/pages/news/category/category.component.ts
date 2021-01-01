@@ -4,7 +4,7 @@ import {FlatTreeControl} from '@angular/cdk/tree';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 import {CoreEnumService, EnumModel, ErrorExceptionResult, FormInfoModel, NewsCategoryModel, NewsCategoryService} from 'ntk-cms-api';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ICategory} from './category.interface';
+//import {ICategory} from './category.interface';
 import {Observable} from 'rxjs';
 
 interface ExampleFlatNode {
@@ -27,14 +27,14 @@ export class CategoryComponent implements OnInit {
   categoryForm: FormGroup;
   dataModel: NewsCategoryModel = new NewsCategoryModel();
   statusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
-  TREE_DATA: ICategory[] = [];
+  TREE_DATA: NewsCategoryModel[] = [];
   hasError: boolean;
   isLoading$: Observable<boolean>;
   getNodeOfId: any;
   flag = false;
   parentId: number;
   formInfo: FormInfoModel = new FormInfoModel();
-  private transformer = (node: ICategory, level: number) => {
+  private transformer = (node: NewsCategoryModel, level: number) => {
     return {
       expandable: !!node.Children && node.Children.length > 0,
       name: node.Title,

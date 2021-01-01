@@ -19,7 +19,7 @@ import {CoreModule} from '../_metronic/core';
 import {SubheaderModule} from '../_metronic/partials/layout/subheader/subheader.module';
 import {SiteModule} from './core/site/site.module';
 import {CoreAuthService, CoreCpMainMenuService} from 'ntk-cms-api';
-// import {AsideResolver} from './_layout/components/aside/aside.resolver';
+
 
 @NgModule({
   declarations: [
@@ -49,7 +49,7 @@ import {CoreAuthService, CoreCpMainMenuService} from 'ntk-cms-api';
   providers: [
     CoreCpMainMenuService,
     CoreAuthService,
-   // AsideResolver
+
   ]
 })
 export class LayoutModule {
