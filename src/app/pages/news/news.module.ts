@@ -7,7 +7,6 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import {TagInputModule} from 'ngx-chips';
 
 import {
-  CoreEnumService,
   NewsCategoryService,
   NewsCommentService,
   NewsConfigurationService,
@@ -33,11 +32,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { TreeviewModule } from 'ngx-treeview';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatButtonModule } from '@angular/material/button';
 import { QueryBuilderModule } from 'angular2-query-builder';
-import { MatTableModule } from '@angular/material/table';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -53,23 +48,19 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
   ],
   imports: [
     NewsRoutingModule,
-    CommonModule,
-    FormsModule,
+    // CommonModule,
+    // FormsModule,
     ReactiveFormsModule,
     TreeviewModule.forRoot(),
     SharedModule.forRoot(),
-
+    SharedModule,
 
     TagInputModule,
     LeafletModule,
     CKEditorModule,
-    // CategoryModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatButtonModule,
+
     QueryBuilderModule,
-    FormsModule,
-    MatSlideToggleModule,
+
 
   ],
   providers: [
