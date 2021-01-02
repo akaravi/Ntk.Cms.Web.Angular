@@ -1,5 +1,5 @@
-<app-category (contentList)="getContentListById($event)"></app-category>
-<div>
+<!-- <app-category (contentList)="getContentListById($event)"></app-category> -->
+<div >
   <div class="align-Btn">
     <button type="button" class="btn btn-primary">جدید</button>
     <a class="btn btn-secondary btn-sm BTN">
@@ -10,6 +10,10 @@
     <button type="button" class="btn btn-warning BTN">برسی مجدد</button>
     <div class="Query" *ngIf="checked">
       <query-builder [(ngModel)]='query' [config]='config'></query-builder>
+      {{query|json}}
+      <app-cms-search-content-list [options]="optionsSearchContentList"></app-cms-search-content-list>
+      <app-cms-export-content-list></app-cms-export-content-list>
+      <app-cms-statist-content-list></app-cms-statist-content-list>
     </div>
   </div>
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">

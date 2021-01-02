@@ -1,0 +1,220 @@
+<div class="d-flex flex-column-fluid">
+    <!--begin::Container-->
+    <div class=" container ">
+        <div class="card card-custom card-transparent">
+            <div class="card-body p-0">
+                <!--begin: ویزارد-->
+                <div #wizard
+                     class="wizard wizard-4 pb-7"
+                     id="kt_wizard_v4"
+                     data-wizard-state="first"
+                     data-wizard-clickable="true">
+                    <!--begin: ویزارد Nav-->
+                    <div class="wizard-nav">
+                        <div class="wizard-steps">
+                            <!--begin::ویزارد گام 1 Nav-->
+                            <div class="wizard-step" data-wizard-type="step" data-wizard-state="current">
+                                <div class="wizard-wrapper">
+                                    <div class="wizard-number">
+                                        1
+                                    </div>
+                                    <div class="wizard-label">
+                                        <div class="wizard-title">
+                                            اطلاعات الزامی
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::ویزارد گام 1 Nav-->
+
+                            <!--begin::ویزارد گام 2 Nav-->
+                            <div class="wizard-step" data-wizard-type="step" data-wizard-state="pending">
+                                <div class="wizard-wrapper">
+                                    <div class="wizard-number">
+                                        2
+                                    </div>
+                                    <div class="wizard-label">
+                                        <div class="wizard-title">
+                                            محتوای مطالب
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::ویزارد گام 2 Nav-->
+
+                            <!--begin::ویزارد گام 3 Nav-->
+                            <div class="wizard-step" data-wizard-type="step" data-wizard-state="pending">
+                                <div class="wizard-wrapper">
+                                    <div class="wizard-number">
+                                        3
+                                    </div>
+                                    <div class="wizard-label">
+                                        <div class="wizard-title">
+                                            فایل های پیوست
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::ویزارد گام 3 Nav-->
+
+                            <!--begin::ویزارد گام 4 Nav-->
+                            <div class="wizard-step" data-wizard-type="step" data-wizard-state="pending">
+                                <div class="wizard-wrapper">
+                                    <div class="wizard-number">
+                                        4
+                                    </div>
+                                    <div class="wizard-label">
+                                        <div class="wizard-title">
+                                            موقعیت مکانی
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::ویزارد گام 4 Nav-->
+                        </div>
+                    </div>
+                    <!--end: ویزارد Nav-->
+
+                    <!--begin: ویزارد Body-->
+                    <div class="card card-custom card-shadowless rounded-top-0">
+                        <div class="card-body p-0">
+                            <div class="row justify-content-center py-8 px-8 py-lg-15 px-lg-10">
+                                <div class="col-xl-12 col-xxl-7">
+                                    <!--begin: ویزارد Form-->
+                                    <form [formGroup]="singUpContentForm" (ngSubmit)="onFormSubmit()"
+                                          class="form mt-0 mt-lg-10 fv-plugins-bootstrap fv-plugins-framework" id="kt_form">
+                                        <!--begin: ویزارد گام 1-->
+                                        <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
+                                            <div class="mb-10 font-weight-bold text-dark">اطلاعات الزامی</div>
+                                            <div class="d-flex">
+                                                <div class="justify-content-between">
+                                                    <label class="lbl-status" for="exampleFormControlSelect1">وضعیت : </label>
+                                                </div>
+                                                <select [(ngModel)]="dataModel.RecordStatus" formControlName="status" class="form-control" id="exampleFormControlSelect1">
+                                                    <option *ngFor="let item of dataModelEnumRecordStatusResult.ListItems;" value="{{item.Value}}">{{item.Key}}</option>
+                                                </select>
+                                            </div>
+                                            <div class="d-flex mt-4">
+                                                <div class="justify-content-between">
+                                                    <label class="lbl-status" for="exampleFormControlInput1">عنوان : </label>
+                                                </div>
+                                                <input [(ngModel)]="dataModel.Title" formControlName="title" type="text" class="form-control" id="exampleFormControlInput1">
+                                            </div>
+                                            <div class="d-flex mt-4">
+                                                <div class="justify-content-between">
+                                                    <label class="lbl-status" for="exampleFormControlTextarea1">توضیحات : </label>
+                                                </div>
+                                                <textarea [(ngModel)]="dataModel.Description" formControlName="description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                            </div>
+                                            <div class="d-flex mt-4 align-items-end">
+                                              <div class="justify-content-between">
+                                                  <label class="lbl-status" for="exampleFormControlTextarea1">تاریخ شروع : </label>
+                                              </div>
+
+                                                  <input matInput formControlName="fromDate" [matDatepicker]="picker1"
+                                                         [(ngModel)]="dataModel.FromDate" (dateChange)="dataModel.FromDate=onValueChange($event)" >
+                                                  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                                  <mat-datepicker touchUi #picker1></mat-datepicker>
+
+                                            </div>
+                                          <div class="d-flex mt-4 align-items-end">
+                                              <div class="justify-content-between">
+                                                  <label class="lbl-status" for="exampleFormControlTextarea1">تاریخ پاپان : </label>
+                                              </div>
+
+                                                  <input  matInput formControlName="expireDate" [matDatepicker]="picker2"
+                                                         [(ngModel)]="dataModel.ExpireDate"  (dateChange)="dataModel.ExpireDate=onValueChange($event)" >
+                                                <mat-datepicker-toggle matSuffix  [for]="picker2"></mat-datepicker-toggle>
+                                                <mat-datepicker touchUi #picker2></mat-datepicker>
+
+                                          </div>
+                                        </div>
+                                        <!--end: ویزارد گام 1-->
+
+
+                                        <!--begin: ویزارد گام 2-->
+                                        <div class="pb-5" data-wizard-type="step-content">
+                                            <div class="mb-10 font-weight-bold text-dark">محتوای مطالب</div>
+                                            <div class="d-flex">
+                                                <div class="justify-content-between">
+                                                    <label class="lbl-content" for="exampleFormControlInput1">برچسب : </label>
+                                                </div>
+                                                <tag-input formControlName="tag" [modelAsStrings]="true">
+                                                </tag-input>
+                                            </div>
+                                            <div class="d-flex pb-10">
+                                                <div class="justify-content-between">
+                                                    <label class="lbl-content" for="exampleFormControlInput1">کلمات کلیدی : </label>
+                                                </div>
+                                                <tag-input formControlName="keyWords" [modelAsStrings]="true">
+                                                </tag-input>
+                                            </div>
+                                            <hr class="pb-5">
+                                            <div class="card card-custom">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">
+                                                        کلاسیک پیش فرض
+                                                    </h3>
+                                                </div>
+                                                <div class="card-body">
+                                                    <ckeditor [editor]="editor" [data]="data"></ckeditor>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                        <!--end: ویزارد گام 2-->
+
+                                        <!--begin: ویزارد گام 3-->
+                                        <div class="pb-5" data-wizard-type="step-content">
+                                            <div class="mb-10 font-weight-bold text-dark">فایل های پیوست</div>
+                                        </div>
+                                        <!--end: ویزارد گام 3-->
+
+                                        <!--begin: ویزارد گام 4-->
+                                        <div class="pb-5" data-wizard-type="step-content">
+                                            <h4 class="mb-10 font-weight-bold text-dark">موقعیت مکانی</h4>
+                                            <div id="map"></div>
+                                            <div class="map-container">
+                                                <div class="map-frame">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--end: ویزارد گام 4-->
+
+                                        <!--begin: ویزارد اقدامات-->
+                                        <div class="d-flex justify-content-between border-top mt-5 pt-10">
+                                            <div class="mr-2">
+                                                <button type="button" class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4" data-wizard-type="action-prev">
+                                                    قبلی
+                                                </button>
+                                            </div>
+                                            <div>
+                                                <button type="submit" class="btn btn-success font-weight-bold text-uppercase px-9 py-4" data-wizard-type="action-submit">
+                                                    ذخیره
+                                                </button>
+                                                <button type="button" class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4" data-wizard-type="action-next">
+                                                    بعدی
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <!--end: ویزارد اقدامات-->
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                    </form>
+                                    <!--end: ویزارد Form-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end: ویزارد Bpdy-->
+                </div>
+                <!--end: ویزارد-->
+            </div>
+        </div>
+    </div>
+    <!--end::Container-->
+</div>
+

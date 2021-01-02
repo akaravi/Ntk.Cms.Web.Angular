@@ -69,32 +69,10 @@ export class AsideComponent implements OnInit {
   }
 
   DataGetCpMenu(): void {
-    // this.firstChildItem = [];
-    // this.secondChildItem = [];
-    // this.thirdChildItem = [];
     this.coreCpMainMenuService.ServiceGetAllMenu(null).subscribe(
       (next) => {
         this.resultCoreCpMainMenu = next;
         this.resultCoreCpMainMenu.ListItems[0].LinkParentId
-        // if (next.IsSuccess) {
-        //   next.ListItems.forEach((firstRes) => {
-        //     this.firstChildItem.push({ firstTitle: firstRes.Title, parentId: firstRes.Id });
-        //     if (typeof firstRes.Children !== 'undefined') {
-        //       firstRes.Children.forEach((secondRes) => {
-        //         this.secondChildItem.push({
-        //           secondTitle: secondRes.Title,
-        //           secondParentId: secondRes.Id,
-        //           firstChildId: secondRes.LinkParentId
-        //         });
-        //         if (typeof secondRes.Children !== 'undefined' && secondRes.Children.length !== 0) {
-        //           secondRes.Children.forEach((thirdRes) => {
-        //             this.thirdChildItem.push({ thirdTitle: thirdRes.Title, secondChildId: thirdRes.LinkParentId });
-        //           });
-        //         }
-        //       });
-        //     }
-        //   });
-        // }
       }
     );
 

@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {NewsComponent} from './news.component';
 import {CategoryResolver} from './category/category.resolver';
+import { ContentComponent } from './content/content.component';
 
 const routes: Routes = [
   {
@@ -10,9 +11,9 @@ const routes: Routes = [
     children: [
       {
         path: 'content',
-        resolve: {categoryList: CategoryResolver},
-        loadChildren: () =>
-          import('./content/content.module').then(m => m.ContentModule)
+        // resolve: {categoryList: CategoryResolver},
+        // loadChildren: () =>    import('./content/content.module').then(m => m.ContentModule)
+        component: ContentComponent
       },
     ]
   },

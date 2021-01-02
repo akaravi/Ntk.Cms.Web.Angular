@@ -49,6 +49,7 @@ export class SubheaderService implements OnDestroy {
 
   // use this method in SubheaderWrapper
   updateAfterRouteChanges(pathName) {
+    
     const aside = this.getBreadcrumbsAndTitle('kt_aside_menu', pathName);
     const header = this.getBreadcrumbsAndTitle('kt_header_menu', pathName);
     const breadcrumbs =
@@ -110,6 +111,7 @@ export class SubheaderService implements OnDestroy {
   }
 
   private getBreadcrumbsAndTitle(menuId, pathName): SubheaderModel {
+    
     const result = new SubheaderModel();
     const menu = document.getElementById(menuId);
     if (!menu) {

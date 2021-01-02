@@ -37,7 +37,7 @@
             </li>
             <!-- Material-UI -->
             <!-- begin::1 Level -->
-            <li *ngFor="let firstItem of resultCoreCpMainMenu.ListItems" class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" routerLinkActive="menu-item-open">
+            <li *ngFor="let firstItem of resultCoreCpMainMenu.ListItems" class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" routerLinkActive="menu-item-active">
                 <a *ngIf="firstItem.Children.length===0" class="menu-link" routerLink="{{firstItem.RouteAddressLink}}" routerLinkActive="active">
                     <span [style.color]="firstItem.Color?.length>0 ? firstItem.Color:''" class="menu-text"><i [ngClass]="firstItem.Icon" aria-hidden="true"></i>&nbsp;&nbsp;{{firstItem.Title}}</span>
                 </a>
@@ -59,7 +59,7 @@
                         <!-- Form Controls -->
 
                         <!-- begin::2 Level -->
-                        <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" routerLinkActive="menu-item-open">
+                        <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" routerLinkActive="menu-item-active">
                             <a *ngIf="secondItem.Children.length===0" class="menu-link" routerLink="{{secondItem.RouteAddressLink}}" routerLinkActive="active">
                                 <span [style.color]="secondItem.Color?.length>0 ? secondItem.Color:''" class="menu-text"><i [ngClass]="secondItem.Icon" aria-hidden="true"></i>&nbsp;&nbsp;{{secondItem.Title}}</span>
                             </a>

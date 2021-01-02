@@ -1,0 +1,55 @@
+<div class="card-content">
+
+  <div class="px-3">
+      <table class="table table-striped">
+          <thead>
+              <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">عنوان</th>
+                  <th scope="col">Start</th>
+                  <th scope="col">End</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Message</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let item of dataModelItemStates">
+                  <th scope="row">{{ item.Item.Id }}</th>
+                  <td>
+                      {{ item.Item.Title | truncate:[20, '...'] }}
+                  </td>
+                  <td>
+                      {{ item.ActionStart }}
+                  </td>
+                  <td>
+                      {{ item.ActionEnd }}
+                  </td>
+                  <td>
+                      {{ item.Status }}
+                  </td>
+                  <td>
+                      {{ item.Message | truncate:[50, '...']  }}
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+
+
+
+
+      <div class="form-actions">
+          <small class="form-text text-muted ">{{formInfo.FormAlert}} </small>
+          <small class="form-text text-muted danger">{{formInfo.FormError}} </small>
+      </div>
+      <div class="form-actions" *ngIf="formInfo.FormAllowSubmit">
+
+          <button type="button" (click)="onFormCancel()" class="btn btn-raised btn-warning mr-1">
+              <i class="ft-x"></i> انصراف
+          </button>
+          <button type="button" (click)="DataDeleteContent()" class="btn btn-raised btn-primary">
+              <i class="fa fa-check-square-o"></i> حدف
+          </button>
+
+      </div>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+.form-body{
+  width: 500px;
+}
+@media (max-width: 700px) {
+  .form-body{
+    display: contents;
+  }
+}
