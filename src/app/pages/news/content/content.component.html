@@ -16,7 +16,7 @@
       <app-cms-statist-content-list></app-cms-statist-content-list>
     </div>
   </div>
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataModelResult.ListItems" class="mat-elevation-z8">
 
     <ng-container matColumnDef="LinkSiteId">
       <th mat-header-cell *matHeaderCellDef>شناسه سایت</th>

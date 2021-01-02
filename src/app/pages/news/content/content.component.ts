@@ -1,8 +1,15 @@
-import {Component, OnInit, Output} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {ErrorExceptionResult, FilterDataModel, FilterModel, NewsCategoryModel, NewsContentModel, NewsContentService} from 'ntk-cms-api';
-import {PublicHelper} from '../../../_helpers/services/publicHelper';
-import {QueryBuilderConfig} from 'angular2-query-builder';
+import { Component, OnInit, Output } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import {
+  ErrorExceptionResult,
+  FilterDataModel,
+  FilterModel,
+  NewsCategoryModel,
+  NewsContentModel,
+  NewsContentService,
+} from 'ntk-cms-api';
+import { PublicHelper } from '../../../_helpers/services/publicHelper';
+import { QueryBuilderConfig } from 'angular2-query-builder';
 import { ComponentOptionSearchContentModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchContentModel';
 import { ComponentOptionNewsCategoryModel } from 'src/app/core/cmsComponentModels/news/componentOptionNewsCategoryModel';
 import { ComponentModalDataModel } from 'src/app/core/cmsComponentModels/base/componentModalDataModel';
@@ -15,10 +22,9 @@ import { NewsContentAddComponent } from './add/add.component';
 @Component({
   selector: 'app-content',
   templateUrl: './content.component.html',
-  styleUrls: ['./content.component.scss']
+  styleUrls: ['./content.component.scss'],
 })
 export class ContentComponent implements OnInit {
-
   filteModelContent = new FilterModel();
   filteModelCategory = new FilterModel();
   dataModelResult: ErrorExceptionResult<NewsContentModel> = new ErrorExceptionResult<NewsContentModel>();
@@ -30,32 +36,29 @@ export class ContentComponent implements OnInit {
   // dateObject: any;
   loadingStatus = false; // add one more property
 
-
-
   query: any;
   checked = false;
   config: QueryBuilderConfig = {
     fields: {
-      age: {name: 'Age', type: 'number'},
+      age: { name: 'Age', type: 'number' },
       gender: {
         name: 'Gender',
         type: 'category',
         options: [
-          {name: 'Male', value: 'm'},
-          {name: 'Female', value: 'f'}
-        ]
-      }
-    }
+          { name: 'Male', value: 'm' },
+          { name: 'Female', value: 'f' },
+        ],
+      },
+    },
   };
   displayedColumns: string[] = [
     'LinkSiteId',
     'RecordStatus',
     'Title',
     'CreatedDate',
-    'UpdatedDate'];
-  dataSource: any;
-
-
+    'UpdatedDate',
+  ];
+  // dataSource: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -63,68 +66,52 @@ export class ContentComponent implements OnInit {
     private newsContentService: NewsContentService,
     private toastrService: CmsToastrService,
     private router: Router,
-    public dialog: MatDialog,
-    ) {
-
-      this.optionsSearchContentList.actions = { onSubmit: (model) => this.onSubmitOptionsSearch(model) };
+    public dialog: MatDialog
+  ) {
+    this.optionsSearchContentList.actions = {
+      onSubmit: (model) => this.onSubmitOptionsSearch(model),
+    };
   }
 
   ngOnInit(): void {
-    this.dataModelResult = this.activatedRoute.snapshot.data.list.ListItems;
-    this.dataSource = this.dataModelResult;
-    this.optionsCategorySelect.actions = { onActionSelect: (x) => this.onActionCategorySelect(x) };
-    if (this.dataModelResult.ListItems.length === 0) {
-      this.DataGetAllContent();
-    }
+    // this.dataModelResult = this.activatedRoute.snapshot.data.list.ListItems;
+    // this.dataSource = this.dataModelResult;
+    this.optionsCategorySelect.actions = {
+      onActionSelect: (x) => this.onActionCategorySelect(x),
+    };
+    // if (this.dataModelResult.ListItems.length === 0) {
+    this.DataGetAllContent();
+    // }
   }
 
   changed(event): void {
     this.checked = event.checked;
   }
 
-   getContentListById(event): any {
-  //   this.filterModelContent.Filters = [];
-  //   this.filterModelContent.Filters.push({
-  //     BooleanValue1: false,
-  //     ClauseType: undefined,
-  //     DateTimeValue1: undefined,
-  //     DateTimeValue2: undefined,
-  //     DecimalForceNullSearch: false,
-  //     DecimalValue1: null,
-  //     DecimalValue2: null,
-  //     EnumValue1: '',
-  //     Filters: [],
-  //     HierarchyIdLevel: null,
-  //     IntContainValues: [],
-  //     IntValue2: null,
-  //     IntValueForceNullSearch: false,
-  //     LatitudeLongitudeDistanceValue1: null,
-  //     LatitudeLongitudeDistanceValue2: null,
-  //     LatitudeLongitudeForceNullSearch: false,
-  //     LatitudeLongitudeSortType: '',
-  //     LatitudeValue1: null,
-  //     LatitudeValue2: null,
-  //     ObjectIdContainValues: [],
-  //     ObjectIdValue1: '',
-  //     PropertyAnyName: '',
-  //     SearchType: undefined,
-  //     SingleValue1: null,
-  //     SingleValue2: null,
-  //     StringContainValues: [],
-  //     StringForceNullSearch: false,
-  //     StringValue1: '',
-  //     Value: undefined,
-  //     PropertyName: 'LinkCategoryId',
-  //     IntValue1: event.id
-  //   });
-  //   return this.newsContentService.ServiceGetAll(this.filterModelContent).subscribe((res) => {
-  //     if (res.IsSuccess) {
-  //       this.dataSource = [];
-  //       this.dataSource = res.ListItems;
-  //     }
-  //   });
+  getContentListById(event): any {
+    this.filteModelContent = new FilterModel();
 
-   }
+    if (event && event.id > 0) {
+      const aaa = {
+        PropertyName: 'LinkCategoryId',
+        IntValue1: event.id,
+      };
+      this.filteModelContent.Filters.push(aaa as FilterDataModel);
+    } else {
+      this.optionsCategorySelect = null;
+      this.optionsCategorySelect.methods.ActionSelectForce(0);
+    }
+    this.DataGetAllContent();
+
+    // return this.newsContentService
+    //   .ServiceGetAll(this.filteModelContent)
+    //   .subscribe((res) => {
+    //     if (res.IsSuccess) {
+    //       this.dataSource = [];
+    //       this.dataSource = res.ListItems;
+    //     }
+    //   });
+  }
 
   DataGetAllContent(): void {
     this.tableContentSelected = [];
@@ -134,24 +121,20 @@ export class ContentComponent implements OnInit {
     this.newsContentService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
-
           this.dataModelResult = next;
-          this.optionsSearchContentList.methods.setAccess(next.Access);
-
+          if (this.optionsSearchContentList.methods) {
+            this.optionsSearchContentList.methods.setAccess(next.Access);
+          }
           this.tableContentloading = false;
         }
         this.loadingStatus = false;
-
       },
       (error) => {
-        this.toastrService.typeError(error),
-          this.tableContentloading = false;
+        this.toastrService.typeError(error), (this.tableContentloading = false);
         this.loadingStatus = false;
-
       }
     );
   }
-
 
   onActionCategorySelect(model: NewsCategoryModel | null): void {
     this.filteModelContent = new FilterModel();
@@ -162,8 +145,7 @@ export class ContentComponent implements OnInit {
         IntValue1: model.Id,
       };
       this.filteModelContent.Filters.push(aaa as FilterDataModel);
-    }
-    else {
+    } else {
       this.optionsCategorySelect = null;
       this.optionsCategorySelect.methods.ActionSelectForce(0);
     }
@@ -171,20 +153,21 @@ export class ContentComponent implements OnInit {
   }
   onActionContentCategoryAdd(): void {
     let parentId = 0;
-    if (this.optionsCategorySelect && this.optionsCategorySelect.data
-      && this.optionsCategorySelect.data.SelectId && this.optionsCategorySelect.data.SelectId > 0) {
+    if (
+      this.optionsCategorySelect &&
+      this.optionsCategorySelect.data &&
+      this.optionsCategorySelect.data.SelectId &&
+      this.optionsCategorySelect.data.SelectId > 0
+    ) {
       parentId = this.optionsCategorySelect.data.SelectId;
     }
     const dialogRef = this.dialog.open(NewsCategoryEditComponent, {
       data: {
-        parentId
-      }
+        parentId,
+      },
     });
 
-
-
-
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
     });
   }
@@ -201,14 +184,11 @@ export class ContentComponent implements OnInit {
     }
     const dialogRef = this.dialog.open(NewsCategoryEditComponent, {
       data: {
-        id: this.optionsCategorySelect.data.SelectId
-      }
+        id: this.optionsCategorySelect.data.SelectId,
+      },
     });
 
-
-
-
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
     });
   }
@@ -226,26 +206,24 @@ export class ContentComponent implements OnInit {
 
     const dialogRef = this.dialog.open(NewsCategoryDeleteComponent, {
       data: {
-        id: this.optionsCategorySelect.data.SelectId
-      }
+        id: this.optionsCategorySelect.data.SelectId,
+      },
     });
 
-
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
     });
   }
   openDialog(): void {
     const dialogRef = this.dialog.open(NewsCategoryDeleteComponent);
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
     });
   }
   // onCloseModal(): void {
 
   // }
-
 
   onActionbuttonNewRow(): void {
     if (
@@ -270,10 +248,12 @@ export class ContentComponent implements OnInit {
     }
     const modalModel: ComponentModalDataModel = {
       Title: 'محتوای جدید',
-      SwitchValue: 'contentContentAdd'
+      SwitchValue: 'contentContentAdd',
     };
-    this.router.navigate(['add'], { relativeTo: this.activatedRoute, queryParams: { parentId: this.optionsCategorySelect.data.SelectId } });
-
+    this.router.navigate(['add'], {
+      relativeTo: this.activatedRoute,
+      queryParams: { parentId: this.optionsCategorySelect.data.SelectId },
+    });
   }
 
   onActionbuttonEditRow(): void {
@@ -298,8 +278,10 @@ export class ContentComponent implements OnInit {
       return;
     }
 
-    this.router.navigate(['edit'], { relativeTo: this.activatedRoute, queryParams: { id: this.tableContentSelected[0].Id } });
-
+    this.router.navigate(['edit'], {
+      relativeTo: this.activatedRoute,
+      queryParams: { id: this.tableContentSelected[0].Id },
+    });
   }
   onActionbuttonDeleteRow(): void {
     if (
@@ -324,16 +306,16 @@ export class ContentComponent implements OnInit {
     }
     const modalModel: ComponentModalDataModel = {
       Title: 'حذف محتوا',
-      SwitchValue: 'contentContentDelete'
+      SwitchValue: 'contentContentDelete',
     };
     const dialogRef = this.dialog.open(NewsContentAddComponent);
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
     });
   }
-  onActionbuttonStatus(): void { }
-  onActionbuttonExport(): void { }
+  onActionbuttonStatus(): void {}
+  onActionbuttonExport(): void {}
 
   onActionbuttonReload(): void {
     this.DataGetAllContent();

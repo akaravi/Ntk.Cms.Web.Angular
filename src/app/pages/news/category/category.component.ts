@@ -1,11 +1,29 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {FlatTreeControl} from '@angular/cdk/tree';
-import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
-import {CoreEnumService, EnumModel, ErrorExceptionResult, FormInfoModel, NewsCategoryModel, NewsCategoryService} from 'ntk-cms-api';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { FlatTreeControl } from '@angular/cdk/tree';
+import {
+  MatTreeFlatDataSource,
+  MatTreeFlattener,
+} from '@angular/material/tree';
+import {
+  CoreEnumService,
+  EnumModel,
+  ErrorExceptionResult,
+  FilterModel,
+  FormInfoModel,
+  NewsCategoryModel,
+  NewsCategoryService,
+} from 'ntk-cms-api';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 //import {ICategory} from './category.interface';
-import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
+import { CmsToastrService } from 'src/app/_helpers/services/cmsToastr.service';
 
 interface ExampleFlatNode {
   expandable: boolean;
@@ -17,17 +35,17 @@ interface ExampleFlatNode {
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
-  styleUrls: ['./category.component.scss']
+  styleUrls: ['./category.component.scss'],
 })
 export class CategoryComponent implements OnInit {
-
   @Output() contentList = new EventEmitter<any>();
   @ViewChild('myModal') myModal;
   action: any;
   categoryForm: FormGroup;
   dataModel: NewsCategoryModel = new NewsCategoryModel();
   statusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
-  TREE_DATA: NewsCategoryModel[] = [];
+  filteModelCategory = new FilterModel();
+  dataModelCategory: NewsCategoryModel[] = [];
   hasError: boolean;
   isLoading$: Observable<boolean>;
   getNodeOfId: any;
@@ -41,22 +59,30 @@ export class CategoryComponent implements OnInit {
       level,
       id: node.Id,
       description: node.Description,
-      recordStatus: node.RecordStatus
+      recordStatus: node.RecordStatus,
     };
-  }
+  };
 
-  constructor(private activatedRoute: ActivatedRoute,
-              public coreEnumService: CoreEnumService,
-              public newsCategoryService: NewsCategoryService,
-              private fb: FormBuilder) {
-  }
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private toastrService: CmsToastrService,
+    public coreEnumService: CoreEnumService,
+    public categoryService: NewsCategoryService,
+    private fb: FormBuilder
+  ) {}
 
   // tslint:disable-next-line
   treeControl = new FlatTreeControl<ExampleFlatNode>(
-    node => node.level, node => node.expandable);
+    (node) => node.level,
+    (node) => node.expandable
+  );
   // tslint:disable-next-line
   treeFlattener = new MatTreeFlattener(
-    this.transformer, node => node.level, node => node.expandable, node => node.Children);
+    this.transformer,
+    (node) => node.level,
+    (node) => node.expandable,
+    (node) => node.Children
+  );
   // tslint:disable-next-line
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
@@ -64,35 +90,36 @@ export class CategoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
-    this.TREE_DATA = this.activatedRoute.snapshot.data.categoryList.ListItems;
-    this.dataSource.data = this.TREE_DATA;
+    // this.dataModelCategory = this.activatedRoute.snapshot.data.categoryList.ListItems;
+    // this.dataSource.data = this.dataModelCategory;
+    this.DataGetAllCategory();
+
     this.getStatus();
   }
+  DataGetAllCategory(): void {
+    this.filteModelCategory.RowPerPage = 200;
 
+    this.categoryService.ServiceGetAll(this.filteModelCategory).subscribe(
+      (next) => {
+        if (next.IsSuccess) {
+          this.dataModelCategory = next.ListItems;
+          this.dataSource.data = this.dataModelCategory;
+        }
+      },
+      (error) => {
+        this.toastrService.typeError(error);
+      }
+    );
+  }
   get f(): any {
     return this.categoryForm.controls;
   }
 
   initForm(): void {
     this.categoryForm = this.fb.group({
-      title: [
-        '',
-        Validators.compose([
-          Validators.required
-        ]),
-      ],
-      status: [
-        '',
-        Validators.compose([
-          Validators.required,
-        ]),
-      ],
-      description: [
-        '',
-        Validators.compose([
-          Validators.required,
-        ]),
-      ],
+      title: ['', Validators.compose([Validators.required])],
+      status: ['', Validators.compose([Validators.required])],
+      description: ['', Validators.compose([Validators.required])],
     });
   }
 
@@ -118,26 +145,22 @@ export class CategoryComponent implements OnInit {
         if (typeof this.getNodeOfId !== 'undefined') {
           this.dataModel.LinkParentId = this.getNodeOfId.id;
         }
-        this.newsCategoryService
-          .ServiceAdd(this.dataModel)
-          .subscribe((res) => {
-            if (res.IsSuccess) {
-              this.dataSource.data = this.TREE_DATA;
-            }
-          });
+        this.categoryService.ServiceAdd(this.dataModel).subscribe((res) => {
+          if (res.IsSuccess) {
+            this.dataSource.data = this.dataModelCategory;
+          }
+        });
       } else {
         this.hasError = false;
         if (this.parentId !== this.getNodeOfId.id) {
           this.dataModel.LinkParentId = this.parentId;
         }
         this.dataModel.Id = this.getNodeOfId.id;
-        this.newsCategoryService
-          .ServiceEdit(this.dataModel)
-          .subscribe((res) => {
-            if (res.IsSuccess) {
-              this.dataSource.data = this.TREE_DATA;
-            }
-          });
+        this.categoryService.ServiceEdit(this.dataModel).subscribe((res) => {
+          if (res.IsSuccess) {
+            this.dataSource.data = this.dataModelCategory;
+          }
+        });
       }
     }
   }
@@ -155,7 +178,7 @@ export class CategoryComponent implements OnInit {
   }
 
   removeNodeOfTreeList(): void {
-    this.newsCategoryService.ServiceDelete(this.getNodeOfId.id).subscribe((res) => {
+    this.categoryService.ServiceDelete(this.getNodeOfId.id).subscribe((res) => {
       if (res.IsSuccess) {
       }
     });

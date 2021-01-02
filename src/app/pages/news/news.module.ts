@@ -7,6 +7,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import {TagInputModule} from 'ngx-chips';
 
 import {
+  CoreEnumService,
   NewsCategoryService,
   NewsCommentService,
   NewsConfigurationService,
@@ -33,7 +34,6 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { TreeviewModule } from 'ngx-treeview';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { QueryBuilderModule } from 'angular2-query-builder';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ContentComponent } from './content/content.component';
 import { CategoryComponent } from './category/category.component';
 
@@ -54,7 +54,7 @@ import { CategoryComponent } from './category/category.component';
     NewsRoutingModule,
      CommonModule,
      FormsModule,
-    ReactiveFormsModule,
+     ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
     TreeviewModule.forRoot(),
     SharedModule.forRoot(),
 
@@ -81,6 +81,7 @@ import { CategoryComponent } from './category/category.component';
     NewsShareMainAdminSettingService,
     NewsShareReciverCategoryService,
     NewsShareServerCategoryService,
+    CoreEnumService
   ]
 })
 export class NewsModule { }
