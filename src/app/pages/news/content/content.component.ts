@@ -1,6 +1,7 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
+  CoreAuthService,
   ErrorExceptionResult,
   FilterDataModel,
   FilterModel,
@@ -61,6 +62,7 @@ export class ContentComponent implements OnInit {
   // dataSource: any;
 
   constructor(
+    private coreAuthService: CoreAuthService,
     private activatedRoute: ActivatedRoute,
     public publicHelper: PublicHelper,
     private newsContentService: NewsContentService,
@@ -80,8 +82,11 @@ export class ContentComponent implements OnInit {
       onActionSelect: (x) => this.onActionCategorySelect(x),
     };
     // if (this.dataModelResult.ListItems.length === 0) {
-    this.DataGetAllContent();
+    // this.DataGetAllContent();
     // }
+    this.coreAuthService.CurrentTokenInfoBSObs.subscribe(() => {
+      this.DataGetAllContent();
+    });
   }
 
   changed(event): void {
@@ -314,8 +319,8 @@ export class ContentComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
     });
   }
-  onActionbuttonStatus(): void {}
-  onActionbuttonExport(): void {}
+  onActionbuttonStatus(): void { }
+  onActionbuttonExport(): void { }
 
   onActionbuttonReload(): void {
     this.DataGetAllContent();

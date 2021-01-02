@@ -12,6 +12,7 @@ import {
   MatTreeFlattener,
 } from '@angular/material/tree';
 import {
+  CoreAuthService,
   CoreEnumService,
   EnumModel,
   ErrorExceptionResult,
@@ -64,6 +65,7 @@ export class CategoryComponent implements OnInit {
   };
 
   constructor(
+    private coreAuthService: CoreAuthService,
     private activatedRoute: ActivatedRoute,
     private toastrService: CmsToastrService,
     public coreEnumService: CoreEnumService,
@@ -92,8 +94,11 @@ export class CategoryComponent implements OnInit {
     this.initForm();
     // this.dataModelCategory = this.activatedRoute.snapshot.data.categoryList.ListItems;
     // this.dataSource.data = this.dataModelCategory;
-    this.DataGetAllCategory();
 
+    // }
+    this.coreAuthService.CurrentTokenInfoBSObs.subscribe(() => {
+      this.DataGetAllCategory();
+    });
     this.getStatus();
   }
   DataGetAllCategory(): void {
