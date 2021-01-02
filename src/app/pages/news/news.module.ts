@@ -33,6 +33,9 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { TreeviewModule } from 'ngx-treeview';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { QueryBuilderModule } from 'angular2-query-builder';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { ContentComponent } from './content/content.component';
+import { CategoryComponent } from './category/category.component';
 
 @NgModule({
   declarations: [
@@ -43,17 +46,17 @@ import { QueryBuilderModule } from 'angular2-query-builder';
     NewsCategoryEditComponent,
     NewsCategorySelectComponent,
     NewsCategoryDeleteComponent,
-    NewsCommentComponent
-
+    NewsCommentComponent,
+    ContentComponent,
+    CategoryComponent
   ],
   imports: [
     NewsRoutingModule,
-    // CommonModule,
-    // FormsModule,
+     CommonModule,
+     FormsModule,
     ReactiveFormsModule,
     TreeviewModule.forRoot(),
     SharedModule.forRoot(),
-    SharedModule,
 
     TagInputModule,
     LeafletModule,

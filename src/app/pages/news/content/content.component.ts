@@ -82,7 +82,7 @@ export class ContentComponent implements OnInit {
     this.checked = event.checked;
   }
 
-  // getContentListById(event): any {
+   getContentListById(event): any {
   //   this.filterModelContent.Filters = [];
   //   this.filterModelContent.Filters.push({
   //     BooleanValue1: false,
@@ -124,7 +124,7 @@ export class ContentComponent implements OnInit {
   //     }
   //   });
 
-  // }
+   }
 
   DataGetAllContent(): void {
     this.tableContentSelected = [];
