@@ -103,8 +103,9 @@ export class ContentComponent implements OnInit {
       };
       this.filteModelContent.Filters.push(aaa as FilterDataModel);
     } else {
-      this.optionsCategorySelect = null;
-      this.optionsCategorySelect.methods.ActionSelectForce(0);
+      if (this.optionsCategorySelect.methods) {
+        this.optionsCategorySelect.methods.ActionSelectForce(0);
+      }
     }
     this.DataGetAllContent();
 

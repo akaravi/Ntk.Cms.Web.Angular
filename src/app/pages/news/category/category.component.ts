@@ -22,7 +22,7 @@ import {
   NewsCategoryService,
 } from 'ntk-cms-api';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-//import {ICategory} from './category.interface';
+// import {ICategory} from './category.interface';
 import { Observable } from 'rxjs';
 import { CmsToastrService } from 'src/app/_helpers/services/cmsToastr.service';
 
@@ -45,8 +45,9 @@ export class CategoryComponent implements OnInit {
   categoryForm: FormGroup;
   dataModel: NewsCategoryModel = new NewsCategoryModel();
   statusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
+  dataModelCategoryResult: ErrorExceptionResult<NewsCategoryModel> = new ErrorExceptionResult<NewsCategoryModel>();
   filteModelCategory = new FilterModel();
-  dataModelCategory: NewsCategoryModel[] = [];
+
   hasError: boolean;
   isLoading$: Observable<boolean>;
   getNodeOfId: any;
@@ -62,7 +63,7 @@ export class CategoryComponent implements OnInit {
       description: node.Description,
       recordStatus: node.RecordStatus,
     };
-  };
+  }
 
   constructor(
     private coreAuthService: CoreAuthService,
@@ -71,7 +72,7 @@ export class CategoryComponent implements OnInit {
     public coreEnumService: CoreEnumService,
     public categoryService: NewsCategoryService,
     private fb: FormBuilder
-  ) {}
+  ) { }
 
   // tslint:disable-next-line
   treeControl = new FlatTreeControl<ExampleFlatNode>(
@@ -91,24 +92,25 @@ export class CategoryComponent implements OnInit {
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
 
   ngOnInit(): void {
+    this.coreAuthService.CurrentTokenInfoBSObs.subscribe(() => {
+      this.DataGetAllCategory();
+    });
     this.initForm();
     // this.dataModelCategory = this.activatedRoute.snapshot.data.categoryList.ListItems;
     // this.dataSource.data = this.dataModelCategory;
 
     // }
-    this.coreAuthService.CurrentTokenInfoBSObs.subscribe(() => {
-      this.DataGetAllCategory();
-    });
+
     this.getStatus();
   }
   DataGetAllCategory(): void {
     this.filteModelCategory.RowPerPage = 200;
-
+    this.filteModelCategory.AccessLoad = true;
     this.categoryService.ServiceGetAll(this.filteModelCategory).subscribe(
       (next) => {
         if (next.IsSuccess) {
-          this.dataModelCategory = next.ListItems;
-          this.dataSource.data = this.dataModelCategory;
+          this.dataModelCategoryResult = next;
+          this.dataSource.data = this.dataModelCategoryResult.ListItems;
         }
       },
       (error) => {
@@ -136,8 +138,13 @@ export class CategoryComponent implements OnInit {
 
   getNode(node): void {
     this.contentList.emit(node);
-    if (typeof this.parentId === 'undefined' || this.parentId !== node.id) {
-      this.parentId = node.id;
+    if (node && node.id) {
+      if (typeof this.parentId === 'undefined' || this.parentId !== node.id) {
+        this.parentId = node.id;
+      }
+    }
+    else {
+      this.parentId = null;
     }
     this.getNodeOfId = node;
     this.flag = true;
@@ -152,7 +159,7 @@ export class CategoryComponent implements OnInit {
         }
         this.categoryService.ServiceAdd(this.dataModel).subscribe((res) => {
           if (res.IsSuccess) {
-            this.dataSource.data = this.dataModelCategory;
+            // this.dataSource.data = this.dataModelCategory;
           }
         });
       } else {
@@ -163,7 +170,7 @@ export class CategoryComponent implements OnInit {
         this.dataModel.Id = this.getNodeOfId.id;
         this.categoryService.ServiceEdit(this.dataModel).subscribe((res) => {
           if (res.IsSuccess) {
-            this.dataSource.data = this.dataModelCategory;
+            // this.dataSource.data = this.dataModelCategory;
           }
         });
       }
@@ -187,5 +194,9 @@ export class CategoryComponent implements OnInit {
       if (res.IsSuccess) {
       }
     });
+  }
+  rootNodeOfTreeList(): void {
+    this.dataSource.data = this.dataModelCategoryResult.ListItems;
+    this.getNode(null);
   }
 }

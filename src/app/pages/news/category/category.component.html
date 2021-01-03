@@ -1,125 +1,84 @@
 <div class="mb-3">
-  <button type="button" class="btn btn-primary"
-          id="openModalButton"
-          data-toggle="modal" data-target="#categoryModal" (click)="addNodeOfTreeNode()">اضافه</button>
-  <button (click)="updateNodeOfTreeNode()" type="button" class="btn btn-warning ml-2"
-          data-toggle="modal" data-target="#categoryModal" [disabled]="!flag">ویرایش</button>
-  <button type="button" class="btn btn-danger" (click)="removeNodeOfTreeList()" [disabled]="!flag">حذف</button>
+    <button *ngIf="dataModelCategoryResult.Access.AccessAddRow" (click)="addNodeOfTreeNode()" type="button" class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">اضافه</button>
+    <button *ngIf="dataModelCategoryResult.Access.AccessEditRow && this.parentId>0" (click)="updateNodeOfTreeNode()" type="button" class="btn btn-warning ml-2" data-toggle="modal" data-target="#categoryModal" [disabled]="!flag">ویرایش</button>
+    <button *ngIf="dataModelCategoryResult.Access.AccessDeleteRow && this.parentId>0" (click)="removeNodeOfTreeList()" type="button" class="btn btn-danger  ml-2" [disabled]="!flag">حذف</button>
+    <button *ngIf="dataModelCategoryResult.Access.AccessWatchRow" (click)="rootNodeOfTreeList()" type="button" class="btn btn-info  ml-2" [disabled]="!flag">...</button>
 </div>
 <mat-tree class="cursor-pointer" [dataSource]="dataSource" [treeControl]="treeControl">
-  <!-- This is the tree node template for leaf nodes -->
-  <mat-tree-node [ngStyle]="{'background': parentId === node.id ? '#d3d3da' : '' }" (click)="getNode(node)" *matTreeNodeDef="let node" matTreeNodePadding>
-    <!-- use a disabled button to provide padding for tree leaf -->
-    <button  mat-icon-button disabled></button>
-    {{node.name}}
-  </mat-tree-node>
-  <!-- This is the tree node template for expandable nodes -->
-  <mat-tree-node [ngStyle]="{'background': parentId === node.id ? '#d3d3da' : '' }" *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
-    <button mat-icon-button matTreeNodeToggle (click)="getNode(node)"
-            [attr.aria-label]="'Toggle ' + node.name">
-      <mat-icon class="mat-icon-rtl-mirror">
-        {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-      </mat-icon>
-    </button>
-    {{node.name}}
-  </mat-tree-node>
+    <!-- This is the tree node template for leaf nodes -->
+    <mat-tree-node [ngStyle]="{'background': parentId === node.id ? '#d3d3da' : '' }" (click)="getNode(node)" *matTreeNodeDef="let node" matTreeNodePadding>
+        <!-- use a disabled button to provide padding for tree leaf -->
+        <button mat-icon-button disabled></button>
+        {{node.name}}
+    </mat-tree-node>
+    <!-- This is the tree node template for expandable nodes -->
+    <mat-tree-node [ngStyle]="{'background': parentId === node.id ? '#d3d3da' : '' }" (click)="getNode(node)" *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
+        <button mat-icon-button matTreeNodeToggle (click)="getNode(node)" [attr.aria-label]="'Toggle ' + node.name">
+            <mat-icon class="mat-icon-rtl-mirror">
+                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+            </mat-icon>
+        </button>
+        {{node.name}}
+    </mat-tree-node>
 </mat-tree>
 <!-- Modal -->
-<div class="modal fade" id="categoryModal"
-     tabindex="-1"
-     role="dialog"
-     aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-      </div>
-      <div class="modal-body">
-        <div>
-          <form
-            [formGroup]="categoryForm"
-            novalidate="novalidate">
-            <div class="form-group">
-              <label for="status">وضعیت</label>
-              <select  [(ngModel)]="dataModel.RecordStatus"
-                       class="form-control"
-                       id="status"
-                       name="status"
-                       formControlName="status">
-                <option *ngFor="let item of statusResult.ListItems"
-                        value="{{item.Value}}">
-                  {{item.Key}}</option>
-              </select>
-              <ng-container
-                [ngTemplateOutlet]="formError"
-                [ngTemplateOutletContext]="{
+<div class="modal fade" id="categoryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <form [formGroup]="categoryForm" novalidate="novalidate">
+                        <div class="form-group">
+                            <label for="status">وضعیت</label>
+                            <select [(ngModel)]="dataModel.RecordStatus" class="form-control" id="status" name="status" formControlName="status">
+                                <option *ngFor="let item of statusResult.ListItems" value="{{item.Value}}">
+                                    {{item.Key}}</option>
+                            </select>
+                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                     validation: 'required',
                     message: 'لطفا یکی از وضعیت ها را انتخاب کنید',
                     control: categoryForm.controls['status']}">
-              </ng-container>
-            </div>
-            <div class="form-group">
-              <label for="title">عنوان</label>
-              <input
-                type="text"
-                [(ngModel)]="dataModel.Title"
-                class="form-control h-auto px-3"
-                id="title"
-                name="title"
-                formControlName="title"
-                autocomplete="off"
-                [ngClass]="{ 'is-invalid': categoryForm.controls['title'].invalid }">
-              <ng-container
-                [ngTemplateOutlet]="formError"
-                [ngTemplateOutletContext]="{
+                            </ng-container>
+                        </div>
+                        <div class="form-group">
+                            <label for="title">عنوان</label>
+                            <input type="text" [(ngModel)]="dataModel.Title" class="form-control h-auto px-3" id="title" name="title" formControlName="title" autocomplete="off" [ngClass]="{ 'is-invalid': categoryForm.controls['title'].invalid }">
+                            <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
                 validation: 'required',
                 message: 'لطفا عنوان مورد نظر خود را وارد کنید',
                 control: categoryForm.controls['title']}">
-              </ng-container>
-            </div>
-            <div class="form-group">
-              <label for="description">توضیحات</label>
-              <input
-                type="text"
-                [(ngModel)]="dataModel.Description"
-                class="form-control h-auto px-3"
-                id="description"
-                name="description"
-                formControlName="description"
-                autocomplete="off"
-                [ngClass]="{ 'is-invalid': categoryForm.controls['description'].invalid }">
-            </div>
-            <ng-container
-              [ngTemplateOutlet]="formError"
-              [ngTemplateOutletContext]="{
+                            </ng-container>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">توضیحات</label>
+                            <input type="text" [(ngModel)]="dataModel.Description" class="form-control h-auto px-3" id="description" name="description" formControlName="description" autocomplete="off" [ngClass]="{ 'is-invalid': categoryForm.controls['description'].invalid }">
+                        </div>
+                        <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
               validation: 'required',
               message: 'لطفا توضیحات مورد نظر خود را وارد کنید',
               control: categoryForm.controls['description']}">
-            </ng-container>
-            <div class="form-group border-top" dir="ltr">
-              <div class="mt-5">
-                <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">بستن</button>
-                <button (click)="onFormSubmit()"
-                        [disabled]="categoryForm.invalid" type="submit" class="btn btn-primary">ثبت</button>
-              </div>
+                        </ng-container>
+                        <div class="form-group border-top" dir="ltr">
+                            <div class="mt-5">
+                                <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">بستن</button>
+                                <button (click)="onFormSubmit()" [disabled]="categoryForm.invalid" type="submit" class="btn btn-primary">ثبت</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-          </form>
         </div>
-      </div>
     </div>
-  </div>
 </div>
-<ng-template
-  #formError
-  let-control="control"
-  let-message="message"
-  let-validation="validation">
-  <ng-container
-    *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
-    <div class="fv-plugins-message-container">
-      <div class="fv-help-block">
-        {{ message }}
-      </div>
-    </div>
-  </ng-container>
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+    <ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
+        <div class="fv-plugins-message-container">
+            <div class="fv-help-block">
+                {{ message }}
+            </div>
+        </div>
+    </ng-container>
 </ng-template>
