@@ -12,7 +12,7 @@ import {
 import { PublicHelper } from '../../../_helpers/services/publicHelper';
 import { QueryBuilderConfig } from 'angular2-query-builder';
 import { ComponentOptionSearchContentModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchContentModel';
-import { ComponentOptionNewsCategoryModel } from 'src/app/core/cmsComponentModels/news/componentOptionNewsCategoryModel';
+import { ComponentOptionNewsCategoryDataModel, ComponentOptionNewsCategoryModel } from 'src/app/core/cmsComponentModels/news/componentOptionNewsCategoryModel';
 import { ComponentModalDataModel } from 'src/app/core/cmsComponentModels/base/componentModalDataModel';
 import { CmsToastrService } from '../../../_helpers/services/cmsToastr.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -33,7 +33,8 @@ export class ContentComponent implements OnInit {
   modalModel: ComponentModalDataModel = new ComponentModalDataModel();
   optionsSearchContentList: ComponentOptionSearchContentModel = new ComponentOptionSearchContentModel();
   tableContentloading = false;
-  tableContentSelected: Array<NewsContentModel> = [];
+  tableRowsSelected: Array<NewsContentModel> = [];
+  tableRowSelected: NewsContentModel = new NewsContentModel();
   // dateObject: any;
   loadingStatus = false; // add one more property
 
@@ -95,14 +96,18 @@ export class ContentComponent implements OnInit {
 
   getContentListById(event): any {
     this.filteModelContent = new FilterModel();
+    this.optionsCategorySelect.data = new ComponentOptionNewsCategoryDataModel();
+    this.optionsCategorySelect.data.Select = event;
 
     if (event && event.id > 0) {
+      this.optionsCategorySelect.data.SelectId = event.id;
       const aaa = {
         PropertyName: 'LinkCategoryId',
         IntValue1: event.id,
       };
       this.filteModelContent.Filters.push(aaa as FilterDataModel);
     } else {
+      this.optionsCategorySelect.data.SelectId = 0;
       if (this.optionsCategorySelect.methods) {
         this.optionsCategorySelect.methods.ActionSelectForce(0);
       }
@@ -120,7 +125,8 @@ export class ContentComponent implements OnInit {
   }
 
   DataGetAllContent(): void {
-    this.tableContentSelected = [];
+    this.tableRowsSelected = [];
+    this.tableRowSelected = new NewsContentModel();
     this.tableContentloading = true;
     this.loadingStatus = true;
     this.filteModelContent.AccessLoad = true;
@@ -264,9 +270,8 @@ export class ContentComponent implements OnInit {
 
   onActionbuttonEditRow(): void {
     if (
-      this.tableContentSelected == null ||
-      this.tableContentSelected.length === 0 ||
-      this.tableContentSelected[0].Id === 0
+      this.tableRowSelected == null ||
+      this.tableRowSelected.Id === 0
     ) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای ویرایش انتخاب نشده است';
@@ -286,14 +291,13 @@ export class ContentComponent implements OnInit {
 
     this.router.navigate(['edit'], {
       relativeTo: this.activatedRoute,
-      queryParams: { id: this.tableContentSelected[0].Id },
+      queryParams: { id: this.tableRowSelected.Id },
     });
   }
   onActionbuttonDeleteRow(): void {
     if (
-      this.tableContentSelected == null ||
-      this.tableContentSelected.length === 0 ||
-      this.tableContentSelected[0].Id === 0
+      this.tableRowSelected == null ||
+      this.tableRowSelected.Id === 0
     ) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای ویرایش انتخاب نشده است';
@@ -330,8 +334,8 @@ export class ContentComponent implements OnInit {
     this.filteModelContent.Filters = model;
     this.DataGetAllContent();
   }
-  onActionTableSelect(row: any): void {
-    this.tableContentSelected = [row];
+  onActionTableRowSelect(row: NewsContentModel): void {
+    this.tableRowSelected = row;
   }
 
   onClickComment(id: number): void {

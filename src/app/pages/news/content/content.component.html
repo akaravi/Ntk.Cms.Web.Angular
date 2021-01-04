@@ -1,61 +1,68 @@
-
 <div class="row">
-  <div class="col-xl-3">
-    <app-category (contentList)="getContentListById($event)"></app-category>
-  </div>
-  <div class="col-xl-9">
-    <div class="align-Btn">
-      <button type="button" class="btn btn-primary">جدید</button>
-      <a class="btn btn-secondary btn-sm BTN">
-        <mat-slide-toggle [(ngModel)]="checked" (change)="changed($event)">پرس و جو ساز</mat-slide-toggle>
-      </a>
-      <button type="button" class="btn btn-success BTN">آمار</button>
-      <button type="button" class="btn btn-bg-info BTN">خروجی فایل</button>
-      <button type="button" class="btn btn-warning BTN">برسی مجدد</button>
-      <div class="Query" *ngIf="checked">
-        <query-builder [(ngModel)]='query' [config]='config'></query-builder>
-        {{query|json}}
-        <app-cms-search-content-list [options]="optionsSearchContentList"></app-cms-search-content-list>
-        <app-cms-export-content-list></app-cms-export-content-list>
-        <app-cms-statist-content-list></app-cms-statist-content-list>
-      </div>
+    <div class="col-xl-3">
+        <app-category (contentList)="getContentListById($event)"></app-category>
     </div>
-    <table mat-table [dataSource]="dataModelResult.ListItems" class="mat-elevation-z8">
+    <div class="col-xl-9">
+        <div class="align-Btn">
+            <button *ngIf="dataModelResult.Access.AccessAddRow && this.optionsCategorySelect.data?.SelectId>0" (click)="onActionbuttonNewRow()" type="button" class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">اضافه</button>
+            <button *ngIf="dataModelResult.Access.AccessEditRow && tableRowSelected.Id>0" (click)="onActionbuttonEditRow()" type="button" class="btn btn-warning ml-2" data-toggle="modal" data-target="#categoryModal">ویرایش</button>
+            <button *ngIf="dataModelResult.Access.AccessDeleteRow && tableRowSelected.Id>0" (click)="onActionbuttonDeleteRow()" type="button" class="btn btn-danger  ml-2">حذف</button>
 
-      <ng-container matColumnDef="LinkSiteId">
-        <th mat-header-cell *matHeaderCellDef>شناسه سایت</th>
-        <td mat-cell *matCellDef="let element">
-          {{ element.LinkSiteId }}
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="RecordStatus">
-        <th mat-header-cell *matHeaderCellDef>وضعیت</th>
-        <td mat-cell *matCellDef="let element">
-          {{ element.RecordStatus }}
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="Title">
-        <th mat-header-cell *matHeaderCellDef>عنوان</th>
-        <td mat-cell *matCellDef="let element">
-          {{ element.Title }}
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="CreatedDate">
-        <th mat-header-cell *matHeaderCellDef>ناریخ ایجاد</th>
-        <td mat-cell *matCellDef="let element">
-          {{ publicHelper.LocaleDate(element.CreatedDate) }}
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="UpdatedDate">
-        <th mat-header-cell *matHeaderCellDef>تاریخ ویرابش</th>
-        <td mat-cell *matCellDef="let element">
-          {{ publicHelper.LocaleDate(element.UpdatedDate) }}
-        </td>
-      </ng-container>
+            <a class="btn btn-secondary btn-sm BTN">
+                <mat-slide-toggle [(ngModel)]="checked" (change)="changed($event)">پرس و جو ساز</mat-slide-toggle>
+            </a>
+            <button (click)="onActionbuttonStatus()" type="button" class="btn btn-success BTN">آمار</button>
+            <button (click)="onActionbuttonExport()" type="button" class="btn btn-bg-info BTN">خروجی فایل</button>
+            <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">برسی مجدد</button>
+            <div class="Query" *ngIf="checked">
+                <query-builder [(ngModel)]='query' [config]='config'></query-builder>
+                {{query|json}}
+                <app-cms-search-content-list [options]="optionsSearchContentList"></app-cms-search-content-list>
+                <app-cms-export-content-list></app-cms-export-content-list>
+                <app-cms-statist-content-list></app-cms-statist-content-list>
+            </div>
+        </div>
+        <table mat-table [dataSource]="dataModelResult.ListItems" class="mat-elevation-z8">
+            <!-- Position Column -->
+            <ng-container matColumnDef="LinkSiteId2">
+                <th mat-header-cell *matHeaderCellDef>شناسه سایت</th>
+                <td mat-cell *matCellDef="let element">
+                    {{ element.LinkSiteId }}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="LinkSiteId">
+                <th mat-header-cell *matHeaderCellDef>شناسه سایت</th>
+                <td mat-cell *matCellDef="let element">
+                    {{ element.LinkSiteId }}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="RecordStatus">
+                <th mat-header-cell *matHeaderCellDef>وضعیت</th>
+                <td mat-cell *matCellDef="let element">
+                    {{ element.RecordStatus }}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="Title">
+                <th mat-header-cell *matHeaderCellDef>عنوان</th>
+                <td mat-cell *matCellDef="let element">
+                    {{ element.Title }}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="CreatedDate">
+                <th mat-header-cell *matHeaderCellDef>ناریخ ایجاد</th>
+                <td mat-cell *matCellDef="let element">
+                    {{ publicHelper.LocaleDate(element.CreatedDate) }}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="UpdatedDate">
+                <th mat-header-cell *matHeaderCellDef>تاریخ ویرابش</th>
+                <td mat-cell *matCellDef="let element">
+                    {{ publicHelper.LocaleDate(element.UpdatedDate) }}
+                </td>
+            </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-  </div>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row (click)="onActionTableRowSelect(row)" [ngStyle]="{'background': row.Id === tableRowSelected.Id ? '#d3d3da' : '' }" *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
 </div>
-
