@@ -3,12 +3,10 @@ import { ComponentOptionModel } from '../base/componentOptionModel';
 
 // tslint:disable-next-line: max-line-length
 export class ComponentOptionNewsCategoryModel implements ComponentOptionModel<ComponentOptionNewsCategoryDataModel, ComponentOptionNewsCategoryActionsModel, ComponentOptionNewsCategoryMethodsModel> {
-  actions: ComponentOptionNewsCategoryActionsModel;
-  methods: ComponentOptionNewsCategoryMethodsModel;
-  data: ComponentOptionNewsCategoryDataModel;
-
+  onActions = new ComponentOptionNewsCategoryActionsModel();
+  methods = new ComponentOptionNewsCategoryMethodsModel();
+  data = new ComponentOptionNewsCategoryDataModel();
 }
-
 export class ComponentOptionNewsCategoryActionsModel {
   onActionSelect: (x: NewsCategoryModel) => void;
 }
@@ -17,6 +15,5 @@ export class ComponentOptionNewsCategoryMethodsModel {
   ActionSelectForce: (id: number) => void;
 }
 export class ComponentOptionNewsCategoryDataModel {
-  SelectId: number;
-  Select: NewsCategoryModel;
+  Select = new NewsCategoryModel();
 }

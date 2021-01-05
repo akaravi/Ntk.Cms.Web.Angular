@@ -17,18 +17,12 @@ import { ComponentOptionSearchContentModel } from 'src/app/core/cmsComponentMode
 })
 export class CmsSearchContentListComponent implements OnInit {
   optionsData: ComponentOptionSearchContentModel = new ComponentOptionSearchContentModel();
-
-  Filters: Array<FilterDataModel>;
   @Input()
   set options(model: ComponentOptionSearchContentModel) {
     this.optionsData = model;
     if (this.optionsData.data.hidden == null) {
       this.optionsData.data.hidden = true;
     }
-
-    model.methods = {
-      setAccess: (x) => this.setAccess(x)
-    };
   }
   get options(): ComponentOptionSearchContentModel {
     if (this.optionsData.data.hidden) {
@@ -36,43 +30,20 @@ export class CmsSearchContentListComponent implements OnInit {
     }
     return this.optionsData;
   }
+  Filters: Array<FilterDataModel>;
   model: any;
   query: RuleSet;
-  // {
-  // condition: 'and',
-  // rules: [
-  //   {
-  //     field: 'category',
-  //     type: 'select',
-  //     operator: 'equal',
-  //     value: ['wallets']
-  //   },
-  //   {
-  //     field: 'price',
-  //     type: 'double',
-  //     operator: 'greater',
-  //     value: 45.5
-  //   },
-  //   {
-  //     field: 'inStock',
-  //     type: 'boolean',
-  //     operator: 'equal',
-  //     value: true
-  //   },
-  //   {
-  //     field: 'createdOn',
-  //     type: 'date',
-  //     operator: 'equal',
-  //     value: '2020-01-20'
-  //   }
-  //   ]
-  // };
-
   fieldMap: QueryBuilderFieldMap = {};
+  constructor() {
 
-  constructor() { }
-
-  ngOnInit(): void { }
+  }
+  ngOnInit(): void {
+    if (this.optionsData) {
+      this.optionsData.methods = {
+        setAccess: (x) => this.setAccess(x)
+      };
+    }
+  }
   setAccess(model: AccessModel): void {
     this.optionsData.data.Access = model;
     this.setFields();
@@ -193,7 +164,7 @@ export class CmsSearchContentListComponent implements OnInit {
   onSubmit(): void {
     // this.model = { name: "ali" };
     this.getRules();
-    this.optionsData.actions.onSubmit(this.Filters);
+    this.optionsData.onActions.onSubmit(this.Filters);
   }
   onGetRules(): void {
     // console.log(this.query);

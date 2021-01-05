@@ -1,10 +1,10 @@
 <div class="row">
     <div class="col-xl-3">
-        <app-category (contentList)="getContentListById($event)"></app-category>
+        <app-news-category-tree [options]="optionsCategorySelect"></app-news-category-tree>
     </div>
     <div class="col-xl-9">
-        <div class="align-Btn">
-            <button *ngIf="dataModelResult.Access.AccessAddRow && this.optionsCategorySelect.data?.SelectId>0" (click)="onActionbuttonNewRow()" type="button" class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">اضافه</button>
+        <div class="button-row">
+            <button *ngIf="dataModelResult.Access.AccessAddRow && this.optionsCategorySelect.data?.Select?.Id>0" (click)="onActionbuttonNewRow()" type="button" class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">اضافه</button>
             <button *ngIf="dataModelResult.Access.AccessEditRow && tableRowSelected.Id>0" (click)="onActionbuttonEditRow()" type="button" class="btn btn-warning ml-2" data-toggle="modal" data-target="#categoryModal">ویرایش</button>
             <button *ngIf="dataModelResult.Access.AccessDeleteRow && tableRowSelected.Id>0" (click)="onActionbuttonDeleteRow()" type="button" class="btn btn-danger  ml-2">حذف</button>
 
@@ -22,7 +22,11 @@
                 <app-cms-statist-content-list></app-cms-statist-content-list>
             </div>
         </div>
-        <table mat-table [dataSource]="dataModelResult.ListItems" class="mat-elevation-z8">
+
+
+        <app-progress-spinner  [options]="loading" >
+        </app-progress-spinner>
+        <table *ngIf="!loading.display" mat-table [dataSource]="dataModelResult.ListItems" class="mat-elevation-z8">
             <!-- Position Column -->
             <ng-container matColumnDef="LinkSiteId2">
                 <th mat-header-cell *matHeaderCellDef>شناسه سایت</th>

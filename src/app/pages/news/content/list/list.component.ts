@@ -9,21 +9,23 @@ import {
   NewsContentModel,
   NewsContentService,
 } from 'ntk-cms-api';
-import { PublicHelper } from '../../../_helpers/services/publicHelper';
+import { PublicHelper } from '../../../../_helpers/services/publicHelper';
 import { QueryBuilderConfig } from 'angular2-query-builder';
 import { ComponentOptionSearchContentModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchContentModel';
 import { ComponentOptionNewsCategoryDataModel, ComponentOptionNewsCategoryModel } from 'src/app/core/cmsComponentModels/news/componentOptionNewsCategoryModel';
 import { ComponentModalDataModel } from 'src/app/core/cmsComponentModels/base/componentModalDataModel';
-import { CmsToastrService } from '../../../_helpers/services/cmsToastr.service';
+import { CmsToastrService } from '../../../../_helpers/services/cmsToastr.service';
 import { MatDialog } from '@angular/material/dialog';
-import { NewsCategoryEditComponent } from '../category/edit/edit.component';
-import { NewsCategoryDeleteComponent } from '../category/delete/delete.component';
-import { NewsContentAddComponent } from './add/add.component';
+import { NewsCategoryEditComponent } from '../../category/edit/edit.component';
+import { NewsCategoryDeleteComponent } from '../../category/delete/delete.component';
+import { NewsContentAddComponent } from '../add/add.component';
+import {  ProgressSpinnerModel } from '../../../../core/models/progressSpinnerModel';
+
 
 @Component({
-  selector: 'app-content',
-  templateUrl: './content.component.html',
-  styleUrls: ['./content.component.scss'],
+  selector: 'app-news-content-list',
+  templateUrl: './list.component.html',
+  styleUrls: ['./list.component.scss'],
 })
 export class ContentComponent implements OnInit {
   filteModelContent = new FilterModel();
@@ -36,7 +38,7 @@ export class ContentComponent implements OnInit {
   tableRowsSelected: Array<NewsContentModel> = [];
   tableRowSelected: NewsContentModel = new NewsContentModel();
   // dateObject: any;
-  loadingStatus = false; // add one more property
+  loading = new ProgressSpinnerModel();
 
   query: any;
   checked = false;
@@ -71,22 +73,19 @@ export class ContentComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog
   ) {
-    this.optionsSearchContentList.actions = {
+    this.optionsCategorySelect.onActions = {
+      onActionSelect: (x) => this.onActionCategorySelect(x),
+    };
+    this.optionsSearchContentList.onActions = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
   }
 
   ngOnInit(): void {
-    // this.dataModelResult = this.activatedRoute.snapshot.data.list.ListItems;
-    // this.dataSource = this.dataModelResult;
-    this.optionsCategorySelect.actions = {
-      onActionSelect: (x) => this.onActionCategorySelect(x),
-    };
-    // if (this.dataModelResult.ListItems.length === 0) {
-    // this.DataGetAllContent();
-    // }
+
+
     this.coreAuthService.CurrentTokenInfoBSObs.subscribe(() => {
-      this.DataGetAllContent();
+      this.DataGetAll();
     });
   }
 
@@ -94,41 +93,42 @@ export class ContentComponent implements OnInit {
     this.checked = event.checked;
   }
 
-  getContentListById(event): any {
-    this.filteModelContent = new FilterModel();
-    this.optionsCategorySelect.data = new ComponentOptionNewsCategoryDataModel();
-    this.optionsCategorySelect.data.Select = event;
+  // getContentListById(event): any {
+  //   this.filteModelContent = new FilterModel();
+  //   this.optionsCategorySelect.data = new ComponentOptionNewsCategoryDataModel();
+  //   this.optionsCategorySelect.data.Select = event;
 
-    if (event && event.id > 0) {
-      this.optionsCategorySelect.data.SelectId = event.id;
-      const aaa = {
-        PropertyName: 'LinkCategoryId',
-        IntValue1: event.id,
-      };
-      this.filteModelContent.Filters.push(aaa as FilterDataModel);
-    } else {
-      this.optionsCategorySelect.data.SelectId = 0;
-      if (this.optionsCategorySelect.methods) {
-        this.optionsCategorySelect.methods.ActionSelectForce(0);
-      }
-    }
-    this.DataGetAllContent();
+  //   if (event && event.id > 0) {
+  //     this.optionsCategorySelect.data.SelectId = event.id;
+  //     const aaa = {
+  //       PropertyName: 'LinkCategoryId',
+  //       IntValue1: event.id,
+  //     };
+  //     this.filteModelContent.Filters.push(aaa as FilterDataModel);
+  //   } else {
+  //     this.optionsCategorySelect.data.SelectId = 0;
+  //     if (this.optionsCategorySelect.methods) {
+  //       this.optionsCategorySelect.methods.ActionSelectForce(0);
+  //     }
+  //   }
+  //   this.DataGetAll();
 
-    // return this.newsContentService
-    //   .ServiceGetAll(this.filteModelContent)
-    //   .subscribe((res) => {
-    //     if (res.IsSuccess) {
-    //       this.dataSource = [];
-    //       this.dataSource = res.ListItems;
-    //     }
-    //   });
-  }
+  //   // return this.newsContentService
+  //   //   .ServiceGetAll(this.filteModelContent)
+  //   //   .subscribe((res) => {
+  //   //     if (res.IsSuccess) {
+  //   //       this.dataSource = [];
+  //   //       this.dataSource = res.ListItems;
+  //   //     }
+  //   //   });
+  // }
 
-  DataGetAllContent(): void {
+  DataGetAll(): void {
     this.tableRowsSelected = [];
     this.tableRowSelected = new NewsContentModel();
     this.tableContentloading = true;
-    this.loadingStatus = true;
+    this.loading.display = true;
+    this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
     this.newsContentService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
@@ -137,13 +137,14 @@ export class ContentComponent implements OnInit {
           if (this.optionsSearchContentList.methods) {
             this.optionsSearchContentList.methods.setAccess(next.Access);
           }
-          this.tableContentloading = false;
         }
-        this.loadingStatus = false;
+        this.tableContentloading = false;
+        this.loading.display = false;
       },
       (error) => {
-        this.toastrService.typeError(error), (this.tableContentloading = false);
-        this.loadingStatus = false;
+        this.toastrService.typeError(error);
+        this.tableContentloading = false;
+        this.loading.display = false;
       }
     );
   }
@@ -158,90 +159,18 @@ export class ContentComponent implements OnInit {
       };
       this.filteModelContent.Filters.push(aaa as FilterDataModel);
     } else {
-      this.optionsCategorySelect = null;
       this.optionsCategorySelect.methods.ActionSelectForce(0);
     }
-    this.DataGetAllContent();
+    this.DataGetAll();
   }
-  onActionContentCategoryAdd(): void {
-    let parentId = 0;
-    if (
-      this.optionsCategorySelect &&
-      this.optionsCategorySelect.data &&
-      this.optionsCategorySelect.data.SelectId &&
-      this.optionsCategorySelect.data.SelectId > 0
-    ) {
-      parentId = this.optionsCategorySelect.data.SelectId;
-    }
-    const dialogRef = this.dialog.open(NewsCategoryEditComponent, {
-      data: {
-        parentId,
-      },
-    });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }
-  onActionContentCategoryEdit(): void {
-    if (
-      this.optionsCategorySelect == null ||
-      this.optionsCategorySelect.data == null ||
-      this.optionsCategorySelect.data.SelectId === 0
-    ) {
-      const title = 'برروز خطا ';
-      const message = 'دسته بندی انتخاب نشده است';
-      this.toastrService.toastr.error(message, title);
-      return;
-    }
-    const dialogRef = this.dialog.open(NewsCategoryEditComponent, {
-      data: {
-        id: this.optionsCategorySelect.data.SelectId,
-      },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }
-  onActionContentCategoryDelete(): void {
-    if (
-      this.optionsCategorySelect == null ||
-      this.optionsCategorySelect.data == null ||
-      this.optionsCategorySelect.data.SelectId === 0
-    ) {
-      const title = 'برروز خطا ';
-      const message = 'دسته بندی انتخاب نشده است';
-      this.toastrService.toastr.error(message, title);
-      return;
-    }
-
-    const dialogRef = this.dialog.open(NewsCategoryDeleteComponent, {
-      data: {
-        id: this.optionsCategorySelect.data.SelectId,
-      },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }
-  openDialog(): void {
-    const dialogRef = this.dialog.open(NewsCategoryDeleteComponent);
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }
-  // onCloseModal(): void {
-
-  // }
 
   onActionbuttonNewRow(): void {
     if (
       this.optionsCategorySelect == null ||
       this.optionsCategorySelect.data == null ||
-      this.optionsCategorySelect.data.SelectId === 0
+      this.optionsCategorySelect.data.Select == null ||
+      this.optionsCategorySelect.data.Select.Id === 0
     ) {
       const title = 'برروز خطا ';
       const message = 'دسته بندی انتخاب نشده است';
@@ -264,7 +193,7 @@ export class ContentComponent implements OnInit {
     };
     this.router.navigate(['add'], {
       relativeTo: this.activatedRoute,
-      queryParams: { parentId: this.optionsCategorySelect.data.SelectId },
+      queryParams: { parentId: this.optionsCategorySelect.data.Select.Id },
     });
   }
 
@@ -328,11 +257,11 @@ export class ContentComponent implements OnInit {
   onActionbuttonExport(): void { }
 
   onActionbuttonReload(): void {
-    this.DataGetAllContent();
+    this.DataGetAll();
   }
   onSubmitOptionsSearch(model: any): void {
     this.filteModelContent.Filters = model;
-    this.DataGetAllContent();
+    this.DataGetAll();
   }
   onActionTableRowSelect(row: NewsContentModel): void {
     this.tableRowSelected = row;
@@ -342,3 +271,4 @@ export class ContentComponent implements OnInit {
     this.router.navigate(['news/comment/', id]);
   }
 }
+

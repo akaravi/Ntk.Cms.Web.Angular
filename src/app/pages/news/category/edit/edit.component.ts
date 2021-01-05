@@ -4,9 +4,10 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 import { FormGroup } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CmsToastrService } from 'src/app/_helpers/services/cmsToastr.service';
 import { ComponentActionEnum } from 'src/app/_helpers/model/component-action-enum';
+import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 
 
 
@@ -27,6 +28,7 @@ export class NewsCategoryEditComponent implements OnInit {
   }
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
+    private dialogRef: MatDialogRef<NewsCategoryEditComponent>,
     private changeDetectorRef: ChangeDetectorRef,
 
     private activatedRoute: ActivatedRoute,
@@ -46,8 +48,9 @@ export class NewsCategoryEditComponent implements OnInit {
     // });
 
   }
+  modalTitle = '';
   private dateModleInput: any;
-  loadingStatus = false; // add one more property
+  loading = new ProgressSpinnerModel();
 
 
   dataModelResult: ErrorExceptionResult<NewsCategoryModel> = new ErrorExceptionResult<NewsCategoryModel>();
@@ -61,6 +64,7 @@ export class NewsCategoryEditComponent implements OnInit {
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   ngOnInit(): void {
+
     // get Id
     if (this.id === 0) {
       this.id = Number(
@@ -101,9 +105,11 @@ export class NewsCategoryEditComponent implements OnInit {
     // get parentId
     if (this.parentId >= 0) {
       this.ComponentAction = ComponentActionEnum.add;
+      this.modalTitle = 'ثبت دسته بندی جدید';
     }
     if (this.id) {
       this.ComponentAction = ComponentActionEnum.edit;
+      this.modalTitle = 'ویرایش دسته بندی';
       this.DataGetOneContent();
     }
     if (this.ComponentAction === ComponentActionEnum.none) {
@@ -129,7 +135,7 @@ export class NewsCategoryEditComponent implements OnInit {
 
     this.formInfo.FormAlert = 'در دریافت ارسال اطلاعات از سرور';
     this.formInfo.FormError = '';
-    this.loadingStatus = true;
+    this.loading.display = true;
     this.newsCategoryService
       .ServiceGetOneById(this.id)
       .subscribe(
@@ -137,23 +143,24 @@ export class NewsCategoryEditComponent implements OnInit {
 
           this.dataModel = next.Item;
           if (next.IsSuccess) {
+            this.modalTitle = this.modalTitle + ' ' + next.Item.Title;
             this.formInfo.FormAlert = '';
           } else {
             this.formInfo.FormAlert = 'برروز خطا';
             this.formInfo.FormError = next.ErrorMessage;
           }
-          this.loadingStatus = false;
+          this.loading.display = false;
         },
         (error) => {
           this.toastrService.typeError(error);
-          this.loadingStatus = false;
+          this.loading.display = false;
         }
       );
   }
   DataAddContent(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
-    this.loadingStatus = true;
+    this.loading.display = true;
     if (this.parentId > 0) {
       this.dataModel.LinkParentId = this.parentId;
     }
@@ -170,19 +177,19 @@ export class NewsCategoryEditComponent implements OnInit {
             this.formInfo.FormAlert = 'برروز خطا';
             this.formInfo.FormError = next.ErrorMessage;
           }
-          this.loadingStatus = false;
+          this.loading.display = false;
         },
         (error) => {
           this.formInfo.FormAllowSubmit = true;
           this.toastrService.typeError(error);
-          this.loadingStatus = false;
+          this.loading.display = false;
         }
       );
   }
   DataEditContent(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
-    this.loadingStatus = true;
+    this.loading.display = true;
     this.newsCategoryService
       .ServiceEdit(this.dataModel)
       .subscribe(
@@ -196,12 +203,12 @@ export class NewsCategoryEditComponent implements OnInit {
             this.formInfo.FormAlert = 'برروز خطا';
             this.formInfo.FormError = next.ErrorMessage;
           }
-          this.loadingStatus = false;
+          this.loading.display = false;
         },
         (error) => {
           this.formInfo.FormAllowSubmit = true;
           this.toastrService.typeError(error);
-          this.loadingStatus = false;
+          this.loading.display = false;
         }
       );
   }
@@ -218,6 +225,6 @@ export class NewsCategoryEditComponent implements OnInit {
     }
   }
   onFormCancel(): void {
-    this.formGroup.reset();
+    this.dialogRef.close();
   }
 }

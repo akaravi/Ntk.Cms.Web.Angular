@@ -5,7 +5,7 @@ import { ComponentOptionModel } from './componentOptionModel';
 
 export class ComponentOptionModalModel
   implements ComponentOptionModel<ComponentOptionModalDataModel, ComponentOptionModalActionsModel, ComponentOptionModalMethodsModel> {
-  actions: ComponentOptionModalActionsModel;
+  onActions: ComponentOptionModalActionsModel;
   methods: ComponentOptionModalMethodsModel;
   data: ComponentOptionModalDataModel = new ComponentOptionModalDataModel();
 

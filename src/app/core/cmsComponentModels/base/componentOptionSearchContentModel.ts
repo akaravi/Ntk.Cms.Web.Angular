@@ -6,7 +6,7 @@ import { ComponentOptionModel } from './componentOptionModel';
 export class ComponentOptionSearchContentModel
   implements ComponentOptionModel<ComponentOptionSearchContentDataModel, ComponentOptionSearchContentActionsModel,
   ComponentOptionSearchContentMethodsModel> {
-  actions: ComponentOptionSearchContentActionsModel;
+  onActions: ComponentOptionSearchContentActionsModel;
   methods: ComponentOptionSearchContentMethodsModel;
   data: ComponentOptionSearchContentDataModel = new ComponentOptionSearchContentDataModel();
   constructor() {

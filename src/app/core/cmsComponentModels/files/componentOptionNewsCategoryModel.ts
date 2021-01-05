@@ -1,8 +1,9 @@
 import { ComponentOptionModel } from '../base/componentOptionModel';
 
 export class ComponentOptionFileUploadModel
+  // tslint:disable-next-line: max-line-length
   implements ComponentOptionModel<ComponentOptionFileUploadDataModel, ComponentOptionFileUploadActionsModel, ComponentOptionFileUploadMethodsModel> {
-  actions: ComponentOptionFileUploadActionsModel;
+    onActions: ComponentOptionFileUploadActionsModel;
   methods: ComponentOptionFileUploadMethodsModel;
   data: ComponentOptionFileUploadDataModel;
 

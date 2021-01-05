@@ -1,9 +1,10 @@
-import {  SmsMainApiPathModel } from 'ntk-cms-api';
+import { SmsMainApiPathModel } from 'ntk-cms-api';
 import { ComponentOptionModel } from '../base/componentOptionModel';
 
 export class ComponentOptionSmsMainApiPathModel
+  // tslint:disable-next-line: max-line-length
   implements ComponentOptionModel<ComponentOptionSmsMainApiPathDataModel, ComponentOptionSmsMainApiPathActionsModel, ComponentOptionSmsMainApiPathMethodsModel> {
-  actions: ComponentOptionSmsMainApiPathActionsModel;
+  onActions: ComponentOptionSmsMainApiPathActionsModel;
   methods: ComponentOptionSmsMainApiPathMethodsModel;
   data: ComponentOptionSmsMainApiPathDataModel;
 

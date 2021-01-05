@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NewsRoutingModule } from './news-routing.module';
 import { NewsComponent } from './news.component';
-import {CategoryResolver} from './category/category.resolver';
+// import {CategoryResolver} from './category/tree/category.resolver';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import {TagInputModule} from 'ngx-chips';
 
@@ -34,8 +34,9 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { TreeviewModule } from 'ngx-treeview';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { QueryBuilderModule } from 'angular2-query-builder';
-import { ContentComponent } from './content/content.component';
-import { CategoryComponent } from './category/category.component';
+import { ContentComponent } from './content/list/list.component';
+import { CategoryComponent } from './category/tree/tree.component';
+import { ProgressSpinnerModule } from 'src/app/shared/progress-spinner/progress-spinner.module';
 
 @NgModule({
   declarations: [
@@ -63,11 +64,11 @@ import { CategoryComponent } from './category/category.component';
     CKEditorModule,
 
     QueryBuilderModule,
-
+    ProgressSpinnerModule,
 
   ],
   providers: [
-    CategoryResolver,
+    // CategoryResolver,
     NewsCategoryService,
     NewsCommentService,
     NewsConfigurationService,

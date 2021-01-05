@@ -13,6 +13,7 @@ import { TruncatePipe } from '../core/pipe/truncate.pipe';
 import { PersianDate } from '../core/pipe/PersianDatePipe/persian-date.pipe';
 
 
+
 @NgModule({
   imports: [
     CommonModule,

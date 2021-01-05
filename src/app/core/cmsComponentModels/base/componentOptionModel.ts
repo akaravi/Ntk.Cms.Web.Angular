@@ -1,5 +1,5 @@
 export interface ComponentOptionModel<TDataModel, TActionModel, TMethodsModel> {
-  actions: TActionModel;
+  onActions: TActionModel;
   methods: TMethodsModel;
   data: TDataModel;
 }

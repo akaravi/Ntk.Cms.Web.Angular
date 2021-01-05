@@ -2,7 +2,7 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ITreeOptions, KEYS, TreeComponent, TreeNode, TREE_ACTIONS } from '@circlon/angular-tree-component';
 import { ErrorExceptionResult, FilterModel, NewsCategoryModel, NewsCategoryService } from 'ntk-cms-api';
-import {ActivatedRoute} from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { CmsToastrService } from 'src/app/_helpers/services/cmsToastr.service';
 import { ComponentOptionNewsCategoryModel } from 'src/app/core/cmsComponentModels/news/componentOptionNewsCategoryModel';
 
@@ -84,7 +84,7 @@ export class NewsCategorySelectComponent implements OnInit {
       this.dataModelCategory = this.activatedRoute.snapshot.data.getCategory;
       this.loadingStatus = false;
     }
-   // this.DataGetAllCategory();
+    // this.DataGetAllCategory();
 
     // this.optionsData.methods = { ActionReload: () => this.onActionReload() }
     this.optionsData.methods = {
@@ -110,11 +110,11 @@ export class NewsCategorySelectComponent implements OnInit {
     );
   }
   onActionSelect(model: NewsCategoryModel): void {
-    if (this.optionsData && this.optionsData.actions && this.optionsData.actions.onActionSelect) {
-      this.optionsData.actions.onActionSelect(model);
-      this.optionsData.data = { SelectId: model.Id, Select: model };
+    debugger
+    if (this.optionsData && this.optionsData.onActions && this.optionsData.onActions.onActionSelect) {
+      this.optionsData.onActions.onActionSelect(model);
+      this.optionsData.data.Select = model;
     }
-
   }
   onActionReload(): void {
     this.DataGetAllCategory();

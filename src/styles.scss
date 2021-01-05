@@ -79,3 +79,15 @@ body{
 .cursor-pointer {
   cursor: pointer;
 }
+.button-row {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  height: auto;
+  border: 1px;
+  padding-block: 22px;
+  padding-right: 8px;
+  border-radius: 5px;
+  background: white;
+  box-shadow: 0 0 6px 1px rgba(0, 0, 0, .1);
+}
