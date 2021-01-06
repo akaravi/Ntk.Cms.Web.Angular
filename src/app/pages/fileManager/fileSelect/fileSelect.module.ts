@@ -7,9 +7,12 @@ import { FileUploadModule } from '../fileUpload/fileUpload.module';
 @NgModule({
   imports: [
     CommonModule,
-    FileUploadModule
+    FileUploadModule,
 
   ],
-  declarations: [FileSelectComponent]
+  declarations: [FileSelectComponent],
+  exports:[FileSelectComponent],
+  providers: []
+
 })
 export class FileSelectModule { }

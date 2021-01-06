@@ -38,6 +38,7 @@ import { ContentComponent } from './content/list/list.component';
 import { CategoryComponent } from './category/tree/tree.component';
 import { ProgressSpinnerModule } from 'src/app/shared/progress-spinner/progress-spinner.module';
 import { FileUploadModule } from '../fileManager/fileUpload/fileUpload.module';
+import { FileSelectModule } from '../fileManager/fileSelect/fileSelect.module';
 
 
 @NgModule({
@@ -68,7 +69,8 @@ import { FileUploadModule } from '../fileManager/fileUpload/fileUpload.module';
 
     QueryBuilderModule,
     ProgressSpinnerModule,
-    FileUploadModule
+    FileUploadModule,
+    FileSelectModule
   ],
   providers: [
     // CategoryResolver,
