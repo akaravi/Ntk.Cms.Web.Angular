@@ -1,4 +1,4 @@
-import { CoreEnumService, EnumModel, ErrorExceptionResult, FormInfoModel, NewsCategoryService, NewsCategoryModel } from 'ntk-cms-api';
+import { CoreEnumService, EnumModel, ErrorExceptionResult, FormInfoModel, NewsCategoryService, NewsCategoryModel, FileUploadedModel } from 'ntk-cms-api';
 import { Component, OnInit, Input, ViewChild, ChangeDetectorRef, Inject } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -8,6 +8,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CmsToastrService } from 'src/app/_helpers/services/cmsToastr.service';
 import { ComponentActionEnum } from 'src/app/_helpers/model/component-action-enum';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
+import { ComponentOptionFileUploadModel } from 'src/app/core/cmsComponentModels/files/componentOptionFileUploadModel';
 
 
 
@@ -42,17 +43,18 @@ export class NewsCategoryEditComponent implements OnInit {
       this.id = data.id;
       this.parentId = data.parentId;
     }
-    // this.coreEnumService.resultEnumRecordStatusObs.subscribe((vlaue) => {
-    //   if (vlaue && vlaue.IsSuccess) { this.coreEnumService.resultEnumRecordStatus = vlaue; }
-    //   this.coreEnumService.ServiceEnumRecordStatus() ;
-    // });
+    this.optionsFileUpload.onActions = {
+      onActionSelect: (model) => this.onActionSelectFile(model),
+    };
+
 
   }
   modalTitle = '';
   private dateModleInput: any;
   loading = new ProgressSpinnerModel();
-
-
+  uploadedfileName = '';
+  uploadedfileKey = '';
+  optionsFileUpload=new ComponentOptionFileUploadModel();
   dataModelResult: ErrorExceptionResult<NewsCategoryModel> = new ErrorExceptionResult<NewsCategoryModel>();
   dataModel: NewsCategoryModel = new NewsCategoryModel();
   id = 0;
@@ -119,8 +121,10 @@ export class NewsCategoryEditComponent implements OnInit {
   }
 
   getEnumRecordStatus(): void {
+    this.loading.display = true;
     this.coreEnumService.ServiceEnumRecordStatus().subscribe((res) => {
       this.dataModelEnumRecordStatusResult = res;
+      this.loading.display = false;
     });
   }
 
@@ -226,5 +230,20 @@ export class NewsCategoryEditComponent implements OnInit {
   }
   onFormCancel(): void {
     this.dialogRef.close();
+  }
+  onActionSelectFile(model: ErrorExceptionResult<FileUploadedModel>): void {
+    // console.log('model', model);
+    if (model && !model.IsSuccess) {
+      // this.message = 'خطا در دریافت عکس کپچا';
+      return;
+    }
+    if (model && model.IsSuccess && model.Item.FileKey) {
+      // this.modelTargetSetDto.UploadFileGUID = model.Item.FileKey;
+      this.uploadedfileName = model.Item.FileName;
+      if (this.uploadedfileKey.length > 0) {
+        this.uploadedfileKey = this.uploadedfileKey + ',';
+      }
+      this.uploadedfileKey = this.uploadedfileKey + model.Item.FileKey;
+    }
   }
 }

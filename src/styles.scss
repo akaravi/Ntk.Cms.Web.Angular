@@ -13,7 +13,7 @@ body{
 // => Material
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
-
+@import '~ngx-toastr/toastr.css';
 @import "~highlight.js/styles/googlecode.css";
 @import "~perfect-scrollbar/css/perfect-scrollbar.css";
 
@@ -85,7 +85,7 @@ body{
   width: 100%;
   height: auto;
   border: 1px;
-  padding-block: 22px;
+  padding: 10px;
   padding-right: 8px;
   border-radius: 5px;
   background: white;

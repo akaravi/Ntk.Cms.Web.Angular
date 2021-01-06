@@ -37,6 +37,8 @@ import { QueryBuilderModule } from 'angular2-query-builder';
 import { ContentComponent } from './content/list/list.component';
 import { CategoryComponent } from './category/tree/tree.component';
 import { ProgressSpinnerModule } from 'src/app/shared/progress-spinner/progress-spinner.module';
+import { FileUploadModule } from '../fileManager/fileUpload/fileUpload.module';
+import { FileUploadComponent } from '../fileManager/fileUpload/fileUpload.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,8 @@ import { ProgressSpinnerModule } from 'src/app/shared/progress-spinner/progress-
     NewsCategoryDeleteComponent,
     NewsCommentComponent,
     ContentComponent,
-    CategoryComponent
+    CategoryComponent,
+    // FileUploadComponent
   ],
   imports: [
     NewsRoutingModule,
@@ -65,7 +68,7 @@ import { ProgressSpinnerModule } from 'src/app/shared/progress-spinner/progress-
 
     QueryBuilderModule,
     ProgressSpinnerModule,
-
+    FileUploadModule
   ],
   providers: [
     // CategoryResolver,

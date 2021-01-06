@@ -28,15 +28,10 @@
         </app-progress-spinner>
         <table *ngIf="!loading.display" mat-table [dataSource]="dataModelResult.ListItems" class="mat-elevation-z8">
             <!-- Position Column -->
-            <ng-container matColumnDef="LinkSiteId2">
-                <th mat-header-cell *matHeaderCellDef>شناسه سایت</th>
-                <td mat-cell *matCellDef="let element">
-                    {{ element.LinkSiteId }}
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="LinkSiteId">
-                <th mat-header-cell *matHeaderCellDef>شناسه سایت</th>
-                <td mat-cell *matCellDef="let element">
+
+            <ng-container matColumnDef="LinkSiteId"  >
+                <th mat-header-cell *matHeaderCellDef  >شناسه سایت</th>
+                <td mat-cell *matCellDef="let element" >
                     {{ element.LinkSiteId }}
                 </td>
             </ng-container>

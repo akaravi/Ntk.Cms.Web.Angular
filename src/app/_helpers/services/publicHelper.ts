@@ -51,4 +51,23 @@ export class PublicHelper {
   RecordStatus(model): string {
     return (this.RecordStatus)[model];
   }
+
+  listAddIfNotExist( listStr:string[] ,item:string,index :number):string[]
+{
+  if(listStr.indexOf(item)<0)
+  {
+    listStr.splice(index,0,item)
+  }
+  return listStr;
+}
+listRemoveIfExist( listStr:string[] ,item:string):string[]
+{
+  let index = listStr.indexOf(item);
+  if(index<0)
+  {
+    return listStr;
+  }
+    listStr.splice(index, 1);
+  return listStr;
+}
 }
