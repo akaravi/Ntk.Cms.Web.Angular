@@ -7,6 +7,7 @@
       </app-progress-spinner >
       <div *ngIf="!loading.display" class="form-body">
         <h4 class="form-section  mb-8" ><i class="ft-user"></i> {{modalTitle}}</h4>
+        <app-file-select dir="ltr" ></app-file-select>
 
         <div class="form-group row">
           <label class="col-md-3 label-control" for="Title">عنوان : </label>
@@ -58,14 +59,7 @@
             <input type="text" id="projectinput5" class="form-control" name="company">
           </div>
         </div>
-        <div *ngIf="uploadedfileKey.length == 0">
-          <app-file-upload [options]="optionsFileUpload"></app-file-upload>
-        </div>
-        <div *ngIf="uploadedfileKey.length > 0">
-          ✅ Uploaded you file.
-          <br/>
-          {{ uploadedfileName }}
-        </div>
+
       </div>
 
       <div class="form-actions">
