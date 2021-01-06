@@ -38,7 +38,7 @@ import { ContentComponent } from './content/list/list.component';
 import { CategoryComponent } from './category/tree/tree.component';
 import { ProgressSpinnerModule } from 'src/app/shared/progress-spinner/progress-spinner.module';
 import { FileUploadModule } from '../fileManager/fileUpload/fileUpload.module';
-import { FileUploadComponent } from '../fileManager/fileUpload/fileUpload.component';
+
 
 @NgModule({
   declarations: [
@@ -52,7 +52,7 @@ import { FileUploadComponent } from '../fileManager/fileUpload/fileUpload.compon
     NewsCommentComponent,
     ContentComponent,
     CategoryComponent,
-    // FileUploadComponent
+
   ],
   imports: [
     NewsRoutingModule,

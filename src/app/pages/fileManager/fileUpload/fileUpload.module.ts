@@ -11,8 +11,11 @@ import Flow from '@flowjs/flow.js';
   ],
   declarations: [
     FileUploadComponent
-  ]
-  ,providers:[
+  ],
+  exports: [
+    FileUploadComponent
+  ],
+  providers: [
     {
       provide: FlowInjectionToken,
       useValue: Flow,

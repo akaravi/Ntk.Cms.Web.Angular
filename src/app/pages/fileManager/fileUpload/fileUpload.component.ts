@@ -81,9 +81,9 @@ export class FileUploadComponent implements OnInit, OnDestroy, AfterViewInit {
           fileName: event.event[0].name,
           fileKey: event.event[1],
         };
-        debugger
-        const retUpload=JSON.parse( event.event[1]) as ErrorExceptionResult<FileUploadedModel>;
-        retUpload.Item.FileName=event.event[0].name
+
+        const retUpload = JSON.parse( event.event[1]) as ErrorExceptionResult<FileUploadedModel>;
+        retUpload.Item.FileName = event.event[0].name;
         this.optionData.onActions.onActionSelect(retUpload);
         this.optionData.data = { Select: retUpload };
       }

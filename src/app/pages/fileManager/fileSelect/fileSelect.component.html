@@ -1,0 +1,11 @@
+<p>
+  fileSelect works!
+</p>
+<div *ngIf="uploadedfileKey.length == 0">
+  <app-file-upload [options]="optionsFileUpload"></app-file-upload>
+</div>
+<div *ngIf="uploadedfileKey.length > 0">
+  ✅ Uploaded you file.
+  <br/>
+  {{ uploadedfileName }}
+</div>
