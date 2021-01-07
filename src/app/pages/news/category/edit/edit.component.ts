@@ -1,15 +1,13 @@
 import { CoreEnumService, EnumModel, ErrorExceptionResult, FormInfoModel, NewsCategoryService, NewsCategoryModel, FileUploadedModel } from 'ntk-cms-api';
 import { Component, OnInit, Input, ViewChild, ChangeDetectorRef, Inject } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-
 import { FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CmsToastrService } from 'src/app/_helpers/services/cmsToastr.service';
 import { ComponentActionEnum } from 'src/app/_helpers/model/component-action-enum';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { ComponentOptionFileUploadModel } from 'src/app/core/cmsComponentModels/files/componentOptionFileUploadModel';
-import { ConfigInterface, DownloadModeEnum, NodeInterface, TreeModel } from 'ntk-cms-filemanager';
+import { ConfigInterface, DownloadModeEnum, TreeModel, NodeInterface } from 'ntk-cms-filemanager';
 
 
 
@@ -48,6 +46,9 @@ export class NewsCategoryEditComponent implements OnInit {
       onActionSelect: (model) => this.onActionSelectFile(model),
     };
 
+
+
+
     const treeConfig: ConfigInterface = {
       baseURL: 'http://localhost:8080/',
       api: {
@@ -68,6 +69,14 @@ export class NewsCategoryEditComponent implements OnInit {
     this.tree = new TreeModel(treeConfig);
     this.node = this.tree.nodes;
   }
+
+  tree: TreeModel;
+  node: NodeInterface;
+  appLanguage = 'sk';
+
+
+
+  
   modalTitle = '';
   private dateModleInput: any;
   loading = new ProgressSpinnerModel();
@@ -85,12 +94,6 @@ export class NewsCategoryEditComponent implements OnInit {
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
 
-
-
-
-  tree: TreeModel;
-  node: NodeInterface;
-  appLanguage = 'sk';
 
 
   // noinspection JSUnusedLocalSymbols
