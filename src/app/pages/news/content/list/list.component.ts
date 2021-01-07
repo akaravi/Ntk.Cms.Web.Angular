@@ -8,6 +8,7 @@ import {
   NewsCategoryModel,
   NewsContentModel,
   NewsContentService,
+  TokenInfoModel,
 } from 'ntk-cms-api';
 import { PublicHelper } from '../../../../_helpers/services/publicHelper';
 import { QueryBuilderConfig } from 'angular2-query-builder';
@@ -20,6 +21,7 @@ import { NewsCategoryEditComponent } from '../../category/edit/edit.component';
 import { NewsCategoryDeleteComponent } from '../../category/delete/delete.component';
 import { NewsContentAddComponent } from '../add/add.component';
 import {  ProgressSpinnerModel } from '../../../../core/models/progressSpinnerModel';
+import { listLazyRoutes } from '@angular/compiler/src/aot/lazy_routes';
 
 
 @Component({
@@ -39,7 +41,7 @@ export class ContentComponent implements OnInit {
   tableRowSelected: NewsContentModel = new NewsContentModel();
   // dateObject: any;
   loading = new ProgressSpinnerModel();
-
+  tokenInfo=new TokenInfoModel();
   query: any;
   checked = false;
   config: QueryBuilderConfig = {
@@ -56,7 +58,7 @@ export class ContentComponent implements OnInit {
     },
   };
   displayedColumns: string[] = [
-    'LinkSiteId',
+
     'RecordStatus',
     'Title',
     'CreatedDate',
@@ -79,13 +81,15 @@ export class ContentComponent implements OnInit {
     this.optionsSearchContentList.onActions = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
+    this.coreAuthService.CurrentTokenInfoBS
   }
 
   ngOnInit(): void {
 
 
-    this.coreAuthService.CurrentTokenInfoBSObs.subscribe(() => {
+    this.coreAuthService.CurrentTokenInfoBSObs.subscribe((next) => {
       this.DataGetAll();
+    this.tokenInfo=  next;
     });
   }
 
@@ -134,6 +138,12 @@ export class ContentComponent implements OnInit {
       (next) => {
         if (next.IsSuccess) {
           this.dataModelResult = next;
+          if(this.tokenInfo.UserAccessAdminAllowToAllData){
+            this.displayedColumns=  this.publicHelper.listAddIfNotExist(this.displayedColumns,'LinkSiteId',0);
+          }else
+          {
+            this.displayedColumns=this.publicHelper.listRemoveIfExist(this.displayedColumns,'LinkSiteId');
+          }
           if (this.optionsSearchContentList.methods) {
             this.optionsSearchContentList.methods.setAccess(next.Access);
           }

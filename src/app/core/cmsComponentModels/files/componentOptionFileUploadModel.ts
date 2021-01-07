@@ -1,3 +1,4 @@
+import { ErrorExceptionResult, FileUploadedModel } from 'ntk-cms-api';
 import { ComponentOptionModel } from '../base/componentOptionModel';
 
 export class ComponentOptionFileUploadModel
@@ -16,6 +17,5 @@ export class ComponentOptionFileUploadMethodsModel {
   ActionReload: () => void;
 }
 export class ComponentOptionFileUploadDataModel {
-  fileName: string;
-  fileKey: string;
+  Select:ErrorExceptionResult<FileUploadedModel>;
 }

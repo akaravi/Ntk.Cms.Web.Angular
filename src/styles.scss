@@ -13,7 +13,7 @@ body{
 // => Material
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
-
+@import '~ngx-toastr/toastr.css';
 @import "~highlight.js/styles/googlecode.css";
 @import "~perfect-scrollbar/css/perfect-scrollbar.css";
 
@@ -35,6 +35,17 @@ body{
 @import "./assets/sass/themes/layout/header/menu/light.scss";
 @import "./assets/sass/themes/layout/brand/dark.scss";
 @import "./assets/sass/themes/layout/aside/dark.scss";
+
+
+@import '../node_modules/@syncfusion/ej2-base/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-inputs/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-popups/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-buttons/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-navigations/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-layouts/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-grids/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-angular-filemanager/styles/material.css';
 
 // Header themes
 // .header-base-light {
@@ -85,7 +96,7 @@ body{
   width: 100%;
   height: auto;
   border: 1px;
-  padding-block: 22px;
+  padding: 10px;
   padding-right: 8px;
   border-radius: 5px;
   background: white;
