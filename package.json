@@ -43,6 +43,7 @@
     "moment": "^2.27.0",
     "ng-apexcharts": "^1.5.1",
     "ng-inline-svg": "^10.1.0",
+    "ng6-file-man": "^2.2.1",
     "ngx-chips": "^2.2.1",
     "ngx-clipboard": "^13.0.1",
     "ngx-highlightjs": "3.0.3",

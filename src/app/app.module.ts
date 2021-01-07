@@ -16,6 +16,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {InlineSVGModule} from 'ng-inline-svg';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ClipboardModule} from 'ngx-clipboard';
+import { TestModule } from './modules/test/test.module';
 
 export function getHighlightLanguages(): any {
   return [
@@ -48,6 +49,7 @@ export function getHighlightLanguages(): any {
     NgbModule,
     HighlightModule,
     ClipboardModule,
+    TestModule
   ],
   providers: [
     CoreAuthService,
