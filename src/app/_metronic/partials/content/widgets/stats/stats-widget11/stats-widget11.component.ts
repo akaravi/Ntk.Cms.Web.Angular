@@ -43,7 +43,7 @@ export class StatsWidget11Component implements OnInit {
     this.chartOptions = this.getChartOptions();
   }
 
-  getChartOptions() {
+  getChartOptions(): any {
     return {
       series: [
         {

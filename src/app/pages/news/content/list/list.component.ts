@@ -13,16 +13,18 @@ import {
 import { PublicHelper } from '../../../../_helpers/services/publicHelper';
 import { QueryBuilderConfig } from 'angular2-query-builder';
 import { ComponentOptionSearchContentModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchContentModel';
-import { ComponentOptionNewsCategoryDataModel, ComponentOptionNewsCategoryModel } from 'src/app/core/cmsComponentModels/news/componentOptionNewsCategoryModel';
+import {
+  ComponentOptionNewsCategoryDataModel,
+  ComponentOptionNewsCategoryModel,
+} from 'src/app/core/cmsComponentModels/news/componentOptionNewsCategoryModel';
 import { ComponentModalDataModel } from 'src/app/core/cmsComponentModels/base/componentModalDataModel';
 import { CmsToastrService } from '../../../../_helpers/services/cmsToastr.service';
 import { MatDialog } from '@angular/material/dialog';
 import { NewsCategoryEditComponent } from '../../category/edit/edit.component';
 import { NewsCategoryDeleteComponent } from '../../category/delete/delete.component';
 import { NewsContentAddComponent } from '../add/add.component';
-import {  ProgressSpinnerModel } from '../../../../core/models/progressSpinnerModel';
+import { ProgressSpinnerModel } from '../../../../core/models/progressSpinnerModel';
 import { listLazyRoutes } from '@angular/compiler/src/aot/lazy_routes';
-
 
 @Component({
   selector: 'app-news-content-list',
@@ -41,7 +43,7 @@ export class ContentComponent implements OnInit {
   tableRowSelected: NewsContentModel = new NewsContentModel();
   // dateObject: any;
   loading = new ProgressSpinnerModel();
-  tokenInfo=new TokenInfoModel();
+  tokenInfo = new TokenInfoModel();
   query: any;
   checked = false;
   config: QueryBuilderConfig = {
@@ -58,7 +60,6 @@ export class ContentComponent implements OnInit {
     },
   };
   displayedColumns: string[] = [
-
     'RecordStatus',
     'Title',
     'CreatedDate',
@@ -81,15 +82,12 @@ export class ContentComponent implements OnInit {
     this.optionsSearchContentList.onActions = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
-    this.coreAuthService.CurrentTokenInfoBS
   }
 
   ngOnInit(): void {
-
-
     this.coreAuthService.CurrentTokenInfoBSObs.subscribe((next) => {
       this.DataGetAll();
-    this.tokenInfo=  next;
+      this.tokenInfo = next;
     });
   }
 
@@ -138,11 +136,17 @@ export class ContentComponent implements OnInit {
       (next) => {
         if (next.IsSuccess) {
           this.dataModelResult = next;
-          if(this.tokenInfo.UserAccessAdminAllowToAllData){
-            this.displayedColumns=  this.publicHelper.listAddIfNotExist(this.displayedColumns,'LinkSiteId',0);
-          }else
-          {
-            this.displayedColumns=this.publicHelper.listRemoveIfExist(this.displayedColumns,'LinkSiteId');
+          if (this.tokenInfo.UserAccessAdminAllowToAllData) {
+            this.displayedColumns = this.publicHelper.listAddIfNotExist(
+              this.displayedColumns,
+              'LinkSiteId',
+              0
+            );
+          } else {
+            this.displayedColumns = this.publicHelper.listRemoveIfExist(
+              this.displayedColumns,
+              'LinkSiteId'
+            );
           }
           if (this.optionsSearchContentList.methods) {
             this.optionsSearchContentList.methods.setAccess(next.Access);
@@ -173,7 +177,6 @@ export class ContentComponent implements OnInit {
     }
     this.DataGetAll();
   }
-
 
   onActionbuttonNewRow(): void {
     if (
@@ -208,10 +211,7 @@ export class ContentComponent implements OnInit {
   }
 
   onActionbuttonEditRow(): void {
-    if (
-      this.tableRowSelected == null ||
-      this.tableRowSelected.Id === 0
-    ) {
+    if (this.tableRowSelected == null || this.tableRowSelected.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای ویرایش انتخاب نشده است';
       this.toastrService.toastr.error(message, title);
@@ -234,10 +234,7 @@ export class ContentComponent implements OnInit {
     });
   }
   onActionbuttonDeleteRow(): void {
-    if (
-      this.tableRowSelected == null ||
-      this.tableRowSelected.Id === 0
-    ) {
+    if (this.tableRowSelected == null || this.tableRowSelected.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای ویرایش انتخاب نشده است';
       this.toastrService.toastr.error(message, title);
@@ -263,8 +260,8 @@ export class ContentComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
     });
   }
-  onActionbuttonStatus(): void { }
-  onActionbuttonExport(): void { }
+  onActionbuttonStatus(): void {}
+  onActionbuttonExport(): void {}
 
   onActionbuttonReload(): void {
     this.DataGetAll();
@@ -281,4 +278,3 @@ export class ContentComponent implements OnInit {
     this.router.navigate(['news/comment/', id]);
   }
 }
-

@@ -21,7 +21,7 @@ export class UserDropdownInnerComponent implements OnInit {
     this.user$ = this.auth.currentUserSubject.asObservable();
   }
 
-  logout() {
+  logout(): void {
     this.auth.logout();
     document.location.reload();
   }

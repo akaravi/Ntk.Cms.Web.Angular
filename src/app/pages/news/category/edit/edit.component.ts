@@ -9,6 +9,7 @@ import { CmsToastrService } from 'src/app/_helpers/services/cmsToastr.service';
 import { ComponentActionEnum } from 'src/app/_helpers/model/component-action-enum';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { ComponentOptionFileUploadModel } from 'src/app/core/cmsComponentModels/files/componentOptionFileUploadModel';
+import { ConfigInterface, DownloadModeEnum, NodeInterface, TreeModel } from 'ntk-cms-filemanager';
 
 
 
@@ -47,7 +48,25 @@ export class NewsCategoryEditComponent implements OnInit {
       onActionSelect: (model) => this.onActionSelectFile(model),
     };
 
+    const treeConfig: ConfigInterface = {
+      baseURL: 'http://localhost:8080/',
+      api: {
+        listFile: 'api/list',
+        uploadFile: 'api/upload',
+        downloadFile: 'api/download',
+        deleteFile: 'api/remove',
+        createFolder: 'api/directory',
+        renameFile: 'api/rename',
+        searchFiles: 'api/search'
+      },
+      options: {
+        allowFolderDownload: DownloadModeEnum.DOWNLOAD_DISABLED,
+        showFilesInsideTree: false
+      }
+    };
 
+    this.tree = new TreeModel(treeConfig);
+    this.node = this.tree.nodes;
   }
   modalTitle = '';
   private dateModleInput: any;
@@ -65,6 +84,20 @@ export class NewsCategoryEditComponent implements OnInit {
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
+
+
+
+
+  tree: TreeModel;
+  node: NodeInterface;
+  appLanguage = 'sk';
+
+
+  // noinspection JSUnusedLocalSymbols
+  itemSelected(event: any) {
+    console.log(event);
+  }
+
   ngOnInit(): void {
 
     // get Id

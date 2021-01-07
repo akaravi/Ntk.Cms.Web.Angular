@@ -21,11 +21,11 @@ export class QuickPanelOffcanvasComponent implements OnInit {
     )}`;
   }
 
-  setActiveTabId(tabId) {
+  setActiveTabId(tabId): void {
     this.activeTabId = tabId;
   }
 
-  getActiveCSSClasses(tabId) {
+  getActiveCSSClasses(tabId): string {
     if (tabId !== this.activeTabId) {
       return '';
     }

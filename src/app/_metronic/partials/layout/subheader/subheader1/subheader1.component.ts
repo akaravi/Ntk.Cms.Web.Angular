@@ -28,7 +28,7 @@ export class Subheader1Component implements OnInit {
     this.title$ = this.subheader.titleSubject.asObservable();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.title$ = this.subheader.titleSubject.asObservable();
     this.breadcrumbs$ = this.subheader.breadCrumbsSubject.asObservable();
     this.description$ = this.subheader.descriptionSubject.asObservable();

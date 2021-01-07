@@ -31,7 +31,7 @@ export class SubheaderWrapperComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {}
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     KTUtil.ready(() => {
       KTLayoutSubheader.init('kt_subheader');
     });

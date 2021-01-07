@@ -110,7 +110,6 @@ export class NewsCategorySelectComponent implements OnInit {
     );
   }
   onActionSelect(model: NewsCategoryModel): void {
-    debugger
     if (this.optionsData && this.optionsData.onActions && this.optionsData.onActions.onActionSelect) {
       this.optionsData.onActions.onActionSelect(model);
       this.optionsData.data.Select = model;

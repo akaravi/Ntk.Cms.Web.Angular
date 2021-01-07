@@ -11,7 +11,7 @@ export class AdvanceTablesWidget2Component implements OnInit {
 
   ngOnInit(): void {}
 
-  setCurrentTab(tab: string) {
+  setCurrentTab(tab: string): void {
     this.currentTab = tab;
   }
 }

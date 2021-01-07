@@ -120,7 +120,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.unsubscribe.forEach((sb) => sb.unsubscribe());
     if (this.routerLoaderTimout) {
       clearTimeout(this.routerLoaderTimout);

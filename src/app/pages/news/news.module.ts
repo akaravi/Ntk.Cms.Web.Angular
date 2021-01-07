@@ -37,7 +37,7 @@ import { QueryBuilderModule } from 'angular2-query-builder';
 import { ContentComponent } from './content/list/list.component';
 import { CategoryComponent } from './category/tree/tree.component';
 import { ProgressSpinnerModule } from 'src/app/shared/progress-spinner/progress-spinner.module';
-import { FileManagerComponent } from 'ntk-cms-filemanager';
+import { FileManagerModule } from 'ntk-cms-filemanager';
 
 @NgModule({
   declarations: [
@@ -51,7 +51,7 @@ import { FileManagerComponent } from 'ntk-cms-filemanager';
     NewsCommentComponent,
     ContentComponent,
     CategoryComponent,
-    FileManagerComponent
+
   ],
   imports: [
     NewsRoutingModule,
@@ -67,6 +67,7 @@ import { FileManagerComponent } from 'ntk-cms-filemanager';
 
     QueryBuilderModule,
     ProgressSpinnerModule,
+    FileManagerModule,
 
   ],
   providers: [
@@ -84,7 +85,8 @@ import { FileManagerComponent } from 'ntk-cms-filemanager';
     NewsShareMainAdminSettingService,
     NewsShareReciverCategoryService,
     NewsShareServerCategoryService,
-    CoreEnumService
+    CoreEnumService,
+    // NodeClickedService
   ]
 })
 export class NewsModule { }

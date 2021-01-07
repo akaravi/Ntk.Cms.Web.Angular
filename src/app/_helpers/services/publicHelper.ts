@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
-import {ErrorExceptionResultBase} from 'ntk-cms-api';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { ErrorExceptionResultBase } from 'ntk-cms-api';
 import { environment } from 'src/environments/environment';
-import {CmsToastrService} from './cmsToastr.service';
+import { CmsToastrService } from './cmsToastr.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +10,7 @@ import {CmsToastrService} from './cmsToastr.service';
 export class PublicHelper {
   constructor(
     private router: Router,
-    private toastrService: CmsToastrService,
+    private toastrService: CmsToastrService
   ) {}
 
   CheckError(model: any): any {
@@ -49,25 +49,21 @@ export class PublicHelper {
   }
 
   RecordStatus(model): string {
-    return (this.RecordStatus)[model];
+    return this.RecordStatus[model];
   }
 
-  listAddIfNotExist( listStr:string[] ,item:string,index :number):string[]
-{
-  if(listStr.indexOf(item)<0)
-  {
-    listStr.splice(index,0,item)
-  }
-  return listStr;
-}
-listRemoveIfExist( listStr:string[] ,item:string):string[]
-{
-  let index = listStr.indexOf(item);
-  if(index<0)
-  {
+  listAddIfNotExist(listStr: string[], item: string, index: number): string[] {
+    if (listStr.indexOf(item) < 0) {
+      listStr.splice(index, 0, item);
+    }
     return listStr;
   }
+  listRemoveIfExist(listStr: string[], item: string): string[] {
+    const index = listStr.indexOf(item);
+    if (index < 0) {
+      return listStr;
+    }
     listStr.splice(index, 1);
-  return listStr;
-}
+    return listStr;
+  }
 }

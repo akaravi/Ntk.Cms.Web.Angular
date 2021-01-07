@@ -27,7 +27,7 @@ export class Subheader6Component implements OnInit {
     this.description$ = this.subheader.descriptionSubject.asObservable();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.subheaderCSSClasses = this.layout.getStringCSSClasses('subheader');
     this.subheaderContainerCSSClasses = this.layout.getStringCSSClasses(
       'subheader_container'

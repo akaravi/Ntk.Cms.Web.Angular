@@ -5,7 +5,7 @@ export class ConfirmPasswordValidator {
    * Check matching password with confirm password
    * @param control AbstractControl
    */
-  static MatchPassword(control: AbstractControl) {
+  static MatchPassword(control: AbstractControl): any {
     const password = control.get('password').value;
 
     const confirmPassword = control.get('cPassword').value;

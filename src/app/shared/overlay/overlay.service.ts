@@ -11,8 +11,8 @@ export class OverlayService {
   createOverlay(config: OverlayConfig): OverlayRef {
     return this.overlay.create(config);
   }
-  attachTemplatePortal(overlayRef: OverlayRef, templateRef: TemplateRef<any>, vcRef: ViewContainerRef) {
-    let templatePortal = new TemplatePortal(templateRef, vcRef);
+  attachTemplatePortal(overlayRef: OverlayRef, templateRef: TemplateRef<any>, vcRef: ViewContainerRef): void {
+    const templatePortal = new TemplatePortal(templateRef, vcRef);
     overlayRef.attach(templatePortal);
   }
   positionGloballyCenter(): PositionStrategy {
