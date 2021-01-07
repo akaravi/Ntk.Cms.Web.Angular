@@ -37,6 +37,7 @@ import { QueryBuilderModule } from 'angular2-query-builder';
 import { ContentComponent } from './content/list/list.component';
 import { CategoryComponent } from './category/tree/tree.component';
 import { ProgressSpinnerModule } from 'src/app/shared/progress-spinner/progress-spinner.module';
+import { FileManagerComponent } from 'ntk-cms-filemanager';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { ProgressSpinnerModule } from 'src/app/shared/progress-spinner/progress-
     NewsCategoryDeleteComponent,
     NewsCommentComponent,
     ContentComponent,
-    CategoryComponent
+    CategoryComponent,
+    FileManagerComponent
   ],
   imports: [
     NewsRoutingModule,
