@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   modelData: AuthUserSignInModel = new AuthUserSignInModel();
   captchaModel: CaptchaModel = new CaptchaModel();
   expireDate: string;
-  source = interval(1000 * 60 * 5);
+  aoutoCaptchaOrder = 1;
 
   // KeenThemes mock, change it to:
   loginForm: FormGroup;
@@ -46,9 +46,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     // get return url from route parameters or default to '/'
     this.returnUrl =
       this.route.snapshot.queryParams['returnUrl'.toString()] || '/';
-    this.source.subscribe(() => {
-      this.onCaptchaOrder();
-    });
+
   }
 
   // convenience getter for easy access to form fields
@@ -107,9 +105,10 @@ export class LoginComponent implements OnInit, OnDestroy {
         const startDate = new Date();
         const endDate = new Date(next.Item.Expire);
         const seconds = (endDate.getTime() - startDate.getTime());
-        setTimeout(() => {
-          this.onCaptchaOrder();
-        }, seconds);
+        if (this.aoutoCaptchaOrder < 10) {
+          this.aoutoCaptchaOrder = this.aoutoCaptchaOrder + 1;
+          setTimeout(() => { this.onCaptchaOrder(); }, seconds);
+        }
       }
     );
   }
