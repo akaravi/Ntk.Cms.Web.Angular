@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {TreeModel, NodeInterface, ConfigInterface, DownloadModeEnum} from 'ng6-file-man';
-// import {TreeModel, NodeInterface, ConfigInterface, DownloadModeEnum } from 'ntk-cms-filemanager';
+// import {TreeModel, NodeInterface, ConfigInterface, DownloadModeEnum} from 'ng6-file-man';
+import {TreeModel, NodeInterface, ConfigInterface, DownloadModeEnum } from 'ntk-cms-filemanager';
 
 @Component({
   selector: 'app-test',
