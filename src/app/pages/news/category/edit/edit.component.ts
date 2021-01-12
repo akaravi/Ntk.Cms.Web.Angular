@@ -50,20 +50,29 @@ export class NewsCategoryEditComponent implements OnInit {
 
 
     const treeConfig: ConfigInterface = {
-      baseURL: 'http://localhost:8080/',
+      baseURL: 'https://apicms.ir/api/v1/',
+      baseUploadURL: 'https://apifile.ir/api/v1/',
       api: {
-        listFile: 'api/list',
-        uploadFile: 'api/upload',
-        downloadFile: 'api/download',
-        deleteFile: 'api/remove',
-        createFolder: 'api/directory',
-        renameFile: 'api/rename',
-        searchFiles: 'api/search'
+        listFile: 'FileContent/GetAll',
+        listFolder: 'FileCategory/GetAll',
+        uploadFile: 'upload',
+        downloadFile: 'download',
+        deleteFile: 'FileContent',
+        deleteFolder: 'FileCategory',
+        createFolder: 'FileCategory',
+        createFile: 'FileContent',
+        getOneFile: 'FileContent',
+        getOneFolder: 'FileCategory',
+        renameFile: 'FileContent',
+        renameFolder: 'FileCategory',
+        searchFiles: 'FileCategory/GetAll',
       },
       options: {
-        allowFolderDownload: DownloadModeEnum.DOWNLOAD_DISABLED,
-        showFilesInsideTree: false
-      }
+        allowFolderDownload: DownloadModeEnum.DOWNLOAD_FILES,
+        showFilesInsideTree: false,
+        showSelectFile: true,
+        showSelectFolder: false,
+      },
     };
 
     this.tree = new TreeModel(treeConfig);
@@ -76,7 +85,7 @@ export class NewsCategoryEditComponent implements OnInit {
 
 
 
-  
+
   modalTitle = '';
   private dateModleInput: any;
   loading = new ProgressSpinnerModel();
@@ -95,10 +104,10 @@ export class NewsCategoryEditComponent implements OnInit {
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
 
 
-
-  // noinspection JSUnusedLocalSymbols
-  itemSelected(event: any) {
+  selected: any;
+  onActionFileSelected(event: any) {
     console.log(event);
+    this.selected=event;
   }
 
   ngOnInit(): void {

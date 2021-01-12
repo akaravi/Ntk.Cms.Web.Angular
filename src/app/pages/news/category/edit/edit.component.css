@@ -6,3 +6,7 @@
     display: contents;
   }
 }
+#file-manager {
+  width: calc(100vw - 16px);
+  height: calc(100vh - 16px);
+}

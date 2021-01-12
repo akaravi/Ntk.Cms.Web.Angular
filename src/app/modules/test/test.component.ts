@@ -13,25 +13,25 @@ export class TestComponent implements OnInit {
   appLanguage = 'sk';
 
   constructor() {
-    const treeConfig: ConfigInterface = {
-      baseURL: 'http://localhost:8080/',
-      api: {
-        listFile: 'api/list',
-        uploadFile: 'api/upload',
-        downloadFile: 'api/download',
-        deleteFile: 'api/remove',
-        createFolder: 'api/directory',
-        renameFile: 'api/rename',
-        searchFiles: 'api/search'
-      },
-      options: {
-        allowFolderDownload: DownloadModeEnum.DOWNLOAD_DISABLED,
-        showFilesInsideTree: false
-      }
-    };
+    // const treeConfig: ConfigInterface = {
+      // baseURL: 'http://localhost:8080/',
+      // api: {
+      //   listFile: 'api/list',
+      //   uploadFile: 'api/upload',
+      //   downloadFile: 'api/download',
+      //   deleteFile: 'api/remove',
+      //   createFolder: 'api/directory',
+      //   renameFile: 'api/rename',
+      //   searchFiles: 'api/search'
+      // },
+      // options: {
+      //   allowFolderDownload: DownloadModeEnum.DOWNLOAD_DISABLED,
+      //   showFilesInsideTree: false
+      // }
+    // };
 
-    this.tree = new TreeModel(treeConfig);
-    this.node = this.tree.nodes;
+    // this.tree = new TreeModel(treeConfig);
+    // this.node = this.tree.nodes;
   }
   ngOnInit(): void {
   }

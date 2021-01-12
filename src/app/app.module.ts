@@ -17,6 +17,7 @@ import {InlineSVGModule} from 'ng-inline-svg';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ClipboardModule} from 'ngx-clipboard';
 import { TestModule } from './modules/test/test.module';
+import { NtkSmartModalModule } from 'ngx-ntk-smart-module';
 
 export function getHighlightLanguages(): any {
   return [
@@ -37,6 +38,7 @@ export function getHighlightLanguages(): any {
     AppRoutingModule,
     HttpClientModule,
     TranslateModule.forRoot(),
+    NtkSmartModalModule.forRoot(),
     ToastrModule.forRoot({
       timeOut: 2000,
       enableHtml: true,

@@ -3,11 +3,15 @@ import { ComponentOptionModel } from '../base/componentOptionModel';
 
 export class ComponentOptionFileUploadModel
   // tslint:disable-next-line: max-line-length
-  implements ComponentOptionModel<ComponentOptionFileUploadDataModel, ComponentOptionFileUploadActionsModel, ComponentOptionFileUploadMethodsModel> {
-    onActions: ComponentOptionFileUploadActionsModel;
+  implements
+    ComponentOptionModel<
+      ComponentOptionFileUploadDataModel,
+      ComponentOptionFileUploadActionsModel,
+      ComponentOptionFileUploadMethodsModel
+    > {
+  onActions: ComponentOptionFileUploadActionsModel;
   methods: ComponentOptionFileUploadMethodsModel;
   data: ComponentOptionFileUploadDataModel;
-
 }
 
 export class ComponentOptionFileUploadActionsModel {
@@ -17,5 +21,5 @@ export class ComponentOptionFileUploadMethodsModel {
   ActionReload: () => void;
 }
 export class ComponentOptionFileUploadDataModel {
-  Select:ErrorExceptionResult<FileUploadedModel>;
+  Select: ErrorExceptionResult<FileUploadedModel>;
 }
