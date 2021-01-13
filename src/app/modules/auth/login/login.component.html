@@ -13,14 +13,7 @@
       <h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">
         {{'TRANSLATOR.WELCOME' | translate}}
       </h3>
-      <span class="text-muted font-weight-bold font-size-h4">
-        <a
-          [routerLink]="'/auth/registration'"
-          id="kt_login_signup"
-          class="text-primary font-weight-bolder"
-          >{{ "AUTH.GENERAL.SIGNUP_BUTTON" | translate }}</a
-        >
-      </span>
+
     </div>
     <!--end::Title-->
 
@@ -85,13 +78,7 @@
       <div class="d-flex justify-content-between mt-n5">
         <label class="font-size-h6 font-weight-bolder text-dark pt-5">{{'AUTH.INPUT.PASSWORD' | translate}}</label
         >
-        <a
-          routerLink="/auth/forgot-password"
-          class="text-primary font-size-h6 font-weight-bolder text-hover-primary pt-5"
-          id="kt_login_forgot"
-        >
-          {{'AUTH.FORGOT.TITLE' | translate}}
-        </a>
+
       </div>
 
       <input
@@ -160,9 +147,29 @@
         type="submit"
         id="kt_login_signin_submit"
         class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3"
+        style="margin: 5px;"
         [disabled]="loginForm.invalid">
         {{'AUTH.LOGIN.BUTTON' | translate}}
       </button>
+      <button
+      type="button"
+      [routerLink]="['/auth/forgot-password']"
+      id="kt_login_signin_submit"
+      class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3"
+      style="margin: 5px;">
+      {{'AUTH.FORGOT.TITLE' | translate}}
+    </button>
+    <button
+    type="button"
+    [routerLink]="['/auth/registration']"
+    id="kt_login_signin_submit"
+    class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3"
+    style="margin: 5px;">
+    {{ "AUTH.GENERAL.SIGNUP_BUTTON" | translate }}
+  </button>
+
+
+
       <ng-container *ngIf="isLoading$ | async">
         <span class="spinner spinner-primary ml-5"></span>
       </ng-container>
