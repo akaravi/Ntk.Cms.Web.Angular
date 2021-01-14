@@ -72,6 +72,8 @@ export class NewsCategoryEditComponent implements OnInit {
         showFilesInsideTree: false,
         showSelectFile: true,
         showSelectFolder: false,
+        showSelectFileType:[],
+        title:"فایل را انتخاب کنید"
       },
     };
 
