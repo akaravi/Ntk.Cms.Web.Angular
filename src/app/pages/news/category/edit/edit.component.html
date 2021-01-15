@@ -96,7 +96,7 @@
           </mat-form-field>
 
           <mat-form-field class="example-full-width">
-            <mat-label>فایل آیکن</mat-label>
+            <mat-label (click)="openFormFileManager = true">فایل آیکن</mat-label>
             <input
               matInput
               [(ngModel)]="dataModel.LinkMainImageId"
@@ -116,7 +116,7 @@
               (click)="dataModel.LinkMainImageId = ''"
               >close</mat-icon
             >
-            <mat-icon matSuffix>mode_edit</mat-icon>
+            <mat-icon matSuffix (click)="openFormFileManager = true">mode_edit</mat-icon>
           </mat-form-field>
 
           <cms-file-manager
