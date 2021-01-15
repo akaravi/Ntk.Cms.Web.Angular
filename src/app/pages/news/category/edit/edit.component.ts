@@ -101,6 +101,7 @@ export class NewsCategoryEditComponent implements OnInit {
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
 
   selected: any;
+  openFormFileManager=false;
   onActionFileSelected(model: NodeInterface) {
     this.dataModel.LinkMainImageId = model.id;
     this.selected = model;
