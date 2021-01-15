@@ -1,226 +1,70 @@
 <div class="card-content" style="direction: rtl">
-  <div class="px-3">
-    {{ dataModel | json }}
-    <form
-      (ngSubmit)="onFormSubmit()"
-      #vform="ngForm"
-      class="form form-horizontal"
-    >
-      <app-progress-spinner [options]="loading"> </app-progress-spinner>
-      <div *ngIf="!loading.display" class="form-body">
-        <h4 class="form-section mb-8">
-          <i class="ft-user"></i> {{ modalTitle }}
-        </h4>
+    <div class="px-3">
+        <form (ngSubmit)="onFormSubmit()" #vform="ngForm" class="form form-horizontal">
+            <app-progress-spinner [options]="loading"> </app-progress-spinner>
+            <div *ngIf="!loading.display" class="form-body">
+                <h4 class="form-section mb-8">
+                    <i class="ft-user"></i> {{ modalTitle }}
+                </h4>
 
-        <div class="form-group row">
-          <mat-form-field class="example-full-width">
-            <mat-label>عنوان</mat-label>
-            <input
-              matInput
-              [(ngModel)]="dataModel.Title"
-              name="dataModel.Title"
-              #Title
-              type="text"
-              placeholder="عنوان"
-              minlength="3"
-              maxlength="20"
-              required
+                <div class="form-group row">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>عنوان</mat-label>
+                        <input matInput [(ngModel)]="dataModel.Title" name="dataModel.Title" #Title type="text" placeholder="عنوان" minlength="3" maxlength="20" required />
+                        <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.Title=''">close</mat-icon>
+                        <mat-icon matSuffix>mode_edit</mat-icon>
+                        <mat-hint align="end">{{ Title.value.length }} / 20</mat-hint>
+                        <mat-error *ngIf="Title.errors?.required">
+                            Title is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
 
-            />
-            <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.Title=''">close</mat-icon>
-            <mat-icon matSuffix>mode_edit</mat-icon>
-            <mat-hint align="end">{{ Title.value.length }} / 20</mat-hint>
-            <mat-error *ngIf="Title.errors?.required">
-              Title is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
+                        <mat-form-field>
+                            <mat-select placeholder="وضعیت" [(ngModel)]="dataModel.RecordStatus"  name="dataModel.RecordStatus" #RecordStatus="ngModel" panelClass="recordStatus-{{dataModel.RecordStatus}}" required>
+                                <mat-option *ngFor="let item of dataModelEnumRecordStatusResult.ListItems;index as i" [value]="item.Value" >{{ item.Key }}</mat-option>
+                            </mat-select>
+                            <mat-hint align="end">انتخاب وضیعت این محتوا</mat-hint>
+                            <mat-error *ngIf="RecordStatus.errors?.required">
+                                RecordStatus is <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    <mat-form-field class="example-full-width">
+                        <mat-label>توضیحات</mat-label>
+                        <input matInput [(ngModel)]="dataModel.Description" name="dataModel.Description" #Description type="text" placeholder="توضیحات" minlength="1" maxlength="100" required />
+                        <mat-icon matSuffix *ngIf="dataModel.Description" matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.Description=''">close</mat-icon>
+                        <mat-icon matSuffix>mode_edit</mat-icon>
+                        <mat-hint align="end">{{ Description.value.length }} / 100</mat-hint>
+                        <mat-error *ngIf="Description.errors?.required">
+                            Description is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
 
-    <div class="example-container">
-      <mat-form-field>
-        <mat-select placeholder="وضعیت">
-          <mat-option    *ngFor="let item of dataModelEnumRecordStatusResult.ListItems;index as i" value="{{ item.Value }}" >{{ item.Key }}</mat-option>
-        </mat-select>
-        <mat-hint align="end">انتخاب وضیعت  این محتوا</mat-hint>
-      </mat-form-field>
+
+
+                    <mat-form-field class="example-full-width">
+                      <mat-label>فایل آیکن</mat-label>
+                      <input matInput [(ngModel)]="dataModel.LinkMainImageId" name="dataModel.LinkMainImageId" #LinkMainImageId type="text" placeholder="شناسه فایل آیکن" />
+                      <mat-icon matSuffix *ngIf="dataModel.LinkMainImageId" matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.LinkMainImageId=''">close</mat-icon>
+                      <mat-icon matSuffix>mode_edit</mat-icon>
+                  </mat-form-field>
+                  <cms-file-manager (itemSelected)="onActionFileSelected($event)" [language]="appLanguage" [isPopup]="true" [tree]="tree" [openFilemanagerButtonLabelKey]="'select'"></cms-file-manager>
+                {{ selected | json }}
+            </div>
+          </div>
+            <div class="form-actions">
+                <small class="form-text text-muted">{{ formInfo.FormAlert }} </small>
+                <small class="form-text text-muted danger">{{ formInfo.FormError }}
+                </small>
+            </div>
+            <div class="form-actions" *ngIf="formInfo.FormAllowSubmit">
+                <button type="button" (click)="onFormCancel()" class="btn btn-raised btn-warning mr-1">
+                    <i class="ft-x"></i> انصراف
+                </button>
+                <button type="submit" class="btn btn-raised btn-primary" [disabled]="!vform.form.valid">
+                    <i class="fa fa-check-square-o"></i> ذخیره
+                </button>
+            </div>
+
+        </form>
     </div>
-           <mat-form-field class="example-full-width">
-            <mat-label>توضیحات</mat-label>
-            <input
-              matInput
-              [(ngModel)]="dataModel.Description"
-              name="dataModel.Description"
-              #Description
-              type="text"
-              placeholder="توضیحات"
-              minlength="1"
-              maxlength="100"
-              required
-
-            />
-            <mat-icon matSuffix *ngIf="dataModel.Description" matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.Description=''">close</mat-icon>
-            <mat-icon matSuffix>mode_edit</mat-icon>
-            <mat-hint align="end">{{ Description.value.length }} / 100</mat-hint>
-            <mat-error *ngIf="Description.errors?.required">
-              Description is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-
-          <!-- <label class="col-md-3 label-control" for="Title">عنوان : </label> -->
-          <!-- <div class="col-md-9">
-            <input
-              [(ngModel)]="dataModel.Title"
-              type="text"
-              class="form-control"
-              name="Title"
-              #Title="ngModel"
-              required
-              minlength="5"
-              maxlength="50"
-              placeholder="عنوان"
-            />
-            <small
-              class="form-text text-muted danger text-right"
-              *ngIf="Title.errors?.required"
-            >
-              الزامی</small
-            >
-            <small
-              class="form-text text-muted danger"
-              *ngIf="Title.errors?.minlength"
-            >
-              حداقل پنج کاراکتر</small
-            >
-            <small
-              class="form-text text-muted danger"
-              *ngIf="Title.errors?.maxlength"
-            >
-              حداکثر پنجاه کاراکتر</small
-            >
-          </div> -->
-        </div>
-
-        <div class="form-group row">
-          <label class="col-md-3 label-control" for="Status">وضعیت:</label>
-          <div class="col-md-9">
-            <fieldset class="form-group">
-              <select
-                [(ngModel)]="dataModel.RecordStatus"
-                name="RecordStatus"
-                #RecordStatus="ngModel"
-                required
-                class="form-control"
-              >
-                <option
-                  *ngFor="
-                    let item of dataModelEnumRecordStatusResult.ListItems;
-                    index as i
-                  "
-                  value="{{ item.Value }}"
-                >
-                  {{ item.Key }}
-                </option>
-              </select>
-              <small
-                class="form-text text-muted danger text-right"
-                *ngIf="RecordStatus.errors?.required"
-              >
-                الزامی</small
-              >
-            </fieldset>
-          </div>
-        </div>
-        <!--
-        <div class="form-group row">
-          <label class="col-md-3 label-control" for="Description"
-            >توضیحات :
-          </label>
-          <div class="col-md-9">
-            <textarea
-              [(ngModel)]="dataModel.Description"
-              name="Description"
-              #Description="ngModel"
-              rows="5"
-              class="form-control"
-            ></textarea>
-            <small
-              class="form-text text-muted danger text-right"
-              *ngIf="Description.errors?.required"
-            >
-              الزامی</small
-            >
-          </div>
-        </div> -->
-
-        <h4 class="form-section text-right mb-5">
-          <i class="ft-file-text"></i> اطلاعات تکمیلی
-        </h4>
-        <div layout="row" flex>
-          <md-input-container flex class="md-icon-float md-block md-title">
-            <label>فایل عکس آیکن</label>
-            <!-- below is the material icons -->
-            <md-icon class="material-icons">phone</md-icon>
-            <input
-              type="text"
-              [(ngModel)]="dataModel.LinkMainImageId"
-              readonly
-            />
-          </md-input-container>
-          <div>
-            <md-button class="md-raised">
-              <!-- below is the material icons -->
-              <md-icon class="material-icons">select</md-icon>
-            </md-button>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-md-3 label-control" for="projectinput5"
-            >فایل آیکن :
-          </label>
-          <div class="col-md-7">
-            <input
-              type="text"
-              [(ngModel)]="dataModel.LinkMainImageId"
-              readonly
-              class="form-control"
-              name="company"
-            />
-          </div>
-          <div class="col-md-2">
-            <cms-file-manager
-              (itemSelected)="onActionFileSelected($event)"
-              [language]="appLanguage"
-              [isPopup]="true"
-              [tree]="tree"
-              [openFilemanagerButtonLabelKey]="'select'"
-            ></cms-file-manager>
-          </div>
-        </div>
-
-        {{ selected | json }}
-      </div>
-
-      <div class="form-actions">
-        <small class="form-text text-muted">{{ formInfo.FormAlert }} </small>
-        <small class="form-text text-muted danger"
-          >{{ formInfo.FormError }}
-        </small>
-      </div>
-      <div class="form-actions" *ngIf="formInfo.FormAllowSubmit">
-        <button
-          type="button"
-          (click)="onFormCancel()"
-          class="btn btn-raised btn-warning mr-1"
-        >
-          <i class="ft-x"></i> انصراف
-        </button>
-        <button
-          type="submit"
-          class="btn btn-raised btn-primary"
-          [disabled]="!vform.form.valid"
-        >
-          <i class="fa fa-check-square-o"></i> ذخیره
-        </button>
-      </div>
-    </form>
-  </div>
 </div>
