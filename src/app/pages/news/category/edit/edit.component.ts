@@ -1,31 +1,42 @@
-import { CoreEnumService, EnumModel, ErrorExceptionResult, FormInfoModel, NewsCategoryService, NewsCategoryModel, FileUploadedModel } from 'ntk-cms-api';
-import { Component, OnInit, Input, ViewChild, ChangeDetectorRef, Inject } from '@angular/core';
+import {
+  CoreEnumService,
+  EnumModel,
+  ErrorExceptionResult,
+  FormInfoModel,
+  NewsCategoryService,
+  NewsCategoryModel,
+  FileUploadedModel,
+} from 'ntk-cms-api';
+import {
+  Component,
+  OnInit,
+  Input,
+  ViewChild,
+  ChangeDetectorRef,
+  Inject,
+} from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CmsToastrService } from 'src/app/_helpers/services/cmsToastr.service';
 import { ComponentActionEnum } from 'src/app/_helpers/model/component-action-enum';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { ComponentOptionFileUploadModel } from 'src/app/core/cmsComponentModels/files/componentOptionFileUploadModel';
-import { ConfigInterface, DownloadModeEnum, TreeModel, NodeInterface } from 'ntk-cms-filemanager';
-
-
-
-
+import {
+  ConfigInterface,
+  DownloadModeEnum,
+  TreeModel,
+  NodeInterface,
+} from 'ntk-cms-filemanager';
+import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
 
 @Component({
   selector: 'app-news-category-edit',
   templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.css']
+  styleUrls: ['./edit.component.css'],
 })
 export class NewsCategoryEditComponent implements OnInit {
-  @Input()
-  set options(model: any) {
-    this.dateModleInput = model;
-  }
-  get options(): any {
-    return this.dateModleInput;
-  }
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<NewsCategoryEditComponent>,
@@ -34,20 +45,12 @@ export class NewsCategoryEditComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     public coreEnumService: CoreEnumService,
     public newsCategoryService: NewsCategoryService,
-    private toastrService: CmsToastrService,
-
+    private toastrService: CmsToastrService
   ) {
-    console.log('data:', data);
     if (data) {
       this.id = data.id;
       this.parentId = data.parentId;
     }
-    this.optionsFileUpload.onActions = {
-      onActionSelect: (model) => this.onActionSelectFile(model),
-    };
-
-
-
 
     const treeConfig: ConfigInterface = {
       baseURL: 'https://apicms.ir/api/v1/',
@@ -72,28 +75,21 @@ export class NewsCategoryEditComponent implements OnInit {
         showFilesInsideTree: false,
         showSelectFile: true,
         showSelectFolder: false,
-        showSelectFileType:[],
-        title:"فایل را انتخاب کنید"
+        showSelectFileType: [],
+        title: 'فایل را انتخاب کنید',
       },
     };
 
     this.tree = new TreeModel(treeConfig);
-    this.node = this.tree.nodes;
   }
-
   tree: TreeModel;
-  node: NodeInterface;
-  appLanguage = 'sk';
-
-
-
-
+  appLanguage = 'fa';
+  formMatcher = new CmsFormsErrorStateMatcher();
+  formControlRequired = new FormControl('', [
+    Validators.required,
+  ]);
   modalTitle = '';
-  private dateModleInput: any;
   loading = new ProgressSpinnerModel();
-  uploadedfileName = '';
-  uploadedfileKey = '';
-  optionsFileUpload=new ComponentOptionFileUploadModel();
   dataModelResult: ErrorExceptionResult<NewsCategoryModel> = new ErrorExceptionResult<NewsCategoryModel>();
   dataModel: NewsCategoryModel = new NewsCategoryModel();
   id = 0;
@@ -101,24 +97,19 @@ export class NewsCategoryEditComponent implements OnInit {
   ComponentAction = ComponentActionEnum.none;
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
 
-
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
 
-
   selected: any;
-  onActionFileSelected(event: any) {
-    console.log(event);
-    this.selected=event;
+  onActionFileSelected(model: NodeInterface) {
+    this.dataModel.LinkMainImageId = model.id;
+    this.selected = model;
   }
 
   ngOnInit(): void {
-
     // get Id
     if (this.id === 0) {
-      this.id = Number(
-        this.activatedRoute.snapshot.paramMap.get('id')
-      );
+      this.id = Number(this.activatedRoute.snapshot.paramMap.get('id'));
     }
     if (this.id === 0) {
       this.activatedRoute.queryParams.subscribe((params) => {
@@ -127,11 +118,6 @@ export class NewsCategoryEditComponent implements OnInit {
           this.id = +params.id || 0;
         }
       });
-    }
-    if (this.id === 0) {
-      if (this.dateModleInput && this.dateModleInput.id) {
-        this.id = this.dateModleInput.id;
-      }
     }
     // get Id
     // get parentId
@@ -143,13 +129,10 @@ export class NewsCategoryEditComponent implements OnInit {
     if (this.parentId === 0) {
       this.activatedRoute.queryParams.subscribe((params) => {
         // Defaults to 0 if no query param provided.
-        if (params.parentId && params.parentId > 0) { this.parentId = +params.parentId || -1; }
+        if (params.parentId && params.parentId > 0) {
+          this.parentId = +params.parentId || -1;
+        }
       });
-    }
-    if (this.parentId === 0) {
-      if (this.dateModleInput && this.dateModleInput.parentId) {
-        this.parentId = this.dateModleInput.parentId;
-      }
     }
     // get parentId
     if (this.parentId >= 0) {
@@ -175,9 +158,6 @@ export class NewsCategoryEditComponent implements OnInit {
     });
   }
 
-
-
-
   DataGetOneContent(): void {
     if (this.id <= 0) {
       this.toastrService.typeErrorEditRowIsNull();
@@ -187,26 +167,23 @@ export class NewsCategoryEditComponent implements OnInit {
     this.formInfo.FormAlert = 'در دریافت ارسال اطلاعات از سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.newsCategoryService
-      .ServiceGetOneById(this.id)
-      .subscribe(
-        (next) => {
-
-          this.dataModel = next.Item;
-          if (next.IsSuccess) {
-            this.modalTitle = this.modalTitle + ' ' + next.Item.Title;
-            this.formInfo.FormAlert = '';
-          } else {
-            this.formInfo.FormAlert = 'برروز خطا';
-            this.formInfo.FormError = next.ErrorMessage;
-          }
-          this.loading.display = false;
-        },
-        (error) => {
-          this.toastrService.typeError(error);
-          this.loading.display = false;
+    this.newsCategoryService.ServiceGetOneById(this.id).subscribe(
+      (next) => {
+        this.dataModel = next.Item;
+        if (next.IsSuccess) {
+          this.modalTitle = this.modalTitle + ' ' + next.Item.Title;
+          this.formInfo.FormAlert = '';
+        } else {
+          this.formInfo.FormAlert = 'برروز خطا';
+          this.formInfo.FormError = next.ErrorMessage;
         }
-      );
+        this.loading.display = false;
+      },
+      (error) => {
+        this.toastrService.typeError(error);
+        this.loading.display = false;
+      }
+    );
   }
   DataAddContent(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
@@ -215,53 +192,49 @@ export class NewsCategoryEditComponent implements OnInit {
     if (this.parentId > 0) {
       this.dataModel.LinkParentId = this.parentId;
     }
-    this.newsCategoryService
-      .ServiceAdd(this.dataModel)
-      .subscribe(
-        (next) => {
-          this.formInfo.FormAllowSubmit = true;
-          this.dataModelResult = next;
-          if (next.IsSuccess) {
-            this.formInfo.FormAlert = 'ثبت با موفقت انجام شد';
-            this.toastrService.typeSuccessAdd();
-          } else {
-            this.formInfo.FormAlert = 'برروز خطا';
-            this.formInfo.FormError = next.ErrorMessage;
-          }
-          this.loading.display = false;
-        },
-        (error) => {
-          this.formInfo.FormAllowSubmit = true;
-          this.toastrService.typeError(error);
-          this.loading.display = false;
+    this.newsCategoryService.ServiceAdd(this.dataModel).subscribe(
+      (next) => {
+        this.formInfo.FormAllowSubmit = true;
+        this.dataModelResult = next;
+        if (next.IsSuccess) {
+          this.formInfo.FormAlert = 'ثبت با موفقت انجام شد';
+          this.toastrService.typeSuccessAdd();
+        } else {
+          this.formInfo.FormAlert = 'برروز خطا';
+          this.formInfo.FormError = next.ErrorMessage;
         }
-      );
+        this.loading.display = false;
+      },
+      (error) => {
+        this.formInfo.FormAllowSubmit = true;
+        this.toastrService.typeError(error);
+        this.loading.display = false;
+      }
+    );
   }
   DataEditContent(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.newsCategoryService
-      .ServiceEdit(this.dataModel)
-      .subscribe(
-        (next) => {
-          this.formInfo.FormAllowSubmit = true;
-          this.dataModelResult = next;
-          if (next.IsSuccess) {
-            this.formInfo.FormAlert = 'ثبت با موفقت انجام شد';
-            this.toastrService.typeSuccessEdit();
-          } else {
-            this.formInfo.FormAlert = 'برروز خطا';
-            this.formInfo.FormError = next.ErrorMessage;
-          }
-          this.loading.display = false;
-        },
-        (error) => {
-          this.formInfo.FormAllowSubmit = true;
-          this.toastrService.typeError(error);
-          this.loading.display = false;
+    this.newsCategoryService.ServiceEdit(this.dataModel).subscribe(
+      (next) => {
+        this.formInfo.FormAllowSubmit = true;
+        this.dataModelResult = next;
+        if (next.IsSuccess) {
+          this.formInfo.FormAlert = 'ثبت با موفقت انجام شد';
+          this.toastrService.typeSuccessEdit();
+        } else {
+          this.formInfo.FormAlert = 'برروز خطا';
+          this.formInfo.FormError = next.ErrorMessage;
         }
-      );
+        this.loading.display = false;
+      },
+      (error) => {
+        this.formInfo.FormAllowSubmit = true;
+        this.toastrService.typeError(error);
+        this.loading.display = false;
+      }
+    );
   }
   onFormSubmit(): void {
     if (this.formGroup.valid) {
@@ -272,25 +245,9 @@ export class NewsCategoryEditComponent implements OnInit {
       if (this.ComponentAction === ComponentActionEnum.edit) {
         this.DataEditContent();
       }
-
     }
   }
   onFormCancel(): void {
     this.dialogRef.close();
-  }
-  onActionSelectFile(model: ErrorExceptionResult<FileUploadedModel>): void {
-    // console.log('model', model);
-    if (model && !model.IsSuccess) {
-      // this.message = 'خطا در دریافت عکس کپچا';
-      return;
-    }
-    if (model && model.IsSuccess && model.Item.FileKey) {
-      // this.modelTargetSetDto.UploadFileGUID = model.Item.FileKey;
-      this.uploadedfileName = model.Item.FileName;
-      if (this.uploadedfileKey.length > 0) {
-        this.uploadedfileKey = this.uploadedfileKey + ',';
-      }
-      this.uploadedfileKey = this.uploadedfileKey + model.Item.FileKey;
-    }
   }
 }
