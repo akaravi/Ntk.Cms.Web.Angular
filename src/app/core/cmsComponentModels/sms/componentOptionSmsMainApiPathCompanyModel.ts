@@ -3,8 +3,8 @@ import { ComponentOptionModel } from '../base/componentOptionModel';
 
 export class ComponentOptionSmsMainApiPathCompanyModel
   implements ComponentOptionModel<ComponentOptionSmsMainApiPathCompanyDataModel, ComponentOptionSmsMainApiPathCompanyActionsModel, ComponentOptionSmsMainApiPathCompanyMethodsModel> {
-    onActions: ComponentOptionSmsMainApiPathCompanyActionsModel;
-  methods: ComponentOptionSmsMainApiPathCompanyMethodsModel;
+    childMethods: ComponentOptionSmsMainApiPathCompanyActionsModel;
+    parentMethods: ComponentOptionSmsMainApiPathCompanyMethodsModel;
   data: ComponentOptionSmsMainApiPathCompanyDataModel;
 
 }

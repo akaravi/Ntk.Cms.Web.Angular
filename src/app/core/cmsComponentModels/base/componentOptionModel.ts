@@ -1,5 +1,5 @@
-export interface ComponentOptionModel<TDataModel, TActionModel, TMethodsModel> {
-  onActions: TActionModel;
-  methods: TMethodsModel;
+export interface ComponentOptionModel<TDataModel, TChildMethods, TParentMethods> {
+  childMethods: TChildMethods;
+  parentMethods: TParentMethods;
   data: TDataModel;
 }

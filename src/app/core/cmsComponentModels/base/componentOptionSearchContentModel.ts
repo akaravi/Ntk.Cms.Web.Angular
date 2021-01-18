@@ -1,27 +1,29 @@
-
 import { AccessModel, FilterDataModel } from 'ntk-cms-api';
 import { ComponentOptionModel } from './componentOptionModel';
 
-
 export class ComponentOptionSearchContentModel
-  implements ComponentOptionModel<ComponentOptionSearchContentDataModel, ComponentOptionSearchContentActionsModel,
-  ComponentOptionSearchContentMethodsModel> {
-  onActions: ComponentOptionSearchContentActionsModel;
-  methods: ComponentOptionSearchContentMethodsModel;
+  implements
+    ComponentOptionModel<
+      ComponentOptionSearchContentDataModel,
+      ComponentOptionSearchContentChildMethodsModel,
+      ComponentOptionSearchContentParentMethodsModel
+    > {
+  childMethods: ComponentOptionSearchContentChildMethodsModel;
+  parentMethods: ComponentOptionSearchContentParentMethodsModel;
   data: ComponentOptionSearchContentDataModel = new ComponentOptionSearchContentDataModel();
   constructor() {
     this.data = new ComponentOptionSearchContentDataModel();
   }
 }
 
-export class ComponentOptionSearchContentActionsModel {
-  onSubmit: (x: Array<FilterDataModel>) => void;
-}
-export class ComponentOptionSearchContentMethodsModel {
+export class ComponentOptionSearchContentChildMethodsModel {
   setAccess: (x: AccessModel) => void;
 }
+export class ComponentOptionSearchContentParentMethodsModel {
+  onSubmit: (x: Array<FilterDataModel>) => void;
+}
 export class ComponentOptionSearchContentDataModel {
-  hidden: boolean;
+  show = false;
   Select: any;
   Access: AccessModel;
 }

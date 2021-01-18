@@ -84,10 +84,7 @@ export class NewsCategorySelectComponent implements OnInit {
       this.dataModelCategory = this.activatedRoute.snapshot.data.getCategory;
       this.loadingStatus = false;
     }
-    // this.DataGetAllCategory();
-
-    // this.optionsData.methods = { ActionReload: () => this.onActionReload() }
-    this.optionsData.methods = {
+    this.optionsData.parentMethods = {
       ActionReload: () => this.onActionReload(),
       ActionSelectForce: (id) => this.onActionSelectForce(id),
     };
@@ -110,8 +107,8 @@ export class NewsCategorySelectComponent implements OnInit {
     );
   }
   onActionSelect(model: NewsCategoryModel): void {
-    if (this.optionsData && this.optionsData.onActions && this.optionsData.onActions.onActionSelect) {
-      this.optionsData.onActions.onActionSelect(model);
+    if (this.optionsData && this.optionsData.childMethods && this.optionsData.childMethods.onActionSelect) {
+      this.optionsData.childMethods.onActionSelect(model);
       this.optionsData.data.Select = model;
     }
   }

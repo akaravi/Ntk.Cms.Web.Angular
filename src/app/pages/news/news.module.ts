@@ -33,7 +33,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { TreeviewModule } from 'ngx-treeview';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { QueryBuilderModule } from 'angular2-query-builder';
 import { ContentComponent } from './content/list/list.component';
 import { CategoryComponent } from './category/tree/tree.component';
 import { ProgressSpinnerModule } from 'src/app/shared/progress-spinner/progress-spinner.module';
@@ -65,7 +64,6 @@ import { CmsFileManagerModule } from 'ntk-cms-filemanager';
     LeafletModule,
     CKEditorModule,
 
-    QueryBuilderModule,
     ProgressSpinnerModule,
     CmsFileManagerModule
   ],

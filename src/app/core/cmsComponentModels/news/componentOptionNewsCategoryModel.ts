@@ -3,8 +3,8 @@ import { ComponentOptionModel } from '../base/componentOptionModel';
 
 // tslint:disable-next-line: max-line-length
 export class ComponentOptionNewsCategoryModel implements ComponentOptionModel<ComponentOptionNewsCategoryDataModel, ComponentOptionNewsCategoryActionsModel, ComponentOptionNewsCategoryMethodsModel> {
-  onActions = new ComponentOptionNewsCategoryActionsModel();
-  methods = new ComponentOptionNewsCategoryMethodsModel();
+  childMethods = new ComponentOptionNewsCategoryActionsModel();
+  parentMethods = new ComponentOptionNewsCategoryMethodsModel();
   data = new ComponentOptionNewsCategoryDataModel();
 }
 export class ComponentOptionNewsCategoryActionsModel {

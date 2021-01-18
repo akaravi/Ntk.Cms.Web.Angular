@@ -25,7 +25,7 @@ export class FileSelectComponent implements OnInit {
   uploadedfileKey = '';
   optionsFileUpload=new ComponentOptionFileUploadModel();
   public ngOnInit(): void {
-    this.optionsFileUpload.onActions = {
+    this.optionsFileUpload.childMethods = {
       onActionSelect: (model) => this.onActionSelectFile(model),
     };
       this.ajaxSettings = {

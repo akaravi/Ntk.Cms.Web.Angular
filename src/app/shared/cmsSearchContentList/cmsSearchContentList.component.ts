@@ -1,12 +1,11 @@
+import { Output } from '@angular/core';
+import { EventEmitter } from '@angular/core';
 import {
   Component,
-  ViewChild,
   OnInit,
-  OnDestroy,
   Input,
-  Injectable,
 } from '@angular/core';
-import { RuleSet, QueryBuilderFieldMap, Field, Rule } from 'ngx-query-builder';
+import { RuleSet, QueryBuilderFieldMap, Rule } from 'ngx-query-builder';
 import { AccessModel, EnumClauseType, FilterDataModel } from 'ntk-cms-api';
 import { ComponentOptionSearchContentModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchContentModel';
 
@@ -16,20 +15,23 @@ import { ComponentOptionSearchContentModel } from 'src/app/core/cmsComponentMode
   styleUrls: ['./cmsSearchContentList.component.scss'],
 })
 export class CmsSearchContentListComponent implements OnInit {
-  optionsData: ComponentOptionSearchContentModel = new ComponentOptionSearchContentModel();
-  @Input()
-  set options(model: ComponentOptionSearchContentModel) {
-    this.optionsData = model;
-    if (this.optionsData.data.hidden == null) {
-      this.optionsData.data.hidden = true;
+  public optionsData: ComponentOptionSearchContentModel = new ComponentOptionSearchContentModel();
+  @Output() optionsChange: EventEmitter<ComponentOptionSearchContentModel> = new EventEmitter<ComponentOptionSearchContentModel>();
+  @Input() set options(model: ComponentOptionSearchContentModel) {
+    if (!model) {
+      model = new ComponentOptionSearchContentModel();
     }
+    this.optionsData = model;
+    this.optionsData.childMethods = {
+      setAccess: (model: AccessModel) => this.setAccess(model),
+    };
+    this.optionsChange.emit(model);
   }
   get options(): ComponentOptionSearchContentModel {
-    if (this.optionsData.data.hidden) {
-
-    }
     return this.optionsData;
   }
+
+
   Filters: Array<FilterDataModel>;
   model: any;
   query: RuleSet;
@@ -38,11 +40,11 @@ export class CmsSearchContentListComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    if (this.optionsData) {
-      this.optionsData.methods = {
-        setAccess: (x) => this.setAccess(x)
-      };
-    }
+    // if (this.optionsData) {
+    //   this.optionsData.childMethods = {
+    //     setAccess: (x) => this.setAccess(x)
+    //   };
+    // }
   }
   setAccess(model: AccessModel): void {
     this.optionsData.data.Access = model;
@@ -54,7 +56,7 @@ export class CmsSearchContentListComponent implements OnInit {
       this.optionsData.data.Access &&
       this.optionsData.data.Access.FieldsInfo
     ) {
-      this.optionsData.data.Access.FieldsInfo.forEach((column, index) => {
+      this.optionsData.data.Access.FieldsInfo.forEach((column) => {
         if (!column.AccessSearchField) { return; }
         if (
           column.FieldType === 'System.Int32' ||
@@ -107,7 +109,7 @@ export class CmsSearchContentListComponent implements OnInit {
     if (!this.query || !this.query.condition) { return; }
 
     if (this.query.condition === 'or') { clauseType = EnumClauseType.Or; }
-    this.query.rules.forEach((column, index) => {
+    this.query.rules.forEach((column) => {
       const ruleSet = column as RuleSet;
       const rule = column as Rule;
       if (
@@ -139,7 +141,7 @@ export class CmsSearchContentListComponent implements OnInit {
     const Filters = new Array<FilterDataModel>();
     let clauseType: EnumClauseType = EnumClauseType.And;
     if (ruleSetInput.condition === 'or') { clauseType = EnumClauseType.Or; }
-    ruleSetInput.rules.forEach((column, index) => {
+    ruleSetInput.rules.forEach((column) => {
       const ruleSet = column as RuleSet;
       const rule = column as Rule;
       if (
@@ -164,7 +166,7 @@ export class CmsSearchContentListComponent implements OnInit {
   onSubmit(): void {
     // this.model = { name: "ali" };
     this.getRules();
-    this.optionsData.onActions.onSubmit(this.Filters);
+    this.optionsData.parentMethods.onSubmit(this.Filters);
   }
   onGetRules(): void {
     // console.log(this.query);

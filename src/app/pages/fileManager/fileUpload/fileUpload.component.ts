@@ -74,8 +74,8 @@ export class FileUploadComponent implements OnInit, OnDestroy, AfterViewInit {
     if (event && event.event) {
       if (
         this.optionData &&
-        this.optionData.onActions &&
-        this.optionData.onActions.onActionSelect
+        this.optionData.childMethods &&
+        this.optionData.childMethods.onActionSelect
       ) {
         const model = {
           fileName: event.event[0].name,
@@ -84,7 +84,7 @@ export class FileUploadComponent implements OnInit, OnDestroy, AfterViewInit {
 
         const retUpload = JSON.parse( event.event[1]) as ErrorExceptionResult<FileUploadedModel>;
         retUpload.Item.FileName = event.event[0].name;
-        this.optionData.onActions.onActionSelect(retUpload);
+        this.optionData.childMethods.onActionSelect(retUpload);
         this.optionData.data = { Select: retUpload };
       }
     }

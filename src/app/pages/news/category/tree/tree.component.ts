@@ -109,7 +109,7 @@ export class CategoryComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.optionsData) {
-      this.optionsData.methods = {
+      this.optionsData.parentMethods = {
         ActionReload: () => this.onActionReload(),
         ActionSelectForce: (id) => this.onActionSelectForce(id),
       };
@@ -152,8 +152,8 @@ export class CategoryComponent implements OnInit {
     this.dataModelSelect = model;
     if (this.optionsData) {
       this.optionsData.data.Select = this.dataModelSelect;
-      if (this.optionsData.onActions && this.optionsData.onActions.onActionSelect) {
-        this.optionsData.onActions.onActionSelect(this.dataModelSelect);
+      if (this.optionsData.childMethods && this.optionsData.childMethods.onActionSelect) {
+        this.optionsData.childMethods.onActionSelect(this.dataModelSelect);
       }
     }
   }

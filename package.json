@@ -32,7 +32,6 @@
     "@ngx-translate/core": "^13.0.0",
     "@types/leaflet": "^1.5.19",
     "angular-in-memory-web-api": "^0.11.0",
-    "angular2-query-builder": "^0.6.2",
     "apexcharts": "^3.20.0",
     "bootstrap": "^4.5.0",
     "clipboard": "^2.0.6",

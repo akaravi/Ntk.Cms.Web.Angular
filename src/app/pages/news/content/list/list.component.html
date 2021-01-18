@@ -9,19 +9,21 @@
             <button *ngIf="dataModelResult.Access.AccessDeleteRow && tableRowSelected.Id>0" (click)="onActionbuttonDeleteRow()" type="button" class="btn btn-danger  ml-2">حذف</button>
 
             <a class="btn btn-secondary btn-sm BTN">
-                <mat-slide-toggle [(ngModel)]="checked" (change)="changed($event)">پرس و جو ساز</mat-slide-toggle>
+                <mat-slide-toggle [(ngModel)]="optionsSearch.data.show"  >پرس و جو ساز</mat-slide-toggle>
             </a>
-            <button (click)="onActionbuttonStatus()" type="button" class="btn btn-success BTN">آمار</button>
+            <a class="btn btn-success btn-sm BTN">
+              <mat-slide-toggle [(ngModel)]="optionsStatist.data.show" (click)="onActionbuttonStatist()" >آمار</mat-slide-toggle>
+          </a>
+
             <button (click)="onActionbuttonExport()" type="button" class="btn btn-bg-info BTN">خروجی فایل</button>
             <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">برسی مجدد</button>
-            <div class="Query" *ngIf="checked">
-                <query-builder [(ngModel)]='query' [config]='config'></query-builder>
-                {{query|json}}
-                <app-cms-search-content-list [options]="optionsSearchContentList"></app-cms-search-content-list>
-                <app-cms-export-content-list></app-cms-export-content-list>
-                <app-cms-statist-content-list></app-cms-statist-content-list>
+
+            <app-cms-search-content-list [(options)]="optionsSearch"></app-cms-search-content-list>
+
+                <app-cms-export-content-list  [(options)]="optionsExport"></app-cms-export-content-list>
+                <app-cms-statist-content-list  [(options)]="optionsStatist" ></app-cms-statist-content-list>
             </div>
-        </div>
+
 
 
         <app-progress-spinner  [options]="loading" >

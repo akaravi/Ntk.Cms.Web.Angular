@@ -4,8 +4,8 @@ import { ComponentOptionModel } from '../base/componentOptionModel';
 export class ComponentOptionSmsMainApiPathModel
   // tslint:disable-next-line: max-line-length
   implements ComponentOptionModel<ComponentOptionSmsMainApiPathDataModel, ComponentOptionSmsMainApiPathActionsModel, ComponentOptionSmsMainApiPathMethodsModel> {
-  onActions: ComponentOptionSmsMainApiPathActionsModel;
-  methods: ComponentOptionSmsMainApiPathMethodsModel;
+    childMethods: ComponentOptionSmsMainApiPathActionsModel;
+  parentMethods: ComponentOptionSmsMainApiPathMethodsModel;
   data: ComponentOptionSmsMainApiPathDataModel;
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   CoreAuthService,
@@ -11,20 +11,17 @@ import {
   TokenInfoModel,
 } from 'ntk-cms-api';
 import { PublicHelper } from '../../../../_helpers/services/publicHelper';
-import { QueryBuilderConfig } from 'angular2-query-builder';
 import { ComponentOptionSearchContentModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchContentModel';
-import {
-  ComponentOptionNewsCategoryDataModel,
-  ComponentOptionNewsCategoryModel,
-} from 'src/app/core/cmsComponentModels/news/componentOptionNewsCategoryModel';
+import { ComponentOptionNewsCategoryModel } from 'src/app/core/cmsComponentModels/news/componentOptionNewsCategoryModel';
 import { ComponentModalDataModel } from 'src/app/core/cmsComponentModels/base/componentModalDataModel';
 import { CmsToastrService } from '../../../../_helpers/services/cmsToastr.service';
 import { MatDialog } from '@angular/material/dialog';
-import { NewsCategoryEditComponent } from '../../category/edit/edit.component';
-import { NewsCategoryDeleteComponent } from '../../category/delete/delete.component';
 import { NewsContentAddComponent } from '../add/add.component';
 import { ProgressSpinnerModel } from '../../../../core/models/progressSpinnerModel';
-import { listLazyRoutes } from '@angular/compiler/src/aot/lazy_routes';
+import { ComponentOptionStatistContentModel } from 'src/app/core/cmsComponentModels/base/componentOptionStatistContentModel';
+import { filter } from 'rxjs/operators';
+import { ComponentOptionExportContentModel } from 'src/app/core/cmsComponentModels/base/componentOptionExportContentModel';
+
 
 @Component({
   selector: 'app-news-content-list',
@@ -37,28 +34,16 @@ export class ContentComponent implements OnInit {
   dataModelResult: ErrorExceptionResult<NewsContentModel> = new ErrorExceptionResult<NewsContentModel>();
   optionsCategorySelect: ComponentOptionNewsCategoryModel = new ComponentOptionNewsCategoryModel();
   modalModel: ComponentModalDataModel = new ComponentModalDataModel();
-  optionsSearchContentList: ComponentOptionSearchContentModel = new ComponentOptionSearchContentModel();
+  optionsSearch: ComponentOptionSearchContentModel = new ComponentOptionSearchContentModel();
+  optionsStatist: ComponentOptionStatistContentModel = new ComponentOptionStatistContentModel();
+  optionsExport: ComponentOptionExportContentModel = new ComponentOptionExportContentModel();
   tableContentloading = false;
   tableRowsSelected: Array<NewsContentModel> = [];
   tableRowSelected: NewsContentModel = new NewsContentModel();
   // dateObject: any;
   loading = new ProgressSpinnerModel();
   tokenInfo = new TokenInfoModel();
-  query: any;
-  checked = false;
-  config: QueryBuilderConfig = {
-    fields: {
-      age: { name: 'Age', type: 'number' },
-      gender: {
-        name: 'Gender',
-        type: 'category',
-        options: [
-          { name: 'Male', value: 'm' },
-          { name: 'Female', value: 'f' },
-        ],
-      },
-    },
-  };
+
   displayedColumns: string[] = [
     'RecordStatus',
     'Title',
@@ -76,10 +61,10 @@ export class ContentComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog
   ) {
-    this.optionsCategorySelect.onActions = {
+    this.optionsCategorySelect.childMethods = {
       onActionSelect: (x) => this.onActionCategorySelect(x),
     };
-    this.optionsSearchContentList.onActions = {
+    this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
   }
@@ -90,40 +75,6 @@ export class ContentComponent implements OnInit {
       this.tokenInfo = next;
     });
   }
-
-  changed(event): void {
-    this.checked = event.checked;
-  }
-
-  // getContentListById(event): any {
-  //   this.filteModelContent = new FilterModel();
-  //   this.optionsCategorySelect.data = new ComponentOptionNewsCategoryDataModel();
-  //   this.optionsCategorySelect.data.Select = event;
-
-  //   if (event && event.id > 0) {
-  //     this.optionsCategorySelect.data.SelectId = event.id;
-  //     const aaa = {
-  //       PropertyName: 'LinkCategoryId',
-  //       IntValue1: event.id,
-  //     };
-  //     this.filteModelContent.Filters.push(aaa as FilterDataModel);
-  //   } else {
-  //     this.optionsCategorySelect.data.SelectId = 0;
-  //     if (this.optionsCategorySelect.methods) {
-  //       this.optionsCategorySelect.methods.ActionSelectForce(0);
-  //     }
-  //   }
-  //   this.DataGetAll();
-
-  //   // return this.newsContentService
-  //   //   .ServiceGetAll(this.filteModelContent)
-  //   //   .subscribe((res) => {
-  //   //     if (res.IsSuccess) {
-  //   //       this.dataSource = [];
-  //   //       this.dataSource = res.ListItems;
-  //   //     }
-  //   //   });
-  // }
 
   DataGetAll(): void {
     this.tableRowsSelected = [];
@@ -148,8 +99,8 @@ export class ContentComponent implements OnInit {
               'LinkSiteId'
             );
           }
-          if (this.optionsSearchContentList.methods) {
-            this.optionsSearchContentList.methods.setAccess(next.Access);
+          if (this.optionsSearch.childMethods) {
+            this.optionsSearch.childMethods.setAccess(next.Access);
           }
         }
         this.tableContentloading = false;
@@ -173,7 +124,7 @@ export class ContentComponent implements OnInit {
       };
       this.filteModelContent.Filters.push(aaa as FilterDataModel);
     } else {
-      this.optionsCategorySelect.methods.ActionSelectForce(0);
+      this.optionsCategorySelect.parentMethods.ActionSelectForce(0);
     }
     this.DataGetAll();
   }
@@ -200,10 +151,6 @@ export class ContentComponent implements OnInit {
       this.toastrService.toastr.error(message, title);
       return;
     }
-    const modalModel: ComponentModalDataModel = {
-      Title: 'محتوای جدید',
-      SwitchValue: 'contentContentAdd',
-    };
     this.router.navigate(['add'], {
       relativeTo: this.activatedRoute,
       queryParams: { parentId: this.optionsCategorySelect.data.Select.Id },
@@ -250,18 +197,20 @@ export class ContentComponent implements OnInit {
       this.toastrService.toastr.error(message, title);
       return;
     }
-    const modalModel: ComponentModalDataModel = {
-      Title: 'حذف محتوا',
-      SwitchValue: 'contentContentDelete',
-    };
     const dialogRef = this.dialog.open(NewsContentAddComponent);
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
     });
   }
-  onActionbuttonStatus(): void {}
-  onActionbuttonExport(): void {}
+  onActionbuttonStatist(): void {
+    // this.optionsStatist.data.show = !this.optionsStatist.data.show;
+    this.optionsStatist.childMethods.runStatist(this.filteModelContent.Filters);
+  }
+  onActionbuttonExport(): void {
+    this.optionsExport.data.show = !this.optionsExport.data.show;
+    this.optionsExport.childMethods.runExport(this.filteModelContent.Filters);
+  }
 
   onActionbuttonReload(): void {
     this.DataGetAll();

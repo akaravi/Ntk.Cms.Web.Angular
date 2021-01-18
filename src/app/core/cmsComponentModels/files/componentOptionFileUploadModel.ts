@@ -9,8 +9,8 @@ export class ComponentOptionFileUploadModel
       ComponentOptionFileUploadActionsModel,
       ComponentOptionFileUploadMethodsModel
     > {
-  onActions: ComponentOptionFileUploadActionsModel;
-  methods: ComponentOptionFileUploadMethodsModel;
+      childMethods  : ComponentOptionFileUploadActionsModel;
+      parentMethods: ComponentOptionFileUploadMethodsModel;
   data: ComponentOptionFileUploadDataModel;
 }
 

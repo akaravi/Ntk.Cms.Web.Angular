@@ -3,8 +3,8 @@ import { ComponentOptionModel } from '../base/componentOptionModel';
 
 // tslint:disable-next-line: max-line-length
 export class ComponentOptionCoreModuleTagCategoryModel implements ComponentOptionModel<ComponentOptionCoreModuleTagCategoryDataModel, ComponentOptionCoreModuleTagCategoryActionsModel, ComponentOptionCoreModuleTagCategoryMethodsModel> {
-  onActions: ComponentOptionCoreModuleTagCategoryActionsModel;
-  methods: ComponentOptionCoreModuleTagCategoryMethodsModel;
+  childMethods: ComponentOptionCoreModuleTagCategoryActionsModel;
+  parentMethods: ComponentOptionCoreModuleTagCategoryMethodsModel;
   data: ComponentOptionCoreModuleTagCategoryDataModel;
 
 }

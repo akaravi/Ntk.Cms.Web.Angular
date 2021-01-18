@@ -17,9 +17,9 @@ export class SubheaderService implements OnDestroy {
   breadCrumbsSubject: BehaviorSubject<
     BreadcrumbItemModel[]
   > = new BehaviorSubject<BreadcrumbItemModel[]>([]);
-  subheaderVersionSubject: BehaviorSubject<string> = new BehaviorSubject<
-    string
-  >('v1'); // [1-6]
+  subheaderVersionSubject: BehaviorSubject<string> = new BehaviorSubject<string>(
+    'v1'
+  ); // [1-6]
   // private fields
   private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
 
@@ -49,7 +49,6 @@ export class SubheaderService implements OnDestroy {
 
   // use this method in SubheaderWrapper
   updateAfterRouteChanges(pathName) {
-    
     const aside = this.getBreadcrumbsAndTitle('kt_aside_menu', pathName);
     const header = this.getBreadcrumbsAndTitle('kt_header_menu', pathName);
     const breadcrumbs =
@@ -111,7 +110,7 @@ export class SubheaderService implements OnDestroy {
   }
 
   private getBreadcrumbsAndTitle(menuId, pathName): SubheaderModel {
-    
+
     const result = new SubheaderModel();
     const menu = document.getElementById(menuId);
     if (!menu) {
@@ -126,16 +125,16 @@ export class SubheaderService implements OnDestroy {
     }
 
     activeLinks.forEach((link) => {
-      const titleSpans = link.getElementsByClassName('menu-text');
+      const titleSpans =  link.getElementsByClassName('menu-text') ;
       if (titleSpans) {
         const titleSpan = Array.from(titleSpans).find(
           (t) => t.innerHTML && t.innerHTML.trim().length > 0
         );
         if (titleSpan) {
           result.breadcrumbs.push({
-            title: titleSpan.innerHTML,
+            title: titleSpan.textContent,
             linkPath: link.pathname,
-            linkText: titleSpan.innerHTML,
+            linkText: titleSpan.textContent,
           });
         }
       }
