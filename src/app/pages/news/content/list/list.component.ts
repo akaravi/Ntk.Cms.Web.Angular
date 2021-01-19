@@ -12,7 +12,6 @@ import {
 } from 'ntk-cms-api';
 import { PublicHelper } from '../../../../_helpers/services/publicHelper';
 import { ComponentOptionSearchContentModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchContentModel';
-import { ComponentOptionNewsCategoryModel } from 'src/app/core/cmsComponentModels/news/componentOptionNewsCategoryModel';
 import { ComponentModalDataModel } from 'src/app/core/cmsComponentModels/base/componentModalDataModel';
 import { CmsToastrService } from '../../../../_helpers/services/cmsToastr.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -21,6 +20,8 @@ import { ProgressSpinnerModel } from '../../../../core/models/progressSpinnerMod
 import { ComponentOptionStatistContentModel } from 'src/app/core/cmsComponentModels/base/componentOptionStatistContentModel';
 import { filter } from 'rxjs/operators';
 import { ComponentOptionExportContentModel } from 'src/app/core/cmsComponentModels/base/componentOptionExportContentModel';
+import { ComponentOptionTreeModel } from 'src/app/core/cmsComponentModels/base/componentOptionTreeModel';
+import { ComponentOptionSelectorModel } from 'src/app/core/cmsComponentModels/base/componentOptionSelectorModel';
 
 
 @Component({
@@ -32,7 +33,7 @@ export class ContentComponent implements OnInit {
   filteModelContent = new FilterModel();
   filteModelCategory = new FilterModel();
   dataModelResult: ErrorExceptionResult<NewsContentModel> = new ErrorExceptionResult<NewsContentModel>();
-  optionsCategorySelect: ComponentOptionNewsCategoryModel = new ComponentOptionNewsCategoryModel();
+  optionsCategoryTree: ComponentOptionTreeModel<NewsCategoryModel> = new ComponentOptionTreeModel<NewsCategoryModel>();
   modalModel: ComponentModalDataModel = new ComponentModalDataModel();
   optionsSearch: ComponentOptionSearchContentModel = new ComponentOptionSearchContentModel();
   optionsStatist: ComponentOptionStatistContentModel = new ComponentOptionStatistContentModel();
@@ -45,6 +46,7 @@ export class ContentComponent implements OnInit {
   tokenInfo = new TokenInfoModel();
 
   displayedColumns: string[] = [
+    'LinkMainImageIdSrc',
     'RecordStatus',
     'Title',
     'CreatedDate',
@@ -61,9 +63,10 @@ export class ContentComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog
   ) {
-    this.optionsCategorySelect.childMethods = {
+    this.optionsCategoryTree.parentMethods = {
       onActionSelect: (x) => this.onActionCategorySelect(x),
     };
+
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
@@ -124,17 +127,17 @@ export class ContentComponent implements OnInit {
       };
       this.filteModelContent.Filters.push(aaa as FilterDataModel);
     } else {
-      this.optionsCategorySelect.parentMethods.ActionSelectForce(0);
+      this.optionsCategoryTree.childMethods.ActionSelectForce(0);
     }
     this.DataGetAll();
   }
 
   onActionbuttonNewRow(): void {
     if (
-      this.optionsCategorySelect == null ||
-      this.optionsCategorySelect.data == null ||
-      this.optionsCategorySelect.data.Select == null ||
-      this.optionsCategorySelect.data.Select.Id === 0
+      this.optionsCategoryTree == null ||
+      this.optionsCategoryTree.data == null ||
+      this.optionsCategoryTree.data.Select == null ||
+      this.optionsCategoryTree.data.Select.Id === 0
     ) {
       const title = 'برروز خطا ';
       const message = 'دسته بندی انتخاب نشده است';
@@ -153,7 +156,7 @@ export class ContentComponent implements OnInit {
     }
     this.router.navigate(['add'], {
       relativeTo: this.activatedRoute,
-      queryParams: { parentId: this.optionsCategorySelect.data.Select.Id },
+      queryParams: { parentId: this.optionsCategoryTree.data.Select.Id },
     });
   }
 
@@ -204,7 +207,7 @@ export class ContentComponent implements OnInit {
     });
   }
   onActionbuttonStatist(): void {
-    // this.optionsStatist.data.show = !this.optionsStatist.data.show;
+
     this.optionsStatist.childMethods.runStatist(this.filteModelContent.Filters);
   }
   onActionbuttonExport(): void {

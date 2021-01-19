@@ -1,10 +1,14 @@
-
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, EventEmitter } from '@angular/core';
 import { ITreeOptions, KEYS, TreeComponent, TreeNode, TREE_ACTIONS } from '@circlon/angular-tree-component';
-import { ErrorExceptionResult, FilterModel, NewsCategoryModel, NewsCategoryService } from 'ntk-cms-api';
+import { CoreAuthService, CoreEnumService, ErrorExceptionResult, FilterDataModel, FilterModel, NewsCategoryModel, NewsCategoryService } from 'ntk-cms-api';
 import { ActivatedRoute } from '@angular/router';
 import { CmsToastrService } from 'src/app/_helpers/services/cmsToastr.service';
-import { ComponentOptionNewsCategoryModel } from 'src/app/core/cmsComponentModels/news/componentOptionNewsCategoryModel';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, startWith, switchMap, tap } from 'rxjs/operators';
+import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
+import { Output } from '@angular/core';
+import { ComponentOptionSelectorModel } from 'src/app/core/cmsComponentModels/base/componentOptionSelectorModel';
 
 
 @Component({
@@ -13,109 +17,121 @@ import { ComponentOptionNewsCategoryModel } from 'src/app/core/cmsComponentModel
   styleUrls: ['./select.component.css']
 })
 export class NewsCategorySelectComponent implements OnInit {
-  @ViewChild('tree', { static: false }) tree: TreeComponent;
-
-  @Input()
-  set options(modelInput: ComponentOptionNewsCategoryModel) {
-    this.optionsData = modelInput;
-  }
-  get options(): ComponentOptionNewsCategoryModel {
-    return this.optionsData;
-  }
-  private optionsData: ComponentOptionNewsCategoryModel;
-  loadingStatus = false; // add one more property
-
-
-  filteModelCategory = new FilterModel();
-  dataModelCategory: ErrorExceptionResult<NewsCategoryModel> = new ErrorExceptionResult<NewsCategoryModel>();
-
-  optionsModelTree: ITreeOptions = {
-    idField: 'id',
-    displayField: 'Title',
-    childrenField: 'Children',
-    // hasChildrenField: 'Children',
-    // isExpandedField: 'expanded',
-    actionMapping: {
-      mouse: {
-        dblClick: (tree, node, $event) => {
-          if (node.hasChildren) {
-            TREE_ACTIONS.TOGGLE_EXPANDED(tree, node, $event);
-          }
-        },
-        click: (tree, node) => {
-          this.onActionSelect(node.data);
-        },
-      },
-      keys: {
-        [KEYS.ENTER]: (tree, node) => {
-          node.expandAll();
-        },
-      },
-    },
-    // nodeHeight: 23,
-    allowDrag: () => {
-      return false;
-    },
-    allowDrop: () => {
-      return false;
-    },
-    allowDragoverStyling: true,
-    levelPadding: 10,
-    // useVirtualScroll: true,
-    animateExpand: true,
-    scrollOnActivate: true,
-    animateSpeed: 30,
-    animateAcceleration: 1.2,
-    // scrollContainer: document.documentElement, // HTML
-    rtl: true,
-    nodeClass: (node: TreeNode) => {
-      return 'icon-ntk-' + node.data.icon;
+  public optionsData: ComponentOptionSelectorModel<NewsCategoryModel> = new ComponentOptionSelectorModel<NewsCategoryModel>();
+  @Output()
+  // tslint:disable-next-line: max-line-length
+  optionsChange: EventEmitter<ComponentOptionSelectorModel<NewsCategoryModel>> = new EventEmitter<ComponentOptionSelectorModel<NewsCategoryModel>>();
+  @Input() set options(model: ComponentOptionSelectorModel<NewsCategoryModel>) {
+    if (!model) {
+      model = new ComponentOptionSelectorModel<NewsCategoryModel>();
     }
-  };
-  constructor(
-    private toastrService: CmsToastrService,
-    public categoryService: NewsCategoryService,
-    private activatedRoute: ActivatedRoute
-  ) { }
-
-  ngOnInit(): void {
-    this.loadingStatus = true;
-    if (this.activatedRoute.snapshot.data.getCategory) {
-      this.dataModelCategory = this.activatedRoute.snapshot.data.getCategory;
-      this.loadingStatus = false;
-    }
-    this.optionsData.parentMethods = {
+    this.optionsData = model;
+    this.optionsData.childMethods = {
       ActionReload: () => this.onActionReload(),
       ActionSelectForce: (id) => this.onActionSelectForce(id),
     };
-
+    this.optionsChange.emit(model);
   }
-  DataGetAllCategory(): void {
-    this.filteModelCategory.RowPerPage = 200;
-    this.loadingStatus = true;
-    this.categoryService.ServiceGetAll(this.filteModelCategory).subscribe(
-      (next) => {
-        if (next.IsSuccess) {
-          this.dataModelCategory = next;
-        }
-        this.loadingStatus = false;
-      },
-      (error) => {
-        this.toastrService.typeError(error);
-        this.loadingStatus = false;
-      }
-    );
+  get options(): ComponentOptionSelectorModel<NewsCategoryModel> {
+    return this.optionsData;
+  }
+
+
+
+  dataModelResult: ErrorExceptionResult<NewsCategoryModel> = new ErrorExceptionResult<NewsCategoryModel>();
+  dataModelSelect: NewsCategoryModel = new NewsCategoryModel();
+
+  loading = new ProgressSpinnerModel();
+
+  myControl = new FormControl();
+  filteredOptions: Observable<NewsCategoryModel[] | void>;
+  constructor(
+    private coreAuthService: CoreAuthService,
+    private toastrService: CmsToastrService,
+    public coreEnumService: CoreEnumService,
+    public categoryService: NewsCategoryService) { }
+
+  ngOnInit(): void {
+    this.filteredOptions = this.myControl.valueChanges
+      .pipe(
+        startWith(''),
+        debounceTime(1000),
+        distinctUntilChanged(),
+        switchMap(val => {
+          if (typeof val === 'string') {
+            return this.DataGetAll(val || '');
+          }
+        }),
+        // tap(() => this.myControl.setValue(this.options[0]))
+      );
+  }
+
+  displayFn(user?: NewsCategoryModel): string | undefined {
+    return user ? user.Title : undefined;
+  }
+  DataGetAll(text: string | number | any): Observable<NewsCategoryModel[]> {
+    const filteModel = new FilterModel();
+    filteModel.RowPerPage = 200;
+    filteModel.AccessLoad = true;
+    // this.loading.backdropEnabled = false;
+    if (text && typeof text === 'string' && text.length > 0) {
+      const aaa = {
+        PropertyName: 'Title',
+        Value: text,
+        SearchType: 5
+      };
+      filteModel.Filters.push(aaa as FilterDataModel);
+    } else if (text && typeof text === 'number' && text > 0) {
+      const aaa = {
+        PropertyName: 'Title',
+        Value: text,
+        SearchType: 5
+      };
+      filteModel.Filters.push(aaa as FilterDataModel);
+      const nnn = {
+        PropertyName: 'Id',
+        Value: text,
+        SearchType: 1
+      };
+      filteModel.Filters.push(nnn as FilterDataModel);
+    }
+    this.loading.Globally = false;
+    this.loading.display = true;
+    return this.categoryService.ServiceGetAll(filteModel)
+      .pipe(
+        map(response => {
+          this.dataModelResult = response;
+          return response.ListItems;
+        }));
   }
   onActionSelect(model: NewsCategoryModel): void {
-    if (this.optionsData && this.optionsData.childMethods && this.optionsData.childMethods.onActionSelect) {
-      this.optionsData.childMethods.onActionSelect(model);
-      this.optionsData.data.Select = model;
+    this.dataModelSelect = model;
+    if (this.optionsData) {
+      this.optionsData.data.Select = this.dataModelSelect;
+      if (this.optionsData.parentMethods && this.optionsData.parentMethods.onActionSelect) {
+        this.optionsData.parentMethods.onActionSelect(this.dataModelSelect);
+      }
     }
   }
-  onActionReload(): void {
-    this.DataGetAllCategory();
+  onActionSelectForce(id: number | NewsCategoryModel): void {
+    if (typeof id === 'number' && id > 0) {
+      this.categoryService.ServiceGetOneById(id).subscribe((next) => {
+        if (next.IsSuccess) {
+          this.myControl.setValue(next.Item);
+        }
+      });
+    }
+    if (typeof id === typeof NewsCategoryModel && id > 0) {
+      this.myControl.setValue(id);
+    }
   }
-  onActionSelectForce(id: number): void {
 
+  onActionReload(): void {
+    // if (this.dataModelSelect && this.dataModelSelect.Id > 0) {
+    //   this.onActionSelect(null);
+    // }
+    this.dataModelSelect = new NewsCategoryModel();
+    this.optionsData.data.Select = new NewsCategoryModel();
+    this.DataGetAll(null);
   }
 }

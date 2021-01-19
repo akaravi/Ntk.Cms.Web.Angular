@@ -101,8 +101,8 @@ export class NewsCategoryEditComponent implements OnInit {
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
 
   selected: any;
-  openFormFileManager=false;
-  onActionFileSelected(model: NodeInterface) {
+  openFormFileManager = false;
+  onActionFileSelected(model: NodeInterface): void {
     this.dataModel.LinkMainImageId = model.id;
     this.selected = model;
   }
@@ -238,15 +238,17 @@ export class NewsCategoryEditComponent implements OnInit {
     );
   }
   onFormSubmit(): void {
-    if (this.formGroup.valid) {
-      this.formInfo.FormAllowSubmit = false;
-      if (this.ComponentAction === ComponentActionEnum.add) {
-        this.DataAddContent();
-      }
-      if (this.ComponentAction === ComponentActionEnum.edit) {
-        this.DataEditContent();
-      }
+    if (!this.formGroup.valid) {
+      return;
     }
+    this.formInfo.FormAllowSubmit = false;
+    if (this.ComponentAction === ComponentActionEnum.add) {
+      this.DataAddContent();
+    }
+    if (this.ComponentAction === ComponentActionEnum.edit) {
+      this.DataEditContent();
+    }
+
   }
   onFormCancel(): void {
     this.dialogRef.close();

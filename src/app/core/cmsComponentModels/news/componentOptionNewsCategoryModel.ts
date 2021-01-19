@@ -8,11 +8,11 @@ export class ComponentOptionNewsCategoryModel implements ComponentOptionModel<Co
   data = new ComponentOptionNewsCategoryDataModel();
 }
 export class ComponentOptionNewsCategoryActionsModel {
-  onActionSelect: (x: NewsCategoryModel) => void;
+  ActionReload: () => void;
+  ActionSelectForce: (id: number | NewsCategoryModel) => void;
 }
 export class ComponentOptionNewsCategoryMethodsModel {
-  ActionReload: () => void;
-  ActionSelectForce: (id: number) => void;
+  onActionSelect: (x: NewsCategoryModel) => void;
 }
 export class ComponentOptionNewsCategoryDataModel {
   Select = new NewsCategoryModel();

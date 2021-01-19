@@ -45,7 +45,7 @@
               type="text"
               placeholder="عنوان"
               minlength="3"
-              maxlength="20"
+              maxlength="50"
               required
             />
             <mat-icon
@@ -58,7 +58,7 @@
               >close</mat-icon
             >
             <mat-icon matSuffix>mode_edit</mat-icon>
-            <mat-hint align="end">{{ Title.value.length }} / 20</mat-hint>
+            <mat-hint align="end">{{ Title.value.length }} / 50</mat-hint>
             <mat-error *ngIf="Title.errors?.required">
               Title is <strong>required</strong>
             </mat-error>
@@ -96,6 +96,7 @@
           </mat-form-field>
 
           <mat-form-field class="example-full-width">
+            <img *ngIf="dataModel?.LinkMainImageIdSrc?.length>0" style="vertical-align:middle;" aria-hidden src="{{dataModel.LinkMainImageIdSrc}}" height="50" width="50"  />
             <mat-label (click)="openFormFileManager = true">فایل آیکن</mat-label>
             <input
               matInput

@@ -1,11 +1,12 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { CoreEnumService, EnumModel, ErrorExceptionResult, FormInfoModel, NewsContentModel, NewsContentService } from 'ntk-cms-api';
+import { CoreEnumService, EnumModel, ErrorExceptionResult, FormInfoModel, NewsCategoryModel, NewsContentModel, NewsContentService } from 'ntk-cms-api';
 import { FormControl, FormGroup } from '@angular/forms';
 import * as Leaflet from 'leaflet';
 import { environment } from '../../../../../environments/environment';
 import { icon } from 'leaflet';
 import { ActivatedRoute } from '@angular/router';
 import { CmsToastrService } from 'src/app/_helpers/services/cmsToastr.service';
+import { ComponentOptionSelectorModel } from 'src/app/core/cmsComponentModels/base/componentOptionSelectorModel';
 
 @Component({
   selector: 'app-news-content-edit',
@@ -19,6 +20,7 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
 
   dataModelResult: ErrorExceptionResult<NewsContentModel> = new ErrorExceptionResult<NewsContentModel>();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
+  optionsCategorySelector: ComponentOptionSelectorModel<NewsCategoryModel> = new ComponentOptionSelectorModel<NewsCategoryModel>();
 
   loadingStatus = false;
   dataModel: NewsContentModel = new NewsContentModel();
@@ -38,6 +40,9 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
     private newsContentService: NewsContentService,
     private toasterService: CmsToastrService
   ) {
+    this.optionsCategorySelector.parentMethods = {
+      onActionSelect: (x) => this.onActionCategorySelect(x),
+    };
   }
 
   id = 0;
@@ -125,9 +130,8 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
     this.loadingStatus = true;
     this.newsContentService.ServiceGetOneById(this.id).subscribe(
       (next) => {
-        this.dataModel = next.Item;
-
         if (next.IsSuccess) {
+          this.optionsCategorySelector.childMethods.ActionSelectForce(next.Item.LinkCategoryId);
           this.dataModel = next.Item;
           this.formInfo.FormAlert = '';
         } else {
@@ -190,6 +194,16 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
       );
   }
 
+  onActionCategorySelect(model: NewsCategoryModel | null): void {
+    if (!model || model.Id <= 0) {
+      this.toasterService.toastr.error(
+        'دسته بندی را مشخص کنید',
+        'دسته بندی اطلاعات مشخص نیست'
+      );
+      return;
+    }
+    this.dataModel.LinkCategoryId = model.Id;
+  }
   onValueChange(model: any): any {
     return model.value;
   }

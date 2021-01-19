@@ -1,13 +1,13 @@
-<span class="ml-3" *ngIf="(loadingStatus)">loading ...</span>
-<img *ngIf="loadingStatus" src="../../../../../assets/media/1_9EBHIOzhE1XfMYoKz1JcsQ.gif"
-     style="
-    position: absolute;
-    width: 230px;
-    margin-top: -85px;
-    margin-right: 320px;">
-<div class="cursor-pointer">
-  <tree-root #tree [nodes]="dataModelCategory.ListItems" [options]="optionsModelTree"  [focused]="true">
-    <template #loadingTemplate>Loading, please hold....</template>
-  </tree-root>
-</div>
 
+  <mat-form-field class="example-full-width">
+    <input type="text" placeholder="{{options.data.placeholder}}" aria-label="Assignee" matInput [formControl]="myControl" [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"  (optionSelected)="onActionSelect($event.option.value)" >
+      <mat-option *ngFor="let state of filteredOptions | async" [value]="state">
+        <img style="vertical-align:middle;" aria-hidden src="{{state.LinkMainImageIdSrc}}" height="25" width="25" />
+        <span>{{ state.Title }}</span> |
+        <small>ID: {{state.Id}}</small>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+{{dataModelSelect|json}}

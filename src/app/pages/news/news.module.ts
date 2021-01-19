@@ -22,7 +22,6 @@ import {
   NewsShareReciverCategoryService,
   NewsShareServerCategoryService
 } from 'ntk-cms-api';
-import { NewsCategoryListComponent } from './category/list/list.component';
 import { NewsCategoryEditComponent } from './category/edit/edit.component';
 import { NewsCategorySelectComponent } from './category/select/select.component';
 import { NewsCategoryDeleteComponent } from './category/delete/delete.component';
@@ -43,7 +42,6 @@ import { CmsFileManagerModule } from 'ntk-cms-filemanager';
     NewsComponent,
     NewsContentAddComponent,
     NewsContentEditComponent,
-    NewsCategoryListComponent,
     NewsCategoryEditComponent,
     NewsCategorySelectComponent,
     NewsCategoryDeleteComponent,
