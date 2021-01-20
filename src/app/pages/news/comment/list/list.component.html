@@ -25,13 +25,6 @@
         </app-progress-spinner>
         <table *ngIf="!loading.display" mat-table [dataSource]="dataModelResult.ListItems" class="mat-elevation-z8">
             <!-- Position Column -->
-
-            <ng-container matColumnDef="LinkMainImageIdSrc">
-                <th mat-header-cell *matHeaderCellDef>عکس</th>
-                <td mat-cell *matCellDef="let element">
-                    <img *ngIf="element?.LinkMainImageIdSrc?.length>0" style="vertical-align:middle;" aria-hidden src="{{element.LinkMainImageIdSrc}}" height="40" width="40" />
-                </td>
-            </ng-container>
             <ng-container matColumnDef="LinkSiteId">
                 <th mat-header-cell *matHeaderCellDef>شناسه سایت</th>
                 <td mat-cell *matCellDef="let element">
@@ -44,10 +37,10 @@
                     {{ element.RecordStatus }}
                 </td>
             </ng-container>
-            <ng-container matColumnDef="Title">
-                <th mat-header-cell *matHeaderCellDef>عنوان</th>
+            <ng-container matColumnDef="Writer">
+                <th mat-header-cell *matHeaderCellDef>نویسنده</th>
                 <td mat-cell *matCellDef="let element">
-                    {{ element.Title }}
+                    {{ element.Writer }}
                 </td>
             </ng-container>
             <ng-container matColumnDef="CreatedDate">

@@ -53,7 +53,7 @@ import { NewsCommentEditComponent } from './comment/edit/edit.component';
     NewsCategoryDeleteComponent,
     NewsCommentComponent,
     NewsCommentListComponent,
-    NewsCommentDeleteComponent
+    NewsCommentDeleteComponent,
     NewsCommentEditComponent
   ],
   imports: [

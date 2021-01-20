@@ -27,7 +27,6 @@ import { ComponentOptionExportModel } from 'src/app/core/cmsComponentModels/base
 })
 export class NewsCommentListComponent implements OnInit {
   filteModelComment = new FilterModel();
-  filteModelCategory = new FilterModel();
   dataModelResult: ErrorExceptionResult<NewsCommentModel> = new ErrorExceptionResult<NewsCommentModel>();
   modalModel: ComponentModalDataModel = new ComponentModalDataModel();
   optionsSearch: ComponentOptionSearchModel = new ComponentOptionSearchModel();
@@ -41,9 +40,8 @@ export class NewsCommentListComponent implements OnInit {
   tokenInfo = new TokenInfoModel();
 
   displayedColumns: string[] = [
-    'LinkMainImageIdSrc',
     'RecordStatus',
-    'Title',
+    'Writer',
     'CreatedDate',
     'UpdatedDate',
     'Action'
@@ -67,6 +65,7 @@ export class NewsCommentListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.parentId = Number(this.activatedRoute.snapshot.paramMap.get('parentId'));
     this.coreAuthService.CurrentTokenInfoBSObs.subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
@@ -74,6 +73,13 @@ export class NewsCommentListComponent implements OnInit {
   }
 
   DataGetAll(): void {
+    if (this.parentId > 0) {
+      const aaa = {
+        PropertyName: 'LinkContentId',
+        IntValue1: this.parentId,
+      };
+      this.filteModelComment.Filters.push(aaa as FilterDataModel);
+    }
     this.tableRowsSelected = [];
     this.tableRowSelected = new NewsCommentModel();
     this.tableCommentloading = true;

@@ -18,9 +18,11 @@ const routes: Routes = [
         component: NewsContentListComponent
       },
       {
-        path: 'comment/:id',
-        // resolve: {categoryList: CategoryResolver},
-        // loadChildren: () =>    import('./content/content.module').then(m => m.ContentModule)
+        path: 'comment',
+        component: NewsCommentListComponent
+      },
+      {
+        path: 'comment/:parentId',
         component: NewsCommentListComponent
       },
 

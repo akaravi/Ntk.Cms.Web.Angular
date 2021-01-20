@@ -31,7 +31,7 @@ export class NewsCommentDeleteComponent implements OnInit {
 
   dataModelResultComment: ErrorExceptionResult<NewsCommentModel> = new ErrorExceptionResult<NewsCommentModel>();
   dataModelResultCommentAllData: ErrorExceptionResult<NewsCommentModel> = new ErrorExceptionResult<NewsCommentModel>();
-  optionsCommentSelector: ComponentOptionSelectorModel<NewsCommentModel> = new ComponentOptionSelectorModel<NewsCommentModel>();
+
 
   dataModel: any = {};
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
@@ -43,10 +43,7 @@ export class NewsCommentDeleteComponent implements OnInit {
     private newsCommentService: NewsCommentService,
     private toastrService: CmsToastrService
   ) {
-    this.optionsCommentSelector.parentMethods = {
-      onActionSelect: (x) => this.onFormChangeNewCatId(x),
-    };
-    this.optionsCommentSelector.data.placeholder = 'دسته بندی جایگزین جهت جابجایی اطلاعات به این  شاخه';
+
   }
   ngOnInit(): void {
     this.id = Number(this.activatedRoute.snapshot.paramMap.get('id'));

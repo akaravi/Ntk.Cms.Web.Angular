@@ -11,20 +11,20 @@
 
                     <mat-form-field class="example-full-width">
                         <mat-label>عنوان</mat-label>
-                        <input matInput [(ngModel)]="dataModelResultCategory.Item.Title" name="dataModelResultCategory.Item.Title" #Title type="text" placeholder="عنوان" minlength="3" maxlength="50" required readonly />
+                        <input matInput [(ngModel)]="dataModelResultComment.Item.Writer" name="dataModelResultComment.Item.Writer" #Writer type="text" placeholder="عنوان" minlength="3" maxlength="50" required readonly />
                     </mat-form-field>
 
                     <mat-form-field class="example-full-width">
                         <mat-label>توضیحات</mat-label>
-                        <textarea matInput [(ngModel)]="dataModelResultCategory.Item.Description" name="dataModelResultCategory.Item.Description" #Description type="text" placeholder="توضیحات" minlength="1" maxlength="100" readonly required rows=5></textarea>
-                        <mat-icon matSuffix *ngIf="dataModel.Description" matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.Description = ''">close</mat-icon>
+                        <textarea matInput [(ngModel)]="dataModelResultComment.Item.Comment" name="dataModelResultComment.Item.Comment" #Comment type="text" placeholder="توضیحات" minlength="1" maxlength="100" readonly required rows=5></textarea>
+                        <mat-icon matSuffix *ngIf="dataModel.Comment" matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.Comment = ''">close</mat-icon>
                         <mat-icon matSuffix>mode_edit</mat-icon>
-                        <mat-hint align="end">{{ Description.value.length }} / 100</mat-hint>
-                        <mat-error *ngIf="Description.errors?.required">
-                            Description is <strong>required</strong>
+                        <mat-hint align="end">{{ Comment.value.length }} / 100</mat-hint>
+                        <mat-error *ngIf="Comment.errors?.required">
+                            Comment is <strong>required</strong>
                         </mat-error>
                     </mat-form-field>
-                    <app-news-category-selector [(options)]="optionsCategorySelector"></app-news-category-selector>
+
                 </div>
             </div>
             <div class="form-actions">
