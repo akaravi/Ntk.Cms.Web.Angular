@@ -6,6 +6,8 @@
 }
 body{
   font-family: 'IRANSansWeb';
+  margin: 0;
+  padding: 0;
 }
 @import url("https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Roboto:300,400,500,600,700");
 // Global vendors
@@ -94,4 +96,7 @@ body{
   border-radius: 5px;
   background: white;
   box-shadow: 0 0 6px 1px rgba(0, 0, 0, .1);
+}
+.mat-form-field-wrapper{
+  font-size: large;
 }

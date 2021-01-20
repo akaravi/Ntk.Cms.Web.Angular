@@ -2,11 +2,11 @@
   <div class="text-right mb-3 mr-3">
     <a data-toggle="modal" data-target="#exampleModal" class="btn btn-outline-info">اضافه کردن دیدگاه</a>
     <a *ngIf="dataSource?.Access?.AccessWatchRow"
-       (click)="optionsSearch.data.hidden=!optionsSearch.data.hidden"
+       (click)="optionsSearch.data.hidden=!optionsSearch.data.show"
        class="btn btn-raised mr-1 shadow-z-2 btn-success special-search">
       <i class="fa fa-search fontavesome-small "></i>&nbsp;جستجوی پیشرفته&nbsp;&nbsp;<i
       id="filter-btn-icon"
-      [className]="optionsSearch.data.hidden ? 'fa fa-toggle-off' : 'fa fa-toggle-on'"
+      [className]="optionsSearch.data.show ? 'fa fa-toggle-off' : 'fa fa-toggle-on'"
       aria-hidden="true"></i>
     </a>
   </div>

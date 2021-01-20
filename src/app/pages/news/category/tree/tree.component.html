@@ -1,13 +1,13 @@
 <div class="button-row">
-    <button *ngIf="dataModelResult.Access.AccessAddRow" (click)="onActionAdd()" type="button" class="btn btn-primary" >اضافه</button>
-    <button *ngIf="dataModelResult.Access.AccessEditRow && dataModelSelect.Id>0" (click)="onActionEdit()" type="button" class="btn btn-warning ml-2" >ویرایش</button>
+    <button *ngIf="dataModelResult.Access.AccessAddRow" (click)="onActionAdd()" type="button" class="btn btn-primary">اضافه</button>
+    <button *ngIf="dataModelResult.Access.AccessEditRow && dataModelSelect.Id>0" (click)="onActionEdit()" type="button" class="btn btn-warning ml-2">ویرایش</button>
     <button *ngIf="dataModelResult.Access.AccessDeleteRow && dataModelSelect.Id>0" (click)="onActionDelete()" type="button" class="btn btn-danger  ml-2">حذف</button>
     <button *ngIf="dataModelResult.Access.AccessWatchRow" (click)="onActionReload()" type="button" class="btn btn-info  ml-2">...</button>
 </div>
 
 <div class="category-tree">
-  <app-progress-spinner class="example-margin" [options]="loading" >
-  </app-progress-spinner>
+    <app-progress-spinner class="example-margin" [options]="loading">
+    </app-progress-spinner>
     <mat-tree *ngIf="!loading.display" class="cursor-pointer" [dataSource]="dataSource" [treeControl]="treeControl">
         <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="onActionSelect(node)" [ngStyle]="{'background': dataModelSelect.Id>0 && dataModelSelect.Id === node.Id ? '#d3d3da' : '' }">
             <button mat-icon-button disabled></button>
@@ -30,4 +30,3 @@
         </mat-nested-tree-node>
     </mat-tree>
 </div>
-

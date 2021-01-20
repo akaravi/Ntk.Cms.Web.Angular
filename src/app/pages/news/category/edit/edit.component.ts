@@ -41,7 +41,6 @@ export class NewsCategoryEditComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<NewsCategoryEditComponent>,
     private changeDetectorRef: ChangeDetectorRef,
-
     private activatedRoute: ActivatedRoute,
     public coreEnumService: CoreEnumService,
     public newsCategoryService: NewsCategoryService,
@@ -82,6 +81,7 @@ export class NewsCategoryEditComponent implements OnInit {
 
     this.tree = new TreeModel(treeConfig);
   }
+
   tree: TreeModel;
   appLanguage = 'fa';
   formMatcher = new CmsFormsErrorStateMatcher();
@@ -200,6 +200,7 @@ export class NewsCategoryEditComponent implements OnInit {
         if (next.IsSuccess) {
           this.formInfo.FormAlert = 'ثبت با موفقت انجام شد';
           this.toastrService.typeSuccessAdd();
+          this.dialogRef.close({ dialogChangedDate: true });
         } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
@@ -224,6 +225,8 @@ export class NewsCategoryEditComponent implements OnInit {
         if (next.IsSuccess) {
           this.formInfo.FormAlert = 'ثبت با موفقت انجام شد';
           this.toastrService.typeSuccessEdit();
+          this.dialogRef.close({ dialogChangedDate: true });
+
         } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
@@ -251,6 +254,6 @@ export class NewsCategoryEditComponent implements OnInit {
 
   }
   onFormCancel(): void {
-    this.dialogRef.close();
+    this.dialogRef.close({ dialogChangedDate: false });
   }
 }

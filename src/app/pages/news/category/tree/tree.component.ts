@@ -115,9 +115,12 @@ export class CategoryComponent implements OnInit {
     }
   }
   onActionReload(): void {
-    // if (this.dataModelSelect && this.dataModelSelect.Id > 0) {
-    //   this.onActionSelect(null);
-    // }
+    if (this.dataModelSelect && this.dataModelSelect.Id > 0) {
+      this.onActionSelect(this.dataModelSelect);
+    }
+    else {
+      this.onActionSelect(null);
+    }
     this.dataModelSelect = new NewsCategoryModel();
     this.optionsData.data.Select = new NewsCategoryModel();
     this.DataGetAll();
@@ -141,7 +144,9 @@ export class CategoryComponent implements OnInit {
     const dialogRef = this.dialog.open(NewsCategoryEditComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(result => {
       // console.log(`Dialog result: ${result}`);
-      this.DataGetAll();
+      if (result && result.dialogChangedDate) {
+        this.DataGetAll();
+      }
     });
   }
 
@@ -165,7 +170,9 @@ export class CategoryComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       // console.log(`Dialog result: ${result}`);
-      this.DataGetAll();
+      if (result && result.dialogChangedDate) {
+        this.DataGetAll();
+      }
     });
   }
 
@@ -189,7 +196,9 @@ export class CategoryComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       // console.log(`Dialog result: ${result}`);
-      this.DataGetAll();
+      if (result && result.dialogChangedDate) {
+        this.DataGetAll();
+      }
     });
   }
 
