@@ -3,14 +3,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from './material/material.module';
-import { CmsExportContentListComponent } from './cmsExportContentList/cmsExportContentList.component';
-import { CmsStatistContentListComponent } from './cmsStatistContentList/cmsStatistContentList.component';
-import { CmsSearchContentListComponent } from './cmsSearchContentList/cmsSearchContentList.component';
+
 import { NgxQueryBuilderModule } from 'ngx-query-builder';
 
 import { TreeModule } from '@circlon/angular-tree-component';
 import { TruncatePipe } from '../core/pipe/truncate.pipe';
 import { PersianDate } from '../core/pipe/PersianDatePipe/persian-date.pipe';
+import { CmsSearchListComponent } from './cmsSearchList/cmsSearchList.component';
+import { CmsStatistListComponent } from './cmsStatistList/cmsStatistList.component';
+import { CmsExportListComponent } from './cmsExportList/cmsExportList.component';
 
 
 
@@ -30,9 +31,9 @@ import { PersianDate } from '../core/pipe/PersianDatePipe/persian-date.pipe';
   declarations: [
     // common and shared components/directives/pipes between more than one module and components will be listed here.
     TruncatePipe,
-    CmsSearchContentListComponent,
-    CmsStatistContentListComponent,
-    CmsExportContentListComponent,
+    CmsSearchListComponent,
+    CmsStatistListComponent,
+    CmsExportListComponent,
     PersianDate,
 
   ],
@@ -45,9 +46,9 @@ import { PersianDate } from '../core/pipe/PersianDatePipe/persian-date.pipe';
     TreeModule,
     TruncatePipe,
     PersianDate,
-    CmsSearchContentListComponent,
-    CmsStatistContentListComponent,
-    CmsExportContentListComponent
+    CmsSearchListComponent,
+    CmsStatistListComponent,
+    CmsExportListComponent
   ],
   /* No providers here! Since they’ll be already provided in AppModule. */
 })

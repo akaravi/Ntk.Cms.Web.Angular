@@ -2,7 +2,9 @@ import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {NewsComponent} from './news.component';
 // import {CategoryResolver} from './category/tree/category.resolver';
-import { ContentComponent } from './content/list/list.component';
+import { NewsContentListComponent } from './content/list/list.component';
+import { NewsCommentListComponent } from './comment/list/list.component';
+
 
 const routes: Routes = [
   {
@@ -13,8 +15,15 @@ const routes: Routes = [
         path: 'content',
         // resolve: {categoryList: CategoryResolver},
         // loadChildren: () =>    import('./content/content.module').then(m => m.ContentModule)
-        component: ContentComponent
+        component: NewsContentListComponent
       },
+      {
+        path: 'comment/:id',
+        // resolve: {categoryList: CategoryResolver},
+        // loadChildren: () =>    import('./content/content.module').then(m => m.ContentModule)
+        component: NewsCommentListComponent
+      },
+
     ]
   },
 ];

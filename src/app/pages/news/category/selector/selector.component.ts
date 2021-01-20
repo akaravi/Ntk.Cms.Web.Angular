@@ -12,11 +12,11 @@ import { ComponentOptionSelectorModel } from 'src/app/core/cmsComponentModels/ba
 
 
 @Component({
-  selector: 'app-news-category-select',
-  templateUrl: './select.component.html',
-  styleUrls: ['./select.component.css']
+  selector: 'app-news-category-selector',
+  templateUrl: './selector.component.html',
+  styleUrls: ['./selector.component.css']
 })
-export class NewsCategorySelectComponent implements OnInit {
+export class NewsCategorySelectorComponent implements OnInit {
   public optionsData: ComponentOptionSelectorModel<NewsCategoryModel> = new ComponentOptionSelectorModel<NewsCategoryModel>();
   @Output()
   // tslint:disable-next-line: max-line-length

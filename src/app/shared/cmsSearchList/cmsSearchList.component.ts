@@ -7,19 +7,19 @@ import {
 } from '@angular/core';
 import { RuleSet, QueryBuilderFieldMap, Rule } from 'ngx-query-builder';
 import { AccessModel, EnumClauseType, FilterDataModel } from 'ntk-cms-api';
-import { ComponentOptionSearchContentModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchContentModel';
+import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 
 @Component({
-  selector: 'app-cms-search-content-list',
-  templateUrl: './cmsSearchContentList.component.html',
-  styleUrls: ['./cmsSearchContentList.component.scss'],
+  selector: 'app-cms-search-list',
+  templateUrl: './cmsSearchList.component.html',
+  styleUrls: ['./cmsSearchList.component.scss'],
 })
-export class CmsSearchContentListComponent implements OnInit {
-  public optionsData: ComponentOptionSearchContentModel = new ComponentOptionSearchContentModel();
-  @Output() optionsChange: EventEmitter<ComponentOptionSearchContentModel> = new EventEmitter<ComponentOptionSearchContentModel>();
-  @Input() set options(model: ComponentOptionSearchContentModel) {
+export class CmsSearchListComponent implements OnInit {
+  public optionsData: ComponentOptionSearchModel = new ComponentOptionSearchModel();
+  @Output() optionsChange: EventEmitter<ComponentOptionSearchModel> = new EventEmitter<ComponentOptionSearchModel>();
+  @Input() set options(model: ComponentOptionSearchModel) {
     if (!model) {
-      model = new ComponentOptionSearchContentModel();
+      model = new ComponentOptionSearchModel();
     }
     this.optionsData = model;
     this.optionsData.childMethods = {
@@ -27,7 +27,7 @@ export class CmsSearchContentListComponent implements OnInit {
     };
     this.optionsChange.emit(model);
   }
-  get options(): ComponentOptionSearchContentModel {
+  get options(): ComponentOptionSearchModel {
     return this.optionsData;
   }
 

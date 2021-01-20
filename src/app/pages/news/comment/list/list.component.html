@@ -1,10 +1,7 @@
 <div class="row">
-    <div class="col-xl-3">
-        <app-news-category-tree [(options)]="optionsCategoryTree"></app-news-category-tree>
-    </div>
-    <div class="col-xl-9">
+    <div class="col-xl-12">
         <div class="button-row">
-            <button *ngIf="dataModelResult.Access.AccessAddRow && this.optionsCategoryTree.data?.Select?.Id>0" (click)="onActionbuttonNewRow()" type="button" class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">اضافه</button>
+            <button *ngIf="dataModelResult.Access.AccessAddRow && this.parentId>0" (click)="onActionbuttonNewRow()" type="button" class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">اضافه</button>
             <button *ngIf="dataModelResult.Access.AccessEditRow && tableRowSelected.Id>0" (click)="onActionbuttonEditRow()" type="button" class="btn btn-warning ml-2" data-toggle="modal" data-target="#categoryModal">ویرایش</button>
             <button *ngIf="dataModelResult.Access.AccessDeleteRow && tableRowSelected.Id>0" (click)="onActionbuttonDeleteRow()" type="button" class="btn btn-danger  ml-2">حذف</button>
 
@@ -16,10 +13,10 @@
             </a>
             <button (click)="onActionbuttonExport()" type="button" class="btn btn-bg-info BTN">خروجی فایل</button>
             <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">برسی مجدد</button>
+            <button (click)="onActionBackToParent()" type="button" class="btn btn-warning BTN">بازگشت</button>
             <app-cms-search-list [(options)]="optionsSearch"></app-cms-search-list>
             <app-cms-export-list [(options)]="optionsExport"></app-cms-export-list>
             <app-cms-statist-list [(options)]="optionsStatist"></app-cms-statist-list>
-            
         </div>
 
 
@@ -70,7 +67,6 @@
               <td mat-cell *matCellDef="let element" class='Action'>
                 <small>ویرایش</small>|
                 <small>خذف</small>|
-                <small (click)="onClickComment(element.Id)">کامنت</small>|
               </td>
           </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

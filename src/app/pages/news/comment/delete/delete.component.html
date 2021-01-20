@@ -33,9 +33,7 @@
                 </small>
             </div>
             <div class="form-actions" *ngIf="formInfo.FormAllowSubmit">
-                <button type="button" (click)="onFormMove()" [disabled]="!vform.form.valid || formInfo.DisabledButtonSubmitted" class="btn btn-raised btn-primary">
-                    <i class="ft-x"></i> جابجای اطلاعات
-                </button>
+
                 <button type="button" (click)="onFormDelete()" [disabled]="!vform.form.valid || formInfo.DisabledButtonSubmitted" class="btn btn-raised btn-warning mr-1">
                     <i class="fa fa-check-square-o"></i> حذف
                 </button>

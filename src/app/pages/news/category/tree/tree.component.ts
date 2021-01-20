@@ -37,7 +37,7 @@ import { ComponentOptionTreeModel } from 'src/app/core/cmsComponentModels/base/c
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.scss'],
 })
-export class CategoryComponent implements OnInit {
+export class NewsCategoryTreeComponent implements OnInit {
   public optionsData: ComponentOptionTreeModel<NewsCategoryModel> = new ComponentOptionTreeModel<NewsCategoryModel>();
   @Output()
   // tslint:disable-next-line: max-line-length

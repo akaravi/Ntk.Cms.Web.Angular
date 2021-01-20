@@ -3,7 +3,7 @@ import { NewsCommentService, NewsContentModel } from 'ntk-cms-api';
 import { ActivatedRoute } from '@angular/router';
 import { FilterModel, FilterDataModel } from 'ntk-cms-api';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { ComponentOptionSearchContentModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchContentModel';
+import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 
 
 @Component({
@@ -27,7 +27,7 @@ export class NewsCommentComponent implements OnInit {
   flag = false;
 
   tableContentSelected = [];
-  optionsSearch: ComponentOptionSearchContentModel = new ComponentOptionSearchContentModel();
+  optionsSearch: ComponentOptionSearchModel = new ComponentOptionSearchModel();
 
   constructor(private newsCommentService: NewsCommentService,
               private activatedRoute: ActivatedRoute,

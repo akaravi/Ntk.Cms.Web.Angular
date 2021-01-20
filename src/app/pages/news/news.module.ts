@@ -23,7 +23,6 @@ import {
   NewsShareServerCategoryService
 } from 'ntk-cms-api';
 import { NewsCategoryEditComponent } from './category/edit/edit.component';
-import { NewsCategorySelectComponent } from './category/select/select.component';
 import { NewsCategoryDeleteComponent } from './category/delete/delete.component';
 import { NewsCommentComponent } from './comment/comment.component';
 import { NewsContentEditComponent } from './content/edit/edit.component';
@@ -32,23 +31,30 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { TreeviewModule } from 'ngx-treeview';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { ContentComponent } from './content/list/list.component';
-import { CategoryComponent } from './category/tree/tree.component';
+
 import { ProgressSpinnerModule } from 'src/app/shared/progress-spinner/progress-spinner.module';
 import { CmsFileManagerModule } from 'ntk-cms-filemanager';
+import { NewsCategorySelectorComponent } from './category/selector/selector.component';
+import { NewsContentListComponent } from './content/list/list.component';
+import { NewsCategoryTreeComponent } from './category/tree/tree.component';
+import { NewsCommentListComponent } from './comment/list/list.component';
+import { NewsCommentDeleteComponent } from './comment/delete/delete.component';
+import { NewsCommentEditComponent } from './comment/edit/edit.component';
 
 @NgModule({
   declarations: [
     NewsComponent,
     NewsContentAddComponent,
     NewsContentEditComponent,
+    NewsContentListComponent,
+    NewsCategoryTreeComponent,
+    NewsCategorySelectorComponent,
     NewsCategoryEditComponent,
-    NewsCategorySelectComponent,
     NewsCategoryDeleteComponent,
     NewsCommentComponent,
-    ContentComponent,
-    CategoryComponent,
-
+    NewsCommentListComponent,
+    NewsCommentDeleteComponent
+    NewsCommentEditComponent
   ],
   imports: [
     NewsRoutingModule,
