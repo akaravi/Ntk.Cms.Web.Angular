@@ -28,7 +28,6 @@ import { NewsCommentComponent } from './comment/comment.component';
 import { NewsContentEditComponent } from './content/edit/edit.component';
 import { NewsContentAddComponent } from './content/add/add.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { TreeviewModule } from 'ngx-treeview';
 import { SharedModule } from 'src/app/shared/shared.module';
 
@@ -40,6 +39,7 @@ import { NewsCategoryTreeComponent } from './category/tree/tree.component';
 import { NewsCommentListComponent } from './comment/list/list.component';
 import { NewsCommentDeleteComponent } from './comment/delete/delete.component';
 import { NewsCommentEditComponent } from './comment/edit/edit.component';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 @NgModule({
   declarations: [
@@ -63,10 +63,9 @@ import { NewsCommentEditComponent } from './comment/edit/edit.component';
      ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
     TreeviewModule.forRoot(),
     SharedModule.forRoot(),
-
+    AngularEditorModule ,
     TagInputModule,
     LeafletModule,
-    CKEditorModule,
 
     ProgressSpinnerModule,
     CmsFileManagerModule

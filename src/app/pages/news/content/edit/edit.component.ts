@@ -48,20 +48,21 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
   id = 0;
 
   ngOnInit(): void {
+    this.id = Number(this.activatedRoute.snapshot.paramMap.get('id'));
+
     this.singUpContentForm = new FormGroup({
       status: new FormControl(this.dataModel.RecordStatus),
       title: new FormControl(this.dataModel.Title),
       description: new FormControl(this.dataModel.Description),
       tag: new FormControl(null),
       keyWords: new FormControl(null),
-      ckeditor: new FormControl(this.dataModel.Body),
       fromDate: new FormControl(this.dataModel.CreatedDate),
       expireDate: new FormControl(this.dataModel.ExpireDate)
     });
 
-    this.activatedRoute.queryParams.subscribe((params) => {
-      this.id = +params.id || 0;
-    });
+    // this.activatedRoute.queryParams.subscribe((params) => {
+    //   this.id = +params.id || 0;
+    // });
     if (this.id === 0) {
       this.toasterService.typeErrorEditRowIsNull();
       return;
@@ -152,7 +153,6 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
     // this.dataModel.FromDate = this.FromDate.nativeElement.value;
     // this.dataModel.ExpireDate = this.expireDate.nativeElement.value;
     this.dataModel.RecordStatus = this.singUpContentForm.get('status').value;
-    this.dataModel.Body = this.singUpContentForm.get('ckeditor').value;
     this.dataModel.Geolocationlatitude = this.lat;
     this.dataModel.Geolocationlongitude = this.lon;
     // this.dataModel.Id = this.newsNetwork.model.Id;

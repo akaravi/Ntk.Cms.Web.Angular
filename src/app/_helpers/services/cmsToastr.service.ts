@@ -59,6 +59,14 @@ export class CmsToastrService {
     this.toastr.error(message, 'Error!');
   }
 
+  typeErrorFormInvalid(str: string = ''): void {
+    let message = 'مقادیر فرم مورد تایید نمی باشد';
+    if (str && str.length > 0) {
+      message = message + ' error: ' + str;
+    }
+    this.toastr.error(message, 'Error!');
+  }
+
   typeErrorGetOne(str: string = ''): void {
     let message = 'خطا در دریافت ردیف ';
     if (str && str.length > 0) {

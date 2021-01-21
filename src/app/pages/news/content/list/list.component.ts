@@ -155,10 +155,7 @@ export class NewsContentListComponent implements OnInit {
       this.toastrService.toastr.error(message, title);
       return;
     }
-    this.router.navigate(['add'], {
-      relativeTo: this.activatedRoute,
-      queryParams: { parentId: this.optionsCategoryTree.data.Select.Id },
-    });
+    this.router.navigate(['/news/content/add', this.optionsCategoryTree.data.Select.Id]);
   }
 
   onActionbuttonEditRow(): void {
@@ -179,10 +176,13 @@ export class NewsContentListComponent implements OnInit {
       return;
     }
 
-    this.router.navigate(['edit'], {
-      relativeTo: this.activatedRoute,
-      queryParams: { id: this.tableRowSelected.Id },
-    });
+
+    // this.router.navigate(['edit'], {
+    //   relativeTo: this.activatedRoute,
+    //   queryParams: { id: this.tableRowSelected.Id },
+    // });
+    this.router.navigate(['/news/content/edit', this.tableRowSelected.Id]);
+
   }
   onActionbuttonDeleteRow(): void {
     if (this.tableRowSelected == null || this.tableRowSelected.Id === 0) {
