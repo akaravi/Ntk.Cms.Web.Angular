@@ -71,7 +71,7 @@ export class NewsCategorySelectorComponent implements OnInit {
   }
   DataGetAll(text: string | number | any): Observable<NewsCategoryModel[]> {
     const filteModel = new FilterModel();
-    filteModel.RowPerPage = 200;
+    filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
     // this.loading.backdropEnabled = false;
     if (text && typeof text === 'string' && text.length > 0) {
@@ -85,13 +85,15 @@ export class NewsCategorySelectorComponent implements OnInit {
       const aaa = {
         PropertyName: 'Title',
         Value: text,
-        SearchType: 5
+        SearchType: 5,
+        ClauseType: 1
       };
       filteModel.Filters.push(aaa as FilterDataModel);
       const nnn = {
         PropertyName: 'Id',
         Value: text,
-        SearchType: 1
+        SearchType: 1,
+        ClauseType: 1
       };
       filteModel.Filters.push(nnn as FilterDataModel);
     }

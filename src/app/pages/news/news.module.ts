@@ -8,6 +8,7 @@ import {TagInputModule} from 'ngx-chips';
 
 import {
   CoreEnumService,
+  CoreModuleTagService,
   NewsCategoryService,
   NewsCommentService,
   NewsConfigurationService,
@@ -86,7 +87,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     NewsShareReciverCategoryService,
     NewsShareServerCategoryService,
     CoreEnumService,
-    // NodeClickedService
+    CoreModuleTagService
   ]
 })
 export class NewsModule { }

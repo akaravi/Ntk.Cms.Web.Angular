@@ -2,12 +2,15 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angula
 import * as Leaflet from 'leaflet';
 import { environment } from '../../../../../environments/environment';
 import { FormControl, FormGroup } from '@angular/forms';
-import { CoreEnumService, EnumModel, ErrorExceptionResult, FormInfoModel, NewsContentModel, NewsContentService } from 'ntk-cms-api';
+import { CoreEnumService, CoreModuleTagService, EnumModel, ErrorExceptionResult, FilterModel, FormInfoModel, NewsContentModel, NewsContentService, FilterDataModel, CoreModuleTagModel } from 'ntk-cms-api';
 import { ActivatedRoute } from '@angular/router';
 import KTWizard from '../../../../../assets/js/components/wizard';
 import { KTUtil } from '../../../../../assets/js/components/util';
 import { CmsToastrService } from 'src/app/_helpers/services/cmsToastr.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { ConfigInterface, DownloadModeEnum, NodeInterface, TreeModel } from 'ntk-cms-filemanager';
 
 
 @Component({
@@ -18,59 +21,87 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
 })
 export class NewsContentAddComponent implements OnInit, AfterViewInit {
 
+
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    public coreEnumService: CoreEnumService,
+    public coreModuleTagService: CoreModuleTagService,
+    private newsContentService: NewsContentService,
+    private toasterService: CmsToastrService
+  ) {
+    // this.dataModel.Body = ' Hello World';
+    const treeConfig: ConfigInterface = {
+      baseURL: 'https://apicms.ir/api/v1/',
+      baseUploadURL: 'https://apifile.ir/api/v1/',
+      api: {
+        listFile: 'FileContent/GetAll',
+        listFolder: 'FileCategory/GetAll',
+        uploadFile: 'upload',
+        downloadFile: 'download',
+        deleteFile: 'FileContent',
+        deleteFolder: 'FileCategory',
+        createFolder: 'FileCategory',
+        createFile: 'FileContent',
+        getOneFile: 'FileContent',
+        getOneFolder: 'FileCategory',
+        renameFile: 'FileContent',
+        renameFolder: 'FileCategory',
+        searchFiles: 'FileCategory/GetAll',
+      },
+      options: {
+        allowFolderDownload: DownloadModeEnum.DOWNLOAD_FILES,
+        showFilesInsideTree: false,
+        showSelectFile: true,
+        showSelectFolder: false,
+        showSelectFileType: [],
+        title: 'فایل را انتخاب کنید',
+      },
+    };
+
+    this.fileManagerTree = new TreeModel(treeConfig);
+  }
+
   @ViewChild('wizard', { static: true }) el: ElementRef;
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
   dataModelResult: ErrorExceptionResult<NewsContentModel> = new ErrorExceptionResult<NewsContentModel>();
+  dataTagModelResult: ErrorExceptionResult<CoreModuleTagModel> = new ErrorExceptionResult<CoreModuleTagModel>();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
 
   loadingStatus = false;
   dataModel = new NewsContentModel();
   linkCategoryId: number;
   formInfo: FormInfoModel = new FormInfoModel();
-  items = ['Javascript', 'Typescript'];
   theMarker: any;
   map: Leaflet.Map;
   model: any;
   lat: any;
   lon: any;
   wizard: any;
-
-
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    public coreEnumService: CoreEnumService,
-    private newsContentService: NewsContentService,
-    private toasterService: CmsToastrService
-  ) {
-    this.dataModel.Body = ' Hello World';
-
-  }
-
+  fileManagerOpenForm = false;
   parentId = 0;
-
 
   editorConfig: AngularEditorConfig = {
     editable: true,
-      spellcheck: true,
-      height: 'auto',
-      minHeight: '30',
-      maxHeight: 'auto',
-      width: 'auto',
-      minWidth: '0',
-      translate: 'yes',
-      enableToolbar: true,
-      showToolbar: true,
-      placeholder: 'Enter text here...',
-      defaultParagraphSeparator: '',
-      defaultFontName: '',
-      defaultFontSize: '',
-      fonts: [
-        {class: 'arial', name: 'Arial'},
-        {class: 'times-new-roman', name: 'Times New Roman'},
-        {class: 'calibri', name: 'Calibri'},
-        {class: 'comic-sans-ms', name: 'Comic Sans MS'}
-      ],
-      customClasses: [
+    spellcheck: true,
+    height: 'auto',
+    minHeight: '30',
+    maxHeight: 'auto',
+    width: 'auto',
+    minWidth: '0',
+    translate: 'yes',
+    enableToolbar: true,
+    showToolbar: true,
+    placeholder: 'Enter text here...',
+    defaultParagraphSeparator: '',
+    defaultFontName: '',
+    defaultFontSize: '',
+    fonts: [
+      { class: 'arial', name: 'Arial' },
+      { class: 'times-new-roman', name: 'Times New Roman' },
+      { class: 'calibri', name: 'Calibri' },
+      { class: 'comic-sans-ms', name: 'Comic Sans MS' }
+    ],
+    customClasses: [
       {
         name: 'quote',
         class: 'quote',
@@ -93,14 +124,60 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
       ['bold', 'italic'],
       ['fontSize']
     ]
-};
+  };
+
+  fileManagerTree: TreeModel;
+
+  itemsAsObjects = [{ id: 0, display: 'Angular', readonly: true }, { id: 1, display: 'React' }];
+  KeywordModel = [];
+  TagModel = [];
+  appLanguage = 'fa';
+  items = ['Javascript', 'Typescript'];
+  public requestAutocompleteItems = (text: string): Observable<any> => {
+    // const url = `https://api.github.com/search/repositories?q=${text}`;
+    // return this.http
+    //   .get(url)
+    //   .map((data: any) => data.items.map(item => item.full_name));
+    const filteModel = new FilterModel();
+    filteModel.RowPerPage = 20;
+    filteModel.AccessLoad = true;
+    // this.loading.backdropEnabled = false;
+    if (text && typeof text === 'string' && text.length > 0) {
+      const aaa = {
+        PropertyName: 'Title',
+        Value: text,
+        SearchType: 5
+      };
+      filteModel.Filters.push(aaa as FilterDataModel);
+    } else if (text && typeof text === 'number' && text > 0) {
+      const aaa2 = {
+        PropertyName: 'Title',
+        Value: text + '',
+        SearchType: 5,
+        ClauseType: 1
+      };
+      filteModel.Filters.push(aaa2 as FilterDataModel);
+      const aaa3 = {
+        PropertyName: 'Id',
+        Value: text + '',
+        SearchType: 1,
+        ClauseType: 1
+      };
+      filteModel.Filters.push(aaa3 as FilterDataModel);
+    }
+    return this.coreModuleTagService.ServiceGetAll(filteModel).pipe(
+      map((data) => data.ListItems.map(val => ({
+        value: val.Id,
+        display: val.Title
+      })))
+    );
+  }
+  onActionFileSelectedLinkMainImageId(model: NodeInterface): void {
+    this.dataModel.LinkMainImageId = model.id;
+  }
+
   ngOnInit(): void {
-    // this.activatedRoute.queryParams.subscribe((params) => {
-    //     this.parentId = +params.parentId || 0;
-    // });
     this.parentId = Number(this.activatedRoute.snapshot.paramMap.get('parentId'));
-
-
     if (this.parentId === 0) {
       this.toasterService.typeErrorAddRowParentIsNull();
       return;

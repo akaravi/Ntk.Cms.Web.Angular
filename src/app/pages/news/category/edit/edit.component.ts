@@ -79,10 +79,10 @@ export class NewsCategoryEditComponent implements OnInit {
       },
     };
 
-    this.tree = new TreeModel(treeConfig);
+    this.fileManagerTree = new TreeModel(treeConfig);
   }
 
-  tree: TreeModel;
+  fileManagerTree: TreeModel;
   appLanguage = 'fa';
   formMatcher = new CmsFormsErrorStateMatcher();
   formControlRequired = new FormControl('', [
@@ -101,7 +101,7 @@ export class NewsCategoryEditComponent implements OnInit {
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
 
   selected: any;
-  openFormFileManager = false;
+  fileManagerOpenForm = false;
   onActionFileSelected(model: NodeInterface): void {
     this.dataModel.LinkMainImageId = model.id;
     this.selected = model;

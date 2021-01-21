@@ -44,13 +44,13 @@
 
                     <mat-form-field class="example-full-width">
                         <img *ngIf="dataModel?.LinkMainImageIdSrc?.length>0" style="vertical-align:middle;" aria-hidden src="{{dataModel.LinkMainImageIdSrc}}" height="50" width="50" />
-                        <mat-label (click)="openFormFileManager = true">فایل آیکن</mat-label>
-                        <input matInput [(ngModel)]="dataModel.LinkMainImageId" name="dataModel.LinkMainImageId" #LinkMainImageId type="text" placeholder="شناسه فایل آیکن" (click)="openFormFileManager = true" />
+                        <mat-label (click)="fileManagerOpenForm = true">فایل آیکن</mat-label>
+                        <input matInput [(ngModel)]="dataModel.LinkMainImageId" name="dataModel.LinkMainImageId" #LinkMainImageId type="text" placeholder="شناسه فایل آیکن" (click)="fileManagerOpenForm = true" />
                         <mat-icon matSuffix *ngIf="dataModel.LinkMainImageId" matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.LinkMainImageId = ''">close</mat-icon>
-                        <mat-icon matSuffix (click)="openFormFileManager = true">mode_edit</mat-icon>
+                        <mat-icon matSuffix (click)="fileManagerOpenForm = true">mode_edit</mat-icon>
                     </mat-form-field>
 
-                    <cms-file-manager (itemSelected)="onActionFileSelected($event)" [language]="appLanguage" [isPopup]="true" [(openForm)]="openFormFileManager" [tree]="tree" [openFilemanagerButtonLabelKey]="'select'" [openFilemanagerButtonView]="false"></cms-file-manager>
+                    <cms-file-manager (itemSelected)="onActionFileSelected($event)" [language]="appLanguage" [isPopup]="true" [(openForm)]="fileManagerOpenForm" [tree]="fileManagerTree" [openFilemanagerButtonLabelKey]="'select'" [openFilemanagerButtonView]="false"></cms-file-manager>
 
                 </div>
             </div>
