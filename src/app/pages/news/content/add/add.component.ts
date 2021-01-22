@@ -212,7 +212,7 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
         if (invalidElements.length > 0) {
           invalidElements[0].focus();
         }
-        // wizardObj.stop();
+         wizardObj.stop();
       }
       this.viewMap = false;
       setTimeout(() => {

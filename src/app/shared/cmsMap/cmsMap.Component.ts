@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import * as L from 'leaflet';
 import { Map, Control, DomUtil, ZoomAnimEvent , Layer, MapOptions, tileLayer, latLng } from 'leaflet';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-cms-map',
@@ -11,11 +12,11 @@ export class CmsMapComponent implements OnInit, OnDestroy {
   @Output() map$: EventEmitter<Map> = new EventEmitter<Map>();
   @Output() zoom$: EventEmitter<number> = new EventEmitter<number>();
   @Input() options: MapOptions = {
-                      layers: [tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                      layers: [tileLayer(environment.leafletUrl , {
                         opacity: 0.7,
                         maxZoom: 19,
                         detectRetina: true,
-                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        // attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                       })],
                       zoom: 16,
                       center: [32.684985, 51.6359425],
