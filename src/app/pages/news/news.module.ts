@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NewsRoutingModule } from './news-routing.module';
 import { NewsComponent } from './news.component';
-// import {CategoryResolver} from './category/tree/category.resolver';
-import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import {TagInputModule} from 'ngx-chips';
 
 import {
@@ -66,7 +64,6 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     SharedModule.forRoot(),
     AngularEditorModule ,
     TagInputModule,
-    LeafletModule,
 
     ProgressSpinnerModule,
     CmsFileManagerModule

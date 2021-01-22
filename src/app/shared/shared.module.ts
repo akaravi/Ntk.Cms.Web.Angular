@@ -12,6 +12,8 @@ import { PersianDate } from '../core/pipe/PersianDatePipe/persian-date.pipe';
 import { CmsSearchListComponent } from './cmsSearchList/cmsSearchList.component';
 import { CmsStatistListComponent } from './cmsStatistList/cmsStatistList.component';
 import { CmsExportListComponent } from './cmsExportList/cmsExportList.component';
+import { CmsMapComponent } from './cmsMap/cmsMap.Component';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 
 
@@ -23,6 +25,7 @@ import { CmsExportListComponent } from './cmsExportList/cmsExportList.component'
     MaterialModule,
     TreeModule,
     NgxQueryBuilderModule,
+    LeafletModule
 
   ],
   entryComponents: [
@@ -35,7 +38,7 @@ import { CmsExportListComponent } from './cmsExportList/cmsExportList.component'
     CmsStatistListComponent,
     CmsExportListComponent,
     PersianDate,
-
+    CmsMapComponent
   ],
   exports: [
     // common and shared components/directives/pipes between more than one module and components will be listed here.
@@ -48,7 +51,8 @@ import { CmsExportListComponent } from './cmsExportList/cmsExportList.component'
     PersianDate,
     CmsSearchListComponent,
     CmsStatistListComponent,
-    CmsExportListComponent
+    CmsExportListComponent,
+    CmsMapComponent
   ],
   /* No providers here! Since they’ll be already provided in AppModule. */
 })

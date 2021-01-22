@@ -1,6 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import * as Leaflet from 'leaflet';
-import { environment } from '../../../../../environments/environment';
 import { FormControl, FormGroup } from '@angular/forms';
 import {
   CoreEnumService,
@@ -22,7 +21,10 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ConfigInterface, DownloadModeEnum, NodeInterface, TreeModel } from 'ntk-cms-filemanager';
-//https://stackblitz.com/edit/tag-input?file=app%2Fapp.component.css
+// https://stackblitz.com/edit/tag-input?file=app%2Fapp.component.css
+import {Map} from 'leaflet';
+import * as L from 'leaflet';
+
 
 @Component({
   selector: 'app-news-content-add',
@@ -78,15 +80,14 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
   dataTagModelResult: ErrorExceptionResult<CoreModuleTagModel> = new ErrorExceptionResult<CoreModuleTagModel>();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   loadingStatus = false;
-  selectFileTypeMainImage = ['jpg', 'jpeg', 'png']
-  selectFileTypePodcast = ['mp3']
+  selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
+  selectFileTypePodcast = ['mp3'];
   linkCategoryId: number;
   formInfo: FormInfoModel = new FormInfoModel();
   theMarker: any;
-  mapModel: Leaflet.Map;
+
   model: any;
-  lat: any;
-  lon: any;
+
   wizard: any;
   fileManagerOpenForm = false;
   fileManagerOpenFormPodcast = false;
@@ -142,6 +143,10 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
   KeywordModel = [];
   TagModel = [];
   appLanguage = 'fa';
+
+  viewMap = false;
+  private map: Map;
+  private zoom: number;
   public requestAutocompleteItems = (text: string): Observable<any> => {
     const filteModel = new FilterModel();
     filteModel.RowPerPage = 20;
@@ -192,8 +197,8 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
       return;
     }
     this.getEnumRecordStatus();
-  }
 
+  }
   ngAfterViewInit(): void {
     this.wizard = new KTWizard(this.el.nativeElement, {
       startStep: 1
@@ -207,8 +212,13 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
         if (invalidElements.length > 0) {
           invalidElements[0].focus();
         }
-        wizardObj.stop();
+        // wizardObj.stop();
       }
+      this.viewMap = false;
+      setTimeout(() => {
+        KTUtil.scrollTop();
+        this.viewMap = true;
+      }, 700);
     });
 
     // Change event
@@ -216,19 +226,10 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
       setTimeout(() => {
         KTUtil.scrollTop();
       }, 500);
+      this.map.invalidateSize();
+
     });
-    this.mapModel = Leaflet.map('map', { center: [32.684985, 51.6359425], zoom: 16 });
-    Leaflet.tileLayer(environment.leafletUrl).addTo(this.mapModel);
-    this.mapModel.on('click', (e) => {
-      // @ts-ignore
-      this.lat = e.latlng.lat;
-      // @ts-ignore
-      this.lon = e.latlng.lng;
-      if (this.theMarker !== undefined) {
-        this.mapModel.removeLayer(this.theMarker);
-      }
-      this.theMarker = Leaflet.marker([this.lat, this.lon]).addTo(this.mapModel);
-    });
+
   }
 
   getEnumRecordStatus(): void {
@@ -237,6 +238,40 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
     });
   }
 
+  receiveMap(map: Map): void {
+    this.map = map;
+
+    // const marker = L.marker([32.684985, 51.6359425]).addTo(map);
+    // const marker =  L.marker([32.684985, 51.6359425], {
+      // icon: this.icons.online,
+
+    // }).on('click',
+    //   (data) => {
+    //     alert("I have a click.")
+    //   } ).addTo(this.map);
+    this.map.on('click', (e) => {
+      // @ts-ignore
+      const lat = e.latlng.lat;
+      // @ts-ignore
+      const lon = e.latlng.lng;
+      if (this.theMarker !== undefined) {
+        this.map.removeLayer(this.theMarker);
+      }
+      if (lat === this.dataModel.Geolocationlatitude && lon === this.dataModel.Geolocationlongitude){
+        this.dataModel.Geolocationlatitude = null;
+        this.dataModel.Geolocationlongitude = null;
+  return;
+}
+      this.theMarker = Leaflet.marker([lat, lon]).addTo(this.map);
+      this.dataModel.Geolocationlatitude = lat;
+      this.dataModel.Geolocationlongitude = lon;
+    });
+
+  }
+
+  receiveZoom(zoom: number): void {
+    this.zoom = zoom;
+  }
   onFormSubmit(): void {
     if (this.parentId === 0) {
       this.toasterService.typeErrorAddRowParentIsNull();
@@ -249,9 +284,6 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
   }
 
   DataAddContent(): void {
-
-    this.dataModel.Geolocationlatitude = this.lat;
-    this.dataModel.Geolocationlongitude = this.lon;
     if (this.linkCategoryId <= 0) {
       this.toasterService.toastr.error(
         'دسته بندی را مشخص کنید',
@@ -286,7 +318,6 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
         }
       );
   }
-
 
 
 }

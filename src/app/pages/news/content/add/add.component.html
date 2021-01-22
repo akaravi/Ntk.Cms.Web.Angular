@@ -234,10 +234,12 @@
 
                     <!--begin: ویزارد گام 4-->
                     <div class="pb-5" data-wizard-type="step-content">
-                      <div id="map"></div>
-                      <div class="map-container">
-                        <div class="map-frame"></div>
-                      </div>
+
+                      <app-cms-map *ngIf="viewMap"
+                      (map$)="receiveMap($event)"
+                      (zoom$)="receiveZoom($event)"
+                      id='main-map'
+                      ></app-cms-map>
                     </div>
                     <!--end: ویزارد گام 4-->
 

@@ -38,9 +38,18 @@ textarea{
 tag-input{
   width: 1000px;
 }
-#map {
-
-  height: 300px;
+//Fix personnal bug leaflet
+.leaflet-pane{
+  img{
+      position: absolute !important;
+  }
+}
+.fs-container {
+  width:100%;
+  height:100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
 }
 .lbl-content{
   width: 100px;

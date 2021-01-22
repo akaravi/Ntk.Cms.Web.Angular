@@ -1,9 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CoreEnumService, EnumModel, ErrorExceptionResult, FormInfoModel, NewsCategoryModel, NewsContentModel, NewsContentService } from 'ntk-cms-api';
 import { FormControl, FormGroup } from '@angular/forms';
-import * as Leaflet from 'leaflet';
 import { environment } from '../../../../../environments/environment';
-import { icon } from 'leaflet';
 import { ActivatedRoute } from '@angular/router';
 import { CmsToastrService } from 'src/app/_helpers/services/cmsToastr.service';
 import { ComponentOptionSelectorModel } from 'src/app/core/cmsComponentModels/base/componentOptionSelectorModel';
@@ -27,9 +25,7 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
   linkCategoryId: number;
   formInfo: FormInfoModel = new FormInfoModel();
   singUpContentForm: FormGroup;
-  items = ['Javascript', 'Typescript'];
   theMarker: any;
-  map: Leaflet.Map;
   model: any;
   lat: any;
   lon: any;
@@ -74,33 +70,8 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
 
 
   ngAfterViewInit(): void {
-    if (this.dataModel.Geolocationlatitude !== undefined && this.dataModel.Geolocationlongitude !== undefined) {
-      this.map = Leaflet.map('map', {
-        center: [this.dataModel.Geolocationlatitude, this.dataModel.Geolocationlongitude],
-        zoom: 16
-      });
-    } else {
-      this.map = Leaflet.map('map', {
-        center: [32.6539, 51.6660],
-        zoom: 16
-      });
-    }
 
-    Leaflet.tileLayer(environment.leafletUrl).addTo(this.map);
-    if (this.dataModel.Geolocationlatitude !== undefined && this.dataModel.Geolocationlongitude !== undefined) {
-      this.theMarker = Leaflet.marker([this.dataModel.Geolocationlatitude,
-      this.dataModel.Geolocationlongitude]).addTo(this.map);
-    }
-    this.map.on('click', (e) => {
-      // @ts-ignore
-      this.lat = e.latlng.lat;
-      // @ts-ignore
-      this.lon = e.latlng.lng;
-      if (this.theMarker !== undefined) {
-        this.map.removeLayer(this.theMarker);
-      }
-      this.theMarker = Leaflet.marker([this.lat, this.lon]).addTo(this.map);
-    });
+
   }
 
   getEnumRecordStatus(): void {
