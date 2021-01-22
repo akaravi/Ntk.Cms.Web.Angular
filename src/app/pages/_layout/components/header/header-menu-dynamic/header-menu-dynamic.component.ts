@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { LayoutService, DynamicHeaderMenuService } from '../../../../../_metronic/core';
+import { LayoutService, DynamicHeaderMenuService } from '../../../../../core';
 
 @Component({
   selector: 'app-header-menu-dynamic',

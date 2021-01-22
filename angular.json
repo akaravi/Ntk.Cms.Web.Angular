@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "CMS": {
+    "ntk-cms-web": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -39,7 +39,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/CMS",
+            "outputPath": "dist/ntk-cms-web",
             "allowedCommonJsDependencies": [
               "object-path",
               "apexcharts",
@@ -104,18 +104,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "CMS:build"
+            "browserTarget": "ntk-cms-web:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "CMS:build:production"
+              "browserTarget": "ntk-cms-web:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "CMS:build"
+            "browserTarget": "ntk-cms-web:build"
           }
         },
         "test": {
@@ -157,18 +157,18 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "CMS:serve"
+            "devServerTarget": "ntk-cms-web:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "CMS:serve:production"
+              "devServerTarget": "ntk-cms-web:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "CMS",
+  "defaultProject": "ntk-cms-web",
   "cli": {
     "analytics": "3dd7735d-1770-477a-b339-339c081b6e32"
   }

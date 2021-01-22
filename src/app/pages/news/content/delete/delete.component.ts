@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { CoreEnumService, FormInfoModel, ItemState, NewsContentModel, NewsContentService } from 'ntk-cms-api';
-import { CmsToastrService } from 'src/app/_helpers/services/cmsToastr.service';
+import { CmsToastrService } from 'src/app/core/helpers/services/cmsToastr.service';
 
 @Component({
   selector: 'app-news-content-delete',

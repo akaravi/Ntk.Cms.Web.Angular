@@ -9,7 +9,7 @@ import {locale as frLang} from './modules/i18n/vocabs/fr';
 import {locale as faLang} from './modules/i18n/vocabs/fa';
 import {CoreAuthService, EnumDeviceType, EnumOperatingSystemType, TokenDeviceClientInfoDtoModel} from 'ntk-cms-api';
 import {environment} from '../environments/environment';
-import {SplashScreenService} from './_metronic/partials/layout/splash-screen/splash-screen.service';
+import {SplashScreenService} from './core/partials/layout/splash-screen/splash-screen.service';
 import {Subscription} from 'rxjs';
 import {NavigationEnd, Router} from '@angular/router';
 

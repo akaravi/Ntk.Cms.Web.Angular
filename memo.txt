@@ -8,10 +8,12 @@ git push -u origin main
 
 
 
-===================RTL 
+===================RTL
 npm run rtl
+=========================================
+ng build  --prod
 
-
+=========================================
 
 ============================ this only ok
 Press the windows-button on your keyboard.
@@ -22,7 +24,7 @@ Run the following command and confirm with ‘Y’
 
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
 ============================
-path Add 
+path Add
 %appdata%\npm
 =======================
 setx path "%path%;%appdata%\npm

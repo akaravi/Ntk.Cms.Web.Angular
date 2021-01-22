@@ -26,11 +26,8 @@ body{
 @import "./assets/plugins/flaticon2/flaticon.css";
 @import "./assets/plugins/keenthemes-icons/font/ki.css";
 
-// Metronic styles (replace these path when using RTL css below)
+//  styles (replace these path when using RTL css below)
 @import "./assets/sass/style.angular.rtl.css";
-
-// For RTL, check this documentation https://keenthemes.com/metronic/?page=docs&section=angular-rtl
-// @import "./assets/sass/style.angular.rtl.css";
 
 // Default Layout themes
 @import "./assets/sass/themes/layout/header/base/light.scss";

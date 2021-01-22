@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { LayoutService } from '../../../../_metronic/core';
+import { LayoutService } from '../../../../core';
 import { CoreAuthService, CoreCpMainMenuModel, CoreCpMainMenuService, ErrorExceptionResult } from 'ntk-cms-api';
 import { ActivatedRoute } from '@angular/router';
 

@@ -14,8 +14,8 @@ import {
 } from 'ntk-cms-api';
 import {environment} from '../../../../../environments/environment';
 import {Router} from '@angular/router';
-import {CmsToastrService} from '../../../../_helpers/services/cmsToastr.service';
-import {PublicHelper} from '../../../../_helpers/services/publicHelper';
+import {CmsToastrService} from '../../../../core/helpers/services/cmsToastr.service';
+import {PublicHelper} from '../../../../core/helpers/services/publicHelper';
 
 
 @Component({

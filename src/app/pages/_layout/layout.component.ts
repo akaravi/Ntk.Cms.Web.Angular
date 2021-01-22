@@ -5,7 +5,7 @@ import {
   ElementRef,
   AfterViewInit,
 } from '@angular/core';
-import { LayoutService, LayoutInitService } from '../../_metronic/core';
+import { LayoutService, LayoutInitService } from '../../core';
 import KTLayoutContent from '../../../assets/js/layout/base/content';
 
 @Component({

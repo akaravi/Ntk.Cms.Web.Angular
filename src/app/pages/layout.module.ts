@@ -13,10 +13,10 @@ import {HeaderMenuDynamicComponent} from './_layout/components/header/header-men
 import {TopbarComponent} from './_layout/components/topbar/topbar.component';
 import {LanguageSelectorComponent} from './_layout/components/topbar/language-selector/language-selector.component';
 import {HeaderMobileComponent} from './_layout/components/header-mobile/header-mobile.component';
-import {ExtrasModule} from '../_metronic/partials/layout/extras/extras.module';
+import {ExtrasModule} from '../core/partials/layout/extras/extras.module';
 import {TranslationModule} from '../modules/i18n/translation.module';
-import {CoreModule} from '../_metronic/core';
-import {SubheaderModule} from '../_metronic/partials/layout/subheader/subheader.module';
+import {CoreModule} from '../core';
+import {SubheaderModule} from '../core/partials/layout/subheader/subheader.module';
 import {SiteModule} from './core/site/site.module';
 import {CoreAuthService, CoreCpMainMenuService} from 'ntk-cms-api';
 

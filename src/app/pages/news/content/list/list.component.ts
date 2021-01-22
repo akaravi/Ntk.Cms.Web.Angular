@@ -10,9 +10,9 @@ import {
   NewsContentService,
   TokenInfoModel,
 } from 'ntk-cms-api';
-import { PublicHelper } from '../../../../_helpers/services/publicHelper';
+import { PublicHelper } from '../../../../core/helpers/services/publicHelper';
 import { ComponentModalDataModel } from 'src/app/core/cmsComponentModels/base/componentModalDataModel';
-import { CmsToastrService } from '../../../../_helpers/services/cmsToastr.service';
+import { CmsToastrService } from '../../../../core/helpers/services/cmsToastr.service';
 import { MatDialog } from '@angular/material/dialog';
 import { NewsContentAddComponent } from '../add/add.component';
 import { ProgressSpinnerModel } from '../../../../core/models/progressSpinnerModel';

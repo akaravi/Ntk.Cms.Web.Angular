@@ -3,7 +3,7 @@ import { CoreEnumService, EnumModel, ErrorExceptionResult, FormInfoModel, NewsCa
 import { FormControl, FormGroup } from '@angular/forms';
 import { environment } from '../../../../../environments/environment';
 import { ActivatedRoute } from '@angular/router';
-import { CmsToastrService } from 'src/app/_helpers/services/cmsToastr.service';
+import { CmsToastrService } from 'src/app/core/helpers/services/cmsToastr.service';
 import { ComponentOptionSelectorModel } from 'src/app/core/cmsComponentModels/base/componentOptionSelectorModel';
 
 @Component({

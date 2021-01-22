@@ -3,7 +3,7 @@ import {KTUtil} from '../../../../../assets/js/components/util.js';
 import KTLayoutAsideToggle from '../../../../../assets/js/layout/base/aside-toggle.js';
 import KTLayoutStickyCard from '../../../../../assets/js/layout/base/sticky-card.js';
 import KTLayoutStretchedCard from '../../../../../assets/js/layout/base/stretched-card.js';
-import {LayoutService} from '../../../../_metronic/core';
+import {LayoutService} from '../../../../core';
 import KTLayoutBrand from '../../../../../assets/js/layout/base/brand.js';
 import KTLayoutAside from '../../../../../assets/js/layout/base/aside.js';
 import KTLayoutAsideMenu from '../../../../../assets/js/layout/base/aside-menu.js';
