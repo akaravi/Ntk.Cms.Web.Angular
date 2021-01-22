@@ -2,7 +2,18 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angula
 import * as Leaflet from 'leaflet';
 import { environment } from '../../../../../environments/environment';
 import { FormControl, FormGroup } from '@angular/forms';
-import { CoreEnumService, CoreModuleTagService, EnumModel, ErrorExceptionResult, FilterModel, FormInfoModel, NewsContentModel, NewsContentService, FilterDataModel, CoreModuleTagModel } from 'ntk-cms-api';
+import {
+  CoreEnumService,
+  CoreModuleTagService,
+  EnumModel,
+  ErrorExceptionResult,
+  FilterModel,
+  FormInfoModel,
+  NewsContentModel,
+  NewsContentService,
+  FilterDataModel,
+  CoreModuleTagModel
+} from 'ntk-cms-api';
 import { ActivatedRoute } from '@angular/router';
 import KTWizard from '../../../../../assets/js/components/wizard';
 import { KTUtil } from '../../../../../assets/js/components/util';
@@ -11,7 +22,7 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ConfigInterface, DownloadModeEnum, NodeInterface, TreeModel } from 'ntk-cms-filemanager';
-
+//https://stackblitz.com/edit/tag-input?file=app%2Fapp.component.css
 
 @Component({
   selector: 'app-news-content-add',
@@ -53,7 +64,6 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
         showFilesInsideTree: false,
         showSelectFile: true,
         showSelectFolder: false,
-        showSelectFileType: [],
         title: 'فایل را انتخاب کنید',
       },
     };
@@ -63,21 +73,23 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
 
   @ViewChild('wizard', { static: true }) el: ElementRef;
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  dataModel = new NewsContentModel();
   dataModelResult: ErrorExceptionResult<NewsContentModel> = new ErrorExceptionResult<NewsContentModel>();
   dataTagModelResult: ErrorExceptionResult<CoreModuleTagModel> = new ErrorExceptionResult<CoreModuleTagModel>();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
-
   loadingStatus = false;
-  dataModel = new NewsContentModel();
+  selectFileTypeMainImage = ['jpg', 'jpeg', 'png']
+  selectFileTypePodcast = ['mp3']
   linkCategoryId: number;
   formInfo: FormInfoModel = new FormInfoModel();
   theMarker: any;
-  map: Leaflet.Map;
+  mapModel: Leaflet.Map;
   model: any;
   lat: any;
   lon: any;
   wizard: any;
   fileManagerOpenForm = false;
+  fileManagerOpenFormPodcast = false;
   parentId = 0;
 
   editorConfig: AngularEditorConfig = {
@@ -127,21 +139,13 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
   };
 
   fileManagerTree: TreeModel;
-
-  itemsAsObjects = [{ id: 0, display: 'Angular', readonly: true }, { id: 1, display: 'React' }];
   KeywordModel = [];
   TagModel = [];
   appLanguage = 'fa';
-  items = ['Javascript', 'Typescript'];
   public requestAutocompleteItems = (text: string): Observable<any> => {
-    // const url = `https://api.github.com/search/repositories?q=${text}`;
-    // return this.http
-    //   .get(url)
-    //   .map((data: any) => data.items.map(item => item.full_name));
     const filteModel = new FilterModel();
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
-    // this.loading.backdropEnabled = false;
     if (text && typeof text === 'string' && text.length > 0) {
       const aaa = {
         PropertyName: 'Title',
@@ -174,6 +178,11 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
   }
   onActionFileSelectedLinkMainImageId(model: NodeInterface): void {
     this.dataModel.LinkMainImageId = model.id;
+    this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
+  }
+  onActionFileSelectedLinkFilePodcastId(model: NodeInterface): void {
+    this.dataModel.LinkFilePodcastId = model.id;
+    this.dataModel.LinkFilePodcastIdSrc = model.downloadLinksrc;
   }
 
   ngOnInit(): void {
@@ -186,7 +195,6 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-
     this.wizard = new KTWizard(this.el.nativeElement, {
       startStep: 1
     });
@@ -201,11 +209,6 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
         }
         wizardObj.stop();
       }
-      // https://angular.io/guide/forms
-      // https://angular.io/guide/form-validation
-
-      // validate the form and use below function to stop the wizard's step
-      // wizardObj.stop();
     });
 
     // Change event
@@ -214,17 +217,17 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
         KTUtil.scrollTop();
       }, 500);
     });
-    this.map = Leaflet.map('map', { center: [32.684985, 51.6359425], zoom: 16 });
-    Leaflet.tileLayer(environment.leafletUrl).addTo(this.map);
-    this.map.on('click', (e) => {
+    this.mapModel = Leaflet.map('map', { center: [32.684985, 51.6359425], zoom: 16 });
+    Leaflet.tileLayer(environment.leafletUrl).addTo(this.mapModel);
+    this.mapModel.on('click', (e) => {
       // @ts-ignore
       this.lat = e.latlng.lat;
       // @ts-ignore
       this.lon = e.latlng.lng;
       if (this.theMarker !== undefined) {
-        this.map.removeLayer(this.theMarker);
+        this.mapModel.removeLayer(this.theMarker);
       }
-      this.theMarker = Leaflet.marker([this.lat, this.lon]).addTo(this.map);
+      this.theMarker = Leaflet.marker([this.lat, this.lon]).addTo(this.mapModel);
     });
   }
 
@@ -284,8 +287,6 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
       );
   }
 
-  onValueChange(model: any): any {
-    return model.value;
-  }
+
 
 }

@@ -74,13 +74,14 @@ export class NewsCategoryEditComponent implements OnInit {
         showFilesInsideTree: false,
         showSelectFile: true,
         showSelectFolder: false,
-        showSelectFileType: [],
+        // showSelectFileType: [],
         title: 'فایل را انتخاب کنید',
       },
     };
 
     this.fileManagerTree = new TreeModel(treeConfig);
   }
+  selectFileTypeMainImage = ['jpg', 'jpeg', 'png']
 
   fileManagerTree: TreeModel;
   appLanguage = 'fa';
@@ -100,11 +101,11 @@ export class NewsCategoryEditComponent implements OnInit {
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
 
-  selected: any;
   fileManagerOpenForm = false;
   onActionFileSelected(model: NodeInterface): void {
     this.dataModel.LinkMainImageId = model.id;
-    this.selected = model;
+    this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
+
   }
 
   ngOnInit(): void {
