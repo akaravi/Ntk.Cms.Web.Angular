@@ -13,14 +13,5 @@ export class NewsComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  // private map: Map;
-  // private zoom: number;
 
-  // receiveMap(map: Map) {
-  //   this.map = map;
-  // }
-
-  // receiveZoom(zoom: number) {
-  //   this.zoom = zoom;
-  // }
 }

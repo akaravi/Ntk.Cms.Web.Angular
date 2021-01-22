@@ -18,6 +18,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ClipboardModule} from 'ngx-clipboard';
 import { TestModule } from './modules/test/test.module';
 import { NtkSmartModalModule } from 'ngx-ntk-smart-module';
+import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 
 export function getHighlightLanguages(): any {
   return [
@@ -51,7 +52,8 @@ export function getHighlightLanguages(): any {
     NgbModule,
     HighlightModule,
     ClipboardModule,
-    TestModule
+    TestModule,
+
   ],
   providers: [
     CoreAuthService,
@@ -61,6 +63,8 @@ export function getHighlightLanguages(): any {
         languages: getHighlightLanguages,
       },
     },
+    {provide: LocationStrategy, useClass: HashLocationStrategy}
+
   ],
   bootstrap: [AppComponent]
 })
