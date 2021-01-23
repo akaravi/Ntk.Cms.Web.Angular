@@ -19,7 +19,7 @@
             <app-cms-search-list [(options)]="optionsSearch"></app-cms-search-list>
             <app-cms-export-list [(options)]="optionsExport"></app-cms-export-list>
             <app-cms-statist-list [(options)]="optionsStatist"></app-cms-statist-list>
-            
+
         </div>
 
 
@@ -33,6 +33,12 @@
                 <th mat-header-cell *matHeaderCellDef>عکس</th>
                 <td mat-cell *matCellDef="let element">
                     <img *ngIf="element?.LinkMainImageIdSrc?.length>0" style="vertical-align:middle;" aria-hidden src="{{element.LinkMainImageIdSrc}}" height="40" width="40" />
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="Id">
+                <th mat-header-cell *matHeaderCellDef>شناسه</th>
+                <td mat-cell *matCellDef="let element">
+                    {{ element.Id }}
                 </td>
             </ng-container>
             <ng-container matColumnDef="LinkSiteId">

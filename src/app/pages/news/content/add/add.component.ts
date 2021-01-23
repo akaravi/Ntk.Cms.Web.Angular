@@ -16,7 +16,7 @@ import {
   NewsContentTagService,
   NewsContentTagModel
 } from 'ntk-cms-api';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 // import KTWizard from '../../../../../assets/js/components/wizard';
 // import { KTUtil } from '../../../../../assets/js/components/util';
 import { CmsToastrService } from 'src/app/core/helpers/services/cmsToastr.service';
@@ -43,6 +43,7 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
     public coreModuleTagService: CoreModuleTagService,
     private newsContentService: NewsContentService,
     private toasterService: CmsToastrService,
+    private router: Router,
     private newsContentTagService: NewsContentTagService
   ) {
 
@@ -262,22 +263,27 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
   }
 
   DataAddContent(): void {
+debugger;
+this.formInfo.FormAllowSubmit = false;
+this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
+this.formInfo.FormError = '';
+this.loading.display = true;
 
-    this.formInfo.FormAllowSubmit = false;
-    this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
-    this.formInfo.FormError = '';
-    this.loading.display = true;
-    this.newsContentService
+this.newsContentService
       .ServiceAdd(this.dataModel)
       .subscribe(
         (next) => {
           this.loading.display = false;
           this.formInfo.FormAllowSubmit = !next.IsSuccess;
           this.dataModelResult = next;
+
+          debugger;
           if (next.IsSuccess) {
+
             this.formInfo.FormAlert = 'ثبت با موفقت انجام شد';
             this.toasterService.typeSuccessAdd();
             this.DataActionAfterAddContentSuccessful(next.Item);
+            this.router.navigate(['/news/content/']);
           } else {
             this.toasterService.typeErrorAdd(next.ErrorMessage);
           }
@@ -296,9 +302,10 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
       this.TagModel.forEach(x => {
       addModel.Id = model.Id;
       addModel.LinkTagid = x.id;
-      this.newsContentTagService.ServiceAdd(addModel).pipe(
+      return this.newsContentTagService.ServiceAdd(addModel).pipe(
         map(response => {
           console.log(response.ListItems);
+          return;
         }));
       });
     }
@@ -315,16 +322,12 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
     this.parentId = model.Id;
   }
 
-  onStepClick(event: StepperSelectionEvent,stepper: MatStepper): void{
+  onStepClick(event: StepperSelectionEvent, stepper: MatStepper): void{
     if (event.previouslySelectedIndex < event.selectedIndex) {
    if (!this.formGroup.valid) {
         this.toasterService.typeErrorFormInvalid();
-        // const invalidElements = this.el.nativeElement.querySelectorAll('.ng-invalid');
-        // if (invalidElements.length > 0) {
-        //   invalidElements[0].focus();
-        // }
-        setTimeout(() => {           // or do some API calls/ Async events
-          stepper.selectedIndex = 0;
+        setTimeout(() => {
+          stepper.selectedIndex = event.previouslySelectedIndex ;
           // stepper.previous();
         }, 10);
 

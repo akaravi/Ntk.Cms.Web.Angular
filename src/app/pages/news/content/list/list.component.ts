@@ -47,6 +47,7 @@ export class NewsContentListComponent implements OnInit {
 
   displayedColumns: string[] = [
     'LinkMainImageIdSrc',
+    'Id',
     'RecordStatus',
     'Title',
     'CreatedDate',
