@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   CoreAuthService,
@@ -22,6 +22,10 @@ import { ComponentOptionSelectorModel } from 'src/app/core/cmsComponentModels/ba
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/base/componentOptionStatistModel';
 import { ComponentOptionExportModel } from 'src/app/core/cmsComponentModels/base/componentOptionExportModel';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+
 
 
 @Component({
@@ -30,31 +34,18 @@ import { ComponentOptionExportModel } from 'src/app/core/cmsComponentModels/base
   styleUrls: ['./list.component.scss'],
 })
 export class NewsContentListComponent implements OnInit {
-  filteModelContent = new FilterModel();
-  filteModelCategory = new FilterModel();
-  dataModelResult: ErrorExceptionResult<NewsContentModel> = new ErrorExceptionResult<NewsContentModel>();
-  optionsCategoryTree: ComponentOptionTreeModel<NewsCategoryModel> = new ComponentOptionTreeModel<NewsCategoryModel>();
-  modalModel: ComponentModalDataModel = new ComponentModalDataModel();
-  optionsSearch: ComponentOptionSearchModel = new ComponentOptionSearchModel();
-  optionsStatist: ComponentOptionStatistModel = new ComponentOptionStatistModel();
-  optionsExport: ComponentOptionExportModel = new ComponentOptionExportModel();
-  tableContentloading = false;
-  tableRowsSelected: Array<NewsContentModel> = [];
-  tableRowSelected: NewsContentModel = new NewsContentModel();
-  // dateObject: any;
-  loading = new ProgressSpinnerModel();
-  tokenInfo = new TokenInfoModel();
-
-  displayedColumns: string[] = [
-    'LinkMainImageIdSrc',
-    'Id',
-    'RecordStatus',
-    'Title',
-    'CreatedDate',
-    'UpdatedDate',
-    'Action'
-  ];
   // dataSource: any;
+
+
+
+
+
+
+
+
+
+
+
 
   constructor(
     private coreAuthService: CoreAuthService,
@@ -72,7 +63,68 @@ export class NewsContentListComponent implements OnInit {
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
+
   }
+  filteModelContent = new FilterModel();
+  filteModelCategory = new FilterModel();
+  dataModelResult: ErrorExceptionResult<NewsContentModel> = new ErrorExceptionResult<NewsContentModel>();
+  optionsCategoryTree: ComponentOptionTreeModel<NewsCategoryModel> = new ComponentOptionTreeModel<NewsCategoryModel>();
+  modalModel: ComponentModalDataModel = new ComponentModalDataModel();
+  optionsSearch: ComponentOptionSearchModel = new ComponentOptionSearchModel();
+  optionsStatist: ComponentOptionStatistModel = new ComponentOptionStatistModel();
+  optionsExport: ComponentOptionExportModel = new ComponentOptionExportModel();
+  tableContentloading = false;
+  tableRowsSelected: Array<NewsContentModel> = [];
+  tableRowSelected: NewsContentModel = new NewsContentModel();
+  // dateObject: any;
+  loading = new ProgressSpinnerModel();
+  tokenInfo = new TokenInfoModel();
+
+  TabledisplayedColumns: string[] = [
+    'LinkMainImageIdSrc',
+    'Id',
+    'RecordStatus',
+    'Title',
+    'CreatedDate',
+    'UpdatedDate',
+    'Action'
+  ];
+
+  @ViewChild(MatPaginator, { static: true }) tablePaginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) tableSort: MatSort;
+
+
+
+  tablePageEvent: PageEvent;
+  tablePageIndex: number;
+  tablePageSize: number;
+  tableLength: number;
+
+
+  onTableSortData(sort: MatSort): void {
+    debugger;
+    this.tableSort = sort;
+  }
+  public onTablePageingData(event?: PageEvent): void {
+    debugger;
+    // this.fooService.getdata(event).subscribe(
+    //   response =>{
+    //     if(response.error) {
+    //       // handle error
+    //     } else {
+    //       this.datasource = response.data;
+    //       this.pageIndex = response.pageIndex;
+    //       this.pageSize = response.pageSize;
+    //       this.length = response.length;
+    //     }
+    //   },
+    //   error =>{
+    //     // handle error
+    //   }
+    // );
+    // return event;
+  }
+
 
   ngOnInit(): void {
     this.coreAuthService.CurrentTokenInfoBSObs.subscribe((next) => {
@@ -93,14 +145,14 @@ export class NewsContentListComponent implements OnInit {
         if (next.IsSuccess) {
           this.dataModelResult = next;
           if (this.tokenInfo.UserAccessAdminAllowToAllData) {
-            this.displayedColumns = this.publicHelper.listAddIfNotExist(
-              this.displayedColumns,
+            this.TabledisplayedColumns = this.publicHelper.listAddIfNotExist(
+              this.TabledisplayedColumns,
               'LinkSiteId',
               0
             );
           } else {
-            this.displayedColumns = this.publicHelper.listRemoveIfExist(
-              this.displayedColumns,
+            this.TabledisplayedColumns = this.publicHelper.listRemoveIfExist(
+              this.TabledisplayedColumns,
               'LinkSiteId'
             );
           }

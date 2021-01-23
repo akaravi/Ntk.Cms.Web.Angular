@@ -26,61 +26,71 @@
 
         <app-progress-spinner [options]="loading">
         </app-progress-spinner>
-        <table *ngIf="!loading.display" mat-table [dataSource]="dataModelResult.ListItems" class="mat-elevation-z8">
-            <!-- Position Column -->
 
-            <ng-container matColumnDef="LinkMainImageIdSrc">
-                <th mat-header-cell *matHeaderCellDef>عکس</th>
-                <td mat-cell *matCellDef="let element">
-                    <img *ngIf="element?.LinkMainImageIdSrc?.length>0" style="vertical-align:middle;" aria-hidden src="{{element.LinkMainImageIdSrc}}" height="40" width="40" />
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="Id">
-                <th mat-header-cell *matHeaderCellDef>شناسه</th>
-                <td mat-cell *matCellDef="let element">
-                    {{ element.Id }}
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="LinkSiteId">
-                <th mat-header-cell *matHeaderCellDef>شناسه سایت</th>
-                <td mat-cell *matCellDef="let element">
-                    {{ element.LinkSiteId }}
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="RecordStatus">
-                <th mat-header-cell *matHeaderCellDef>وضعیت</th>
-                <td mat-cell *matCellDef="let element">
-                    {{ element.RecordStatus }}
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="Title">
-                <th mat-header-cell *matHeaderCellDef>عنوان</th>
-                <td mat-cell *matCellDef="let element">
-                    {{ element.Title }}
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="CreatedDate">
-                <th mat-header-cell *matHeaderCellDef>ناریخ ایجاد</th>
-                <td mat-cell *matCellDef="let element">
-                    {{ publicHelper.LocaleDate(element.CreatedDate) }}
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="UpdatedDate">
-                <th mat-header-cell *matHeaderCellDef>تاریخ ویرابش</th>
-                <td mat-cell *matCellDef="let element">
-                    {{ publicHelper.LocaleDate(element.UpdatedDate) }}
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="Action">
-              <th mat-header-cell *matHeaderCellDef>...</th>
-              <td mat-cell *matCellDef="let element" class='Action'>
-                <small>ویرایش</small>|
-                <small>خذف</small>|
-                <small (click)="onClickComment(element.Id)">کامنت</small>|
-              </td>
-          </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row (click)="onActionTableRowSelect(row)" [ngStyle]="{'background': row.Id === tableRowSelected.Id ? '#d3d3da' : '' }" *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
+<div class="example-container mat-elevation-z8">
+  <mat-table  *ngIf="!loading.display" [dataSource]="dataModelResult.ListItems" matSort #sort="matSort" (matSortChange)="onTableSortData(sort)">
+    <!-- LinkMainImageIdSrc Column -->
+    <ng-container matColumnDef="LinkMainImageIdSrc">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> عکس </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <img *ngIf="row?.LinkMainImageIdSrc?.length>0" style="vertical-align:middle;" aria-hidden src="{{row.LinkMainImageIdSrc}}" height="40" width="40" />
+
+      </mat-cell>
+  </ng-container>
+      <!-- ID Column -->
+
+    <ng-container matColumnDef="Id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> شناسه </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.Id}} </mat-cell>
+    </ng-container>
+    <!-- LinkSiteId Column -->
+    <ng-container matColumnDef="LinkSiteId">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> شناسه سایت </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.LinkSiteId}} </mat-cell>
+    </ng-container>
+    <!-- RecordStatus Column -->
+    <ng-container matColumnDef="RecordStatus">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> وضعیت </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.RecordStatus}} </mat-cell>
+    </ng-container>
+    <!-- Title Column -->
+    <ng-container matColumnDef="Title">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> عنوان </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.Title}} </mat-cell>
+    </ng-container>
+    <!-- CreatedDate Column -->
+    <ng-container matColumnDef="CreatedDate">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> ناریخ ایجاد </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.CreatedDate) }} </mat-cell>
+    </ng-container>
+    <!-- UpdatedDate Column -->
+    <ng-container matColumnDef="UpdatedDate">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> تاریخ ویرابش </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.UpdatedDate) }}  </mat-cell>
+    </ng-container>
+    <!-- Action Column -->
+    <ng-container matColumnDef="Action">
+      <mat-header-cell *matHeaderCellDef> ... </mat-header-cell>
+      <mat-cell *matCellDef="let row" class='Action'>
+        <small>ویرایش</small>|
+        <small>خذف</small>|
+        <small (click)="onClickComment(row.Id)">کامنت</small>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="TabledisplayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: TabledisplayedColumns;"
+      (click)="onActionTableRowSelect(row)" [ngStyle]="{'background': row.Id === tableRowSelected.Id ? '#d3d3da' : '' }">
+    </mat-row>
+  </mat-table>
+
+  <mat-paginator #paginator
+  [length]="tableLength"
+  [pageIndex]="tablePageIndex"
+  [pageSize]="tablePageSize"
+  [pageSizeOptions]="[5, 10, 25, 100]"
+  (page)="pageEvent = onTablePageingData($event)"></mat-paginator>
+
+</div>
+
     </div>
 </div>
