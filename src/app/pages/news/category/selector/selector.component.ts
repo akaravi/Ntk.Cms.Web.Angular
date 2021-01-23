@@ -33,6 +33,10 @@ export class NewsCategorySelectorComponent implements OnInit {
     this.optionsChange.emit(model);
   }
   get options(): ComponentOptionSelectorModel<NewsCategoryModel> {
+    this.optionsData.childMethods = {
+      ActionReload: () => this.onActionReload(),
+      ActionSelectForce: (id) => this.onActionSelectForce(id),
+    };
     return this.optionsData;
   }
 
@@ -43,16 +47,17 @@ export class NewsCategorySelectorComponent implements OnInit {
 
   loading = new ProgressSpinnerModel();
 
-  myControl = new FormControl();
-  filteredOptions: Observable<NewsCategoryModel[] | void>;
+  formControl = new FormControl();
+  filteredOptions: Observable<NewsCategoryModel[] >;
   constructor(
-    private coreAuthService: CoreAuthService,
-    private toastrService: CmsToastrService,
     public coreEnumService: CoreEnumService,
-    public categoryService: NewsCategoryService) { }
+    public categoryService: NewsCategoryService) {
+
+
+    }
 
   ngOnInit(): void {
-    this.filteredOptions = this.myControl.valueChanges
+    this.filteredOptions = this.formControl.valueChanges
       .pipe(
         startWith(''),
         debounceTime(1000),
@@ -115,16 +120,32 @@ export class NewsCategorySelectorComponent implements OnInit {
       }
     }
   }
+
+push(newvalue: NewsCategoryModel): Observable<NewsCategoryModel[]>
+{
+ return this.filteredOptions.pipe(map(items  => {
+  if (items.find(x => x.Id === newvalue.Id)){
+    return items;
+  }
+  items.push(newvalue);
+  return items;
+  }));
+
+}
   onActionSelectForce(id: number | NewsCategoryModel): void {
     if (typeof id === 'number' && id > 0) {
       this.categoryService.ServiceGetOneById(id).subscribe((next) => {
         if (next.IsSuccess) {
-          this.myControl.setValue(next.Item);
+          this.filteredOptions = this.push(next.Item);
+          this.dataModelSelect = next.Item;
+          this.formControl.setValue(next.Item);
         }
       });
     }
-    if (typeof id === typeof NewsCategoryModel && id > 0) {
-      this.myControl.setValue(id);
+    if (typeof id === typeof NewsCategoryModel) {
+      this.filteredOptions = this.push( (id as NewsCategoryModel));
+      this.dataModelSelect = (id as NewsCategoryModel);
+      this.formControl.setValue( id );
     }
   }
 

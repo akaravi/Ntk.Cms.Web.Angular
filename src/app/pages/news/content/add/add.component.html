@@ -1,282 +1,207 @@
 <div class="d-flex flex-column-fluid">
   <!--begin::Container-->
   <div class="container">
-    <div class="card card-custom card-transparent">
-      <div class="card-body p-0">
-        <!--begin: ویزارد-->
-        <div #wizard class="wizard wizard-4 pb-7" id="kt_wizard_v4" data-wizard-state="first"
-          data-wizard-clickable="true">
-          <!--begin: ویزارد Nav-->
-          <div class="wizard-nav">
-            <div class="wizard-steps">
-              <!--begin::ویزارد گام 1 Nav-->
-              <div class="wizard-step" data-wizard-type="step" data-wizard-state="current">
-                <div class="wizard-wrapper">
-                  <div class="wizard-number">1</div>
-                  <div class="wizard-label">
-                    <div class="wizard-title">اطلاعات الزامی</div>
-                  </div>
-                </div>
-              </div>
-              <!--end::ویزارد گام 1 Nav-->
+    <form (ngSubmit)="onFormSubmit()" #vform="ngForm"
+    class="form mt-0 mt-lg-10 fv-plugins-bootstrap fv-plugins-framework" >
 
-              <!--begin::ویزارد گام 2 Nav-->
-              <div class="wizard-step" data-wizard-type="step" data-wizard-state="pending">
-                <div class="wizard-wrapper">
-                  <div class="wizard-number">2</div>
-                  <div class="wizard-label">
-                    <div class="wizard-title">محتوای موتور های سرچ</div>
-                  </div>
-                </div>
-              </div>
-              <!--end::ویزارد گام 2 Nav-->
+    <mat-horizontal-stepper  (selectionChange)="onStepClick($event,stepper)"  #stepper>
 
-              <!--begin::ویزارد گام 3 Nav-->
-              <div class="wizard-step" data-wizard-type="step" data-wizard-state="pending">
-                <div class="wizard-wrapper">
-                  <div class="wizard-number">3</div>
-                  <div class="wizard-label">
-                    <div class="wizard-title">فایل های پیوست</div>
-                  </div>
-                </div>
-              </div>
-              <!--end::ویزارد گام 3 Nav-->
+      <mat-step label="اطلاعات الزامی" state="phone">
+        <p>Put down your phones.</p>
 
-              <!--begin::ویزارد گام 4 Nav-->
-              <div class="wizard-step" data-wizard-type="step" data-wizard-state="pending">
-                <div class="wizard-wrapper">
-                  <div class="wizard-number">4</div>
-                  <div class="wizard-label">
-                    <div class="wizard-title">موقعیت مکانی</div>
-                  </div>
-                </div>
-              </div>
-              <!--end::ویزارد گام 4 Nav-->
-            </div>
-          </div>
-          <!--end: ویزارد Nav-->
+        <mat-form-field>
+          <mat-select placeholder="وضعیت" [(ngModel)]="dataModel.RecordStatus"
+            name="dataModel.RecordStatus" #RecordStatus="ngModel"
+            panelClass="recordStatus-{{ dataModel.RecordStatus }}" required>
+            <mat-option *ngFor="
+                let item of dataModelEnumRecordStatusResult.ListItems;
+                index as i
+              " [value]="item.Value">{{ item.Key }}</mat-option>
+          </mat-select>
+          <mat-hint align="end">انتخاب وضیعت این محتوا</mat-hint>
+          <mat-error *ngIf="RecordStatus.errors?.required">
+            RecordStatus is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <app-news-category-selector [(options)]="optionsCategorySelector" ></app-news-category-selector>
+        <mat-form-field class="example-full-width">
+          <mat-label>عنوان</mat-label>
+          <input matInput [(ngModel)]="dataModel.Title" name="dataModel.Title" #Title type="text"
+            placeholder="عنوان" minlength="3" maxlength="50" required />
+          <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
+            (click)="dataModel.Title = ''">close</mat-icon>
+          <mat-icon matSuffix>mode_edit</mat-icon>
+          <mat-hint align="end">{{ Title.value.length }} / 50</mat-hint>
+          <mat-error *ngIf="Title.errors?.required">
+            Title is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
 
-          <!--begin: ویزارد Body-->
-          <div class="card card-custom card-shadowless rounded-top-0">
-            <div class="card-body p-0">
-              <div class="row justify-content-center py-8 px-8 py-lg-15 px-lg-10">
-                <div class="col-xl-12 col-xxl-7">
-                  <!--begin: ویزارد Form-->
+        <mat-form-field class="example-full-width">
+          <mat-label>توضیحات</mat-label>
+          <textarea matInput [(ngModel)]="dataModel.Description" name="dataModel.Description" #Description
+            type="text" placeholder="توضیحات" minlength="1" maxlength="100" required rows="5"></textarea>
+          <mat-icon matSuffix *ngIf="dataModel.Description" matSuffix mat-icon-button aria-label="Clear"
+            (click)="dataModel.Description = ''">close</mat-icon>
+          <mat-icon matSuffix>mode_edit</mat-icon>
+          <mat-hint align="end">{{ Description.value.length }} / 100</mat-hint>
+          <mat-error *ngIf="Description.errors?.required">
+            Description is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
 
+        <mat-form-field class="example-full-width">
+          <mat-label>تاریخ شروع</mat-label>
+          <input matInput [matDatepicker]="picker1" [(ngModel)]="dataModel.FromDate"
+            name="dataModel.FromDate" />
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker touchUi #picker1></mat-datepicker>
+        </mat-form-field>
 
-
-
-
-
-
-
-                  <form #vform="ngForm" (ngSubmit)="onFormSubmit()"
-                    class="form mt-0 mt-lg-10 fv-plugins-bootstrap fv-plugins-framework" id="kt_form">
-                    <!--begin: ویزارد گام 1-->
-                    <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
-
-                      <mat-form-field>
-                        <mat-select placeholder="وضعیت" [(ngModel)]="dataModel.RecordStatus"
-                          name="dataModel.RecordStatus" #RecordStatus="ngModel"
-                          panelClass="recordStatus-{{ dataModel.RecordStatus }}" required>
-                          <mat-option *ngFor="
-                              let item of dataModelEnumRecordStatusResult.ListItems;
-                              index as i
-                            " [value]="item.Value">{{ item.Key }}</mat-option>
-                        </mat-select>
-                        <mat-hint align="end">انتخاب وضیعت این محتوا</mat-hint>
-                        <mat-error *ngIf="RecordStatus.errors?.required">
-                          RecordStatus is <strong>required</strong>
-                        </mat-error>
-                      </mat-form-field>
-                      <mat-form-field class="example-full-width">
-                        <mat-label>عنوان</mat-label>
-                        <input matInput [(ngModel)]="dataModel.Title" name="dataModel.Title" #Title type="text"
-                          placeholder="عنوان" minlength="3" maxlength="50" required />
-                        <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
-                          (click)="dataModel.Title = ''">close</mat-icon>
-                        <mat-icon matSuffix>mode_edit</mat-icon>
-                        <mat-hint align="end">{{ Title.value.length }} / 50</mat-hint>
-                        <mat-error *ngIf="Title.errors?.required">
-                          Title is <strong>required</strong>
-                        </mat-error>
-                      </mat-form-field>
-
-                      <mat-form-field class="example-full-width">
-                        <mat-label>توضیحات</mat-label>
-                        <textarea matInput [(ngModel)]="dataModel.Description" name="dataModel.Description" #Description
-                          type="text" placeholder="توضیحات" minlength="1" maxlength="100" required rows="5"></textarea>
-                        <mat-icon matSuffix *ngIf="dataModel.Description" matSuffix mat-icon-button aria-label="Clear"
-                          (click)="dataModel.Description = ''">close</mat-icon>
-                        <mat-icon matSuffix>mode_edit</mat-icon>
-                        <mat-hint align="end">{{ Description.value.length }} / 100</mat-hint>
-                        <mat-error *ngIf="Description.errors?.required">
-                          Description is <strong>required</strong>
-                        </mat-error>
-                      </mat-form-field>
-
-                      <mat-form-field class="example-full-width">
-                        <mat-label>تاریخ شروع</mat-label>
-                        <input matInput [matDatepicker]="picker1" [(ngModel)]="dataModel.FromDate"
-                          name="dataModel.FromDate" />
-                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                        <mat-datepicker touchUi #picker1></mat-datepicker>
-                      </mat-form-field>
-
-                      <mat-form-field class="example-full-width">
-                        <mat-label>تاریخ پاپان</mat-label>
-                        <input matInput [matDatepicker]="picker2" [(ngModel)]="dataModel.ExpireDate"
-                          name="dataModel.ExpireDate" />
-                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                        <mat-datepicker touchUi #picker2></mat-datepicker>
-                      </mat-form-field>
-                      <hr class="pb-5" />
-                      <angular-editor [placeholder]="'Enter text here...'" [config]="editorConfig"
-                        [(ngModel)]="dataModel.Body" name="dataModel.Body"></angular-editor>
+        <mat-form-field class="example-full-width">
+          <mat-label>تاریخ پاپان</mat-label>
+          <input matInput [matDatepicker]="picker2" [(ngModel)]="dataModel.ExpireDate"
+            name="dataModel.ExpireDate" />
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker touchUi #picker2></mat-datepicker>
+        </mat-form-field>
+        <hr class="pb-5" />
+        <angular-editor [placeholder]="'Enter text here...'" [config]="editorConfig"
+          [(ngModel)]="dataModel.Body" name="dataModel.Body"></angular-editor>
 
 
-                    </div>
-                    <!--end: ویزارد گام 1-->
+          <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
+            بعدی
+          </button>
+      </mat-step>
 
-                    <!--begin: ویزارد گام 2-->
-                    <div class="pb-5" data-wizard-type="step-content">
-                      <div class="mb-12 font-weight-bold text-dark">
+      <mat-step label="موتور های سرچ" state="chat">
+        <p>Socialize with each other.</p>
+        <mat-form-field class="example-full-width">
+          <mat-label>آدرس صفحه منبع مطلب</mat-label>
+          <input matInput [(ngModel)]="dataModel.Source" name="dataModel.Source" #Source type="text"
+            dir="ltr" style="text-align: left;" placeholder="لینک وب سایت مرجع محتوا" minlength="3"
+            maxlength="500" />
+          <mat-icon matSuffix *ngIf="dataModel.Source" matSuffix mat-icon-button aria-label="Clear"
+            (click)="dataModel.Source = ''">close</mat-icon>
+          <mat-icon matSuffix>mode_edit</mat-icon>
+          <mat-hint align="end">{{ Source.value.length }} / 500</mat-hint>
 
-                        <mat-form-field class="example-full-width">
-                          <mat-label>آدرس صفحه منبع مطلب</mat-label>
-                          <input matInput [(ngModel)]="dataModel.Source" name="dataModel.Source" #Source type="text"
-                            dir="ltr" style="text-align: left;" placeholder="لینک وب سایت مرجع محتوا" minlength="3"
-                            maxlength="500" />
-                          <mat-icon matSuffix *ngIf="dataModel.Source" matSuffix mat-icon-button aria-label="Clear"
-                            (click)="dataModel.Source = ''">close</mat-icon>
-                          <mat-icon matSuffix>mode_edit</mat-icon>
-                          <mat-hint align="end">{{ Source.value.length }} / 500</mat-hint>
+        </mat-form-field>
 
-                        </mat-form-field>
+        <tag-input [(ngModel)]="TagModel" name="TagModel" [placeholder]="'+ Tag'"
+        [onTextChangeDebounce]="500" [secondaryPlaceholder]="'Search in Tags'"
+        [onlyFromAutocomplete]="true" [identifyBy]="'id'"
+        [displayBy]="'display'">
+        <tag-input-dropdown [autocompleteObservable]="requestAutocompleteItems">
+          <ng-template let-item="item" let-index="index">
+            {{ item.display }}
+          </ng-template>
+        </tag-input-dropdown>
+      </tag-input>
+      {{TagModel|json}}
 
+      <tag-input [(ngModel)]="KeywordModel" name="KeywordModel" [placeholder]="'+ کلمه کلیدی'"
+        [secondaryPlaceholder]="'انتخاب کلمات کلیدی نسبت به مطلب'"
+        [identifyBy]="'display'">
 
-
-                        <tag-input [(ngModel)]="TagModel" name="TagModel" [placeholder]="'+ Tag'"
-                          [onTextChangeDebounce]="500" [secondaryPlaceholder]="'Search in Tags'"
-                          [separatorKeyCodes]="[32, 188]" [onlyFromAutocomplete]="true" [identifyBy]="'id'"
-                          [displayBy]="'display'">
-                          <tag-input-dropdown [autocompleteObservable]="requestAutocompleteItems">
-                            <ng-template let-item="item" let-index="index">
-                              {{ item.display }}
-                            </ng-template>
-                          </tag-input-dropdown>
-                        </tag-input>
-                        {{TagModel|json}}
-
-                        <tag-input [(ngModel)]="KeywordModel" name="KeywordModel" [placeholder]="'+ کلمه کلیدی'"
-                          [secondaryPlaceholder]="'انتخاب کلمات کلیدی نسبت به مطلب'" [separatorKeyCodes]="[32, 188]"
-                          [identifyBy]="'display'">
-
-                        </tag-input>
-                        {{KeywordModel|json}}
-                      </div>
-                    </div>
-                    <!--end: ویزارد گام 2-->
-
-                    <!--begin: ویزارد گام 3-->
-                    <div class="pb-5" data-wizard-type="step-content">
-                      <div class="mb-12 font-weight-bold text-dark">
-                        <div class="mb-3">
-                          <img *ngIf="dataModel?.LinkMainImageIdSrc?.length>0" style="vertical-align:middle;"
-                            aria-hidden src="{{dataModel.LinkMainImageIdSrc}}" height="50" width="50" />
-                        </div>
-                        <div class="mb-9">
-                          <mat-form-field class="example-full-width">
-
-                            <mat-label (click)="fileManagerOpenForm = true">عکس اصلی</mat-label>
-                            <input matInput [(ngModel)]="dataModel.LinkMainImageId" name="dataModel.LinkMainImageId"
-                              #LinkMainImageId type="text" placeholder="شناسه فایل اصلی"
-                              (click)="fileManagerOpenForm = true" />
-                            <mat-icon matSuffix *ngIf="dataModel.LinkMainImageId" matSuffix mat-icon-button
-                              aria-label="Clear" (click)="dataModel.LinkMainImageId = ''">close</mat-icon>
-                            <mat-icon matSuffix (click)="fileManagerOpenForm = true">mode_edit</mat-icon>
-                          </mat-form-field>
-
-                          <cms-file-manager (itemSelected)="onActionFileSelectedLinkMainImageId($event)"
-                            [language]="appLanguage" [isPopup]="true" [(openForm)]="fileManagerOpenForm"
-                            [tree]="fileManagerTree" [openFilemanagerButtonLabelKey]="'select'"
-                            [selectFileType]="selectFileTypeMainImage"
-                            [openFilemanagerButtonView]="false"></cms-file-manager>
-                        </div>
-                        <div class="mb-3">
-                          <audio *ngIf="dataModel?.LinkFilePodcastIdSrc?.length>0" controls>
-                            <source src="{{dataModel.LinkFilePodcastIdSrc}}" type="audio/mp3">
-                            Your browser does not support the audio tag.
-                          </audio>
-                        </div>
-                        <div class="mb-9">
-                          <mat-form-field class="example-full-width">
-                            <input matInput [(ngModel)]="dataModel.LinkFilePodcastId" name="dataModel.LinkFilePodcastId"
-                              #LinkFilePodcastId type="text" placeholder="شناسه فایل صوتی"
-                              (click)="fileManagerOpenFormPodcast = true" />
-                            <mat-icon matSuffix *ngIf="dataModel.LinkFilePodcastId" matSuffix mat-icon-button
-                              aria-label="Clear" (click)="dataModel.LinkFilePodcastId = ''">close</mat-icon>
-                            <mat-icon matSuffix (click)="fileManagerOpenFormPodcast = true">mode_edit</mat-icon>
-                          </mat-form-field>
-
-                          <cms-file-manager (itemSelected)="onActionFileSelectedLinkFilePodcastId($event)"
-                            [language]="appLanguage" [isPopup]="true" [(openForm)]="fileManagerOpenFormPodcast"
-                            [tree]="fileManagerTree" [openFilemanagerButtonLabelKey]="'select'"
-                            [selectFileType]="selectFileTypePodcast"
-                            [openFilemanagerButtonView]="false"></cms-file-manager>
-                        </div>
-
-
-
-                      </div>
-                    </div>
-                    <!--end: ویزارد گام 3-->
-
-                    <!--begin: ویزارد گام 4-->
-                    <div class="pb-5" data-wizard-type="step-content">
-
-                      <app-cms-map *ngIf="viewMap"
-                      (map$)="receiveMap($event)"
-                      (zoom$)="receiveZoom($event)"
-                      id='main-map'
-                      ></app-cms-map>
-                    </div>
-                    <!--end: ویزارد گام 4-->
-
-                    <!--begin: ویزارد اقدامات-->
-                    <div class="d-flex justify-content-between border-top mt-5 pt-10">
-                      <div class="mr-2">
-                        <button type="button" class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
-                          data-wizard-type="action-prev">
-                          قبلی
-                        </button>
-                      </div>
-                      <div>
-                        <button type="submit" class="btn btn-success font-weight-bold text-uppercase px-9 py-4"
-                          data-wizard-type="action-submit">
-                          ذخیره
-                        </button>
-                        <button type="button" class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4"
-                          data-wizard-type="action-next">
-                          بعدی
-                        </button>
-                      </div>
-                    </div>
-                    <!--end: ویزارد اقدامات-->
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                  </form>
-                  <!--end: ویزارد Form-->
-                </div>
-              </div>
-            </div>
-          </div>
-          <!--end: ویزارد Bpdy-->
+      </tag-input>
+      {{KeywordModel|json}}
+        <div>
+          <button type="button"  mat-button matStepperPrevious class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
+          قبلی
+        </button>
+        <button  type="button" [disabled]="!vform.form.valid" mat-button matStepperNext class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
+        بعدی
+      </button>
         </div>
-        <!--end: ویزارد-->
-      </div>
-    </div>
+      </mat-step>
+      <mat-step label="فایل های پیوست" state="chat">
+        <p>Socialize with each other.</p>
+        <div class="mb-3">
+          <img *ngIf="dataModel?.LinkMainImageIdSrc?.length>0" style="vertical-align:middle;"
+            aria-hidden src="{{dataModel.LinkMainImageIdSrc}}" height="50" width="50" />
+        </div>
+        <div class="mb-9">
+          <mat-form-field class="example-full-width">
+
+            <mat-label (click)="fileManagerOpenForm = true">عکس اصلی</mat-label>
+            <input matInput [(ngModel)]="dataModel.LinkMainImageId" name="dataModel.LinkMainImageId"
+              #LinkMainImageId type="text" placeholder="شناسه فایل اصلی"
+              (click)="fileManagerOpenForm = true" />
+            <mat-icon matSuffix *ngIf="dataModel.LinkMainImageId" matSuffix mat-icon-button
+              aria-label="Clear" (click)="dataModel.LinkMainImageId = ''">close</mat-icon>
+            <mat-icon matSuffix (click)="fileManagerOpenForm = true">mode_edit</mat-icon>
+          </mat-form-field>
+
+          <cms-file-manager (itemSelected)="onActionFileSelectedLinkMainImageId($event)"
+            [language]="appLanguage" [isPopup]="true" [(openForm)]="fileManagerOpenForm"
+            [tree]="fileManagerTree" [openFilemanagerButtonLabelKey]="'select'"
+            [selectFileType]="selectFileTypeMainImage"
+            [openFilemanagerButtonView]="false"></cms-file-manager>
+        </div>
+        <div class="mb-3">
+          <audio *ngIf="dataModel?.LinkFilePodcastIdSrc?.length>0" controls>
+            <source src="{{dataModel.LinkFilePodcastIdSrc}}" type="audio/mp3">
+            Your browser does not support the audio tag.
+          </audio>
+        </div>
+        <div class="mb-9">
+          <mat-form-field class="example-full-width">
+            <input matInput [(ngModel)]="dataModel.LinkFilePodcastId" name="dataModel.LinkFilePodcastId"
+              #LinkFilePodcastId type="text" placeholder="شناسه فایل صوتی"
+              (click)="fileManagerOpenFormPodcast = true" />
+            <mat-icon matSuffix *ngIf="dataModel.LinkFilePodcastId" matSuffix mat-icon-button
+              aria-label="Clear" (click)="dataModel.LinkFilePodcastId = ''">close</mat-icon>
+            <mat-icon matSuffix (click)="fileManagerOpenFormPodcast = true">mode_edit</mat-icon>
+          </mat-form-field>
+
+          <cms-file-manager (itemSelected)="onActionFileSelectedLinkFilePodcastId($event)"
+            [language]="appLanguage" [isPopup]="true" [(openForm)]="fileManagerOpenFormPodcast"
+            [tree]="fileManagerTree" [openFilemanagerButtonLabelKey]="'select'"
+            [selectFileType]="selectFileTypePodcast"
+            [openFilemanagerButtonView]="false"></cms-file-manager>
+        </div>
+        <div>
+          <button  type="button" mat-button matStepperPrevious class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
+            قبلی
+          </button>
+          <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
+          بعدی
+        </button>
+        </div>
+      </mat-step>
+
+      <mat-step label="موقعیت مکانی">
+        <p>You're welcome.</p>
+        <app-cms-map
+        (map$)="receiveMap($event)"
+        (zoom$)="receiveZoom($event)"
+        id='main-map'
+        ></app-cms-map>
+        <div>
+          <button type="button" mat-button matStepperPrevious class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
+            قبلی
+          </button>
+          <button type="submit" mat-button [disabled]="!vform.form.valid"  class="btn btn-success font-weight-bold text-uppercase px-9 py-4">
+          ذخیره
+        </button>
+        </div>
+      </mat-step>
+
+      <!-- Icon overrides. -->
+      <ng-template matStepperIcon="phone">
+        <mat-icon>call_end</mat-icon>
+      </ng-template>
+
+      <ng-template matStepperIcon="chat">
+        <mat-icon>forum</mat-icon>
+      </ng-template>
+
+    </mat-horizontal-stepper>
+
+  </form>
+
   </div>
   <!--end::Container-->
 </div>

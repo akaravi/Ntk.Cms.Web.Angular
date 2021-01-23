@@ -47,8 +47,10 @@ export class CmsMapComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.map.clearAllEventListeners();
-    this.map.remove();
+    // this.map.clearAllEventListeners();
+
+    // this.map.remove();
+
   }
 
   onMapReady(map: Map): void {
@@ -65,9 +67,9 @@ export class CmsMapComponent implements OnInit, OnDestroy {
     this.zoom = e.target.getZoom();
     this.zoom$.emit(this.zoom);
   }
-  onResize(event): void {
-    event.target.innerWidth;
-  }
+  // onResize(event): void {
+  //   event.target.innerWidth;
+  // }
 
 
 }

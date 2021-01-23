@@ -41,7 +41,7 @@ export class TranslationService {
     this.translate.addLangs(this.langIds);
   }
 
-  setLanguage(lang) {
+  setLanguage(lang): void {
     if (lang) {
       this.translate.use(this.translate.getDefaultLang());
       this.translate.use(lang);

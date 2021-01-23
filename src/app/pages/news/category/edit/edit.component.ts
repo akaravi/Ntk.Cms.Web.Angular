@@ -51,37 +51,10 @@ export class NewsCategoryEditComponent implements OnInit {
       this.parentId = data.parentId;
     }
 
-    const treeConfig: ConfigInterface = {
-      baseURL: 'https://apicms.ir/api/v1/',
-      baseUploadURL: 'https://apifile.ir/api/v1/',
-      api: {
-        listFile: 'FileContent/GetAll',
-        listFolder: 'FileCategory/GetAll',
-        uploadFile: 'upload',
-        downloadFile: 'download',
-        deleteFile: 'FileContent',
-        deleteFolder: 'FileCategory',
-        createFolder: 'FileCategory',
-        createFile: 'FileContent',
-        getOneFile: 'FileContent',
-        getOneFolder: 'FileCategory',
-        renameFile: 'FileContent',
-        renameFolder: 'FileCategory',
-        searchFiles: 'FileCategory/GetAll',
-      },
-      options: {
-        allowFolderDownload: DownloadModeEnum.DOWNLOAD_FILES,
-        showFilesInsideTree: false,
-        showSelectFile: true,
-        showSelectFolder: false,
-        // showSelectFileType: [],
-        title: 'فایل را انتخاب کنید',
-      },
-    };
 
-    this.fileManagerTree = new TreeModel(treeConfig);
+    this.fileManagerTree = new TreeModel();
   }
-  selectFileTypeMainImage = ['jpg', 'jpeg', 'png']
+  selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
 
   fileManagerTree: TreeModel;
   appLanguage = 'fa';
@@ -91,7 +64,7 @@ export class NewsCategoryEditComponent implements OnInit {
   ]);
   modalTitle = '';
   loading = new ProgressSpinnerModel();
-  dataModelResult: ErrorExceptionResult<NewsCategoryModel> = new ErrorExceptionResult<NewsCategoryModel>();
+  dataModelResult: ErrorExceptionResult<NewsCategoryModel>  = new ErrorExceptionResult<NewsCategoryModel>();
   dataModel: NewsCategoryModel = new NewsCategoryModel();
   id = 0;
   parentId = -1;
