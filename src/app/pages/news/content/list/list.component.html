@@ -22,7 +22,7 @@
 
         </div>
 
-
+{{filteModelContent|json}}
 
         <app-progress-spinner [options]="loading">
         </app-progress-spinner>
@@ -84,11 +84,11 @@
   </mat-table>
 
   <mat-paginator #paginator
-  [length]="tableLength"
-  [pageIndex]="tablePageIndex"
-  [pageSize]="tablePageSize"
-  [pageSizeOptions]="[5, 10, 25, 100]"
-  (page)="pageEvent = onTablePageingData($event)"></mat-paginator>
+  [length]="(dataModelResult.TotalRowCount)"
+  [pageIndex]="(dataModelResult.CurrentPageNumber-1)"
+  [pageSize]="dataModelResult.RowPerPage"
+  [pageSizeOptions]="[5, 10, 20, 100]"
+  (page)="onTablePageingData($event)"></mat-paginator>
 
 </div>
 
