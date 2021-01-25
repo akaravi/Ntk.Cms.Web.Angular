@@ -23,7 +23,6 @@ import {
 } from 'ntk-cms-api';
 import { NewsCategoryEditComponent } from './category/edit/edit.component';
 import { NewsCategoryDeleteComponent } from './category/delete/delete.component';
-import { NewsCommentComponent } from './comment/comment.component';
 import { NewsContentEditComponent } from './content/edit/edit.component';
 import { NewsContentAddComponent } from './content/add/add.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -50,7 +49,6 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     NewsCategorySelectorComponent,
     NewsCategoryEditComponent,
     NewsCategoryDeleteComponent,
-    NewsCommentComponent,
     NewsCommentListComponent,
     NewsCommentDeleteComponent,
     NewsCommentEditComponent

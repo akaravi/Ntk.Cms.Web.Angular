@@ -17,12 +17,7 @@
                     <mat-form-field class="example-full-width">
                         <mat-label>توضیحات</mat-label>
                         <textarea matInput [(ngModel)]="dataModelResultCategory.Item.Description" name="dataModelResultCategory.Item.Description" #Description type="text" placeholder="توضیحات" minlength="1" maxlength="100" readonly required rows=5></textarea>
-                        <mat-icon matSuffix *ngIf="dataModel.Description" matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.Description = ''">close</mat-icon>
-                        <mat-icon matSuffix>mode_edit</mat-icon>
-                        <mat-hint align="end">{{ Description.value.length }} / 100</mat-hint>
-                        <mat-error *ngIf="Description.errors?.required">
-                            Description is <strong>required</strong>
-                        </mat-error>
+           
                     </mat-form-field>
                     <app-news-category-selector [(options)]="optionsCategorySelector"></app-news-category-selector>
                 </div>

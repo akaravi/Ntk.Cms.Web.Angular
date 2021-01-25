@@ -5,24 +5,21 @@ import {
   FormInfoModel,
   NewsCommentService,
   NewsCommentModel,
-  FileUploadedModel,
 } from 'ntk-cms-api';
 import {
   Component,
   OnInit,
-  Input,
   ViewChild,
   ChangeDetectorRef,
   Inject,
 } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CmsToastrService } from 'src/app/core/helpers/services/cmsToastr.service';
 import { ComponentActionEnum } from 'src/app/core/helpers/model/component-action-enum';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 
-import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
 
 @Component({
   selector: 'app-news-comment-edit',
@@ -30,35 +27,29 @@ import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateM
   styleUrls: ['./edit.component.css'],
 })
 export class NewsCommentEditComponent implements OnInit {
-
+  requestId = 0;
+  requestParentId = 0;
+  requestContentId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<NewsCommentEditComponent>,
-    private changeDetectorRef: ChangeDetectorRef,
-    private activatedRoute: ActivatedRoute,
     public coreEnumService: CoreEnumService,
     public newsCommentService: NewsCommentService,
     private toastrService: CmsToastrService
   ) {
     if (data) {
-      this.id = data.id;
-      this.parentId = data.parentId;
+      this.requestId = +data.id || 0;
+      this.requestParentId = +data.parentId || 0;
+      this.requestContentId = +data.contentId || 0;
     }
 
 
   }
 
-  appLanguage = 'fa';
-  formMatcher = new CmsFormsErrorStateMatcher();
-  formControlRequired = new FormControl('', [
-    Validators.required,
-  ]);
-  modalTitle = '';
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<NewsCommentModel> = new ErrorExceptionResult<NewsCommentModel>();
   dataModel: NewsCommentModel = new NewsCommentModel();
-  id = 0;
-  parentId = -1;
+
   ComponentAction = ComponentActionEnum.none;
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
 
@@ -69,45 +60,18 @@ export class NewsCommentEditComponent implements OnInit {
   openFormFileManager = false;
 
   ngOnInit(): void {
-    // get Id
-    if (this.id === 0) {
-      this.id = Number(this.activatedRoute.snapshot.paramMap.get('id'));
-    }
-    if (this.id === 0) {
-      this.activatedRoute.queryParams.subscribe((params) => {
-        // Defaults to 0 if no query param provided.
-        if (params.id && params.id > 0) {
-          this.id = +params.id || 0;
-        }
-      });
-    }
-    // get Id
-    // get parentId
-    if (this.parentId === 0) {
-      this.parentId = Number(
-        this.activatedRoute.snapshot.paramMap.get('parentId')
-      );
-    }
-    if (this.parentId === 0) {
-      this.activatedRoute.queryParams.subscribe((params) => {
-        // Defaults to 0 if no query param provided.
-        if (params.parentId && params.parentId > 0) {
-          this.parentId = +params.parentId || -1;
-        }
-      });
-    }
-    // get parentId
-    if (this.parentId >= 0) {
-      this.ComponentAction = ComponentActionEnum.add;
-      this.modalTitle = 'ثبت دسته بندی جدید';
-    }
-    if (this.id) {
+    debugger;
+    if (this.requestId > 0) {
       this.ComponentAction = ComponentActionEnum.edit;
-      this.modalTitle = 'ویرایش دسته بندی';
+      this.formInfo.FormTitle = 'ویرایش  کامنت';
       this.DataGetOneContent();
+    } else if (this.requestContentId > 0) {
+      this.ComponentAction = ComponentActionEnum.add;
+      this.formInfo.FormTitle = 'ثبت کامت جدید';
     }
     if (this.ComponentAction === ComponentActionEnum.none) {
       this.toastrService.typeErrorComponentAction();
+      this.dialogRef.close({ dialogChangedDate: false });
     }
     this.getEnumRecordStatus();
   }
@@ -121,7 +85,7 @@ export class NewsCommentEditComponent implements OnInit {
   }
 
   DataGetOneContent(): void {
-    if (this.id <= 0) {
+    if (this.requestId <= 0) {
       this.toastrService.typeErrorEditRowIsNull();
       return;
     }
@@ -129,11 +93,10 @@ export class NewsCommentEditComponent implements OnInit {
     this.formInfo.FormAlert = 'در دریافت ارسال اطلاعات از سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.newsCommentService.ServiceGetOneById(this.id).subscribe(
+    this.newsCommentService.ServiceGetOneById(this.requestId).subscribe(
       (next) => {
         this.dataModel = next.Item;
         if (next.IsSuccess) {
-          this.modalTitle = this.modalTitle ;
           this.formInfo.FormAlert = '';
         } else {
           this.formInfo.FormAlert = 'برروز خطا';
@@ -151,15 +114,16 @@ export class NewsCommentEditComponent implements OnInit {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    if (this.parentId > 0) {
-      this.dataModel.LinkParentId = this.parentId;
+    if (this.requestParentId > 0) {
+      this.dataModel.LinkParentId = this.requestParentId;
     }
+    this.dataModel.LinkContentId = this.requestContentId;
     this.newsCommentService.ServiceAdd(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormAllowSubmit = true;
         this.dataModelResult = next;
         if (next.IsSuccess) {
-          this.formInfo.FormAlert = 'ثبت با موفقت انجام شد';
+          this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
           this.toastrService.typeSuccessAdd();
           this.dialogRef.close({ dialogChangedDate: true });
         } else {
@@ -184,7 +148,7 @@ export class NewsCommentEditComponent implements OnInit {
         this.formInfo.FormAllowSubmit = true;
         this.dataModelResult = next;
         if (next.IsSuccess) {
-          this.formInfo.FormAlert = 'ثبت با موفقت انجام شد';
+          this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
           this.toastrService.typeSuccessEdit();
           this.dialogRef.close({ dialogChangedDate: true });
 

@@ -33,7 +33,7 @@ const routes: Routes = [
         component: NewsCommentListComponent
       },
       {
-        path: 'comment/:parentId',
+        path: 'comment/:ContentId',
         component: NewsCommentListComponent
       },
 

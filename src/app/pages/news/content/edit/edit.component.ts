@@ -147,7 +147,7 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
           this.formInfo.FormAllowSubmit = !next.IsSuccess;
           this.dataModelResult = next;
           if (next.IsSuccess) {
-            this.formInfo.FormAlert = 'ویرایش با موفقت انجام شد';
+            this.formInfo.FormAlert = 'ویرایش با موفقیت انجام شد';
             this.toasterService.typeSuccessEdit();
 
           } else {

@@ -1,71 +1,85 @@
 import { Component, OnInit } from '@angular/core';
+import { CoreAuthService, EnumSortType, ErrorExceptionResult, NewsCommentModel, NewsCommentService, NewsContentModel, TokenInfoModel } from 'ntk-cms-api';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  CoreAuthService,
-  ErrorExceptionResult,
-  FilterDataModel,
-  FilterModel,
-  NewsCategoryModel,
-  NewsCommentModel,
-  NewsCommentService,
-  TokenInfoModel,
-} from 'ntk-cms-api';
-import { PublicHelper } from '../../../../core/helpers/services/publicHelper';
-import { ComponentModalDataModel } from 'src/app/core/cmsComponentModels/base/componentModalDataModel';
-import { CmsToastrService } from '../../../../core/helpers/services/cmsToastr.service';
-import { MatDialog } from '@angular/material/dialog';
-import { ProgressSpinnerModel } from '../../../../core/models/progressSpinnerModel';
+import { FilterModel, FilterDataModel } from 'ntk-cms-api';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
-import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/base/componentOptionStatistModel';
+import { MatTableDataSource } from '@angular/material/table';
 import { ComponentOptionExportModel } from 'src/app/core/cmsComponentModels/base/componentOptionExportModel';
+import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/base/componentOptionStatistModel';
+import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
+import { PublicHelper } from 'src/app/core/helpers/services/publicHelper';
+import { CmsToastrService } from 'src/app/core/helpers/services/cmsToastr.service';
+import { MatSort } from '@angular/material/sort';
+import { PageEvent } from '@angular/material/paginator';
+import { MatDialog } from '@angular/material/dialog';
+import { NewsCommentEditComponent } from '../edit/edit.component';
+import { NewsCommentDeleteComponent } from '../delete/delete.component';
 
 
 @Component({
   selector: 'app-news-comment-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class NewsCommentListComponent implements OnInit {
-  filteModelComment = new FilterModel();
+  comment: string;
+  author: string;
+  dataSource: any;
+  flag = false;
+  tableContentSelected = [];
+  constructor(private newsCommentService: NewsCommentService,
+    private activatedRoute: ActivatedRoute,
+    private coreAuthService: CoreAuthService,
+    public publicHelper: PublicHelper,
+    private toastrService: CmsToastrService,
+    private router: Router,
+    public dialog: MatDialog
+
+
+  ) {
+    this.optionsSearch.parentMethods = {
+      onSubmit: (model) => this.onSubmitOptionsSearch(model),
+    };
+  }
+  requestContentId = 0;
+  filteModelContent = new FilterModel();
   dataModelResult: ErrorExceptionResult<NewsCommentModel> = new ErrorExceptionResult<NewsCommentModel>();
-  modalModel: ComponentModalDataModel = new ComponentModalDataModel();
   optionsSearch: ComponentOptionSearchModel = new ComponentOptionSearchModel();
   optionsStatist: ComponentOptionStatistModel = new ComponentOptionStatistModel();
   optionsExport: ComponentOptionExportModel = new ComponentOptionExportModel();
-  tableCommentloading = false;
-  tableRowsSelected: Array<NewsCommentModel> = [];
-  tableRowSelected: NewsCommentModel = new NewsCommentModel();
-  // dateObject: any;
-  loading = new ProgressSpinnerModel();
   tokenInfo = new TokenInfoModel();
-
-  displayedColumns: string[] = [
+  loading = new ProgressSpinnerModel();
+  tableRowsSelected: Array<NewsContentModel> = [];
+  tableRowSelected: NewsContentModel = new NewsContentModel();
+  tableSource: MatTableDataSource<NewsCommentModel> = new MatTableDataSource<NewsCommentModel>();
+  tabledisplayedColumns: string[] = [
+    'Id',
     'RecordStatus',
     'Writer',
     'CreatedDate',
     'UpdatedDate',
     'Action'
   ];
-  // dataSource: any;
-  parentId = 0;
-  constructor(
-    private coreAuthService: CoreAuthService,
-    private activatedRoute: ActivatedRoute,
-    public publicHelper: PublicHelper,
-    private newsCommentService: NewsCommentService,
-    private toastrService: CmsToastrService,
-    private router: Router,
-    public dialog: MatDialog
-  ) {
 
 
-    this.optionsSearch.parentMethods = {
-      onSubmit: (model) => this.onSubmitOptionsSearch(model),
-    };
-  }
+
+
+
+  columnsToDisplay: string[] = ['Id', 'Writer'];
+  expandedElement: NewsContentModel | null;
 
   ngOnInit(): void {
-    this.parentId = Number(this.activatedRoute.snapshot.paramMap.get('parentId'));
+    debugger;
+    this.requestContentId = Number(this.activatedRoute.snapshot.paramMap.get('ContentId'));
+
     this.coreAuthService.CurrentTokenInfoBSObs.subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
@@ -73,53 +87,116 @@ export class NewsCommentListComponent implements OnInit {
   }
 
   DataGetAll(): void {
-    if (this.parentId > 0) {
-      const aaa = {
-        PropertyName: 'LinkContentId',
-        IntValue1: this.parentId,
-      };
-      this.filteModelComment.Filters.push(aaa as FilterDataModel);
-    }
     this.tableRowsSelected = [];
-    this.tableRowSelected = new NewsCommentModel();
-    this.tableCommentloading = true;
+    this.tableRowSelected = new NewsContentModel();
+
     this.loading.display = true;
     this.loading.Globally = false;
-    this.filteModelComment.AccessLoad = true;
-    this.newsCommentService.ServiceGetAll(this.filteModelComment).subscribe(
+    this.filteModelContent.AccessLoad = true;
+    if (this.requestContentId > 0) {
+      const filter = new FilterDataModel();
+      filter.PropertyName = 'linkContentId';
+      filter.Value = this.requestContentId;
+      this.filteModelContent.Filters.push(filter);
+    }
+    this.newsCommentService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
           this.dataModelResult = next;
+          this.tableSource.data = next.ListItems;
           if (this.tokenInfo.UserAccessAdminAllowToAllData) {
-            this.displayedColumns = this.publicHelper.listAddIfNotExist(
-              this.displayedColumns,
+            this.tabledisplayedColumns = this.publicHelper.listAddIfNotExist(
+              this.tabledisplayedColumns,
               'LinkSiteId',
               0
             );
           } else {
-            this.displayedColumns = this.publicHelper.listRemoveIfExist(
-              this.displayedColumns,
+            this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
+              this.tabledisplayedColumns,
               'LinkSiteId'
+            );
+          }
+          if (this.requestContentId === 0) {
+            this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
+              this.tabledisplayedColumns,
+              'LinkContentId'
             );
           }
           if (this.optionsSearch.childMethods) {
             this.optionsSearch.childMethods.setAccess(next.Access);
           }
         }
-        this.tableCommentloading = false;
         this.loading.display = false;
       },
       (error) => {
         this.toastrService.typeError(error);
-        this.tableCommentloading = false;
+
         this.loading.display = false;
       }
     );
   }
 
 
-  onActionbuttonNewRow(): void {
+  onTableSortData(sort: MatSort): void {
+    if (this.tableSource && this.tableSource.sort && this.tableSource.sort.active === sort.active) {
+      if (this.tableSource.sort.start === 'asc') {
+        sort.start = 'desc';
+        this.filteModelContent.SortColumn = sort.active;
+        this.filteModelContent.SortType = EnumSortType.Descending;
+      } else if (this.tableSource.sort.start === 'desc') {
+        this.filteModelContent.SortColumn = '';
+        this.filteModelContent.SortType = EnumSortType.Ascending;
+      } else {
+        sort.start = 'desc';
+      }
+    } else {
+      this.filteModelContent.SortColumn = sort.active;
+      this.filteModelContent.SortType = EnumSortType.Ascending;
+    }
+    this.tableSource.sort = sort;
+    this.filteModelContent.CurrentPageNumber = 0;
+    this.DataGetAll();
+  }
+  onTablePageingData(event?: PageEvent): void {
+    this.filteModelContent.CurrentPageNumber = event.pageIndex + 1;
+    this.filteModelContent.RowPerPage = event.pageSize;
+    this.DataGetAll();
+  }
 
+  // onClickAddComment(): void {
+  //   const model = {
+  //     id: +this.activatedRoute.snapshot.params.id,
+  //     comment: this.comment,
+  //     author: this.author
+  //   };
+  //   this.newsCommentService.ServiceAdd(model).subscribe((res) => {
+
+  //   });
+  // }
+
+  // onActionTableSelect(row: any): void {
+  //   this.tableContentSelected = [row];
+  // }
+
+  // onClickEditComment(element): void {
+  //   const model = {
+  //     id: element.Id,
+  //     comment: element.Comment,
+  //     author: element.Writer
+  //   };
+  //   this.newsCommentService.ServiceEdit(model).subscribe();
+  // }
+
+  onActionbuttonNewRow(): void {
+    if (
+      this.requestContentId == null ||
+      this.requestContentId === 0
+    ) {
+      const title = 'برروز خطا ';
+      const message = 'محتوا انتخاب نشده است';
+      this.toastrService.toastr.error(message, title);
+      return;
+    }
     if (
       this.dataModelResult == null ||
       this.dataModelResult.Access == null ||
@@ -130,11 +207,17 @@ export class NewsCommentListComponent implements OnInit {
       this.toastrService.toastr.error(message, title);
       return;
     }
-    this.router.navigate(['add'], {
-      relativeTo: this.activatedRoute,
-      queryParams: { parentId: this.parentId },
+    const dialogRef = this.dialog.open(NewsCommentEditComponent, {
+      data: { contentId: this.requestContentId }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log(`Dialog result: ${result}`);
+      if (result && result.dialogChangedDate) {
+        this.DataGetAll();
+      }
     });
   }
+
 
   onActionbuttonEditRow(): void {
     if (this.tableRowSelected == null || this.tableRowSelected.Id === 0) {
@@ -154,9 +237,14 @@ export class NewsCommentListComponent implements OnInit {
       return;
     }
 
-    this.router.navigate(['edit'], {
-      relativeTo: this.activatedRoute,
-      queryParams: { id: this.tableRowSelected.Id },
+    const dialogRef = this.dialog.open(NewsCommentEditComponent, {
+      data: { id: this.tableRowSelected.Id }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log(`Dialog result: ${result}`);
+      if (result && result.dialogChangedDate) {
+        this.DataGetAll();
+      }
     });
   }
   onActionbuttonDeleteRow(): void {
@@ -176,33 +264,35 @@ export class NewsCommentListComponent implements OnInit {
       this.toastrService.toastr.error(message, title);
       return;
     }
-    // const dialogRef = this.dialog.open(NewsCommentAddComponent);
-
-    // dialogRef.afterClosed().subscribe((result) => {
-    //   console.log(`Dialog result: ${result}`);
-    // });
+    const dialogRef = this.dialog.open(NewsCommentDeleteComponent, {
+      data: { id: this.tableRowSelected.Id }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log(`Dialog result: ${result}`);
+      if (result && result.dialogChangedDate) {
+        this.DataGetAll();
+      }
+    });
   }
   onActionbuttonStatist(): void {
-
-    this.optionsStatist.childMethods.runStatist(this.filteModelComment.Filters);
+    this.optionsStatist.childMethods.runStatist(this.filteModelContent.Filters);
   }
   onActionbuttonExport(): void {
     this.optionsExport.data.show = !this.optionsExport.data.show;
-    this.optionsExport.childMethods.runExport(this.filteModelComment.Filters);
+    this.optionsExport.childMethods.runExport(this.filteModelContent.Filters);
   }
 
   onActionbuttonReload(): void {
     this.DataGetAll();
   }
   onSubmitOptionsSearch(model: any): void {
-    this.filteModelComment.Filters = model;
+    this.filteModelContent.Filters = model;
     this.DataGetAll();
   }
-  onActionTableRowSelect(row: NewsCommentModel): void {
+  onActionTableRowSelect(row: NewsContentModel): void {
     this.tableRowSelected = row;
   }
-
   onActionBackToParent(): void {
-    this.router.navigate(['news/content']);
+    this.router.navigate(['/news/content/']);
   }
 }

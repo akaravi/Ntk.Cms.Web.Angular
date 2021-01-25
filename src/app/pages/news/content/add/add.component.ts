@@ -280,7 +280,7 @@ this.newsContentService
           debugger;
           if (next.IsSuccess) {
 
-            this.formInfo.FormAlert = 'ثبت با موفقت انجام شد';
+            this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
             this.toasterService.typeSuccessAdd();
             this.DataActionAfterAddContentSuccessful(next.Item);
             this.router.navigate(['/news/content/']);

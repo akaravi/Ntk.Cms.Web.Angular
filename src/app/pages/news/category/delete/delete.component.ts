@@ -15,27 +15,7 @@ import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
   styleUrls: ['./delete.component.css']
 })
 export class NewsCategoryDeleteComponent implements OnInit {
-
-  @Input()
-  set options(model: any) {
-    this.dateModleInput = model;
-  }
-  get options(): any {
-    return this.dateModleInput;
-  }
-
-  id: any;
-  loading = new ProgressSpinnerModel();
-
-  private dateModleInput: any;
-
-  dataModelResultCategory: ErrorExceptionResult<NewsCategoryModel> = new ErrorExceptionResult<NewsCategoryModel>();
-  dataModelResultCategoryAllData: ErrorExceptionResult<NewsCategoryModel> = new ErrorExceptionResult<NewsCategoryModel>();
-  optionsCategorySelector: ComponentOptionSelectorModel<NewsCategoryModel> = new ComponentOptionSelectorModel<NewsCategoryModel>();
-
-  dataModel: any = {};
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
-  formInfo: FormInfoModel = new FormInfoModel();
+  requestId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<NewsCategoryDeleteComponent>,
@@ -43,25 +23,26 @@ export class NewsCategoryDeleteComponent implements OnInit {
     private newsCategoryService: NewsCategoryService,
     private toastrService: CmsToastrService
   ) {
+    if (data) {
+      this.requestId = +data.id || 0;
+    }
     this.optionsCategorySelector.parentMethods = {
       onActionSelect: (x) => this.onFormChangeNewCatId(x),
     };
     this.optionsCategorySelector.data.placeholder = 'دسته بندی جایگزین جهت جابجایی اطلاعات به این  شاخه';
   }
+  loading = new ProgressSpinnerModel();
+  dataModelResultCategory: ErrorExceptionResult<NewsCategoryModel> = new ErrorExceptionResult<NewsCategoryModel>();
+  dataModelResultCategoryAllData: ErrorExceptionResult<NewsCategoryModel> = new ErrorExceptionResult<NewsCategoryModel>();
+  optionsCategorySelector: ComponentOptionSelectorModel<NewsCategoryModel> = new ComponentOptionSelectorModel<NewsCategoryModel>();
+  dataModel: any = {};
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  formInfo: FormInfoModel = new FormInfoModel();
   ngOnInit(): void {
-    this.id = Number(this.activatedRoute.snapshot.paramMap.get('id'));
-    this.activatedRoute.queryParams.subscribe((params) => {
-      // Defaults to 0 if no query param provided.
-      this.id = +params.id || 0;
-    });
-    if (this.dateModleInput && this.dateModleInput.id) {
-      this.id = this.dateModleInput.id;
-    }
-    if (this.data && typeof this.data.id === 'number' && this.data.id > 0) {
-      this.id = this.data.id;
-    }
-    if (this.id === 0) {
+
+    if (this.requestId <= 0) {
       this.toastrService.typeErrorDeleteRowIsNull();
+      this.dialogRef.close({ dialogChangedDate: false });
       return;
     }
     this.DataGetOne();
@@ -69,14 +50,14 @@ export class NewsCategoryDeleteComponent implements OnInit {
   }
 
   DataGetOne(): void {
-    if (this.id === 0) {
+    if (this.requestId === 0) {
       this.toastrService.typeErrorDeleteRowIsNull();
       return;
     }
     this.formInfo.FormAlert = 'در حال لود اطلاعات';
     this.loading.display = true;
     this.newsCategoryService
-      .ServiceGetOneById(this.id)
+      .ServiceGetOneById(this.requestId)
       .subscribe(
         (next) => {
           this.dataModelResultCategory = next;
@@ -129,7 +110,7 @@ export class NewsCategoryDeleteComponent implements OnInit {
 
   }
   onFormMove(): void {
-    if (this.id === 0) {
+    if (this.requestId === 0) {
       this.toastrService.typeErrorDeleteRowIsNull();
       return;
     }
@@ -137,20 +118,17 @@ export class NewsCategoryDeleteComponent implements OnInit {
       return;
     }
     this.formInfo.FormAllowSubmit = true;
-    if (this.dataModel.NewCatId === this.id) {
+    if (this.dataModel.NewCatId === this.requestId) {
       this.formInfo.FormAlert = 'برروز خطا';
       this.formInfo.FormError =
         'شناسه دسته بندی در حال حذف با دسته بندی جایگزین یکسان است';
       this.formInfo.DisabledButtonSubmitted = false;
     }
-    if (this.id === 0) {
-      this.toastrService.typeErrorDeleteRowIsNull();
-      return;
-    }
+
     this.formInfo.DisabledButtonSubmitted = true;
     this.loading.display = true;
     this.newsCategoryService
-      .ServiceMove(this.id, this.dataModel.NewCatId)
+      .ServiceMove(this.requestId, this.dataModel.NewCatId)
       .subscribe(
         (next) => {
           if (!next.IsSuccess) {
@@ -175,7 +153,7 @@ export class NewsCategoryDeleteComponent implements OnInit {
       );
   }
   onFormDelete(): void {
-    if (this.id === 0) {
+    if (this.requestId === 0) {
       this.toastrService.typeErrorDeleteRowIsNull();
       return;
     }
@@ -183,14 +161,10 @@ export class NewsCategoryDeleteComponent implements OnInit {
       return;
     }
     this.formInfo.FormAllowSubmit = false;
-    if (this.id === 0) {
-      this.toastrService.typeErrorDeleteRowIsNull();
-      return;
-    }
     this.formInfo.DisabledButtonSubmitted = true;
     this.loading.display = true;
     this.newsCategoryService
-      .ServiceDelete(this.id)
+      .ServiceDelete(this.requestId)
       .subscribe(
         (next) => {
           this.formInfo.FormAllowSubmit = !next.IsSuccess;
@@ -219,12 +193,12 @@ export class NewsCategoryDeleteComponent implements OnInit {
   }
   onFormChangeNewCatId(model: NewsCategoryModel): void {
     this.formInfo.FormAlert = '';
-    if (this.id === 0 || !model || model.Id <= 0) {
+    if (this.requestId === 0 || !model || model.Id <= 0) {
       this.toastrService.typeErrorDeleteRowIsNull();
       return;
     }
     this.dataModel.NewCatId = model.Id;
-    if (this.dataModel.NewCatId === this.id) {
+    if (this.dataModel.NewCatId === this.requestId) {
       this.formInfo.FormAlert = 'برروز خطا';
       this.formInfo.FormError =
         'شناسه دسته بندی در حال حذف با دسته بندی جایگزین یکسان است';
@@ -238,6 +212,4 @@ export class NewsCategoryDeleteComponent implements OnInit {
     this.dialogRef.close({ dialogChangedDate: false });
     this.loading.display = false;
   }
-
-
 }

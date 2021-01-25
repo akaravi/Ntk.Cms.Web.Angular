@@ -144,10 +144,6 @@ export class NewsCategoryTreeComponent implements OnInit {
   }
 
   onActionEdit(): void {
-    // this.dataModel.Title = this.getNodeOfId.name;
-    // this.dataModel.Description = this.getNodeOfId.description;
-    // this.dataModel.RecordStatus = this.getNodeOfId.recordStatus;
-    // this.action = 'edit';
     let id = 0;
     if (this.dataModelSelect && this.dataModelSelect.Id > 0) {
       id = this.dataModelSelect.Id;

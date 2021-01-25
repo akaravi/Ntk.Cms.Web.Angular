@@ -1,46 +1,44 @@
 <div class="card-content" style="direction: rtl">
-    <div class="px-3">
-        <form #vform="ngForm" class="form form-horizontal">
-            <app-progress-spinner [options]="loading"> </app-progress-spinner>
-            <div *ngIf="!loading.display" class="form-body">
-                <h4 class="form-section mb-8">
-                    <i class="ft-user"></i> حذف ردیف اطلاعات
-                </h4>
+  <div class="px-3">
+    <form #vform="ngForm" class="form form-horizontal">
+      <app-progress-spinner [options]="loading"> </app-progress-spinner>
+      <div *ngIf="!loading.display" class="form-body">
+        <h4 class="form-section mb-8">
+          <i class="ft-user"></i> حذف ردیف اطلاعات
+        </h4>
 
-                <div class="form-group row">
+        <div class="form-group row">
 
-                    <mat-form-field class="example-full-width">
-                        <mat-label>عنوان</mat-label>
-                        <input matInput [(ngModel)]="dataModelResultComment.Item.Writer" name="dataModelResultComment.Item.Writer" #Writer type="text" placeholder="عنوان" minlength="3" maxlength="50" required readonly />
-                    </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>عنوان</mat-label>
+            <input matInput [(ngModel)]="dataModelResultComment.Item.Writer" name="dataModelResultComment.Item.Writer"
+              #Writer type="text" placeholder="عنوان"  required readonly />
+          </mat-form-field>
 
-                    <mat-form-field class="example-full-width">
-                        <mat-label>توضیحات</mat-label>
-                        <textarea matInput [(ngModel)]="dataModelResultComment.Item.Comment" name="dataModelResultComment.Item.Comment" #Comment type="text" placeholder="توضیحات" minlength="1" maxlength="100" readonly required rows=5></textarea>
-                        <mat-icon matSuffix *ngIf="dataModel.Comment" matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.Comment = ''">close</mat-icon>
-                        <mat-icon matSuffix>mode_edit</mat-icon>
-                        <mat-hint align="end">{{ Comment.value.length }} / 100</mat-hint>
-                        <mat-error *ngIf="Comment.errors?.required">
-                            Comment is <strong>required</strong>
-                        </mat-error>
-                    </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>توضیحات</mat-label>
+            <textarea matInput [(ngModel)]="dataModelResultComment.Item.Comment"
+              name="dataModelResultComment.Item.Comment" #Comment type="text" placeholder="توضیحات" minlength="1"
+              maxlength="100" readonly required rows=5></textarea>
+          </mat-form-field>
 
-                </div>
-            </div>
-            <div class="form-actions">
-                <small class="form-text text-muted">{{ formInfo.FormAlert }} </small>
-                <small class="form-text text-muted danger">{{ formInfo.FormError }}
-                </small>
-            </div>
-            <div class="form-actions" *ngIf="formInfo.FormAllowSubmit">
+        </div>
+      </div>
+      <div class="form-actions">
+        <small class="form-text text-muted">{{ formInfo.FormAlert }} </small>
+        <small class="form-text text-muted danger">{{ formInfo.FormError }}
+        </small>
+      </div>
+      <div class="form-actions" *ngIf="formInfo.FormAllowSubmit">
 
-                <button type="button" (click)="onFormDelete()" [disabled]="!vform.form.valid || formInfo.DisabledButtonSubmitted" class="btn btn-raised btn-warning mr-1">
-                    <i class="fa fa-check-square-o"></i> حذف
-                </button>
-                <button type="button" (click)="onFormCancel()" class="btn btn-raised btn-warning mr-1">
-                    <i class="ft-x"></i> انصراف
-                </button>
-            </div>
-        </form>
-    </div>
+        <button type="button" (click)="onFormDelete()"
+          [disabled]="!vform.form.valid || formInfo.DisabledButtonSubmitted" class="btn btn-raised btn-warning mr-1">
+          <i class="fa fa-check-square-o"></i> حذف
+        </button>
+        <button type="button" (click)="onFormCancel()" class="btn btn-raised btn-warning mr-1">
+          <i class="ft-x"></i> انصراف
+        </button>
+      </div>
+    </form>
+  </div>
 </div>
