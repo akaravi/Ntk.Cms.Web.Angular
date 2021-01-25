@@ -4,26 +4,19 @@ import {
   Input,
   OnInit,
   Output,
-  ViewChild,
 } from '@angular/core';
-import { FlatTreeControl, NestedTreeControl } from '@angular/cdk/tree';
+import { NestedTreeControl } from '@angular/cdk/tree';
 import {
-  MatTreeFlatDataSource,
-  MatTreeFlattener,
   MatTreeNestedDataSource,
 } from '@angular/material/tree';
 import {
   CoreAuthService,
   CoreEnumService,
-  EnumModel,
   ErrorExceptionResult,
   FilterModel,
-  FormInfoModel,
   NewsCategoryModel,
   NewsCategoryService,
 } from 'ntk-cms-api';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
 import { CmsToastrService } from 'src/app/core/helpers/services/cmsToastr.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { NewsCategoryEditComponent } from '../edit/edit.component';
@@ -49,7 +42,7 @@ export class NewsCategoryTreeComponent implements OnInit {
     this.optionsData = model;
     this.optionsData.childMethods = {
       ActionReload: () => this.onActionReload(),
-      ActionSelectForce: (id) => this.onActionSelectForce(id),
+      ActionSelectForce: (id) => this.onActionSelectForce(),
     };
     this.optionsChange.emit(model);
   }
@@ -125,7 +118,7 @@ export class NewsCategoryTreeComponent implements OnInit {
     this.optionsData.data.Select = new NewsCategoryModel();
     this.DataGetAll();
   }
-  onActionSelectForce(id: number | NewsCategoryModel): void {
+  onActionSelectForce(): void {
 
   }
 

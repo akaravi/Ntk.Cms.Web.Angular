@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   CoreAuthService,
   EnumSortType,
@@ -20,10 +20,9 @@ import { ComponentOptionTreeModel } from 'src/app/core/cmsComponentModels/base/c
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/base/componentOptionStatistModel';
 import { ComponentOptionExportModel } from 'src/app/core/cmsComponentModels/base/componentOptionExportModel';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-
-
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-news-content-list',
@@ -55,14 +54,12 @@ export class NewsContentListComponent implements OnInit {
   optionsSearch: ComponentOptionSearchModel = new ComponentOptionSearchModel();
   optionsStatist: ComponentOptionStatistModel = new ComponentOptionStatistModel();
   optionsExport: ComponentOptionExportModel = new ComponentOptionExportModel();
-
+  tokenInfo = new TokenInfoModel();
+  loading = new ProgressSpinnerModel();
   tableRowsSelected: Array<NewsContentModel> = [];
   tableRowSelected: NewsContentModel = new NewsContentModel();
-  // dateObject: any;
-  loading = new ProgressSpinnerModel();
-  tokenInfo = new TokenInfoModel();
-
-  TabledisplayedColumns: string[] = [
+  tableSource: MatTableDataSource<NewsContentModel> = new MatTableDataSource<NewsContentModel>();
+  tabledisplayedColumns: string[] = [
     'LinkMainImageIdSrc',
     'Id',
     'RecordStatus',
@@ -71,64 +68,12 @@ export class NewsContentListComponent implements OnInit {
     'UpdatedDate',
     'Action'
   ];
-
-  // @ViewChild(MatPaginator, { static: true }) tablePaginator: MatPaginator;
-  // @ViewChild(MatSort, { static: true }) tableSort: MatSort;
-
-
-
-  tablePageEvent: PageEvent;
-  tablePageIndex: number;
-  // tablePageSize: number;
-  tableLength: number;
-
-  lastSort: MatSort
-  onTableSortData(sort: MatSort): void {
-    if (this.lastSort && this.lastSort.active === sort.active) {
-      if (sort.start === 'desc') {
-        sort.start = 'asc';
-      } else {
-        sort.start = 'desc';
-      }
-    }
-    this.lastSort = sort;
-    this.filteModelContent.SortColumn = sort.active;
-    this.filteModelContent.SortType = EnumSortType.Ascending;
-    if (sort.start === 'desc') {
-      this.filteModelContent.SortType = EnumSortType.Descending;
-    }
-    this.DataGetAll();
-  }
-  public onTablePageingData(event?: PageEvent): void {
-    this.filteModelContent.CurrentPageNumber = event.pageIndex + 1;
-    this.filteModelContent.RowPerPage = event.pageSize;
-    this.DataGetAll();
-    // this.fooService.getdata(event).subscribe(
-    //   response =>{
-    //     if(response.error) {
-    //       // handle error
-    //     } else {
-    //       this.datasource = response.data;
-    //       this.pageIndex = response.pageIndex;
-    //       this.pageSize = response.pageSize;
-    //       this.length = response.length;
-    //     }
-    //   },
-    //   error =>{
-    //     // handle error
-    //   }
-    // );
-    //return event;
-  }
-
-
   ngOnInit(): void {
     this.coreAuthService.CurrentTokenInfoBSObs.subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
     });
   }
-
   DataGetAll(): void {
     this.tableRowsSelected = [];
     this.tableRowSelected = new NewsContentModel();
@@ -140,15 +85,16 @@ export class NewsContentListComponent implements OnInit {
       (next) => {
         if (next.IsSuccess) {
           this.dataModelResult = next;
+          this.tableSource.data = next.ListItems;
           if (this.tokenInfo.UserAccessAdminAllowToAllData) {
-            this.TabledisplayedColumns = this.publicHelper.listAddIfNotExist(
-              this.TabledisplayedColumns,
+            this.tabledisplayedColumns = this.publicHelper.listAddIfNotExist(
+              this.tabledisplayedColumns,
               'LinkSiteId',
               0
             );
           } else {
-            this.TabledisplayedColumns = this.publicHelper.listRemoveIfExist(
-              this.TabledisplayedColumns,
+            this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
+              this.tabledisplayedColumns,
               'LinkSiteId'
             );
           }
@@ -156,7 +102,6 @@ export class NewsContentListComponent implements OnInit {
             this.optionsSearch.childMethods.setAccess(next.Access);
           }
         }
-
         this.loading.display = false;
       },
       (error) => {
@@ -167,6 +112,31 @@ export class NewsContentListComponent implements OnInit {
     );
   }
 
+  onTableSortData(sort: MatSort): void {
+    if (this.tableSource && this.tableSource.sort && this.tableSource.sort.active === sort.active) {
+      if (this.tableSource.sort.start === 'asc') {
+        sort.start = 'desc';
+        this.filteModelContent.SortColumn = sort.active;
+        this.filteModelContent.SortType = EnumSortType.Descending;
+      } else if (this.tableSource.sort.start === 'desc') {
+        this.filteModelContent.SortColumn = '';
+        this.filteModelContent.SortType = EnumSortType.Ascending;
+      } else {
+        sort.start = 'desc';
+      }
+    } else {
+      this.filteModelContent.SortColumn = sort.active;
+      this.filteModelContent.SortType = EnumSortType.Ascending;
+    }
+    this.tableSource.sort = sort;
+    this.filteModelContent.CurrentPageNumber = 0;
+    this.DataGetAll();
+  }
+  onTablePageingData(event?: PageEvent): void {
+    this.filteModelContent.CurrentPageNumber = event.pageIndex + 1;
+    this.filteModelContent.RowPerPage = event.pageSize;
+    this.DataGetAll();
+  }
   onActionCategorySelect(model: NewsCategoryModel | null): void {
     this.filteModelContent = new FilterModel();
 
@@ -224,14 +194,7 @@ export class NewsContentListComponent implements OnInit {
       this.toastrService.toastr.error(message, title);
       return;
     }
-
-
-    // this.router.navigate(['edit'], {
-    //   relativeTo: this.activatedRoute,
-    //   queryParams: { id: this.tableRowSelected.Id },
-    // });
     this.router.navigate(['/news/content/edit', this.tableRowSelected.Id]);
-
   }
   onActionbuttonDeleteRow(): void {
     if (this.tableRowSelected == null || this.tableRowSelected.Id === 0) {
@@ -257,7 +220,6 @@ export class NewsContentListComponent implements OnInit {
     });
   }
   onActionbuttonStatist(): void {
-
     this.optionsStatist.childMethods.runStatist(this.filteModelContent.Filters);
   }
   onActionbuttonExport(): void {
@@ -275,7 +237,6 @@ export class NewsContentListComponent implements OnInit {
   onActionTableRowSelect(row: NewsContentModel): void {
     this.tableRowSelected = row;
   }
-
   onClickComment(id: number): void {
     this.router.navigate(['/news/comment/', id]);
   }

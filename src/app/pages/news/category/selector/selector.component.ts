@@ -1,11 +1,8 @@
-import { Component, OnInit, Input, ViewChild, EventEmitter } from '@angular/core';
-import { ITreeOptions, KEYS, TreeComponent, TreeNode, TREE_ACTIONS } from '@circlon/angular-tree-component';
-import { CoreAuthService, CoreEnumService, ErrorExceptionResult, FilterDataModel, FilterModel, NewsCategoryModel, NewsCategoryService } from 'ntk-cms-api';
-import { ActivatedRoute } from '@angular/router';
-import { CmsToastrService } from 'src/app/core/helpers/services/cmsToastr.service';
+import { Component, OnInit, Input, EventEmitter } from '@angular/core';
+import { CoreEnumService, ErrorExceptionResult, FilterDataModel, FilterModel, NewsCategoryModel, NewsCategoryService } from 'ntk-cms-api';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map, startWith, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { Output } from '@angular/core';
 import { ComponentOptionSelectorModel } from 'src/app/core/cmsComponentModels/base/componentOptionSelectorModel';
