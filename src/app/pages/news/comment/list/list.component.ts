@@ -36,15 +36,12 @@ export class NewsCommentListComponent implements OnInit {
   flag = false;
   tableContentSelected = [];
   constructor(private newsCommentService: NewsCommentService,
-    private activatedRoute: ActivatedRoute,
-    private coreAuthService: CoreAuthService,
-    public publicHelper: PublicHelper,
-    private toastrService: CmsToastrService,
-    private router: Router,
-    public dialog: MatDialog
-
-
-  ) {
+              private activatedRoute: ActivatedRoute,
+              private coreAuthService: CoreAuthService,
+              public publicHelper: PublicHelper,
+              private toastrService: CmsToastrService,
+              private router: Router,
+              public dialog: MatDialog) {
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
@@ -77,9 +74,7 @@ export class NewsCommentListComponent implements OnInit {
   expandedElement: NewsContentModel | null;
 
   ngOnInit(): void {
-    debugger;
     this.requestContentId = Number(this.activatedRoute.snapshot.paramMap.get('ContentId'));
-
     this.coreAuthService.CurrentTokenInfoBSObs.subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
@@ -220,7 +215,7 @@ export class NewsCommentListComponent implements OnInit {
 
 
   onActionbuttonEditRow(): void {
-    if (this.tableRowSelected == null || this.tableRowSelected.Id === 0) {
+    if (this.tableRowSelected === null || this.tableRowSelected.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای ویرایش انتخاب نشده است';
       this.toastrService.toastr.error(message, title);

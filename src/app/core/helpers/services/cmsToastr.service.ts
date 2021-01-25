@@ -13,7 +13,12 @@ export class CmsToastrService {
   typeSuccessAdd(): void {
     this.toastr.success('با موفقیت اضافه شد', 'Success!');
   }
-
+  typeSuccessAddSimilar(): void {
+    this.toastr.success('با موفقیت مطالب مشابه اضافه شد', 'Success!');
+  }
+  typeSuccessAddTag(): void {
+    this.toastr.success('با موفقیت تگ مشابه اضافه شد', 'Success!');
+  }
   typeSuccessRemove(): void {
     this.toastr.success('با موفقیت حذف شد', 'Success!');
   }
@@ -85,6 +90,27 @@ export class CmsToastrService {
 
   typeErrorAdd(str: string = ''): void {
     let message = 'خطا در اضافه کردن';
+    if (str && str.length > 0) {
+      message = message + ' error: ' + str;
+    }
+    this.toastr.error(message, 'Error!');
+  }
+  typeErrorAddSimilar(str: string = ''): void {
+    let message = 'خطا در اضافه کردن مطالب مشابه';
+    if (str && str.length > 0) {
+      message = message + ' error: ' + str;
+    }
+    this.toastr.error(message, 'Error!');
+  }
+  typeErrorAddTag(str: string = ''): void {
+    let message = 'خطا در اضافه کردن تگها';
+    if (str && str.length > 0) {
+      message = message + ' error: ' + str;
+    }
+    this.toastr.error(message, 'Error!');
+  }
+  typeErrorAddDuplicate(str: string = ''): void {
+    let message = 'اطلاعات وارد شده تکراری است';
     if (str && str.length > 0) {
       message = message + ' error: ' + str;
     }

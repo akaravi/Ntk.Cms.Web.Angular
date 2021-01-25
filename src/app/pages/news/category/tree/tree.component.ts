@@ -64,7 +64,6 @@ export class NewsCategoryTreeComponent implements OnInit {
   dataModelResult: ErrorExceptionResult<NewsCategoryModel> = new ErrorExceptionResult<NewsCategoryModel>();
   filteModel = new FilterModel();
   loading = new ProgressSpinnerModel();
-  // formInfo: FormInfoModel = new FormInfoModel();
   treeControl = new NestedTreeControl<NewsCategoryModel>(node => node.Children);
   dataSource = new MatTreeNestedDataSource<NewsCategoryModel>();
 

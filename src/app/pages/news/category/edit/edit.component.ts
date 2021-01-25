@@ -84,7 +84,7 @@ export class NewsCategoryEditComponent implements OnInit {
       this.ComponentAction = ComponentActionEnum.edit;
       this.formInfo.FormTitle = 'ویرایش  دسته بندی';
       this.DataGetOneContent();
-    } else if(this.requestId === 0) {
+    } else if (this.requestId === 0) {
       this.ComponentAction = ComponentActionEnum.add;
       this.formInfo.FormTitle = 'ثبت دسته بندی جدید';
     }
@@ -118,7 +118,7 @@ export class NewsCategoryEditComponent implements OnInit {
       (next) => {
         this.dataModel = next.Item;
         if (next.IsSuccess) {
-          this.formInfo.FormTitle = this.formInfo.FormTitle+ ' ' + next.Item.Title;
+          this.formInfo.FormTitle = this.formInfo.FormTitle + ' ' + next.Item.Title;
           this.formInfo.FormAlert = '';
         } else {
           this.formInfo.FormAlert = 'برروز خطا';

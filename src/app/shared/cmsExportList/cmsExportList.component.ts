@@ -20,7 +20,7 @@ export class CmsExportListComponent implements OnInit {
     }
     this.optionsData = model;
     this.optionsData.childMethods = {
-      runExport: (model:  Array<FilterDataModel>) => this.runExport(model),
+      runExport: (model: Array<FilterDataModel>) => this.runExport(model),
     };
     this.optionsChange.emit(model);
   }
@@ -30,7 +30,7 @@ export class CmsExportListComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
-  runExport(model:  Array<FilterDataModel>): void {
-    //todo: karavi;
+  runExport(model: Array<FilterDataModel>): void {
+    // todo: karavi;
   }
 }

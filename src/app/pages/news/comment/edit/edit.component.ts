@@ -60,7 +60,6 @@ export class NewsCommentEditComponent implements OnInit {
   openFormFileManager = false;
 
   ngOnInit(): void {
-    debugger;
     if (this.requestId > 0) {
       this.ComponentAction = ComponentActionEnum.edit;
       this.formInfo.FormTitle = 'ویرایش  کامنت';

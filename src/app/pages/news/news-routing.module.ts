@@ -21,11 +21,11 @@ const routes: Routes = [
         component: NewsContentListComponent
       },
       {
-        path: 'content/add/:parentId',
+        path: 'content/add/:CategoryId',
         component: NewsContentAddComponent
       },
       {
-        path: 'content/edit/:id',
+        path: 'content/edit/:Id',
         component: NewsContentEditComponent
       },
       {

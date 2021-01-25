@@ -20,7 +20,7 @@ export class CmsStatistListComponent implements OnInit {
     }
     this.optionsData = model;
     this.optionsData.childMethods = {
-      runStatist: (model:  Array<FilterDataModel>) => this.runStatist(model),
+      runStatist: (model: Array<FilterDataModel>) => this.runStatist(model),
     };
     this.optionsChange.emit(model);
   }
@@ -30,7 +30,7 @@ export class CmsStatistListComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
-  runStatist(model:  Array<FilterDataModel>): void {
-    //todo: karavi;
+  runStatist(model: Array<FilterDataModel>): void {
+    // todo: karavi;
   }
 }

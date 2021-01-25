@@ -75,7 +75,7 @@
         </mat-step>
 
         <mat-step label="موتور های سرچ" state="seo">
-          <p>Socialize with each other.</p>
+          <p>این بخش کمک می کند موتورهای سرچ بهتر مطالب را ایندکس کنند</p>
           <mat-form-field class="example-full-width">
             <mat-label>آدرس صفحه منبع مطلب</mat-label>
             <input matInput [(ngModel)]="dataModel.Source" name="dataModel.Source" #Source type="text" dir="ltr"
@@ -87,7 +87,7 @@
 
           </mat-form-field>
 
-          <tag-input [(ngModel)]="TagModel" name="TagModel" [placeholder]="'+ Tag'" [onTextChangeDebounce]="500"
+          <tag-input [(ngModel)]="tagDataModel" name="TagModel" [placeholder]="'+ Tag'" [onTextChangeDebounce]="500"
             [secondaryPlaceholder]="'Search in Tags'" [onlyFromAutocomplete]="true" [identifyBy]="'id'"
             [displayBy]="'display'">
             <tag-input-dropdown [autocompleteObservable]="requestAutocompleteItems">
@@ -96,13 +96,11 @@
               </ng-template>
             </tag-input-dropdown>
           </tag-input>
-          {{TagModel|json}}
 
-          <tag-input [(ngModel)]="KeywordModel" name="KeywordModel" [placeholder]="'+ کلمه کلیدی'"
+          <tag-input [(ngModel)]="keywordDataModel" name="KeywordModel" [placeholder]="'+ کلمه کلیدی'"
             [secondaryPlaceholder]="'انتخاب کلمات کلیدی نسبت به مطلب'" [identifyBy]="'display'">
 
           </tag-input>
-          {{KeywordModel|json}}
           <div *ngIf="formInfo.FormAllowSubmit">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
@@ -168,9 +166,95 @@
             </button>
           </div>
         </mat-step>
+        <mat-step label="سایت اطلاعات" state="otherinfo">
+          <p>سایر اطلاعات در رابطه با این محتوا در این قسمت  اضافه کنید</p>
 
+          <mat-form-field class="example-full-width">
+            <mat-label>عنوان</mat-label>
+            <input matInput [(ngModel)]="contentOtherInfoSelected.Title" name="contentOtherInfoSelected.Title" #contentOtherInfoSelected_Title type="text"
+              style="text-align: left;" placeholder="عنوان" minlength="3" maxlength="50" />
+            <mat-icon matSuffix *ngIf="contentOtherInfoSelected.Title" matSuffix mat-icon-button aria-label="Clear"
+              (click)="contentOtherInfoSelected.Title = ''">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
+            <mat-hint align="end">{{ contentOtherInfoSelected_Title.value.length }} / 50</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <mat-label>کلید</mat-label>
+            <input matInput [(ngModel)]="contentOtherInfoSelected.TypeId" name="contentOtherInfoSelected.TypeId" #contentOtherInfoSelected_TypeId type="number"
+              style="text-align: left;" placeholder="عددی توافقی برای نمایش"  />
+            <mat-icon matSuffix *ngIf="contentOtherInfoSelected.TypeId" matSuffix mat-icon-button aria-label="Clear"
+              (click)="contentOtherInfoSelected.TypeId = ''">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
+
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>منبع</mat-label>
+            <input matInput [(ngModel)]="contentOtherInfoSelected.Source" name="contentOtherInfoSelected.Source" #contentOtherInfoSelected_Source type="text" dir="ltr"
+              style="text-align: left;" placeholder="http://" maxlength="100" />
+            <mat-icon matSuffix *ngIf="contentOtherInfoSelected.Source" matSuffix mat-icon-button aria-label="Clear"
+              (click)="contentOtherInfoSelected.Source = ''">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
+            <mat-hint align="end">{{ contentOtherInfoSelected_Source.value.length }} / 500</mat-hint>
+          </mat-form-field>
+
+          <angular-editor [placeholder]="'Enter text here...'" [config]="editorConfig" [(ngModel)]="contentOtherInfoSelected.HtmlBody"
+            name="contentOtherInfoSelected.HtmlBody"></angular-editor>
+
+            <button (click)="onActionContentOtherInfoAddToLIst()" type="button" mat-button matStepperPrevious
+            class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
+            اضافه به لیست ...
+          </button>
+          <ul class="heroes">
+            <li *ngFor="let item of otherInfoDataModel;let i = index">
+              <span class="badge">{{i}}</span> {{item.Title}}
+              <button type="button" matSuffix mat-button mat-icon-button (click)="onActionContentOtherInfoRemoveFromLIst(i)">
+                <mat-icon matTooltip='remove  "{{item.Title}}"'>remove</mat-icon>
+              </button>
+            </li>
+          </ul>
+
+          <div *ngIf="formInfo.FormAllowSubmit">
+            <button type="button" mat-button matStepperPrevious
+              class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
+              قبلی
+            </button>
+            <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
+              class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
+              بعدی
+            </button>
+          </div>
+        </mat-step>
+        <mat-step label="مطالب مشابه" state="info">
+          <p>مطالب مرتبط را مشخص کنید</p>
+          <app-news-content-selector [(options)]="optionsContentSelector">
+            <mat-icon matSuffix *ngIf="contentSimilarSelected && contentSimilarSelected.Id" matSuffix mat-button mat-icon-button (click)="onActionContentSimilarAddToLIst()" matTooltip='Add "{{contentSimilarSelected.Title}}"'>add</mat-icon>
+          </app-news-content-selector>
+
+
+
+          <ul class="heroes">
+            <li *ngFor="let item of similarDataModel">
+              <span class="badge">{{item.Id}}</span> {{item.Title}}
+              <button type="button" matSuffix mat-button mat-icon-button (click)="onActionContentSimilarRemoveFromLIst(item)">
+                <mat-icon matTooltip='remove  "{{item.Title}}"'>remove</mat-icon>
+              </button>
+            </li>
+          </ul>
+
+          <div *ngIf="formInfo.FormAllowSubmit">
+            <button type="button" mat-button matStepperPrevious
+              class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
+              قبلی
+            </button>
+            <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
+              class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
+              بعدی
+            </button>
+          </div>
+        </mat-step>
         <mat-step label="موقعیت مکانی" state="loaction">
-          <p>You're welcome.</p>
+          <p>روی نقشه کلیک کنید تا موقیت مکانی مشخس گردد</p>
           <app-cms-map (map$)="receiveMap($event)" (zoom$)="receiveZoom($event)" id='main-map'></app-cms-map>
           <div *ngIf="formInfo.FormAllowSubmit">
             <button type="button" mat-button matStepperPrevious
