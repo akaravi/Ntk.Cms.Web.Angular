@@ -33,6 +33,7 @@ import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { ComponentOptionSelectorModel } from 'src/app/core/cmsComponentModels/base/componentOptionSelectorModel';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { MatStepper } from '@angular/material/stepper';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-news-content-add',
@@ -119,8 +120,13 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
   tagDataModel = [];
   similarDataModel = new Array<NewsContentModel>();
   otherInfoDataModel = new Array<NewsContentOtherInfoModel>();
-  contentSimilarSelected: NewsContentModel;
-  contentOtherInfoSelected: NewsContentOtherInfoModel;
+  contentSimilarSelected: NewsContentModel = new NewsContentModel();
+  contentOtherInfoSelected: NewsContentOtherInfoModel = new NewsContentOtherInfoModel();
+  otherInfoTabledisplayedColumns = ['Title', 'TypeId', 'Action']
+  similarTabledisplayedColumns = ['LinkMainImageIdSrc', 'Id', 'RecordStatus', 'Title', 'Action']
+  similarTabledataSource = new MatTableDataSource<NewsContentModel>();
+  otherInfoTabledataSource = new MatTableDataSource<NewsContentOtherInfoModel>();
+
   appLanguage = 'fa';
 
   viewMap = false;
@@ -132,7 +138,7 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
       this.toasterService.typeErrorAddRowParentIsNull();
       return;
     }
-
+    this.dataModel.LinkCategoryId = this.requestCategoryId;
     this.getEnumRecordStatus();
   }
   ngAfterViewInit(): void {
@@ -221,7 +227,7 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
     this.zoom = zoom;
   }
   onFormSubmit(): void {
-    if (this.requestCategoryId <= 0) {
+    if (this.dataModel.LinkCategoryId <= 0) {
       this.toasterService.typeErrorAddRowParentIsNull();
       return;
     }
@@ -229,7 +235,7 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
       this.toasterService.typeErrorFormInvalid();
       return;
     }
-    this.dataModel.LinkCategoryId = this.requestCategoryId;
+
     if (this.keywordDataModel && this.keywordDataModel.length > 0) {
       const listKeyword = this.keywordDataModel.map(x => x.display);
       if (listKeyword && listKeyword.length > 0) {
@@ -258,6 +264,7 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
             this.toasterService.typeSuccessAdd();
             await this.DataActionAfterAddContentSuccessfulTag(this.dataModelResult.Item);
             await this.DataActionAfterAddContentSuccessfulSimilar(this.dataModelResult.Item);
+            await this.DataActionAfterAddContentSuccessfulOtherInfo(this.dataModelResult.Item);
             this.loading.display = false;
             this.router.navigate(['/news/content/']);
           } else {
@@ -304,9 +311,9 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
     return this.newsContentOtherInfoService.ServiceAddBatch(this.otherInfoDataModel).pipe(
       map(response => {
         if (response.IsSuccess) {
-          this.toasterService.typeSuccessAddSimilar();
+          this.toasterService.typeSuccessAddOtherInfo();
         } else {
-          this.toasterService.typeErrorAddSimilar();
+          this.toasterService.typeErrorAddOtherInfo();
         }
         return of(response);
       },
@@ -354,7 +361,7 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
       );
       return;
     }
-    this.requestCategoryId = model.Id;
+    this.dataModel.LinkCategoryId = model.Id;
   }
   onActionContentSimilarSelect(model: NewsContentModel | null): void {
     if (!model || model.Id <= 0) {
@@ -371,6 +378,7 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
       return;
     }
     this.similarDataModel.push(this.contentSimilarSelected);
+    this.similarTabledataSource.data = this.similarDataModel;
   }
   onActionContentSimilarRemoveFromLIst(model: NewsContentModel | null): void {
     if (!model || model.Id <= 0) {
@@ -386,28 +394,44 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
       }
     });
     this.similarDataModel = retOut;
+    this.similarTabledataSource.data = this.similarDataModel;
   }
 
 
   onActionContentOtherInfoAddToLIst(): void {
-    if (!this.contentOtherInfoSelected || this.contentOtherInfoSelected.Id <= 0) {
+    if (!this.contentOtherInfoSelected) {
       return;
     }
-    if (this.otherInfoDataModel.find(x => x.Id === this.contentOtherInfoSelected.Id)) {
+    if (this.otherInfoDataModel.find(x => x.Title === this.contentOtherInfoSelected.Title)) {
       this.toasterService.typeErrorAddDuplicate();
       return;
     }
     this.otherInfoDataModel.push(this.contentOtherInfoSelected);
     this.contentOtherInfoSelected = new NewsContentOtherInfoModel();
+    this.otherInfoTabledataSource.data = this.otherInfoDataModel;
   }
   onActionContentOtherInfoRemoveFromLIst(index: number): void {
-    if (!index || index < 0) {
+    if (index < 0) {
       return;
     }
     if (!this.otherInfoDataModel || this.otherInfoDataModel.length === 0) {
       return;
     }
-    this.otherInfoDataModel = this.otherInfoDataModel.splice(index, 0);
+    this.otherInfoDataModel.splice(index, 1);
+    this.otherInfoTabledataSource.data = this.otherInfoDataModel;
+
+  }
+  onActionContentOtherInfoEditFromLIst(index: number): void {
+    if (index < 0) {
+      return;
+    }
+    if (!this.otherInfoDataModel || this.otherInfoDataModel.length === 0) {
+      return;
+    }
+    this.contentOtherInfoSelected = this.otherInfoDataModel[index];
+    this.otherInfoDataModel.splice(index, 1);
+    this.otherInfoTabledataSource.data = this.otherInfoDataModel;
+
   }
 
   onStepClick(event: StepperSelectionEvent, stepper: MatStepper): void {

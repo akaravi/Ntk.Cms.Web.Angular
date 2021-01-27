@@ -16,6 +16,9 @@ export class CmsToastrService {
   typeSuccessAddSimilar(): void {
     this.toastr.success('با موفقیت مطالب مشابه اضافه شد', 'Success!');
   }
+  typeSuccessAddOtherInfo(): void {
+    this.toastr.success('با موفقیت سایر اطلاعات اضافه شد', 'Success!');
+  }
   typeSuccessAddTag(): void {
     this.toastr.success('با موفقیت تگ مشابه اضافه شد', 'Success!');
   }
@@ -97,6 +100,13 @@ export class CmsToastrService {
   }
   typeErrorAddSimilar(str: string = ''): void {
     let message = 'خطا در اضافه کردن مطالب مشابه';
+    if (str && str.length > 0) {
+      message = message + ' error: ' + str;
+    }
+    this.toastr.error(message, 'Error!');
+  }
+  typeErrorAddOtherInfo(str: string = ''): void {
+    let message = 'خطا در اضافه کردن سایر اطلاعات';
     if (str && str.length > 0) {
       message = message + ' error: ' + str;
     }

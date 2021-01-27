@@ -166,13 +166,14 @@
             </button>
           </div>
         </mat-step>
-        <mat-step label="سایت اطلاعات" state="otherinfo">
-          <p>سایر اطلاعات در رابطه با این محتوا در این قسمت  اضافه کنید</p>
+        <mat-step label="سایر اطلاعات" state="otherinfo">
+          <p>سایر اطلاعات در رابطه با این محتوا در این قسمت اضافه کنید</p>
 
           <mat-form-field class="example-full-width">
             <mat-label>عنوان</mat-label>
-            <input matInput [(ngModel)]="contentOtherInfoSelected.Title" name="contentOtherInfoSelected.Title" #contentOtherInfoSelected_Title type="text"
-              style="text-align: left;" placeholder="عنوان" minlength="3" maxlength="50" />
+            <input matInput [(ngModel)]="contentOtherInfoSelected.Title" name="contentOtherInfoSelected.Title"
+              #contentOtherInfoSelected_Title type="text" style="text-align: left;" placeholder="عنوان" minlength="3"
+              maxlength="50" />
             <mat-icon matSuffix *ngIf="contentOtherInfoSelected.Title" matSuffix mat-icon-button aria-label="Clear"
               (click)="contentOtherInfoSelected.Title = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
@@ -181,8 +182,9 @@
 
           <mat-form-field class="example-full-width">
             <mat-label>کلید</mat-label>
-            <input matInput [(ngModel)]="contentOtherInfoSelected.TypeId" name="contentOtherInfoSelected.TypeId" #contentOtherInfoSelected_TypeId type="number"
-              style="text-align: left;" placeholder="عددی توافقی برای نمایش"  />
+            <input matInput [(ngModel)]="contentOtherInfoSelected.TypeId" name="contentOtherInfoSelected.TypeId"
+              #contentOtherInfoSelected_TypeId type="number" style="text-align: left;"
+              placeholder="عددی توافقی برای نمایش" />
             <mat-icon matSuffix *ngIf="contentOtherInfoSelected.TypeId" matSuffix mat-icon-button aria-label="Clear"
               (click)="contentOtherInfoSelected.TypeId = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
@@ -190,29 +192,77 @@
           </mat-form-field>
           <mat-form-field class="example-full-width">
             <mat-label>منبع</mat-label>
-            <input matInput [(ngModel)]="contentOtherInfoSelected.Source" name="contentOtherInfoSelected.Source" #contentOtherInfoSelected_Source type="text" dir="ltr"
-              style="text-align: left;" placeholder="http://" maxlength="100" />
+            <input matInput [(ngModel)]="contentOtherInfoSelected.Source" name="contentOtherInfoSelected.Source"
+              #contentOtherInfoSelected_Source type="text" dir="ltr" style="text-align: left;" placeholder="http://"
+              maxlength="100" />
             <mat-icon matSuffix *ngIf="contentOtherInfoSelected.Source" matSuffix mat-icon-button aria-label="Clear"
               (click)="contentOtherInfoSelected.Source = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
             <mat-hint align="end">{{ contentOtherInfoSelected_Source.value.length }} / 500</mat-hint>
           </mat-form-field>
 
-          <angular-editor [placeholder]="'Enter text here...'" [config]="editorConfig" [(ngModel)]="contentOtherInfoSelected.HtmlBody"
-            name="contentOtherInfoSelected.HtmlBody"></angular-editor>
+          <angular-editor [placeholder]="'Enter text here...'" [config]="editorConfig"
+            [(ngModel)]="contentOtherInfoSelected.HtmlBody" name="contentOtherInfoSelected.HtmlBody"></angular-editor>
 
-            <button (click)="onActionContentOtherInfoAddToLIst()" type="button" mat-button matStepperPrevious
+          <button (click)="onActionContentOtherInfoAddToLIst()" type="button" mat-button
             class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
             اضافه به لیست ...
           </button>
-          <ul class="heroes">
-            <li *ngFor="let item of otherInfoDataModel;let i = index">
-              <span class="badge">{{i}}</span> {{item.Title}}
-              <button type="button" matSuffix mat-button mat-icon-button (click)="onActionContentOtherInfoRemoveFromLIst(i)">
-                <mat-icon matTooltip='remove  "{{item.Title}}"'>remove</mat-icon>
-              </button>
-            </li>
-          </ul>
+          <p>لیست سایر اطلاعات</p>
+          <!-- TABLE  -->
+          <div class="example-container mat-elevation-z8">
+            <mat-table [dataSource]="otherInfoTabledataSource">
+              <!-- Title Column -->
+              <ng-container matColumnDef="Title">
+                <mat-header-cell *matHeaderCellDef> عنوان </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.Title}} </mat-cell>
+              </ng-container>
+              <!-- TypeId Column -->
+              <ng-container matColumnDef="TypeId">
+                <mat-header-cell *matHeaderCellDef> نوع </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.TypeId}} </mat-cell>
+              </ng-container>
+              <!-- Action Column -->
+              <ng-container matColumnDef="Action">
+                <mat-header-cell *matHeaderCellDef> ... </mat-header-cell>
+                <mat-cell *matCellDef="let row; let i = index" class='Action'>
+                  <small (click)="onActionContentOtherInfoEditFromLIst(i)">ویرایش</small>|
+                  <small (click)="onActionContentOtherInfoRemoveFromLIst(i)">حذف</small>
+                </mat-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="otherInfoTabledisplayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: otherInfoTabledisplayedColumns;"
+                [ngStyle]="{'background': row.Title === contentOtherInfoSelected.Title ? '#d3d3da' : '' }">
+              </mat-row>
+            </mat-table>
+          </div>
+          <!-- TABLE  -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
           <div *ngIf="formInfo.FormAllowSubmit">
             <button type="button" mat-button matStepperPrevious
@@ -228,19 +278,58 @@
         <mat-step label="مطالب مشابه" state="info">
           <p>مطالب مرتبط را مشخص کنید</p>
           <app-news-content-selector [(options)]="optionsContentSelector">
-            <mat-icon matSuffix *ngIf="contentSimilarSelected && contentSimilarSelected.Id" matSuffix mat-button mat-icon-button (click)="onActionContentSimilarAddToLIst()" matTooltip='Add "{{contentSimilarSelected.Title}}"'>add</mat-icon>
+            <mat-icon matSuffix *ngIf="contentSimilarSelected && contentSimilarSelected.Id" matSuffix mat-button
+              mat-icon-button (click)="onActionContentSimilarAddToLIst()"
+              matTooltip='Add "{{contentSimilarSelected.Title}}"'>add</mat-icon>
           </app-news-content-selector>
 
 
+          <!-- TABLE  -->
+          <div class="example-container mat-elevation-z8">
+            <mat-table [dataSource]="similarTabledataSource">
+              <!-- LinkMainImageIdSrc Column -->
+              <ng-container matColumnDef="LinkMainImageIdSrc">
+                <mat-header-cell *matHeaderCellDef > عکس </mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <img *ngIf="row?.LinkMainImageIdSrc?.length>0" style="vertical-align:middle;" aria-hidden
+                    src="{{row.LinkMainImageIdSrc}}" height="40" width="40" />
+                </mat-cell>
+              </ng-container>
+              <!-- Id Column -->
+              <ng-container matColumnDef="Id">
+                <mat-header-cell *matHeaderCellDef> شناسه </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.Id}} </mat-cell>
+              </ng-container>
+              <!-- LinkSiteId Column -->
+              <ng-container matColumnDef="LinkSiteId">
+                <mat-header-cell *matHeaderCellDef > شناسه سایت </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.LinkSiteId}} </mat-cell>
+              </ng-container>
+              <!-- RecordStatus Column -->
+              <ng-container matColumnDef="RecordStatus">
+                <mat-header-cell *matHeaderCellDef > وضعیت </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.RecordStatus}} </mat-cell>
+              </ng-container>
+              <!-- Title Column -->
+              <ng-container matColumnDef="Title">
+                <mat-header-cell *matHeaderCellDef> عنوان </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.Title}} </mat-cell>
+              </ng-container>
 
-          <ul class="heroes">
-            <li *ngFor="let item of similarDataModel">
-              <span class="badge">{{item.Id}}</span> {{item.Title}}
-              <button type="button" matSuffix mat-button mat-icon-button (click)="onActionContentSimilarRemoveFromLIst(item)">
-                <mat-icon matTooltip='remove  "{{item.Title}}"'>remove</mat-icon>
-              </button>
-            </li>
-          </ul>
+              <!-- Action Column -->
+              <ng-container matColumnDef="Action">
+                <mat-header-cell *matHeaderCellDef> ... </mat-header-cell>
+                <mat-cell *matCellDef="let row; let i = index" class='Action'>
+                  <small (click)="onActionContentSimilarRemoveFromLIst(row)">حذف</small>
+                </mat-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="similarTabledisplayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: similarTabledisplayedColumns;"
+                [ngStyle]="{'background': row.Id === contentSimilarSelected.Id ? '#d3d3da' : '' }">
+              </mat-row>
+            </mat-table>
+          </div>
+          <!-- TABLE  -->
 
           <div *ngIf="formInfo.FormAllowSubmit">
             <button type="button" mat-button matStepperPrevious
