@@ -17,7 +17,8 @@ import {
   NewsContentTagModel,
   NewsContentSimilarService,
   NewsContentOtherInfoService,
-  NewsContentOtherInfoModel
+  NewsContentOtherInfoModel,
+  NewsContentSimilarModel
 } from 'ntk-cms-api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CmsToastrService } from 'src/app/core/helpers/services/cmsToastr.service';
@@ -31,7 +32,6 @@ import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { MatStepper } from '@angular/material/stepper';
 import { MatTableDataSource } from '@angular/material/table';
 import { PoinModel } from 'src/app/core/models/pointModel';
-import { NewsContentSimilarModel } from 'ntk-cms-api/lib/models/entity/news/newsContentSimilarModel';
 
 @Component({
   selector: 'app-news-content-edit',

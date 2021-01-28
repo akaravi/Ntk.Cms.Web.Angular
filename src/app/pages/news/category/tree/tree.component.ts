@@ -30,25 +30,6 @@ import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
   styleUrls: ['./tree.component.scss'],
 })
 export class NewsCategoryTreeComponent implements OnInit {
-  // public optionsData: ComponentOptionTreeModel<NewsCategoryModel> = new ComponentOptionTreeModel<NewsCategoryModel>();
-  // @Output()
-  // // tslint:disable-next-line: max-line-length
-  // optionsChange: EventEmitter<ComponentOptionTreeModel<NewsCategoryModel>> = new EventEmitter<ComponentOptionTreeModel<NewsCategoryModel>>();
-  // @Input() set options(model: ComponentOptionTreeModel<NewsCategoryModel>) {
-  //   if (!model) {
-  //     model = new ComponentOptionTreeModel<NewsCategoryModel>();
-  //   }
-  //   this.optionsData = model;
-  //   this.optionsData.childMethods = {
-  //     ActionReload: () => this.onActionReload(),
-  //     ActionSelectForce: (id) => this.onActionSelectForce(),
-  //   };
-  //   this.optionsChange.emit(model);
-  // }
-  // get options(): ComponentOptionTreeModel<NewsCategoryModel> {
-  //   return this.optionsData;
-  // }
-
   constructor(
     private coreAuthService: CoreAuthService,
     private toastrService: CmsToastrService,
