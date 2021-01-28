@@ -14,6 +14,8 @@ import { CmsStatistListComponent } from './cmsStatistList/cmsStatistList.compone
 import { CmsExportListComponent } from './cmsExportList/cmsExportList.component';
 import { CmsMapComponent } from './cmsMap/cmsMap.Component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { TagAutocompleteComponent } from '../modules/coreModule/tag/autocomplete/autocomplete.component';
+import { TagInputModule } from 'ngx-chips';
 
 
 
@@ -25,7 +27,8 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
     MaterialModule,
     TreeModule,
     NgxQueryBuilderModule,
-    LeafletModule
+    LeafletModule,
+    TagInputModule
 
   ],
   entryComponents: [
@@ -38,7 +41,8 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
     CmsStatistListComponent,
     CmsExportListComponent,
     PersianDate,
-    CmsMapComponent
+    CmsMapComponent,
+    TagAutocompleteComponent
   ],
   exports: [
     // common and shared components/directives/pipes between more than one module and components will be listed here.
@@ -52,7 +56,8 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
     CmsSearchListComponent,
     CmsStatistListComponent,
     CmsExportListComponent,
-    CmsMapComponent
+    CmsMapComponent,
+    TagAutocompleteComponent
   ],
   /* No providers here! Since they’ll be already provided in AppModule. */
 })

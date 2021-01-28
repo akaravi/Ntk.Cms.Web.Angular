@@ -30,7 +30,6 @@ import { map } from 'rxjs/operators';
 import { ConfigInterface, DownloadModeEnum, NodeInterface, TreeModel } from 'ntk-cms-filemanager';
 import { Map } from 'leaflet';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
-import { ComponentOptionSelectorModel } from 'src/app/core/cmsComponentModels/base/componentOptionSelectorModel';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { MatStepper } from '@angular/material/stepper';
 import { MatTableDataSource } from '@angular/material/table';
@@ -46,7 +45,7 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     public coreEnumService: CoreEnumService,
-    public coreModuleTagService: CoreModuleTagService,
+    // public coreModuleTagService: CoreModuleTagService,
     private newsContentService: NewsContentService,
     private newsContentSimilarService: NewsContentSimilarService,
     private newsContentOtherInfoService: NewsContentOtherInfoService,
@@ -59,15 +58,13 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
   dataModel = new NewsContentModel();
   dataModelResult: ErrorExceptionResult<NewsContentModel> = new ErrorExceptionResult<NewsContentModel>();
-  datatagDataModelResult: ErrorExceptionResult<CoreModuleTagModel> = new ErrorExceptionResult<CoreModuleTagModel>();
+  // datatagDataModelResult: ErrorExceptionResult<CoreModuleTagModel> = new ErrorExceptionResult<CoreModuleTagModel>();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   loading = new ProgressSpinnerModel();
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
   selectFileTypePodcast = ['mp3'];
   formInfo: FormInfoModel = new FormInfoModel();
   mapMarker: any;
-  optionsContentSelector: ComponentOptionSelectorModel<NewsContentModel> = new ComponentOptionSelectorModel<NewsContentModel>();
-  optionsCategorySelector: ComponentOptionSelectorModel<NewsCategoryModel> = new ComponentOptionSelectorModel<NewsCategoryModel>();
   fileManagerOpenForm = false;
   fileManagerOpenFormPodcast = false;
 
@@ -122,8 +119,8 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
   otherInfoDataModel = new Array<NewsContentOtherInfoModel>();
   contentSimilarSelected: NewsContentModel = new NewsContentModel();
   contentOtherInfoSelected: NewsContentOtherInfoModel = new NewsContentOtherInfoModel();
-  otherInfoTabledisplayedColumns = ['Title', 'TypeId', 'Action']
-  similarTabledisplayedColumns = ['LinkMainImageIdSrc', 'Id', 'RecordStatus', 'Title', 'Action']
+  otherInfoTabledisplayedColumns = ['Title', 'TypeId', 'Action'];
+  similarTabledisplayedColumns = ['LinkMainImageIdSrc', 'Id', 'RecordStatus', 'Title', 'Action'];
   similarTabledataSource = new MatTableDataSource<NewsContentModel>();
   otherInfoTabledataSource = new MatTableDataSource<NewsContentOtherInfoModel>();
 
@@ -142,47 +139,50 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
     this.getEnumRecordStatus();
   }
   ngAfterViewInit(): void {
-    this.optionsCategorySelector.childMethods.ActionSelectForce(this.requestCategoryId);
-    this.optionsCategorySelector.parentMethods = {
-      onActionSelect: (x) => this.onActionCategorySelect(x),
-    };
-    this.optionsContentSelector.parentMethods = {
-      onActionSelect: (x) => this.onActionContentSimilarSelect(x),
-    };
+    // this.optionsCategorySelector.childMethods.ActionSelectForce(this.requestCategoryId);
+    // this.optionsCategorySelector.parentMethods = {
+    //   onActionSelect: (x) => this.onActionCategorySelect(x),
+    // };
+    // this.optionsContentSelector.parentMethods = {
+    //   onActionSelect: (x) => this.onActionContentSimilarSelect(x),
+    // };
   }
-  public requestAutocompleteItems = (text: string): Observable<any> => {
-    const filteModel = new FilterModel();
-    filteModel.RowPerPage = 20;
-    filteModel.AccessLoad = true;
-    if (text && typeof text === 'string' && text.length > 0) {
-      const aaa = {
-        PropertyName: 'Title',
-        Value: text,
-        SearchType: 5
-      };
-      filteModel.Filters.push(aaa as FilterDataModel);
-    } else if (text && typeof text === 'number' && text > 0) {
-      const aaa2 = {
-        PropertyName: 'Title',
-        Value: text + '',
-        SearchType: 5,
-        ClauseType: 1
-      };
-      filteModel.Filters.push(aaa2 as FilterDataModel);
-      const aaa3 = {
-        PropertyName: 'Id',
-        Value: text + '',
-        SearchType: 1,
-        ClauseType: 1
-      };
-      filteModel.Filters.push(aaa3 as FilterDataModel);
-    }
-    return this.coreModuleTagService.ServiceGetAll(filteModel).pipe(
-      map((data) => data.ListItems.map(val => ({
-        value: val.Id,
-        display: val.Title
-      })))
-    );
+  // public requestAutocompleteItems = (text: string): Observable<any> => {
+  //   const filteModel = new FilterModel();
+  //   filteModel.RowPerPage = 20;
+  //   filteModel.AccessLoad = true;
+  //   if (text && typeof text === 'string' && text.length > 0) {
+  //     const aaa = {
+  //       PropertyName: 'Title',
+  //       Value: text,
+  //       SearchType: 5
+  //     };
+  //     filteModel.Filters.push(aaa as FilterDataModel);
+  //   } else if (text && typeof text === 'number' && text > 0) {
+  //     const aaa2 = {
+  //       PropertyName: 'Title',
+  //       Value: text + '',
+  //       SearchType: 5,
+  //       ClauseType: 1
+  //     };
+  //     filteModel.Filters.push(aaa2 as FilterDataModel);
+  //     const aaa3 = {
+  //       PropertyName: 'Id',
+  //       Value: text + '',
+  //       SearchType: 1,
+  //       ClauseType: 1
+  //     };
+  //     filteModel.Filters.push(aaa3 as FilterDataModel);
+  //   }
+  //   return this.coreModuleTagService.ServiceGetAll(filteModel).pipe(
+  //     map((data) => data.ListItems.map(val => ({
+  //       value: val.Id,
+  //       display: val.Title
+  //     })))
+  //   );
+  // }
+  onActionTagChange(model: any): void {
+    this.tagDataModel = model;
   }
   onActionFileSelectedLinkMainImageId(model: NodeInterface): void {
     this.dataModel.LinkMainImageId = model.id;
@@ -283,19 +283,19 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
     if (!this.tagDataModel || this.tagDataModel.length === 0) {
       return;
     }
-    const dataList = new Array<NewsContentTagModel>();
+    const dataListAdd = new Array<NewsContentTagModel>();
     this.tagDataModel.forEach(x => {
       const row = new NewsContentTagModel();
       row.LinkContentId = model.Id;
-      row.LinkTagid = x.Id;
-      dataList.push(row);
+      row.LinkTagId = x.Id;
+      dataListAdd.push(row);
     });
-    return this.newsContentTagService.ServiceAddBatch(dataList).pipe(
+    return this.newsContentTagService.ServiceAddBatch(dataListAdd).pipe(
       map(response => {
         if (response.IsSuccess) {
-          this.toasterService.typeSuccessAddSimilar();
+          this.toasterService.typeSuccessAddTag();
         } else {
-          this.toasterService.typeErrorAddSimilar();
+          this.toasterService.typeErrorAddTag();
         }
         console.log(response.ListItems);
         return of(response);
@@ -444,5 +444,8 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
         }, 10);
       }
     }
+  }
+  onActionBackToParent(): void {
+    this.router.navigate(['/news/content/']);
   }
 }

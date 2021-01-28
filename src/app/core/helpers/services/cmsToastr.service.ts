@@ -22,6 +22,9 @@ export class CmsToastrService {
   typeSuccessAddTag(): void {
     this.toastr.success('با موفقیت تگ مشابه اضافه شد', 'Success!');
   }
+  typeSuccessRemoveTag(): void {
+    this.toastr.success('با موفقیت تگ مشابه حذف شد', 'Success!');
+  }
   typeSuccessRemove(): void {
     this.toastr.success('با موفقیت حذف شد', 'Success!');
   }
@@ -114,6 +117,13 @@ export class CmsToastrService {
   }
   typeErrorAddTag(str: string = ''): void {
     let message = 'خطا در اضافه کردن تگها';
+    if (str && str.length > 0) {
+      message = message + ' error: ' + str;
+    }
+    this.toastr.error(message, 'Error!');
+  }
+  typeErrorRemoveTag(str: string = ''): void {
+    let message = 'خطا در حذف کردن تگها';
     if (str && str.length > 0) {
       message = message + ' error: ' + str;
     }

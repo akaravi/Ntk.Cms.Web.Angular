@@ -22,7 +22,7 @@
               RecordStatus is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-          <app-news-category-selector [(options)]="optionsCategorySelector"></app-news-category-selector>
+          <app-news-category-selector (optionSelect)="onActionCategorySelect($event)"  [optionSelectForce]="dataModel.LinkCategoryId"  [optionPlaceholder]="'دسته بندی'" ></app-news-category-selector>
           <mat-form-field class="example-full-width">
             <mat-label>عنوان</mat-label>
             <input matInput [(ngModel)]="dataModel.Title" name="dataModel.Title" #Title type="text" placeholder="عنوان"
@@ -71,6 +71,9 @@
               class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
               بعدی
             </button>
+            <a class="btn btn-secondary btn-sm BTN">
+              <button (click)="onActionBackToParent()" type="button" class="btn btn-warning BTN">بازگشت</button>
+            </a>
           </div>
         </mat-step>
 
@@ -87,15 +90,8 @@
 
           </mat-form-field>
 
-          <tag-input [(ngModel)]="tagDataModel" name="TagModel" [placeholder]="'+ Tag'" [onTextChangeDebounce]="500"
-            [secondaryPlaceholder]="'Search in Tags'" [onlyFromAutocomplete]="true" [identifyBy]="'id'"
-            [displayBy]="'display'">
-            <tag-input-dropdown [autocompleteObservable]="requestAutocompleteItems">
-              <ng-template let-item="item" let-index="index">
-                {{ item.display }}
-              </ng-template>
-            </tag-input-dropdown>
-          </tag-input>
+          <app-tag-autocomplete (optionChange)="onActionTagChange($event)" [optionPlaceholder]="' + Tag '"></app-tag-autocomplete>
+
 
           <tag-input [(ngModel)]="keywordDataModel" name="KeywordModel" [placeholder]="'+ کلمه کلیدی'"
             [secondaryPlaceholder]="'انتخاب کلمات کلیدی نسبت به مطلب'" [identifyBy]="'display'">
@@ -172,7 +168,7 @@
           <mat-form-field class="example-full-width">
             <mat-label>عنوان</mat-label>
             <input matInput [(ngModel)]="contentOtherInfoSelected.Title" name="contentOtherInfoSelected.Title"
-              #contentOtherInfoSelected_Title type="text" style="text-align: left;" placeholder="عنوان" minlength="3"
+              #contentOtherInfoSelected_Title type="text"  placeholder="عنوان" minlength="3"
               maxlength="50" />
             <mat-icon matSuffix *ngIf="contentOtherInfoSelected.Title" matSuffix mat-icon-button aria-label="Clear"
               (click)="contentOtherInfoSelected.Title = ''">close</mat-icon>
@@ -183,7 +179,7 @@
           <mat-form-field class="example-full-width">
             <mat-label>کلید</mat-label>
             <input matInput [(ngModel)]="contentOtherInfoSelected.TypeId" name="contentOtherInfoSelected.TypeId"
-              #contentOtherInfoSelected_TypeId type="number" style="text-align: left;"
+              #contentOtherInfoSelected_TypeId type="number"
               placeholder="عددی توافقی برای نمایش" />
             <mat-icon matSuffix *ngIf="contentOtherInfoSelected.TypeId" matSuffix mat-icon-button aria-label="Clear"
               (click)="contentOtherInfoSelected.TypeId = ''">close</mat-icon>
@@ -277,7 +273,7 @@
         </mat-step>
         <mat-step label="مطالب مشابه" state="info">
           <p>مطالب مرتبط را مشخص کنید</p>
-          <app-news-content-selector [(options)]="optionsContentSelector">
+          <app-news-content-selector (optionSelect)="onActionContentSimilarSelect($event)" >
             <mat-icon matSuffix *ngIf="contentSimilarSelected && contentSimilarSelected.Id" matSuffix mat-button
               mat-icon-button (click)="onActionContentSimilarAddToLIst()"
               matTooltip='Add "{{contentSimilarSelected.Title}}"'>add</mat-icon>

@@ -9,15 +9,15 @@ import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 
 
 @Component({
-  selector: 'app-news-category-delete',
+  selector: 'app-tag-category-delete',
   templateUrl: './delete.component.html',
   styleUrls: ['./delete.component.css']
 })
-export class NewsCategoryDeleteComponent implements OnInit {
+export class TagCategoryDeleteComponent implements OnInit {
   requestId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialogRef: MatDialogRef<NewsCategoryDeleteComponent>,
+    private dialogRef: MatDialogRef<TagCategoryDeleteComponent>,
     private activatedRoute: ActivatedRoute,
     private newsCategoryService: NewsCategoryService,
     private toastrService: CmsToastrService

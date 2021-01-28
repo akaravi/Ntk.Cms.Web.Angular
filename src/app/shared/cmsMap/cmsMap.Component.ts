@@ -1,28 +1,35 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import * as L from 'leaflet';
-import { Map, Control, DomUtil, ZoomAnimEvent , Layer, MapOptions, tileLayer, latLng } from 'leaflet';
+import { Map, Control, DomUtil, ZoomAnimEvent, Layer, MapOptions, tileLayer, latLng } from 'leaflet';
+import { PoinModel } from 'src/app/core/models/pointModel';
 import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-cms-map',
   templateUrl: './cmsMap.component.html',
-  styleUrls: ['./cmsMap.component.css', ]
+  styleUrls: ['./cmsMap.component.css',]
 })
 export class CmsMapComponent implements OnInit, OnDestroy {
   @Output() map$: EventEmitter<Map> = new EventEmitter<Map>();
   @Output() zoom$: EventEmitter<number> = new EventEmitter<number>();
   @Input() options: MapOptions = {
-                      layers: [tileLayer(environment.leafletUrl , {
-                        opacity: 0.7,
-                        maxZoom: 19,
-                        detectRetina: true,
-                        // attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                      })],
-                      zoom: 16,
-                      center: [32.684985, 51.6359425],
-                      // center: latLng(0, 0)
+    layers: [tileLayer(environment.leafletUrl, {
+      opacity: 0.7,
+      maxZoom: 19,
+      detectRetina: true,
+      // attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    })],
+    zoom: 16,
+    center: [32.684985, 51.6359425],
+    // center: latLng(0, 0)
   };
+  @Input() set optonCenter(model: PoinModel) {
+    if (model && model.lat && model.lon && model.lat !== 0 && model.lon !== 0) {
+      //this.options.center = [model.lat, model.lon];
+      this.map.setView(new L.LatLng(model.lat, model.lon), this.zoom);
 
+    }
+  }
   public map: Map;
   public zoom: number;
 
@@ -54,9 +61,9 @@ export class CmsMapComponent implements OnInit, OnDestroy {
   }
 
   onMapReady(map: Map): void {
-    setTimeout(function() {
+    setTimeout(function () {
       map.invalidateSize();
-     }, 500);
+    }, 500);
     this.map = map;
     this.map$.emit(map);
     this.zoom = map.getZoom();
@@ -67,9 +74,4 @@ export class CmsMapComponent implements OnInit, OnDestroy {
     this.zoom = e.target.getZoom();
     this.zoom$.emit(this.zoom);
   }
-  // onResize(event): void {
-  //   event.target.innerWidth;
-  // }
-
-
 }

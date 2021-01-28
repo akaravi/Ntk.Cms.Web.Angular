@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { Output } from '@angular/core';
-import { ComponentOptionSelectorModel } from 'src/app/core/cmsComponentModels/base/componentOptionSelectorModel';
 
 
 @Component({
@@ -14,44 +13,49 @@ import { ComponentOptionSelectorModel } from 'src/app/core/cmsComponentModels/ba
   styleUrls: ['./selector.component.css']
 })
 export class NewsCategorySelectorComponent implements OnInit {
-  public optionsData: ComponentOptionSelectorModel<NewsCategoryModel> = new ComponentOptionSelectorModel<NewsCategoryModel>();
-  @Output()
+
+  // public optionsData: ComponentOptionSelectorModel<NewsCategoryModel> = new ComponentOptionSelectorModel<NewsCategoryModel>();
+  // @Output()
+  // // tslint:disable-next-line: max-line-length
   // tslint:disable-next-line: max-line-length
-  optionsChange: EventEmitter<ComponentOptionSelectorModel<NewsCategoryModel>> = new EventEmitter<ComponentOptionSelectorModel<NewsCategoryModel>>();
-  @Input() set options(model: ComponentOptionSelectorModel<NewsCategoryModel>) {
-    if (!model) {
-      model = new ComponentOptionSelectorModel<NewsCategoryModel>();
-    }
-    this.optionsData = model;
-    this.optionsData.childMethods = {
-      ActionReload: () => this.onActionReload(),
-      ActionSelectForce: (id) => this.onActionSelectForce(id),
-    };
-    this.optionsChange.emit(model);
-  }
-  get options(): ComponentOptionSelectorModel<NewsCategoryModel> {
-    this.optionsData.childMethods = {
-      ActionReload: () => this.onActionReload(),
-      ActionSelectForce: (id) => this.onActionSelectForce(id),
-    };
-    return this.optionsData;
-  }
+  // optionsChange: EventEmitter<ComponentOptionSelectorModel<NewsCategoryModel>> = new EventEmitter<ComponentOptionSelectorModel<NewsCategoryModel>>();
+  // @Input() set options(model: ComponentOptionSelectorModel<NewsCategoryModel>) {
+  //   if (!model) {
+  //     model = new ComponentOptionSelectorModel<NewsCategoryModel>();
+  //   }
+  //   this.optionsData = model;
+  //   this.optionsData.childMethods = {
+  //     ActionReload: () => this.onActionReload(),
+  //     ActionSelectForce: (id) => this.onActionSelectForce(id),
+  //   };
+  //   this.optionsChange.emit(model);
+  // }
+  // get options(): ComponentOptionSelectorModel<NewsCategoryModel> {
+  //   this.optionsData.childMethods = {
+  //     ActionReload: () => this.onActionReload(),
+  //     ActionSelectForce: (id) => this.onActionSelectForce(id),
+  //   };
+  //   this.optionsChange.emit(this.optionsData);
+  //   return this.optionsData;
+  // }
 
-
-
-  dataModelResult: ErrorExceptionResult<NewsCategoryModel> = new ErrorExceptionResult<NewsCategoryModel>();
-  dataModelSelect: NewsCategoryModel = new NewsCategoryModel();
-
-  loading = new ProgressSpinnerModel();
-
-  formControl = new FormControl();
-  filteredOptions: Observable<NewsCategoryModel[] >;
   constructor(
     public coreEnumService: CoreEnumService,
     public categoryService: NewsCategoryService) {
 
 
-    }
+  }
+  dataModelResult: ErrorExceptionResult<NewsCategoryModel> = new ErrorExceptionResult<NewsCategoryModel>();
+  dataModelSelect: NewsCategoryModel = new NewsCategoryModel();
+  loading = new ProgressSpinnerModel();
+  formControl = new FormControl();
+  filteredOptions: Observable<NewsCategoryModel[]>;
+  @Input() optionPlaceholder = new EventEmitter<string>();
+  @Output() optionSelect = new EventEmitter();
+  @Input() optionReload = () => this.onActionReload();
+  @Input() set optionSelectForce(x: number | NewsCategoryModel) {
+    this.onActionSelectForce(x);
+  }
 
   ngOnInit(): void {
     this.filteredOptions = this.formControl.valueChanges
@@ -110,25 +114,26 @@ export class NewsCategorySelectorComponent implements OnInit {
   }
   onActionSelect(model: NewsCategoryModel): void {
     this.dataModelSelect = model;
-    if (this.optionsData) {
-      this.optionsData.data.Select = this.dataModelSelect;
-      if (this.optionsData.parentMethods && this.optionsData.parentMethods.onActionSelect) {
-        this.optionsData.parentMethods.onActionSelect(this.dataModelSelect);
+    this.optionSelect.emit(this.dataModelSelect);
+    // this.optionsData.Select = this.dataModelSelect;
+    // if (this.optionsData) {
+    //   this.optionsData.data.Select = this.dataModelSelect;
+    //   if (this.optionsData.parentMethods && this.optionsData.parentMethods.onActionSelect) {
+    //     this.optionsData.parentMethods.onActionSelect(this.dataModelSelect);
+    //   }
+    // }
+  }
+
+  push(newvalue: NewsCategoryModel): Observable<NewsCategoryModel[]> {
+    return this.filteredOptions.pipe(map(items => {
+      if (items.find(x => x.Id === newvalue.Id)) {
+        return items;
       }
-    }
-  }
+      items.push(newvalue);
+      return items;
+    }));
 
-push(newvalue: NewsCategoryModel): Observable<NewsCategoryModel[]>
-{
- return this.filteredOptions.pipe(map(items  => {
-  if (items.find(x => x.Id === newvalue.Id)){
-    return items;
   }
-  items.push(newvalue);
-  return items;
-  }));
-
-}
   onActionSelectForce(id: number | NewsCategoryModel): void {
     if (typeof id === 'number' && id > 0) {
       this.categoryService.ServiceGetOneById(id).subscribe((next) => {
@@ -140,9 +145,9 @@ push(newvalue: NewsCategoryModel): Observable<NewsCategoryModel[]>
       });
     }
     if (typeof id === typeof NewsCategoryModel) {
-      this.filteredOptions = this.push( (id as NewsCategoryModel));
+      this.filteredOptions = this.push((id as NewsCategoryModel));
       this.dataModelSelect = (id as NewsCategoryModel);
-      this.formControl.setValue( id );
+      this.formControl.setValue(id);
     }
   }
 
@@ -151,7 +156,7 @@ push(newvalue: NewsCategoryModel): Observable<NewsCategoryModel[]>
     //   this.onActionSelect(null);
     // }
     this.dataModelSelect = new NewsCategoryModel();
-    this.optionsData.data.Select = new NewsCategoryModel();
+    // this.optionsData.Select = new NewsCategoryModel();
     this.DataGetAll(null);
   }
 }

@@ -10,11 +10,11 @@ import { Output } from '@angular/core';
 
 
 @Component({
-  selector: 'app-news-content-selector',
+  selector: 'app-tag-selector',
   templateUrl: './selector.component.html',
-  styleUrls: ['./selector.component.css']
+  styleUrls: ['./selector.component.scss']
 })
-export class NewsContentSelectorComponent implements OnInit {
+export class TagSelectorComponent implements OnInit {
   constructor(
     public coreEnumService: CoreEnumService,
     public contentService: NewsContentService) {

@@ -22,9 +22,7 @@
               RecordStatus is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-          <app-news-category-selector (optionSelect)="onActionCategorySelect($event)"
-            [optionSelectForce]="dataModel.LinkCategoryId" [optionPlaceholder]="'دسته بندی'">
-          </app-news-category-selector>
+          <app-news-category-selector (optionSelect)="onActionCategorySelect($event)" [optionSelectForce]="dataModel.LinkCategoryId" [optionPlaceholder]="'دسته بندی'" ></app-news-category-selector>
           <mat-form-field class="example-full-width">
             <mat-label>عنوان</mat-label>
             <input matInput [(ngModel)]="dataModel.Title" name="dataModel.Title" #Title type="text" placeholder="عنوان"
@@ -92,11 +90,15 @@
 
           </mat-form-field>
 
-
-          <app-tag-autocomplete (optionChange)="onActionTagChange($event)" [optionSelectForce]="tagIdsData"
-            [optionPlaceholder]="' + Tag '"></app-tag-autocomplete>
-
-
+          <tag-input [(ngModel)]="tagDataModel" name="TagModel" [placeholder]="'+ Tag'" [onTextChangeDebounce]="500"
+            [secondaryPlaceholder]="'Search in Tags'" [onlyFromAutocomplete]="true" [identifyBy]="'id'"
+            [displayBy]="'display'">
+            <tag-input-dropdown [autocompleteObservable]="requestAutocompleteItems">
+              <ng-template let-item="item" let-index="index">
+                {{ item.display }}
+              </ng-template>
+            </tag-input-dropdown>
+          </tag-input>
 
           <tag-input [(ngModel)]="keywordDataModel" name="KeywordModel" [placeholder]="'+ کلمه کلیدی'"
             [secondaryPlaceholder]="'انتخاب کلمات کلیدی نسبت به مطلب'" [identifyBy]="'display'">
@@ -173,7 +175,8 @@
           <mat-form-field class="example-full-width">
             <mat-label>عنوان</mat-label>
             <input matInput [(ngModel)]="contentOtherInfoSelected.Title" name="contentOtherInfoSelected.Title"
-              #contentOtherInfoSelected_Title type="text" placeholder="عنوان" minlength="3" maxlength="50" />
+              #contentOtherInfoSelected_Title type="text" style="text-align: left;" placeholder="عنوان" minlength="3"
+              maxlength="50" />
             <mat-icon matSuffix *ngIf="contentOtherInfoSelected.Title" matSuffix mat-icon-button aria-label="Clear"
               (click)="contentOtherInfoSelected.Title = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
@@ -183,7 +186,8 @@
           <mat-form-field class="example-full-width">
             <mat-label>کلید</mat-label>
             <input matInput [(ngModel)]="contentOtherInfoSelected.TypeId" name="contentOtherInfoSelected.TypeId"
-              #contentOtherInfoSelected_TypeId type="number" placeholder="عددی توافقی برای نمایش" />
+              #contentOtherInfoSelected_TypeId type="number" style="text-align: left;"
+              placeholder="عددی توافقی برای نمایش" />
             <mat-icon matSuffix *ngIf="contentOtherInfoSelected.TypeId" matSuffix mat-icon-button aria-label="Clear"
               (click)="contentOtherInfoSelected.TypeId = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
@@ -211,11 +215,6 @@
           <!-- TABLE  -->
           <div class="example-container mat-elevation-z8">
             <mat-table [dataSource]="otherInfoTabledataSource">
-              <!-- Id Column -->
-              <ng-container matColumnDef="Id">
-                <mat-header-cell *matHeaderCellDef> شناسه </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.Id}} </mat-cell>
-              </ng-container>
               <!-- Title Column -->
               <ng-container matColumnDef="Title">
                 <mat-header-cell *matHeaderCellDef> عنوان </mat-header-cell>
@@ -281,7 +280,7 @@
         </mat-step>
         <mat-step label="مطالب مشابه" state="info">
           <p>مطالب مرتبط را مشخص کنید</p>
-          <app-news-content-selector (optionSelect)="onActionContentSimilarSelect($event)">
+          <app-news-content-selector (optionSelect)="onActionContentSimilarSelect($event)" >
             <mat-icon matSuffix *ngIf="contentSimilarSelected && contentSimilarSelected.Id" matSuffix mat-button
               mat-icon-button (click)="onActionContentSimilarAddToLIst()"
               matTooltip='Add "{{contentSimilarSelected.Title}}"'>add</mat-icon>
@@ -293,7 +292,7 @@
             <mat-table [dataSource]="similarTabledataSource">
               <!-- LinkMainImageIdSrc Column -->
               <ng-container matColumnDef="LinkMainImageIdSrc">
-                <mat-header-cell *matHeaderCellDef> عکس </mat-header-cell>
+                <mat-header-cell *matHeaderCellDef > عکس </mat-header-cell>
                 <mat-cell *matCellDef="let row">
                   <img *ngIf="row?.LinkMainImageIdSrc?.length>0" style="vertical-align:middle;" aria-hidden
                     src="{{row.LinkMainImageIdSrc}}" height="40" width="40" />
@@ -306,12 +305,12 @@
               </ng-container>
               <!-- LinkSiteId Column -->
               <ng-container matColumnDef="LinkSiteId">
-                <mat-header-cell *matHeaderCellDef> شناسه سایت </mat-header-cell>
+                <mat-header-cell *matHeaderCellDef > شناسه سایت </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.LinkSiteId}} </mat-cell>
               </ng-container>
               <!-- RecordStatus Column -->
               <ng-container matColumnDef="RecordStatus">
-                <mat-header-cell *matHeaderCellDef> وضعیت </mat-header-cell>
+                <mat-header-cell *matHeaderCellDef > وضعیت </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.RecordStatus}} </mat-cell>
               </ng-container>
               <!-- Title Column -->
@@ -348,8 +347,7 @@
         </mat-step>
         <mat-step label="موقعیت مکانی" state="loaction">
           <p>روی نقشه کلیک کنید تا موقیت مکانی مشخس گردد</p>
-          <app-cms-map (map$)="receiveMap($event)" (zoom$)="receiveZoom($event)" [optonCenter]="mapOptonCenter"
-            id='main-map'></app-cms-map>
+          <app-cms-map (map$)="receiveMap($event)" (zoom$)="receiveZoom($event)" id='main-map'></app-cms-map>
           <div *ngIf="formInfo.FormAllowSubmit">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">

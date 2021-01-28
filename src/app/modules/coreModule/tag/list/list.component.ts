@@ -14,7 +14,7 @@ import {
 import { PublicHelper } from '../../../../core/helpers/services/publicHelper';
 import { CmsToastrService } from '../../../../core/helpers/services/cmsToastr.service';
 import { MatDialog } from '@angular/material/dialog';
-import { NewsContentAddComponent } from '../add/add.component';
+import { TagAddComponent } from '../add/add.component';
 import { ProgressSpinnerModel } from '../../../../core/models/progressSpinnerModel';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/base/componentOptionStatistModel';
@@ -24,11 +24,11 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
-  selector: 'app-news-content-list',
+  selector: 'app-tag-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
-export class NewsContentListComponent implements OnInit {
+export class TagListComponent implements OnInit {
 
   constructor(
     private coreAuthService: CoreAuthService,
@@ -212,7 +212,7 @@ export class NewsContentListComponent implements OnInit {
       this.toastrService.toastr.error(message, title);
       return;
     }
-    const dialogRef = this.dialog.open(NewsContentAddComponent);
+    const dialogRef = this.dialog.open(TagAddComponent);
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);

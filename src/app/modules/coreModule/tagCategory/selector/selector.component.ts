@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter } from '@angular/core';
-import { CoreEnumService, ErrorExceptionResult, FilterDataModel, FilterModel, NewsContentModel, NewsContentService } from 'ntk-cms-api';
+import { CoreEnumService, ErrorExceptionResult, FilterDataModel, FilterModel, NewsCategoryModel, NewsCategoryService } from 'ntk-cms-api';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
@@ -7,31 +7,56 @@ import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { Output } from '@angular/core';
 
 
-
-
 @Component({
-  selector: 'app-news-content-selector',
+  selector: 'app-tag-category-selector',
   templateUrl: './selector.component.html',
-  styleUrls: ['./selector.component.css']
+  styleUrls: ['./selector.component.scss']
 })
-export class NewsContentSelectorComponent implements OnInit {
+export class TagCategorySelectorComponent implements OnInit {
+
+  // public optionsData: ComponentOptionSelectorModel<NewsCategoryModel> = new ComponentOptionSelectorModel<NewsCategoryModel>();
+  // @Output()
+  // // tslint:disable-next-line: max-line-length
+  // tslint:disable-next-line: max-line-length
+  // optionsChange: EventEmitter<ComponentOptionSelectorModel<NewsCategoryModel>> = new EventEmitter<ComponentOptionSelectorModel<NewsCategoryModel>>();
+  // @Input() set options(model: ComponentOptionSelectorModel<NewsCategoryModel>) {
+  //   if (!model) {
+  //     model = new ComponentOptionSelectorModel<NewsCategoryModel>();
+  //   }
+  //   this.optionsData = model;
+  //   this.optionsData.childMethods = {
+  //     ActionReload: () => this.onActionReload(),
+  //     ActionSelectForce: (id) => this.onActionSelectForce(id),
+  //   };
+  //   this.optionsChange.emit(model);
+  // }
+  // get options(): ComponentOptionSelectorModel<NewsCategoryModel> {
+  //   this.optionsData.childMethods = {
+  //     ActionReload: () => this.onActionReload(),
+  //     ActionSelectForce: (id) => this.onActionSelectForce(id),
+  //   };
+  //   this.optionsChange.emit(this.optionsData);
+  //   return this.optionsData;
+  // }
+
   constructor(
     public coreEnumService: CoreEnumService,
-    public contentService: NewsContentService) {
+    public categoryService: NewsCategoryService) {
 
 
   }
-  dataModelResult: ErrorExceptionResult<NewsContentModel> = new ErrorExceptionResult<NewsContentModel>();
-  dataModelSelect: NewsContentModel = new NewsContentModel();
+  dataModelResult: ErrorExceptionResult<NewsCategoryModel> = new ErrorExceptionResult<NewsCategoryModel>();
+  dataModelSelect: NewsCategoryModel = new NewsCategoryModel();
   loading = new ProgressSpinnerModel();
   formControl = new FormControl();
-  filteredOptions: Observable<NewsContentModel[]>;
+  filteredOptions: Observable<NewsCategoryModel[]>;
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Output() optionSelect = new EventEmitter();
   @Input() optionReload = () => this.onActionReload();
-  @Input() set optionSelectForce(x: number | NewsContentModel) {
+  @Input() set optionSelectForce(x: number | NewsCategoryModel) {
     this.onActionSelectForce(x);
   }
+
   ngOnInit(): void {
     this.filteredOptions = this.formControl.valueChanges
       .pipe(
@@ -47,10 +72,10 @@ export class NewsContentSelectorComponent implements OnInit {
       );
   }
 
-  displayFn(user?: NewsContentModel): string | undefined {
+  displayFn(user?: NewsCategoryModel): string | undefined {
     return user ? user.Title : undefined;
   }
-  DataGetAll(text: string | number | any): Observable<NewsContentModel[]> {
+  DataGetAll(text: string | number | any): Observable<NewsCategoryModel[]> {
     const filteModel = new FilterModel();
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
@@ -80,14 +105,14 @@ export class NewsContentSelectorComponent implements OnInit {
     }
     this.loading.Globally = false;
     this.loading.display = true;
-    return this.contentService.ServiceGetAll(filteModel)
+    return this.categoryService.ServiceGetAll(filteModel)
       .pipe(
         map(response => {
           this.dataModelResult = response;
           return response.ListItems;
         }));
   }
-  onActionSelect(model: NewsContentModel): void {
+  onActionSelect(model: NewsCategoryModel): void {
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
     // this.optionsData.Select = this.dataModelSelect;
@@ -99,7 +124,7 @@ export class NewsContentSelectorComponent implements OnInit {
     // }
   }
 
-  push(newvalue: NewsContentModel): Observable<NewsContentModel[]> {
+  push(newvalue: NewsCategoryModel): Observable<NewsCategoryModel[]> {
     return this.filteredOptions.pipe(map(items => {
       if (items.find(x => x.Id === newvalue.Id)) {
         return items;
@@ -109,9 +134,9 @@ export class NewsContentSelectorComponent implements OnInit {
     }));
 
   }
-  onActionSelectForce(id: number | NewsContentModel): void {
+  onActionSelectForce(id: number | NewsCategoryModel): void {
     if (typeof id === 'number' && id > 0) {
-      this.contentService.ServiceGetOneById(id).subscribe((next) => {
+      this.categoryService.ServiceGetOneById(id).subscribe((next) => {
         if (next.IsSuccess) {
           this.filteredOptions = this.push(next.Item);
           this.dataModelSelect = next.Item;
@@ -119,9 +144,9 @@ export class NewsContentSelectorComponent implements OnInit {
         }
       });
     }
-    if (typeof id === typeof NewsContentModel) {
-      this.filteredOptions = this.push((id as NewsContentModel));
-      this.dataModelSelect = (id as NewsContentModel);
+    if (typeof id === typeof NewsCategoryModel) {
+      this.filteredOptions = this.push((id as NewsCategoryModel));
+      this.dataModelSelect = (id as NewsCategoryModel);
       this.formControl.setValue(id);
     }
   }
@@ -130,8 +155,8 @@ export class NewsContentSelectorComponent implements OnInit {
     // if (this.dataModelSelect && this.dataModelSelect.Id > 0) {
     //   this.onActionSelect(null);
     // }
-    this.dataModelSelect = new NewsContentModel();
-    // this.optionsData.Select = new NewsContentModel();
+    this.dataModelSelect = new NewsCategoryModel();
+    // this.optionsData.Select = new NewsCategoryModel();
     this.DataGetAll(null);
   }
 }
