@@ -16,7 +16,6 @@ import {
   NewsContentTagService,
   NewsContentTagModel,
   NewsContentSimilarService,
-  NewsContentSimilarModel,
   NewsContentOtherInfoService,
   NewsContentOtherInfoModel
 } from 'ntk-cms-api';
@@ -32,6 +31,7 @@ import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { MatStepper } from '@angular/material/stepper';
 import { MatTableDataSource } from '@angular/material/table';
 import { PoinModel } from 'src/app/core/models/pointModel';
+import { NewsContentSimilarModel } from 'ntk-cms-api/lib/models/entity/news/newsContentSimilarModel';
 
 @Component({
   selector: 'app-news-content-edit',
@@ -235,7 +235,7 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
             const lat = this.dataModel.Geolocationlatitude;
             const lon = this.dataModel.Geolocationlongitude;
             if (lat > 0 && lon > 0) {
-              this.mapMarkerPoints.push({ lat: lat, lon: lon });
+              this.mapMarkerPoints.push({ lat, lon });
             }
             this.keywordDataModel = this.dataModel.Keyword.split(',');
             this.DataTagGetAll();
@@ -470,7 +470,7 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
       const row = new NewsContentTagModel();
       row.LinkContentId = model.Id;
       row.LinkTagId = item;
-      if (!this.dataContentTagModelResult.ListItems.find(x => x.LinkTagId == item)) {
+      if (!this.dataContentTagModelResult.ListItems.find(x => x.LinkTagId === item)) {
         dataListAdd.push(row);
       }
     });
@@ -533,9 +533,9 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
     if (!this.similarDataModel || this.similarDataModel.length === 0) {
       return;
     }
-    const dataList = new Array<NewsContentSimilar>();
+    const dataList = new Array<NewsContentSimilarModel>();
     this.similarDataModel.forEach(x => {
-      const row = new NewsContentSimilar();
+      const row = new NewsContentSimilarModel();
       row.LinkSourceId = model.Id;
       row.LinkDestinationId = x.Id;
       dataList.push(row);

@@ -70,7 +70,7 @@ export class TagAutocompleteComponent implements OnInit {
 
   onActionChange(): void {
     const retIds = [];
-    this.tagDataModel.forEach(x => { retIds.push(x.id) });
+    this.tagDataModel.forEach(x => { retIds.push(x.id); });
     this.optionChange.emit(retIds);
     // this.optionsData.Select = this.dataModelSelect;
     // if (this.optionsData) {

@@ -22,6 +22,7 @@ import { ComponentOptionExportModel } from 'src/app/core/cmsComponentModels/base
 import { PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { NewsContentDeleteComponent } from '../delete/delete.component';
 
 @Component({
   selector: 'app-news-content-list',
@@ -212,7 +213,7 @@ export class NewsContentListComponent implements OnInit {
       this.toastrService.toastr.error(message, title);
       return;
     }
-    const dialogRef = this.dialog.open(NewsContentAddComponent);
+    const dialogRef = this.dialog.open(NewsContentDeleteComponent, { data: { id: this.tableRowSelected.Id } });
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);

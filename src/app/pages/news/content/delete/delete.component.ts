@@ -1,12 +1,15 @@
 import {
   Component,
+  Inject,
   Input,
   OnInit,
   ViewChild,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { CoreEnumService, FormInfoModel, ItemState, NewsContentModel, NewsContentService } from 'ntk-cms-api';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { CoreEnumService, ErrorExceptionResult, FormInfoModel, ItemState, NewsContentModel, NewsContentService } from 'ntk-cms-api';
 import { CmsToastrService } from 'src/app/core/helpers/services/cmsToastr.service';
+import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 
 @Component({
   selector: 'app-news-content-delete',
@@ -14,56 +17,68 @@ import { CmsToastrService } from 'src/app/core/helpers/services/cmsToastr.servic
   styleUrls: ['./delete.component.scss']
 })
 export class NewsContentDeleteComponent implements OnInit {
-  @Input()
-  set options(model: any) {
-    this.dateModleInput = model;
-  }
-  get options(): any {
-    return this.dateModleInput;
-  }
-  @ViewChild('vform', { static: false })
-  formGroup: FormGroup;
-  private dateModleInput: any;
-  dataModelContents: Array<NewsContentModel> = new Array<NewsContentModel>();
-  dataModelItemStates: Array<ItemState<NewsContentModel>> = new Array<
-    ItemState<NewsContentModel>
-  >();
-  formInfo: FormInfoModel = new FormInfoModel();
+  requestId = 0;
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private dialogRef: MatDialogRef<NewsContentDeleteComponent>,
     public newsContentService: NewsContentService,
     public coreEnumService: CoreEnumService,
-    private toastrService: CmsToastrService,
-  ) { }
-
-  ngOnInit(): void {
-    if (this.dateModleInput && this.dateModleInput.Contents) {
-      this.dataModelContents = this.dateModleInput.Contents;
+    private toasterService: CmsToastrService, ) {
+    if (data) {
+      this.requestId = +data.id || 0;
     }
 
-    this.DataGetListContent();
   }
-  DataGetListContent(): void {
-    if (this.dataModelContents == null || this.dataModelContents.length === 0) {
-      this.toastrService.typeErrorDeleteRowIsNull()
+
+  @ViewChild('vform', { static: false })
+  formGroup: FormGroup;
+  loading = new ProgressSpinnerModel();
+
+  formInfo: FormInfoModel = new FormInfoModel();
+  dataModelResult: ErrorExceptionResult<NewsContentModel> = new ErrorExceptionResult<NewsContentModel>();
+  dataModelItemStates: Array<ItemState<any>> = new Array<ItemState<any>>();
+  ngOnInit(): void {
+    if (this.requestId <= 0) {
+      this.toasterService.typeErrorDeleteRowIsNull();
+      this.dialogRef.close({ dialogChangedDate: false });
       return;
     }
 
+    this.DataGetOne();
+  }
+  DataGetOne(): void {
+    this.formInfo.FormAllowSubmit = false;
+    this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
     this.formInfo.FormError = '';
-    this.dataModelContents.forEach((element) => {
-      this.dataModelItemStates.push({
-        ActionStart: false,
-        ActionEnd: false,
-        Item: element,
-        Status: '',
-        Message: '',
-      });
-    });
+    this.loading.display = true;
+
+    this.newsContentService
+      .ServiceGetOneById(this.requestId)
+      .subscribe(
+        async (next) => {
+          this.loading.display = false;
+          this.dataModelResult = next;
+          this.formInfo.FormAllowSubmit = true;
+
+          if (next.IsSuccess) {
+            this.loading.display = false;
+          } else {
+            this.toasterService.typeErrorGetOne(next.ErrorMessage);
+          }
+        },
+        (error) => {
+          this.loading.display = false;
+          this.formInfo.FormAllowSubmit = true;
+          const title = 'برروی خطا در دریافت اطلاعات';
+          this.toasterService.typeErrorGetOne(error);
+        }
+      );
   }
   DataDeleteContent(): void {
-    if (this.dataModelContents == null || this.dataModelContents.length === 0) {
+    if (this.requestId == null || this.requestId === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیف اطلاعات جهت حذف مشخص نیست';
-      this.toastrService.toastr.error(message, title);
+      this.toasterService.toastr.error(message, title);
       return;
     }
 
@@ -89,7 +104,7 @@ export class NewsContentDeleteComponent implements OnInit {
           element.ActionEnd = true;
           // this.formInfo.FormAllowSubmit = true;
           const title = 'برروی خطا در دریافت اطلاعات';
-          this.toastrService.typeError(error);
+          this.toasterService.typeError(error);
           element.Message = title + ' : ';
           element.Status = 'Error';
         }

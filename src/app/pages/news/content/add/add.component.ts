@@ -34,6 +34,7 @@ import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { MatStepper } from '@angular/material/stepper';
 import { MatTableDataSource } from '@angular/material/table';
 
+
 @Component({
   selector: 'app-news-content-add',
   templateUrl: './add.component.html',
@@ -296,7 +297,7 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
     if (!this.similarDataModel || this.similarDataModel.length === 0) {
       return;
     }
-    const dataList = new Array<NewsContentSimilarModel();
+    const dataList: NewsContentSimilarModel[] = [];
     this.similarDataModel.forEach(x => {
       const row = new NewsContentSimilarModel();
       row.LinkSourceId = model.Id;
