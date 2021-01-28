@@ -327,8 +327,8 @@ export class TagAddComponent implements OnInit, AfterViewInit {
     const dataList = new Array<NewsContentSimilar>();
     this.similarDataModel.forEach(x => {
       const row = new NewsContentSimilar();
-      row.LinkSourceid = model.Id;
-      row.LinkDestinationid = x.Id;
+      row.LinkSourceId = model.Id;
+      row.LinkDestinationId = x.Id;
       dataList.push(row);
     });
     return this.newsContentSimilarService.ServiceAddBatch(dataList).pipe(

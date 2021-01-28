@@ -16,7 +16,7 @@ import {
   NewsContentTagService,
   NewsContentTagModel,
   NewsContentSimilarService,
-  NewsContentSimilar,
+  NewsContentSimilarModel,
   NewsContentOtherInfoService,
   NewsContentOtherInfoModel
 } from 'ntk-cms-api';
@@ -59,7 +59,17 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
   dataModel = new NewsContentModel();
   dataModelResult: ErrorExceptionResult<NewsContentModel> = new ErrorExceptionResult<NewsContentModel>();
   dataContentTagModelResult: ErrorExceptionResult<NewsContentTagModel> = new ErrorExceptionResult<NewsContentTagModel>();
+  dataContentSimilarModelResult: ErrorExceptionResult<NewsContentSimilarModel> = new ErrorExceptionResult<NewsContentSimilarModel>();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
+  similarDataModel = new Array<NewsContentModel>();
+  otherInfoDataModel = new Array<NewsContentOtherInfoModel>();
+  contentSimilarSelected: NewsContentModel = new NewsContentModel();
+  contentOtherInfoSelected: NewsContentOtherInfoModel = new NewsContentOtherInfoModel();
+  otherInfoTabledisplayedColumns = ['Id', 'Title', 'TypeId', 'Action'];
+  similarTabledisplayedColumns = ['LinkMainImageIdSrc', 'Id', 'RecordStatus', 'Title', 'Action'];
+  similarTabledataSource = new MatTableDataSource<NewsContentModel>();
+  otherInfoTabledataSource = new MatTableDataSource<NewsContentOtherInfoModel>();
+
   loading = new ProgressSpinnerModel();
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
   selectFileTypePodcast = ['mp3'];
@@ -115,14 +125,7 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
   fileManagerTree: TreeModel;
   keywordDataModel = [];
   tagIdsData: number[];
-  similarDataModel = new Array<NewsContentModel>();
-  otherInfoDataModel = new Array<NewsContentOtherInfoModel>();
-  contentSimilarSelected: NewsContentModel = new NewsContentModel();
-  contentOtherInfoSelected: NewsContentOtherInfoModel = new NewsContentOtherInfoModel();
-  otherInfoTabledisplayedColumns = ['Id', 'Title', 'TypeId', 'Action'];
-  similarTabledisplayedColumns = ['LinkMainImageIdSrc', 'Id', 'RecordStatus', 'Title', 'Action'];
-  similarTabledataSource = new MatTableDataSource<NewsContentModel>();
-  otherInfoTabledataSource = new MatTableDataSource<NewsContentOtherInfoModel>();
+
 
   appLanguage = 'fa';
 
@@ -234,7 +237,7 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
             if (lat > 0 && lon > 0) {
               this.mapMarkerPoints.push({ lat: lat, lon: lon });
             }
-
+            this.keywordDataModel = this.dataModel.Keyword.split(',');
             this.DataTagGetAll();
             this.DataOtherInfoGetAll();
             this.loading.display = false;
@@ -341,12 +344,12 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
     const filteModel = new FilterModel();
 
     const aaa1 = {
-      PropertyName: 'LinkSourceid',
+      PropertyName: 'LinkSourceId',
       Value: this.dataModelResult.Item.Id + '',
       ClauseType: 2
     };
     const aaa2 = {
-      PropertyName: 'LinkDestinationid',
+      PropertyName: 'LinkDestinationId',
       Value: this.dataModelResult.Item.Id + '',
       ClauseType: 2
     };
@@ -364,10 +367,10 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
           if (next.IsSuccess) {
             const listIds = Array<number>();
             next.ListItems.forEach(x => {
-              if (x.LinkDestinationid === this.dataModelResult.Item.Id) {
-                listIds.push(x.LinkSourceid);
+              if (x.LinkDestinationId === this.dataModelResult.Item.Id) {
+                listIds.push(x.LinkSourceId);
               } else {
-                listIds.push(x.LinkDestinationid);
+                listIds.push(x.LinkDestinationId);
               }
 
 
@@ -441,8 +444,8 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
             this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
             this.toasterService.typeSuccessAdd();
             await this.DataActionAfterAddContentSuccessfulTag(this.dataModelResult.Item);
-            // await this.DataActionAfterAddContentSuccessfulSimilar(this.dataModelResult.Item);
-            // await this.DataActionAfterAddContentSuccessfulOtherInfo(this.dataModelResult.Item);
+            await this.DataActionAfterAddContentSuccessfulSimilar(this.dataModelResult.Item);
+            await this.DataActionAfterAddContentSuccessfulOtherInfo(this.dataModelResult.Item);
             this.loading.display = false;
             this.router.navigate(['/news/edit/', this.requestId]);
           } else {
@@ -473,7 +476,7 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
     });
 
     this.dataContentTagModelResult.ListItems.forEach(item => {
-      if (!this.tagIdsData.find(x => x == item.LinkTagId)) {
+      if (!this.tagIdsData.find(x => x === item.LinkTagId)) {
         dataListAdd.push(item);
       }
     });
@@ -533,8 +536,8 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
     const dataList = new Array<NewsContentSimilar>();
     this.similarDataModel.forEach(x => {
       const row = new NewsContentSimilar();
-      row.LinkSourceid = model.Id;
-      row.LinkDestinationid = x.Id;
+      row.LinkSourceId = model.Id;
+      row.LinkDestinationId = x.Id;
       dataList.push(row);
     });
     return this.newsContentSimilarService.ServiceAddBatch(dataList).pipe(

@@ -16,7 +16,7 @@ import {
   NewsContentTagService,
   NewsContentTagModel,
   NewsContentSimilarService,
-  NewsContentSimilar,
+  NewsContentSimilarModel,
   NewsContentOtherInfoService,
   NewsContentOtherInfoModel
 } from 'ntk-cms-api';
@@ -147,40 +147,7 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
     //   onActionSelect: (x) => this.onActionContentSimilarSelect(x),
     // };
   }
-  // public requestAutocompleteItems = (text: string): Observable<any> => {
-  //   const filteModel = new FilterModel();
-  //   filteModel.RowPerPage = 20;
-  //   filteModel.AccessLoad = true;
-  //   if (text && typeof text === 'string' && text.length > 0) {
-  //     const aaa = {
-  //       PropertyName: 'Title',
-  //       Value: text,
-  //       SearchType: 5
-  //     };
-  //     filteModel.Filters.push(aaa as FilterDataModel);
-  //   } else if (text && typeof text === 'number' && text > 0) {
-  //     const aaa2 = {
-  //       PropertyName: 'Title',
-  //       Value: text + '',
-  //       SearchType: 5,
-  //       ClauseType: 1
-  //     };
-  //     filteModel.Filters.push(aaa2 as FilterDataModel);
-  //     const aaa3 = {
-  //       PropertyName: 'Id',
-  //       Value: text + '',
-  //       SearchType: 1,
-  //       ClauseType: 1
-  //     };
-  //     filteModel.Filters.push(aaa3 as FilterDataModel);
-  //   }
-  //   return this.coreModuleTagService.ServiceGetAll(filteModel).pipe(
-  //     map((data) => data.ListItems.map(val => ({
-  //       value: val.Id,
-  //       display: val.Title
-  //     })))
-  //   );
-  // }
+
   onActionTagChange(model: any): void {
     this.tagDataModel = model;
   }
@@ -329,11 +296,11 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
     if (!this.similarDataModel || this.similarDataModel.length === 0) {
       return;
     }
-    const dataList = new Array<NewsContentSimilar>();
+    const dataList = new Array<NewsContentSimilarModel();
     this.similarDataModel.forEach(x => {
-      const row = new NewsContentSimilar();
-      row.LinkSourceid = model.Id;
-      row.LinkDestinationid = x.Id;
+      const row = new NewsContentSimilarModel();
+      row.LinkSourceId = model.Id;
+      row.LinkDestinationId = x.Id;
       dataList.push(row);
     });
     return this.newsContentSimilarService.ServiceAddBatch(dataList).pipe(
