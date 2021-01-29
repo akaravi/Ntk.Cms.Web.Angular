@@ -1,6 +1,6 @@
 import { AuthModel } from './auth.model';
-import { AddressModel } from './address.model';
-import { SocialNetworksModel } from './social-networks.model';
+// import { AddressModel } from './address.model';
+// import { SocialNetworksModel } from './social-networks.model';
 
 export class UserModel extends AuthModel {
   id: number;
@@ -13,8 +13,8 @@ export class UserModel extends AuthModel {
   occupation: string;
   companyName: string;
   phone: string;
-  address?: AddressModel;
-  socialNetworks?: SocialNetworksModel;
+  // address?: AddressModel;
+  // socialNetworks?: SocialNetworksModel;
 
   setUser(user: any) {
     this.id = user.id;
@@ -27,7 +27,7 @@ export class UserModel extends AuthModel {
     this.occupation = user.occupation || '';
     this.companyName = user.companyName || '';
     this.phone = user.phone || '';
-    this.address = user.address;
-    this.socialNetworks = user.socialNetworks;
+    // this.address = user.address;
+    // this.socialNetworks = user.socialNetworks;
   }
 }

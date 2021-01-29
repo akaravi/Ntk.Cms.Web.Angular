@@ -34,24 +34,24 @@ export class CmsTokenAccessAdminComponent implements OnInit {
   }
 
   onActionbuttonUserAccessAdminAllowToAllData(): void {
-    const AuthModel: AuthRenewTokenModel = new AuthRenewTokenModel();
+    const authModel: AuthRenewTokenModel = new AuthRenewTokenModel();
     const NewToall = !this.TokenInfo.UserAccessAdminAllowToAllData;
-    AuthModel.UserAccessAdminAllowToProfessionalData = this.TokenInfo.UserAccessAdminAllowToProfessionalData;
-    AuthModel.UserAccessAdminAllowToAllData = NewToall;
-    AuthModel.SiteId = this.TokenInfo.SiteId;
-    AuthModel.UserId = this.TokenInfo.UserId;
-    AuthModel.Lang = this.TokenInfo.Language;
+    authModel.UserAccessAdminAllowToProfessionalData = this.TokenInfo.UserAccessAdminAllowToProfessionalData;
+    authModel.UserAccessAdminAllowToAllData = NewToall;
+    authModel.SiteId = this.TokenInfo.SiteId;
+    authModel.UserId = this.TokenInfo.UserId;
+    authModel.Lang = this.TokenInfo.Language;
 
     const title = 'اطلاعات ';
     let message = '';
-    if (AuthModel.UserAccessAdminAllowToAllData) {
+    if (authModel.UserAccessAdminAllowToAllData) {
       message = 'درخواست برای دسترسی به کلیه اطلاعات به سرور ارسال شد';
     } else {
       message = 'درخواست قطع  دسترسی به کل اطلاعات  به سرور ارسال شد';
     }
     this.toastrService.toastr.info(message, title);
     this.loadingStatus = true;
-    this.coreAuthService.ServiceRenewToken(AuthModel).subscribe(
+    this.coreAuthService.ServiceRenewToken(authModel).subscribe(
       (next) => {
         this.loadingStatus = false;
         if (next.IsSuccess) {
@@ -76,24 +76,24 @@ export class CmsTokenAccessAdminComponent implements OnInit {
   }
 
   onActionbuttonUserAccessAdminAllowToProfessionalData(): void {
-    const AuthModel: AuthRenewTokenModel = new AuthRenewTokenModel();
+    const authModel: AuthRenewTokenModel = new AuthRenewTokenModel();
     const NewToPerf = !this.TokenInfo.UserAccessAdminAllowToProfessionalData;
-    AuthModel.UserAccessAdminAllowToProfessionalData = NewToPerf;
-    AuthModel.UserAccessAdminAllowToAllData = this.TokenInfo.UserAccessAdminAllowToAllData;
-    AuthModel.SiteId = this.TokenInfo.SiteId;
-    AuthModel.UserId = this.TokenInfo.UserId;
-    AuthModel.Lang = this.TokenInfo.Language;
+    authModel.UserAccessAdminAllowToProfessionalData = NewToPerf;
+    authModel.UserAccessAdminAllowToAllData = this.TokenInfo.UserAccessAdminAllowToAllData;
+    authModel.SiteId = this.TokenInfo.SiteId;
+    authModel.UserId = this.TokenInfo.UserId;
+    authModel.Lang = this.TokenInfo.Language;
 
     const title = 'اطلاعات ';
     let message = '';
-    if (AuthModel.UserAccessAdminAllowToAllData) {
+    if (authModel.UserAccessAdminAllowToAllData) {
       message = 'درخواست برای دسترسی حرفه ایی به سرور ارسال شد';
     } else {
       message = 'درخواست قطع  دسترسی حرفه ایی  به سرور ارسال شد';
     }
     this.toastrService.toastr.info(message, title);
     this.loadingStatus = true;
-    this.coreAuthService.ServiceRenewToken(AuthModel).subscribe(
+    this.coreAuthService.ServiceRenewToken(authModel).subscribe(
       (next) => {
         this.loadingStatus = false;
         if (next.IsSuccess) {
@@ -123,18 +123,18 @@ export class CmsTokenAccessAdminComponent implements OnInit {
       this.toastrService.toastr.warning(message, title);
       return;
     }
-    const AuthModel: AuthRenewTokenModel = new AuthRenewTokenModel();
-    AuthModel.UserAccessAdminAllowToProfessionalData = this.TokenInfo.UserAccessAdminAllowToProfessionalData;
-    AuthModel.UserAccessAdminAllowToAllData = this.TokenInfo.UserAccessAdminAllowToAllData;
-    AuthModel.SiteId = this.TokenInfo.SiteId;
-    AuthModel.UserId = this.UserId;
-    AuthModel.Lang = this.TokenInfo.Language;
+    const authModel: AuthRenewTokenModel = new AuthRenewTokenModel();
+    authModel.UserAccessAdminAllowToProfessionalData = this.TokenInfo.UserAccessAdminAllowToProfessionalData;
+    authModel.UserAccessAdminAllowToAllData = this.TokenInfo.UserAccessAdminAllowToAllData;
+    authModel.SiteId = this.TokenInfo.SiteId;
+    authModel.UserId = this.UserId;
+    authModel.Lang = this.TokenInfo.Language;
 
     const title = 'اطلاعات ';
     const message = 'درخواست تغییر کاربر به سرور ارسال شد';
     this.toastrService.toastr.info(message, title);
     this.loadingStatus = true;
-    this.coreAuthService.ServiceRenewToken(AuthModel).subscribe(
+    this.coreAuthService.ServiceRenewToken(authModel).subscribe(
       (next) => {
         this.loadingStatus = false;
         if (next.IsSuccess) {
@@ -163,18 +163,18 @@ export class CmsTokenAccessAdminComponent implements OnInit {
       this.toastrService.toastr.warning(message, title);
       return;
     }
-    const AuthModel: AuthRenewTokenModel = new AuthRenewTokenModel();
-    AuthModel.UserAccessAdminAllowToProfessionalData = this.TokenInfo.UserAccessAdminAllowToProfessionalData;
-    AuthModel.UserAccessAdminAllowToAllData = this.TokenInfo.UserAccessAdminAllowToAllData;
-    AuthModel.UserId = this.TokenInfo.UserId;
-    AuthModel.SiteId = this.SiteId;
-    AuthModel.Lang = this.TokenInfo.Language;
+    const authModel: AuthRenewTokenModel = new AuthRenewTokenModel();
+    authModel.UserAccessAdminAllowToProfessionalData = this.TokenInfo.UserAccessAdminAllowToProfessionalData;
+    authModel.UserAccessAdminAllowToAllData = this.TokenInfo.UserAccessAdminAllowToAllData;
+    authModel.UserId = this.TokenInfo.UserId;
+    authModel.SiteId = this.SiteId;
+    authModel.Lang = this.TokenInfo.Language;
 
     const title = 'اطلاعات ';
     const message = 'درخواست تغییر سایت به سرور ارسال شد';
     this.toastrService.toastr.info(message, title);
     this.loadingStatus = true;
-    this.coreAuthService.ServiceRenewToken(AuthModel).subscribe(
+    this.coreAuthService.ServiceRenewToken(authModel).subscribe(
       (next) => {
         this.loadingStatus = false;
         if (next.IsSuccess) {

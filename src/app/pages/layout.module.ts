@@ -17,7 +17,7 @@ import {ExtrasModule} from '../core/partials/layout/extras/extras.module';
 import {TranslationModule} from '../modules/i18n/translation.module';
 import {CoreModule} from '../core';
 import {SubheaderModule} from '../core/partials/layout/subheader/subheader.module';
-import {SiteModule} from './core/site/site.module';
+import {SiteModule} from '../modules/core/site/site.module';
 import {CoreAuthService, CoreCpMainMenuService} from 'ntk-cms-api';
 
 

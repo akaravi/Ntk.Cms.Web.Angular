@@ -137,10 +137,10 @@ export class CoreSiteAddFirstComponent implements OnInit {
   }
 
   clickSelectSite(Id: number): void {
-    let AuthModel: AuthRenewTokenModel;
-    AuthModel = new AuthRenewTokenModel();
-    AuthModel.SiteId = Id;
-    this.coreAuthService.ServiceRenewToken(AuthModel).subscribe(
+    let authModel: AuthRenewTokenModel;
+    authModel = new AuthRenewTokenModel();
+    authModel.SiteId = Id;
+    this.coreAuthService.ServiceRenewToken(authModel).subscribe(
       (res) => {
         if (res.IsSuccess) {
           this.router.navigate([environment.cmsUiConfig.Pathdashboard]);

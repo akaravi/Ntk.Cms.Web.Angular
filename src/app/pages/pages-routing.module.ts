@@ -15,12 +15,12 @@ const routes: Routes = [
       {
         path: 'site',
         loadChildren: () =>
-          import('../pages/core/site/site.module').then((m) => m.SiteModule),
+          import('../modules/core/site/site.module').then((m) => m.SiteModule),
       },
       {
         path: 'news',
         loadChildren: () =>
-          import('../pages/news/news.module').then(m => m.NewsModule)
+          import('../modules/news/news.module').then(m => m.NewsModule)
       },
       {
         path: '',

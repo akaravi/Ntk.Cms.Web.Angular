@@ -43,11 +43,11 @@ export class SelectionComponent implements OnInit {
   }
 
   clickSelectSite(id: number): void {
-    let AuthModel: AuthRenewTokenModel;
-    AuthModel = new AuthRenewTokenModel();
-    AuthModel.SiteId = id;
+    let authModel: AuthRenewTokenModel;
+    authModel = new AuthRenewTokenModel();
+    authModel.SiteId = id;
     this.subManager.add(
-      this.coreAuthService.ServiceRenewToken(AuthModel).subscribe(
+      this.coreAuthService.ServiceRenewToken(authModel).subscribe(
         (res) => {
           if (res.IsSuccess) {
             // localStorage.setItem('userInfo', JSON.stringify( res.Item));
@@ -63,11 +63,11 @@ export class SelectionComponent implements OnInit {
 
   onActionAddFirstSite(model: ErrorExceptionResult<any>): void {
     if (model.IsSuccess) {
-      let AuthModel: AuthRenewTokenModel;
-      AuthModel = new AuthRenewTokenModel();
-      // AuthModel.SiteId = model.Id;
+      let authModel: AuthRenewTokenModel;
+      authModel = new AuthRenewTokenModel();
+      // authModel.SiteId = model.Id;
       this.subManager.add(
-        this.coreAuthService.ServiceRenewToken(AuthModel).subscribe(
+        this.coreAuthService.ServiceRenewToken(authModel).subscribe(
           (next) => {
             if (next.IsSuccess) {
               this.router.navigate([environment.cmsUiConfig.Pathdashboard]);

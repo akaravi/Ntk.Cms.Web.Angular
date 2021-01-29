@@ -7,7 +7,7 @@ import {FormsModule} from '@angular/forms';
 import {SelectionComponent} from './selection/selection.component';
 import {CoreSiteAddFirstComponent} from './addFirst/addFirst.component';
 import {SiteResolver} from './site.resolver';
-import {LayoutModule} from '../../layout.module';
+import {LayoutModule} from '../../../pages/layout.module';
 
 @NgModule({
   declarations: [
