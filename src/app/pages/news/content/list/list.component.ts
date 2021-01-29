@@ -213,7 +213,7 @@ export class NewsContentListComponent implements OnInit {
       this.toastrService.toastr.error(message, title);
       return;
     }
-    const dialogRef = this.dialog.open(NewsContentDeleteComponent, { data: { model: this.tableRowSelected } });
+    const dialogRef = this.dialog.open(NewsContentDeleteComponent, { data: { id: this.tableRowSelected.Id } });
     dialogRef.afterClosed().subscribe(result => {
       // console.log(`Dialog result: ${result}`);
       if (result && result.dialogChangedDate) {
