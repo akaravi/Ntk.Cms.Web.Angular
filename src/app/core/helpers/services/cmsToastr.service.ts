@@ -25,6 +25,12 @@ export class CmsToastrService {
   typeSuccessRemoveTag(): void {
     this.toastr.success('با موفقیت تگ مشابه حذف شد', 'Success!');
   }
+  typeSuccessRemoveOtherInfo(): void {
+    this.toastr.success('با موفقیت سایر اطلاعات حذف شد', 'Success!');
+  }
+  typeSuccessRemoveSimilar(): void {
+    this.toastr.success('با موفقیت سایر اطلاعات مشابه حذف شد', 'Success!');
+  }
   typeSuccessRemove(): void {
     this.toastr.success('با موفقیت حذف شد', 'Success!');
   }
@@ -124,6 +130,20 @@ export class CmsToastrService {
   }
   typeErrorRemoveTag(str: string = ''): void {
     let message = 'خطا در حذف کردن تگها';
+    if (str && str.length > 0) {
+      message = message + ' error: ' + str;
+    }
+    this.toastr.error(message, 'Error!');
+  }
+  typeErrorRemoveOtherInfo(str: string = ''): void {
+    let message = 'خطا در حذف کردن سایر اطلاعات';
+    if (str && str.length > 0) {
+      message = message + ' error: ' + str;
+    }
+    this.toastr.error(message, 'Error!');
+  }
+  typeErrorRemoveSimilar(str: string = ''): void {
+    let message = 'خطا در حذف کردن اطلاعات مشابه';
     if (str && str.length > 0) {
       message = message + ' error: ' + str;
     }

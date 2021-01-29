@@ -60,6 +60,7 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
   dataModelResult: ErrorExceptionResult<NewsContentModel> = new ErrorExceptionResult<NewsContentModel>();
   dataContentTagModelResult: ErrorExceptionResult<NewsContentTagModel> = new ErrorExceptionResult<NewsContentTagModel>();
   dataContentSimilarModelResult: ErrorExceptionResult<NewsContentSimilarModel> = new ErrorExceptionResult<NewsContentSimilarModel>();
+  dataContentOtherInfoModelResult: ErrorExceptionResult<NewsContentOtherInfoModel> = new ErrorExceptionResult<NewsContentOtherInfoModel>();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   similarDataModel = new Array<NewsContentModel>();
   otherInfoDataModel = new Array<NewsContentOtherInfoModel>();
@@ -163,40 +164,7 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
     });
   }
 
-  receiveMap(model: Map): void {
-    this.mapModel = model;
 
-    if (this.mapMarkerPoints && this.mapMarkerPoints.length > 0) {
-      this.mapMarkerPoints.forEach(item => {
-        this.mapMarker = Leaflet.marker([item.lat, item.lon]).addTo(this.mapModel);
-      });
-      this.mapOptonCenter = this.mapMarkerPoints[0];
-      this.mapMarkerPoints = [];
-    }
-
-    this.mapModel.on('click', (e) => {
-      // @ts-ignore
-      const lat = e.latlng.lat;
-      // @ts-ignore
-      const lon = e.latlng.lng;
-      if (this.mapMarker !== undefined) {
-        this.mapModel.removeLayer(this.mapMarker);
-      }
-      if (lat === this.dataModel.Geolocationlatitude && lon === this.dataModel.Geolocationlongitude) {
-        this.dataModel.Geolocationlatitude = null;
-        this.dataModel.Geolocationlongitude = null;
-        return;
-      }
-      this.mapMarker = Leaflet.marker([lat, lon]).addTo(this.mapModel);
-      this.dataModel.Geolocationlatitude = lat;
-      this.dataModel.Geolocationlongitude = lon;
-    });
-
-  }
-
-  receiveZoom(zoom: number): void {
-    this.zoom = zoom;
-  }
   onFormSubmit(): void {
     if (this.requestId <= 0) {
       this.toasterService.typeErrorAddRowParentIsNull();
@@ -240,6 +208,7 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
             this.keywordDataModel = this.dataModel.Keyword.split(',');
             this.DataTagGetAll();
             this.DataOtherInfoGetAll();
+            this.DataSimilarGetAllIds();
             this.loading.display = false;
           } else {
             this.toasterService.typeErrorGetOne(next.ErrorMessage);
@@ -311,14 +280,13 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
       Value: this.dataModelResult.Item.Id + '',
     };
     filteModel.Filters.push(aaa3 as FilterDataModel);
-    this.tagIdsData = [];
     this.newsContentOtherInfoService
       .ServiceGetAll(filteModel)
       .subscribe(
         async (next) => {
           this.loading.display = false;
           this.formInfo.FormAllowSubmit = true;
-
+          this.dataContentOtherInfoModelResult = next;
           if (next.IsSuccess) {
             this.otherInfoDataModel = next.ListItems;
             this.otherInfoTabledataSource.data = next.ListItems;
@@ -346,24 +314,24 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
     const aaa1 = {
       PropertyName: 'LinkSourceId',
       Value: this.dataModelResult.Item.Id + '',
-      ClauseType: 2
+      ClauseType: 1
     };
     const aaa2 = {
       PropertyName: 'LinkDestinationId',
       Value: this.dataModelResult.Item.Id + '',
-      ClauseType: 2
+      ClauseType: 1
     };
     filteModel.Filters.push(aaa1 as FilterDataModel);
     filteModel.Filters.push(aaa2 as FilterDataModel);
 
-    this.tagIdsData = [];
     this.newsContentSimilarService
       .ServiceGetAll(filteModel)
       .subscribe(
         async (next) => {
           this.loading.display = false;
           this.formInfo.FormAllowSubmit = true;
-
+          this.dataContentSimilarModelResult = next
+          debugger;
           if (next.IsSuccess) {
             const listIds = Array<number>();
             next.ListItems.forEach(x => {
@@ -372,8 +340,6 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
               } else {
                 listIds.push(x.LinkDestinationId);
               }
-
-
             });
             this.DataSimilarGetAll(listIds);
 
@@ -390,6 +356,10 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
       );
   }
   DataSimilarGetAll(ids: Array<number>): void {
+    if (!ids || ids.length === 0) {
+      return;
+    }
+
     this.formInfo.FormAllowSubmit = false;
     this.formInfo.FormAlert = 'در حال دریافت سایر اطلاعات از سرور';
     this.formInfo.FormError = '';
@@ -397,13 +367,14 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
 
 
     const filteModel = new FilterModel();
-
-    const aaa3 = {
-      PropertyName: 'LinkContentId',
-      Value: this.dataModelResult.Item.Id + '',
-    };
-    filteModel.Filters.push(aaa3 as FilterDataModel);
-    this.tagIdsData = [];
+    ids.forEach(item => {
+      const aaa3 = {
+        PropertyName: 'Id',
+        Value: item + '',
+        ClauseType: 1
+      };
+      filteModel.Filters.push(aaa3 as FilterDataModel);
+    });
     this.newsContentService
       .ServiceGetAll(filteModel)
       .subscribe(
@@ -460,102 +431,153 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
         }
       );
   }
-  DataActionAfterAddContentSuccessfulTag(model: NewsContentModel): Promise<any> {
-    if (!this.tagIdsData || this.tagIdsData.length === 0) {
-      return;
-    }
+  async DataActionAfterAddContentSuccessfulTag(model: NewsContentModel): Promise<any> {
+
+    debugger;
     const dataListAdd = new Array<NewsContentTagModel>();
     const dataListDelete = new Array<NewsContentTagModel>();
-    this.tagIdsData.forEach(item => {
-      const row = new NewsContentTagModel();
-      row.LinkContentId = model.Id;
-      row.LinkTagId = item;
-      if (!this.dataContentTagModelResult.ListItems.find(x => x.LinkTagId === item)) {
-        dataListAdd.push(row);
-      }
-    });
-
-    this.dataContentTagModelResult.ListItems.forEach(item => {
-      if (!this.tagIdsData.find(x => x === item.LinkTagId)) {
-        dataListAdd.push(item);
-      }
-    });
-
-
-
-
-    this.newsContentTagService.ServiceAddBatch(dataListAdd).pipe(
-      map(response => {
-        if (response.IsSuccess) {
-          this.toasterService.typeSuccessAddTag();
-        } else {
-          this.toasterService.typeErrorAddTag();
+    if (this.tagIdsData) {
+      this.tagIdsData.forEach(item => {
+        const row = new NewsContentTagModel();
+        row.LinkContentId = model.Id;
+        row.LinkTagId = item;
+        if (!this.dataContentTagModelResult.ListItems || !this.dataContentTagModelResult.ListItems.find(x => x.LinkTagId === item)) {
+          dataListAdd.push(row);
         }
-        console.log(response.ListItems);
-        return of(response);
-      })).toPromise();
-    this.newsContentTagService.ServiceDeleteBatch(dataListDelete).pipe(
-      map(response => {
-        if (response.IsSuccess) {
-          this.toasterService.typeSuccessRemoveTag();
-        } else {
-          this.toasterService.typeErrorRemoveTag();
-        }
-        console.log(response.ListItems);
-        return of(response);
-      })).toPromise();
-  }
-  DataActionAfterAddContentSuccessfulOtherInfo(model: NewsContentModel): Promise<any> {
-    if (!this.otherInfoDataModel || this.otherInfoDataModel.length === 0) {
-      return;
+      });
     }
-    this.otherInfoDataModel.forEach(x => {
-      x.LinkContentId = model.Id;
-    });
-    return this.newsContentOtherInfoService.ServiceAddBatch(this.otherInfoDataModel).pipe(
-      map(response => {
-        if (response.IsSuccess) {
-          this.toasterService.typeSuccessAddOtherInfo();
-        } else {
-          this.toasterService.typeErrorAddOtherInfo();
+    if (this.dataContentTagModelResult.ListItems) {
+      this.dataContentTagModelResult.ListItems.forEach(item => {
+        if (!this.tagIdsData || !this.tagIdsData.find(x => x === item.LinkTagId)) {
+          dataListDelete.push(item);
         }
-        return of(response);
-      },
-        (error) => {
-          this.loading.display = false;
-          this.formInfo.FormAllowSubmit = true;
-          const title = 'برروی خطا در دریافت اطلاعات';
-          this.toasterService.typeErrorAdd(error);
-        }
-      )).toPromise();
-  }
-  DataActionAfterAddContentSuccessfulSimilar(model: NewsContentModel): Promise<any> {
-    if (!this.similarDataModel || this.similarDataModel.length === 0) {
-      return;
+      });
     }
-    const dataList = new Array<NewsContentSimilarModel>();
-    this.similarDataModel.forEach(x => {
-      const row = new NewsContentSimilarModel();
-      row.LinkSourceId = model.Id;
-      row.LinkDestinationId = x.Id;
-      dataList.push(row);
-    });
-    return this.newsContentSimilarService.ServiceAddBatch(dataList).pipe(
-      map(response => {
-        if (response.IsSuccess) {
-          this.toasterService.typeSuccessAddSimilar();
-        } else {
-          this.toasterService.typeErrorAddSimilar();
+
+
+    if (dataListAdd && dataListAdd.length > 0) {
+      const act1 = await this.newsContentTagService.ServiceAddBatch(dataListAdd).pipe(
+        map(response => {
+          if (response.IsSuccess) {
+            this.toasterService.typeSuccessAddTag();
+          } else {
+            this.toasterService.typeErrorAddTag();
+          }
+          console.log(response.ListItems);
+          return of(response);
+        })).toPromise();
+    }
+    if (dataListDelete && dataListDelete.length > 0) {
+      const act2 = await this.newsContentTagService.ServiceDeleteBatch(dataListDelete).pipe(
+        map(response => {
+          if (response.IsSuccess) {
+            this.toasterService.typeSuccessRemoveTag();
+          } else {
+            this.toasterService.typeErrorRemoveTag();
+          }
+          console.log(response.ListItems);
+          return of(response);
+        })).toPromise();
+    }
+  }
+  async DataActionAfterAddContentSuccessfulOtherInfo(model: NewsContentModel): Promise<any> {
+    debugger;
+    const dataListAdd = new Array<NewsContentOtherInfoModel>();
+    const dataListDelete = new Array<NewsContentOtherInfoModel>();
+    if (this.otherInfoDataModel) {
+      this.otherInfoDataModel.forEach(item => {
+        const row = new NewsContentOtherInfoModel();
+        row.LinkContentId = model.Id;
+        if (!this.dataContentOtherInfoModelResult.ListItems || !item.Id|| !this.dataContentOtherInfoModelResult.ListItems.find(x => x.Id === item.Id)) {
+          dataListAdd.push(row);
         }
-        return of(response);
-      },
-        (error) => {
-          this.loading.display = false;
-          this.formInfo.FormAllowSubmit = true;
-          const title = 'برروی خطا در دریافت اطلاعات';
-          this.toasterService.typeErrorAdd(error);
+      });
+    }
+    if (this.dataContentOtherInfoModelResult.ListItems) {
+      this.dataContentOtherInfoModelResult.ListItems.forEach(item => {
+        if (!this.otherInfoDataModel || !this.otherInfoDataModel.find(x => x.Id === item.Id)) {
+          dataListDelete.push(item);
         }
-      )).toPromise();
+      });
+    }
+
+
+
+
+    if (dataListAdd && dataListAdd.length > 0) {
+      const act1 = await this.newsContentOtherInfoService.ServiceAddBatch(dataListAdd).pipe(
+        map(response => {
+          if (response.IsSuccess) {
+            this.toasterService.typeSuccessAddOtherInfo();
+          } else {
+            this.toasterService.typeErrorAddOtherInfo();
+          }
+          return of(response);
+        })).toPromise();
+    }
+    if (dataListDelete && dataListDelete.length > 0) {
+      const act2 = await this.newsContentOtherInfoService.ServiceDeleteList(dataListDelete.map(x => x.Id)).pipe(
+        map(response => {
+          if (response.IsSuccess) {
+            this.toasterService.typeSuccessRemoveOtherInfo();
+          } else {
+            this.toasterService.typeErrorRemoveOtherInfo();
+          }
+          return of(response);
+        })).toPromise();
+    }
+  }
+  async DataActionAfterAddContentSuccessfulSimilar(model: NewsContentModel): Promise<any> {
+    debugger;
+    const dataListAdd = new Array<NewsContentSimilarModel>();
+    const dataListDelete = new Array<NewsContentSimilarModel>();
+    if (this.similarDataModel) {
+      this.similarDataModel.forEach(item => {
+        const row = new NewsContentSimilarModel();
+        row.LinkSourceId = model.Id;
+        row.LinkDestinationId = item.Id;
+        if (!this.dataContentSimilarModelResult.ListItems ||
+          !this.dataContentSimilarModelResult.ListItems.find(x => x.LinkSourceId === item.Id || x.LinkDestinationId === item.Id)) {
+          dataListAdd.push(row);
+        }
+      });
+    }
+    if (this.dataContentSimilarModelResult.ListItems) {
+      this.dataContentSimilarModelResult.ListItems.forEach(item => {
+        if (!this.similarDataModel || !this.similarDataModel.find(x => x.Id === item.LinkSourceId || x.Id === item.LinkDestinationId)) {
+          dataListDelete.push(item);
+        }
+      });
+    }
+
+
+
+
+    if (dataListAdd && dataListAdd.length > 0) {
+      const act1 = await this.newsContentSimilarService.ServiceAddBatch(dataListAdd).pipe(
+        map(response => {
+          if (response.IsSuccess) {
+            this.toasterService.typeSuccessAddSimilar();
+          } else {
+            this.toasterService.typeErrorAddSimilar();
+          }
+          return of(response);
+        })).toPromise();
+    }
+    if (dataListDelete && dataListDelete.length > 0) {
+      const act2 = await this.newsContentSimilarService.ServiceDeleteBatch(dataListDelete).pipe(
+        map(response => {
+          if (response.IsSuccess) {
+            this.toasterService.typeSuccessRemoveSimilar();
+          } else {
+            this.toasterService.typeErrorRemoveSimilar();
+          }
+          return of(response);
+        })).toPromise();
+    }
+
+
+
   }
   onActionCategorySelect(model: NewsCategoryModel | null): void {
     if (!model || model.Id <= 0) {
@@ -656,5 +678,39 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
   }
   onActionBackToParent(): void {
     this.router.navigate(['/news/content/']);
+  }
+  receiveMap(model: Map): void {
+    this.mapModel = model;
+
+    if (this.mapMarkerPoints && this.mapMarkerPoints.length > 0) {
+      this.mapMarkerPoints.forEach(item => {
+        this.mapMarker = Leaflet.marker([item.lat, item.lon]).addTo(this.mapModel);
+      });
+      this.mapOptonCenter = this.mapMarkerPoints[0];
+      this.mapMarkerPoints = [];
+    }
+
+    this.mapModel.on('click', (e) => {
+      // @ts-ignore
+      const lat = e.latlng.lat;
+      // @ts-ignore
+      const lon = e.latlng.lng;
+      if (this.mapMarker !== undefined) {
+        this.mapModel.removeLayer(this.mapMarker);
+      }
+      if (lat === this.dataModel.Geolocationlatitude && lon === this.dataModel.Geolocationlongitude) {
+        this.dataModel.Geolocationlatitude = null;
+        this.dataModel.Geolocationlongitude = null;
+        return;
+      }
+      this.mapMarker = Leaflet.marker([lat, lon]).addTo(this.mapModel);
+      this.dataModel.Geolocationlatitude = lat;
+      this.dataModel.Geolocationlongitude = lon;
+    });
+
+  }
+
+  receiveZoom(zoom: number): void {
+    this.zoom = zoom;
   }
 }
