@@ -104,7 +104,7 @@ export class SearchDropdownInnerComponent implements OnInit {
    * Search
    * @param e: Event
    */
-  search(e) {
+  search(e): void {
     this.data = null;
     if (e.target.value.length > 1) {
       this.loading = true;
@@ -123,16 +123,16 @@ export class SearchDropdownInnerComponent implements OnInit {
    *
    * @param e: Event
    */
-  clear(e) {
+  clear(e): void {
     this.data = null;
     this.searchInput.nativeElement.value = '';
   }
 
-  openChange() {
+  openChange(): void {
     setTimeout(() => this.searchInput.nativeElement.focus());
   }
 
-  showCloseButton() {
+  showCloseButton(): any {
     return this.data && this.data.length && !this.loading;
   }
 }

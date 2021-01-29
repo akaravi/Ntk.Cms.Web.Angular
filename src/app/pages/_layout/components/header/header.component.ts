@@ -19,6 +19,7 @@ import KTLayoutHeader from '../../../../../assets/js/layout/base/header';
 import KTLayoutHeaderMenu from '../../../../../assets/js/layout/base/header-menu';
 import { KTUtil } from '../../../../../assets/js/components/util';
 import { Subscription, Observable, BehaviorSubject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -69,7 +70,9 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
     this.unsubscribe.push(routerSubscription);
+    this.developing = environment.developing;
   }
+  developing = false;
 
   ngOnInit(): void {
     this.headerContainerCSSClasses = this.layout.getStringCSSClasses(

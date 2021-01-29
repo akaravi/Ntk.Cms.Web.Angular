@@ -1,7 +1,6 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Subscription, Observable, interval} from 'rxjs';
-import {AuthService} from '../_services/auth.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthUserSignInModel, CaptchaModel, CoreAuthService} from 'ntk-cms-api';
 
@@ -28,12 +27,12 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService,
+    private authService: CoreAuthService,
     private route: ActivatedRoute,
     private router: Router,
     private coreAuthService: CoreAuthService
   ) {
-    this.isLoading$ = this.authService.isLoading$;
+    // this.isLoading$ = this.authService.isLoading$;
     // redirect to home if already logged in
     // if (this.authService.currentUserValue) {
     //     this.router.navigate(['/']);

@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {Observable, Subscription} from 'rxjs';
-import {AuthService} from '../_services/auth.service';
 import {first} from 'rxjs/operators';
 import {CaptchaModel, CoreAuthService, AuthUserForgetPasswordModel} from 'ntk-cms-api';
 import {ToastrService} from 'ngx-toastr';
@@ -30,12 +29,11 @@ export class ForgotPasswordComponent implements OnInit {
 
     constructor(
         private fb: FormBuilder,
-        private authService: AuthService,
         private coreAuthService: CoreAuthService,
         private toasterService: ToastrService,
         private router: Router
     ) {
-        this.isLoading$ = this.authService.isLoading$;
+
     }
 
     ngOnInit(): void {

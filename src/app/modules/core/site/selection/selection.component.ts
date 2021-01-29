@@ -12,7 +12,7 @@ import {
   ErrorExceptionResult,
   FilterModel
 } from 'ntk-cms-api';
-import {PublicHelper} from '../../../../core/helpers/services/publicHelper';
+import {PublicHelper} from '../../../../core/helpers/publicHelper';
 import {CmsToastrService} from '../../../../core/helpers/services/cmsToastr.service';
 
 

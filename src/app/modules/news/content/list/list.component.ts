@@ -11,7 +11,7 @@ import {
   NewsContentService,
   TokenInfoModel,
 } from 'ntk-cms-api';
-import { PublicHelper } from '../../../../core/helpers/services/publicHelper';
+import { PublicHelper } from '../../../../core/helpers/publicHelper';
 import { CmsToastrService } from '../../../../core/helpers/services/cmsToastr.service';
 import { MatDialog } from '@angular/material/dialog';
 import { NewsContentAddComponent } from '../add/add.component';

@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { LayoutService, LayoutInitService } from '../../core';
 import KTLayoutContent from '../../../assets/js/layout/base/content';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-layout',
@@ -46,8 +47,9 @@ export class LayoutComponent implements OnInit, AfterViewInit {
     private layout: LayoutService
   ) {
     this.initService.init();
+    this.developing = environment.developing;
   }
-
+  developing = false;
   ngOnInit(): void {
     // build view by layout config settings
     this.selfLayout = this.layout.getProp('self.layout');
@@ -109,7 +111,7 @@ export class LayoutComponent implements OnInit, AfterViewInit {
         if (this.asideHTMLAttributes.hasOwnProperty(key)) {
           this.ktAside.nativeElement.attributes[key] = this.asideHTMLAttributes[
             key
-            ];
+          ];
         }
       }
     }
@@ -119,7 +121,7 @@ export class LayoutComponent implements OnInit, AfterViewInit {
         if (this.headerMobileAttributes.hasOwnProperty(key)) {
           this.ktHeaderMobile.nativeElement.attributes[
             key
-            ] = this.headerMobileAttributes[key];
+          ] = this.headerMobileAttributes[key];
         }
       }
     }
@@ -129,7 +131,7 @@ export class LayoutComponent implements OnInit, AfterViewInit {
         if (this.headerHTMLAttributes.hasOwnProperty(key)) {
           this.ktHeader.nativeElement.attributes[
             key
-            ] = this.headerHTMLAttributes[key];
+          ] = this.headerHTMLAttributes[key];
         }
       }
     }

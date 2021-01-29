@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   AuthRenewTokenModel,
   CoreAuthService,
@@ -17,15 +18,20 @@ export class CmsTokenAccessAdminComponent implements OnInit {
 
   TokenInfo: TokenInfoModel = new TokenInfoModel();
   loadingStatus = false;
-  SiteId: number ;
-  UserId: number ;
+  SiteId: number;
+  UserId: number;
 
   constructor(
     public coreAuthService: CoreAuthService,
-    private toastrService: CmsToastrService
+    private toastrService: CmsToastrService,
+    private router: Router,
+
   ) {
     this.coreAuthService.CurrentTokenInfoBS.subscribe((value) => {
       this.TokenInfo = value;
+      if (this.TokenInfo && this.TokenInfo.UserId > 0 && this.TokenInfo.SiteId <= 0) {
+        this.router.navigate(['/site/selection']);
+      }
     });
   }
 
@@ -55,7 +61,7 @@ export class CmsTokenAccessAdminComponent implements OnInit {
       (next) => {
         this.loadingStatus = false;
         if (next.IsSuccess) {
-          let title = 'اطلاعات ';
+          const title = 'اطلاعات ';
           let message = '';
           if (next.Item.UserAccessAdminAllowToAllData === NewToall) {
             message = 'دسترسی تایید شد';

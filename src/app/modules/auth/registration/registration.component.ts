@@ -1,7 +1,6 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {Subscription, Observable} from 'rxjs';
-import {AuthService} from '../_services/auth.service';
 import {Router} from '@angular/router';
 import {ConfirmPasswordValidator} from './confirm-password.validator';
 import {first} from 'rxjs/operators';
@@ -26,13 +25,13 @@ export class RegistrationComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService,
     private router: Router,
     private coreAuthService: CoreAuthService
   ) {
-    this.isLoading$ = this.authService.isLoading$;
+    // this.isLoading$ = this.authService.isLoading$;
     // redirect to home if already logged in
-    if (this.authService.currentUserValue) {
+    debugger;
+    if (this.coreAuthService.CurrentTokenInfoBS) {
       this.router.navigate(['/']);
     }
   }

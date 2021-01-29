@@ -1,5 +1,5 @@
 <!--begin::Topbar-->
-<ng-container *ngIf="extraSearchDisplay">
+<ng-container *ngIf="extraSearchDisplay && developing">
   <ng-container *ngIf="extrasSearchLayout === 'offcanvas'">
     <!--begin::Search-->
     <div class="topbar-item">
@@ -50,7 +50,7 @@
   </ng-container>
 </ng-container>
 
-<ng-container *ngIf="extrasNotificationsDisplay">
+<ng-container *ngIf="extrasNotificationsDisplay&& developing">
   <ng-container *ngIf="extrasNotificationsLayout === 'offcanvas'">
     <!--begin::Notifications-->
     <div class="topbar-item">
@@ -107,7 +107,7 @@
   </ng-container>
 </ng-container>
 
-<ng-container *ngIf="extrasQuickActionsDisplay">
+<ng-container *ngIf="extrasQuickActionsDisplay&& developing">
   <ng-container *ngIf="extrasQuickActionsLayout === 'offcanvas'">
     <!--begin::Quick Actions-->
     <div class="topbar-item">
@@ -156,7 +156,7 @@
   </ng-container>
 </ng-container>
 
-<ng-container *ngIf="extrasCartDisplay">
+<ng-container *ngIf="extrasCartDisplay && developing">
   <ng-container *ngIf="extrasCartLayout === 'offcanvas'">
     <!--begin::Cart-->
     <div class="topbar-item">
@@ -207,7 +207,7 @@
   </ng-container>
 </ng-container>
 
-<ng-container *ngIf="extrasQuickPanelDisplay">
+<ng-container *ngIf="extrasQuickPanelDisplay && developing">
   <!--begin::Quick panel-->
   <div class="topbar-item">
     <div class="btn btn-icon btn-clean btn-lg mr-1" id="kt_quick_panel_toggle">
@@ -240,11 +240,11 @@
           >
           <span
             class="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3"
-          >{{ _user.fullname }}</span
+          >{{ _user.FullName }}</span
           >
           <span class="symbol symbol-lg-35 symbol-25 symbol-light-success">
             <span class="symbol-label font-size-h5 font-weight-bold">{{
-              _user.fullname
+              _user.FullName
               }}</span>
           </span>
         </div>
@@ -272,11 +272,11 @@
             >
             <span
               class="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3"
-            >{{ _user.fullname }}</span
+            >{{ _user.FullName }}</span
             >
             <span class="symbol symbol-35 symbol-light-success">
               <span class="symbol-label font-size-h5 font-weight-bold">{{
-                _user.fullname
+                _user.FullName
                 }}</span>
             </span>
           </div>

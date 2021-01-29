@@ -30,7 +30,7 @@
       <!--begin::Header Menu-->
       <!-- Don't change id => 'kt_header_menu' -->
       <!-- STATIC MENU -->
-      <app-header-menu
+      <app-header-menu *ngIf="developing"
         #ktHeaderMenu
         id="kt_header_menu"
         class="header-menu header-menu-mobile"

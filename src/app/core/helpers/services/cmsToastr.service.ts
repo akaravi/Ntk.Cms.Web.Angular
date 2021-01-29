@@ -10,6 +10,9 @@ export class CmsToastrService {
   }
 
   // Success Type
+  typeSuccessAccessChange(): void {
+    this.toastr.success('دسترسی با موفقیت تایید شد', 'Success!');
+  }
   typeSuccessAdd(): void {
     this.toastr.success('با موفقیت اضافه شد', 'Success!');
   }
@@ -59,7 +62,13 @@ export class CmsToastrService {
     }
     this.toastr.error(message, 'Error!');
   }
-
+  typeErrorAccessChange(str: string = ''): void {
+    let message = 'دسترسی جدید تایید نشد';
+    if (str && str.length > 0) {
+      message = message + ' error: ' + str;
+    }
+    this.toastr.error(message, 'Error!');
+  }
   typeErrorDeviceToken(str: string = ''): void {
     let message = 'شناسه دستگاه شما مورد تایید نمی باشد.اطفا با پستبانی تماس بگیرید';
     if (str && str.length > 0) {

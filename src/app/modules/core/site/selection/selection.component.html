@@ -6,17 +6,17 @@
     <div class="row">
       <div *ngFor="let item of dataModel.ListItems" style="margin-left: 10px;">
         <div (click)="clickSelectSite(item.Id)" class="card card-custom card-stretch gutter-b cursor-pointer"
-             style="top: 15px;width: fit-content;">
+          style="top: 15px;width: fit-content;">
           <div class="card-body d-flex flex-column">
             <div class="flex-grow-1 pb-5">
               <div class="d-flex align-items-center pr-2 mb-6 text-right">
-                      <span class="text-muted font-weight-bold font-size-lg flex-grow-1">
-                          {{item.Title}}
-                      </span>
+                <span class="text-muted font-weight-bold font-size-lg flex-grow-1">
+                  {{item.Title}}
+                </span>
                 <div class="symbol symbol-50">
-                        <span class="symbol-label bg-light-light">
-                          <img src="{{item.MainImageSrc}}" class="h-90px align-self-center custom" alt="">
-                      </span>
+                  <span class="symbol-label bg-light-light">
+                    <img src="{{item.MainImageSrc}}" class="h-90px align-self-center custom" width="40px" height="40px" alt="">
+                  </span>
                 </div>
               </div>
               <p class="text-dark font-weight-bolder text-hover-primary font-size-h4 text-right">
@@ -49,10 +49,12 @@
                 </div>
               </a>
             </div>
+            <br>
+            <button (click)="clickSelectSite(item.Id)" type="button" class="btn btn-warning BTN">ورود</button>
+
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-

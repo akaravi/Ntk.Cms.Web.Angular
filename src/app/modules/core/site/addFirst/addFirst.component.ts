@@ -15,7 +15,7 @@ import {
 import {environment} from '../../../../../environments/environment';
 import {Router} from '@angular/router';
 import {CmsToastrService} from '../../../../core/helpers/services/cmsToastr.service';
-import {PublicHelper} from '../../../../core/helpers/services/publicHelper';
+import {PublicHelper} from '../../../../core/helpers/publicHelper';
 
 
 @Component({

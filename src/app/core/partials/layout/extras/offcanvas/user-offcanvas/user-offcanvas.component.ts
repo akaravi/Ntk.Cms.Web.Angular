@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LayoutService } from '../../../../..';
 import { Observable } from 'rxjs';
-import { UserModel } from '../../../../../../modules/auth/_models/user.model';
-import { AuthService } from '../../../../../../modules/auth/_services/auth.service';
+import { CoreAuthService, TokenInfoModel } from 'ntk-cms-api';
 
 @Component({
   selector: 'app-user-offcanvas',
@@ -11,19 +10,19 @@ import { AuthService } from '../../../../../../modules/auth/_services/auth.servi
 })
 export class UserOffcanvasComponent implements OnInit {
   extrasUserOffcanvasDirection = 'offcanvas-right';
-  user$: Observable<UserModel>;
+  user$: Observable<TokenInfoModel>;
 
-  constructor(private layout: LayoutService, private auth: AuthService) {}
+  constructor(private layout: LayoutService, private auth: CoreAuthService) { }
 
   ngOnInit(): void {
     this.extrasUserOffcanvasDirection = `offcanvas-${this.layout.getProp(
       'extras.user.offcanvas.direction'
     )}`;
-    this.user$ = this.auth.currentUserSubject.asObservable();
+    this.user$ = this.auth.CurrentTokenInfoBS.asObservable();
   }
 
-  logout() {
-    this.auth.logout();
+  logout(): void {
+    this.auth.ServiceLogout().subscribe();
     document.location.reload();
   }
 }
