@@ -2,10 +2,11 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-import {EnumDeviceType, EnumOperatingSystemType} from 'ntk-cms-api';
+import { EnumDeviceType, EnumOperatingSystemType } from 'ntk-cms-api';
 
 export const environment = {
   production: false,
+  developing: true,
   appVersion: 'v712demo1',
   USERDATA_KEY: 'authf649fc9a5f55',
   isMockEnabled: true,

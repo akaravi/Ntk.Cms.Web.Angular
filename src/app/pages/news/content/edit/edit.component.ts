@@ -115,7 +115,7 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
         tag: 'h1',
       },
     ],
-    sanitize: true,
+    sanitize: false,
     toolbarPosition: 'top',
     toolbarHiddenButtons: [
       ['bold', 'italic'],
@@ -330,8 +330,7 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
         async (next) => {
           this.loading.display = false;
           this.formInfo.FormAllowSubmit = true;
-          this.dataContentSimilarModelResult = next
-          debugger;
+          this.dataContentSimilarModelResult = next;
           if (next.IsSuccess) {
             const listIds = Array<number>();
             next.ListItems.forEach(x => {
@@ -433,7 +432,6 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
   }
   async DataActionAfterAddContentSuccessfulTag(model: NewsContentModel): Promise<any> {
 
-    debugger;
     const dataListAdd = new Array<NewsContentTagModel>();
     const dataListDelete = new Array<NewsContentTagModel>();
     if (this.tagIdsData) {
@@ -481,7 +479,6 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
     }
   }
   async DataActionAfterAddContentSuccessfulOtherInfo(model: NewsContentModel): Promise<any> {
-    debugger;
     const dataListAdd = new Array<NewsContentOtherInfoModel>();
     const dataListDelete = new Array<NewsContentOtherInfoModel>();
     if (this.otherInfoDataModel) {
@@ -528,7 +525,6 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
     }
   }
   async DataActionAfterAddContentSuccessfulSimilar(model: NewsContentModel): Promise<any> {
-    debugger;
     const dataListAdd = new Array<NewsContentSimilarModel>();
     const dataListDelete = new Array<NewsContentSimilarModel>();
     if (this.similarDataModel) {
