@@ -5,7 +5,7 @@ import {
   CoreAuthService,
   TokenInfoModel,
 } from 'ntk-cms-api';
-import { CmsToastrService } from 'src/app/core/helpers/services/cmsToastr.service';
+import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 
 
 

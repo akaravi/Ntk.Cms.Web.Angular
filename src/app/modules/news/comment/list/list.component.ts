@@ -9,7 +9,7 @@ import { ComponentOptionExportModel } from 'src/app/core/cmsComponentModels/base
 import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/base/componentOptionStatistModel';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
-import { CmsToastrService } from 'src/app/core/helpers/services/cmsToastr.service';
+import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { MatSort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';

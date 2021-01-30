@@ -1,0 +1,96 @@
+<div class="row">
+  <div class="col-xl-3">
+    <app-article-category-tree (optionSelect)="onActionCategorySelect($event)"></app-article-category-tree>
+  </div>
+  <div class="col-xl-9">
+    <div class="button-row">
+      <button *ngIf="dataModelResult.Access.AccessAddRow && this.categoryModelSelected?.Id>0"
+        (click)="onActionbuttonNewRow()" type="button" class="btn btn-primary" id="openModalButton" data-toggle="modal"
+        data-target="#categoryModal">اضافه</button>
+      <button *ngIf="dataModelResult.Access.AccessEditRow && tableRowSelected.Id>0" (click)="onActionbuttonEditRow()"
+        type="button" class="btn btn-warning ml-2" data-toggle="modal" data-target="#categoryModal">ویرایش</button>
+      <button *ngIf="dataModelResult.Access.AccessDeleteRow && tableRowSelected.Id>0"
+        (click)="onActionbuttonDeleteRow()" type="button" class="btn btn-danger  ml-2">حذف</button>
+
+      <a class="btn btn-secondary btn-sm BTN">
+        <mat-slide-toggle [(ngModel)]="optionsSearch.data.show">پرس و جو ساز</mat-slide-toggle>
+      </a>
+      <a class="btn btn-success btn-sm BTN">
+        <mat-slide-toggle [(ngModel)]="optionsStatist.data.show" (click)="onActionbuttonStatist()">آمار
+        </mat-slide-toggle>
+      </a>
+      <button (click)="onActionbuttonExport()" type="button" class="btn btn-bg-info BTN">خروجی فایل</button>
+      <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">برسی مجدد</button>
+      <app-cms-search-list [(options)]="optionsSearch"></app-cms-search-list>
+      <app-cms-export-list [(options)]="optionsExport"></app-cms-export-list>
+      <app-cms-statist-list [(options)]="optionsStatist"></app-cms-statist-list>
+
+    </div>
+
+    <app-progress-spinner [options]="loading">
+    </app-progress-spinner>
+
+    <div class="example-container mat-elevation-z8">
+      <mat-table [dataSource]="tableSource" matSort #tableSort="matSort" (matSortChange)="onTableSortData(tableSort)">
+        <!-- LinkMainImageIdSrc Column -->
+        <ng-container matColumnDef="LinkMainImageIdSrc">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> عکس </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <img *ngIf="row?.LinkMainImageIdSrc?.length>0" style="vertical-align:middle;" aria-hidden
+              src="{{row.LinkMainImageIdSrc}}" height="40" width="40" />
+
+          </mat-cell>
+        </ng-container>
+        <!-- ID Column -->
+        <ng-container matColumnDef="Id">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> شناسه </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.Id}} </mat-cell>
+        </ng-container>
+        <!-- LinkSiteId Column -->
+        <ng-container matColumnDef="LinkSiteId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> شناسه سایت </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.LinkSiteId}} </mat-cell>
+        </ng-container>
+        <!-- RecordStatus Column -->
+        <ng-container matColumnDef="RecordStatus">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> وضعیت </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.RecordStatus}} </mat-cell>
+        </ng-container>
+        <!-- Title Column -->
+        <ng-container matColumnDef="Title">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> عنوان </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.Title}} </mat-cell>
+        </ng-container>
+        <!-- CreatedDate Column -->
+        <ng-container matColumnDef="CreatedDate">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> ناریخ ایجاد </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.CreatedDate) }} </mat-cell>
+        </ng-container>
+        <!-- UpdatedDate Column -->
+        <ng-container matColumnDef="UpdatedDate">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> تاریخ ویرابش </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.UpdatedDate) }} </mat-cell>
+        </ng-container>
+        <!-- Action Column -->
+        <ng-container matColumnDef="Action">
+          <mat-header-cell *matHeaderCellDef> ... </mat-header-cell>
+          <mat-cell *matCellDef="let row" class='Action'>
+            <small (click)="onActionbuttonEditRow()">ویرایش</small>|
+            <small (click)="onActionbuttonDeleteRow()">حذف</small>|
+            <small (click)="onClickComment(row.Id)">کامنت</small>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="tabledisplayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: tabledisplayedColumns;" (click)="onActionTableRowSelect(row)"
+          [ngStyle]="{'background': row.Id === tableRowSelected.Id ? '#d3d3da' : '' }">
+        </mat-row>
+      </mat-table>
+
+      <mat-paginator #paginator [length]="(dataModelResult.TotalRowCount)"
+        [pageIndex]="(dataModelResult.CurrentPageNumber-1)" [pageSize]="dataModelResult.RowPerPage"
+        [pageSizeOptions]="[5, 10, 20, 100]" (page)="onTablePageingData($event)"></mat-paginator>
+
+    </div>
+
+  </div>
+</div>

@@ -23,7 +23,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 // import KTWizard from '../../../../../assets/js/components/wizard';
 // import { KTUtil } from '../../../../../assets/js/components/util';
-import { CmsToastrService } from 'src/app/core/helpers/services/cmsToastr.service';
+import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';

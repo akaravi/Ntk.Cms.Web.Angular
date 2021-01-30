@@ -1,6 +1,6 @@
 import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CmsAuthGuard } from './core/helpers/services/cmsAuthGuard.service';
+import { CmsAuthGuard } from './core/services/cmsAuthGuard.service';
 
 const routes: Routes = [
   {

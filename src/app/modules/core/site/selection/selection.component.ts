@@ -13,7 +13,7 @@ import {
   FilterModel
 } from 'ntk-cms-api';
 import {PublicHelper} from '../../../../core/helpers/publicHelper';
-import {CmsToastrService} from '../../../../core/helpers/services/cmsToastr.service';
+import {CmsToastrService} from '../../../../core/services/cmsToastr.service';
 
 
 @Component({

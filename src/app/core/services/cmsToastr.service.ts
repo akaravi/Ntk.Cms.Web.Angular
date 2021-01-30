@@ -45,7 +45,9 @@ export class CmsToastrService {
   typeSuccessMove(): void {
     this.toastr.success('با موفقیت منتقل شد', 'Success!');
   }
-
+  typeSuccessLogout(): void {
+    this.toastr.success('با موفقیت از حساب کاربری خود خارج شدید', 'Success!');
+  }
   // error Type
   typeErrorInternetConnection(str: string = ''): void {
     let message = 'خطا در اتصال به اینترنت.لطفا اتصال به اینترنت را بررسی کنید';
@@ -221,7 +223,13 @@ export class CmsToastrService {
     }
     this.toastr.error(message, 'Error!');
   }
-
+  typeErrorLogout(str: string = ''): void {
+    let message = 'برروز خطا در خارج شدن از حساب کاربری';
+    if (str && str.length > 0) {
+      message = message + ' error: ' + str;
+    }
+    this.toastr.error(message, 'Error!');
+  }
   typeError(model: any, str: string = ''): void {
     let message = 'برروز خطا ' + ' ' + str;
     if (!model) {

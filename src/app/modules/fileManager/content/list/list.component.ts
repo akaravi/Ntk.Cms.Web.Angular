@@ -12,7 +12,7 @@ import {
   TokenInfoModel,
 } from 'ntk-cms-api';
 import { PublicHelper } from '../../../../core/helpers/publicHelper';
-import { CmsToastrService } from '../../../../core/helpers/services/cmsToastr.service';
+import { CmsToastrService } from '../../../../core/services/cmsToastr.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ProgressSpinnerModel } from '../../../../core/models/progressSpinnerModel';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';

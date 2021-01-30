@@ -16,7 +16,7 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { CmsToastrService } from 'src/app/core/helpers/services/cmsToastr.service';
+import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { ComponentActionEnum } from 'src/app/core/helpers/model/component-action-enum';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 

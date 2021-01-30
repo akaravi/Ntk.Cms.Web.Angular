@@ -17,7 +17,7 @@ import {
   FileCategoryModel,
   FileCategoryService,
 } from 'ntk-cms-api';
-import { CmsToastrService } from 'src/app/core/helpers/services/cmsToastr.service';
+import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { FileCategoryEditComponent } from '../edit/edit.component';
 import { FileCategoryDeleteComponent } from '../delete/delete.component';

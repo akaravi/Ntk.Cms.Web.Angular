@@ -18,7 +18,7 @@ import {
 import { ActivatedRoute, Params } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { CmsToastrService } from 'src/app/core/helpers/services/cmsToastr.service';
+import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { ComponentActionEnum } from 'src/app/core/helpers/model/component-action-enum';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { ComponentOptionFileUploadModel } from 'src/app/core/cmsComponentModels/files/componentOptionFileUploadModel';

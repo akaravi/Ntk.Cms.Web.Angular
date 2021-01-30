@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LayoutService } from '../../../../..';
 import { CoreAuthService, TokenInfoModel } from 'ntk-cms-api';
+import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
+import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-user-dropdown-inner',
   templateUrl: './user-dropdown-inner.component.html',
@@ -11,7 +13,10 @@ export class UserDropdownInnerComponent implements OnInit {
   extrasUserDropdownStyle: 'light' | 'dark' = 'light';
   user$: Observable<TokenInfoModel>;
 
-  constructor(private layout: LayoutService, private auth: CoreAuthService) { }
+  constructor(private layout: LayoutService,
+              private auth: CoreAuthService,
+              private toasterService: CmsToastrService,
+  ) { }
 
   ngOnInit(): void {
     this.extrasUserDropdownStyle = this.layout.getProp(
@@ -20,8 +25,15 @@ export class UserDropdownInnerComponent implements OnInit {
     this.user$ = this.auth.CurrentTokenInfoBS.asObservable();
   }
 
-  logout(): void {
-    this.auth.ServiceLogout().subscribe();
+  async logout(): Promise<void> {
+    const retOut = await this.auth.ServiceLogout().pipe(map(next => {
+      if (next.IsSuccess) {
+        this.toasterService.typeSuccessLogout();
+      } else {
+        this.toasterService.typeErrorLogout();
+      }
+      return;
+    })).toPromise();
     document.location.reload();
   }
 }

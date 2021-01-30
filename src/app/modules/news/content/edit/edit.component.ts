@@ -21,7 +21,7 @@ import {
   NewsContentSimilarModel
 } from 'ntk-cms-api';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CmsToastrService } from 'src/app/core/helpers/services/cmsToastr.service';
+import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';

@@ -9,7 +9,7 @@ import { FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { CoreEnumService, ErrorExceptionResult, FormInfoModel, ItemState, NewsContentModel, NewsContentService } from 'ntk-cms-api';
-import { CmsToastrService } from 'src/app/core/helpers/services/cmsToastr.service';
+import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 
 @Component({

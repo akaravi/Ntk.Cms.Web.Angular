@@ -3,7 +3,7 @@ import { Component, OnInit, Input, ViewChild, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 import { CoreEnumService, ErrorExceptionResult, FilterModel, FormInfoModel, NewsCategoryModel, NewsCategoryService } from 'ntk-cms-api';
-import { CmsToastrService } from 'src/app/core/helpers/services/cmsToastr.service';
+import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 
