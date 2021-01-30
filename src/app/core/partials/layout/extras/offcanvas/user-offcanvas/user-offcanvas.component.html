@@ -67,7 +67,7 @@
       <div class="separator separator-dashed mt-8 mb-5"></div>
       <!--end::Separator-->
       <!--begin::Nav-->
-      <div class="navi navi-spacer-x-0 p-0">
+      <div class="navi navi-spacer-x-0 p-0" *ngIf="developing">
         <!--begin::Item-->
         <a class="navi-item cursor-pointer">
           <div class="navi-link">
@@ -164,15 +164,15 @@
       <!--end::Separator-->
 
       <!--begin::Notifications-->
-      <div>
+      <div *ngIf="developing">
         <!--begin:Heading-->
-        <h5 class="mb-5">
+        <h5 class="mb-5" >
           Recent Notifications
         </h5>
         <!--end:Heading-->
 
         <!--begin::Item-->
-        <div class="d-flex align-items-center bg-light-warning rounded p-5 gutter-b">
+        <div class="d-flex align-items-center bg-light-warning rounded p-5 gutter-b" >
           <span class="svg-icon svg-icon-warning mr-5">
             <span [inlineSVG]="'./assets/media/svg/icons/Home/Library.svg'" cacheSVG="true"
               class="svg-icon svg-icon-lg"></span>

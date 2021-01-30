@@ -11,6 +11,7 @@ import { Subheader6Component } from './subheader6/subheader6.component';
 import { SubheaderWrapperComponent } from './subheader-wrapper/subheader-wrapper.component';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { DropdownMenusModule } from '../../content/dropdown-menus/dropdown-menus.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { DropdownMenusModule } from '../../content/dropdown-menus/dropdown-menus
     InlineSVGModule,
     NgbDropdownModule,
     DropdownMenusModule,
+    SharedModule
   ],
   exports: [SubheaderWrapperComponent],
 })

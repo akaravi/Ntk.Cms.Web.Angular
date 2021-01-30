@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LayoutService } from '../../../../..';
 import { Observable } from 'rxjs';
 import { CoreAuthService, TokenInfoModel } from 'ntk-cms-api';
+import { environment } from '../../../../../../../environments/environment';
 
 @Component({
   selector: 'app-user-offcanvas',
@@ -12,8 +13,10 @@ export class UserOffcanvasComponent implements OnInit {
   extrasUserOffcanvasDirection = 'offcanvas-right';
   user$: Observable<TokenInfoModel>;
 
-  constructor(private layout: LayoutService, private auth: CoreAuthService) { }
-
+  constructor(private layout: LayoutService, private auth: CoreAuthService) {
+    this.developing = environment.developing;
+  }
+  developing = false;
   ngOnInit(): void {
     this.extrasUserOffcanvasDirection = `offcanvas-${this.layout.getProp(
       'extras.user.offcanvas.direction'

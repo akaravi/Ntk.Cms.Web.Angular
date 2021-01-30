@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { LayoutService } from '../../../..';
 import { SubheaderService } from '../_services/subheader.service';
 import { BreadcrumbItemModel } from '../_models/breadcrumb-item.model';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-subheader1',
@@ -26,8 +27,11 @@ export class Subheader1Component implements OnInit {
     private cdr: ChangeDetectorRef
   ) {
     this.title$ = this.subheader.titleSubject.asObservable();
-  }
 
+    this.developing = environment.developing;
+  }
+  developing = false;
+  dateTime = new Date();
   ngOnInit(): void {
     this.title$ = this.subheader.titleSubject.asObservable();
     this.breadcrumbs$ = this.subheader.breadCrumbsSubject.asObservable();

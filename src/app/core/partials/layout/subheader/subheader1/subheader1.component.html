@@ -73,12 +73,12 @@
             >Today</span
           >
           <span class="font-weight-bold" id="kt_dashboard_daterangepicker_date"
-            >Aug 16</span
+            >{{dateTime|date}}/{{dateTime|persianDate}}</span
           >
         </a>
         <!--end::Daterange-->
       </ng-container>
-      <ng-container *ngIf="!subheaderDisplayDaterangepicker">
+      <ng-container *ngIf="!subheaderDisplayDaterangepicker && developing">
         <!--begin::Actions-->
         <a
           class="btn btn-light-primary font-weight-bolder btn-sm cursor-pointer"
@@ -87,9 +87,8 @@
         </a>
         <!--end::Actions-->
       </ng-container>
-
       <!--begin::Dropdown-->
-      <div
+      <div *ngIf="developing"
         class="dropdown dropdown-inline"
         data-toggle="tooltip"
         title="Quick actions"

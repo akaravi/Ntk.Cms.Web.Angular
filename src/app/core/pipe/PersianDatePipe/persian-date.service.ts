@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
-@Injectable()
+
+@Injectable({
+  providedIn: 'root',
+})
 export class PersianCalendarService {
   weekDayNames: string[] = ['شنبه', 'یکشنبه', 'دوشنبه',
     'سه شنبه', 'چهارشنبه',

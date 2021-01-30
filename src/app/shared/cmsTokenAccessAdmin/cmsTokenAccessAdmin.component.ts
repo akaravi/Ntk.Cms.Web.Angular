@@ -71,12 +71,11 @@ export class CmsTokenAccessAdminComponent implements OnInit {
             this.toastrService.toastr.warning(message, title);
           }
         } else {
-          const title = 'برروز خطا ';
-          message = next.ErrorMessage;
-          this.toastrService.toastr.error(message, title);
+          this.toastrService.typeErrorAccessChange(next.ErrorMessage);
         }
       },
-      () => {
+      (error) => {
+        this.toastrService.typeErrorAccessChange(error);
       }
     );
   }
@@ -112,12 +111,11 @@ export class CmsTokenAccessAdminComponent implements OnInit {
             this.toastrService.toastr.warning(message, title);
           }
         } else {
-          const title = 'برروز خطا ';
-          const message = next.ErrorMessage;
-          this.toastrService.toastr.error(message, title);
+          this.toastrService.typeErrorAccessChange(next.ErrorMessage);
         }
       },
-      () => {
+      (error) => {
+        this.toastrService.typeErrorAccessChange(error);
       }
     );
   }
@@ -152,12 +150,11 @@ export class CmsTokenAccessAdminComponent implements OnInit {
             this.toastrService.toastr.warning(message, title);
           }
         } else {
-          const title = 'برروز خطا ';
-          const message = next.ErrorMessage;
-          this.toastrService.toastr.error(message, title);
+          this.toastrService.typeErrorAccessChange(next.ErrorMessage);
         }
       },
-      () => {
+      (error) => {
+        this.toastrService.typeErrorAccessChange(error);
       }
     );
   }
@@ -193,12 +190,11 @@ export class CmsTokenAccessAdminComponent implements OnInit {
             this.toastrService.toastr.warning(message, title);
           }
         } else {
-          const title = 'برروز خطا ';
-          const message = next.ErrorMessage;
-          this.toastrService.toastr.error(message, title);
+          this.toastrService.typeErrorAccessChange(next.ErrorMessage);
         }
       },
-      () => {
+      (error) => {
+        this.toastrService.typeErrorAccessChange(error);
       }
     );
   }
