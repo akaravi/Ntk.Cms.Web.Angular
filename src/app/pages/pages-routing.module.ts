@@ -48,14 +48,14 @@ const routes: Routes = [
           import('../modules/filemanager/filemanager.module').then(m => m.FileManagerModule)
       },
       {
-        path: '',
-        redirectTo: 'dashboard',
-        pathMatch: 'full',
-      },
-      {
         path: 'application',
         loadChildren: () =>
           import('../modules/application/application.module').then(m => m.ApplicationModule)
+      },
+      {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full',
       },
     ]
   }

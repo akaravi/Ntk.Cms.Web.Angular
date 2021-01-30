@@ -49,7 +49,7 @@ export class ApplicationAppListComponent implements OnInit {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
   }
-  requestSourceId= 0;
+  requestSourceId = 0;
   filteModelContent = new FilterModel();
   dataModelResult: ErrorExceptionResult<ApplicationAppModel> = new ErrorExceptionResult<ApplicationAppModel>();
   optionsSearch: ComponentOptionSearchModel = new ComponentOptionSearchModel();

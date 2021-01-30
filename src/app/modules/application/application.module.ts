@@ -18,18 +18,6 @@ import { CmsFileManagerModule } from 'ntk-cms-filemanager';
 import { ApplicationAppService, CoreAuthService, CoreEnumService, CoreModuleTagService } from 'ntk-cms-api';
 
 @NgModule({
-  imports: [
-    ApplicationRoutes,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
-    TreeviewModule.forRoot(),
-    SharedModule.forRoot(),
-    AngularEditorModule,
-    TagInputModule,
-    ProgressSpinnerModule,
-    CmsFileManagerModule
-  ],
   declarations: [
     ApplicationComponent,
     ApplicationAppListComponent,
@@ -38,6 +26,18 @@ import { ApplicationAppService, CoreAuthService, CoreEnumService, CoreModuleTagS
     ApplicationNotificationListComponent,
     ApplicationSourceListComponent,
     ApplicationThemeConfigListComponent
+  ],
+  imports: [
+    CommonModule,
+    ApplicationRoutes,
+    FormsModule,
+    ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
+    TreeviewModule.forRoot(),
+    SharedModule.forRoot(),
+    AngularEditorModule,
+    TagInputModule,
+    ProgressSpinnerModule,
+    CmsFileManagerModule
   ],
   providers: [
     CoreEnumService,

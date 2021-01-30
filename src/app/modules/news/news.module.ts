@@ -58,8 +58,8 @@ import { NewsContentDeleteComponent } from './content/delete/delete.component';
     NewsCommentEditComponent,
   ],
   imports: [
-    NewsRouting,
     CommonModule,
+    NewsRouting,
     FormsModule,
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
     TreeviewModule.forRoot(),
