@@ -18,6 +18,21 @@ const routes: Routes = [
           import('../modules/core/site/site.module').then((m) => m.SiteModule),
       },
       {
+        path: 'core',
+        loadChildren: () =>
+          import('../modules/core/core.module').then(m => m.CoreModule)
+      },
+      {
+        path: 'coremodule',
+        loadChildren: () =>
+          import('../modules/coreModule/coreModule.module').then(m => m.CoreModuleModule)
+      },
+      {
+        path: 'coretoken',
+        loadChildren: () =>
+          import('../modules/coreToken/coreToken.module').then(m => m.CoreTokenModule)
+      },
+      {
         path: 'news',
         loadChildren: () =>
           import('../modules/news/news.module').then(m => m.NewsModule)
@@ -36,6 +51,11 @@ const routes: Routes = [
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',
+      },
+      {
+        path: 'application',
+        loadChildren: () =>
+          import('../modules/application/application.module').then(m => m.ApplicationModule)
       },
     ]
   }

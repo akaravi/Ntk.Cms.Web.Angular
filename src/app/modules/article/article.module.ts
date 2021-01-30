@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ArticleRoutingModule } from './article-routing.module';
+import { ArticleRouting } from './article.routing';
 import { ArticleComponent } from './article.component';
 import {TagInputModule} from 'ngx-chips';
 
@@ -58,7 +58,7 @@ import { ArticleContentDeleteComponent } from './content/delete/delete.component
     ArticleCommentEditComponent,
   ],
   imports: [
-    ArticleRoutingModule,
+    ArticleRouting,
      CommonModule,
      FormsModule,
      ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { NewsComponent } from './news.component';
-// import {CategoryResolver} from './category/tree/category.resolver';
 import { NewsContentListComponent } from './content/list/list.component';
 import { NewsCommentListComponent } from './comment/list/list.component';
 import { NewsCommentEditComponent } from './comment/edit/edit.component';
@@ -45,5 +44,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class NewsRoutingModule {
+export class NewsRouting {
 }

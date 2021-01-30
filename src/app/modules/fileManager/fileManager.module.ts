@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FileManagerRoutingModule } from './fileManager-routing.module';
+import { FileManagerRouting } from './fileManager.routing';
 import { FileManagerComponent } from './fileManager.component';
 import {TagInputModule} from 'ngx-chips';
 
@@ -41,7 +41,7 @@ import { FileContentExplorerComponent } from './content/explorer/explorer.compon
     FileContentExplorerComponent
   ],
   imports: [
-    FileManagerRoutingModule,
+    FileManagerRouting,
      CommonModule,
      FormsModule,
      ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),

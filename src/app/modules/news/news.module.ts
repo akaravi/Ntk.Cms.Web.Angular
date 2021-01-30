@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NewsRoutingModule } from './news-routing.module';
+import { NewsRouting } from './news.routing';
 import { NewsComponent } from './news.component';
-import {TagInputModule} from 'ngx-chips';
+import { TagInputModule } from 'ngx-chips';
 
 import {
   CoreEnumService,
@@ -38,7 +38,7 @@ import { NewsCommentListComponent } from './comment/list/list.component';
 import { NewsCommentDeleteComponent } from './comment/delete/delete.component';
 import { NewsCommentEditComponent } from './comment/edit/edit.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
-import {NewsContentSelectorComponent} from './content/selector/selector.component';
+import { NewsContentSelectorComponent } from './content/selector/selector.component';
 import { NewsContentDeleteComponent } from './content/delete/delete.component';
 
 @NgModule({
@@ -58,20 +58,20 @@ import { NewsContentDeleteComponent } from './content/delete/delete.component';
     NewsCommentEditComponent,
   ],
   imports: [
-    NewsRoutingModule,
-     CommonModule,
-     FormsModule,
-     ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
+    NewsRouting,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
     TreeviewModule.forRoot(),
     SharedModule.forRoot(),
-    AngularEditorModule ,
+    AngularEditorModule,
     TagInputModule,
-
     ProgressSpinnerModule,
     CmsFileManagerModule
   ],
   providers: [
-    // CategoryResolver,
+    CoreEnumService,
+    CoreModuleTagService,
     NewsCategoryService,
     NewsCommentService,
     NewsConfigurationService,
@@ -85,8 +85,7 @@ import { NewsContentDeleteComponent } from './content/delete/delete.component';
     NewsShareMainAdminSettingService,
     NewsShareReciverCategoryService,
     NewsShareServerCategoryService,
-    CoreEnumService,
-    CoreModuleTagService
+
   ]
 })
 export class NewsModule { }
