@@ -23,6 +23,11 @@ const routes: Routes = [
           import('../modules/news/news.module').then(m => m.NewsModule)
       },
       {
+        path: 'filemanager',
+        loadChildren: () =>
+          import('../modules/filemanager/filemanager.module').then(m => m.FileManagerModule)
+      },
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',

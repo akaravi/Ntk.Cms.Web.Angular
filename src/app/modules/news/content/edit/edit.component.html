@@ -281,10 +281,13 @@
         </mat-step>
         <mat-step label="مطالب مشابه" state="info">
           <p>مطالب مرتبط را مشخص کنید</p>
-          <app-news-content-selector (optionSelect)="onActionContentSimilarSelect($event)">
-            <mat-icon matSuffix *ngIf="contentSimilarSelected && contentSimilarSelected.Id" matSuffix mat-button
-              mat-icon-button (click)="onActionContentSimilarAddToLIst()"
-              matTooltip='Add "{{contentSimilarSelected.Title}}"'>add</mat-icon>
+          <app-news-content-selector (optionSelect)="onActionContentSimilarSelect($event)" [optionPlaceholder]="'محتوای مشابه'" >
+
+
+            <button *ngIf="contentSimilarSelected && contentSimilarSelected.Id" (click)="onActionContentSimilarAddToLIst()" type="button" mat-button
+            class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
+            اضافه به لیست ...
+          </button>
           </app-news-content-selector>
 
 

@@ -1,0 +1,10 @@
+<mat-form-field class="example-full-width">
+    <input type="text" placeholder="{{optionPlaceholder}}" aria-label="Assignee" matInput [formControl]="formControl" [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="onActionSelect($event.option.value)">
+        <mat-option *ngFor="let state of filteredOptions | async" [value]="state">
+            <span>{{ state.Title }}</span> |
+            <small>ID: {{state.Id}}</small>
+        </mat-option>
+    </mat-autocomplete>
+    <ng-content></ng-content>
+</mat-form-field>
