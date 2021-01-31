@@ -1,3 +1,104 @@
-<p>
-  list works!
-</p>
+<div class="row">
+  <div *ngIf="requestApplicationId===0" class="col-xl-3">
+    <app-application-app-tree (optionSelect)="onActionCategorySelect($event)"></app-application-app-tree>
+  </div>
+  <div [ngClass]="(requestApplicationId===0)?'col-xl-9':'col-xl-12'">
+    <div class="button-row">
+      <button *ngIf="dataModelResult.Access.AccessAddRow " (click)="onActionbuttonNewRow()" type="button"
+        class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">اضافه</button>
+      <button *ngIf="dataModelResult.Access.AccessEditRow && tableRowSelected.Id>0" (click)="onActionbuttonEditRow()"
+        type="button" class="btn btn-warning ml-2" data-toggle="modal" data-target="#categoryModal">ویرایش</button>
+      <button *ngIf="dataModelResult.Access.AccessDeleteRow && tableRowSelected.Id>0"
+        (click)="onActionbuttonDeleteRow()" type="button" class="btn btn-danger  ml-2">حذف</button>
+
+      <a class="btn btn-secondary btn-sm BTN">
+        <mat-slide-toggle [(ngModel)]="optionsSearch.data.show">پرس و جو ساز</mat-slide-toggle>
+      </a>
+
+      <a class="btn btn-success btn-sm BTN">
+        <mat-slide-toggle [(ngModel)]="optionsStatist.data.show" (click)="onActionbuttonStatist()">آمار
+        </mat-slide-toggle>
+      </a>
+      <button (click)="onActionbuttonExport()" type="button" class="btn btn-bg-info BTN">خروجی فایل</button>
+      <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">برسی مجدد</button>
+      <button (click)="onActionBackToParent()" *ngIf="requestApplicationId>0" type="button"
+        class="btn btn-warning BTN">بازگشت</button>
+      <app-cms-search-list [(options)]="optionsSearch"></app-cms-search-list>
+      <app-cms-export-list [(options)]="optionsExport"></app-cms-export-list>
+      <app-cms-statist-list [(options)]="optionsStatist"></app-cms-statist-list>
+
+    </div>
+
+    <app-progress-spinner [options]="loading">
+    </app-progress-spinner>
+
+    <div class="example-container mat-elevation-z8">
+      <mat-table [dataSource]="tableSource" matSort #tableSort="matSort" (matSortChange)="onTableSortData(tableSort)">
+        <!-- ID Column -->
+        <ng-container matColumnDef="Id">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> شناسه </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.Id}} </mat-cell>
+        </ng-container>
+        <!-- LinkSiteId Column -->
+        <ng-container matColumnDef="LinkSiteId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> شناسه سایت </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.LinkSiteId}} </mat-cell>
+        </ng-container>
+        <!-- LinkApplicationId Column -->
+        <ng-container matColumnDef="LinkApplicationId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> شناسه اپ </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.LinkApplicationId}} </mat-cell>
+        </ng-container>
+        <!-- LinkApplicationMemberId Column -->
+        <ng-container matColumnDef="LinkApplicationMemberId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> شناسه کاربر </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.LinkApplicationMemberId}} </mat-cell>
+        </ng-container>
+
+        <!-- RecordStatus Column -->
+        <ng-container matColumnDef="RecordStatus">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> وضعیت </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.RecordStatus}} </mat-cell>
+        </ng-container>
+        <!-- Title Column -->
+        <ng-container matColumnDef="Title">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> عنوان </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.Title}} </mat-cell>
+        </ng-container>
+        <!-- ContentType Column -->
+        <ng-container matColumnDef="ContentType">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> نوع </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.ContentType}} </mat-cell>
+        </ng-container>
+        <!-- CreatedDate Column -->
+        <ng-container matColumnDef="CreatedDate">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> ناریخ ایجاد </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.CreatedDate) }} </mat-cell>
+        </ng-container>
+        <!-- UpdatedDate Column -->
+        <ng-container matColumnDef="UpdatedDate">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> تاریخ ویرابش </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.UpdatedDate) }} </mat-cell>
+        </ng-container>
+        <!-- Action Column -->
+        <ng-container matColumnDef="Action">
+          <mat-header-cell *matHeaderCellDef> ... </mat-header-cell>
+          <mat-cell *matCellDef="let row" class='Action'>
+            <small (click)="onActionbuttonEditRow()">ویرایش</small>|
+            <small (click)="onActionbuttonDeleteRow()">حذف</small>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="tabledisplayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: tabledisplayedColumns;" (click)="onActionTableRowSelect(row)"
+          [ngStyle]="{'background': row.Id === tableRowSelected.Id ? '#d3d3da' : '' }">
+        </mat-row>
+      </mat-table>
+
+      <mat-paginator #paginator [length]="(dataModelResult.TotalRowCount)"
+        [pageIndex]="(dataModelResult.CurrentPageNumber-1)" [pageSize]="dataModelResult.RowPerPage"
+        [pageSizeOptions]="[5, 10, 20, 100]" (page)="onTablePageingData($event)"></mat-paginator>
+
+    </div>
+
+  </div>
+</div>

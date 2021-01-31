@@ -15,7 +15,9 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { TagInputModule } from 'ngx-chips';
 import { ProgressSpinnerModule } from 'src/app/shared/progress-spinner/progress-spinner.module';
 import { CmsFileManagerModule } from 'ntk-cms-filemanager';
-import { ApplicationAppService, ApplicationIntroService, CoreAuthService, CoreEnumService, CoreModuleTagService } from 'ntk-cms-api';
+import { ApplicationAppService, ApplicationIntroService, ApplicationLogNotificationService, ApplicationMemberInfoService, ApplicationSourceService, ApplicationThemeConfigService, CoreAuthService, CoreEnumService, CoreModuleTagService } from 'ntk-cms-api';
+import { ApplicationSourceTreeComponent } from './source/tree/tree.component';
+import { ApplicationAppTreeComponent } from './content/tree/tree.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,10 @@ import { ApplicationAppService, ApplicationIntroService, CoreAuthService, CoreEn
     ApplicationIntroListComponent,
     ApplicationNotificationListComponent,
     ApplicationSourceListComponent,
-    ApplicationThemeConfigListComponent
+    ApplicationThemeConfigListComponent,
+    ApplicationSourceTreeComponent,
+    ApplicationAppTreeComponent,
+
   ],
   imports: [
     CommonModule,
@@ -41,10 +46,15 @@ import { ApplicationAppService, ApplicationIntroService, CoreAuthService, CoreEn
   ],
   providers: [
     CoreEnumService,
+    CoreAuthService,
     CoreModuleTagService,
     ApplicationAppService,
     ApplicationIntroService,
-    CoreAuthService,
+    ApplicationSourceService,
+    ApplicationMemberInfoService,
+    ApplicationLogNotificationService,
+    ApplicationThemeConfigService
+
 
   ]
 })

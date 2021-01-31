@@ -1,7 +1,7 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { ApplicationIntroModel, ApplicationIntroService, CoreAuthService, EnumSortType, ErrorExceptionResult, FilterDataModel, FilterModel, TokenInfoModel } from 'ntk-cms-api';
+import { ApplicationAppModel, ApplicationAppService, ApplicationSourceModel, CoreAuthService, EnumSortType, ErrorExceptionResult, FilterDataModel, FilterModel, TokenInfoModel } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
@@ -18,12 +18,8 @@ import { PageEvent } from '@angular/material/paginator';
   styleUrls: ['./list.component.scss']
 })
 export class ApplicationAppListComponent implements OnInit {
-  comment: string;
-  author: string;
-  dataSource: any;
-  flag = false;
-  tableContentSelected = [];
-  constructor(private applicationIntroService: ApplicationIntroService,
+  requestSourceId = 0;
+  constructor(private applicationAppService: ApplicationAppService,
               private activatedRoute: ActivatedRoute,
               private coreAuthService: CoreAuthService,
               public publicHelper: PublicHelper,
@@ -34,22 +30,29 @@ export class ApplicationAppListComponent implements OnInit {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
   }
-  requestSourceId = 0;
+  comment: string;
+  author: string;
+  dataSource: any;
+  flag = false;
+  tableContentSelected = [];
+
   filteModelContent = new FilterModel();
-  dataModelResult: ErrorExceptionResult<ApplicationIntroModel> = new ErrorExceptionResult<ApplicationIntroModel>();
+  dataModelResult: ErrorExceptionResult<ApplicationAppModel> = new ErrorExceptionResult<ApplicationAppModel>();
   optionsSearch: ComponentOptionSearchModel = new ComponentOptionSearchModel();
   optionsStatist: ComponentOptionStatistModel = new ComponentOptionStatistModel();
   optionsExport: ComponentOptionExportModel = new ComponentOptionExportModel();
   tokenInfo = new TokenInfoModel();
   loading = new ProgressSpinnerModel();
-  tableRowsSelected: Array<ApplicationIntroModel> = [];
-  tableRowSelected: ApplicationIntroModel = new ApplicationIntroModel();
-  tableSource: MatTableDataSource<ApplicationIntroModel> = new MatTableDataSource<ApplicationIntroModel>();
+  tableRowsSelected: Array<ApplicationAppModel> = [];
+  tableRowSelected: ApplicationAppModel = new ApplicationAppModel();
+  tableSource: MatTableDataSource<ApplicationAppModel> = new MatTableDataSource<ApplicationAppModel>();
+  categoryModelSelected: ApplicationSourceModel;
+
   tabledisplayedColumns: string[] = [
     'Id',
     'RecordStatus',
     'Title',
-    'LinkApplicationId',
+    'LinkSourceId',
     'CreatedDate',
     'UpdatedDate',
     'Action'
@@ -57,7 +60,7 @@ export class ApplicationAppListComponent implements OnInit {
 
 
   columnsToDisplay: string[] = ['Id', 'Writer'];
-  expandedElement: ApplicationIntroModel | null;
+  expandedElement: ApplicationAppModel | null;
 
   ngOnInit(): void {
     this.requestSourceId = Number(this.activatedRoute.snapshot.paramMap.get('SourceId'));
@@ -69,7 +72,7 @@ export class ApplicationAppListComponent implements OnInit {
 
   DataGetAll(): void {
     this.tableRowsSelected = [];
-    this.tableRowSelected = new ApplicationIntroModel();
+    this.tableRowSelected = new ApplicationAppModel();
 
     this.loading.display = true;
     this.loading.Globally = false;
@@ -80,7 +83,7 @@ export class ApplicationAppListComponent implements OnInit {
       filter.Value = this.requestSourceId;
       this.filteModelContent.Filters.push(filter);
     }
-    this.applicationIntroService.ServiceGetAll(this.filteModelContent).subscribe(
+    this.applicationAppService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
           this.dataModelResult = next;
@@ -176,7 +179,20 @@ export class ApplicationAppListComponent implements OnInit {
     // });
   }
 
-
+  onActionCategorySelect(model: ApplicationSourceModel | null): void {
+    this.filteModelContent = new FilterModel();
+    this.categoryModelSelected = model;
+    if (model && model.Id > 0) {
+      const aaa = {
+        PropertyName: 'LinkSourceId',
+        IntValue1: model.Id,
+      };
+      this.filteModelContent.Filters.push(aaa as FilterDataModel);
+    } else {
+      // this.optionsCategoryTree.childMethods.ActionSelectForce(0);
+    }
+    this.DataGetAll();
+  }
   onActionbuttonEditRow(): void {
     if (this.tableRowSelected === null || this.tableRowSelected.Id === 0) {
       const title = 'برروز خطا ';
@@ -247,7 +263,7 @@ export class ApplicationAppListComponent implements OnInit {
     this.filteModelContent.Filters = model;
     this.DataGetAll();
   }
-  onActionTableRowSelect(row: ApplicationIntroModel): void {
+  onActionTableRowSelect(row: ApplicationAppModel): void {
     this.tableRowSelected = row;
   }
   onActionBackToParent(): void {

@@ -1,7 +1,7 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { ApplicationIntroModel, ApplicationIntroService, CoreAuthService, EnumSortType, ErrorExceptionResult, FilterDataModel, FilterModel, TokenInfoModel } from 'ntk-cms-api';
+import { ApplicationAppModel, ApplicationIntroModel, ApplicationIntroService, CoreAuthService, EnumSortType, ErrorExceptionResult, FilterDataModel, FilterModel, TokenInfoModel } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
@@ -18,11 +18,8 @@ import { PageEvent } from '@angular/material/paginator';
   styleUrls: ['./list.component.scss']
 })
 export class ApplicationIntroListComponent implements OnInit {
-  comment: string;
-  author: string;
-  dataSource: any;
-  flag = false;
-  tableContentSelected = [];
+  requestApplicationId = 0;
+
   constructor(private applicationIntroService: ApplicationIntroService,
               private activatedRoute: ActivatedRoute,
               private coreAuthService: CoreAuthService,
@@ -34,7 +31,11 @@ export class ApplicationIntroListComponent implements OnInit {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
   }
-  requestSourceId = 0;
+  comment: string;
+  author: string;
+  dataSource: any;
+  flag = false;
+  tableContentSelected = [];
   filteModelContent = new FilterModel();
   dataModelResult: ErrorExceptionResult<ApplicationIntroModel> = new ErrorExceptionResult<ApplicationIntroModel>();
   optionsSearch: ComponentOptionSearchModel = new ComponentOptionSearchModel();
@@ -42,6 +43,7 @@ export class ApplicationIntroListComponent implements OnInit {
   optionsExport: ComponentOptionExportModel = new ComponentOptionExportModel();
   tokenInfo = new TokenInfoModel();
   loading = new ProgressSpinnerModel();
+  categoryModelSelected: ApplicationAppModel;
   tableRowsSelected: Array<ApplicationIntroModel> = [];
   tableRowSelected: ApplicationIntroModel = new ApplicationIntroModel();
   tableSource: MatTableDataSource<ApplicationIntroModel> = new MatTableDataSource<ApplicationIntroModel>();
@@ -60,7 +62,7 @@ export class ApplicationIntroListComponent implements OnInit {
   expandedElement: ApplicationIntroModel | null;
 
   ngOnInit(): void {
-    this.requestSourceId = Number(this.activatedRoute.snapshot.paramMap.get('SourceId'));
+    this.requestApplicationId = Number(this.activatedRoute.snapshot.paramMap.get('ApplicationId'));
     this.coreAuthService.CurrentTokenInfoBSObs.subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
@@ -74,10 +76,10 @@ export class ApplicationIntroListComponent implements OnInit {
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
-    if (this.requestSourceId > 0) {
+    if (this.requestApplicationId > 0) {
       const filter = new FilterDataModel();
       filter.PropertyName = 'LinkSourceId';
-      filter.Value = this.requestSourceId;
+      filter.Value = this.requestApplicationId;
       this.filteModelContent.Filters.push(filter);
     }
     this.applicationIntroService.ServiceGetAll(this.filteModelContent).subscribe(
@@ -97,10 +99,10 @@ export class ApplicationIntroListComponent implements OnInit {
               'LinkSiteId'
             );
           }
-          if (this.requestSourceId === 0) {
+          if (this.requestApplicationId === 0) {
             this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
               this.tabledisplayedColumns,
-              'LinkSourceId'
+              'LinkApplicationId'
             );
           }
           if (this.optionsSearch.childMethods) {
@@ -147,8 +149,8 @@ export class ApplicationIntroListComponent implements OnInit {
 
   onActionbuttonNewRow(): void {
     if (
-      this.requestSourceId == null ||
-      this.requestSourceId === 0
+      this.requestApplicationId== null ||
+      this.requestApplicationId === 0
     ) {
       const title = 'برروز خطا ';
       const message = 'محتوا انتخاب نشده است';
@@ -231,6 +233,20 @@ export class ApplicationIntroListComponent implements OnInit {
     //     this.DataGetAll();
     //   }
     // });
+  }
+  onActionCategorySelect(model: ApplicationAppModel | null): void {
+    this.filteModelContent = new FilterModel();
+    this.categoryModelSelected = model;
+    if (model && model.Id > 0) {
+      const aaa = {
+        PropertyName: 'LinkApplicationId',
+        IntValue1: model.Id,
+      };
+      this.filteModelContent.Filters.push(aaa as FilterDataModel);
+    } else {
+      // this.optionsCategoryTree.childMethods.ActionSelectForce(0);
+    }
+    this.DataGetAll();
   }
   onActionbuttonStatist(): void {
     this.optionsStatist.childMethods.runStatist(this.filteModelContent.Filters);
