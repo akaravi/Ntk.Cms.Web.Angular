@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApplicationComponent } from './application.component';
 import { ApplicationRoutes } from './application.routing';
-import { ApplicationAppListComponent } from './app/list/list.component';
+import { ApplicationAppListComponent } from './content/list/list.component';
 import { ApplicationMemberInfoListComponent } from './memberInfo/list/list.component';
 import { ApplicationIntroListComponent } from './intro/list/list.component';
 import { ApplicationNotificationListComponent } from './notification/list/list.component';
@@ -15,7 +15,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { TagInputModule } from 'ngx-chips';
 import { ProgressSpinnerModule } from 'src/app/shared/progress-spinner/progress-spinner.module';
 import { CmsFileManagerModule } from 'ntk-cms-filemanager';
-import { ApplicationAppService, CoreAuthService, CoreEnumService, CoreModuleTagService } from 'ntk-cms-api';
+import { ApplicationAppService, ApplicationIntroService, CoreAuthService, CoreEnumService, CoreModuleTagService } from 'ntk-cms-api';
 
 @NgModule({
   declarations: [
@@ -43,6 +43,7 @@ import { ApplicationAppService, CoreAuthService, CoreEnumService, CoreModuleTagS
     CoreEnumService,
     CoreModuleTagService,
     ApplicationAppService,
+    ApplicationIntroService,
     CoreAuthService,
 
   ]

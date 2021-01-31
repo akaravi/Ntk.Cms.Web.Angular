@@ -1,9 +1,8 @@
 <div class="row">
   <div class="col-xl-12">
     <div class="button-row">
-      <button *ngIf="dataModelResult.Access.AccessAddRow " (click)="onActionbuttonNewRow()"
-        type="button" class="btn btn-primary" id="openModalButton" data-toggle="modal"
-        data-target="#categoryModal">اضافه</button>
+      <button *ngIf="dataModelResult.Access.AccessAddRow " (click)="onActionbuttonNewRow()" type="button"
+        class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">اضافه</button>
       <button *ngIf="dataModelResult.Access.AccessEditRow && tableRowSelected.Id>0" (click)="onActionbuttonEditRow()"
         type="button" class="btn btn-warning ml-2" data-toggle="modal" data-target="#categoryModal">ویرایش</button>
       <button *ngIf="dataModelResult.Access.AccessDeleteRow && tableRowSelected.Id>0"
@@ -19,12 +18,11 @@
       </a>
       <button (click)="onActionbuttonExport()" type="button" class="btn btn-bg-info BTN">خروجی فایل</button>
       <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">برسی مجدد</button>
+      <button (click)="onActionBackToParent()" type="button" class="btn btn-warning BTN">بازگشت</button>
       <app-cms-search-list [(options)]="optionsSearch"></app-cms-search-list>
       <app-cms-export-list [(options)]="optionsExport"></app-cms-export-list>
       <app-cms-statist-list [(options)]="optionsStatist"></app-cms-statist-list>
-      <a class="btn btn-secondary btn-sm BTN">
-        <button (click)="onActionBackToParent()" type="button" class="btn btn-warning BTN">بازگشت</button>
-      </a>
+
     </div>
 
     <app-progress-spinner [options]="loading">
@@ -42,10 +40,10 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header> شناسه سایت </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.LinkSiteId}} </mat-cell>
         </ng-container>
-        <!-- LinkSourceId Column -->
-        <ng-container matColumnDef="LinkSourceId">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> شناسه سورس </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.LinkSourceId}} </mat-cell>
+        <!-- LinkApplicationId Column -->
+        <ng-container matColumnDef="LinkApplicationId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> شناسه اپ </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.LinkApplicationId}} </mat-cell>
         </ng-container>
         <!-- LinkContentId Column -->
         <ng-container matColumnDef="LinkContentId">

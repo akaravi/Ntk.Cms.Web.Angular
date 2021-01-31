@@ -1,34 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { ApplicationAppModel, ApplicationAppService, CoreAuthService, EnumSortType, ErrorExceptionResult, TokenInfoModel } from 'ntk-cms-api';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FilterModel, FilterDataModel } from 'ntk-cms-api';
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
+import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { ApplicationIntroModel, ApplicationIntroService, CoreAuthService, EnumSortType, ErrorExceptionResult, FilterDataModel, FilterModel, TokenInfoModel } from 'ntk-cms-api';
+import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
+import { PublicHelper } from 'src/app/core/helpers/publicHelper';
+import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
+import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
+import { MatDialog } from '@angular/material/dialog';
 import { ComponentOptionExportModel } from 'src/app/core/cmsComponentModels/base/componentOptionExportModel';
 import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/base/componentOptionStatistModel';
-import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
-import { PublicHelper } from 'src/app/core/helpers/publicHelper';
-import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { MatSort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
-import { MatDialog } from '@angular/material/dialog';
-
 
 @Component({
   selector: 'app-application-app-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({ height: '0px', minHeight: '0' })),
-      state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ],
-})
-@Component({
-  selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
@@ -38,7 +23,7 @@ export class ApplicationAppListComponent implements OnInit {
   dataSource: any;
   flag = false;
   tableContentSelected = [];
-  constructor(private applicationAppService: ApplicationAppService,
+  constructor(private applicationIntroService: ApplicationIntroService,
               private activatedRoute: ActivatedRoute,
               private coreAuthService: CoreAuthService,
               public publicHelper: PublicHelper,
@@ -51,19 +36,20 @@ export class ApplicationAppListComponent implements OnInit {
   }
   requestSourceId = 0;
   filteModelContent = new FilterModel();
-  dataModelResult: ErrorExceptionResult<ApplicationAppModel> = new ErrorExceptionResult<ApplicationAppModel>();
+  dataModelResult: ErrorExceptionResult<ApplicationIntroModel> = new ErrorExceptionResult<ApplicationIntroModel>();
   optionsSearch: ComponentOptionSearchModel = new ComponentOptionSearchModel();
   optionsStatist: ComponentOptionStatistModel = new ComponentOptionStatistModel();
   optionsExport: ComponentOptionExportModel = new ComponentOptionExportModel();
   tokenInfo = new TokenInfoModel();
   loading = new ProgressSpinnerModel();
-  tableRowsSelected: Array<ApplicationAppModel> = [];
-  tableRowSelected: ApplicationAppModel = new ApplicationAppModel();
-  tableSource: MatTableDataSource<ApplicationAppModel> = new MatTableDataSource<ApplicationAppModel>();
+  tableRowsSelected: Array<ApplicationIntroModel> = [];
+  tableRowSelected: ApplicationIntroModel = new ApplicationIntroModel();
+  tableSource: MatTableDataSource<ApplicationIntroModel> = new MatTableDataSource<ApplicationIntroModel>();
   tabledisplayedColumns: string[] = [
     'Id',
     'RecordStatus',
     'Title',
+    'LinkApplicationId',
     'CreatedDate',
     'UpdatedDate',
     'Action'
@@ -71,7 +57,7 @@ export class ApplicationAppListComponent implements OnInit {
 
 
   columnsToDisplay: string[] = ['Id', 'Writer'];
-  expandedElement: ApplicationAppModel | null;
+  expandedElement: ApplicationIntroModel | null;
 
   ngOnInit(): void {
     this.requestSourceId = Number(this.activatedRoute.snapshot.paramMap.get('SourceId'));
@@ -83,7 +69,7 @@ export class ApplicationAppListComponent implements OnInit {
 
   DataGetAll(): void {
     this.tableRowsSelected = [];
-    this.tableRowSelected = new ApplicationAppModel();
+    this.tableRowSelected = new ApplicationIntroModel();
 
     this.loading.display = true;
     this.loading.Globally = false;
@@ -94,7 +80,7 @@ export class ApplicationAppListComponent implements OnInit {
       filter.Value = this.requestSourceId;
       this.filteModelContent.Filters.push(filter);
     }
-    this.applicationAppService.ServiceGetAll(this.filteModelContent).subscribe(
+    this.applicationIntroService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
           this.dataModelResult = next;
@@ -158,29 +144,6 @@ export class ApplicationAppListComponent implements OnInit {
     this.DataGetAll();
   }
 
-  // onClickAddComment(): void {
-  //   const model = {
-  //     id: +this.activatedRoute.snapshot.params.id,
-  //     comment: this.comment,
-  //     author: this.author
-  //   };
-  //   this.newsCommentService.ServiceAdd(model).subscribe((res) => {
-
-  //   });
-  // }
-
-  // onActionTableSelect(row: any): void {
-  //   this.tableContentSelected = [row];
-  // }
-
-  // onClickEditComment(element): void {
-  //   const model = {
-  //     id: element.Id,
-  //     comment: element.Comment,
-  //     author: element.Writer
-  //   };
-  //   this.newsCommentService.ServiceEdit(model).subscribe();
-  // }
 
   onActionbuttonNewRow(): void {
     if (
@@ -284,7 +247,7 @@ export class ApplicationAppListComponent implements OnInit {
     this.filteModelContent.Filters = model;
     this.DataGetAll();
   }
-  onActionTableRowSelect(row: ApplicationAppModel): void {
+  onActionTableRowSelect(row: ApplicationIntroModel): void {
     this.tableRowSelected = row;
   }
   onActionBackToParent(): void {
