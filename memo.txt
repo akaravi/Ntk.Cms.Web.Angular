@@ -10,8 +10,7 @@ git push -u origin main
 
 ===================RTL
 npm run rtl
-=========================================
-ng build  --prod
+
 
 =========================================
 
@@ -35,3 +34,5 @@ git config --global core.ignorecase false
 =============================
 ng update --next @angular/cli --force
 npm install typescript@latest
+=========================================
+ng build  --prod
