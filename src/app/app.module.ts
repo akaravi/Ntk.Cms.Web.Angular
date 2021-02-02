@@ -19,7 +19,7 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { TestModule } from './modules/test/test.module';
 import { NtkSmartModalModule } from 'ngx-ntk-smart-module';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
-import { AuthInterceptor } from './core/interceptor/auth-interceptor.service';
+import { HttpConfigInterceptor } from './core/interceptor/httpConfigInterceptor';
 
 export function getHighlightLanguages(): any {
   return [
@@ -66,7 +66,7 @@ export function getHighlightLanguages(): any {
     },
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     {
-      provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
+      provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true
     },
   ],
   bootstrap: [AppComponent]

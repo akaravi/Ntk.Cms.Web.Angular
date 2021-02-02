@@ -16,6 +16,7 @@ import { CmsMapComponent } from './cmsMap/cmsMap.Component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { TagAutocompleteComponent } from '../modules/coreModule/tag/autocomplete/autocomplete.component';
 import { TagInputModule } from 'ngx-chips';
+import { RecordStatusClassPipe } from '../core/pipe/recordStatusClass.pipe';
 
 
 
@@ -37,6 +38,7 @@ import { TagInputModule } from 'ngx-chips';
   declarations: [
     // common and shared components/directives/pipes between more than one module and components will be listed here.
     TruncatePipe,
+    RecordStatusClassPipe,
     CmsSearchListComponent,
     CmsStatistListComponent,
     CmsExportListComponent,
@@ -52,6 +54,7 @@ import { TagInputModule } from 'ngx-chips';
     MaterialModule,
     TreeModule,
     TruncatePipe,
+    RecordStatusClassPipe,
     PersianDate,
     CmsSearchListComponent,
     CmsStatistListComponent,

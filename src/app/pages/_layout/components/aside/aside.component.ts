@@ -72,7 +72,7 @@ export class AsideComponent implements OnInit {
     this.coreCpMainMenuService.ServiceGetAllMenu(null).subscribe(
       (next) => {
         this.resultCoreCpMainMenu = next;
-        this.resultCoreCpMainMenu.ListItems[0].LinkParentId
+        // this.resultCoreCpMainMenu.ListItems[0].LinkParentId
       }
     );
 
