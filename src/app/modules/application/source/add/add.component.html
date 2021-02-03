@@ -1,3 +1,272 @@
-<p>
-  add works!
-</p>
+<div class="d-flex flex-column-fluid">
+  <!--begin::Container-->
+  <div class="container">
+    <form (ngSubmit)="onFormSubmit()" #vform="ngForm"
+      class="form mt-0 mt-lg-10 fv-plugins-bootstrap fv-plugins-framework">
+      <app-progress-spinner [options]="loading">
+      </app-progress-spinner>
+      <mat-horizontal-stepper *ngIf="!loading.display" (selectionChange)="onStepClick($event,stepper)" #stepper>
+
+        <mat-step label="اطلاعات الزامی" state="main">
+
+          <mat-form-field class="example-full-width">
+            <mat-select placeholder="وضعیت" [(ngModel)]="dataModel.RecordStatus" name="dataModel.RecordStatus"
+              #RecordStatus="ngModel" panelClass="recordStatus-{{ dataModel.RecordStatus }}" required>
+              <mat-option *ngFor="
+                let item of dataModelEnumRecordStatusResult.ListItems;
+                index as i
+              " [value]="item.Value">{{ item.Description }}</mat-option>
+            </mat-select>
+            <mat-hint align="end">انتخاب وضیعت این محتوا</mat-hint>
+            <mat-error *ngIf="RecordStatus.errors?.required">
+              RecordStatus is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <mat-select placeholder="Os Type" [(ngModel)]="dataModel.OsType" name="dataModel.OsType"
+              #OsType="ngModel" required>
+              <mat-option *ngFor="
+                let item of dataModelEnumOsTypeResult.ListItems;
+                index as i
+              " [value]="item.Value">{{ item.Description }}</mat-option>
+            </mat-select>
+            <mat-hint align="end">انتخاب نوع سیستم عامل اپلیکیشن</mat-hint>
+            <mat-error *ngIf="OsType.errors?.required">
+              OsType is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+
+          
+
+
+          <mat-form-field class="example-full-width">
+            <mat-label>عنوان</mat-label>
+            <input matInput [(ngModel)]="dataModel.Title" name="dataModel.Title" #Title type="text" placeholder="عنوان"
+              minlength="3" maxlength="100" required />
+            <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
+              (click)="dataModel.Title = ''">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
+            <mat-hint align="end">{{ Title.value.length }} / 100</mat-hint>
+            <mat-error *ngIf="Title.errors?.required">
+              Title is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <mat-label>ClassName</mat-label>
+            <input matInput [(ngModel)]="dataModel.ClassName" name="dataModel.ClassName" #ClassName type="text" placeholder="عنوان"
+              minlength="3" maxlength="100" required />
+            <mat-icon matSuffix *ngIf="dataModel.ClassName" matSuffix mat-icon-button aria-label="Clear"
+              (click)="dataModel.ClassName = ''">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
+            <mat-hint align="end">{{ ClassName.value.length }} / 100</mat-hint>
+            <mat-error *ngIf="ClassName.errors?.required">
+              ClassName is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <mat-label>PackageName</mat-label>
+            <input matInput [(ngModel)]="dataModel.PackageName" name="dataModel.PackageName" #PackageName type="text" placeholder="عنوان"
+              minlength="3" maxlength="100" required />
+            <mat-icon matSuffix *ngIf="dataModel.PackageName" matSuffix mat-icon-button aria-label="Clear"
+              (click)="dataModel.PackageName = ''">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
+            <mat-hint align="end">{{ PackageName.value.length }} / 100</mat-hint>
+            <mat-error *ngIf="PackageName.errors?.required">
+              PackageName is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          
+
+
+
+          <mat-form-field class="example-full-width">
+            <mat-label>SourceNameGit</mat-label>
+            <input matInput [(ngModel)]="dataModel.SourceNameGit" name="dataModel.SourceNameGit" #SourceNameGit type="text" placeholder="عنوان"
+              minlength="3" maxlength="100" required />
+            <mat-icon matSuffix *ngIf="dataModel.SourceNameGit" matSuffix mat-icon-button aria-label="Clear"
+              (click)="dataModel.SourceNameGit = ''">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
+            <mat-hint align="end">{{ SourceNameGit.value.length }} / 100</mat-hint>
+            <mat-error *ngIf="SourceNameGit.errors?.required">
+              SourceNameGit is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+
+
+
+
+          <mat-form-field class="example-full-width">
+            <mat-label>FilePathOnServer</mat-label>
+            <input matInput [(ngModel)]="dataModel.FilePathOnServer" name="dataModel.FilePathOnServer" #FilePathOnServer type="text" placeholder="عنوان"
+              minlength="3" maxlength="100" required />
+            <mat-icon matSuffix *ngIf="dataModel.FilePathOnServer" matSuffix mat-icon-button aria-label="Clear"
+              (click)="dataModel.FilePathOnServer = ''">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
+            <mat-hint align="end">{{ FilePathOnServer.value.length }} / 100</mat-hint>
+            <mat-error *ngIf="FilePathOnServer.errors?.required">
+              FilePathOnServer is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+
+
+
+          <mat-form-field class="example-full-width">
+            <mat-label>Extension</mat-label>
+            <input matInput [(ngModel)]="dataModel.Extension" name="dataModel.Extension" #Extension type="text" placeholder="عنوان"
+              minlength="1" maxlength="10" required />
+            <mat-icon matSuffix *ngIf="dataModel.Extension" matSuffix mat-icon-button aria-label="Clear"
+              (click)="dataModel.Extension = ''">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
+            <mat-hint align="end">{{ Extension.value.length }} / 10</mat-hint>
+            <mat-error *ngIf="Extension.errors?.required">
+              Extension is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+
+
+          <mat-form-field class="example-full-width">
+            <mat-label>ExtensionUpdateFile</mat-label>
+            <input matInput [(ngModel)]="dataModel.ExtensionUpdateFile" name="dataModel.ExtensionUpdateFile" #ExtensionUpdateFile type="text" placeholder="عنوان"
+              minlength="1" maxlength="10" required />
+            <mat-icon matSuffix *ngIf="dataModel.ExtensionUpdateFile" matSuffix mat-icon-button aria-label="Clear"
+              (click)="dataModel.ExtensionUpdateFile = ''">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
+            <mat-hint align="end">{{ ExtensionUpdateFile.value.length }} / 10</mat-hint>
+            <mat-error *ngIf="ExtensionUpdateFile.errors?.required">
+              Extension Update File is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+
+
+
+
+
+  
+
+          <div *ngIf="formInfo.FormAllowSubmit">
+            <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
+              class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
+              بعدی
+            </button>
+            <a class="btn btn-secondary btn-sm BTN">
+              <button (click)="onActionBackToParent()" type="button" class="btn btn-warning BTN">بازگشت</button>
+            </a>
+          </div>
+        </mat-step>
+
+        <mat-step label="تنطیمات ساخت" state="seo">
+          <p>این بخش کمک می کند موتورهای سرچ بهتر مطالب را ایندکس کنند</p>
+         
+
+          
+          <div *ngIf="formInfo.FormAllowSubmit">
+            <button type="button" mat-button matStepperPrevious
+              class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
+              قبلی
+            </button>
+            <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
+              class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
+              بعدی
+            </button>
+          </div>
+        </mat-step>
+        <mat-step label="فایل های پیوست" state="file">
+          <p>Socialize with each other.</p>
+          <div class="mb-3">
+            <img *ngIf="dataModel?.LinkMainImageIdSrc?.length>0" style="vertical-align:middle;" aria-hidden
+              src="{{dataModel.LinkMainImageIdSrc}}" height="50" width="50" />
+          </div>
+          <div class="mb-9">
+            <mat-form-field class="example-full-width">
+
+              <mat-label (click)="fileManagerOpenForm = true">عکس اصلی</mat-label>
+              <input matInput [(ngModel)]="dataModel.LinkMainImageId" name="dataModel.LinkMainImageId" #LinkMainImageId
+                type="text" placeholder="شناسه فایل اصلی" (click)="fileManagerOpenForm = true" />
+              <mat-icon matSuffix *ngIf="dataModel.LinkMainImageId" matSuffix mat-icon-button aria-label="Clear"
+                (click)="dataModel.LinkMainImageId = ''">close</mat-icon>
+              <mat-icon matSuffix (click)="fileManagerOpenForm = true">mode_edit</mat-icon>
+            </mat-form-field>
+
+            <cms-file-manager (itemSelected)="onActionFileSelectedLinkMainImageId($event)" [language]="appLanguage"
+              [isPopup]="true" [(openForm)]="fileManagerOpenForm" [tree]="fileManagerTree"
+              [openFilemanagerButtonLabelKey]="'select'" [selectFileType]="selectFileTypeMainImage"
+              [openFilemanagerButtonView]="false"></cms-file-manager>
+          </div>
+          
+          <div *ngIf="formInfo.FormAllowSubmit">
+            <button type="button" mat-button matStepperPrevious
+              class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
+              قبلی
+            </button>
+            <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
+              class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
+              بعدی
+            </button>
+          </div>
+        </mat-step>
+        <mat-step label="تنظیمات پیش فرض مدیریت کل در ساخت" state="otherinfo">
+          <p>سایر اطلاعات در رابطه با این محتوا در این قسمت اضافه کنید</p>
+
+
+
+
+
+          <div *ngIf="formInfo.FormAllowSubmit">
+            <button type="button" mat-button matStepperPrevious
+              class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
+              قبلی
+            </button>
+            <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
+              class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
+              بعدی
+            </button>
+          </div>
+        </mat-step>
+       
+        <mat-step label="موقعیت مکانی" state="loaction">
+          <p>روی نقشه کلیک کنید تا موقیت مکانی مشخس گردد</p>
+
+
+
+          <div *ngIf="formInfo.FormAllowSubmit">
+            <button type="button" mat-button matStepperPrevious
+              class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
+              قبلی
+            </button>
+            <button type="submit" mat-button [disabled]="!vform.form.valid"
+              class="btn btn-success font-weight-bold text-uppercase px-9 py-4">
+              ذخیره
+            </button>
+          </div>
+        </mat-step>
+
+        <!-- Icon overrides. -->
+        <ng-template matStepperIcon="main">
+          <mat-icon>call_end</mat-icon>
+        </ng-template>
+        <ng-template matStepperIcon="seo">
+          <mat-icon>call_end</mat-icon>
+        </ng-template>
+        <ng-template matStepperIcon="file">
+          <mat-icon>forum</mat-icon>
+        </ng-template>
+        <ng-template matStepperIcon="loaction">
+          <mat-icon>forum</mat-icon>
+        </ng-template>
+
+      </mat-horizontal-stepper>
+
+    </form>
+
+  </div>
+  <!--end::Container-->
+</div>

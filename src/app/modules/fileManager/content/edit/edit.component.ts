@@ -1,31 +1,25 @@
-import { AfterViewInit, Component, OnInit, ViewChild, Pipe, EventEmitter } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import * as Leaflet from 'leaflet';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import {
   CoreEnumService,
-  CoreModuleTagService,
   EnumModel,
   ErrorExceptionResult,
-  FilterModel,
   FormInfoModel,
   FileContentModel,
   FileContentService,
-  FilterDataModel,
-  CoreModuleTagModel,
   FileCategoryModel,
 } from 'ntk-cms-api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
-import { AngularEditorConfig } from '@kolkov/angular-editor';
-import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { ConfigInterface, DownloadModeEnum, NodeInterface, TreeModel } from 'ntk-cms-filemanager';
+import { NodeInterface, TreeModel } from 'ntk-cms-filemanager';
 import { Map } from 'leaflet';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { MatStepper } from '@angular/material/stepper';
 import { MatTableDataSource } from '@angular/material/table';
 import { PoinModel } from 'src/app/core/models/pointModel';
+import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 @Component({
   selector: 'app-file-content-edit',
@@ -38,8 +32,8 @@ export class FileContentEditComponent implements OnInit, AfterViewInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     public coreEnumService: CoreEnumService,
-    // public coreModuleTagService: CoreModuleTagService,
-    private fileContentService: FileContentService,
+    public publicHelper: PublicHelper,
+        private fileContentService: FileContentService,
     private toasterService: CmsToastrService,
     private router: Router,
 
@@ -64,50 +58,6 @@ export class FileContentEditComponent implements OnInit, AfterViewInit {
   fileManagerOpenForm = false;
   fileManagerOpenFormPodcast = false;
 
-  editorConfig: AngularEditorConfig = {
-    editable: true,
-    spellcheck: true,
-    height: 'auto',
-    minHeight: '30',
-    maxHeight: 'auto',
-    width: 'auto',
-    minWidth: '0',
-    translate: 'yes',
-    enableToolbar: true,
-    showToolbar: true,
-    placeholder: 'Enter text here...',
-    defaultParagraphSeparator: '',
-    defaultFontName: '',
-    defaultFontSize: '',
-    fonts: [
-      { class: 'arial', name: 'Arial' },
-      { class: 'times-new-roman', name: 'Times New Roman' },
-      { class: 'calibri', name: 'Calibri' },
-      { class: 'comic-sans-ms', name: 'Comic Sans MS' }
-    ],
-    customClasses: [
-      {
-        name: 'quote',
-        class: 'quote',
-      },
-      {
-        name: 'redText',
-        class: 'redText'
-      },
-      {
-        name: 'titleText',
-        class: 'titleText',
-        tag: 'h1',
-      },
-    ],
-    sanitize: false,
-    toolbarPosition: 'top',
-    toolbarHiddenButtons: [
-      ['bold', 'italic'],
-      ['fontSize']
-    ]
-  };
-
   fileManagerTree: TreeModel;
   keywordDataModel = [];
   tagIdsData: number[];
@@ -117,7 +67,6 @@ export class FileContentEditComponent implements OnInit, AfterViewInit {
 
   viewMap = false;
   private mapModel: Map;
-  private zoom: number;
   private mapMarkerPoints: Array<PoinModel> = [];
   mapOptonCenter = {};
   ngOnInit(): void {
@@ -198,7 +147,6 @@ export class FileContentEditComponent implements OnInit, AfterViewInit {
         (error) => {
           this.loading.display = false;
           this.formInfo.FormAllowSubmit = true;
-          const title = 'برروی خطا در دریافت اطلاعات';
           this.toasterService.typeErrorGetOne(error);
         }
       );
@@ -230,7 +178,6 @@ export class FileContentEditComponent implements OnInit, AfterViewInit {
         (error) => {
           this.loading.display = false;
           this.formInfo.FormAllowSubmit = true;
-          const title = 'برروی خطا در دریافت اطلاعات';
           this.toasterService.typeErrorAdd(error);
         }
       );
@@ -327,6 +274,5 @@ export class FileContentEditComponent implements OnInit, AfterViewInit {
   }
 
   receiveZoom(zoom: number): void {
-    this.zoom = zoom;
   }
 }
