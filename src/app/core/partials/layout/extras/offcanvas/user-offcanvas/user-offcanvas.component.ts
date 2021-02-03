@@ -5,6 +5,7 @@ import { CoreAuthService, TokenInfoModel } from 'ntk-cms-api';
 import { environment } from '../../../../../../../environments/environment';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { map } from 'rxjs/operators';
+import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 
 @Component({
   selector: 'app-user-offcanvas',
@@ -14,6 +15,7 @@ import { map } from 'rxjs/operators';
 export class UserOffcanvasComponent implements OnInit {
   extrasUserOffcanvasDirection = 'offcanvas-right';
   user$: Observable<TokenInfoModel>;
+  loading = new ProgressSpinnerModel();
 
   constructor(private layout: LayoutService, private auth: CoreAuthService,
     private toasterService: CmsToastrService,
@@ -30,7 +32,10 @@ export class UserOffcanvasComponent implements OnInit {
   }
 
   async logout(): Promise<void> {
+    this.loading.display = true;
+    this.toasterService.typeOrderActionLogout();
     const retOut = await this.auth.ServiceLogout().pipe(map(next => {
+      this.loading.display = false;
       if (next.IsSuccess) {
         this.toasterService.typeSuccessLogout();
       } else {

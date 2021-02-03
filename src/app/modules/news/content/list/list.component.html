@@ -76,9 +76,9 @@
         <ng-container matColumnDef="Action">
           <mat-header-cell *matHeaderCellDef> ... </mat-header-cell>
           <mat-cell *matCellDef="let row" class='Action'>
-            <small (click)="onActionbuttonEditRow()">ویرایش</small>|
-            <small (click)="onActionbuttonDeleteRow()">حذف</small>|
-            <small (click)="onClickComment(row.Id)">کامنت</small>
+            <small (click)="onActionbuttonEditRow(row)">ویرایش</small>|
+            <small (click)="onActionbuttonDeleteRow(row)">حذف</small>|
+            <small (click)="onClickComment(row)">کامنت</small>
           </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="tabledisplayedColumns"></mat-header-row>

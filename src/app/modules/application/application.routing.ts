@@ -7,6 +7,9 @@ import { ApplicationMemberInfoListComponent } from './memberInfo/list/list.compo
 import { ApplicationNotificationListComponent } from './notification/list/list.component';
 import { ApplicationSourceListComponent } from './source/list/list.component';
 import { ApplicationThemeConfigListComponent } from './themeConfig/list/list.component';
+import { ApplicationSourceAddComponent } from './source/add/add.component';
+import { ApplicationSourceEditComponent } from './source/edit/edit.component';
+import { ApplicationSourceDeleteComponent } from './source/delete/delete.component';
 
 const routes: Routes = [
   {
@@ -14,7 +17,27 @@ const routes: Routes = [
     component: ApplicationComponent,
     children: [
       {
+        path: 'source',
+        component: ApplicationSourceListComponent
+      },
+      {
+        path: 'source/add',
+        component: ApplicationSourceAddComponent
+      },
+      {
+        path: 'source/edit/:Id',
+        component: ApplicationSourceEditComponent
+      },
+      {
+        path: 'source/delete/:Id',
+        component: ApplicationSourceDeleteComponent
+      },
+      {
         path: 'app',
+        component: ApplicationAppListComponent
+      },
+      {
+        path: 'app/:SourceId',
         component: ApplicationAppListComponent
       },
       {
@@ -29,10 +52,7 @@ const routes: Routes = [
         path: 'notification',
         component: ApplicationNotificationListComponent
       },
-      {
-        path: 'source',
-        component: ApplicationSourceListComponent
-      },
+
       {
         path: 'themeconfig',
         component: ApplicationThemeConfigListComponent

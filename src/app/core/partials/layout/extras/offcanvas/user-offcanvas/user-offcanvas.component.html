@@ -52,8 +52,9 @@
               </span>
             </a>
 
-            <a class="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5 cursor-pointer" (click)="logout()">Sign
-              Out</a>
+            <button class="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5 cursor-pointer"
+              [disabled]="loading.display" (click)="logout()">Sign
+              Out</button>
           </div>
         </div>
       </div>
@@ -166,13 +167,13 @@
       <!--begin::Notifications-->
       <div *ngIf="developing">
         <!--begin:Heading-->
-        <h5 class="mb-5" >
+        <h5 class="mb-5">
           Recent Notifications
         </h5>
         <!--end:Heading-->
 
         <!--begin::Item-->
-        <div class="d-flex align-items-center bg-light-warning rounded p-5 gutter-b" >
+        <div class="d-flex align-items-center bg-light-warning rounded p-5 gutter-b">
           <span class="svg-icon svg-icon-warning mr-5">
             <span [inlineSVG]="'./assets/media/svg/icons/Home/Library.svg'" cacheSVG="true"
               class="svg-icon svg-icon-lg"></span>

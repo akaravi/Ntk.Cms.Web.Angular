@@ -1,7 +1,17 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { ApplicationAppModel, ApplicationAppService, ApplicationSourceModel, CoreAuthService, EnumSortType, ErrorExceptionResult, FilterDataModel, FilterModel, TokenInfoModel } from 'ntk-cms-api';
+import {
+  ApplicationAppModel,
+  ApplicationAppService,
+  ApplicationSourceModel,
+  CoreAuthService,
+  EnumSortType,
+  ErrorExceptionResult,
+  FilterDataModel,
+  FilterModel,
+  TokenInfoModel
+} from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
@@ -20,12 +30,12 @@ import { PageEvent } from '@angular/material/paginator';
 export class ApplicationAppListComponent implements OnInit {
   requestSourceId = 0;
   constructor(private applicationAppService: ApplicationAppService,
-              private activatedRoute: ActivatedRoute,
-              private coreAuthService: CoreAuthService,
-              public publicHelper: PublicHelper,
-              private toastrService: CmsToastrService,
-              private router: Router,
-              public dialog: MatDialog) {
+    private activatedRoute: ActivatedRoute,
+    private coreAuthService: CoreAuthService,
+    public publicHelper: PublicHelper,
+    private toastrService: CmsToastrService,
+    private router: Router,
+    public dialog: MatDialog) {
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
@@ -193,8 +203,8 @@ export class ApplicationAppListComponent implements OnInit {
     }
     this.DataGetAll();
   }
-  onActionbuttonEditRow(): void {
-    if (this.tableRowSelected === null || this.tableRowSelected.Id === 0) {
+  onActionbuttonEditRow(mode: ApplicationAppModel = this.tableRowSelected): void {
+    if (!mode || !mode.Id || mode.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای ویرایش انتخاب نشده است';
       this.toastrService.toastr.error(message, title);
@@ -221,8 +231,8 @@ export class ApplicationAppListComponent implements OnInit {
     //   }
     // });
   }
-  onActionbuttonDeleteRow(): void {
-    if (this.tableRowSelected == null || this.tableRowSelected.Id === 0) {
+  onActionbuttonDeleteRow(mode: ApplicationAppModel = this.tableRowSelected): void {
+    if (mode == null || !mode.Id || mode.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای ویرایش انتخاب نشده است';
       this.toastrService.toastr.error(message, title);
@@ -267,6 +277,6 @@ export class ApplicationAppListComponent implements OnInit {
     this.tableRowSelected = row;
   }
   onActionBackToParent(): void {
-    this.router.navigate(['/news/content/']);
+    this.router.navigate(['/application/source/']);
   }
 }

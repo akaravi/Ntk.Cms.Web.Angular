@@ -20,12 +20,12 @@ import { PageEvent } from '@angular/material/paginator';
 export class ApplicationThemeConfigListComponent implements OnInit {
   requestSourceId = 0;
   constructor(private applicationThemeConfigService: ApplicationThemeConfigService,
-              private activatedRoute: ActivatedRoute,
-              private coreAuthService: CoreAuthService,
-              public publicHelper: PublicHelper,
-              private toastrService: CmsToastrService,
-              private router: Router,
-              public dialog: MatDialog) {
+    private activatedRoute: ActivatedRoute,
+    private coreAuthService: CoreAuthService,
+    public publicHelper: PublicHelper,
+    private toastrService: CmsToastrService,
+    private router: Router,
+    public dialog: MatDialog) {
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
@@ -195,13 +195,14 @@ export class ApplicationThemeConfigListComponent implements OnInit {
     }
     this.DataGetAll();
   }
-  onActionbuttonEditRow(): void {
-    if (this.tableRowSelected === null || this.tableRowSelected.Id === 0) {
+  onActionbuttonEditRow(model: ApplicationThemeConfigModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای ویرایش انتخاب نشده است';
       this.toastrService.toastr.error(message, title);
       return;
     }
+    this.tableRowSelected = model;
     if (
       this.dataModelResult == null ||
       this.dataModelResult.Access == null ||
@@ -223,13 +224,15 @@ export class ApplicationThemeConfigListComponent implements OnInit {
     //   }
     // });
   }
-  onActionbuttonDeleteRow(): void {
-    if (this.tableRowSelected == null || this.tableRowSelected.Id === 0) {
+  onActionbuttonDeleteRow(model: ApplicationThemeConfigModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای ویرایش انتخاب نشده است';
       this.toastrService.toastr.error(message, title);
       return;
     }
+    this.tableRowSelected = model;
+
     if (
       this.dataModelResult == null ||
       this.dataModelResult.Access == null ||

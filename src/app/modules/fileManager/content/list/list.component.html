@@ -71,8 +71,8 @@
         <ng-container matColumnDef="Action">
           <mat-header-cell *matHeaderCellDef> ... </mat-header-cell>
           <mat-cell *matCellDef="let row" class='Action'>
-            <small (click)="onActionbuttonEditRow()">ویرایش</small>|
-            <small (click)="onActionbuttonDeleteRow()">حذف</small>|
+            <small (click)="onActionbuttonEditRow(row)">ویرایش</small>|
+            <small (click)="onActionbuttonDeleteRow(row)">حذف</small>|
             <small (click)="onClickDownload(row)">دانلود</small>
           </mat-cell>
         </ng-container>

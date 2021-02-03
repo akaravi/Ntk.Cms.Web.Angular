@@ -20,11 +20,11 @@ import { PageEvent } from '@angular/material/paginator';
 })
 export class ApplicationSourceListComponent implements OnInit {
   constructor(private applicationSourceService: ApplicationSourceService,
-              private coreAuthService: CoreAuthService,
-              public publicHelper: PublicHelper,
-              private toastrService: CmsToastrService,
-              private router: Router,
-              public dialog: MatDialog) {
+    private coreAuthService: CoreAuthService,
+    public publicHelper: PublicHelper,
+    private toastrService: CmsToastrService,
+    private router: Router,
+    public dialog: MatDialog) {
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
@@ -56,8 +56,7 @@ export class ApplicationSourceListComponent implements OnInit {
     'ClassName',
     'OsType',
     'ForceUpdate',
-    'CreatedDate',
-    'UpdatedDate',
+    'IsPublish',
     'Action'
   ];
 
@@ -152,24 +151,19 @@ export class ApplicationSourceListComponent implements OnInit {
       this.toastrService.toastr.error(message, title);
       return;
     }
-    // const dialogRef = this.dialog.open(NewsCommentEditComponent, {
-    //   data: { contentId: this.requestContentId }
-    // });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   // console.log(`Dialog result: ${result}`);
-    //   if (result && result.dialogChangedDate) {
-    //     this.DataGetAll();
-    //   }
-    // });
+    this.router.navigate(['/application/source/add/']);
+
   }
 
-  onActionbuttonEditRow(): void {
-    if (this.tableRowSelected === null || this.tableRowSelected.Id === 0) {
+  onActionbuttonEditRow(model: ApplicationSourceModel = this.tableRowSelected): void {
+
+    if (!model || !model.Id || model.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای ویرایش انتخاب نشده است';
       this.toastrService.toastr.error(message, title);
       return;
     }
+    this.tableRowSelected = model;
     if (
       this.dataModelResult == null ||
       this.dataModelResult.Access == null ||
@@ -180,24 +174,17 @@ export class ApplicationSourceListComponent implements OnInit {
       this.toastrService.toastr.error(message, title);
       return;
     }
-
-    // const dialogRef = this.dialog.open(NewsCommentEditComponent, {
-    //   data: { id: this.tableRowSelected.Id }
-    // });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   // console.log(`Dialog result: ${result}`);
-    //   if (result && result.dialogChangedDate) {
-    //     this.DataGetAll();
-    //   }
-    // });
+    this.router.navigate(['/application/source/edit/', this.tableRowSelected.Id]);
   }
-  onActionbuttonDeleteRow(): void {
-    if (this.tableRowSelected == null || this.tableRowSelected.Id === 0) {
+  onActionbuttonDeleteRow(model: ApplicationSourceModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای ویرایش انتخاب نشده است';
       this.toastrService.toastr.error(message, title);
       return;
     }
+    this.tableRowSelected = model;
+
     if (
       this.dataModelResult == null ||
       this.dataModelResult.Access == null ||
@@ -217,6 +204,39 @@ export class ApplicationSourceListComponent implements OnInit {
     //     this.DataGetAll();
     //   }
     // });
+    this.router.navigate(['/application/source/delete/', this.tableRowSelected.Id]);
+
+  }
+  onActionbuttonApplicationList(model: ApplicationSourceModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id === 0) {
+      const title = 'برروز خطا ';
+      const message = 'ردیفی برای ویرایش انتخاب نشده است';
+      this.toastrService.toastr.error(message, title);
+      return;
+    }
+    this.tableRowSelected = model;
+
+    if (
+      this.dataModelResult == null ||
+      this.dataModelResult.Access == null ||
+      !this.dataModelResult.Access.AccessDeleteRow
+    ) {
+      const title = 'برروز خطا ';
+      const message = 'شما دسترسی برای حذف ندارید';
+      this.toastrService.toastr.error(message, title);
+      return;
+    }
+    // const dialogRef = this.dialog.open(NewsCommentDeleteComponent, {
+    //   data: { id: this.tableRowSelected.Id }
+    // });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   // console.log(`Dialog result: ${result}`);
+    //   if (result && result.dialogChangedDate) {
+    //     this.DataGetAll();
+    //   }
+    // });
+    this.router.navigate(['/application/app/', this.tableRowSelected.Id]);
+
   }
   onActionbuttonStatist(): void {
     this.optionsStatist.childMethods.runStatist(this.filteModelContent.Filters);

@@ -17,6 +17,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { TagAutocompleteComponent } from '../modules/coreModule/tag/autocomplete/autocomplete.component';
 import { TagInputModule } from 'ngx-chips';
 import { RecordStatusClassPipe } from '../core/pipe/recordStatusClass.pipe';
+import { BoolStatusClassPipe } from '../core/pipe/boolStatusClass.pipe';
 
 
 
@@ -39,6 +40,7 @@ import { RecordStatusClassPipe } from '../core/pipe/recordStatusClass.pipe';
     // common and shared components/directives/pipes between more than one module and components will be listed here.
     TruncatePipe,
     RecordStatusClassPipe,
+    BoolStatusClassPipe,
     CmsSearchListComponent,
     CmsStatistListComponent,
     CmsExportListComponent,
@@ -55,6 +57,7 @@ import { RecordStatusClassPipe } from '../core/pipe/recordStatusClass.pipe';
     TreeModule,
     TruncatePipe,
     RecordStatusClassPipe,
+    BoolStatusClassPipe,
     PersianDate,
     CmsSearchListComponent,
     CmsStatistListComponent,

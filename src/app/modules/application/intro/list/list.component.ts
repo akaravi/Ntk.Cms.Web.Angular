@@ -21,12 +21,12 @@ export class ApplicationIntroListComponent implements OnInit {
   requestApplicationId = 0;
 
   constructor(private applicationIntroService: ApplicationIntroService,
-              private activatedRoute: ActivatedRoute,
-              private coreAuthService: CoreAuthService,
-              public publicHelper: PublicHelper,
-              private toastrService: CmsToastrService,
-              private router: Router,
-              public dialog: MatDialog) {
+    private activatedRoute: ActivatedRoute,
+    private coreAuthService: CoreAuthService,
+    public publicHelper: PublicHelper,
+    private toastrService: CmsToastrService,
+    private router: Router,
+    public dialog: MatDialog) {
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
@@ -149,7 +149,7 @@ export class ApplicationIntroListComponent implements OnInit {
 
   onActionbuttonNewRow(): void {
     if (
-      this.requestApplicationId== null ||
+      this.requestApplicationId == null ||
       this.requestApplicationId === 0
     ) {
       const title = 'برروز خطا ';
@@ -179,8 +179,8 @@ export class ApplicationIntroListComponent implements OnInit {
   }
 
 
-  onActionbuttonEditRow(): void {
-    if (this.tableRowSelected === null || this.tableRowSelected.Id === 0) {
+  onActionbuttonEditRow(model: ApplicationIntroModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای ویرایش انتخاب نشده است';
       this.toastrService.toastr.error(message, title);
@@ -207,8 +207,8 @@ export class ApplicationIntroListComponent implements OnInit {
     //   }
     // });
   }
-  onActionbuttonDeleteRow(): void {
-    if (this.tableRowSelected == null || this.tableRowSelected.Id === 0) {
+  onActionbuttonDeleteRow(model: ApplicationIntroModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای ویرایش انتخاب نشده است';
       this.toastrService.toastr.error(message, title);

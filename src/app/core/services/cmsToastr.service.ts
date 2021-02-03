@@ -8,7 +8,10 @@ import {ErrorExceptionResultBase} from 'ntk-cms-api';
 export class CmsToastrService {
   constructor(public toastr: ToastrService) {
   }
-
+  // typeOrderAction
+  typeOrderActionLogout(): void {
+    this.toastr.success('درحال اجرای خروج از حساب کاربری.', 'Info!');
+  }
   // Success Type
   typeSuccessAccessChange(): void {
     this.toastr.success('دسترسی با موفقیت تایید شد', 'Success!');

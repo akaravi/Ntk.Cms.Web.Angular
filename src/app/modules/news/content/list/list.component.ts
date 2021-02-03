@@ -177,13 +177,14 @@ export class NewsContentListComponent implements OnInit {
     this.router.navigate(['/news/content/add', this.categoryModelSelected.Id]);
   }
 
-  onActionbuttonEditRow(): void {
-    if (this.tableRowSelected == null || this.tableRowSelected.Id === 0) {
+  onActionbuttonEditRow(model: NewsContentModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای ویرایش انتخاب نشده است';
       this.toastrService.toastr.error(message, title);
       return;
     }
+    this.tableRowSelected = model;
     if (
       this.dataModelResult == null ||
       this.dataModelResult.Access == null ||
@@ -196,13 +197,15 @@ export class NewsContentListComponent implements OnInit {
     }
     this.router.navigate(['/news/content/edit', this.tableRowSelected.Id]);
   }
-  onActionbuttonDeleteRow(): void {
-    if (this.tableRowSelected == null || this.tableRowSelected.Id === 0) {
+  onActionbuttonDeleteRow(model: NewsContentModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای ویرایش انتخاب نشده است';
       this.toastrService.toastr.error(message, title);
       return;
     }
+    this.tableRowSelected = model;
+
     if (
       this.dataModelResult == null ||
       this.dataModelResult.Access == null ||
