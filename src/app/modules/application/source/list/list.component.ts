@@ -1,8 +1,15 @@
 
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { ApplicationSourceModel, ApplicationSourceService, CoreAuthService, EnumSortType, ErrorExceptionResult, FilterModel, TokenInfoModel } from 'ntk-cms-api';
+import { ApplicationSourceModel,
+  ApplicationSourceService,
+  CoreAuthService,
+  EnumSortType,
+  ErrorExceptionResult,
+  FilterModel,
+  TokenInfoModel
+} from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
@@ -20,11 +27,11 @@ import { PageEvent } from '@angular/material/paginator';
 })
 export class ApplicationSourceListComponent implements OnInit {
   constructor(private applicationSourceService: ApplicationSourceService,
-    private coreAuthService: CoreAuthService,
-    public publicHelper: PublicHelper,
-    private toastrService: CmsToastrService,
-    private router: Router,
-    public dialog: MatDialog) {
+              private coreAuthService: CoreAuthService,
+              public publicHelper: PublicHelper,
+              private toastrService: CmsToastrService,
+              private router: Router,
+              public dialog: MatDialog) {
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
@@ -53,7 +60,6 @@ export class ApplicationSourceListComponent implements OnInit {
     'RecordStatus',
     'Title',
     'PackageName',
-    'ClassName',
     'OsType',
     'ForceUpdate',
     'IsPublish',

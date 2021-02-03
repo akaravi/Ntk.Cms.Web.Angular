@@ -38,7 +38,7 @@
           </mat-form-field>
 
 
-          
+
 
 
           <mat-form-field class="example-full-width">
@@ -80,7 +80,7 @@
             </mat-error>
           </mat-form-field>
 
-          
+
 
 
 
@@ -150,7 +150,7 @@
 
 
 
-  
+
 
           <div *ngIf="formInfo.FormAllowSubmit">
             <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
@@ -165,9 +165,9 @@
 
         <mat-step label="تنطیمات ساخت" state="seo">
           <p>این بخش کمک می کند موتورهای سرچ بهتر مطالب را ایندکس کنند</p>
-         
 
-          
+
+
           <div *ngIf="formInfo.FormAllowSubmit">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
@@ -192,7 +192,7 @@
               <input matInput [(ngModel)]="dataModel.LinkMainImageId" name="dataModel.LinkMainImageId" #LinkMainImageId
                 type="text" placeholder="شناسه فایل اصلی" (click)="fileManagerOpenForm = true" />
               <mat-icon matSuffix *ngIf="dataModel.LinkMainImageId" matSuffix mat-icon-button aria-label="Clear"
-                (click)="dataModel.LinkMainImageId = ''">close</mat-icon>
+                (click)="dataModel.LinkMainImageId = null">close</mat-icon>
               <mat-icon matSuffix (click)="fileManagerOpenForm = true">mode_edit</mat-icon>
             </mat-form-field>
 
@@ -201,7 +201,7 @@
               [openFilemanagerButtonLabelKey]="'select'" [selectFileType]="selectFileTypeMainImage"
               [openFilemanagerButtonView]="false"></cms-file-manager>
           </div>
-          
+
           <div *ngIf="formInfo.FormAllowSubmit">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
@@ -231,7 +231,7 @@
             </button>
           </div>
         </mat-step>
-       
+
         <mat-step label="موقعیت مکانی" state="loaction">
           <p>روی نقشه کلیک کنید تا موقیت مکانی مشخس گردد</p>
 

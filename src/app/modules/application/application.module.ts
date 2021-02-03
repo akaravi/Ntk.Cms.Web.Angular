@@ -24,6 +24,7 @@ import {
   ApplicationThemeConfigService,
   CoreAuthService,
   CoreEnumService,
+  ApplicationEnumService,
   CoreModuleTagService
 } from 'ntk-cms-api';
 import { ApplicationSourceTreeComponent } from './source/tree/tree.component';
@@ -31,6 +32,7 @@ import { ApplicationAppTreeComponent } from './content/tree/tree.component';
 import { ApplicationSourceAddComponent } from './source/add/add.component';
 import { ApplicationSourceEditComponent } from './source/edit/edit.component';
 import { ApplicationSourceDeleteComponent } from './source/delete/delete.component';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -47,21 +49,23 @@ import { ApplicationSourceDeleteComponent } from './source/delete/delete.compone
     ApplicationThemeConfigListComponent,
     ApplicationAppTreeComponent,
   ],
-  imports: [
-    CommonModule,
-    ApplicationRoutes,
-    FormsModule,
-    ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
-    TreeviewModule.forRoot(),
-    SharedModule.forRoot(),
-    AngularEditorModule,
-    TagInputModule,
-    ProgressSpinnerModule,
-    CmsFileManagerModule
-  ],
+    imports: [
+        CommonModule,
+        ApplicationRoutes,
+        FormsModule,
+        ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
+        TreeviewModule.forRoot(),
+        SharedModule.forRoot(),
+        AngularEditorModule,
+        TagInputModule,
+        ProgressSpinnerModule,
+        CmsFileManagerModule,
+        MatIconModule
+    ],
   providers: [
     CoreEnumService,
     CoreAuthService,
+    ApplicationEnumService,
     CoreModuleTagService,
     ApplicationAppService,
     ApplicationIntroService,

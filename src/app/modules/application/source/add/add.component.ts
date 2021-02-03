@@ -2,11 +2,20 @@ import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ApplicationSourceModel, ApplicationSourceService, CoreEnumService, EnumModel, ErrorExceptionResult, FormInfoModel } from 'ntk-cms-api';
+import { Router } from '@angular/router';
+import {
+  ApplicationEnumService,
+  ApplicationSourceModel,
+  ApplicationSourceService,
+  CoreEnumService,
+  EnumModel,
+  ErrorExceptionResult,
+  FormInfoModel
+} from 'ntk-cms-api';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
+import {NodeInterface, TreeModel} from 'ntk-cms-filemanager';
 
 @Component({
   selector: 'app-add',
@@ -16,10 +25,13 @@ import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 export class ApplicationSourceAddComponent implements OnInit {
 
   constructor(public publicHelper: PublicHelper,
-    public coreEnumService: CoreEnumService,
-    private applicationSourceService: ApplicationSourceService,
-    private toasterService: CmsToastrService,
-    private router: Router) { }
+              public coreEnumService: CoreEnumService,
+              public applicationEnumService: ApplicationEnumService,
+              private applicationSourceService: ApplicationSourceService,
+              private toasterService: CmsToastrService,
+              private router: Router) {
+    this.fileManagerTree = new TreeModel();
+  }
 
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
   loading = new ProgressSpinnerModel();
@@ -33,6 +45,7 @@ export class ApplicationSourceAddComponent implements OnInit {
   fileManagerOpenForm = false;
   appLanguage = 'fa';
 
+  fileManagerTree: TreeModel;
   ngOnInit(): void {
     this.getEnumRecordStatus();
     this.getEnumOsType();
@@ -43,8 +56,8 @@ export class ApplicationSourceAddComponent implements OnInit {
     });
   }
   getEnumOsType(): void {
-    this.coreEnumService.ServiceEnumRecordStatus().subscribe((res) => {
-      this.dataModelEnumRecordStatusResult = res;
+    this.applicationEnumService.ServiceEnumOSType().subscribe((res) => {
+      this.dataModelEnumOsTypeResult = res;
     });
   }
   onFormSubmit(): void {
@@ -99,5 +112,9 @@ export class ApplicationSourceAddComponent implements OnInit {
   }
   onActionBackToParent(): void {
     this.router.navigate(['/application/source/']);
+  }
+  onActionFileSelectedLinkMainImageId(model: NodeInterface): void {
+    this.dataModel.LinkMainImageId = model.id;
+    this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
   }
 }
