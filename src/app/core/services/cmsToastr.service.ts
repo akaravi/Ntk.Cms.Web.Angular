@@ -48,8 +48,14 @@ export class CmsToastrService {
   typeSuccessMove(): void {
     this.toastr.success('با موفقیت منتقل شد', 'Success!');
   }
+  typeSuccessLogin(): void {
+    this.toastr.success('با موفقیت به حساب کاربری خود وارد شدید', 'Success!');
+  }
   typeSuccessLogout(): void {
     this.toastr.success('با موفقیت از حساب کاربری خود خارج شدید', 'Success!');
+  }
+  typeSuccessRegistery(): void {
+    this.toastr.success('با موفقیت حساب کاربری شما ساخته شد', 'Success!');
   }
   // error Type
   typeErrorInternetConnection(str: string = ''): void {
@@ -163,6 +169,13 @@ export class CmsToastrService {
     }
     this.toastr.error(message, 'Error!');
   }
+  typeErrorGetCpatcha(str: string = ''): void {
+    let message = 'خطا در ساخت عکس کپچا';
+    if (str && str.length > 0) {
+      message = message + ' error: ' + str;
+    }
+    this.toastr.error(message, 'Error!');
+  }
   typeErrorAddDuplicate(str: string = ''): void {
     let message = 'اطلاعات وارد شده تکراری است';
     if (str && str.length > 0) {
@@ -228,6 +241,13 @@ export class CmsToastrService {
   }
   typeErrorLogout(str: string = ''): void {
     let message = 'برروز خطا در خارج شدن از حساب کاربری';
+    if (str && str.length > 0) {
+      message = message + ' error: ' + str;
+    }
+    this.toastr.error(message, 'Error!');
+  }
+  typeErrorRegistery(str: string = ''): void {
+    let message = 'برروز خطا در ایجاد حساب کاربری';
     if (str && str.length > 0) {
       message = message + ' error: ' + str;
     }

@@ -1,10 +1,11 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import {Subscription, Observable} from 'rxjs';
-import {Router} from '@angular/router';
-import {ConfirmPasswordValidator} from './confirm-password.validator';
-import {first} from 'rxjs/operators';
-import {AuthUserSignUpModel, CaptchaModel, CoreAuthService} from 'ntk-cms-api';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Subscription, Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { ConfirmPasswordValidator } from './confirm-password.validator';
+import { first } from 'rxjs/operators';
+import { AuthUserSignUpModel, CaptchaModel, CoreAuthService } from 'ntk-cms-api';
+import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 
 @Component({
   selector: 'app-registration',
@@ -16,21 +17,17 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   hasError: boolean;
   isLoading$: Observable<boolean>;
   registerModel: AuthUserSignUpModel = new AuthUserSignUpModel();
-
   captchaModel: CaptchaModel = new CaptchaModel();
-
 
   // private fields
   private unsubscribe: Subscription[] = [];
 
   constructor(
+    private cmsToastrService: CmsToastrService,
     private fb: FormBuilder,
     private router: Router,
     private coreAuthService: CoreAuthService
   ) {
-    // this.isLoading$ = this.authService.isLoading$;
-    // redirect to home if already logged in
-    debugger;
     if (this.coreAuthService.CurrentTokenInfoBS) {
       this.router.navigate(['/']);
     }
@@ -113,8 +110,12 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       .pipe(first())
       .subscribe((res) => {
         if (res.IsSuccess) {
+          this.cmsToastrService.typeSuccessRegistery();
+
           this.router.navigate(['/']);
         } else {
+          this.cmsToastrService.typeErrorRegistery(res.ErrorMessage);
+
           this.hasError = true;
         }
       });
@@ -126,6 +127,9 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     this.coreAuthService.ServiceCaptcha().subscribe(
       (next) => {
         this.captchaModel = next.Item;
+        if (!next.IsSuccess) {
+          this.cmsToastrService.typeErrorGetCpatcha(next.ErrorMessage);
+        }
       }
     );
   }

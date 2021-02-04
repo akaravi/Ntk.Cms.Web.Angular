@@ -45,7 +45,7 @@ export class FileCategoryEditComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     public coreEnumService: CoreEnumService,
     public fileCategoryService: FileCategoryService,
-    private toastrService: CmsToastrService
+    private cmsToastrService: CmsToastrService
   ) {
     if (data) {
       this.requestId = +data.id || 0;
@@ -88,7 +88,7 @@ export class FileCategoryEditComponent implements OnInit {
     }
 
     if (this.ComponentAction === ComponentActionEnum.none) {
-      this.toastrService.typeErrorComponentAction();
+      this.cmsToastrService.typeErrorComponentAction();
       this.dialogRef.close({ dialogChangedDate: false });
       return;
     }
@@ -105,7 +105,7 @@ export class FileCategoryEditComponent implements OnInit {
 
   DataGetOneContent(): void {
     if (this.requestId <= 0) {
-      this.toastrService.typeErrorEditRowIsNull();
+      this.cmsToastrService.typeErrorEditRowIsNull();
       return;
     }
 
@@ -125,7 +125,7 @@ export class FileCategoryEditComponent implements OnInit {
         this.loading.display = false;
       },
       (error) => {
-        this.toastrService.typeError(error);
+        this.cmsToastrService.typeError(error);
         this.loading.display = false;
       }
     );
@@ -143,7 +143,7 @@ export class FileCategoryEditComponent implements OnInit {
         this.dataModelResult = next;
         if (next.IsSuccess) {
           this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
-          this.toastrService.typeSuccessAdd();
+          this.cmsToastrService.typeSuccessAdd();
           this.dialogRef.close({ dialogChangedDate: true });
         } else {
           this.formInfo.FormAlert = 'برروز خطا';
@@ -153,7 +153,7 @@ export class FileCategoryEditComponent implements OnInit {
       },
       (error) => {
         this.formInfo.FormAllowSubmit = true;
-        this.toastrService.typeError(error);
+        this.cmsToastrService.typeError(error);
         this.loading.display = false;
       }
     );
@@ -168,7 +168,7 @@ export class FileCategoryEditComponent implements OnInit {
         this.dataModelResult = next;
         if (next.IsSuccess) {
           this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
-          this.toastrService.typeSuccessEdit();
+          this.cmsToastrService.typeSuccessEdit();
           this.dialogRef.close({ dialogChangedDate: true });
 
         } else {
@@ -179,7 +179,7 @@ export class FileCategoryEditComponent implements OnInit {
       },
       (error) => {
         this.formInfo.FormAllowSubmit = true;
-        this.toastrService.typeError(error);
+        this.cmsToastrService.typeError(error);
         this.loading.display = false;
       }
     );

@@ -51,7 +51,7 @@ export class NewsCategoryTreeComponent implements OnInit {
 
   constructor(
     private coreAuthService: CoreAuthService,
-    private toastrService: CmsToastrService,
+    private cmsToastrService: CmsToastrService,
     public coreEnumService: CoreEnumService,
     public categoryService: NewsCategoryService,
     public dialog: MatDialog,
@@ -94,7 +94,7 @@ export class NewsCategoryTreeComponent implements OnInit {
       (error) => {
         this.loading.display = false;
 
-        this.toastrService.typeError(error);
+        this.cmsToastrService.typeError(error);
 
       }
     );
@@ -153,7 +153,7 @@ export class NewsCategoryTreeComponent implements OnInit {
     if (id === 0) {
       const title = 'برروز خطا ';
       const message = 'دسته بندی انتخاب نشده است';
-      this.toastrService.toastr.error(message, title);
+      this.cmsToastrService.toastr.error(message, title);
       return;
     }
     const dialogRef = this.dialog.open(NewsCategoryEditComponent, {
@@ -179,7 +179,7 @@ export class NewsCategoryTreeComponent implements OnInit {
     if (id === 0) {
       const title = 'برروز خطا ';
       const message = 'دسته بندی انتخاب نشده است';
-      this.toastrService.toastr.error(message, title);
+      this.cmsToastrService.toastr.error(message, title);
       return;
     }
     const dialogRef = this.dialog.open(NewsCategoryDeleteComponent, {

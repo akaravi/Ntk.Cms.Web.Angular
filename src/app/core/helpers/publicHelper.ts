@@ -11,7 +11,7 @@ import { CmsToastrService } from '../services/cmsToastr.service';
 export class PublicHelper {
   constructor(
     private router: Router,
-    private toastrService: CmsToastrService
+    private cmsToastrService: CmsToastrService
   ) {}
 
   CheckError(model: any): any {
@@ -23,7 +23,7 @@ export class PublicHelper {
       errorExceptionResult = model.error;
       if (errorExceptionResult) {
         if (errorExceptionResult.Status === 401) {
-          this.toastrService.toastr.warning(
+          this.cmsToastrService.toastr.warning(
             'لطفا مجددا وارد حساب کاربری خود شوید',
             'نیاز به ورود مجدد'
           );

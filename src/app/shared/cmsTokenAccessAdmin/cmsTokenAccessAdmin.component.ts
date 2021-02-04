@@ -23,7 +23,7 @@ export class CmsTokenAccessAdminComponent implements OnInit {
 
   constructor(
     public coreAuthService: CoreAuthService,
-    private toastrService: CmsToastrService,
+    private cmsToastrService: CmsToastrService,
     private router: Router,
 
   ) {
@@ -55,7 +55,7 @@ export class CmsTokenAccessAdminComponent implements OnInit {
     } else {
       message = 'درخواست قطع  دسترسی به کل اطلاعات  به سرور ارسال شد';
     }
-    this.toastrService.toastr.info(message, title);
+    this.cmsToastrService.toastr.info(message, title);
     this.loadingStatus = true;
     this.coreAuthService.ServiceRenewToken(authModel).subscribe(
       (next) => {
@@ -65,17 +65,17 @@ export class CmsTokenAccessAdminComponent implements OnInit {
           let message = '';
           if (next.Item.UserAccessAdminAllowToAllData === NewToall) {
             message = 'دسترسی تایید شد';
-            this.toastrService.toastr.success(message, title);
+            this.cmsToastrService.toastr.success(message, title);
           } else {
             message = 'دسترسی  جدید تایید نشد';
-            this.toastrService.toastr.warning(message, title);
+            this.cmsToastrService.toastr.warning(message, title);
           }
         } else {
-          this.toastrService.typeErrorAccessChange(next.ErrorMessage);
+          this.cmsToastrService.typeErrorAccessChange(next.ErrorMessage);
         }
       },
       (error) => {
-        this.toastrService.typeErrorAccessChange(error);
+        this.cmsToastrService.typeErrorAccessChange(error);
       }
     );
   }
@@ -96,7 +96,7 @@ export class CmsTokenAccessAdminComponent implements OnInit {
     } else {
       message = 'درخواست قطع  دسترسی حرفه ایی  به سرور ارسال شد';
     }
-    this.toastrService.toastr.info(message, title);
+    this.cmsToastrService.toastr.info(message, title);
     this.loadingStatus = true;
     this.coreAuthService.ServiceRenewToken(authModel).subscribe(
       (next) => {
@@ -105,17 +105,17 @@ export class CmsTokenAccessAdminComponent implements OnInit {
           const title = 'اطلاعات ';
           if (next.Item.UserAccessAdminAllowToProfessionalData === NewToPerf) {
             const message = 'دسترسی تایید شد';
-            this.toastrService.toastr.success(message, title);
+            this.cmsToastrService.toastr.success(message, title);
           } else {
             const message = 'دسترسی  جدید تایید نشد';
-            this.toastrService.toastr.warning(message, title);
+            this.cmsToastrService.toastr.warning(message, title);
           }
         } else {
-          this.toastrService.typeErrorAccessChange(next.ErrorMessage);
+          this.cmsToastrService.typeErrorAccessChange(next.ErrorMessage);
         }
       },
       (error) => {
-        this.toastrService.typeErrorAccessChange(error);
+        this.cmsToastrService.typeErrorAccessChange(error);
       }
     );
   }
@@ -124,7 +124,7 @@ export class CmsTokenAccessAdminComponent implements OnInit {
     if (this.UserId === this.TokenInfo.UserId) {
       const title = 'هشدار';
       const message = 'شناسه درخواستی این کاربر با کاربری که در آن هستید یکسان است';
-      this.toastrService.toastr.warning(message, title);
+      this.cmsToastrService.toastr.warning(message, title);
       return;
     }
     const authModel: AuthRenewTokenModel = new AuthRenewTokenModel();
@@ -136,7 +136,7 @@ export class CmsTokenAccessAdminComponent implements OnInit {
 
     const title = 'اطلاعات ';
     const message = 'درخواست تغییر کاربر به سرور ارسال شد';
-    this.toastrService.toastr.info(message, title);
+    this.cmsToastrService.toastr.info(message, title);
     this.loadingStatus = true;
     this.coreAuthService.ServiceRenewToken(authModel).subscribe(
       (next) => {
@@ -144,17 +144,17 @@ export class CmsTokenAccessAdminComponent implements OnInit {
         if (next.IsSuccess) {
           if (next.Item.UserId === this.UserId) {
             const message = 'دسترسی به کاربر جدید تایید شد';
-            this.toastrService.toastr.success(message, title);
+            this.cmsToastrService.toastr.success(message, title);
           } else {
             const message = 'دسترسی به کاربر جدید تایید نشد';
-            this.toastrService.toastr.warning(message, title);
+            this.cmsToastrService.toastr.warning(message, title);
           }
         } else {
-          this.toastrService.typeErrorAccessChange(next.ErrorMessage);
+          this.cmsToastrService.typeErrorAccessChange(next.ErrorMessage);
         }
       },
       (error) => {
-        this.toastrService.typeErrorAccessChange(error);
+        this.cmsToastrService.typeErrorAccessChange(error);
       }
     );
   }
@@ -163,7 +163,7 @@ export class CmsTokenAccessAdminComponent implements OnInit {
     if (this.SiteId === this.TokenInfo.SiteId) {
       const title = 'هشدار';
       const message = 'شناسه این وب سایت با وب سایتی که در آن هستید یکسان است';
-      this.toastrService.toastr.warning(message, title);
+      this.cmsToastrService.toastr.warning(message, title);
       return;
     }
     const authModel: AuthRenewTokenModel = new AuthRenewTokenModel();
@@ -175,7 +175,7 @@ export class CmsTokenAccessAdminComponent implements OnInit {
 
     const title = 'اطلاعات ';
     const message = 'درخواست تغییر سایت به سرور ارسال شد';
-    this.toastrService.toastr.info(message, title);
+    this.cmsToastrService.toastr.info(message, title);
     this.loadingStatus = true;
     this.coreAuthService.ServiceRenewToken(authModel).subscribe(
       (next) => {
@@ -184,17 +184,17 @@ export class CmsTokenAccessAdminComponent implements OnInit {
           const title = 'اطلاعات ';
           if (next.Item.SiteId === this.SiteId) {
             const message = 'دسترسی به سایت جدید تایید شد';
-            this.toastrService.toastr.success(message, title);
+            this.cmsToastrService.toastr.success(message, title);
           } else {
             const message = 'دسترسی به سایت جدید تایید نشد';
-            this.toastrService.toastr.warning(message, title);
+            this.cmsToastrService.toastr.warning(message, title);
           }
         } else {
-          this.toastrService.typeErrorAccessChange(next.ErrorMessage);
+          this.cmsToastrService.typeErrorAccessChange(next.ErrorMessage);
         }
       },
       (error) => {
-        this.toastrService.typeErrorAccessChange(error);
+        this.cmsToastrService.typeErrorAccessChange(error);
       }
     );
   }

@@ -20,7 +20,7 @@ export class FileCategoryDeleteComponent implements OnInit {
     private dialogRef: MatDialogRef<FileCategoryDeleteComponent>,
     private activatedRoute: ActivatedRoute,
     private fileCategoryService: FileCategoryService,
-    private toastrService: CmsToastrService
+    private cmsToastrService: CmsToastrService
   ) {
     if (data) {
       this.requestId = +data.id || 0;
@@ -37,7 +37,7 @@ export class FileCategoryDeleteComponent implements OnInit {
   ngOnInit(): void {
 
     if (this.requestId <= 0) {
-      this.toastrService.typeErrorDeleteRowIsNull();
+      this.cmsToastrService.typeErrorDeleteRowIsNull();
       this.dialogRef.close({ dialogChangedDate: false });
       return;
     }
@@ -47,7 +47,7 @@ export class FileCategoryDeleteComponent implements OnInit {
 
   DataGetOne(): void {
     if (this.requestId === 0) {
-      this.toastrService.typeErrorDeleteRowIsNull();
+      this.cmsToastrService.typeErrorDeleteRowIsNull();
       return;
     }
     this.formInfo.FormAlert = 'در حال لود اطلاعات';
@@ -61,7 +61,7 @@ export class FileCategoryDeleteComponent implements OnInit {
             this.formInfo.FormAlert = 'برروز خطا';
             this.formInfo.FormError = next.ErrorMessage;
             this.formInfo.FormErrorStatus = true;
-            this.toastrService.typeErrorGetOne();
+            this.cmsToastrService.typeErrorGetOne();
           } else {
             this.formInfo.FormAlert = '';
           }
@@ -70,7 +70,7 @@ export class FileCategoryDeleteComponent implements OnInit {
         (error) => {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormErrorStatus = true;
-          this.toastrService.typeError(error);
+          this.cmsToastrService.typeError(error);
           this.loading.display = false;
         }
       );
@@ -90,7 +90,7 @@ export class FileCategoryDeleteComponent implements OnInit {
             this.formInfo.FormAlert = 'برروز خطا';
             this.formInfo.FormError = next.ErrorMessage;
             this.formInfo.FormErrorStatus = true;
-            this.toastrService.typeErrorGetAll();
+            this.cmsToastrService.typeErrorGetAll();
           } else {
             this.formInfo.FormAlert = '';
           }
@@ -99,7 +99,7 @@ export class FileCategoryDeleteComponent implements OnInit {
         (error) => {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormErrorStatus = true;
-          this.toastrService.typeError(error);
+          this.cmsToastrService.typeError(error);
           this.loading.display = false;
         }
       );
@@ -107,7 +107,7 @@ export class FileCategoryDeleteComponent implements OnInit {
   }
   onFormMove(): void {
     if (this.requestId === 0) {
-      this.toastrService.typeErrorDeleteRowIsNull();
+      this.cmsToastrService.typeErrorDeleteRowIsNull();
       return;
     }
     if (!this.formGroup.valid) {
@@ -130,10 +130,10 @@ export class FileCategoryDeleteComponent implements OnInit {
           if (!next.IsSuccess) {
             this.formInfo.FormAlert = 'برروز خطا';
             this.formInfo.FormError = next.ErrorMessage;
-            this.toastrService.typeErrorMove();
+            this.cmsToastrService.typeErrorMove();
           } else {
             this.formInfo.FormAlert = 'جابجایی با موفقیت انجام شد';
-            this.toastrService.typeSuccessMove();
+            this.cmsToastrService.typeSuccessMove();
           }
           this.formInfo.FormAllowSubmit = true;
           this.formInfo.DisabledButtonSubmitted = false;
@@ -141,7 +141,7 @@ export class FileCategoryDeleteComponent implements OnInit {
         },
         (error) => {
           this.formInfo.FormAlert = 'برروز خطا';
-          this.toastrService.typeError(error);
+          this.cmsToastrService.typeError(error);
           this.formInfo.DisabledButtonSubmitted = false;
           this.formInfo.FormAllowSubmit = true;
           this.loading.display = false;
@@ -150,7 +150,7 @@ export class FileCategoryDeleteComponent implements OnInit {
   }
   onFormDelete(): void {
     if (this.requestId === 0) {
-      this.toastrService.typeErrorDeleteRowIsNull();
+      this.cmsToastrService.typeErrorDeleteRowIsNull();
       return;
     }
     if (!this.formGroup.valid) {
@@ -167,11 +167,11 @@ export class FileCategoryDeleteComponent implements OnInit {
           if (!next.IsSuccess) {
             this.formInfo.FormAlert = 'برروز خطا';
             this.formInfo.FormError = next.ErrorMessage;
-            this.toastrService.typeErrorRemove();
+            this.cmsToastrService.typeErrorRemove();
 
           } else {
             this.formInfo.FormAlert = 'حذف با موفقیت انجام شد';
-            this.toastrService.typeSuccessRemove();
+            this.cmsToastrService.typeSuccessRemove();
             this.dialogRef.close({ dialogChangedDate: true });
           }
           this.formInfo.DisabledButtonSubmitted = false;
@@ -180,7 +180,7 @@ export class FileCategoryDeleteComponent implements OnInit {
         (error) => {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormAllowSubmit = true;
-          this.toastrService.typeError(error);
+          this.cmsToastrService.typeError(error);
           this.formInfo.DisabledButtonSubmitted = false;
           this.loading.display = false;
         }
@@ -190,7 +190,7 @@ export class FileCategoryDeleteComponent implements OnInit {
   onFormChangeNewCatId(model: FileCategoryModel): void {
     this.formInfo.FormAlert = '';
     if (this.requestId === 0 || !model || model.Id <= 0) {
-      this.toastrService.typeErrorDeleteRowIsNull();
+      this.cmsToastrService.typeErrorDeleteRowIsNull();
       return;
     }
     this.dataModel.NewCatId = model.Id;

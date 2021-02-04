@@ -35,7 +35,7 @@ export class ArticleCommentEditComponent implements OnInit {
     private dialogRef: MatDialogRef<ArticleCommentEditComponent>,
     public coreEnumService: CoreEnumService,
     public articleCommentService: ArticleCommentService,
-    private toastrService: CmsToastrService
+    private cmsToastrService: CmsToastrService
   ) {
     if (data) {
       this.requestId = +data.id || 0;
@@ -69,7 +69,7 @@ export class ArticleCommentEditComponent implements OnInit {
       this.formInfo.FormTitle = 'ثبت کامت جدید';
     }
     if (this.ComponentAction === ComponentActionEnum.none) {
-      this.toastrService.typeErrorComponentAction();
+      this.cmsToastrService.typeErrorComponentAction();
       this.dialogRef.close({ dialogChangedDate: false });
     }
     this.getEnumRecordStatus();
@@ -85,7 +85,7 @@ export class ArticleCommentEditComponent implements OnInit {
 
   DataGetOneContent(): void {
     if (this.requestId <= 0) {
-      this.toastrService.typeErrorEditRowIsNull();
+      this.cmsToastrService.typeErrorEditRowIsNull();
       return;
     }
 
@@ -104,7 +104,7 @@ export class ArticleCommentEditComponent implements OnInit {
         this.loading.display = false;
       },
       (error) => {
-        this.toastrService.typeError(error);
+        this.cmsToastrService.typeError(error);
         this.loading.display = false;
       }
     );
@@ -123,7 +123,7 @@ export class ArticleCommentEditComponent implements OnInit {
         this.dataModelResult = next;
         if (next.IsSuccess) {
           this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
-          this.toastrService.typeSuccessAdd();
+          this.cmsToastrService.typeSuccessAdd();
           this.dialogRef.close({ dialogChangedDate: true });
         } else {
           this.formInfo.FormAlert = 'برروز خطا';
@@ -133,7 +133,7 @@ export class ArticleCommentEditComponent implements OnInit {
       },
       (error) => {
         this.formInfo.FormAllowSubmit = true;
-        this.toastrService.typeError(error);
+        this.cmsToastrService.typeError(error);
         this.loading.display = false;
       }
     );
@@ -148,7 +148,7 @@ export class ArticleCommentEditComponent implements OnInit {
         this.dataModelResult = next;
         if (next.IsSuccess) {
           this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
-          this.toastrService.typeSuccessEdit();
+          this.cmsToastrService.typeSuccessEdit();
           this.dialogRef.close({ dialogChangedDate: true });
 
         } else {
@@ -159,7 +159,7 @@ export class ArticleCommentEditComponent implements OnInit {
       },
       (error) => {
         this.formInfo.FormAllowSubmit = true;
-        this.toastrService.typeError(error);
+        this.cmsToastrService.typeError(error);
         this.loading.display = false;
       }
     );

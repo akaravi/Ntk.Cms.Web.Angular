@@ -30,7 +30,7 @@ export class SelectionComponent implements OnInit {
   constructor(
     private coreAuthService: CoreAuthService,
     private coreSiteService: CoreSiteService,
-    private toastrService: CmsToastrService,
+    private cmsToastrService: CmsToastrService,
     private publicHelper: PublicHelper,
     private router: Router,
     private activatedRoute: ActivatedRoute
@@ -55,7 +55,7 @@ export class SelectionComponent implements OnInit {
           }
         },
         (error) => {
-          this.toastrService.typeError(error);
+          this.cmsToastrService.typeError(error);
         }
       )
     );
@@ -74,7 +74,7 @@ export class SelectionComponent implements OnInit {
             }
           },
           (error) => {
-            this.toastrService.toastr.error(
+            this.cmsToastrService.toastr.error(
               this.publicHelper.CheckError(error),
               'خطا در ورود'
             );

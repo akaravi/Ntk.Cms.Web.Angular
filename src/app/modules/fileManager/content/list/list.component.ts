@@ -34,7 +34,7 @@ export class FileContentListComponent implements OnInit {
     private coreAuthService: CoreAuthService,
     public publicHelper: PublicHelper,
     private fileContentService: FileContentService,
-    private toastrService: CmsToastrService,
+    private cmsToastrService: CmsToastrService,
     private router: Router,
     public dialog: MatDialog
   ) {
@@ -105,7 +105,7 @@ export class FileContentListComponent implements OnInit {
         this.loading.display = false;
       },
       (error) => {
-        this.toastrService.typeError(error);
+        this.cmsToastrService.typeError(error);
 
         this.loading.display = false;
       }
@@ -144,7 +144,7 @@ export class FileContentListComponent implements OnInit {
     if (model && model.Id > 0) {
       const aaa = {
         PropertyName: 'LinkCategoryId',
-        IntValue1: model.Id,
+        IntValue: model.Id,
       };
       this.filteModelContent.Filters.push(aaa as FilterDataModel);
     } else {
@@ -160,7 +160,7 @@ export class FileContentListComponent implements OnInit {
     ) {
       const title = 'برروز خطا ';
       const message = 'دسته بندی انتخاب نشده است';
-      this.toastrService.toastr.error(message, title);
+      this.cmsToastrService.toastr.error(message, title);
       return;
     }
     if (
@@ -170,7 +170,7 @@ export class FileContentListComponent implements OnInit {
     ) {
       const title = 'برروز خطا ';
       const message = 'شما دسترسی برای اضافه کردن ندارید';
-      this.toastrService.toastr.error(message, title);
+      this.cmsToastrService.toastr.error(message, title);
       return;
     }
     this.router.navigate(['/file/content/add', this.categoryModelSelected.Id]);
@@ -180,7 +180,7 @@ export class FileContentListComponent implements OnInit {
     if (!model ||!model.Id || model.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.toastrService.toastr.error(message, title);
+      this.cmsToastrService.toastr.error(message, title);
       return;
     }
     this.tableRowSelected=model;
@@ -191,7 +191,7 @@ export class FileContentListComponent implements OnInit {
     ) {
       const title = 'برروز خطا ';
       const message = 'شما دسترسی برای ویرایش ندارید';
-      this.toastrService.toastr.error(message, title);
+      this.cmsToastrService.toastr.error(message, title);
       return;
     }
     this.router.navigate(['/file/content/edit', this.tableRowSelected.Id]);
@@ -200,7 +200,7 @@ export class FileContentListComponent implements OnInit {
     if (!model ||!model.Id || model.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.toastrService.toastr.error(message, title);
+      this.cmsToastrService.toastr.error(message, title);
       return;
     }
     this.tableRowSelected=model;
@@ -212,7 +212,7 @@ export class FileContentListComponent implements OnInit {
     ) {
       const title = 'برروز خطا ';
       const message = 'شما دسترسی برای حذف ندارید';
-      this.toastrService.toastr.error(message, title);
+      this.cmsToastrService.toastr.error(message, title);
       return;
     }
     const dialogRef = this.dialog.open(FileContentDeleteComponent, { data: { id: this.tableRowSelected.Id } });

@@ -1,8 +1,9 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Subscription, Observable, interval} from 'rxjs';
-import {ActivatedRoute, Router} from '@angular/router';
-import {AuthUserSignInModel, CaptchaModel, CoreAuthService} from 'ntk-cms-api';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subscription, Observable, interval } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthUserSignInModel, CaptchaModel, CoreAuthService } from 'ntk-cms-api';
+import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 
 @Component({
   selector: 'app-login',
@@ -26,17 +27,13 @@ export class LoginComponent implements OnInit, OnDestroy {
   unsubscribe: Subscription[] = [];
 
   constructor(
+    private cmsToastrService: CmsToastrService,
     private fb: FormBuilder,
-    private authService: CoreAuthService,
     private route: ActivatedRoute,
     private router: Router,
     private coreAuthService: CoreAuthService
   ) {
-    // this.isLoading$ = this.authService.isLoading$;
-    // redirect to home if already logged in
-    // if (this.authService.currentUserValue) {
-    //     this.router.navigate(['/']);
-    // }
+
   }
 
   ngOnInit(): void {
@@ -68,7 +65,6 @@ export class LoginComponent implements OnInit, OnDestroy {
           Validators.email,
           Validators.minLength(3),
           Validators.maxLength(320),
-          // https://stackoverflow.com/questions/386294/what-is-the-maximum-length-of-a-valid-email-address
         ]),
       ],
       password: [
@@ -83,13 +79,16 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   submit(): void {
+
     this.hasError = false;
     this.modelData.CaptchaKey = this.captchaModel.Key;
     this.coreAuthService.ServiceSigninUser(this.modelData).subscribe(
       (res) => {
         if (res.IsSuccess) {
+          this.cmsToastrService.typeSuccessLogin();
           this.router.navigate(['/site/selection']);
         } else {
+          this.cmsToastrService.typeErrorLogin(res.ErrorMessage);
           this.onCaptchaOrder();
         }
       });
@@ -99,6 +98,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.modelData.CaptchaText = '';
     this.coreAuthService.ServiceCaptcha().subscribe(
       (next) => {
+
         this.captchaModel = next.Item;
         this.expireDate = next.Item.Expire.split('+')[1];
         const startDate = new Date();
@@ -107,6 +107,9 @@ export class LoginComponent implements OnInit, OnDestroy {
         if (this.aoutoCaptchaOrder < 10) {
           this.aoutoCaptchaOrder = this.aoutoCaptchaOrder + 1;
           setTimeout(() => { this.onCaptchaOrder(); }, seconds);
+        }
+        if (!next.IsSuccess) {
+          this.cmsToastrService.typeErrorGetCpatcha(next.ErrorMessage);
         }
       }
     );

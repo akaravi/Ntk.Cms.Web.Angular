@@ -32,7 +32,7 @@ export class TagDeleteComponent implements OnInit {
   constructor(
     public newsContentService: NewsContentService,
     public coreEnumService: CoreEnumService,
-    private toastrService: CmsToastrService,
+    private cmsToastrService: CmsToastrService,
   ) { }
 
   ngOnInit(): void {
@@ -44,7 +44,7 @@ export class TagDeleteComponent implements OnInit {
   }
   DataGetListContent(): void {
     if (this.dataModelContents == null || this.dataModelContents.length === 0) {
-      this.toastrService.typeErrorDeleteRowIsNull()
+      this.cmsToastrService.typeErrorDeleteRowIsNull()
       return;
     }
 
@@ -63,7 +63,7 @@ export class TagDeleteComponent implements OnInit {
     if (this.dataModelContents == null || this.dataModelContents.length === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیف اطلاعات جهت حذف مشخص نیست';
-      this.toastrService.toastr.error(message, title);
+      this.cmsToastrService.toastr.error(message, title);
       return;
     }
 
@@ -89,7 +89,7 @@ export class TagDeleteComponent implements OnInit {
           element.ActionEnd = true;
           // this.formInfo.FormAllowSubmit = true;
           const title = 'برروی خطا در دریافت اطلاعات';
-          this.toastrService.typeError(error);
+          this.cmsToastrService.typeError(error);
           element.Message = title + ' : ';
           element.Status = 'Error';
         }

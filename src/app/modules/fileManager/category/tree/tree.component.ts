@@ -32,7 +32,7 @@ import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 export class FileCategoryTreeComponent implements OnInit {
   constructor(
     private coreAuthService: CoreAuthService,
-    private toastrService: CmsToastrService,
+    private cmsToastrService: CmsToastrService,
     public coreEnumService: CoreEnumService,
     public categoryService: FileCategoryService,
     public dialog: MatDialog,
@@ -75,7 +75,7 @@ export class FileCategoryTreeComponent implements OnInit {
       (error) => {
         this.loading.display = false;
 
-        this.toastrService.typeError(error);
+        this.cmsToastrService.typeError(error);
 
       }
     );
@@ -134,7 +134,7 @@ export class FileCategoryTreeComponent implements OnInit {
     if (id === 0) {
       const title = 'برروز خطا ';
       const message = 'دسته بندی انتخاب نشده است';
-      this.toastrService.toastr.error(message, title);
+      this.cmsToastrService.toastr.error(message, title);
       return;
     }
     const dialogRef = this.dialog.open(FileCategoryEditComponent, {
@@ -160,7 +160,7 @@ export class FileCategoryTreeComponent implements OnInit {
     if (id === 0) {
       const title = 'برروز خطا ';
       const message = 'دسته بندی انتخاب نشده است';
-      this.toastrService.toastr.error(message, title);
+      this.cmsToastrService.toastr.error(message, title);
       return;
     }
     const dialogRef = this.dialog.open(FileCategoryDeleteComponent, {

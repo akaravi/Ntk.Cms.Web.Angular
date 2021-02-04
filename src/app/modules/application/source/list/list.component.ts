@@ -29,7 +29,7 @@ export class ApplicationSourceListComponent implements OnInit {
   constructor(private applicationSourceService: ApplicationSourceService,
               private coreAuthService: CoreAuthService,
               public publicHelper: PublicHelper,
-              private toastrService: CmsToastrService,
+              private cmsToastrService: CmsToastrService,
               private router: Router,
               public dialog: MatDialog) {
     this.optionsSearch.parentMethods = {
@@ -110,7 +110,7 @@ export class ApplicationSourceListComponent implements OnInit {
         this.loading.display = false;
       },
       (error) => {
-        this.toastrService.typeError(error);
+        this.cmsToastrService.typeError(error);
 
         this.loading.display = false;
       }
@@ -154,7 +154,7 @@ export class ApplicationSourceListComponent implements OnInit {
     ) {
       const title = 'برروز خطا ';
       const message = 'شما دسترسی برای اضافه کردن ندارید';
-      this.toastrService.toastr.error(message, title);
+      this.cmsToastrService.toastr.error(message, title);
       return;
     }
     this.router.navigate(['/application/source/add/']);
@@ -166,7 +166,7 @@ export class ApplicationSourceListComponent implements OnInit {
     if (!model || !model.Id || model.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.toastrService.toastr.error(message, title);
+      this.cmsToastrService.toastr.error(message, title);
       return;
     }
     this.tableRowSelected = model;
@@ -177,7 +177,7 @@ export class ApplicationSourceListComponent implements OnInit {
     ) {
       const title = 'برروز خطا ';
       const message = 'شما دسترسی برای ویرایش ندارید';
-      this.toastrService.toastr.error(message, title);
+      this.cmsToastrService.toastr.error(message, title);
       return;
     }
     this.router.navigate(['/application/source/edit/', this.tableRowSelected.Id]);
@@ -186,7 +186,7 @@ export class ApplicationSourceListComponent implements OnInit {
     if (!model || !model.Id || model.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.toastrService.toastr.error(message, title);
+      this.cmsToastrService.toastr.error(message, title);
       return;
     }
     this.tableRowSelected = model;
@@ -198,7 +198,7 @@ export class ApplicationSourceListComponent implements OnInit {
     ) {
       const title = 'برروز خطا ';
       const message = 'شما دسترسی برای حذف ندارید';
-      this.toastrService.toastr.error(message, title);
+      this.cmsToastrService.toastr.error(message, title);
       return;
     }
     // const dialogRef = this.dialog.open(NewsCommentDeleteComponent, {
@@ -217,7 +217,7 @@ export class ApplicationSourceListComponent implements OnInit {
     if (!model || !model.Id || model.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.toastrService.toastr.error(message, title);
+      this.cmsToastrService.toastr.error(message, title);
       return;
     }
     this.tableRowSelected = model;
@@ -229,7 +229,7 @@ export class ApplicationSourceListComponent implements OnInit {
     ) {
       const title = 'برروز خطا ';
       const message = 'شما دسترسی برای حذف ندارید';
-      this.toastrService.toastr.error(message, title);
+      this.cmsToastrService.toastr.error(message, title);
       return;
     }
     // const dialogRef = this.dialog.open(NewsCommentDeleteComponent, {

@@ -30,7 +30,7 @@ import { Router } from '@angular/router';
 export class ApplicationSourceTreeComponent implements OnInit {
   constructor(
     private coreAuthService: CoreAuthService,
-    private toastrService: CmsToastrService,
+    private cmsToastrService: CmsToastrService,
     public coreEnumService: CoreEnumService,
     public categoryService: ApplicationSourceService,
     private router: Router,
@@ -74,7 +74,7 @@ export class ApplicationSourceTreeComponent implements OnInit {
       (error) => {
         this.loading.display = false;
 
-        this.toastrService.typeError(error);
+        this.cmsToastrService.typeError(error);
 
       }
     );
@@ -110,7 +110,7 @@ export class ApplicationSourceTreeComponent implements OnInit {
     if (id === 0) {
       const title = 'برروز خطا ';
       const message = 'دسته بندی انتخاب نشده است';
-      this.toastrService.toastr.error(message, title);
+      this.cmsToastrService.toastr.error(message, title);
       return;
     }
     this.router.navigate(['/application/source/edit/', id]);
@@ -125,7 +125,7 @@ export class ApplicationSourceTreeComponent implements OnInit {
     if (id === 0) {
       const title = 'برروز خطا ';
       const message = 'دسته بندی انتخاب نشده است';
-      this.toastrService.toastr.error(message, title);
+      this.cmsToastrService.toastr.error(message, title);
       return;
     }
     this.router.navigate(['/application/source/delete/', id]);
