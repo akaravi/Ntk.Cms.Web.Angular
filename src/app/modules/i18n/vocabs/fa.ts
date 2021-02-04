@@ -109,6 +109,19 @@ export const locale = {
           ADD_MESSAGE: 'Customer has been created'
         }
       }
+    },
+    Application: {
+      Source: {
+        RecordStatus: 'وضعیت',
+        RecordStatus_hint: 'انتخاب وضعیت این محتوا',
+        RecordStatus_required: 'انتخاب وضعیت الزامی است',
+        OSType: 'نوع سیستم عامل',
+        OSType_hint: 'انتخاب نوع سیستم عامل اپلیکیشن',
+        OSType_required: 'انتخاب نوع سیستم عامل اپلیکیشن الزامی است',
+        Title: 'عنوان',
+        Title_hint: 'عنوان سورس اپلیکیشن',
+        Title_required: 'عنوان اپلیکیشن الزامی است',
+      }
     }
   }
 };

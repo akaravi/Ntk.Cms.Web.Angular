@@ -21,6 +21,7 @@ import { BoolStatusClassPipe } from '../core/pipe/boolStatusClass.pipe';
 
 
 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -30,7 +31,7 @@ import { BoolStatusClassPipe } from '../core/pipe/boolStatusClass.pipe';
     TreeModule,
     NgxQueryBuilderModule,
     LeafletModule,
-    TagInputModule
+    TagInputModule,
 
   ],
   entryComponents: [
@@ -63,7 +64,8 @@ import { BoolStatusClassPipe } from '../core/pipe/boolStatusClass.pipe';
     CmsStatistListComponent,
     CmsExportListComponent,
     CmsMapComponent,
-    TagAutocompleteComponent
+    TagAutocompleteComponent,
+    
   ],
   /* No providers here! Since they’ll be already provided in AppModule. */
 })

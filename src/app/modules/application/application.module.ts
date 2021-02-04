@@ -33,6 +33,7 @@ import { ApplicationSourceAddComponent } from './source/add/add.component';
 import { ApplicationSourceEditComponent } from './source/edit/edit.component';
 import { ApplicationSourceDeleteComponent } from './source/delete/delete.component';
 import {MatIconModule} from '@angular/material/icon';
+import { TranslationModule } from '../i18n/translation.module';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import {MatIconModule} from '@angular/material/icon';
   ],
     imports: [
         CommonModule,
+      TranslationModule,
         ApplicationRoutes,
         FormsModule,
         ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),

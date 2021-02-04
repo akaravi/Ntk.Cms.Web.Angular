@@ -2,7 +2,7 @@
   <!--begin::Container-->
   <div class="container">
     <form (ngSubmit)="onFormSubmit()" #vform="ngForm"
-      class="form mt-0 mt-lg-10 fv-plugins-bootstrap fv-plugins-framework">
+          class="form mt-0 mt-lg-10 fv-plugins-bootstrap fv-plugins-framework">
       <app-progress-spinner [options]="loading">
       </app-progress-spinner>
       <mat-horizontal-stepper *ngIf="!loading.display" (selectionChange)="onStepClick($event,stepper)" #stepper>
@@ -10,30 +10,30 @@
         <mat-step label="اطلاعات الزامی" state="main">
 
           <mat-form-field class="example-full-width">
-            <mat-select placeholder="وضعیت" [(ngModel)]="dataModel.RecordStatus" name="dataModel.RecordStatus"
-              #RecordStatus="ngModel" panelClass="recordStatus-{{ dataModel.RecordStatus }}" required>
+            <mat-select placeholder="{{ 'Application.Source.RecordStatus' | translate }}" [(ngModel)]="dataModel.RecordStatus" name="dataModel.RecordStatus"
+                        #RecordStatus="ngModel" panelClass="recordStatus-{{ dataModel.RecordStatus }}" required>
               <mat-option *ngFor="
                 let item of dataModelEnumRecordStatusResult.ListItems;
                 index as i
               " [value]="item.Value">{{ item.Description }}</mat-option>
             </mat-select>
-            <mat-hint align="end">انتخاب وضیعت این محتوا</mat-hint>
+            <mat-hint align="end">{{ 'Application.Source.RecordStatus_hint' | translate }}</mat-hint>
             <mat-error *ngIf="RecordStatus.errors?.required">
-              RecordStatus is <strong>required</strong>
+              {{'Application.Source.RecordStatus_required'|translate}}
             </mat-error>
           </mat-form-field>
 
           <mat-form-field class="example-full-width">
-            <mat-select placeholder="Os Type" [(ngModel)]="dataModel.OsType" name="dataModel.OsType"
-              #OsType="ngModel" required>
+            <mat-select placeholder="{{ 'Application.Source.OSType' | translate }}" [(ngModel)]="dataModel.OSType" name="dataModel.OSType"
+                        #OSType="ngModel" required>
               <mat-option *ngFor="
                 let item of dataModelEnumOsTypeResult.ListItems;
                 index as i
               " [value]="item.Value">{{ item.Description }}</mat-option>
             </mat-select>
-            <mat-hint align="end">انتخاب نوع سیستم عامل اپلیکیشن</mat-hint>
-            <mat-error *ngIf="OsType.errors?.required">
-              OsType is <strong>required</strong>
+            <mat-hint align="end">{{ 'Application.Source.OSType_hint' | translate }}</mat-hint>
+            <mat-error *ngIf="OSType.errors?.required">
+              {{'Application.Source.OSType_required'|translate}}
             </mat-error>
           </mat-form-field>
 
@@ -42,26 +42,27 @@
 
 
           <mat-form-field class="example-full-width">
-            <mat-label>عنوان</mat-label>
+            <mat-label>{{ 'Application.Source.Title' | translate }}</mat-label>
             <input matInput [(ngModel)]="dataModel.Title" name="dataModel.Title" #Title type="text" placeholder="عنوان"
-              minlength="3" maxlength="100" required />
+                   minlength="3" maxlength="100" required />
             <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
-              (click)="dataModel.Title = ''">close</mat-icon>
+                      (click)="dataModel.Title = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
-            <mat-hint align="end">{{ Title.value.length }} / 100</mat-hint>
+            <mat-hint align="end">{{ 'Application.Source.Title_hint' | translate }}</mat-hint>
+            <mat-hint align="start">{{ Title.value.length }} / 100</mat-hint>
             <mat-error *ngIf="Title.errors?.required">
-              Title is <strong>required</strong>
+              {{'Application.Source.Title_required'|translate}}
             </mat-error>
           </mat-form-field>
 
           <mat-form-field class="example-full-width">
             <mat-label>ClassName</mat-label>
             <input matInput [(ngModel)]="dataModel.ClassName" name="dataModel.ClassName" #ClassName type="text" placeholder="عنوان"
-              minlength="3" maxlength="100" required />
+                   minlength="3" maxlength="100" required />
             <mat-icon matSuffix *ngIf="dataModel.ClassName" matSuffix mat-icon-button aria-label="Clear"
-              (click)="dataModel.ClassName = ''">close</mat-icon>
+                      (click)="dataModel.ClassName = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
-            <mat-hint align="end">{{ ClassName.value.length }} / 100</mat-hint>
+            <mat-hint align="start">{{ ClassName.value.length }} / 100</mat-hint>
             <mat-error *ngIf="ClassName.errors?.required">
               ClassName is <strong>required</strong>
             </mat-error>
@@ -70,9 +71,9 @@
           <mat-form-field class="example-full-width">
             <mat-label>PackageName</mat-label>
             <input matInput [(ngModel)]="dataModel.PackageName" name="dataModel.PackageName" #PackageName type="text" placeholder="عنوان"
-              minlength="3" maxlength="100" required />
+                   minlength="3" maxlength="100" required />
             <mat-icon matSuffix *ngIf="dataModel.PackageName" matSuffix mat-icon-button aria-label="Clear"
-              (click)="dataModel.PackageName = ''">close</mat-icon>
+                      (click)="dataModel.PackageName = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
             <mat-hint align="end">{{ PackageName.value.length }} / 100</mat-hint>
             <mat-error *ngIf="PackageName.errors?.required">
@@ -84,35 +85,6 @@
 
 
 
-          <mat-form-field class="example-full-width">
-            <mat-label>SourceNameGit</mat-label>
-            <input matInput [(ngModel)]="dataModel.SourceNameGit" name="dataModel.SourceNameGit" #SourceNameGit type="text" placeholder="عنوان"
-              minlength="3" maxlength="100" required />
-            <mat-icon matSuffix *ngIf="dataModel.SourceNameGit" matSuffix mat-icon-button aria-label="Clear"
-              (click)="dataModel.SourceNameGit = ''">close</mat-icon>
-            <mat-icon matSuffix>mode_edit</mat-icon>
-            <mat-hint align="end">{{ SourceNameGit.value.length }} / 100</mat-hint>
-            <mat-error *ngIf="SourceNameGit.errors?.required">
-              SourceNameGit is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-
-
-
-
-
-          <mat-form-field class="example-full-width">
-            <mat-label>FilePathOnServer</mat-label>
-            <input matInput [(ngModel)]="dataModel.FilePathOnServer" name="dataModel.FilePathOnServer" #FilePathOnServer type="text" placeholder="عنوان"
-              minlength="3" maxlength="100" required />
-            <mat-icon matSuffix *ngIf="dataModel.FilePathOnServer" matSuffix mat-icon-button aria-label="Clear"
-              (click)="dataModel.FilePathOnServer = ''">close</mat-icon>
-            <mat-icon matSuffix>mode_edit</mat-icon>
-            <mat-hint align="end">{{ FilePathOnServer.value.length }} / 100</mat-hint>
-            <mat-error *ngIf="FilePathOnServer.errors?.required">
-              FilePathOnServer is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
 
 
 
@@ -120,9 +92,9 @@
           <mat-form-field class="example-full-width">
             <mat-label>Extension</mat-label>
             <input matInput [(ngModel)]="dataModel.Extension" name="dataModel.Extension" #Extension type="text" placeholder="عنوان"
-              minlength="1" maxlength="10" required />
+                   minlength="1" maxlength="10" required />
             <mat-icon matSuffix *ngIf="dataModel.Extension" matSuffix mat-icon-button aria-label="Clear"
-              (click)="dataModel.Extension = ''">close</mat-icon>
+                      (click)="dataModel.Extension = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
             <mat-hint align="end">{{ Extension.value.length }} / 10</mat-hint>
             <mat-error *ngIf="Extension.errors?.required">
@@ -135,9 +107,9 @@
           <mat-form-field class="example-full-width">
             <mat-label>ExtensionUpdateFile</mat-label>
             <input matInput [(ngModel)]="dataModel.ExtensionUpdateFile" name="dataModel.ExtensionUpdateFile" #ExtensionUpdateFile type="text" placeholder="عنوان"
-              minlength="1" maxlength="10" required />
+                   minlength="1" maxlength="10" required />
             <mat-icon matSuffix *ngIf="dataModel.ExtensionUpdateFile" matSuffix mat-icon-button aria-label="Clear"
-              (click)="dataModel.ExtensionUpdateFile = ''">close</mat-icon>
+                      (click)="dataModel.ExtensionUpdateFile = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
             <mat-hint align="end">{{ ExtensionUpdateFile.value.length }} / 10</mat-hint>
             <mat-error *ngIf="ExtensionUpdateFile.errors?.required">
@@ -145,16 +117,13 @@
             </mat-error>
           </mat-form-field>
 
-
-
-
-
-
-
+          <div class="example-full-width">
+            <mat-slide-toggle [(ngModel)]="dataModel.IsPublish" name="dataModel.IsPublish">قابل دسترس برای عموم</mat-slide-toggle>
+          </div>
 
           <div *ngIf="formInfo.FormAllowSubmit">
             <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
-              class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
+                    class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
               بعدی
             </button>
             <a class="btn btn-secondary btn-sm BTN">
@@ -164,17 +133,58 @@
         </mat-step>
 
         <mat-step label="تنطیمات ساخت" state="seo">
-          <p>این بخش کمک می کند موتورهای سرچ بهتر مطالب را ایندکس کنند</p>
+          <p>تنظیمات ساخت اپلیکیشن و برروز رسانی را انتخاب کنید</p>
+
+          <div class="example-full-width">
+            <mat-slide-toggle [(ngModel)]="dataModel.ForceUpdate" name="dataModel.ForceUpdate">برروز رسانی الزامی</mat-slide-toggle>
+          </div>
+          <div class="example-full-width">
+            <mat-slide-toggle [(ngModel)]="dataModel.UpdateSourceByGit" name="dataModel.UpdateSourceByGit">برروز رسانی کد به صورت خودکار</mat-slide-toggle>
+          </div>
+          <div class="example-full-width">
+            <mat-slide-toggle [(ngModel)]="dataModel.IsAbilityGradleBuild" name="dataModel.IsAbilityGradleBuild">قابلیت ساخت خودکار</mat-slide-toggle>
+          </div>
 
 
+
+
+          <mat-form-field class="example-full-width">
+            <mat-label>SourceNameGit</mat-label>
+            <input matInput [(ngModel)]="dataModel.SourceNameGit" name="dataModel.SourceNameGit" #SourceNameGit type="text" placeholder="عنوان"
+                   minlength="0" maxlength="100"  />
+            <mat-icon matSuffix *ngIf="dataModel.SourceNameGit" matSuffix mat-icon-button aria-label="Clear"
+                      (click)="dataModel.SourceNameGit = ''">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
+            <mat-hint align="end">{{ SourceNameGit.value.length }} / 100</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <mat-label>FilePathOnServer</mat-label>
+            <input matInput [(ngModel)]="dataModel.FilePathOnServer" name="dataModel.FilePathOnServer" #FilePathOnServer type="text" placeholder="عنوان"
+                   minlength="0" maxlength="100"  />
+            <mat-icon matSuffix *ngIf="dataModel.FilePathOnServer" matSuffix mat-icon-button aria-label="Clear"
+                      (click)="dataModel.FilePathOnServer = ''">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
+            <mat-hint align="end">{{ FilePathOnServer.value.length }} / 100</mat-hint>
+          </mat-form-field>
+
+
+          <mat-form-field class="example-full-width">
+            <mat-label>FireBaseServerKey</mat-label>
+            <textarea matInput [(ngModel)]="dataModel.FireBaseServerKey" name="dataModel.FireBaseServerKey" #FireBaseServerKey type="text" placeholder="عنوان"
+                      rows="5"  ></textarea>
+            <mat-icon matSuffix *ngIf="dataModel.FireBaseServerKey" matSuffix mat-icon-button aria-label="Clear"
+                      (click)="dataModel.FireBaseServerKey = ''">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
+          </mat-form-field>
 
           <div *ngIf="formInfo.FormAllowSubmit">
             <button type="button" mat-button matStepperPrevious
-              class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
+                    class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
               قبلی
             </button>
             <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
-              class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
+                    class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
               بعدی
             </button>
           </div>
@@ -183,85 +193,286 @@
           <p>Socialize with each other.</p>
           <div class="mb-3">
             <img *ngIf="dataModel?.LinkMainImageIdSrc?.length>0" style="vertical-align:middle;" aria-hidden
-              src="{{dataModel.LinkMainImageIdSrc}}" height="50" width="50" />
+                 src="{{dataModel.LinkMainImageIdSrc}}" height="50" width="50" />
           </div>
           <div class="mb-9">
             <mat-form-field class="example-full-width">
 
               <mat-label (click)="fileManagerOpenForm = true">عکس اصلی</mat-label>
               <input matInput [(ngModel)]="dataModel.LinkMainImageId" name="dataModel.LinkMainImageId" #LinkMainImageId
-                type="text" placeholder="شناسه فایل اصلی" (click)="fileManagerOpenForm = true" />
+                     type="text" placeholder="شناسه فایل اصلی" (click)="fileManagerOpenForm = true" />
               <mat-icon matSuffix *ngIf="dataModel.LinkMainImageId" matSuffix mat-icon-button aria-label="Clear"
-                (click)="dataModel.LinkMainImageId = null">close</mat-icon>
+                        (click)="dataModel.LinkMainImageId = null">close</mat-icon>
               <mat-icon matSuffix (click)="fileManagerOpenForm = true">mode_edit</mat-icon>
             </mat-form-field>
 
             <cms-file-manager (itemSelected)="onActionFileSelectedLinkMainImageId($event)" [language]="appLanguage"
-              [isPopup]="true" [(openForm)]="fileManagerOpenForm" [tree]="fileManagerTree"
-              [openFilemanagerButtonLabelKey]="'select'" [selectFileType]="selectFileTypeMainImage"
-              [openFilemanagerButtonView]="false"></cms-file-manager>
+                              [isPopup]="true" [(openForm)]="fileManagerOpenForm" [tree]="fileManagerTree"
+                              [openFilemanagerButtonLabelKey]="'select'" [selectFileType]="selectFileTypeMainImage"
+                              [openFilemanagerButtonView]="false"></cms-file-manager>
           </div>
 
           <div *ngIf="formInfo.FormAllowSubmit">
             <button type="button" mat-button matStepperPrevious
-              class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
+                    class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
               قبلی
             </button>
             <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
-              class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
-              بعدی
-            </button>
-          </div>
-        </mat-step>
-        <mat-step label="تنظیمات پیش فرض مدیریت کل در ساخت" state="otherinfo">
-          <p>سایر اطلاعات در رابطه با این محتوا در این قسمت اضافه کنید</p>
-
-
-
-
-
-          <div *ngIf="formInfo.FormAllowSubmit">
-            <button type="button" mat-button matStepperPrevious
-              class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
-              قبلی
-            </button>
-            <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
-              class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
+                    class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
               بعدی
             </button>
           </div>
         </mat-step>
 
-        <mat-step label="موقعیت مکانی" state="loaction">
-          <p>روی نقشه کلیک کنید تا موقیت مکانی مشخس گردد</p>
+        <mat-step label="تنظیمات قالب و ساخت" state="otherinfo">
+          <p>تنظیمات پیش فرض مدیریت کل در ساخت</p>
+
+          <mat-form-field class="example-full-width">
+            <mat-label>DefaultConfigBuilderAdminJsonValues</mat-label>
+            <textarea matInput [(ngModel)]="dataModel.DefaultConfigBuilderAdminJsonValues" name="dataModel.DefaultConfigBuilderAdminJsonValues" #DefaultConfigBuilderAdminJsonValues type="text" placeholder="عنوان"
+                      rows="5"  ></textarea>
+            <mat-icon matSuffix *ngIf="dataModel.DefaultConfigBuilderAdminJsonValues" matSuffix mat-icon-button aria-label="Clear"
+                      (click)="dataModel.DefaultConfigBuilderAdminJsonValues = ''">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>DefaultConfigRuntimeAdminJsonValues</mat-label>
+            <textarea matInput [(ngModel)]="dataModel.DefaultConfigRuntimeAdminJsonValues" name="dataModel.DefaultConfigRuntimeAdminJsonValues" #DefaultConfigRuntimeAdminJsonValues type="text" placeholder="عنوان"
+                      rows="5"  ></textarea>
+            <mat-icon matSuffix *ngIf="dataModel.DefaultConfigRuntimeAdminJsonValues" matSuffix mat-icon-button aria-label="Clear"
+                      (click)="dataModel.DefaultConfigRuntimeAdminJsonValues = ''">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>DefaultConfigBuilderSiteJsonValues</mat-label>
+            <textarea matInput [(ngModel)]="dataModel.DefaultConfigBuilderSiteJsonValues" name="dataModel.DefaultConfigBuilderSiteJsonValues" #DefaultConfigBuilderSiteJsonValues type="text" placeholder="عنوان"
+                      rows="5"  ></textarea>
+            <mat-icon matSuffix *ngIf="dataModel.DefaultConfigBuilderSiteJsonValues" matSuffix mat-icon-button aria-label="Clear"
+                      (click)="dataModel.DefaultConfigBuilderSiteJsonValues = ''">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>DefaultConfigRuntimeSiteJsonValues</mat-label>
+            <textarea matInput [(ngModel)]="dataModel.DefaultConfigRuntimeSiteJsonValues" name="dataModel.DefaultConfigRuntimeSiteJsonValues" #DefaultConfigRuntimeSiteJsonValues type="text" placeholder="عنوان"
+                      rows="5"  ></textarea>
+            <mat-icon matSuffix *ngIf="dataModel.DefaultConfigRuntimeSiteJsonValues" matSuffix mat-icon-button aria-label="Clear"
+                      (click)="dataModel.DefaultConfigRuntimeSiteJsonValues = ''">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
+          </mat-form-field>
+
+
+
+
+
+
+
+
+          <table class="example-full-width" cellspacing="0">
+
+            <tr>
+              <td><mat-form-field class="example-full-width">
+                <mat-label>BuildKey1String</mat-label>
+                <input matInput [(ngModel)]="dataModel.BuildKey1String" name="dataModel.BuildKey1String" #BuildKey1String type="text" placeholder="KEY"
+                       minlength="0" maxlength="1000" />
+                <mat-hint align="end">{{ BuildKey1String.value.length }} / 1000</mat-hint>
+              </mat-form-field></td>
+              <td><mat-form-field class="example-full-width">
+                <mat-label>BuildKey1Value</mat-label>
+                <input matInput [(ngModel)]="dataModel.BuildKey1Value" name="dataModel.BuildKey1Value" #BuildKey1Value type="text" placeholder="Value"
+                       minlength="0" maxlength="1000" />
+                <mat-hint align="end">{{ BuildKey1Value.value.length }} / 1000</mat-hint>
+              </mat-form-field></td>
+            </tr>
+
+
+            <tr>
+              <td><mat-form-field class="example-full-width">
+                <mat-label>BuildKey2String</mat-label>
+                <input matInput [(ngModel)]="dataModel.BuildKey2String" name="dataModel.BuildKey2String" #BuildKey2String type="text" placeholder="KEY"
+                       minlength="0" maxlength="1000" />
+                <mat-hint align="end">{{ BuildKey2String.value.length }} / 1000</mat-hint>
+              </mat-form-field></td>
+              <td><mat-form-field class="example-full-width">
+                <mat-label>BuildKey2Value</mat-label>
+                <input matInput [(ngModel)]="dataModel.BuildKey2Value" name="dataModel.BuildKey2Value" #BuildKey2Value type="text" placeholder="Value"
+                       minlength="0" maxlength="1000" />
+                <mat-hint align="end">{{ BuildKey2Value.value.length }} / 1000</mat-hint>
+              </mat-form-field></td>
+            </tr>
+
+
+
+            <tr>
+              <td><mat-form-field class="example-full-width">
+                <mat-label>BuildKey3String</mat-label>
+                <input matInput [(ngModel)]="dataModel.BuildKey3String" name="dataModel.BuildKey3String" #BuildKey3String type="text" placeholder="KEY"
+                       minlength="0" maxlength="1000" />
+                <mat-hint align="end">{{ BuildKey3String.value.length }} / 1000</mat-hint>
+              </mat-form-field></td>
+              <td><mat-form-field class="example-full-width">
+                <mat-label>BuildKey3Value</mat-label>
+                <input matInput [(ngModel)]="dataModel.BuildKey3Value" name="dataModel.BuildKey3Value" #BuildKey3Value type="text" placeholder="Value"
+                       minlength="0" maxlength="1000" />
+                <mat-hint align="end">{{ BuildKey3Value.value.length }} / 1000</mat-hint>
+              </mat-form-field></td>
+            </tr>
+
+
+            <tr>
+              <td><mat-form-field class="example-full-width">
+                <mat-label>BuildKey4String</mat-label>
+                <input matInput [(ngModel)]="dataModel.BuildKey4String" name="dataModel.BuildKey4String" #BuildKey4String type="text" placeholder="KEY"
+                       minlength="0" maxlength="1000" />
+                <mat-hint align="end">{{ BuildKey4String.value.length }} / 1000</mat-hint>
+              </mat-form-field></td>
+              <td><mat-form-field class="example-full-width">
+                <mat-label>BuildKey4Value</mat-label>
+                <input matInput [(ngModel)]="dataModel.BuildKey4Value" name="dataModel.BuildKey4Value" #BuildKey4Value type="text" placeholder="Value"
+                       minlength="0" maxlength="1000" />
+                <mat-hint align="end">{{ BuildKey4Value.value.length }} / 1000</mat-hint>
+              </mat-form-field></td>
+            </tr>
+
+
+
+            <tr>
+              <td><mat-form-field class="example-full-width">
+                <mat-label>BuildKey5String</mat-label>
+                <input matInput [(ngModel)]="dataModel.BuildKey5String" name="dataModel.BuildKey5String" #BuildKey5String type="text" placeholder="KEY"
+                       minlength="0" maxlength="1000" />
+                <mat-hint align="end">{{ BuildKey5String.value.length }} / 1000</mat-hint>
+              </mat-form-field></td>
+              <td><mat-form-field class="example-full-width">
+                <mat-label>BuildKey5Value</mat-label>
+                <input matInput [(ngModel)]="dataModel.BuildKey5Value" name="dataModel.BuildKey5Value" #BuildKey5Value type="text" placeholder="Value"
+                       minlength="0" maxlength="1000" />
+                <mat-hint align="end">{{ BuildKey5Value.value.length }} / 1000</mat-hint>
+              </mat-form-field></td>
+            </tr>
+
+
+
+          </table>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
           <div *ngIf="formInfo.FormAllowSubmit">
             <button type="button" mat-button matStepperPrevious
-              class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
+                    class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
+              قبلی
+            </button>
+            <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
+                    class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
+              بعدی
+            </button>
+          </div>
+        </mat-step>
+
+        <mat-step label="گزارش" state="loaction">
+          <p>گزارش آخرین وضعیت ها</p>
+
+          <mat-form-field class="example-full-width">
+            <mat-label>LastSuccessfullyBuildDate</mat-label>
+            <input matInput [(ngModel)]="dataModel.LastSuccessfullyBuildDate" name="dataModel.LastSuccessfullyBuildDate" #LastSuccessfullyBuildDate type="text" placeholder="عنوان"
+            />
+            <mat-icon matSuffix *ngIf="dataModel.LastSuccessfullyBuildDate" matSuffix mat-icon-button aria-label="Clear"
+                      (click)="dataModel.LastSuccessfullyBuildDate = null">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
+            <mat-hint align="end">{{ LastSuccessfullyBuildDate.value.length }} / 100</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <mat-label>LastBuildCommandDate</mat-label>
+            <input matInput [(ngModel)]="dataModel.LastBuildCommandDate" name="dataModel.LastBuildCommandDate" #LastBuildCommandDate type="text" placeholder="عنوان"
+            />
+            <mat-icon matSuffix *ngIf="dataModel.LastBuildCommandDate" matSuffix mat-icon-button aria-label="Clear"
+                      (click)="dataModel.LastBuildCommandDate = null">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
+            <mat-hint align="end">{{ LastBuildCommandDate.value.length }} / 100</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <mat-label>LastBuildCommandBy</mat-label>
+            <input matInput [(ngModel)]="dataModel.LastBuildCommandBy" name="dataModel.LastBuildCommandBy" #LastBuildCommandBy type="text" placeholder="عنوان"
+            />
+            <mat-icon matSuffix *ngIf="dataModel.LastBuildCommandBy" matSuffix mat-icon-button aria-label="Clear"
+                      (click)="dataModel.LastBuildCommandBy = null">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
+            <mat-hint align="end">{{ LastBuildCommandBy.value.length }} / 100</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <mat-label>LastBuildCommandDate</mat-label>
+            <input matInput [(ngModel)]="dataModel.LastBuildCommandDate" name="dataModel.LastBuildCommandDate" #LastBuildCommandDate type="text" placeholder="عنوان"
+            />
+            <mat-icon matSuffix *ngIf="dataModel.LastBuildCommandDate" matSuffix mat-icon-button aria-label="Clear"
+                      (click)="dataModel.LastBuildCommandDate = null">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
+            <mat-hint align="end">{{ LastBuildCommandDate.value.length }} / 100</mat-hint>
+          </mat-form-field>
+
+
+          <mat-form-field class="example-full-width">
+            <mat-label>LastBuildCommandBy</mat-label>
+            <input matInput [(ngModel)]="dataModel.LastBuildCommandBy" name="dataModel.LastBuildCommandBy" #LastBuildCommandBy type="text" placeholder="عنوان"
+            />
+            <mat-icon matSuffix *ngIf="dataModel.LastBuildCommandBy" matSuffix mat-icon-button aria-label="Clear"
+                      (click)="dataModel.LastBuildCommandBy = null">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
+            <mat-hint align="end">{{ LastBuildCommandBy.value.length }} / 100</mat-hint>
+          </mat-form-field>
+
+
+          <mat-form-field class="example-full-width">
+            <mat-label>LastUnsuccessfullyBuildErrorDate</mat-label>
+            <input matInput [(ngModel)]="dataModel.LastUnsuccessfullyBuildErrorDate" name="dataModel.LastUnsuccessfullyBuildErrorDate" #LastUnsuccessfullyBuildErrorDate type="text" placeholder="عنوان"
+            />
+            <mat-icon matSuffix *ngIf="dataModel.LastUnsuccessfullyBuildErrorDate" matSuffix mat-icon-button aria-label="Clear"
+                      (click)="dataModel.LastUnsuccessfullyBuildErrorDate = null">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
+            <mat-hint align="end">{{ LastUnsuccessfullyBuildErrorDate.value.length }} / 100</mat-hint>
+          </mat-form-field>
+
+
+
+          <mat-form-field class="example-full-width">
+            <mat-label>LastUnsuccessfullyBuildErrorMessage</mat-label>
+            <input matInput [(ngModel)]="dataModel.LastUnsuccessfullyBuildErrorMessage" name="dataModel.LastUnsuccessfullyBuildErrorMessage" #LastUnsuccessfullyBuildErrorMessage type="text" placeholder="عنوان"
+            />
+            <mat-icon matSuffix *ngIf="dataModel.LastUnsuccessfullyBuildErrorMessage" matSuffix mat-icon-button aria-label="Clear"
+                      (click)="dataModel.LastUnsuccessfullyBuildErrorMessage = null">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
+            <mat-hint align="end">{{ LastUnsuccessfullyBuildErrorMessage.value.length }} / 100</mat-hint>
+          </mat-form-field>
+
+
+
+
+
+          <div *ngIf="formInfo.FormAllowSubmit">
+            <button type="button" mat-button matStepperPrevious
+                    class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
               قبلی
             </button>
             <button type="submit" mat-button [disabled]="!vform.form.valid"
-              class="btn btn-success font-weight-bold text-uppercase px-9 py-4">
+                    class="btn btn-success font-weight-bold text-uppercase px-9 py-4">
               ذخیره
             </button>
           </div>
         </mat-step>
 
-        <!-- Icon overrides. -->
-        <ng-template matStepperIcon="main">
-          <mat-icon>call_end</mat-icon>
-        </ng-template>
-        <ng-template matStepperIcon="seo">
-          <mat-icon>call_end</mat-icon>
-        </ng-template>
-        <ng-template matStepperIcon="file">
-          <mat-icon>forum</mat-icon>
-        </ng-template>
-        <ng-template matStepperIcon="loaction">
-          <mat-icon>forum</mat-icon>
-        </ng-template>
+
 
       </mat-horizontal-stepper>
 
@@ -270,3 +481,4 @@
   </div>
   <!--end::Container-->
 </div>
+

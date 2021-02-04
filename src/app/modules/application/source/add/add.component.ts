@@ -18,7 +18,7 @@ import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import {NodeInterface, TreeModel} from 'ntk-cms-filemanager';
 
 @Component({
-  selector: 'app-add',
+  selector: 'app-aplication-source-add',
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.scss']
 })
