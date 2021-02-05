@@ -103,7 +103,13 @@ export class CmsToastrService {
     }
     this.toastr.error(message, 'Error!');
   }
-
+  typeErrorGetAccess(str: string = ''): void {
+    let message = 'خطا در دریافت دسترسی های ';
+    if (str && str.length > 0) {
+      message = message + ' error: ' + str;
+    }
+    this.toastr.error(message, 'Error!');
+  }
   typeErrorGetOne(str: string = ''): void {
     let message = 'خطا در دریافت ردیف ';
     if (str && str.length > 0) {

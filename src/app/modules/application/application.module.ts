@@ -34,6 +34,9 @@ import { ApplicationSourceEditComponent } from './source/edit/edit.component';
 import { ApplicationSourceDeleteComponent } from './source/delete/delete.component';
 import {MatIconModule} from '@angular/material/icon';
 import { TranslationModule } from '../i18n/translation.module';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatStepperModule} from '@angular/material/stepper';
+import { ApplicationSourceSelectorComponent } from './source/selector/selector.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +46,7 @@ import { TranslationModule } from '../i18n/translation.module';
     ApplicationSourceAddComponent,
     ApplicationSourceEditComponent,
     ApplicationSourceDeleteComponent,
+    ApplicationSourceSelectorComponent,
     ApplicationAppListComponent,
     ApplicationMemberInfoListComponent,
     ApplicationIntroListComponent,
@@ -50,20 +54,22 @@ import { TranslationModule } from '../i18n/translation.module';
     ApplicationThemeConfigListComponent,
     ApplicationAppTreeComponent,
   ],
-    imports: [
-        CommonModule,
-      TranslationModule,
-        ApplicationRoutes,
-        FormsModule,
-        ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
-        TreeviewModule.forRoot(),
-        SharedModule.forRoot(),
-        AngularEditorModule,
-        TagInputModule,
-        ProgressSpinnerModule,
-        CmsFileManagerModule,
-        MatIconModule
-    ],
+  imports: [
+    CommonModule,
+    TranslationModule,
+    ApplicationRoutes,
+    FormsModule,
+    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
+    TreeviewModule.forRoot(),
+    SharedModule.forRoot(),
+    AngularEditorModule,
+    TagInputModule,
+    ProgressSpinnerModule,
+    CmsFileManagerModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatStepperModule
+  ],
   providers: [
     CoreEnumService,
     CoreAuthService,

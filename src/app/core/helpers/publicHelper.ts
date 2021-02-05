@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
-import { ErrorExceptionResultBase } from 'ntk-cms-api';
+import { AccessModel, DataFieldInfoModel, ErrorExceptionResultBase } from 'ntk-cms-api';
 import { environment } from 'src/environments/environment';
 import { CmsToastrService } from '../services/cmsToastr.service';
 
@@ -12,7 +12,50 @@ export class PublicHelper {
   constructor(
     private router: Router,
     private cmsToastrService: CmsToastrService
-  ) {}
+  ) { }
+  editorConfig: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: 'auto',
+    minHeight: '30',
+    maxHeight: 'auto',
+    width: 'auto',
+    minWidth: '0',
+    translate: 'yes',
+    enableToolbar: true,
+    showToolbar: true,
+    placeholder: 'Enter text here...',
+    defaultParagraphSeparator: '',
+    defaultFontName: '',
+    defaultFontSize: '',
+    fonts: [
+      { class: 'arial', name: 'Arial' },
+      { class: 'times-new-roman', name: 'Times New Roman' },
+      { class: 'calibri', name: 'Calibri' },
+      { class: 'comic-sans-ms', name: 'Comic Sans MS' }
+    ],
+    customClasses: [
+      {
+        name: 'quote',
+        class: 'quote',
+      },
+      {
+        name: 'redText',
+        class: 'redText'
+      },
+      {
+        name: 'titleText',
+        class: 'titleText',
+        tag: 'h1',
+      },
+    ],
+    sanitize: true,
+    toolbarPosition: 'top',
+    toolbarHiddenButtons: [
+      ['bold', 'italic'],
+      ['fontSize']
+    ]
+  };
 
   CheckError(model: any): any {
     if (!model) {
@@ -67,47 +110,23 @@ export class PublicHelper {
     listStr.splice(index, 1);
     return listStr;
   }
-  editorConfig: AngularEditorConfig = {
-    editable: true,
-    spellcheck: true,
-    height: 'auto',
-    minHeight: '30',
-    maxHeight: 'auto',
-    width: 'auto',
-    minWidth: '0',
-    translate: 'yes',
-    enableToolbar: true,
-    showToolbar: true,
-    placeholder: 'Enter text here...',
-    defaultParagraphSeparator: '',
-    defaultFontName: '',
-    defaultFontSize: '',
-    fonts: [
-      { class: 'arial', name: 'Arial' },
-      { class: 'times-new-roman', name: 'Times New Roman' },
-      { class: 'calibri', name: 'Calibri' },
-      { class: 'comic-sans-ms', name: 'Comic Sans MS' }
-    ],
-    customClasses: [
-      {
-        name: 'quote',
-        class: 'quote',
-      },
-      {
-        name: 'redText',
-        class: 'redText'
-      },
-      {
-        name: 'titleText',
-        class: 'titleText',
-        tag: 'h1',
-      },
-    ],
-    sanitize: true,
-    toolbarPosition: 'top',
-    toolbarHiddenButtons: [
-      ['bold', 'italic'],
-      ['fontSize']
-    ]
-  };
+  fieldInfo(dataAccessModel: AccessModel, fieldName: string): DataFieldInfoModel {
+    const retOut = new DataFieldInfoModel();
+    if (!dataAccessModel || !dataAccessModel.FieldsInfo || dataAccessModel.FieldsInfo.length === 0) {
+      return retOut;
+    }
+    const field = dataAccessModel.FieldsInfo.find(x => x.FieldName === fieldName);
+    if (!field) {
+      return retOut;
+    }
+    return field;
+  }
+  fieldInfoConvertor(dataAccessModel: AccessModel): Map<string, DataFieldInfoModel> {
+    const retOut = new Map<string, DataFieldInfoModel>();
+    if (!dataAccessModel || !dataAccessModel.FieldsInfo || dataAccessModel.FieldsInfo.length === 0) {
+      return retOut;
+    }
+    dataAccessModel.FieldsInfo.forEach((el) => retOut[el.FieldName] = el);
+    return retOut;
+  }
 }
