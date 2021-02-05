@@ -37,6 +37,7 @@ import { TranslationModule } from '../i18n/translation.module';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatStepperModule} from '@angular/material/stepper';
 import { ApplicationSourceSelectorComponent } from './source/selector/selector.component';
+import { ApplicationThemeConfigSelectorComponent } from './themeConfig/selector/selector.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { ApplicationSourceSelectorComponent } from './source/selector/selector.c
     ApplicationIntroListComponent,
     ApplicationNotificationListComponent,
     ApplicationThemeConfigListComponent,
+    ApplicationThemeConfigSelectorComponent,
     ApplicationAppTreeComponent,
   ],
   imports: [

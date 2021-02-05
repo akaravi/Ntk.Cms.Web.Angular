@@ -140,7 +140,7 @@ export class ApplicationSourceEditComponent implements OnInit {
           if (next.IsSuccess) {
             this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
             this.toasterService.typeSuccessEdit();
-            // this.router.navigate(['/application/source/']);
+            this.router.navigate(['/application/source/']);
           } else {
             this.toasterService.typeErrorEdit(next.ErrorMessage);
           }

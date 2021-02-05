@@ -71,6 +71,7 @@ export class ApplicationSourceListComponent implements OnInit {
   expandedElement: ApplicationSourceModel | null;
 
   ngOnInit(): void {
+    this.filteModelContent.SortColumn = 'Title';
     this.coreAuthService.CurrentTokenInfoBSObs.subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;

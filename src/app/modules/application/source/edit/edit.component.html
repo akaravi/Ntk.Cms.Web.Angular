@@ -21,7 +21,7 @@
             </mat-select>
             <mat-hint align="end">{{ 'Application.Source.RecordStatus_hint' | translate }}</mat-hint>
             <mat-error *ngIf="RecordStatus.errors?.required">
-              {{'Application.Source.RecordStatus_required'|translate}}
+              {{ fieldsInfo['OSType']?.RecordStatus }} is <strong>required</strong>
             </mat-error>
           </mat-form-field>
 
@@ -35,8 +35,8 @@
             </mat-select>
             <mat-hint align="end">{{ 'Application.Source.OSType_hint' | translate }}</mat-hint>
             <mat-error *ngIf="OSType.errors?.required">
-              {{'Application.Source.OSType_required'|translate}}
-            </mat-error>
+              {{ fieldsInfo['OSType']?.FieldTitle }} is <strong>required</strong>
+                   </mat-error>
           </mat-form-field>
 
 
@@ -50,7 +50,7 @@
             <mat-hint align="end">{{ 'Application.Source.Title_hint' | translate }}</mat-hint>
             <mat-hint align="start">{{ Title.value.length }} / 100</mat-hint>
             <mat-error *ngIf="Title.errors?.required">
-              {{'Application.Source.Title_required'|translate}}
+              {{ fieldsInfo['Title']?.FieldTitle }} is <strong>required</strong>
             </mat-error>
           </mat-form-field>
 
@@ -187,7 +187,7 @@
           </div>
         </mat-step>
         <mat-step label="فایل های پیوست" state="file">
-          <p>Socialize with each other.</p>
+          <p>عکس از اپلیکیشن.</p>
           <div class="mb-3">
             <img *ngIf="dataModel?.LinkMainImageIdSrc?.length>0" style="vertical-align:middle;" aria-hidden
               src="{{dataModel.LinkMainImageIdSrc}}" height="50" width="50" />
