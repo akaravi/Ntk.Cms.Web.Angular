@@ -71,7 +71,6 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
   selectFileTypePodcast = ['mp3'];
   formInfo: FormInfoModel = new FormInfoModel();
-  mapMarker: any;
   fileManagerOpenForm = false;
   fileManagerOpenFormPodcast = false;
 
@@ -83,6 +82,7 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
   appLanguage = 'fa';
 
   viewMap = false;
+  mapMarker: any;
   private mapModel: Map;
   private mapMarkerPoints: Array<PoinModel> = [];
   mapOptonCenter = {};

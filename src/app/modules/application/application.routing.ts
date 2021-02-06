@@ -10,6 +10,8 @@ import { ApplicationThemeConfigListComponent } from './themeConfig/list/list.com
 import { ApplicationSourceAddComponent } from './source/add/add.component';
 import { ApplicationSourceEditComponent } from './source/edit/edit.component';
 import { ApplicationSourceDeleteComponent } from './source/delete/delete.component';
+import { ApplicationAppEditComponent } from './content/edit/edit.component';
+import { ApplicationAppAddComponent } from './content/add/add.component';
 
 const routes: Routes = [
   {
@@ -41,7 +43,23 @@ const routes: Routes = [
         component: ApplicationAppListComponent
       },
       {
+        path: 'app/add/:SourceId',
+        component: ApplicationAppAddComponent
+      },
+      {
+        path: 'app/edit/:Id',
+        component: ApplicationAppEditComponent
+      },
+      {
         path: 'intro',
+        component: ApplicationIntroListComponent
+      },
+      {
+        path: 'intro/add/:ApplicationId',
+        component: ApplicationIntroListComponent
+      },
+      {
+        path: 'intro/edit/:Id',
         component: ApplicationIntroListComponent
       },
       {

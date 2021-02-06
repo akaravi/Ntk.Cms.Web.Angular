@@ -22,19 +22,19 @@
               RecordStatus is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-          <app-news-category-selector (optionSelect)="onActionCategorySelect($event)"
+          <app-file-category-selector (optionSelect)="onActionCategorySelect($event)"
             [optionSelectForce]="dataModel.LinkCategoryId" [optionPlaceholder]="'دسته بندی'">
-          </app-news-category-selector>
+          </app-file-category-selector>
           <mat-form-field class="example-full-width">
             <mat-label>عنوان</mat-label>
-            <input matInput [(ngModel)]="dataModel.Title" name="dataModel.Title" #Title type="text" placeholder="عنوان"
+            <input matInput [(ngModel)]="dataModel.FileName" name="dataModel.FileName" #FileName type="text" placeholder="عنوان"
               minlength="3" maxlength="100" required />
-            <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
-              (click)="dataModel.Title = ''">close</mat-icon>
+            <mat-icon matSuffix *ngIf="dataModel.FileName" matSuffix mat-icon-button aria-label="Clear"
+              (click)="dataModel.FileName = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
-            <mat-hint align="end">{{ Title.value.length }} / 100</mat-hint>
-            <mat-error *ngIf="Title.errors?.required">
-              Title is <strong>required</strong>
+            <mat-hint align="end">{{ FileName.value.length }} / 100</mat-hint>
+            <mat-error *ngIf="FileName.errors?.required">
+              FileName is <strong>required</strong>
             </mat-error>
           </mat-form-field>
 
@@ -115,7 +115,7 @@
         </mat-step>
 
         <mat-step label="موقعیت مکانی" state="loaction">
-          <p>روی نقشه کلیک کنید تا موقیت مکانی مشخس گردد</p>
+          <p>روی نقشه کلیک کنید تا موقیت مکانی مشخص گردد</p>
           <app-cms-map (map$)="receiveMap($event)" (zoom$)="receiveZoom($event)" [optonCenter]="mapOptonCenter"
             id='main-map'></app-cms-map>
           <div *ngIf="formInfo.FormAllowSubmit">

@@ -20,6 +20,10 @@ import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { NodeInterface, TreeModel } from 'ntk-cms-filemanager';
 import { retry } from 'rxjs/operators';
 import { ApplicationThemeConfigModel } from 'ntk-cms-api';
+import { PoinModel } from 'src/app/core/models/pointModel';
+import { Map as leafletMap } from 'leaflet';
+import * as Leaflet from 'leaflet';
+
 
 @Component({
   selector: 'app-aplication-app-edit',
@@ -30,12 +34,12 @@ export class ApplicationAppEditComponent implements OnInit {
   requestId = 0;
 
   constructor(private activatedRoute: ActivatedRoute,
-              public publicHelper: PublicHelper,
-              public coreEnumService: CoreEnumService,
-              public applicationEnumService: ApplicationEnumService,
-              private applicationAppService: ApplicationAppService,
-              private toasterService: CmsToastrService,
-              private router: Router) {
+    public publicHelper: PublicHelper,
+    public coreEnumService: CoreEnumService,
+    public applicationEnumService: ApplicationEnumService,
+    private applicationAppService: ApplicationAppService,
+    private toasterService: CmsToastrService,
+    private router: Router) {
     this.fileManagerTree = new TreeModel();
   }
 
@@ -53,6 +57,10 @@ export class ApplicationAppEditComponent implements OnInit {
   appLanguage = 'fa';
 
   fileManagerTree: TreeModel;
+  mapMarker: any;
+  private mapModel: leafletMap;
+  private mapMarkerPoints: Array<PoinModel> = [];
+  mapOptonCenter = {};
   ngOnInit(): void {
     this.requestId = Number(this.activatedRoute.snapshot.paramMap.get('Id'));
     if (this.requestId === 0) {
@@ -62,21 +70,25 @@ export class ApplicationAppEditComponent implements OnInit {
     this.DataGetAccess();
     this.DataGetOne(this.requestId);
     this.getEnumRecordStatus();
-    this.getEnumOsType();
   }
   getEnumRecordStatus(): void {
     this.coreEnumService.ServiceEnumRecordStatus().subscribe((res) => {
       this.dataModelEnumRecordStatusResult = res;
     });
   }
-  getEnumOsType(): void {
-    this.applicationEnumService.ServiceEnumOSType().subscribe((res) => {
-      this.dataModelEnumOsTypeResult = res;
-    });
-  }
+
   onFormSubmit(): void {
     if (!this.formGroup.valid) {
       this.toasterService.typeErrorFormInvalid();
+      return;
+    }
+    if (this.dataModel.LinkSourceId <= 0) {
+      this.toasterService.typeErrorEdit('سورس کد برنامه مشخص  کنید');
+
+      return;
+    }
+    if (this.dataModel.LinkThemeConfigId <= 0) {
+      this.toasterService.typeErrorEdit('قالب  برنامه مشخص  کنید');
       return;
     }
     this.DataEditContent();
@@ -166,12 +178,58 @@ export class ApplicationAppEditComponent implements OnInit {
       // }
     }
   }
+  receiveMap(model: leafletMap): void {
+    this.mapModel = model;
+
+    if (this.mapMarkerPoints && this.mapMarkerPoints.length > 0) {
+      this.mapMarkerPoints.forEach(item => {
+        this.mapMarker = Leaflet.marker([item.lat, item.lon]).addTo(this.mapModel);
+      });
+      this.mapOptonCenter = this.mapMarkerPoints[0];
+      this.mapMarkerPoints = [];
+    }
+
+    this.mapModel.on('click', (e) => {
+      // @ts-ignore
+      const lat = e.latlng.lat;
+      // @ts-ignore
+      const lon = e.latlng.lng;
+      if (this.mapMarker !== undefined) {
+        this.mapModel.removeLayer(this.mapMarker);
+      }
+      if (lat === this.dataModel.AboutUsGeolocationlatitude && lon === this.dataModel.AboutUsGeolocationlongitude) {
+        this.dataModel.AboutUsGeolocationlatitude = null;
+        this.dataModel.AboutUsGeolocationlongitude = null;
+        return;
+      }
+      this.mapMarker = Leaflet.marker([lat, lon]).addTo(this.mapModel);
+      this.dataModel.AboutUsGeolocationlatitude = lat;
+      this.dataModel.AboutUsGeolocationlongitude = lon;
+    });
+
+  }
   onActionBackToParent(): void {
-    this.router.navigate(['/application/source/']);
+    this.router.navigate(['/application/app/']);
   }
   onActionFileSelectedLinkMainImageId(model: NodeInterface): void {
     this.dataModel.LinkMainImageId = model.id;
     this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
+  }
+  onActionFileSelectedLinkFileIdIcon(model: NodeInterface): void {
+    this.dataModel.LinkFileIdIcon = model.id;
+    this.dataModel.LinkFileIdIconSrc = model.downloadLinksrc;
+  }
+  onActionFileSelectedLinkFileIdLogo(model: NodeInterface): void {
+    this.dataModel.LinkFileIdLogo = model.id;
+    this.dataModel.LinkFileIdLogoSrc = model.downloadLinksrc;
+  }
+  onActionFileSelectedLinkFileIdSplashScreen(model: NodeInterface): void {
+    this.dataModel.LinkFileIdSplashScreen = model.id;
+    this.dataModel.LinkFileIdSplashScreenSrc = model.downloadLinksrc;
+  }
+  onActionFileSelectedAboutUsLinkImageId(model: NodeInterface): void {
+    this.dataModel.AboutUsLinkImageId = model.id;
+    this.dataModel.AboutUsLinkImageIdSrc = model.downloadLinksrc;
   }
   onActionSelectSource(model: ApplicationSourceModel | null): void {
     if (!model || model.Id <= 0) {

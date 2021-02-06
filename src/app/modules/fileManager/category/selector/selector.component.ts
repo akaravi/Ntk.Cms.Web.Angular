@@ -14,7 +14,6 @@ import { Output } from '@angular/core';
 })
 export class FileCategorySelectorComponent implements OnInit {
 
-
   constructor(
     public coreEnumService: CoreEnumService,
     public categoryService: FileCategoryService) {

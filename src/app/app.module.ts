@@ -65,9 +65,7 @@ export function getHighlightLanguages(): any {
       },
     },
     { provide: LocationStrategy, useClass: HashLocationStrategy },
-    {
-      provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true
-    },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

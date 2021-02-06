@@ -9,10 +9,10 @@ import { PersianCalendarService } from './persian-date.service';
 */
 // tslint:disable-next-line: use-pipe-transform-interface
 @Pipe({
-  name: 'persianDate'
+  name: 'persianDateFull'
 })
 @Injectable()
-export class PersianDate {
+export class PersianDateFull {
   /**
    *
    */
@@ -27,9 +27,9 @@ export class PersianDate {
       return '';
     }
     const d = new Date(value);
-    if (!d ) {
+    if (!d) {
       return '';
     }
-    return this.persianCalendarService.PersianCalendar(d);
+    return this.persianCalendarService.PersianCalendar(d) + ' ' + d.getHours() + ':' + d.getMinutes();
   }
 }

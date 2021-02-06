@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {SiteRoutingModule} from './site-routing.module';
+import {SiteRouting} from './site.routing';
 import {SiteComponent} from './site.component';
 import {CoreModuleService, CoreSiteCategoryModuleService, CoreSiteCategoryService, CoreSiteService} from 'ntk-cms-api';
 import {FormsModule} from '@angular/forms';
@@ -8,6 +8,7 @@ import {SelectionComponent} from './selection/selection.component';
 import {CoreSiteAddFirstComponent} from './addFirst/addFirst.component';
 import {SiteResolver} from './site.resolver';
 import {LayoutModule} from '../../../pages/layout.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,9 @@ import {LayoutModule} from '../../../pages/layout.module';
     imports: [
         CommonModule,
         FormsModule,
-        SiteRoutingModule,
+        SiteRouting,
+        SharedModule.forRoot(),
+
     ],
   providers: [
     CoreSiteService,

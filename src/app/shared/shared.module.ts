@@ -18,6 +18,7 @@ import { TagAutocompleteComponent } from '../modules/coreModule/tag/autocomplete
 import { TagInputModule } from 'ngx-chips';
 import { RecordStatusClassPipe } from '../core/pipe/recordStatusClass.pipe';
 import { BoolStatusClassPipe } from '../core/pipe/boolStatusClass.pipe';
+import { PersianDateFull } from '../core/pipe/PersianDatePipe/persian-date-full.pipe';
 
 
 
@@ -46,6 +47,7 @@ import { BoolStatusClassPipe } from '../core/pipe/boolStatusClass.pipe';
     CmsStatistListComponent,
     CmsExportListComponent,
     PersianDate,
+    PersianDateFull,
     CmsMapComponent,
     TagAutocompleteComponent
   ],
@@ -60,12 +62,13 @@ import { BoolStatusClassPipe } from '../core/pipe/boolStatusClass.pipe';
     RecordStatusClassPipe,
     BoolStatusClassPipe,
     PersianDate,
+    PersianDateFull,
     CmsSearchListComponent,
     CmsStatistListComponent,
     CmsExportListComponent,
     CmsMapComponent,
     TagAutocompleteComponent,
-    
+
   ],
   /* No providers here! Since they’ll be already provided in AppModule. */
 })

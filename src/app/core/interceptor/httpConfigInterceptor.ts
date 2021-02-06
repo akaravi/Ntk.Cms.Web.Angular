@@ -21,6 +21,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
 
       catchError(error => {
+        debugger
         if (error.status === 0) {
           this.toasterService.typeErrorInternetConnection();
         }

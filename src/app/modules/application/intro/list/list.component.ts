@@ -1,7 +1,17 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { ApplicationAppModel, ApplicationIntroModel, ApplicationIntroService, CoreAuthService, EnumSortType, ErrorExceptionResult, FilterDataModel, FilterModel, TokenInfoModel } from 'ntk-cms-api';
+import {
+  ApplicationAppModel,
+  ApplicationIntroModel,
+  ApplicationIntroService,
+  CoreAuthService,
+  EnumSortType,
+  ErrorExceptionResult,
+  FilterDataModel,
+  FilterModel,
+  TokenInfoModel
+} from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
@@ -167,15 +177,8 @@ export class ApplicationIntroListComponent implements OnInit {
       this.cmsToastrService.toastr.error(message, title);
       return;
     }
-    // const dialogRef = this.dialog.open(NewsCommentEditComponent, {
-    //   data: { contentId: this.requestContentId }
-    // });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   // console.log(`Dialog result: ${result}`);
-    //   if (result && result.dialogChangedDate) {
-    //     this.DataGetAll();
-    //   }
-    // });
+    this.router.navigate(['/application/intro/', this.requestApplicationId]);
+
   }
 
 
@@ -186,6 +189,7 @@ export class ApplicationIntroListComponent implements OnInit {
       this.cmsToastrService.toastr.error(message, title);
       return;
     }
+    this.tableRowSelected = model;
     if (
       this.dataModelResult == null ||
       this.dataModelResult.Access == null ||
@@ -196,16 +200,7 @@ export class ApplicationIntroListComponent implements OnInit {
       this.cmsToastrService.toastr.error(message, title);
       return;
     }
-
-    // const dialogRef = this.dialog.open(NewsCommentEditComponent, {
-    //   data: { id: this.tableRowSelected.Id }
-    // });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   // console.log(`Dialog result: ${result}`);
-    //   if (result && result.dialogChangedDate) {
-    //     this.DataGetAll();
-    //   }
-    // });
+    this.router.navigate(['/application/intro/edit/', this.tableRowSelected]);
   }
   onActionbuttonDeleteRow(model: ApplicationIntroModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
@@ -214,6 +209,7 @@ export class ApplicationIntroListComponent implements OnInit {
       this.cmsToastrService.toastr.error(message, title);
       return;
     }
+    this.tableRowSelected = model;
     if (
       this.dataModelResult == null ||
       this.dataModelResult.Access == null ||
@@ -224,20 +220,14 @@ export class ApplicationIntroListComponent implements OnInit {
       this.cmsToastrService.toastr.error(message, title);
       return;
     }
-    // const dialogRef = this.dialog.open(NewsCommentDeleteComponent, {
-    //   data: { id: this.tableRowSelected.Id }
-    // });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   // console.log(`Dialog result: ${result}`);
-    //   if (result && result.dialogChangedDate) {
-    //     this.DataGetAll();
-    //   }
-    // });
+    this.router.navigate(['/application/intro/delete/', this.tableRowSelected]);
   }
   onActionCategorySelect(model: ApplicationAppModel | null): void {
     this.filteModelContent = new FilterModel();
     this.categoryModelSelected = model;
+    this.requestApplicationId = 0;
     if (model && model.Id > 0) {
+      this.requestApplicationId = model.Id;
       const aaa = {
         PropertyName: 'LinkApplicationId',
         IntValue: model.Id,
@@ -267,6 +257,6 @@ export class ApplicationIntroListComponent implements OnInit {
     this.tableRowSelected = row;
   }
   onActionBackToParent(): void {
-    this.router.navigate(['/news/content/']);
+    this.router.navigate(['/application/content/']);
   }
 }

@@ -38,6 +38,11 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatStepperModule} from '@angular/material/stepper';
 import { ApplicationSourceSelectorComponent } from './source/selector/selector.component';
 import { ApplicationThemeConfigSelectorComponent } from './themeConfig/selector/selector.component';
+import { ApplicationAppEditComponent } from './content/edit/edit.component';
+import { ApplicationAppAddComponent } from './content/add/add.component';
+import { ApplicationIntroAddComponent } from './intro/add/add.component';
+import { ApplicationIntroEditComponent } from './intro/edit/edit.component';
+import { ApplicationAppSelectorComponent } from './content/selector/selector.component';
 
 @NgModule({
   declarations: [
@@ -49,8 +54,13 @@ import { ApplicationThemeConfigSelectorComponent } from './themeConfig/selector/
     ApplicationSourceDeleteComponent,
     ApplicationSourceSelectorComponent,
     ApplicationAppListComponent,
+    ApplicationAppAddComponent,
+    ApplicationAppEditComponent,
+    ApplicationAppSelectorComponent,
     ApplicationMemberInfoListComponent,
     ApplicationIntroListComponent,
+    ApplicationIntroAddComponent,
+    ApplicationIntroEditComponent,
     ApplicationNotificationListComponent,
     ApplicationThemeConfigListComponent,
     ApplicationThemeConfigSelectorComponent,
@@ -82,9 +92,7 @@ import { ApplicationThemeConfigSelectorComponent } from './themeConfig/selector/
     ApplicationSourceService,
     ApplicationMemberInfoService,
     ApplicationLogNotificationService,
-    ApplicationThemeConfigService
-
-
+    ApplicationThemeConfigService,
   ]
 })
 export class ApplicationModule { }

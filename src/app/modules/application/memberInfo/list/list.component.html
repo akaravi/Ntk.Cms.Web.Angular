@@ -4,8 +4,6 @@
   </div>
   <div [ngClass]="(requestApplicationId===0)?'col-xl-9':'col-xl-12'">
     <div class="button-row">
-      <button *ngIf="dataModelResult.Access.AccessAddRow " (click)="onActionbuttonNewRow()" type="button"
-        class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">اضافه</button>
       <button *ngIf="dataModelResult.Access.AccessEditRow && tableRowSelected.Id>0" (click)="onActionbuttonEditRow()"
         type="button" class="btn btn-warning ml-2" data-toggle="modal" data-target="#categoryModal">ویرایش</button>
       <button *ngIf="dataModelResult.Access.AccessDeleteRow && tableRowSelected.Id>0"
@@ -53,7 +51,7 @@
         <!-- RecordStatus Column -->
         <ng-container matColumnDef="RecordStatus">
           <mat-header-cell *matHeaderCellDef mat-sort-header> وضعیت </mat-header-cell>
-          <mat-cell *matCellDef="let row"> <i [ngClass]="row.RecordStatus|statusClass" ></i> </mat-cell>
+          <mat-cell *matCellDef="let row"> <i [ngClass]="row.RecordStatus|statusClass"></i> </mat-cell>
         </ng-container>
         <!-- LinkUserId Column -->
         <ng-container matColumnDef="LinkUserId">

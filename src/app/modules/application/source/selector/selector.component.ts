@@ -25,6 +25,7 @@ export class ApplicationSourceSelectorComponent implements OnInit {
   loading = new ProgressSpinnerModel();
   formControl = new FormControl();
   filteredOptions: Observable<ApplicationSourceModel[]>;
+  @Input() disabled = new EventEmitter<boolean>();
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Output() optionSelect = new EventEmitter();
   @Input() optionReload = () => this.onActionReload();

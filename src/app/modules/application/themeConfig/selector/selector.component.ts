@@ -5,7 +5,8 @@ import {
   FilterDataModel,
   FilterModel,
   ApplicationThemeConfigModel,
-  ApplicationThemeConfigService
+  ApplicationThemeConfigService,
+  ApplicationSourceModel
 } from 'ntk-cms-api';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -27,18 +28,23 @@ export class ApplicationThemeConfigSelectorComponent implements OnInit {
 
 
   }
+  @Input() set optionSelectForce(x: number | ApplicationThemeConfigModel) {
+    this.onActionSelectForce(x);
+  }
+  @Input() set optionSelectParentForce(x: number) {
+    this.onActionSelectParentForce(x);
+  }
   dataModelResult: ErrorExceptionResult<ApplicationThemeConfigModel> = new ErrorExceptionResult<ApplicationThemeConfigModel>();
   dataModelSelect: ApplicationThemeConfigModel = new ApplicationThemeConfigModel();
   loading = new ProgressSpinnerModel();
   formControl = new FormControl();
   filteredOptions: Observable<ApplicationThemeConfigModel[]>;
+  parentId = 0;
+  @Input() disabled = new EventEmitter<boolean>();
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Output() optionSelect = new EventEmitter();
-  @Input() optionReload = () => this.onActionReload();
-  @Input() set optionSelectForce(x: number | ApplicationThemeConfigModel) {
-    this.onActionSelectForce(x);
-  }
 
+  @Input() optionReload = () => this.onActionReload();
   ngOnInit(): void {
     this.filteredOptions = this.formControl.valueChanges
       .pipe(
@@ -61,14 +67,14 @@ export class ApplicationThemeConfigSelectorComponent implements OnInit {
     const filteModel = new FilterModel();
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
-    // this.loading.backdropEnabled = false;
+    const filters = new Array<FilterDataModel>();
     if (text && typeof text === 'string' && text.length > 0) {
       const aaa = {
         PropertyName: 'Title',
         Value: text,
         SearchType: 5
       };
-      filteModel.Filters.push(aaa as FilterDataModel);
+      filters.push(aaa as FilterDataModel);
     } else if (text && typeof text === 'number' && text > 0) {
       const aaa = {
         PropertyName: 'Title',
@@ -76,14 +82,32 @@ export class ApplicationThemeConfigSelectorComponent implements OnInit {
         SearchType: 5,
         ClauseType: 1
       };
-      filteModel.Filters.push(aaa as FilterDataModel);
+      filters.push(aaa as FilterDataModel);
       const nnn = {
         PropertyName: 'Id',
         Value: text,
         SearchType: 1,
         ClauseType: 1
       };
-      filteModel.Filters.push(nnn as FilterDataModel);
+      filters.push(nnn as FilterDataModel);
+    }
+    if (this.parentId > 0) {
+      const parent = {
+        PropertyName: 'LinkSourceId',
+        Value: this.parentId.toString(),
+        ClauseType: 0,
+        SearchType: 2
+      };
+      filteModel.Filters.push(parent as FilterDataModel);
+      const tree = {
+        Filters: filters,
+      }
+      if (filters && filters.length > 0) {
+        filteModel.Filters.push(tree as FilterDataModel);
+      }
+    }
+    else if (filters && filters.length > 0) {
+      filteModel.Filters = filters as FilterDataModel[];
     }
     this.loading.Globally = false;
     this.loading.display = true;
@@ -124,6 +148,17 @@ export class ApplicationThemeConfigSelectorComponent implements OnInit {
       this.dataModelSelect = (id as ApplicationThemeConfigModel);
       this.formControl.setValue(id);
     }
+  }
+  onActionSelectParentForce(id: number): void {
+    const befor = this.parentId;
+    this.parentId = 0;
+    if (id > 0) {
+      this.parentId = id;
+    }
+    if (this.parentId === befor) {
+      return;
+    }
+    this.DataGetAll(null);
   }
 
   onActionReload(): void {

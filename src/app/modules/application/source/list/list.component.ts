@@ -223,27 +223,7 @@ export class ApplicationSourceListComponent implements OnInit {
     }
     this.tableRowSelected = model;
 
-    if (
-      this.dataModelResult == null ||
-      this.dataModelResult.Access == null ||
-      !this.dataModelResult.Access.AccessDeleteRow
-    ) {
-      const title = 'برروز خطا ';
-      const message = 'شما دسترسی برای حذف ندارید';
-      this.cmsToastrService.toastr.error(message, title);
-      return;
-    }
-    // const dialogRef = this.dialog.open(NewsCommentDeleteComponent, {
-    //   data: { id: this.tableRowSelected.Id }
-    // });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   // console.log(`Dialog result: ${result}`);
-    //   if (result && result.dialogChangedDate) {
-    //     this.DataGetAll();
-    //   }
-    // });
     this.router.navigate(['/application/app/', this.tableRowSelected.Id]);
-
   }
   onActionbuttonStatist(): void {
     this.optionsStatist.childMethods.runStatist(this.filteModelContent.Filters);
@@ -263,7 +243,5 @@ export class ApplicationSourceListComponent implements OnInit {
   onActionTableRowSelect(row: ApplicationSourceModel): void {
     this.tableRowSelected = row;
   }
-  onActionBackToParent(): void {
-    this.router.navigate(['/news/content/']);
-  }
+
 }

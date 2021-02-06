@@ -187,6 +187,8 @@ export class ApplicationAppListComponent implements OnInit {
     //     this.DataGetAll();
     //   }
     // });
+    this.router.navigate(['/application/app/add/', this.requestSourceId]);
+
   }
 
   onActionCategorySelect(model: ApplicationSourceModel | null): void {
@@ -210,6 +212,7 @@ export class ApplicationAppListComponent implements OnInit {
       this.cmsToastrService.toastr.error(message, title);
       return;
     }
+    this.tableRowSelected = mode;
     if (
       this.dataModelResult == null ||
       this.dataModelResult.Access == null ||
@@ -230,6 +233,8 @@ export class ApplicationAppListComponent implements OnInit {
     //     this.DataGetAll();
     //   }
     // });
+    this.router.navigate(['/application/app/edit/', this.tableRowSelected.Id]);
+
   }
   onActionbuttonDeleteRow(mode: ApplicationAppModel = this.tableRowSelected): void {
     if (mode == null || !mode.Id || mode.Id === 0) {
@@ -238,6 +243,7 @@ export class ApplicationAppListComponent implements OnInit {
       this.cmsToastrService.toastr.error(message, title);
       return;
     }
+    this.tableRowSelected = mode;
     if (
       this.dataModelResult == null ||
       this.dataModelResult.Access == null ||
@@ -257,6 +263,8 @@ export class ApplicationAppListComponent implements OnInit {
     //     this.DataGetAll();
     //   }
     // });
+    this.router.navigate(['/application/app/delete/', this.tableRowSelected.Id]);
+
   }
   onActionbuttonStatist(): void {
     this.optionsStatist.childMethods.runStatist(this.filteModelContent.Filters);
@@ -277,6 +285,6 @@ export class ApplicationAppListComponent implements OnInit {
     this.tableRowSelected = row;
   }
   onActionBackToParent(): void {
-    this.router.navigate(['/application/source/']);
+    this.router.navigate(['/application/app/']);
   }
 }

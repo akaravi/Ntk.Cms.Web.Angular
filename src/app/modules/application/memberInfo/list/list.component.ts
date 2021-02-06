@@ -155,37 +155,6 @@ export class ApplicationMemberInfoListComponent implements OnInit {
   }
 
 
-  onActionbuttonNewRow(): void {
-    if (
-      this.requestApplicationId == null ||
-      this.requestApplicationId === 0
-    ) {
-      const title = 'برروز خطا ';
-      const message = 'محتوا انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
-      return;
-    }
-    if (
-      this.dataModelResult == null ||
-      this.dataModelResult.Access == null ||
-      !this.dataModelResult.Access.AccessAddRow
-    ) {
-      const title = 'برروز خطا ';
-      const message = 'شما دسترسی برای اضافه کردن ندارید';
-      this.cmsToastrService.toastr.error(message, title);
-      return;
-    }
-    // const dialogRef = this.dialog.open(NewsCommentEditComponent, {
-    //   data: { contentId: this.requestContentId }
-    // });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   // console.log(`Dialog result: ${result}`);
-    //   if (result && result.dialogChangedDate) {
-    //     this.DataGetAll();
-    //   }
-    // });
-  }
-
 
   onActionbuttonEditRow(model: ApplicationMemberInfoModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
