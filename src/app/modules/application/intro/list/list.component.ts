@@ -230,7 +230,7 @@ export class ApplicationIntroListComponent implements OnInit {
       this.requestApplicationId = model.Id;
       const aaa = {
         PropertyName: 'LinkApplicationId',
-        IntValue: model.Id,
+        Value: model.Id,
       };
       this.filteModelContent.Filters.push(aaa as FilterDataModel);
     } else {

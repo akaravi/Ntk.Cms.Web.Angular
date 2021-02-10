@@ -145,7 +145,7 @@ export class NewsContentListComponent implements OnInit {
     if (model && model.Id > 0) {
       const aaa = {
         PropertyName: 'LinkCategoryId',
-        IntValue: model.Id,
+        Value: model.Id,
       };
       this.filteModelContent.Filters.push(aaa as FilterDataModel);
     } else {

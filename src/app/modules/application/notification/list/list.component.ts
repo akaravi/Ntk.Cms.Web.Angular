@@ -245,7 +245,7 @@ export class ApplicationNotificationListComponent implements OnInit {
     if (model && model.Id > 0) {
       const aaa = {
         PropertyName: 'LinkApplicationId',
-        IntValue: model.Id,
+        Value: model.Id,
       };
       this.filteModelContent.Filters.push(aaa as FilterDataModel);
     } else {
