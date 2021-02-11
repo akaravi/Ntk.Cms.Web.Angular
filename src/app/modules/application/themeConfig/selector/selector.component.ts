@@ -95,8 +95,8 @@ export class ApplicationThemeConfigSelectorComponent implements OnInit {
       const parent = {
         PropertyName: 'LinkSourceId',
         Value: this.parentId.toString(),
-        ClauseType: 0,
-        SearchType: 2
+        ClauseType: 2,
+        SearchType: 0
       };
       filteModel.Filters.push(parent as FilterDataModel);
       const tree = {
@@ -162,6 +162,7 @@ export class ApplicationThemeConfigSelectorComponent implements OnInit {
   }
 
   onActionReload(): void {
+    debugger
     // if (this.dataModelSelect && this.dataModelSelect.Id > 0) {
     //   this.onActionSelect(null);
     // }

@@ -1,0 +1,25 @@
+<mat-card class="example-card">
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image"></div>
+    <mat-card-title>{{dateModel.Title}}</mat-card-title>
+    <mat-card-subtitle>{{dateModel.AboutUsTitle}}</mat-card-subtitle>
+  </mat-card-header>
+  <img [src]="dateModel.DownloadLinkSrcByDomainQRCodeBase64" alt="بارکد را اسکن کنید" height="300px" width="300px">
+  <img [src]="dateModel.LinkMainImageIdSrc" *ngIf="dateModel.LinkMainImageId>0 &&dateModel.LinkMainImageIdSrc.length>0"
+    height="300px" width="300px">
+  <mat-card-content>
+    <p>
+      {{dateModel.DownloadLinkSrc}}
+    </p>
+    <p>
+      {{dateModel.DownloadLinkSrcCustomize}}
+    </p>
+    <p>
+      {{dateModel.DownloadLinkUpdateSrc}}
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button (click)="onActionDownloadApp()" mat-button>دانلود اپ</button>
+    <button (click)="onActionDownloadUpdate()" mat-button>دانلود آپدیت</button>
+  </mat-card-actions>
+</mat-card>

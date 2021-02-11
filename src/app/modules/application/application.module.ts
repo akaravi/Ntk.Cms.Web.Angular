@@ -43,6 +43,7 @@ import { ApplicationAppAddComponent } from './content/add/add.component';
 import { ApplicationIntroAddComponent } from './intro/add/add.component';
 import { ApplicationIntroEditComponent } from './intro/edit/edit.component';
 import { ApplicationAppSelectorComponent } from './content/selector/selector.component';
+import { ApplicationAppDownloadComponent } from './content/download/download.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { ApplicationAppSelectorComponent } from './content/selector/selector.com
     ApplicationAppAddComponent,
     ApplicationAppEditComponent,
     ApplicationAppSelectorComponent,
+    ApplicationAppDownloadComponent,
     ApplicationMemberInfoListComponent,
     ApplicationIntroListComponent,
     ApplicationIntroAddComponent,

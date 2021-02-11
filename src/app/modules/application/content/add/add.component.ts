@@ -222,6 +222,6 @@ export class ApplicationAppAddComponent implements OnInit {
       );
       return;
     }
-    this.dataModel.LinkSourceId = model.Id;
+    this.dataModel.LinkThemeConfigId = model.Id;
   }
 }

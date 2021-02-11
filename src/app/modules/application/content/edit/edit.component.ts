@@ -34,12 +34,12 @@ export class ApplicationAppEditComponent implements OnInit {
   requestId = 0;
 
   constructor(private activatedRoute: ActivatedRoute,
-    public publicHelper: PublicHelper,
-    public coreEnumService: CoreEnumService,
-    public applicationEnumService: ApplicationEnumService,
-    private applicationAppService: ApplicationAppService,
-    private toasterService: CmsToastrService,
-    private router: Router) {
+              public publicHelper: PublicHelper,
+              public coreEnumService: CoreEnumService,
+              public applicationEnumService: ApplicationEnumService,
+              private applicationAppService: ApplicationAppService,
+              private toasterService: CmsToastrService,
+              private router: Router) {
     this.fileManagerTree = new TreeModel();
   }
 
@@ -127,6 +127,11 @@ export class ApplicationAppEditComponent implements OnInit {
 
           if (next.IsSuccess) {
             this.dataModel = next.Item;
+            const lat = this.dataModel.AboutUsGeolocationlatitude;
+            const lon = this.dataModel.AboutUsGeolocationlongitude;
+            if (lat > 0 && lon > 0) {
+              this.mapMarkerPoints.push({ lat, lon });
+            }
           } else {
             this.toasterService.typeErrorGetOne(next.ErrorMessage);
           }
@@ -154,7 +159,7 @@ export class ApplicationAppEditComponent implements OnInit {
           if (next.IsSuccess) {
             this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
             this.toasterService.typeSuccessEdit();
-            this.router.navigate(['/application/source/']);
+            this.router.navigate(['/application/app/']);
           } else {
             this.toasterService.typeErrorEdit(next.ErrorMessage);
           }
@@ -239,7 +244,13 @@ export class ApplicationAppEditComponent implements OnInit {
       );
       return;
     }
-    this.dataModel.LinkSourceId = model.Id;
+    if (this.dataModel.LinkSourceId !== model.Id) {
+      this.toasterService.toastr.error(
+        'سورس قابل تغییر نمی باشد',
+        'سورس اپلیکیشن در حالت ویرایش قابل تغییر نمی باشد'
+      );
+    }
+
   }
   onActionSelectTheme(model: ApplicationThemeConfigModel | null): void {
     if (!model || model.Id <= 0) {
@@ -249,6 +260,6 @@ export class ApplicationAppEditComponent implements OnInit {
       );
       return;
     }
-    this.dataModel.LinkSourceId = model.Id;
+    this.dataModel.LinkThemeConfigId = model.Id;
   }
 }

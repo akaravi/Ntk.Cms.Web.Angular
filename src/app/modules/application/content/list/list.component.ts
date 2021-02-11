@@ -21,6 +21,7 @@ import { ComponentOptionExportModel } from 'src/app/core/cmsComponentModels/base
 import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/base/componentOptionStatistModel';
 import { MatSort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
+import { ApplicationAppDownloadComponent } from '../download/download.component';
 
 @Component({
   selector: 'app-application-app-list',
@@ -119,6 +120,10 @@ export class ApplicationAppListComponent implements OnInit {
           if (this.optionsSearch.childMethods) {
             this.optionsSearch.childMethods.setAccess(next.Access);
           }
+        }
+        else {
+          this.cmsToastrService.typeErrorGetAll(next.ErrorMessage);
+
         }
         this.loading.display = false;
       },
@@ -286,5 +291,73 @@ export class ApplicationAppListComponent implements OnInit {
   }
   onActionBackToParent(): void {
     this.router.navigate(['/application/app/']);
+  }
+  onActionbuttonUploadApp(mode: ApplicationAppModel = this.tableRowSelected): void {
+    if (mode == null || !mode.Id || mode.Id === 0) {
+      const title = 'برروز خطا ';
+      const message = 'ردیفی  انتخاب نشده است';
+      this.cmsToastrService.toastr.error(message, title);
+      return;
+    }
+    this.tableRowSelected = mode;
+
+
+  }
+  onActionbuttonUploadUpdate(mode: ApplicationAppModel = this.tableRowSelected): void {
+    if (mode == null || !mode.Id || mode.Id === 0) {
+      const title = 'برروز خطا ';
+      const message = 'ردیفی  انتخاب نشده است';
+      this.cmsToastrService.toastr.error(message, title);
+      return;
+    }
+    this.tableRowSelected = mode;
+
+
+  }
+  onActionbuttonBuildApp(mode: ApplicationAppModel = this.tableRowSelected): void {
+    if (mode == null || !mode.Id || mode.Id === 0) {
+      const title = 'برروز خطا ';
+      const message = 'ردیفی  انتخاب نشده است';
+      this.cmsToastrService.toastr.error(message, title);
+      return;
+    }
+    this.tableRowSelected = mode;
+    this.loading.display = true;
+    this.loading.Globally = false;
+    this.applicationAppService.ServiceBuild(this.tableRowSelected.Id).subscribe(
+      (next) => {
+        this.loading.display = false;
+        if (next.IsSuccess) {
+          this.cmsToastrService.typeSuccessAppBuild(next.ErrorMessage);
+        }
+        else {
+          this.cmsToastrService.typeErrorGetAll(next.ErrorMessage);
+        }
+      },
+      (error) => {
+        this.cmsToastrService.typeError(error);
+
+        this.loading.display = false;
+      }
+    );
+
+  }
+  onActionbuttonDownloadApp(mode: ApplicationAppModel = this.tableRowSelected): void {
+    if (mode == null || !mode.Id || mode.Id === 0) {
+      const title = 'برروز خطا ';
+      const message = 'ردیفی  انتخاب نشده است';
+      this.cmsToastrService.toastr.error(message, title);
+      return;
+    }
+    this.tableRowSelected = mode;
+    const dialogRef = this.dialog.open(ApplicationAppDownloadComponent, {
+      data:  this.tableRowSelected 
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.dialogChangedDate) {
+        this.DataGetAll();
+      }
+    });
+
   }
 }

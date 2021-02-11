@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
-import {ToastrService} from 'ngx-toastr';
-import {ErrorExceptionResultBase} from 'ntk-cms-api';
+import { Injectable } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { ErrorExceptionResultBase } from 'ntk-cms-api';
 
 @Injectable({
   providedIn: 'root'
@@ -56,6 +56,14 @@ export class CmsToastrService {
   }
   typeSuccessRegistery(): void {
     this.toastr.success('با موفقیت حساب کاربری شما ساخته شد', 'Success!');
+  }
+  typeSuccessAppBuild(str: string): void {
+    let message = 'دستور ساخت اپ ثب شد';
+
+    if (str && str.length > 0) {
+      message = message + ' Message: ' + str;
+    }
+    this.toastr.success(message, 'Success!');
   }
   // error Type
   typeErrorInternetConnection(str: string = ''): void {

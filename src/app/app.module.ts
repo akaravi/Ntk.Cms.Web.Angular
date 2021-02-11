@@ -42,7 +42,7 @@ export function getHighlightLanguages(): any {
     TranslateModule.forRoot(),
     NtkSmartModalModule.forRoot(),
     ToastrModule.forRoot({
-      timeOut: 2000,
+      timeOut: 5000,
       enableHtml: true,
       positionClass: 'toast-top-right',
       preventDuplicates: true,
