@@ -40,7 +40,7 @@ export class AsideComponent implements OnInit {
 
   ngOnInit(): void {
     // this.menuList = this.activatedRoute.snapshot.data.menuList;
-    this.DataGetCpMenu();
+  
     // load view settings
     this.disableAsideSelfDisplay = this.layout.getProp('aside.self.display') === false;
     this.brandSkin = this.layout.getProp('brand.self.theme');
@@ -55,6 +55,7 @@ export class AsideComponent implements OnInit {
     this.asideMenuCSSClasses = `${this.asideMenuCSSClasses} ${this.asideMenuScroll === 1 ? 'scroll my-4 ps ps--active-y' : ''}`;
     // Routing
     this.location = this.loc;
+    this.DataGetCpMenu();
     this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe(() => {
       this.DataGetCpMenu();
     });

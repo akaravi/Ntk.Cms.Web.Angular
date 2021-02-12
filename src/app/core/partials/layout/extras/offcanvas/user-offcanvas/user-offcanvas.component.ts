@@ -31,8 +31,6 @@ export class UserOffcanvasComponent implements OnInit {
       'extras.user.offcanvas.direction'
     )}`;
     this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((value) => {
-      debugger
-
       this.TokenInfo = value;
     });
       }

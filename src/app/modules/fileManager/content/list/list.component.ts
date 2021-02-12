@@ -70,7 +70,8 @@ export class FileContentListComponent implements OnInit {
     'Action'
   ];
   ngOnInit(): void {
-    this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
+    this.DataGetAll();
+     this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
     });

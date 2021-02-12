@@ -73,7 +73,8 @@ export class ApplicationSourceListComponent implements OnInit {
 
   ngOnInit(): void {
     this.filteModelContent.SortColumn = 'Title';
-    this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
+    this.DataGetAll();
+     this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
     });

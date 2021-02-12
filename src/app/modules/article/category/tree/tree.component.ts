@@ -55,7 +55,8 @@ export class ArticleCategoryTreeComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe(() => {
+    this.DataGetAll();
+     this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe(() => {
       this.DataGetAll();
     });
   }

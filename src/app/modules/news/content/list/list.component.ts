@@ -70,8 +70,9 @@ export class NewsContentListComponent implements OnInit {
     'Action'
   ];
   ngOnInit(): void {
-    this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
-      debugger
+   
+    this.DataGetAll();
+     this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
     });

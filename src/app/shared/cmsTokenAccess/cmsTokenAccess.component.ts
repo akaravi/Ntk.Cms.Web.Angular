@@ -11,11 +11,11 @@ import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 
 
 @Component({
-  selector: 'app-cms-token-access-admin',
-  templateUrl: './cmsTokenAccessAdmin.component.html',
-  styleUrls: ['./cmsTokenAccessAdmin.component.scss'],
+  selector: 'app-cms-token-access',
+  templateUrl: './cmsTokenAccess.component.html',
+  styleUrls: ['./cmsTokenAccess.component.scss'],
 })
-export class CmsTokenAccessAdminComponent implements OnInit {
+export class CmsTokenAccessComponent implements OnInit {
 
   TokenInfo: TokenInfoModel = new TokenInfoModel();
   loadingStatus = false;

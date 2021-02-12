@@ -65,6 +65,7 @@ export class ApplicationNotificationListComponent implements OnInit {
 
   ngOnInit(): void {
     this.requestApplicationId = Number(this.activatedRoute.snapshot.paramMap.get('ApplicationId'));
+    this.DataGetAll();
     this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;

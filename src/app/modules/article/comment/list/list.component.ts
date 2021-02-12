@@ -75,6 +75,7 @@ export class ArticleCommentListComponent implements OnInit {
 
   ngOnInit(): void {
     this.requestContentId = Number(this.activatedRoute.snapshot.paramMap.get('ContentId'));
+    this.DataGetAll();
     this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;

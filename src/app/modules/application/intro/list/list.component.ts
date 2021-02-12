@@ -74,7 +74,8 @@ export class ApplicationIntroListComponent implements OnInit {
 
   ngOnInit(): void {
     this.requestApplicationId = Number(this.activatedRoute.snapshot.paramMap.get('ApplicationId'));
-    this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
+    this.DataGetAll();
+     this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
     });

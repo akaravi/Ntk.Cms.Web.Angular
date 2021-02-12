@@ -1,6 +1,7 @@
 <!-- begin::User Panel-->
+
 <div id="kt_quick_user" class="offcanvas p-10" [ngClass]="extrasUserOffcanvasDirection">
-  <ng-container *ngIf="TokenInfo&& TokenInfo.UserId>0">
+  <ng-container *ngIf="TokenInfo">
     <!--begin::Header-->
     <div class="offcanvas-header d-flex align-items-center justify-content-between pb-5">
       <h3 class="font-weight-bold m-0">
@@ -23,7 +24,7 @@
         </div>
         <div class="d-flex flex-column">
           <a href="#" class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">
-            {{ TokenInfo.FullName }}
+            {{ TokenInfo.Name }}
           </a>
           <div class="text-muted mt-1">
             User Id:{{TokenInfo.UserId}}
@@ -63,7 +64,7 @@
       <!--begin::Separator-->
       <div class="separator separator-dashed mt-8 mb-5"></div>
       <!--end::Separator-->
-      <app-cms-token-access-admin></app-cms-token-access-admin>
+      <app-cms-token-access></app-cms-token-access>
       <!--begin::Separator-->
       <div class="separator separator-dashed mt-8 mb-5"></div>
       <!--end::Separator-->

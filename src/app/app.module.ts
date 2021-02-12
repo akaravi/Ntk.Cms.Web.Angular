@@ -70,13 +70,4 @@ export function getHighlightLanguages(): any {
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(
-    public coreAuthService: CoreAuthService,
-  ) {
-    debugger
-    this.coreAuthService.CurrentTokenInfoRenew();
-  }
-  OnInit(): void{
-
-  }
 }

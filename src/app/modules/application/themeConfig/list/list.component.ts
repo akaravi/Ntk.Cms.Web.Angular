@@ -66,7 +66,8 @@ export class ApplicationThemeConfigListComponent implements OnInit {
 
   ngOnInit(): void {
     this.requestSourceId = Number(this.activatedRoute.snapshot.paramMap.get('SourceId'));
-    this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
+    this.DataGetAll();
+     this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
     });

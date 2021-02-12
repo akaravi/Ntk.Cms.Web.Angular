@@ -8,6 +8,7 @@ import {
 import { LayoutService, LayoutInitService } from '../../core';
 import KTLayoutContent from '../../../assets/js/layout/base/content';
 import { environment } from 'src/environments/environment';
+import { CoreAuthService } from 'ntk-cms-api';
 
 @Component({
   selector: 'app-layout',
@@ -44,13 +45,16 @@ export class LayoutComponent implements OnInit, AfterViewInit {
 
   constructor(
     private initService: LayoutInitService,
-    private layout: LayoutService
+    private layout: LayoutService,
+    private coreAuthService: CoreAuthService
   ) {
     this.initService.init();
     this.developing = environment.developing;
   }
   developing = false;
   ngOnInit(): void {
+       // First Token Info
+       this.coreAuthService.CurrentTokenInfoRenew();
     // build view by layout config settings
     this.selfLayout = this.layout.getProp('self.layout');
     this.asideSelfDisplay = this.layout.getProp('aside.self.display');

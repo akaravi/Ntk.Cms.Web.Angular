@@ -55,6 +55,7 @@ export class FileCategoryTreeComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.DataGetAll();
     this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe(() => {
       this.DataGetAll();
     });

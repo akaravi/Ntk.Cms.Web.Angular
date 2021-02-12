@@ -18,7 +18,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./topbar.component.scss'],
 })
 export class TopbarComponent implements OnInit, AfterViewInit {
-  TokenInfo: TokenInfoModel;
+  TokenInfo =new TokenInfoModel();
   // tobbar extras
   extraSearchDisplay: boolean;
   extrasSearchLayout: 'offcanvas' | 'dropdown';
@@ -33,11 +33,11 @@ export class TopbarComponent implements OnInit, AfterViewInit {
   extrasUserDisplay: boolean;
   extrasUserLayout: 'offcanvas' | 'dropdown';
 
-  constructor(private layout: LayoutService,     private cmsApiStore :ntkCmsApiStoreService,
+  constructor(private layout: LayoutService,   
+      private cmsApiStore :ntkCmsApiStoreService,
     ) {
 
     this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((value) => {
-      debugger
       this.TokenInfo = value;
     });
     this.developing = environment.developing;
@@ -45,6 +45,8 @@ export class TopbarComponent implements OnInit, AfterViewInit {
   developing = false;
 
   ngOnInit(): void {
+  
+
     // topbar extras
     this.extraSearchDisplay = this.layout.getProp('extras.search.display');
     this.extrasSearchLayout = this.layout.getProp('extras.search.layout');

@@ -26,8 +26,6 @@ export class UserDropdownInnerComponent implements OnInit {
     );
 
       this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((value) => {
-        debugger
-
         this.TokenInfo = value;
       });
   }
