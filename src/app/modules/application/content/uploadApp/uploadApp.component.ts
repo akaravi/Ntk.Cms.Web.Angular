@@ -1,15 +1,16 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FilePreviewModel } from 'ngx-awesome-uploader';
 import { ApplicationAppModel } from 'ntk-cms-api';
 
 @Component({
-  selector: 'app-download',
-  templateUrl: './download.component.html',
-  styleUrls: ['./download.component.scss']
+  selector: 'app-upload-app',
+  templateUrl: './uploadApp.component.html',
+  styleUrls: ['./uploadApp.component.scss']
 })
-export class ApplicationAppDownloadComponent implements OnInit {
+export class ApplicationAppUploadAppComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public dateModel: ApplicationAppModel,
-              private dialogRef: MatDialogRef<ApplicationAppDownloadComponent>,
+              private dialogRef: MatDialogRef<ApplicationAppUploadAppComponent>,
 
   ) {
   }
@@ -26,5 +27,8 @@ export class ApplicationAppDownloadComponent implements OnInit {
   onActionDownloadUpdate(): void{
     window.open(this.dateModel.DownloadLinkUpdateSrc);
 
+  }
+  OnActionUploadSuccess(model: FilePreviewModel): void{
+console.log(model);
   }
 }

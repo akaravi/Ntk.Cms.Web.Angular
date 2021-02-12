@@ -1,15 +1,15 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApplicationAppModel } from 'ntk-cms-api';
 
 @Component({
-  selector: 'app-download',
-  templateUrl: './download.component.html',
-  styleUrls: ['./download.component.scss']
+  selector: 'app-upload-update',
+  templateUrl: './uploadUpdate.component.html',
+  styleUrls: ['./uploadUpdate.component.scss']
 })
-export class ApplicationAppDownloadComponent implements OnInit {
+export class ApplicationAppUploadUpdateComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public dateModel: ApplicationAppModel,
-              private dialogRef: MatDialogRef<ApplicationAppDownloadComponent>,
+              private dialogRef: MatDialogRef<ApplicationAppUploadUpdateComponent>,
 
   ) {
   }

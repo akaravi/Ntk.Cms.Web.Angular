@@ -1,0 +1,24 @@
+<mat-card class="example-card">
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image"></div>
+    <mat-card-title>{{dateModel.Title}}</mat-card-title>
+    <mat-card-subtitle>ver : {{dateModel.AppVersion}}</mat-card-subtitle>
+  </mat-card-header>
+  <div class="uploader-wrapper">
+    <cms-file-uploader  (optionUploadSuccess)="OnActionUploadSuccess($event)">
+    </cms-file-uploader>
+  </div>
+
+  <mat-card-content>
+    <p>
+      {{dateModel.DownloadLinkSrc}}
+
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+
+    <button (click)="onFormCancel()" class="btn btn-raised btn-warning mr-1">
+      <i class="ft-x"></i> بازگشت
+    </button>
+  </mat-card-actions>
+</mat-card>

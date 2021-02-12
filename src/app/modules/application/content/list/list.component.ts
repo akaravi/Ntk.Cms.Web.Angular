@@ -22,6 +22,8 @@ import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/bas
 import { MatSort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 import { ApplicationAppDownloadComponent } from '../download/download.component';
+import { ApplicationAppUploadAppComponent } from '../uploadApp/uploadApp.component';
+import { ApplicationAppUploadUpdateComponent } from '../uploadUpdate/uploadUpdate.component';
 
 @Component({
   selector: 'app-application-app-list',
@@ -76,6 +78,7 @@ export class ApplicationAppListComponent implements OnInit {
   ngOnInit(): void {
     this.requestSourceId = Number(this.activatedRoute.snapshot.paramMap.get('SourceId'));
     this.coreAuthService.CurrentTokenInfoBSObs.subscribe((next) => {
+      debugger
       this.DataGetAll();
       this.tokenInfo = next;
     });
@@ -300,8 +303,14 @@ export class ApplicationAppListComponent implements OnInit {
       return;
     }
     this.tableRowSelected = mode;
-
-
+    const dialogRef = this.dialog.open(ApplicationAppUploadAppComponent, {
+      data:  this.tableRowSelected ,
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.dialogChangedDate) {
+        this.DataGetAll();
+      }
+    });
   }
   onActionbuttonUploadUpdate(mode: ApplicationAppModel = this.tableRowSelected): void {
     if (mode == null || !mode.Id || mode.Id === 0) {
@@ -311,6 +320,15 @@ export class ApplicationAppListComponent implements OnInit {
       return;
     }
     this.tableRowSelected = mode;
+    const dialogRef = this.dialog.open(ApplicationAppUploadUpdateComponent, {
+      data:  this.tableRowSelected ,
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.dialogChangedDate) {
+        this.DataGetAll();
+      }
+    });
+
 
 
   }
@@ -351,7 +369,7 @@ export class ApplicationAppListComponent implements OnInit {
     }
     this.tableRowSelected = mode;
     const dialogRef = this.dialog.open(ApplicationAppDownloadComponent, {
-      data:  this.tableRowSelected 
+      data:  this.tableRowSelected ,
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.dialogChangedDate) {

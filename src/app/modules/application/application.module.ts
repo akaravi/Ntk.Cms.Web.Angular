@@ -44,6 +44,9 @@ import { ApplicationIntroAddComponent } from './intro/add/add.component';
 import { ApplicationIntroEditComponent } from './intro/edit/edit.component';
 import { ApplicationAppSelectorComponent } from './content/selector/selector.component';
 import { ApplicationAppDownloadComponent } from './content/download/download.component';
+import { ApplicationAppUploadAppComponent } from './content/uploadApp/uploadApp.component';
+import { ApplicationAppUploadUpdateComponent } from './content/uploadUpdate/uploadUpdate.component';
+import { CmsFileUploaderModule } from 'ntk-cms-fileuploader';
 
 @NgModule({
   declarations: [
@@ -59,6 +62,8 @@ import { ApplicationAppDownloadComponent } from './content/download/download.com
     ApplicationAppEditComponent,
     ApplicationAppSelectorComponent,
     ApplicationAppDownloadComponent,
+    ApplicationAppUploadAppComponent,
+    ApplicationAppUploadUpdateComponent,
     ApplicationMemberInfoListComponent,
     ApplicationIntroListComponent,
     ApplicationIntroAddComponent,
@@ -82,7 +87,8 @@ import { ApplicationAppDownloadComponent } from './content/download/download.com
     CmsFileManagerModule,
     MatIconModule,
     MatFormFieldModule,
-    MatStepperModule
+    MatStepperModule,
+    CmsFileUploaderModule
   ],
   providers: [
     CoreEnumService,
