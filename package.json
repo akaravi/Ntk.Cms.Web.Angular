@@ -51,7 +51,7 @@
     "ngx-query-builder": "^0.1.0",
     "ngx-toastr": "^13.1.0",
     "ngx-treeview": "^10.0.2",
-    "ntk-cms-api": "^1.0.136",
+    "ntk-cms-api": "^1.0.139",
     "ntk-cms-filemanager": "^1.0.21",
     "ntk-cms-fileuploader": "^1.0.3",
     "object-path": "^0.11.4",

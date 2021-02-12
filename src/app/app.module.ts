@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, OnInit } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -70,4 +70,13 @@ export function getHighlightLanguages(): any {
   bootstrap: [AppComponent]
 })
 export class AppModule {
+  constructor(
+    public coreAuthService: CoreAuthService,
+  ) {
+    debugger
+    this.coreAuthService.CurrentTokenInfoRenew();
+  }
+  OnInit(): void{
+
+  }
 }

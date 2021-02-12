@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
 })
 export class UserDropdownInnerComponent implements OnInit {
   extrasUserDropdownStyle: 'light' | 'dark' = 'light';
-  user$: Observable<TokenInfoModel>;
+  TokenInfo: TokenInfoModel;
 
   constructor(private layout: LayoutService,
     private cmsApiStore :ntkCmsApiStoreService,
@@ -24,9 +24,12 @@ export class UserDropdownInnerComponent implements OnInit {
     this.extrasUserDropdownStyle = this.layout.getProp(
       'extras.user.dropdown.style'
     );
-    debugger
-      this.user$ =  this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo);
-    
+
+      this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((value) => {
+        debugger
+
+        this.TokenInfo = value;
+      });
   }
 
   async logout(): Promise<void> {

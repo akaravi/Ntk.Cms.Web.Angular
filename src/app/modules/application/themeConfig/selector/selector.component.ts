@@ -162,7 +162,6 @@ export class ApplicationThemeConfigSelectorComponent implements OnInit {
   }
 
   onActionReload(): void {
-    debugger
     // if (this.dataModelSelect && this.dataModelSelect.Id > 0) {
     //   this.onActionSelect(null);
     // }

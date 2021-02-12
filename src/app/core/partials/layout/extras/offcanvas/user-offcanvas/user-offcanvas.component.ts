@@ -14,7 +14,7 @@ import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 })
 export class UserOffcanvasComponent implements OnInit {
   extrasUserOffcanvasDirection = 'offcanvas-right';
-  user$: Observable<TokenInfoModel>;
+  TokenInfo: TokenInfoModel;
   loading = new ProgressSpinnerModel();
 
   constructor(private layout: LayoutService, private auth: CoreAuthService,
@@ -30,8 +30,11 @@ export class UserOffcanvasComponent implements OnInit {
     this.extrasUserOffcanvasDirection = `offcanvas-${this.layout.getProp(
       'extras.user.offcanvas.direction'
     )}`;
-    debugger
-    this.user$ =  this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo);
+    this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((value) => {
+      debugger
+
+      this.TokenInfo = value;
+    });
       }
 
   async logout(): Promise<void> {

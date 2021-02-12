@@ -39,8 +39,7 @@ export class CmsTokenAccessAdminComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    debugger
-    this.coreAuthService.CurrentTokenInfoRenew();
+   
   }
 
   onActionbuttonUserAccessAdminAllowToAllData(): void {
