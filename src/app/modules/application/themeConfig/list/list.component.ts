@@ -1,7 +1,7 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { ApplicationThemeConfigModel, ApplicationAppService, ApplicationSourceModel, ApplicationThemeConfigService, CoreAuthService, EnumSortType, ErrorExceptionResult, FilterDataModel, FilterModel, TokenInfoModel } from 'ntk-cms-api';
+import { ApplicationThemeConfigModel, ApplicationAppService, ApplicationSourceModel, ApplicationThemeConfigService, CoreAuthService, EnumSortType, ErrorExceptionResult, FilterDataModel, FilterModel, TokenInfoModel, ntkCmsApiStoreService } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
@@ -21,7 +21,7 @@ export class ApplicationThemeConfigListComponent implements OnInit {
   requestSourceId = 0;
   constructor(private applicationThemeConfigService: ApplicationThemeConfigService,
     private activatedRoute: ActivatedRoute,
-    private coreAuthService: CoreAuthService,
+    private cmsApiStore : ntkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
     private router: Router,
@@ -66,7 +66,7 @@ export class ApplicationThemeConfigListComponent implements OnInit {
 
   ngOnInit(): void {
     this.requestSourceId = Number(this.activatedRoute.snapshot.paramMap.get('SourceId'));
-    this.coreAuthService.CurrentTokenInfoBSObs.subscribe((next) => {
+    this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
     });

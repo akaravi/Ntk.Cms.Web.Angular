@@ -16,6 +16,7 @@ import {
   FilterModel,
   ArticleCategoryModel,
   ArticleCategoryService,
+  ntkCmsApiStoreService,
 } from 'ntk-cms-api';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -31,7 +32,7 @@ import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 })
 export class ArticleCategoryTreeComponent implements OnInit {
   constructor(
-    private coreAuthService: CoreAuthService,
+    private cmsApiStore : ntkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
     public coreEnumService: CoreEnumService,
     public categoryService: ArticleCategoryService,
@@ -54,7 +55,7 @@ export class ArticleCategoryTreeComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.coreAuthService.CurrentTokenInfoBSObs.subscribe(() => {
+    this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe(() => {
       this.DataGetAll();
     });
   }

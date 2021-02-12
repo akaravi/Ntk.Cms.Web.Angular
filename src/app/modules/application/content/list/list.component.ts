@@ -10,6 +10,7 @@ import {
   ErrorExceptionResult,
   FilterDataModel,
   FilterModel,
+  ntkCmsApiStoreService,
   TokenInfoModel
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
@@ -34,7 +35,7 @@ export class ApplicationAppListComponent implements OnInit {
   requestSourceId = 0;
   constructor(private applicationAppService: ApplicationAppService,
     private activatedRoute: ActivatedRoute,
-    private coreAuthService: CoreAuthService,
+    private cmsApiStore :ntkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
     private router: Router,
@@ -77,7 +78,7 @@ export class ApplicationAppListComponent implements OnInit {
 
   ngOnInit(): void {
     this.requestSourceId = Number(this.activatedRoute.snapshot.paramMap.get('SourceId'));
-    this.coreAuthService.CurrentTokenInfoBSObs.subscribe((next) => {
+    this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       debugger
       this.DataGetAll();
       this.tokenInfo = next;

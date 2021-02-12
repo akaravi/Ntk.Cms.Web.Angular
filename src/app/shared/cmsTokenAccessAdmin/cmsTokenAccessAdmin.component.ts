@@ -4,6 +4,7 @@ import {
   AuthRenewTokenModel,
   CoreAuthService,
   TokenInfoModel,
+  ntkCmsApiStoreService
 } from 'ntk-cms-api';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 
@@ -23,11 +24,13 @@ export class CmsTokenAccessAdminComponent implements OnInit {
 
   constructor(
     public coreAuthService: CoreAuthService,
+    private cmsApiStore :ntkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
     private router: Router,
 
   ) {
-    this.coreAuthService.CurrentTokenInfoBS.subscribe((value) => {
+
+    this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((value) => {
       this.TokenInfo = value;
       if (this.TokenInfo && this.TokenInfo.UserId > 0 && this.TokenInfo.SiteId <= 0) {
         this.router.navigate(['/site/selection']);
@@ -36,7 +39,8 @@ export class CmsTokenAccessAdminComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.coreAuthService.CurrentTokenInfoBSRenew();
+    debugger
+    this.coreAuthService.CurrentTokenInfoRenew();
   }
 
   onActionbuttonUserAccessAdminAllowToAllData(): void {
@@ -91,7 +95,7 @@ export class CmsTokenAccessAdminComponent implements OnInit {
 
     const title = 'اطلاعات ';
     let message = '';
-    if (authModel.UserAccessAdminAllowToAllData) {
+    if (authModel.UserAccessAdminAllowToProfessionalData) {
       message = 'درخواست برای دسترسی حرفه ایی به سرور ارسال شد';
     } else {
       message = 'درخواست قطع  دسترسی حرفه ایی  به سرور ارسال شد';

@@ -16,12 +16,13 @@ import {
   FilterModel,
   NewsCategoryModel,
   NewsCategoryService,
+  ntkCmsApiStoreService,
 } from 'ntk-cms-api';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { NewsCategoryEditComponent } from '../edit/edit.component';
-import { NewsCategoryDeleteComponent } from '../delete/delete.component';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
+import { TagCategoryEditComponent } from '../edit/edit.component';
+import { TagCategoryDeleteComponent } from '../delete/delete.component';
 
 
 @Component({
@@ -50,7 +51,7 @@ export class NewsCategoryTreeComponent implements OnInit {
   // }
 
   constructor(
-    private coreAuthService: CoreAuthService,
+    private cmsApiStore : ntkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
     public coreEnumService: CoreEnumService,
     public categoryService: NewsCategoryService,
@@ -73,7 +74,7 @@ export class NewsCategoryTreeComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.coreAuthService.CurrentTokenInfoBSObs.subscribe(() => {
+    this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe(() => {
       this.DataGetAll();
     });
   }
@@ -136,7 +137,7 @@ export class NewsCategoryTreeComponent implements OnInit {
     dialogConfig.data = { parentId };
 
 
-    const dialogRef = this.dialog.open(NewsCategoryEditComponent, dialogConfig);
+    const dialogRef = this.dialog.open(TagCategoryEditComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(result => {
       // console.log(`Dialog result: ${result}`);
       if (result && result.dialogChangedDate) {
@@ -156,7 +157,7 @@ export class NewsCategoryTreeComponent implements OnInit {
       this.cmsToastrService.toastr.error(message, title);
       return;
     }
-    const dialogRef = this.dialog.open(NewsCategoryEditComponent, {
+    const dialogRef = this.dialog.open(TagCategoryEditComponent, {
       data: { id }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -182,7 +183,7 @@ export class NewsCategoryTreeComponent implements OnInit {
       this.cmsToastrService.toastr.error(message, title);
       return;
     }
-    const dialogRef = this.dialog.open(NewsCategoryDeleteComponent, {
+    const dialogRef = this.dialog.open(TagCategoryDeleteComponent, {
       data: { id }
     });
     dialogRef.afterClosed().subscribe(result => {

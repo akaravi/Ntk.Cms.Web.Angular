@@ -10,6 +10,7 @@ import {
   FileContentModel,
   FileContentService,
   TokenInfoModel,
+  ntkCmsApiStoreService,
 } from 'ntk-cms-api';
 import { PublicHelper } from '../../../../core/helpers/publicHelper';
 import { CmsToastrService } from '../../../../core/services/cmsToastr.service';
@@ -31,7 +32,7 @@ import { FileContentDeleteComponent } from '../delete/delete.component';
 export class FileContentListComponent implements OnInit {
 
   constructor(
-    private coreAuthService: CoreAuthService,
+    private cmsApiStore : ntkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private fileContentService: FileContentService,
     private cmsToastrService: CmsToastrService,
@@ -69,7 +70,7 @@ export class FileContentListComponent implements OnInit {
     'Action'
   ];
   ngOnInit(): void {
-    this.coreAuthService.CurrentTokenInfoBSObs.subscribe((next) => {
+    this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
     });

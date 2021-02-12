@@ -16,6 +16,7 @@ import {
   FilterModel,
   ApplicationSourceModel,
   ApplicationSourceService,
+  ntkCmsApiStoreService,
 } from 'ntk-cms-api';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
@@ -29,7 +30,7 @@ import { Router } from '@angular/router';
 })
 export class ApplicationSourceTreeComponent implements OnInit {
   constructor(
-    private coreAuthService: CoreAuthService,
+    private cmsApiStore : ntkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
     public coreEnumService: CoreEnumService,
     public categoryService: ApplicationSourceService,
@@ -53,7 +54,7 @@ export class ApplicationSourceTreeComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.coreAuthService.CurrentTokenInfoBSObs.subscribe(() => {
+    this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe(() => {
       this.DataGetAll();
     });
   }

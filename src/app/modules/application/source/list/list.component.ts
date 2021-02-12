@@ -8,6 +8,7 @@ import { ApplicationSourceModel,
   EnumSortType,
   ErrorExceptionResult,
   FilterModel,
+  ntkCmsApiStoreService,
   TokenInfoModel
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
@@ -27,7 +28,7 @@ import { PageEvent } from '@angular/material/paginator';
 })
 export class ApplicationSourceListComponent implements OnInit {
   constructor(private applicationSourceService: ApplicationSourceService,
-              private coreAuthService: CoreAuthService,
+    private cmsApiStore : ntkCmsApiStoreService,
               public publicHelper: PublicHelper,
               private cmsToastrService: CmsToastrService,
               private router: Router,
@@ -72,7 +73,7 @@ export class ApplicationSourceListComponent implements OnInit {
 
   ngOnInit(): void {
     this.filteModelContent.SortColumn = 'Title';
-    this.coreAuthService.CurrentTokenInfoBSObs.subscribe((next) => {
+    this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
     });

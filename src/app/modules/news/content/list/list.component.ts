@@ -9,12 +9,12 @@ import {
   NewsCategoryModel,
   NewsContentModel,
   NewsContentService,
+  ntkCmsApiStoreService,
   TokenInfoModel,
 } from 'ntk-cms-api';
 import { PublicHelper } from '../../../../core/helpers/publicHelper';
 import { CmsToastrService } from '../../../../core/services/cmsToastr.service';
 import { MatDialog } from '@angular/material/dialog';
-import { NewsContentAddComponent } from '../add/add.component';
 import { ProgressSpinnerModel } from '../../../../core/models/progressSpinnerModel';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/base/componentOptionStatistModel';
@@ -32,7 +32,7 @@ import { NewsContentDeleteComponent } from '../delete/delete.component';
 export class NewsContentListComponent implements OnInit {
 
   constructor(
-    private coreAuthService: CoreAuthService,
+    private cmsApiStore : ntkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private newsContentService: NewsContentService,
     private cmsToastrService: CmsToastrService,
@@ -70,7 +70,8 @@ export class NewsContentListComponent implements OnInit {
     'Action'
   ];
   ngOnInit(): void {
-    this.coreAuthService.CurrentTokenInfoBSObs.subscribe((next) => {
+    this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
+      debugger
       this.DataGetAll();
       this.tokenInfo = next;
     });

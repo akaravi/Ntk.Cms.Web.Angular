@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CoreAuthService, EnumSortType, ErrorExceptionResult, ArticleCommentModel, ArticleCommentService, ArticleContentModel, TokenInfoModel } from 'ntk-cms-api';
+import { CoreAuthService, EnumSortType, ErrorExceptionResult, ArticleCommentModel, ArticleCommentService, ArticleContentModel, TokenInfoModel, ntkCmsApiStoreService } from 'ntk-cms-api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FilterModel, FilterDataModel } from 'ntk-cms-api';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -37,7 +37,7 @@ export class ArticleCommentListComponent implements OnInit {
   tableContentSelected = [];
   constructor(private articleCommentService: ArticleCommentService,
     private activatedRoute: ActivatedRoute,
-    private coreAuthService: CoreAuthService,
+    private cmsApiStore : ntkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
     private router: Router,
@@ -75,7 +75,7 @@ export class ArticleCommentListComponent implements OnInit {
 
   ngOnInit(): void {
     this.requestContentId = Number(this.activatedRoute.snapshot.paramMap.get('ContentId'));
-    this.coreAuthService.CurrentTokenInfoBSObs.subscribe((next) => {
+    this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
     });

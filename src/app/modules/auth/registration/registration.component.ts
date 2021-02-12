@@ -28,7 +28,8 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     private router: Router,
     private coreAuthService: CoreAuthService
   ) {
-    if (this.coreAuthService.CurrentTokenInfoBS) {
+    debugger
+    if (this.coreAuthService.CurrentTokenInfoRenew()) {
       this.router.navigate(['/']);
     }
   }

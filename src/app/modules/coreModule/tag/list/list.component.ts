@@ -9,6 +9,7 @@ import {
   NewsCategoryModel,
   NewsContentModel,
   NewsContentService,
+  ntkCmsApiStoreService,
   TokenInfoModel,
 } from 'ntk-cms-api';
 import { PublicHelper } from '../../../../core/helpers/publicHelper';
@@ -31,7 +32,7 @@ import { MatTableDataSource } from '@angular/material/table';
 export class TagListComponent implements OnInit {
 
   constructor(
-    private coreAuthService: CoreAuthService,
+    private cmsApiStore : ntkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private newsContentService: NewsContentService,
     private cmsToastrService: CmsToastrService,
@@ -69,7 +70,7 @@ export class TagListComponent implements OnInit {
     'Action'
   ];
   ngOnInit(): void {
-    this.coreAuthService.CurrentTokenInfoBSObs.subscribe((next) => {
+    this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
     });

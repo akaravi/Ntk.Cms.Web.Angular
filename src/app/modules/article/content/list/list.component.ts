@@ -10,6 +10,7 @@ import {
   ArticleContentModel,
   ArticleContentService,
   TokenInfoModel,
+  ntkCmsApiStoreService,
 } from 'ntk-cms-api';
 import { PublicHelper } from '../../../../core/helpers/publicHelper';
 import { CmsToastrService } from '../../../../core/services/cmsToastr.service';
@@ -32,7 +33,7 @@ import { ArticleContentDeleteComponent } from '../delete/delete.component';
 export class ArticleContentListComponent implements OnInit {
 
   constructor(
-    private coreAuthService: CoreAuthService,
+    private cmsApiStore : ntkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private articleContentService: ArticleContentService,
     private cmsToastrService: CmsToastrService,
@@ -70,7 +71,7 @@ export class ArticleContentListComponent implements OnInit {
     'Action'
   ];
   ngOnInit(): void {
-    this.coreAuthService.CurrentTokenInfoBSObs.subscribe((next) => {
+    this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
     });

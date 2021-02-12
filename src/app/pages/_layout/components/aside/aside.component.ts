@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { LayoutService } from '../../../../core';
-import { CoreAuthService, CoreCpMainMenuModel, CoreCpMainMenuService, ErrorExceptionResult } from 'ntk-cms-api';
+import { CoreAuthService, CoreCpMainMenuModel, CoreCpMainMenuService, ErrorExceptionResult, ntkCmsApiStoreService } from 'ntk-cms-api';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -34,7 +34,7 @@ export class AsideComponent implements OnInit {
     private loc: Location,
     private coreCpMainMenuService: CoreCpMainMenuService,
     public coreAuthService: CoreAuthService,
-    private activatedRoute: ActivatedRoute
+    private cmsApiStore : ntkCmsApiStoreService,
   ) {
   }
 
@@ -55,7 +55,7 @@ export class AsideComponent implements OnInit {
     this.asideMenuCSSClasses = `${this.asideMenuCSSClasses} ${this.asideMenuScroll === 1 ? 'scroll my-4 ps ps--active-y' : ''}`;
     // Routing
     this.location = this.loc;
-    this.coreAuthService.CurrentTokenInfoBSObs.subscribe(() => {
+    this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe(() => {
       this.DataGetCpMenu();
     });
   }

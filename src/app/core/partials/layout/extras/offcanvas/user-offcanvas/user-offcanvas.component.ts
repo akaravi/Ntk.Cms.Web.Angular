@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LayoutService } from '../../../../..';
 import { Observable } from 'rxjs';
-import { CoreAuthService, TokenInfoModel } from 'ntk-cms-api';
+import { CoreAuthService, ntkCmsApiStoreService, TokenInfoModel } from 'ntk-cms-api';
 import { environment } from '../../../../../../../environments/environment';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { map } from 'rxjs/operators';
@@ -19,6 +19,8 @@ export class UserOffcanvasComponent implements OnInit {
 
   constructor(private layout: LayoutService, private auth: CoreAuthService,
     private toasterService: CmsToastrService,
+    private cmsApiStore :ntkCmsApiStoreService,
+
   ) {
 
     this.developing = environment.developing;
@@ -28,8 +30,9 @@ export class UserOffcanvasComponent implements OnInit {
     this.extrasUserOffcanvasDirection = `offcanvas-${this.layout.getProp(
       'extras.user.offcanvas.direction'
     )}`;
-    this.user$ = this.auth.CurrentTokenInfoBS.asObservable();
-  }
+    debugger
+    this.user$ =  this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo);
+      }
 
   async logout(): Promise<void> {
     this.loading.display = true;

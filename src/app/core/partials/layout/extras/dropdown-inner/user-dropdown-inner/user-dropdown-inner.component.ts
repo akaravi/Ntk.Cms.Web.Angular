@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LayoutService } from '../../../../..';
-import { CoreAuthService, TokenInfoModel } from 'ntk-cms-api';
+import { CoreAuthService, ntkCmsApiStoreService, TokenInfoModel } from 'ntk-cms-api';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { map } from 'rxjs/operators';
 @Component({
@@ -14,6 +14,8 @@ export class UserDropdownInnerComponent implements OnInit {
   user$: Observable<TokenInfoModel>;
 
   constructor(private layout: LayoutService,
+    private cmsApiStore :ntkCmsApiStoreService,
+
               private auth: CoreAuthService,
               private toasterService: CmsToastrService,
   ) { }
@@ -22,7 +24,9 @@ export class UserDropdownInnerComponent implements OnInit {
     this.extrasUserDropdownStyle = this.layout.getProp(
       'extras.user.dropdown.style'
     );
-    this.user$ = this.auth.CurrentTokenInfoBS.asObservable();
+    debugger
+      this.user$ =  this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo);
+    
   }
 
   async logout(): Promise<void> {
