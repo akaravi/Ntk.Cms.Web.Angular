@@ -21,6 +21,7 @@ import {
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -55,9 +56,13 @@ export class ApplicationAppTreeComponent implements OnInit {
 
   ngOnInit(): void {
     this.DataGetAll();
-    this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe(() => {
+    this.cmsApiStoreSubscribe =  this.cmsApiStore.getState((state) =>  state.ntkCmsAPiState.tokenInfo).subscribe(() => {
       this.DataGetAll();
     });
+  }
+  cmsApiStoreSubscribe:Subscription;
+  ngOnDestroy() {
+    this.cmsApiStoreSubscribe.unsubscribe();
   }
   DataGetAll(): void {
     this.filteModel.RowPerPage = 200;

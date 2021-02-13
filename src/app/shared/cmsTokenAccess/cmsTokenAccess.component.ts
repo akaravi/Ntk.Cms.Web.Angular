@@ -6,6 +6,7 @@ import {
   TokenInfoModel,
   ntkCmsApiStoreService
 } from 'ntk-cms-api';
+import { Subscription } from 'rxjs';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 
 
@@ -17,39 +18,50 @@ import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 })
 export class CmsTokenAccessComponent implements OnInit {
 
-  TokenInfo: TokenInfoModel = new TokenInfoModel();
+  tokenInfo: TokenInfoModel = new TokenInfoModel();
   loadingStatus = false;
   SiteId: number;
   UserId: number;
 
   constructor(
     public coreAuthService: CoreAuthService,
-    private cmsApiStore :ntkCmsApiStoreService,
+    private cmsApiStore: ntkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
     private router: Router,
 
   ) {
 
-    this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((value) => {
-      this.TokenInfo = value;
-      if (this.TokenInfo && this.TokenInfo.UserId > 0 && this.TokenInfo.SiteId <= 0) {
+    this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
+    
+    if (this.tokenInfo && this.tokenInfo.UserId > 0 && this.tokenInfo.SiteId <= 0) {
+      this.router.navigate(['/site/selection']);
+    }
+
+    this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((value) => {
+      this.tokenInfo = value;
+      if (this.tokenInfo && this.tokenInfo.UserId > 0 && this.tokenInfo.SiteId <= 0) {
         this.router.navigate(['/site/selection']);
       }
     });
+
+
   }
 
   ngOnInit(): void {
-   
-  }
 
+  }
+  cmsApiStoreSubscribe: Subscription;
+  ngOnDestroy() {
+    this.cmsApiStoreSubscribe.unsubscribe();
+  }
   onActionbuttonUserAccessAdminAllowToAllData(): void {
     const authModel: AuthRenewTokenModel = new AuthRenewTokenModel();
-    const NewToall = !this.TokenInfo.UserAccessAdminAllowToAllData;
-    authModel.UserAccessAdminAllowToProfessionalData = this.TokenInfo.UserAccessAdminAllowToProfessionalData;
+    const NewToall = !this.tokenInfo.UserAccessAdminAllowToAllData;
+    authModel.UserAccessAdminAllowToProfessionalData = this.tokenInfo.UserAccessAdminAllowToProfessionalData;
     authModel.UserAccessAdminAllowToAllData = NewToall;
-    authModel.SiteId = this.TokenInfo.SiteId;
-    authModel.UserId = this.TokenInfo.UserId;
-    authModel.Lang = this.TokenInfo.Language;
+    authModel.SiteId = this.tokenInfo.SiteId;
+    authModel.UserId = this.tokenInfo.UserId;
+    authModel.Lang = this.tokenInfo.Language;
 
     const title = 'اطلاعات ';
     let message = '';
@@ -85,12 +97,12 @@ export class CmsTokenAccessComponent implements OnInit {
 
   onActionbuttonUserAccessAdminAllowToProfessionalData(): void {
     const authModel: AuthRenewTokenModel = new AuthRenewTokenModel();
-    const NewToPerf = !this.TokenInfo.UserAccessAdminAllowToProfessionalData;
+    const NewToPerf = !this.tokenInfo.UserAccessAdminAllowToProfessionalData;
     authModel.UserAccessAdminAllowToProfessionalData = NewToPerf;
-    authModel.UserAccessAdminAllowToAllData = this.TokenInfo.UserAccessAdminAllowToAllData;
-    authModel.SiteId = this.TokenInfo.SiteId;
-    authModel.UserId = this.TokenInfo.UserId;
-    authModel.Lang = this.TokenInfo.Language;
+    authModel.UserAccessAdminAllowToAllData = this.tokenInfo.UserAccessAdminAllowToAllData;
+    authModel.SiteId = this.tokenInfo.SiteId;
+    authModel.UserId = this.tokenInfo.UserId;
+    authModel.Lang = this.tokenInfo.Language;
 
     const title = 'اطلاعات ';
     let message = '';
@@ -124,18 +136,18 @@ export class CmsTokenAccessComponent implements OnInit {
   }
 
   onActionbuttonSelectUser(): void {
-    if (this.UserId === this.TokenInfo.UserId) {
+    if (this.UserId === this.tokenInfo.UserId) {
       const title = 'هشدار';
       const message = 'شناسه درخواستی این کاربر با کاربری که در آن هستید یکسان است';
       this.cmsToastrService.toastr.warning(message, title);
       return;
     }
     const authModel: AuthRenewTokenModel = new AuthRenewTokenModel();
-    authModel.UserAccessAdminAllowToProfessionalData = this.TokenInfo.UserAccessAdminAllowToProfessionalData;
-    authModel.UserAccessAdminAllowToAllData = this.TokenInfo.UserAccessAdminAllowToAllData;
-    authModel.SiteId = this.TokenInfo.SiteId;
+    authModel.UserAccessAdminAllowToProfessionalData = this.tokenInfo.UserAccessAdminAllowToProfessionalData;
+    authModel.UserAccessAdminAllowToAllData = this.tokenInfo.UserAccessAdminAllowToAllData;
+    authModel.SiteId = this.tokenInfo.SiteId;
     authModel.UserId = this.UserId;
-    authModel.Lang = this.TokenInfo.Language;
+    authModel.Lang = this.tokenInfo.Language;
 
     const title = 'اطلاعات ';
     const message = 'درخواست تغییر کاربر به سرور ارسال شد';
@@ -163,18 +175,18 @@ export class CmsTokenAccessComponent implements OnInit {
   }
 
   onActionbuttonSelectSite(): void {
-    if (this.SiteId === this.TokenInfo.SiteId) {
+    if (this.SiteId === this.tokenInfo.SiteId) {
       const title = 'هشدار';
       const message = 'شناسه این وب سایت با وب سایتی که در آن هستید یکسان است';
       this.cmsToastrService.toastr.warning(message, title);
       return;
     }
     const authModel: AuthRenewTokenModel = new AuthRenewTokenModel();
-    authModel.UserAccessAdminAllowToProfessionalData = this.TokenInfo.UserAccessAdminAllowToProfessionalData;
-    authModel.UserAccessAdminAllowToAllData = this.TokenInfo.UserAccessAdminAllowToAllData;
-    authModel.UserId = this.TokenInfo.UserId;
+    authModel.UserAccessAdminAllowToProfessionalData = this.tokenInfo.UserAccessAdminAllowToProfessionalData;
+    authModel.UserAccessAdminAllowToAllData = this.tokenInfo.UserAccessAdminAllowToAllData;
+    authModel.UserId = this.tokenInfo.UserId;
     authModel.SiteId = this.SiteId;
-    authModel.Lang = this.TokenInfo.Language;
+    authModel.Lang = this.tokenInfo.Language;
 
     const title = 'اطلاعات ';
     const message = 'درخواست تغییر سایت به سرور ارسال شد';

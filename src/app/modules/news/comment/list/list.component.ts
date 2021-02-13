@@ -15,6 +15,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { NewsCommentEditComponent } from '../edit/edit.component';
 import { NewsCommentDeleteComponent } from '../delete/delete.component';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -77,12 +78,16 @@ export class NewsCommentListComponent implements OnInit {
     this.requestContentId = Number(this.activatedRoute.snapshot.paramMap.get('ContentId'));
   
     this.DataGetAll();
-      this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
+    this.tokenInfo =  this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
+      this.cmsApiStoreSubscribe =  this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
     });
   }
-
+  cmsApiStoreSubscribe:Subscription;
+  ngOnDestroy() {
+    this.cmsApiStoreSubscribe.unsubscribe();
+  }
   DataGetAll(): void {
     this.tableRowsSelected = [];
     this.tableRowSelected = new NewsContentModel();

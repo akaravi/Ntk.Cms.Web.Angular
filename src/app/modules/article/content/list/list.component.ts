@@ -24,6 +24,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ArticleContentDeleteComponent } from '../delete/delete.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-article-content-list',
@@ -33,7 +34,7 @@ import { ArticleContentDeleteComponent } from '../delete/delete.component';
 export class ArticleContentListComponent implements OnInit {
 
   constructor(
-    private cmsApiStore : ntkCmsApiStoreService,
+    private cmsApiStore: ntkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private articleContentService: ArticleContentService,
     private cmsToastrService: CmsToastrService,
@@ -72,10 +73,15 @@ export class ArticleContentListComponent implements OnInit {
   ];
   ngOnInit(): void {
     this.DataGetAll();
-    this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
+    this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
+    this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
     });
+  }
+  cmsApiStoreSubscribe: Subscription;
+  ngOnDestroy() {
+    this.cmsApiStoreSubscribe.unsubscribe();
   }
   DataGetAll(): void {
     this.tableRowsSelected = [];

@@ -152,16 +152,16 @@
 </ng-container>
 <ng-container *ngIf="extrasUserDisplay">
   <ng-container *ngIf="extrasUserLayout === 'offcanvas'">
-    <ng-container *ngIf="TokenInfo">
+    <ng-container *ngIf="tokenInfo">
       <!--begin::User-->
       <div class="topbar-item">
         <div class="btn btn-icon btn-icon-mobile w-auto btn-clean d-flex align-items-center btn-lg px-2"
           id="kt_quick_user_toggle">
           <span class="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">Hi,</span>
           <span
-            class="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">{{TokenInfo.Name}}</span>
+            class="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">{{tokenInfo.Name}}</span>
           <span class="symbol symbol-lg-35 symbol-25 symbol-light-success">
-            <span class="symbol-label font-size-h5 font-weight-bold">{{TokenInfo.Name}}</span>
+            <span class="symbol-label font-size-h5 font-weight-bold">{{tokenInfo.Name}}</span>
           </span>
         </div>
       </div>
@@ -171,14 +171,14 @@
 
   <ng-container *ngIf="extrasUserLayout === 'dropdown'">
     <!--begin::User-->
-    <ng-container *ngIf="TokenInfo ">
+    <ng-container *ngIf="tokenInfo ">
       <div class="dropdown" ngbDropdown placement="bottom-right">
         <div class="topbar-item" data-toggle="dropdown" data-offset="0px,0px" ngbDropdownToggle>
           <div class="btn btn-icon w-auto btn-clean d-flex align-items-center btn-lg px-2">
             <span class="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">Hi,</span>
-            <span class="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">{{TokenInfo.Name}}</span>
+            <span class="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">{{tokenInfo.Name}}</span>
             <span class="symbol symbol-35 symbol-light-success">
-              <span class="symbol-label font-size-h5 font-weight-bold">{{TokenInfo.Name}}</span>
+              <span class="symbol-label font-size-h5 font-weight-bold">{{tokenInfo.Name}}</span>
             </span>
           </div>
         </div>

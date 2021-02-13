@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   CoreAuthService,
@@ -23,13 +23,14 @@ import { PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { NewsContentDeleteComponent } from '../delete/delete.component';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-news-content-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
-export class NewsContentListComponent implements OnInit {
+export class NewsContentListComponent implements OnInit , OnDestroy  {
 
   constructor(
     private cmsApiStore : ntkCmsApiStoreService,
@@ -72,10 +73,15 @@ export class NewsContentListComponent implements OnInit {
   ngOnInit(): void {
    
     this.DataGetAll();
-     this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
+    this.tokenInfo =  this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
+    this.cmsApiStoreSubscribe =  this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
     });
+  }
+  cmsApiStoreSubscribe:Subscription;
+  ngOnDestroy() {
+    this.cmsApiStoreSubscribe.unsubscribe();
   }
   DataGetAll(): void {
     this.tableRowsSelected = [];

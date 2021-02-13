@@ -23,6 +23,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { FileCategoryEditComponent } from '../edit/edit.component';
 import { FileCategoryDeleteComponent } from '../delete/delete.component';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -56,9 +57,13 @@ export class FileCategoryTreeComponent implements OnInit {
 
   ngOnInit(): void {
     this.DataGetAll();
-    this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe(() => {
+    this.cmsApiStoreSubscribe =  this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe(() => {
       this.DataGetAll();
     });
+  }
+  cmsApiStoreSubscribe:Subscription;
+  ngOnDestroy() {
+    this.cmsApiStoreSubscribe.unsubscribe();
   }
   DataGetAll(): void {
     this.filteModel.RowPerPage = 200;

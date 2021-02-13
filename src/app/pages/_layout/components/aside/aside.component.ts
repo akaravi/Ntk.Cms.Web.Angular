@@ -3,6 +3,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { LayoutService } from '../../../../core';
 import { CoreAuthService, CoreCpMainMenuModel, CoreCpMainMenuService, ErrorExceptionResult, ntkCmsApiStoreService } from 'ntk-cms-api';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-aside',
@@ -28,19 +29,19 @@ export class AsideComponent implements OnInit {
   // firstChildItem: Array<any> = [];
   // secondChildItem: Array<any> = [];
   // thirdChildItem: Array<any> = [];
-   resultCoreCpMainMenu: ErrorExceptionResult<CoreCpMainMenuModel> = new ErrorExceptionResult<CoreCpMainMenuModel>();
+  resultCoreCpMainMenu: ErrorExceptionResult<CoreCpMainMenuModel> = new ErrorExceptionResult<CoreCpMainMenuModel>();
   constructor(
     private layout: LayoutService,
     private loc: Location,
     private coreCpMainMenuService: CoreCpMainMenuService,
     public coreAuthService: CoreAuthService,
-    private cmsApiStore : ntkCmsApiStoreService,
+    private cmsApiStore: ntkCmsApiStoreService,
   ) {
   }
 
   ngOnInit(): void {
     // this.menuList = this.activatedRoute.snapshot.data.menuList;
-  
+
     // load view settings
     this.disableAsideSelfDisplay = this.layout.getProp('aside.self.display') === false;
     this.brandSkin = this.layout.getProp('brand.self.theme');
@@ -56,11 +57,15 @@ export class AsideComponent implements OnInit {
     // Routing
     this.location = this.loc;
     this.DataGetCpMenu();
-    this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe(() => {
+
+    this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe(() => {
       this.DataGetCpMenu();
     });
   }
-
+  cmsApiStoreSubscribe: Subscription;
+  ngOnDestroy() {
+    this.cmsApiStoreSubscribe.unsubscribe();
+  }
   private getLogo(): string {
     if (this.brandSkin === 'light') {
       return './assets/media/logos/logo-dark.png';

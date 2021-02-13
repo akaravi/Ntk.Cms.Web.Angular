@@ -1,5 +1,5 @@
 
-<ng-container *ngIf="TokenInfo">
+<ng-container *ngIf="tokenInfo">
   <ng-container *ngIf="extrasUserDropdownStyle === 'light'">
     <!--begin::Header-->
     <div class="d-flex align-items-center p-8 rounded-top">
@@ -11,7 +11,7 @@
 
       <!--begin::Text-->
       <div class="text-dark m-0 flex-grow-1 mr-3 font-size-h5">
-        {{ TokenInfo.FullName }}
+        {{ tokenInfo.FullName }}
       </div>
       <span
         class="label label-light-success label-lg font-weight-bold label-inline"
@@ -34,14 +34,14 @@
         <div class="symbol bg-white-o-15 mr-3">
           <span
             class="symbol-label text-success font-weight-bold font-size-h4"
-            >{{ TokenInfo.FullName | firstLetter }}</span
+            >{{ tokenInfo.FullName | firstLetter }}</span
           >
         </div>
         <!--end::Symbol-->
 
         <!--begin::Text-->
         <div class="text-white m-0 flex-grow-1 mr-3 font-size-h5">
-          {{ TokenInfo.FullName }}
+          {{ tokenInfo.FullName }}
         </div>
         <!--end::Text-->
       </div>

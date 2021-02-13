@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { LayoutService } from '../../../../core';
 import KTLayoutQuickSearch from '../../../../../assets/js/layout/extended/quick-search';
 import KTLayoutQuickNotifications from '../../../../../assets/js/layout/extended/quick-notifications';
@@ -18,7 +18,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./topbar.component.scss'],
 })
 export class TopbarComponent implements OnInit, AfterViewInit {
-  TokenInfo =new TokenInfoModel();
+  tokenInfo = new TokenInfoModel();
   // tobbar extras
   extraSearchDisplay: boolean;
   extrasSearchLayout: 'offcanvas' | 'dropdown';
@@ -33,19 +33,23 @@ export class TopbarComponent implements OnInit, AfterViewInit {
   extrasUserDisplay: boolean;
   extrasUserLayout: 'offcanvas' | 'dropdown';
 
-  constructor(private layout: LayoutService,   
-      private cmsApiStore :ntkCmsApiStoreService,
-    ) {
-
-    this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((value) => {
-      this.TokenInfo = value;
+  constructor(private layout: LayoutService,
+    private cmsApiStore: ntkCmsApiStoreService,
+  ) {
+    this.tokenInfo =  this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
+    this.cmsApiStoreSubscribe =  this.cmsApiStore.getState((state) =>  state.ntkCmsAPiState.tokenInfo).subscribe((value) => {
+      this.tokenInfo = value;
     });
     this.developing = environment.developing;
+  }
+  cmsApiStoreSubscribe:Subscription;
+  ngOnDestroy() {
+    this.cmsApiStoreSubscribe.unsubscribe();
   }
   developing = false;
 
   ngOnInit(): void {
-  
+
 
     // topbar extras
     this.extraSearchDisplay = this.layout.getProp('extras.search.display');
