@@ -65,6 +65,9 @@ export class CmsToastrService {
     }
     this.toastr.success(message, 'Success!');
   }
+  typeSuccessAppUpload(): void {
+    this.toastr.success('با موفقیت آپلود شد', 'Success!');
+  }
   // error Type
   typeErrorInternetConnection(str: string = ''): void {
     let message = 'خطا در اتصال به اینترنت.لطفا اتصال به اینترنت را بررسی کنید';
