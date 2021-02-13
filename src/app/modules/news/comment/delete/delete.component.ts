@@ -11,7 +11,7 @@ import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 @Component({
   selector: 'app-news-comment-delete',
   templateUrl: './delete.component.html',
-  styleUrls: ['./delete.component.css']
+  styleUrls: ['./delete.component.scss']
 })
 export class NewsCommentDeleteComponent implements OnInit {
   requestId = 0;

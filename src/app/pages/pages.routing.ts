@@ -53,6 +53,11 @@ const routes: Routes = [
           import('../modules/application/application.module').then(m => m.ApplicationModule)
       },
       {
+        path: 'polling',
+        loadChildren: () =>
+          import('../modules/polling/polling.module').then(m => m.PollingModule)
+      },
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',
@@ -65,5 +70,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class PagesRoutingModule {
+export class PagesRouting {
 }

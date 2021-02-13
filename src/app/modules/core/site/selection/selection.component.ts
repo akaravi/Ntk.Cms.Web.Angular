@@ -19,7 +19,7 @@ import {CmsToastrService} from '../../../../core/services/cmsToastr.service';
 @Component({
   selector: 'app-site-selection',
   templateUrl: './selection.component.html',
-  styleUrls: ['./selection.component.css']
+  styleUrls: ['./selection.component.scss']
 })
 export class SelectionComponent implements OnInit {
 

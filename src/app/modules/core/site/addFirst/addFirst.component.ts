@@ -21,7 +21,7 @@ import {PublicHelper} from '../../../../core/helpers/publicHelper';
 @Component({
   selector: 'app-core-site-add-first',
   templateUrl: './addFirst.component.html',
-  styleUrls: ['./addFirst.component.css']
+  styleUrls: ['./addFirst.component.scss']
 })
 export class CoreSiteAddFirstComponent implements OnInit {
 

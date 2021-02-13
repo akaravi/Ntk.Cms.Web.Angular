@@ -33,7 +33,7 @@ import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateM
 @Component({
   selector: 'app-file-category-edit',
   templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.css'],
+  styleUrls: ['./edit.component.scss'],
 })
 export class FileCategoryEditComponent implements OnInit {
   requestId = 0;

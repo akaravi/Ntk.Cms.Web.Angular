@@ -10,7 +10,7 @@ import { Output } from '@angular/core';
 @Component({
   selector: 'app-file-category-selector',
   templateUrl: './selector.component.html',
-  styleUrls: ['./selector.component.css']
+  styleUrls: ['./selector.component.scss']
 })
 export class FileCategorySelectorComponent implements OnInit {
 

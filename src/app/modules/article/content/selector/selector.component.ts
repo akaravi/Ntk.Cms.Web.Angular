@@ -12,7 +12,7 @@ import { Output } from '@angular/core';
 @Component({
   selector: 'app-article-content-selector',
   templateUrl: './selector.component.html',
-  styleUrls: ['./selector.component.css']
+  styleUrls: ['./selector.component.scss']
 })
 export class ArticleContentSelectorComponent implements OnInit {
   constructor(

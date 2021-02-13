@@ -12,7 +12,7 @@ import { Output } from '@angular/core';
 @Component({
   selector: 'app-file-content-selector',
   templateUrl: './selector.component.html',
-  styleUrls: ['./selector.component.css']
+  styleUrls: ['./selector.component.scss']
 })
 export class FileContentSelectorComponent implements OnInit {
   constructor(

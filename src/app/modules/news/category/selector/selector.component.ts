@@ -10,7 +10,7 @@ import { Output } from '@angular/core';
 @Component({
   selector: 'app-news-category-selector',
   templateUrl: './selector.component.html',
-  styleUrls: ['./selector.component.css']
+  styleUrls: ['./selector.component.scss']
 })
 export class NewsCategorySelectorComponent implements OnInit {
 

@@ -7,8 +7,8 @@ import {FormsModule} from '@angular/forms';
 import {SelectionComponent} from './selection/selection.component';
 import {CoreSiteAddFirstComponent} from './addFirst/addFirst.component';
 import {SiteResolver} from './site.resolver';
-import {LayoutModule} from '../../../pages/layout.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+
 
 @NgModule({
   declarations: [

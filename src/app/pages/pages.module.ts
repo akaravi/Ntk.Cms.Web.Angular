@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {PagesRoutingModule} from './pages-routing.module';
+import {PagesRouting} from './pages.routing';
 import {LayoutComponent} from './_layout/layout.component';
 import {ScriptsInitComponent} from './_layout/init/scipts-init/scripts-init.component';
 import {AsideComponent} from './_layout/components/aside/aside.component';
@@ -36,7 +36,7 @@ import {CoreAuthService, CoreCpMainMenuService} from 'ntk-cms-api';
   ],
   imports: [
     CommonModule,
-    PagesRoutingModule,
+    PagesRouting,
     TranslationModule,
     InlineSVGModule,
     ExtrasModule,
@@ -52,5 +52,5 @@ import {CoreAuthService, CoreCpMainMenuService} from 'ntk-cms-api';
 
   ]
 })
-export class LayoutModule {
+export class PagesModule {
 }

@@ -22,7 +22,7 @@ import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 @Component({
   selector: 'app-progress-spinner',
   templateUrl: './progress-spinner.component.html',
-  styleUrls: ['./progress-spinner.component.css'],
+  styleUrls: ['./progress-spinner.component.scss'],
 })
 export class ProgressSpinnerComponent implements DoCheck, OnInit {
   @Input()

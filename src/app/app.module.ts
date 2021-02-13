@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, OnInit } from '@angular/core';
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CoreAuthService } from 'ntk-cms-api';
@@ -20,6 +19,7 @@ import { TestModule } from './modules/test/test.module';
 import { NtkSmartModalModule } from 'ngx-ntk-smart-module';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { HttpConfigInterceptor } from './core/interceptor/httpConfigInterceptor';
+import { AppRouting } from './app.routing';
 
 export function getHighlightLanguages(): any {
   return [
@@ -37,7 +37,7 @@ export function getHighlightLanguages(): any {
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    AppRoutingModule,
+    AppRouting,
     HttpClientModule,
     TranslateModule.forRoot(),
     NtkSmartModalModule.forRoot(),

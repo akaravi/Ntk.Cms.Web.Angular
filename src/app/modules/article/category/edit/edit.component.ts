@@ -33,7 +33,7 @@ import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateM
 @Component({
   selector: 'app-article-category-edit',
   templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.css'],
+  styleUrls: ['./edit.component.scss'],
 })
 export class ArticleCategoryEditComponent implements OnInit {
   requestId = 0;
