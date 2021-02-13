@@ -14,7 +14,7 @@ import {TopbarComponent} from './_layout/components/topbar/topbar.component';
 import {LanguageSelectorComponent} from './_layout/components/topbar/language-selector/language-selector.component';
 import {HeaderMobileComponent} from './_layout/components/header-mobile/header-mobile.component';
 import {ExtrasModule} from '../core/partials/layout/extras/extras.module';
-import {TranslationModule} from '../modules/i18n/translation.module';
+import {TranslationModule} from '../core/i18n/translation.module';
 import {CoreModule} from '../core';
 import {SubheaderModule} from '../core/partials/layout/subheader/subheader.module';
 import {SiteModule} from '../modules/core/site/site.module';

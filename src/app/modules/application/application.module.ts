@@ -33,7 +33,7 @@ import { ApplicationSourceAddComponent } from './source/add/add.component';
 import { ApplicationSourceEditComponent } from './source/edit/edit.component';
 import { ApplicationSourceDeleteComponent } from './source/delete/delete.component';
 import {MatIconModule} from '@angular/material/icon';
-import { TranslationModule } from '../i18n/translation.module';
+import { TranslationModule } from '../../core/i18n/translation.module';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatStepperModule} from '@angular/material/stepper';
 import { ApplicationSourceSelectorComponent } from './source/selector/selector.component';
