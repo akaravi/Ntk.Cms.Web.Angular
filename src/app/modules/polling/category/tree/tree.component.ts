@@ -1,3 +1,4 @@
+import { ProgressSpinnerModel } from './../../../../core/models/progressSpinnerModel';
 import {
   Component,
   EventEmitter,
@@ -18,16 +19,17 @@ import {
   PollingCategoryService,
   ntkCmsApiStoreService,
 } from 'ntk-cms-api';
-import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
+
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { PollingCategoryEditComponent } from '../edit/edit.component';
 import { PollingCategoryDeleteComponent } from '../delete/delete.component';
-import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
+
 import { Subscription } from 'rxjs';
+import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 
 
 @Component({
-  selector: 'app-news-category-tree',
+  selector: 'app-polling-category-tree',
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.scss'],
 })

@@ -23,6 +23,8 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { PollingContentListComponent } from './content/list/list.component';
 import { PollingContentAddComponent } from './content/add/add.component';
 import { PollingContentEditComponent } from './content/edit/edit.component';
+import { PollingCategoryTreeComponent } from './category/tree/tree.component';
+import { PollingContentDeleteComponent } from './content/delete/delete.component';
 
 
 @NgModule({
@@ -31,9 +33,11 @@ import { PollingContentEditComponent } from './content/edit/edit.component';
     PollingCategorySelectorComponent,
     PollingCategoryEditComponent,
     PollingCategoryDeleteComponent,
+    PollingCategoryTreeComponent,
     PollingContentListComponent,
     PollingContentAddComponent,
-    PollingContentEditComponent
+    PollingContentEditComponent,
+    PollingContentDeleteComponent,
   ],
   imports: [
     CommonModule,

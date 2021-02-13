@@ -9,7 +9,7 @@
 
         <mat-step label="اطلاعات الزامی" state="main">
 
-          <mat-form-field>
+          <mat-form-field class="example-full-width">
             <mat-select placeholder="وضعیت" [(ngModel)]="dataModel.RecordStatus" name="dataModel.RecordStatus"
               #RecordStatus="ngModel" panelClass="recordStatus-{{ dataModel.RecordStatus }}" required>
               <mat-option *ngFor="
@@ -65,8 +65,8 @@
             <mat-datepicker touchUi #picker2></mat-datepicker>
           </mat-form-field>
           <hr class="pb-5" />
-          <angular-editor [placeholder]="'Enter text here...'" [config]="publicHelper.editorConfig" [(ngModel)]="dataModel.Body"
-            name="dataModel.Body"></angular-editor>
+          <angular-editor [placeholder]="'Enter text here...'" [config]="publicHelper.editorConfig"
+            [(ngModel)]="dataModel.Body" name="dataModel.Body"></angular-editor>
 
           <div *ngIf="formInfo.FormAllowSubmit">
             <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
@@ -257,13 +257,15 @@
         </mat-step>
         <mat-step label="مطالب مشابه" state="info">
           <p>مطالب مرتبط را مشخص کنید</p>
-          <app-polling-content-selector (optionSelect)="onActionContentSimilarSelect($event)" [optionPlaceholder]="'محتوای مشابه'" >
+          <app-polling-content-selector (optionSelect)="onActionContentSimilarSelect($event)"
+            [optionPlaceholder]="'محتوای مشابه'">
 
 
-            <button *ngIf="contentSimilarSelected && contentSimilarSelected.Id" (click)="onActionContentSimilarAddToLIst()" type="button" mat-button
-            class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
-            اضافه به لیست ...
-          </button>
+            <button *ngIf="contentSimilarSelected && contentSimilarSelected.Id"
+              (click)="onActionContentSimilarAddToLIst()" type="button" mat-button
+              class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
+              اضافه به لیست ...
+            </button>
           </app-polling-content-selector>
 
 
@@ -291,7 +293,7 @@
               <!-- RecordStatus Column -->
               <ng-container matColumnDef="RecordStatus">
                 <mat-header-cell *matHeaderCellDef> وضعیت </mat-header-cell>
-                <mat-cell *matCellDef="let row"> <i [ngClass]="row.RecordStatus|statusClass" ></i> </mat-cell>
+                <mat-cell *matCellDef="let row"> <i [ngClass]="row.RecordStatus|statusClass"></i> </mat-cell>
               </ng-container>
               <!-- Title Column -->
               <ng-container matColumnDef="Title">
