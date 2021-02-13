@@ -25,7 +25,7 @@ import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { NodeInterface, TreeModel } from 'ntk-cms-filemanager';
-import { Map } from 'leaflet';
+import { Map as leafletMap } from 'leaflet';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { MatStepper } from '@angular/material/stepper';
@@ -62,11 +62,12 @@ export class TagAddComponent implements OnInit, AfterViewInit {
   loading = new ProgressSpinnerModel();
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
   selectFileTypePodcast = ['mp3'];
+  selectFileTypeMovie = ['mp4'];
   formInfo: FormInfoModel = new FormInfoModel();
   mapMarker: any;
   fileManagerOpenForm = false;
   fileManagerOpenFormPodcast = false;
-
+  fileManagerOpenFormMovie = false;
   fileManagerTree: TreeModel;
   keywordDataModel = [];
   tagDataModel = [];
@@ -82,7 +83,7 @@ export class TagAddComponent implements OnInit, AfterViewInit {
   appLanguage = 'fa';
 
   viewMap = false;
-  private mapModel: Map;
+  private mapModel: leafletMap;
   ngOnInit(): void {
     this.requestCategoryId = Number(this.activatedRoute.snapshot.paramMap.get('CategoryId'));
     if (this.requestCategoryId === 0) {
@@ -143,7 +144,10 @@ export class TagAddComponent implements OnInit, AfterViewInit {
     this.dataModel.LinkFilePodcastId = model.id;
     this.dataModel.LinkFilePodcastIdSrc = model.downloadLinksrc;
   }
-
+  onActionFileSelectedLinkFileMovieId(model: NodeInterface): void {
+    this.dataModel.LinkFileMovieId = model.id;
+    this.dataModel.LinkFileMovieIdSrc = model.downloadLinksrc;
+  }
 
 
   getEnumRecordStatus(): void {
@@ -152,7 +156,7 @@ export class TagAddComponent implements OnInit, AfterViewInit {
     });
   }
 
-  receiveMap(model: Map): void {
+  receiveMap(model: leafletMap): void {
     this.mapModel = model;
     this.mapModel.on('click', (e) => {
       // @ts-ignore

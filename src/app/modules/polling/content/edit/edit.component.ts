@@ -11,11 +11,15 @@ import {
   PollingContentService,
   FilterDataModel,
   PollingCategoryModel,
+  DataFieldInfoModel,
+  AccessModel,
 } from 'ntk-cms-api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { NodeInterface, TreeModel } from 'ntk-cms-filemanager';
-import { Map } from 'leaflet';
+import { Map as leafletMap } from 'leaflet';
+
+
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { MatStepper } from '@angular/material/stepper';
@@ -45,6 +49,8 @@ export class PollingContentEditComponent implements OnInit, AfterViewInit {
   }
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
   dataModel = new PollingContentModel();
+  dataAccessModel: AccessModel;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
   dataModelResult: ErrorExceptionResult<PollingContentModel> = new ErrorExceptionResult<PollingContentModel>();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   similarDataModel = new Array<PollingContentModel>();
@@ -56,12 +62,12 @@ export class PollingContentEditComponent implements OnInit, AfterViewInit {
   loading = new ProgressSpinnerModel();
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
   selectFileTypePodcast = ['mp3'];
+  selectFileTypeMovie = ['mp4'];
   formInfo: FormInfoModel = new FormInfoModel();
   fileManagerOpenForm = false;
   fileManagerOpenFormPodcast = false;
-
+  fileManagerOpenFormMovie = false;
   fileManagerTree: TreeModel;
-  keywordDataModel = [];
   tagIdsData: number[];
 
 
@@ -69,7 +75,7 @@ export class PollingContentEditComponent implements OnInit, AfterViewInit {
 
   viewMap = false;
   mapMarker: any;
-  private mapModel: Map;
+  private mapModel: leafletMap;
   private mapMarkerPoints: Array<PoinModel> = [];
   mapOptonCenter = {};
   ngOnInit(): void {
@@ -79,6 +85,7 @@ export class PollingContentEditComponent implements OnInit, AfterViewInit {
       return;
     }
     this.DataGetOne();
+    this.DataGetAccess();
     this.getEnumRecordStatus();
   }
   ngAfterViewInit(): void {
@@ -92,7 +99,10 @@ export class PollingContentEditComponent implements OnInit, AfterViewInit {
     this.dataModel.LinkFilePodcastId = model.id;
     this.dataModel.LinkFilePodcastIdSrc = model.downloadLinksrc;
   }
-
+  onActionFileSelectedLinkFileMovieId(model: NodeInterface): void {
+    this.dataModel.LinkFileMovieId = model.id;
+    this.dataModel.LinkFileMovieIdSrc = model.downloadLinksrc;
+  }
 
 
   getEnumRecordStatus(): void {
@@ -112,15 +122,26 @@ export class PollingContentEditComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    if (this.keywordDataModel && this.keywordDataModel.length > 0) {
-      const listKeyword = this.keywordDataModel.map(x => x.display);
-      if (listKeyword && listKeyword.length > 0) {
-        this.dataModel.Keyword = listKeyword.join(',');
-      }
-    }
+
     this.DataEditContent();
   }
-
+  DataGetAccess(): void {
+    this.pollingContentService
+      .ServiceViewModel()
+      .subscribe(
+        async (next) => {
+          if (next.IsSuccess) {
+            this.dataAccessModel = next.Access;
+            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+          } else {
+            this.toasterService.typeErrorGetAccess(next.ErrorMessage);
+          }
+        },
+        (error) => {
+          this.toasterService.typeErrorGetAccess(error);
+        }
+      );
+  }
   DataGetOne(): void {
     this.formInfo.FormAllowSubmit = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
@@ -142,7 +163,6 @@ export class PollingContentEditComponent implements OnInit, AfterViewInit {
             if (lat > 0 && lon > 0) {
               this.mapMarkerPoints.push({ lat, lon });
             }
-            this.keywordDataModel = this.dataModel.Keyword.split(',');
             // this.DataTagGetAll();
             // this.DataOtherInfoGetAll();
             // this.DataSimilarGetAllIds();
@@ -203,9 +223,7 @@ export class PollingContentEditComponent implements OnInit, AfterViewInit {
     }
     this.dataModel.LinkCategoryId = model.Id;
   }
-  onActionTagChange(ids: number[]): void {
-    this.tagIdsData = ids;
-  }
+
   onActionContentSimilarSelect(model: PollingContentModel | null): void {
     if (!model || model.Id <= 0) {
       return;
@@ -256,7 +274,7 @@ export class PollingContentEditComponent implements OnInit, AfterViewInit {
   onActionBackToParent(): void {
     this.router.navigate(['/polling/content/']);
   }
-  receiveMap(model: Map): void {
+  receiveMap(model: leafletMap): void {
     this.mapModel = model;
 
     if (this.mapMarkerPoints && this.mapMarkerPoints.length > 0) {

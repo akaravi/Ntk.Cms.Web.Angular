@@ -13,7 +13,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { NodeInterface, TreeModel } from 'ntk-cms-filemanager';
-import { Map } from 'leaflet';
+import { Map as leafletMap } from 'leaflet';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { MatStepper } from '@angular/material/stepper';
@@ -53,11 +53,12 @@ export class FileContentEditComponent implements OnInit, AfterViewInit {
   loading = new ProgressSpinnerModel();
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
   selectFileTypePodcast = ['mp3'];
+  selectFileTypeMovie = ['mp4'];
   formInfo: FormInfoModel = new FormInfoModel();
   mapMarker: any;
   fileManagerOpenForm = false;
   fileManagerOpenFormPodcast = false;
-
+  fileManagerOpenFormMovie = false;
   fileManagerTree: TreeModel;
   keywordDataModel = [];
   tagIdsData: number[];
@@ -66,7 +67,7 @@ export class FileContentEditComponent implements OnInit, AfterViewInit {
   appLanguage = 'fa';
 
   viewMap = false;
-  private mapModel: Map;
+  private mapModel: leafletMap;
   private mapMarkerPoints: Array<PoinModel> = [];
   mapOptonCenter = {};
   ngOnInit(): void {
@@ -80,13 +81,6 @@ export class FileContentEditComponent implements OnInit, AfterViewInit {
   }
   ngAfterViewInit(): void {
 
-  }
-  onActionFileSelectedLinkMainImageId(model: NodeInterface): void {
-    this.dataModel.LinkMainImageId = model.id;
-    this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
-  }
-  onActionFileSelectedLinkFilePodcastId(model: NodeInterface): void {
-    this.dataModel.LinkFilePodcastId = model.id;
   }
 
 
@@ -242,7 +236,7 @@ export class FileContentEditComponent implements OnInit, AfterViewInit {
   onActionBackToParent(): void {
     this.router.navigate(['/file/content/']);
   }
-  receiveMap(model: Map): void {
+  receiveMap(model: leafletMap): void {
     this.mapModel = model;
 
     if (this.mapMarkerPoints && this.mapMarkerPoints.length > 0) {
