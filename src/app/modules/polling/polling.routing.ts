@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { PollingComponent } from './polling.component';
 import { PollingContentAddComponent } from './content/add/add.component';
 import { PollingContentEditComponent } from './content/edit/edit.component';
+import { PollingVoteListComponent } from './vote/list/list.component';
 
 
 
@@ -25,8 +26,15 @@ const routes: Routes = [
       {
         path: 'content/edit/:Id',
         component: PollingContentEditComponent
-      }
-
+      },
+      {
+        path: 'vote',
+        component: PollingVoteListComponent
+      },
+      {
+        path: 'vote/:ContentId',
+        component: PollingVoteListComponent
+      },
     ]
   },
 ];

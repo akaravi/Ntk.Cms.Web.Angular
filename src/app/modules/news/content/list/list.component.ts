@@ -71,7 +71,7 @@ export class NewsContentListComponent implements OnInit , OnDestroy  {
     'Action'
   ];
   ngOnInit(): void {
-   
+
     this.DataGetAll();
     this.tokenInfo =  this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
     this.cmsApiStoreSubscribe =  this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
@@ -250,7 +250,13 @@ export class NewsContentListComponent implements OnInit , OnDestroy  {
   onActionTableRowSelect(row: NewsContentModel): void {
     this.tableRowSelected = row;
   }
-  onClickComment(id: number): void {
-    this.router.navigate(['/news/comment/', id]);
+  onActionbuttonComment(model: NewsContentModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id === 0) {
+      const title = 'برروز خطا ';
+      const message = 'ردیفی برای ویرایش انتخاب نشده است';
+      this.cmsToastrService.toastr.error(message, title);
+      return;
+    }
+    this.router.navigate(['/news/comment/', model.Id]);
   }
 }

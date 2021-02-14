@@ -41,7 +41,7 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
     private activatedRoute: ActivatedRoute,
     public coreEnumService: CoreEnumService,
     public publicHelper: PublicHelper,
-        private newsContentService: NewsContentService,
+    private newsContentService: NewsContentService,
     private newsContentTagService: NewsContentTagService,
     private newsContentSimilarService: NewsContentSimilarService,
     private newsContentOtherInfoService: NewsContentOtherInfoService,
@@ -414,7 +414,7 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
       this.otherInfoDataModel.forEach(item => {
         const row = new NewsContentOtherInfoModel();
         row.LinkContentId = model.Id;
-        if (!this.dataContentOtherInfoModelResult.ListItems || !item.Id|| !this.dataContentOtherInfoModelResult.ListItems.find(x => x.Id === item.Id)) {
+        if (!this.dataContentOtherInfoModelResult.ListItems || !item.Id || !this.dataContentOtherInfoModelResult.ListItems.find(x => x.Id === item.Id)) {
           dataListAdd.push(row);
         }
       });

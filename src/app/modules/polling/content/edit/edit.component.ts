@@ -13,6 +13,8 @@ import {
   PollingCategoryModel,
   DataFieldInfoModel,
   AccessModel,
+  PollingOptionModel,
+  PollingOptionService,
 } from 'ntk-cms-api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
@@ -39,7 +41,8 @@ export class PollingContentEditComponent implements OnInit, AfterViewInit {
     private activatedRoute: ActivatedRoute,
     public coreEnumService: CoreEnumService,
     public publicHelper: PublicHelper,
-        private pollingContentService: PollingContentService,
+    private pollingContentService: PollingContentService,
+    private pollingOptionService: PollingOptionService,
 
     private toasterService: CmsToastrService,
     private router: Router,
@@ -53,11 +56,13 @@ export class PollingContentEditComponent implements OnInit, AfterViewInit {
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
   dataModelResult: ErrorExceptionResult<PollingContentModel> = new ErrorExceptionResult<PollingContentModel>();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
-  similarDataModel = new Array<PollingContentModel>();
-  contentSimilarSelected: PollingContentModel = new PollingContentModel();
-  otherInfoTabledisplayedColumns = ['Id', 'Title', 'TypeId', 'Action'];
-  similarTabledisplayedColumns = ['LinkMainImageIdSrc', 'Id', 'RecordStatus', 'Title', 'Action'];
-  similarTabledataSource = new MatTableDataSource<PollingContentModel>();
+  optionSelected: PollingOptionModel = new PollingOptionModel();
+  optionDataModel = new Array<PollingOptionModel>();
+  optionTabledataSource = new MatTableDataSource<PollingOptionModel>();
+  dataOptionModelResult: ErrorExceptionResult<PollingOptionModel> = new ErrorExceptionResult<PollingOptionModel>();
+
+  optionTabledisplayedColumns = ['Id', 'Option', 'OptionAnswer', 'IsCorrectAnswer', 'NumberOfVotes', 'ScoreOfVotes', 'Action'];
+
 
   loading = new ProgressSpinnerModel();
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
@@ -163,7 +168,7 @@ export class PollingContentEditComponent implements OnInit, AfterViewInit {
             if (lat > 0 && lon > 0) {
               this.mapMarkerPoints.push({ lat, lon });
             }
-            // this.DataTagGetAll();
+            this.DataOptionGetAll();
             // this.DataOtherInfoGetAll();
             // this.DataSimilarGetAllIds();
             this.loading.display = false;
@@ -178,7 +183,41 @@ export class PollingContentEditComponent implements OnInit, AfterViewInit {
         }
       );
   }
+  DataOptionGetAll(): void {
+    this.formInfo.FormAllowSubmit = false;
+    this.formInfo.FormAlert = 'در حال دریافت گزینه ها از سرور';
+    this.formInfo.FormError = '';
+    this.loading.display = true;
 
+
+    const filteModel = new FilterModel();
+
+    const aaa3 = {
+      PropertyName: 'LinkPollingContentId',
+      Value: this.dataModelResult.Item.Id + '',
+    };
+    filteModel.Filters.push(aaa3 as FilterDataModel);
+    this.pollingOptionService
+      .ServiceGetAll(filteModel)
+      .subscribe(
+        async (next) => {
+          this.loading.display = false;
+          this.formInfo.FormAllowSubmit = true;
+          this.dataOptionModelResult = next;
+          if (next.IsSuccess) {
+            this.optionDataModel = next.ListItems;
+            this.optionTabledataSource.data = next.ListItems;
+          } else {
+            this.toasterService.typeErrorGetAll(next.ErrorMessage);
+          }
+        },
+        (error) => {
+          this.loading.display = false;
+          this.formInfo.FormAllowSubmit = true;
+          this.toasterService.typeErrorGetAll(error);
+        }
+      );
+  }
   DataEditContent(): void {
     this.formInfo.FormAllowSubmit = false;
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
@@ -196,7 +235,7 @@ export class PollingContentEditComponent implements OnInit, AfterViewInit {
 
             this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
             this.toasterService.typeSuccessAdd();
-            // await this.DataActionAfterAddContentSuccessfulTag(this.dataModelResult.Item);
+            await this.DataActionAfterAddContentSuccessfullOption(this.dataModelResult.Item);
             // await this.DataActionAfterAddContentSuccessfulSimilar(this.dataModelResult.Item);
             // await this.DataActionAfterAddContentSuccessfulOtherInfo(this.dataModelResult.Item);
             this.loading.display = false;
@@ -212,7 +251,30 @@ export class PollingContentEditComponent implements OnInit, AfterViewInit {
         }
       );
   }
-
+  async DataActionAfterAddContentSuccessfullOption(model: PollingContentModel): Promise<any> {
+    const dataListAdd = new Array<PollingOptionModel>();
+    const dataListDelete = new Array<PollingOptionModel>();
+    if (this.optionDataModel) {
+      this.optionDataModel.forEach(item => {
+        const row = new PollingOptionModel();
+        row.LinkPollingContentId = model.Id;
+        if (!this.dataOptionModelResult.ListItems || !item.Id || !this.dataOptionModelResult.ListItems.find(x => x.Id === item.Id)) {
+          dataListAdd.push(row);
+        }
+      });
+    }
+    if (this.dataOptionModelResult.ListItems) {
+      this.dataOptionModelResult.ListItems.forEach(item => {
+        if (!this.optionDataModel || !this.optionDataModel.find(x => x.Id === item.Id)) {
+          dataListDelete.push(item);
+        }
+      });
+    }
+    if (dataListAdd && dataListAdd.length > 0) {
+    }
+    if (dataListDelete && dataListDelete.length > 0) {
+    }
+  }
   onActionCategorySelect(model: PollingCategoryModel | null): void {
     if (!model || model.Id <= 0) {
       this.toasterService.toastr.error(
@@ -224,38 +286,42 @@ export class PollingContentEditComponent implements OnInit, AfterViewInit {
     this.dataModel.LinkCategoryId = model.Id;
   }
 
-  onActionContentSimilarSelect(model: PollingContentModel | null): void {
-    if (!model || model.Id <= 0) {
+  onActionOptionAddToLIst(): void {
+    if (!this.optionSelected) {
       return;
     }
-    this.contentSimilarSelected = model;
-  }
-  onActionContentSimilarAddToLIst(): void {
-    if (!this.contentSimilarSelected || this.contentSimilarSelected.Id <= 0) {
-      return;
-    }
-    if (this.similarDataModel.find(x => x.Id === this.contentSimilarSelected.Id)) {
+    if (this.optionDataModel.find(x => x.Option === this.optionSelected.Option)) {
       this.toasterService.typeErrorAddDuplicate();
       return;
     }
-    this.similarDataModel.push(this.contentSimilarSelected);
-    this.similarTabledataSource.data = this.similarDataModel;
+    this.optionDataModel.push(this.optionSelected);
+    this.optionSelected = new PollingOptionModel();
+    this.optionTabledataSource.data = this.optionDataModel;
   }
-  onActionContentSimilarRemoveFromLIst(model: PollingContentModel | null): void {
-    if (!model || model.Id <= 0) {
+  onActionOptionRemoveFromLIst(index: number): void {
+
+    if (index < 0) {
       return;
     }
-    if (!this.similarDataModel || this.similarDataModel.length === 0) {
+    if (!this.optionDataModel || this.optionDataModel.length === 0) {
       return;
     }
-    const retOut = new Array<PollingContentModel>();
-    this.similarDataModel.forEach(x => {
-      if (x.Id !== model.Id) {
-        retOut.push(x);
-      }
-    });
-    this.similarDataModel = retOut;
-    this.similarTabledataSource.data = this.similarDataModel;
+    this.optionDataModel.splice(index, 1);
+    this.optionTabledataSource.data = this.optionDataModel;
+
+  }
+  onActionOptionEditFromLIst(index: number): void {
+
+    if (index < 0) {
+      return;
+    }
+    if (!this.optionDataModel || this.optionDataModel.length === 0) {
+      return;
+    }
+    this.optionSelected = this.optionDataModel[index];
+    this.optionDataModel.splice(index, 1);
+    this.optionTabledataSource.data = this.optionDataModel;
+
   }
 
 

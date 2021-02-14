@@ -53,8 +53,9 @@
 
           <mat-form-field class="example-full-width">
             <mat-label>حداکثر مجموع امتیاز</mat-label>
-            <input matInput [(ngModel)]="dataModel.MaxVoteForThisContent" name="dataModel.MaxVoteForThisContent" #MaxVoteForThisContent type="text" placeholder="حداکثر امتیازی که کاربری می تواند بدهد"
-              min="1" max="100" required />
+            <input matInput [(ngModel)]="dataModel.MaxVoteForThisContent" name="dataModel.MaxVoteForThisContent"
+              #MaxVoteForThisContent type="text" placeholder="حداکثر امتیازی که کاربری می تواند بدهد" min="1" max="100"
+              required />
             <mat-icon matSuffix *ngIf="dataModel.MaxVoteForThisContent" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.MaxVoteForThisContent = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
@@ -65,8 +66,9 @@
 
           <mat-form-field class="example-full-width">
             <mat-label>حداکثر امتیاز به هر گزینه</mat-label>
-            <input matInput [(ngModel)]="dataModel.MaxVoteForEachOption" name="dataModel.MaxVoteForEachOption" #MaxVoteForEachOption type="text" placeholder="حداکثر امتیازی که کاربری می تواند بدهد"
-              min="1" max="100" required />
+            <input matInput [(ngModel)]="dataModel.MaxVoteForEachOption" name="dataModel.MaxVoteForEachOption"
+              #MaxVoteForEachOption type="text" placeholder="حداکثر امتیازی که کاربری می تواند بدهد" min="1" max="100"
+              required />
             <mat-icon matSuffix *ngIf="dataModel.MaxVoteForEachOption" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.MaxVoteForEachOption = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
@@ -78,16 +80,20 @@
 
 
           <div class="example-full-width">
-            <mat-slide-toggle [(ngModel)]="dataModel.ViewStatisticsAfterVote" *ngIf="fieldsInfo['ViewStatisticsAfterVote']?.AccessWatchField"
-              [disabled]="!fieldsInfo['ViewStatisticsAfterVote']?.AccessEditField" name="dataModel.ViewStatisticsAfterVote">
+            <mat-slide-toggle [(ngModel)]="dataModel.ViewStatisticsAfterVote"
+              *ngIf="fieldsInfo['ViewStatisticsAfterVote']?.AccessWatchField"
+              [disabled]="!fieldsInfo['ViewStatisticsAfterVote']?.AccessEditField"
+              name="dataModel.ViewStatisticsAfterVote">
               {{fieldsInfo['ViewStatisticsAfterVote']?.FieldTitle}}
             </mat-slide-toggle>
           </div>
 
 
           <div class="example-full-width">
-            <mat-slide-toggle [(ngModel)]="dataModel.ViewStatisticsBeforeVote" *ngIf="fieldsInfo['ViewStatisticsBeforeVote']?.AccessWatchField"
-              [disabled]="!fieldsInfo['ViewStatisticsBeforeVote']?.AccessEditField" name="dataModel.ViewStatisticsBeforeVote">
+            <mat-slide-toggle [(ngModel)]="dataModel.ViewStatisticsBeforeVote"
+              *ngIf="fieldsInfo['ViewStatisticsBeforeVote']?.AccessWatchField"
+              [disabled]="!fieldsInfo['ViewStatisticsBeforeVote']?.AccessEditField"
+              name="dataModel.ViewStatisticsBeforeVote">
               {{fieldsInfo['ViewStatisticsBeforeVote']?.FieldTitle}}
             </mat-slide-toggle>
           </div>
@@ -124,17 +130,86 @@
           <p>این بخش برای نوع و کزینه ای نظر سنجی می باشد</p>
 
           <mat-form-field class="example-full-width">
-            <mat-label>عنوان</mat-label>
-            <input matInput [(ngModel)]="dataModel.Title" name="dataModel.Title" #Title type="text" placeholder="عنوان"
-              minlength="3" maxlength="100" required />
-            <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
-              (click)="dataModel.Title = ''">close</mat-icon>
+            <mat-label>گزینه</mat-label>
+            <input matInput [(ngModel)]="optionSelected.Option" name="optionSelected.Option" #optionSelected_Option
+              type="text" placeholder="گزینه" minlength="1" maxlength="200" />
+            <mat-icon matSuffix *ngIf="optionSelected.Option" matSuffix mat-icon-button aria-label="Clear"
+              (click)="optionSelected.Option = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
-            <mat-hint align="end">{{ Title.value.length }} / 100</mat-hint>
-            <mat-error *ngIf="Title.errors?.required">
-              Title is <strong>required</strong>
-            </mat-error>
+            <mat-hint align="end">{{ optionSelected_Option.value.length }} / 200</mat-hint>
           </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <mat-label>پاسخ</mat-label>
+            <textarea matInput [(ngModel)]="optionSelected.OptionAnswer" name="optionSelected.OptionAnswer"
+              #optionSelected_OptionAnswer type="text" placeholder="پاسخ" minlength="0" maxlength="500"
+              row="5"></textarea>
+            <mat-icon matSuffix *ngIf="optionSelected.OptionAnswer" matSuffix mat-icon-button aria-label="Clear"
+              (click)="optionSelected.OptionAnswer = ''">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
+            <mat-hint align="end">{{ optionSelected_OptionAnswer.value.length }} / 500</mat-hint>
+          </mat-form-field>
+
+          <div class="example-full-width">
+            <mat-slide-toggle [(ngModel)]="optionSelected.IsCorrectAnswer" name="optionSelected.IsCorrectAnswer">
+              این گزینه صحیح است
+            </mat-slide-toggle>
+          </div>
+
+          <button (click)="onActionOptionAddToLIst()" type="button" mat-button
+            class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
+            اضافه به لیست ...
+          </button>
+          <p>لیست سایر اطلاعات</p>
+
+          <!-- TABLE  -->
+          <div class="example-container mat-elevation-z8">
+            <mat-table [dataSource]="optionTabledataSource">
+              <!-- Id Column -->
+              <ng-container matColumnDef="Id">
+                <mat-header-cell *matHeaderCellDef> شناسه </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.Id}} </mat-cell>
+              </ng-container>
+              <!-- Option Column -->
+              <ng-container matColumnDef="Option">
+                <mat-header-cell *matHeaderCellDef> گزینه </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.Option}} </mat-cell>
+              </ng-container>
+              <!-- OptionAnswer Column -->
+              <ng-container matColumnDef="OptionAnswer">
+                <mat-header-cell *matHeaderCellDef> پاسخ </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.OptionAnswer}} </mat-cell>
+              </ng-container>
+              <!-- IsCorrectAnswer Column -->
+              <ng-container matColumnDef="IsCorrectAnswer">
+                <mat-header-cell *matHeaderCellDef> IsCorrectAnswer </mat-header-cell>
+                <mat-cell *matCellDef="let row"><i [ngClass]="row.IsCorrectAnswer|boolClass"></i> </mat-cell>
+              </ng-container>
+              <!-- IsCorrectAnswer Column -->
+              <ng-container matColumnDef="NumberOfVotes">
+                <mat-header-cell *matHeaderCellDef> NumberOfVotes </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.NumberOfVotes}} </mat-cell>
+              </ng-container>
+              <!-- ScoreOfVotes Column -->
+              <ng-container matColumnDef="ScoreOfVotes">
+                <mat-header-cell *matHeaderCellDef> ScoreOfVotes </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.ScoreOfVotes}} </mat-cell>
+              </ng-container>
+              <!-- Action Column -->
+              <ng-container matColumnDef="Action">
+                <mat-header-cell *matHeaderCellDef> ... </mat-header-cell>
+                <mat-cell *matCellDef="let row; let i = index" class='Action'>
+                  <small (click)="onActionOptionEditFromLIst(i)">ویرایش</small>|
+                  <small (click)="onActionOptionRemoveFromLIst(i)">حذف</small>
+                </mat-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="optionTabledisplayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: optionTabledisplayedColumns;"
+                [ngStyle]="{'background': row.Option === optionSelected.Option ? '#d3d3da' : '' }">
+              </mat-row>
+            </mat-table>
+          </div>
+          <!-- TABLE  -->
 
 
 
@@ -194,6 +269,12 @@
               [openFilemanagerButtonLabelKey]="'select'" [selectFileType]="selectFileTypePodcast"
               [openFilemanagerButtonView]="false"></cms-file-manager>
           </div>
+          <div class="mb-3">
+            <video *ngIf="dataModel?.LinkFileMovieIdSrc?.length>0" controls>
+              <source src="{{dataModel.LinkFileMovieIdSrc}}" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
           <div class="mb-9">
             <mat-form-field class="example-full-width">
               <input matInput [(ngModel)]="dataModel.LinkFileMovieId" name="dataModel.LinkFileMovieId" #LinkFileMovieId
@@ -219,38 +300,7 @@
             </button>
           </div>
         </mat-step>
-        <mat-step label="سایر اطلاعات" state="otherinfo">
-          <p>سایر اطلاعات در رابطه با این محتوا در این قسمت اضافه کنید</p>
 
-
-
-
-          <div *ngIf="formInfo.FormAllowSubmit">
-            <button type="button" mat-button matStepperPrevious
-              class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
-              قبلی
-            </button>
-            <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
-              class="btn btn-primary font-weight-bold text-uppercase px-9 py-4">
-              بعدی
-            </button>
-          </div>
-        </mat-step>
-        <mat-step label="مطالب مشابه" state="info">
-          <p>مطالب مرتبط را مشخص کنید</p>
-
-
-          <div *ngIf="formInfo.FormAllowSubmit">
-            <button type="button" mat-button matStepperPrevious
-              class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
-              قبلی
-            </button>
-            <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
-              class="btn btn-primary font-weight-bold text-uppercase px-9 py-4">
-              بعدی
-            </button>
-          </div>
-        </mat-step>
         <mat-step label="موقعیت مکانی" state="loaction">
           <p>روی نقشه کلیک کنید تا موقیت مکانی مشخص گردد</p>
           <app-cms-map (map$)="receiveMap($event)" (zoom$)="receiveZoom($event)" [optonCenter]="mapOptonCenter"

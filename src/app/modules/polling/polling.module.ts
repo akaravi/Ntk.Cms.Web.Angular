@@ -9,6 +9,8 @@ import {
   CoreModuleTagService,
   PollingCategoryService,
   PollingContentService,
+  PollingOptionService,
+  PollingVoteService,
 
 } from 'ntk-cms-api';
 import { PollingCategoryEditComponent } from './category/edit/edit.component';
@@ -56,7 +58,8 @@ import { PollingContentDeleteComponent } from './content/delete/delete.component
     CoreModuleTagService,
     PollingCategoryService,
     PollingContentService,
-
+    PollingOptionService,
+    PollingVoteService,
   ]
 })
 export class PollingModule { }

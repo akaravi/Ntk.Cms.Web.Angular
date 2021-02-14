@@ -1,29 +1,25 @@
-import {
-  Component,
-  Inject,
-  Input,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+import { Component, OnInit, Input, ViewChild, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CoreEnumService, ErrorExceptionResult, FormInfoModel, ItemState, PollingContentModel, PollingContentService } from 'ntk-cms-api';
+import { FormGroup } from '@angular/forms';
+import { CoreEnumService, ErrorExceptionResult, FilterModel, FormInfoModel, PollingVoteModel, PollingVoteService } from 'ntk-cms-api';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 
+
 @Component({
-  selector: 'app-polling-content-delete',
+  selector: 'app-news-comment-delete',
   templateUrl: './delete.component.html',
   styleUrls: ['./delete.component.scss']
 })
-export class PollingContentDeleteComponent implements OnInit {
+export class PollingVoteDeleteComponent implements OnInit {
   requestId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialogRef: MatDialogRef<PollingContentDeleteComponent>,
+    private dialogRef: MatDialogRef<PollingVoteDeleteComponent>,
     private activatedRoute: ActivatedRoute,
-    private pollingContentService: PollingContentService,
+    private pollingVoteService: PollingVoteService,
     private cmsToastrService: CmsToastrService
   ) {
     if (data) {
@@ -31,7 +27,7 @@ export class PollingContentDeleteComponent implements OnInit {
     }
   }
   loading = new ProgressSpinnerModel();
-  dataModelResultContent: ErrorExceptionResult<PollingContentModel> = new ErrorExceptionResult<PollingContentModel>();
+  dataModelResultComment: ErrorExceptionResult<PollingVoteModel> = new ErrorExceptionResult<PollingVoteModel>();
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
   formInfo: FormInfoModel = new FormInfoModel();
   ngOnInit(): void {
@@ -50,11 +46,11 @@ export class PollingContentDeleteComponent implements OnInit {
     }
     this.formInfo.FormAlert = 'در حال لود اطلاعات';
     this.loading.display = true;
-    this.pollingContentService
+    this.pollingVoteService
       .ServiceGetOneById(this.requestId)
       .subscribe(
         (next) => {
-          this.dataModelResultContent = next;
+          this.dataModelResultComment = next;
           if (!next.IsSuccess) {
             this.formInfo.FormAlert = 'برروز خطا';
             this.formInfo.FormError = next.ErrorMessage;
@@ -88,7 +84,7 @@ export class PollingContentDeleteComponent implements OnInit {
     this.formInfo.FormAllowSubmit = false;
     this.formInfo.DisabledButtonSubmitted = true;
     this.loading.display = true;
-    this.pollingContentService
+    this.pollingVoteService
       .ServiceDelete(this.requestId)
       .subscribe(
         (next) => {

@@ -247,7 +247,5 @@ export class TagListComponent implements OnInit {
   onActionTableRowSelect(row: NewsContentModel): void {
     this.tableRowSelected = row;
   }
-  onClickComment(model: NewsContentModel): void {
-    this.router.navigate(['/news/comment/', model.Id]);
-  }
+
 }

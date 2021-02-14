@@ -250,7 +250,15 @@ export class PollingContentListComponent implements OnInit , OnDestroy  {
   onActionTableRowSelect(row: PollingContentModel): void {
     this.tableRowSelected = row;
   }
-  onClickComment(id: number): void {
-    this.router.navigate(['/polling/comment/', id]);
+
+
+  onActionbuttonComment(model: PollingContentModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id === 0) {
+      const title = 'برروز خطا ';
+      const message = 'ردیفی   انتخاب نشده است';
+      this.cmsToastrService.toastr.error(message, title);
+      return;
+    }
+    this.router.navigate(['/polling/vote/', model.Id]);
   }
 }

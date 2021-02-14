@@ -250,7 +250,14 @@ export class ArticleContentListComponent implements OnInit {
   onActionTableRowSelect(row: ArticleContentModel): void {
     this.tableRowSelected = row;
   }
-  onClickComment(model: ArticleContentModel): void {
+
+  onActionbuttonComment(model: ArticleContentModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id === 0) {
+      const title = 'برروز خطا ';
+      const message = 'ردیفی برای ویرایش انتخاب نشده است';
+      this.cmsToastrService.toastr.error(message, title);
+      return;
+    }
     this.router.navigate(['/article/comment/', model.Id]);
   }
 }
