@@ -14,8 +14,8 @@ import {
   CoreEnumService,
   ErrorExceptionResult,
   FilterModel,
-  ApplicationAppModel,
-  ApplicationAppService,
+  TicketingDepartemenOperatorModel,
+  TicketingDepartemenOperatorService,
   ntkCmsApiStoreService,
 } from 'ntk-cms-api';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
@@ -29,29 +29,29 @@ import { Subscription } from 'rxjs';
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.scss'],
 })
-export class ApplicationAppTreeComponent implements OnInit {
+export class TicketingDepartemenOperatorTreeComponent implements OnInit {
   constructor(
     private cmsApiStore :ntkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
     public coreEnumService: CoreEnumService,
-    public categoryService: ApplicationAppService,
+    public categoryService: TicketingDepartemenOperatorService,
     private router: Router,
 
   ) {
   }
-  dataModelSelect: ApplicationAppModel = new ApplicationAppModel();
-  dataModelResult: ErrorExceptionResult<ApplicationAppModel> = new ErrorExceptionResult<ApplicationAppModel>();
+  dataModelSelect: TicketingDepartemenOperatorModel = new TicketingDepartemenOperatorModel();
+  dataModelResult: ErrorExceptionResult<TicketingDepartemenOperatorModel> = new ErrorExceptionResult<TicketingDepartemenOperatorModel>();
   filteModel = new FilterModel();
   loading = new ProgressSpinnerModel();
-  treeControl = new NestedTreeControl<ApplicationAppModel>(node => null);
-  dataSource = new MatTreeNestedDataSource<ApplicationAppModel>();
+  treeControl = new NestedTreeControl<TicketingDepartemenOperatorModel>(node => null);
+  dataSource = new MatTreeNestedDataSource<TicketingDepartemenOperatorModel>();
   @Output() optionSelect = new EventEmitter();
   @Input() optionReload = () => this.onActionReload();
-  @Input() set optionSelectForce(x: number | ApplicationAppModel) {
+  @Input() set optionSelectForce(x: number | TicketingDepartemenOperatorModel) {
     this.onActionSelectForce(x);
   }
 
-  hasChild = (_: number, node: ApplicationAppModel) => false;
+  hasChild = (_: number, node: TicketingDepartemenOperatorModel) => false;
 
 
   ngOnInit(): void {
@@ -86,7 +86,7 @@ export class ApplicationAppTreeComponent implements OnInit {
       }
     );
   }
-  onActionSelect(model: ApplicationAppModel): void {
+  onActionSelect(model: TicketingDepartemenOperatorModel): void {
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
   }
@@ -97,10 +97,10 @@ export class ApplicationAppTreeComponent implements OnInit {
     else {
       this.onActionSelect(null);
     }
-    this.dataModelSelect = new ApplicationAppModel();
+    this.dataModelSelect = new TicketingDepartemenOperatorModel();
     this.DataGetAll();
   }
-  onActionSelectForce(id: number | ApplicationAppModel): void {
+  onActionSelectForce(id: number | TicketingDepartemenOperatorModel): void {
 
   }
 

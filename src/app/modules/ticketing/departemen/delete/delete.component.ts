@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './delete.component.html',
   styleUrls: ['./delete.component.scss']
 })
-export class ApplicationSourceDeleteComponent implements OnInit {
+export class TicketingDepartemenDeleteComponent implements OnInit {
 
   constructor() { }
 

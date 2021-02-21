@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter } from '@angular/core';
-import { CoreEnumService, ErrorExceptionResult, FilterDataModel, FilterModel, ApplicationSourceModel, ApplicationSourceService } from 'ntk-cms-api';
+import { CoreEnumService, ErrorExceptionResult, FilterDataModel, FilterModel, TicketingDepartemenModel, TicketingDepartemenService } from 'ntk-cms-api';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
@@ -12,24 +12,24 @@ import { Output } from '@angular/core';
   templateUrl: './selector.component.html',
   styleUrls: ['./selector.component.scss']
 })
-export class ApplicationSourceSelectorComponent implements OnInit {
+export class TicketingDepartemenSelectorComponent implements OnInit {
 
   constructor(
     public coreEnumService: CoreEnumService,
-    public categoryService: ApplicationSourceService) {
+    public categoryService: TicketingDepartemenService) {
 
 
   }
-  dataModelResult: ErrorExceptionResult<ApplicationSourceModel> = new ErrorExceptionResult<ApplicationSourceModel>();
-  dataModelSelect: ApplicationSourceModel = new ApplicationSourceModel();
+  dataModelResult: ErrorExceptionResult<TicketingDepartemenModel> = new ErrorExceptionResult<TicketingDepartemenModel>();
+  dataModelSelect: TicketingDepartemenModel = new TicketingDepartemenModel();
   loading = new ProgressSpinnerModel();
   formControl = new FormControl();
-  filteredOptions: Observable<ApplicationSourceModel[]>;
+  filteredOptions: Observable<TicketingDepartemenModel[]>;
   @Input() disabled = new EventEmitter<boolean>();
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Output() optionSelect = new EventEmitter();
   @Input() optionReload = () => this.onActionReload();
-  @Input() set optionSelectForce(x: number | ApplicationSourceModel) {
+  @Input() set optionSelectForce(x: number | TicketingDepartemenModel) {
     this.onActionSelectForce(x);
   }
 
@@ -48,10 +48,10 @@ export class ApplicationSourceSelectorComponent implements OnInit {
       );
   }
 
-  displayFn(user?: ApplicationSourceModel): string | undefined {
+  displayFn(user?: TicketingDepartemenModel): string | undefined {
     return user ? user.Title : undefined;
   }
-  DataGetAll(text: string | number | any): Observable<ApplicationSourceModel[]> {
+  DataGetAll(text: string | number | any): Observable<TicketingDepartemenModel[]> {
     const filteModel = new FilterModel();
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
@@ -88,12 +88,12 @@ export class ApplicationSourceSelectorComponent implements OnInit {
           return response.ListItems;
         }));
   }
-  onActionSelect(model: ApplicationSourceModel): void {
+  onActionSelect(model: TicketingDepartemenModel): void {
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
   }
 
-  push(newvalue: ApplicationSourceModel): Observable<ApplicationSourceModel[]> {
+  push(newvalue: TicketingDepartemenModel): Observable<TicketingDepartemenModel[]> {
     return this.filteredOptions.pipe(map(items => {
       if (items.find(x => x.Id === newvalue.Id)) {
         return items;
@@ -103,7 +103,7 @@ export class ApplicationSourceSelectorComponent implements OnInit {
     }));
 
   }
-  onActionSelectForce(id: number | ApplicationSourceModel): void {
+  onActionSelectForce(id: number | TicketingDepartemenModel): void {
     if (typeof id === 'number' && id > 0) {
       this.categoryService.ServiceGetOneById(id).subscribe((next) => {
         if (next.IsSuccess) {
@@ -113,9 +113,9 @@ export class ApplicationSourceSelectorComponent implements OnInit {
         }
       });
     }
-    if (typeof id === typeof ApplicationSourceModel) {
-      this.filteredOptions = this.push((id as ApplicationSourceModel));
-      this.dataModelSelect = (id as ApplicationSourceModel);
+    if (typeof id === typeof TicketingDepartemenModel) {
+      this.filteredOptions = this.push((id as TicketingDepartemenModel));
+      this.dataModelSelect = (id as TicketingDepartemenModel);
       this.formControl.setValue(id);
     }
   }
@@ -124,8 +124,8 @@ export class ApplicationSourceSelectorComponent implements OnInit {
     // if (this.dataModelSelect && this.dataModelSelect.Id > 0) {
     //   this.onActionSelect(null);
     // }
-    this.dataModelSelect = new ApplicationSourceModel();
-    // this.optionsData.Select = new ApplicationSourceModel();
+    this.dataModelSelect = new TicketingDepartemenModel();
+    // this.optionsData.Select = new TicketingDepartemenModel();
     this.DataGetAll(null);
   }
 }

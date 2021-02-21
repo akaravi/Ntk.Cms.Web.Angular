@@ -58,6 +58,11 @@ const routes: Routes = [
           import('../modules/polling/polling.module').then(m => m.PollingModule)
       },
       {
+        path: 'ticketing',
+        loadChildren: () =>
+          import('../modules/ticketing/ticketing.module').then(m => m.TicketingModule)
+      },
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',

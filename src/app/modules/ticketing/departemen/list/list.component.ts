@@ -2,8 +2,8 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { ApplicationSourceModel,
-  ApplicationSourceService,
+import { TicketingDepartemenModel,
+  TicketingDepartemenService,
   CoreAuthService,
   EnumSortType,
   ErrorExceptionResult,
@@ -27,8 +27,8 @@ import { Subscription } from 'rxjs';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ApplicationSourceListComponent implements OnInit {
-  constructor(private applicationSourceService: ApplicationSourceService,
+export class TicketingDepartemenListComponent implements OnInit {
+  constructor(private ticketingDepartemenService: TicketingDepartemenService,
     private cmsApiStore : ntkCmsApiStoreService,
               public publicHelper: PublicHelper,
               private cmsToastrService: CmsToastrService,
@@ -45,15 +45,15 @@ export class ApplicationSourceListComponent implements OnInit {
   tableContentSelected = [];
 
   filteModelContent = new FilterModel();
-  dataModelResult: ErrorExceptionResult<ApplicationSourceModel> = new ErrorExceptionResult<ApplicationSourceModel>();
+  dataModelResult: ErrorExceptionResult<TicketingDepartemenModel> = new ErrorExceptionResult<TicketingDepartemenModel>();
   optionsSearch: ComponentOptionSearchModel = new ComponentOptionSearchModel();
   optionsStatist: ComponentOptionStatistModel = new ComponentOptionStatistModel();
   optionsExport: ComponentOptionExportModel = new ComponentOptionExportModel();
   tokenInfo = new TokenInfoModel();
   loading = new ProgressSpinnerModel();
-  tableRowsSelected: Array<ApplicationSourceModel> = [];
-  tableRowSelected: ApplicationSourceModel = new ApplicationSourceModel();
-  tableSource: MatTableDataSource<ApplicationSourceModel> = new MatTableDataSource<ApplicationSourceModel>();
+  tableRowsSelected: Array<TicketingDepartemenModel> = [];
+  tableRowSelected: TicketingDepartemenModel = new TicketingDepartemenModel();
+  tableSource: MatTableDataSource<TicketingDepartemenModel> = new MatTableDataSource<TicketingDepartemenModel>();
 
 
   tabledisplayedColumns: string[] = [
@@ -70,7 +70,7 @@ export class ApplicationSourceListComponent implements OnInit {
 
 
   columnsToDisplay: string[] = ['Id', 'Writer'];
-  expandedElement: ApplicationSourceModel | null;
+  expandedElement: TicketingDepartemenModel | null;
 
   ngOnInit(): void {
     this.filteModelContent.SortColumn = 'Title';
@@ -87,13 +87,13 @@ export class ApplicationSourceListComponent implements OnInit {
   }
   DataGetAll(): void {
     this.tableRowsSelected = [];
-    this.tableRowSelected = new ApplicationSourceModel();
+    this.tableRowSelected = new TicketingDepartemenModel();
 
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
 
-    this.applicationSourceService.ServiceGetAll(this.filteModelContent).subscribe(
+    this.ticketingDepartemenService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
           this.dataModelResult = next;
@@ -169,7 +169,7 @@ export class ApplicationSourceListComponent implements OnInit {
 
   }
 
-  onActionbuttonEditRow(model: ApplicationSourceModel = this.tableRowSelected): void {
+  onActionbuttonEditRow(model: TicketingDepartemenModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id === 0) {
       const title = 'برروز خطا ';
@@ -190,7 +190,7 @@ export class ApplicationSourceListComponent implements OnInit {
     }
     this.router.navigate(['/application/source/edit/', this.tableRowSelected.Id]);
   }
-  onActionbuttonDeleteRow(model: ApplicationSourceModel = this.tableRowSelected): void {
+  onActionbuttonDeleteRow(model: TicketingDepartemenModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای ویرایش انتخاب نشده است';
@@ -221,7 +221,7 @@ export class ApplicationSourceListComponent implements OnInit {
     this.router.navigate(['/application/source/delete/', this.tableRowSelected.Id]);
 
   }
-  onActionbuttonApplicationList(model: ApplicationSourceModel = this.tableRowSelected): void {
+  onActionbuttonApplicationList(model: TicketingDepartemenModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای ویرایش انتخاب نشده است';
@@ -247,7 +247,7 @@ export class ApplicationSourceListComponent implements OnInit {
     this.filteModelContent.Filters = model;
     this.DataGetAll();
   }
-  onActionTableRowSelect(row: ApplicationSourceModel): void {
+  onActionTableRowSelect(row: TicketingDepartemenModel): void {
     this.tableRowSelected = row;
   }
 

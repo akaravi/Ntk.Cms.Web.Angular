@@ -13,7 +13,6 @@ import { TreeviewModule } from 'ngx-treeview';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { TagInputModule } from 'ngx-chips';
-import { ProgressSpinnerModule } from 'src/app/shared/progress-spinner/progress-spinner.module';
 import { CmsFileManagerModule } from 'ntk-cms-filemanager';
 import {
   ApplicationAppService,
@@ -83,7 +82,7 @@ import { CmsFileUploaderModule } from 'ntk-cms-fileuploader';
     SharedModule.forRoot(),
     AngularEditorModule,
     TagInputModule,
-    ProgressSpinnerModule,
+    //ProgressSpinnerModule,
     CmsFileManagerModule,
     MatIconModule,
     MatFormFieldModule,

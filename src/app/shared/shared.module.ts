@@ -19,6 +19,8 @@ import { TagInputModule } from 'ngx-chips';
 import { RecordStatusClassPipe } from '../core/pipe/recordStatusClass.pipe';
 import { BoolStatusClassPipe } from '../core/pipe/boolStatusClass.pipe';
 import { PersianDateFull } from '../core/pipe/PersianDatePipe/persian-date-full.pipe';
+import { ProgressSpinnerComponent } from './progress-spinner/progress-spinner.component';
+import { OverlayService } from './overlay/overlay.service';
 
 
 
@@ -33,7 +35,7 @@ import { PersianDateFull } from '../core/pipe/PersianDatePipe/persian-date-full.
     NgxQueryBuilderModule,
     LeafletModule,
     TagInputModule,
-
+    //ProgressSpinnerModule,
   ],
   entryComponents: [
     // All components about to be loaded "dynamically" need to be declared in the entryComponents section.
@@ -49,7 +51,8 @@ import { PersianDateFull } from '../core/pipe/PersianDatePipe/persian-date-full.
     PersianDate,
     PersianDateFull,
     CmsMapComponent,
-    TagAutocompleteComponent
+    TagAutocompleteComponent,
+    ProgressSpinnerComponent
   ],
   exports: [
     // common and shared components/directives/pipes between more than one module and components will be listed here.
@@ -68,8 +71,9 @@ import { PersianDateFull } from '../core/pipe/PersianDatePipe/persian-date-full.
     CmsExportListComponent,
     CmsMapComponent,
     TagAutocompleteComponent,
-
+    ProgressSpinnerComponent
   ],
+  providers:[OverlayService]
   /* No providers here! Since they’ll be already provided in AppModule. */
 })
 export class SharedModule {

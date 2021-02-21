@@ -1,40 +1,49 @@
-import { PollingContentListComponent } from './content/list/list.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { PollingComponent } from './ticketing.component';
-import { PollingContentAddComponent } from './content/add/add.component';
-import { PollingContentEditComponent } from './content/edit/edit.component';
-import { PollingVoteListComponent } from './vote/list/list.component';
+import { TicketingComponent } from './ticketing.component';
+import { TicketingDepartemenListComponent } from './departemen/list/list.component';
+import { TicketingDepartemenEditComponent } from './departemen/edit/edit.component';
+import { TicketingFaqListComponent } from './faq/list/list.component';
+import { TicketingFaqEditComponent } from './faq/edit/edit.component';
 
 
 
 const routes: Routes = [
   {
     path: '',
-    component: PollingComponent,
+    component: TicketingComponent,
     children: [
       {
-        path: 'content',
-        // resolve: {categoryList: CategoryResolver},
-        // loadChildren: () =>    import('./content/content.module').then(m => m.ContentModule)
-        component: PollingContentListComponent
+        path: 'departemen',
+        component: TicketingDepartemenListComponent
       },
       {
-        path: 'content/add/:CategoryId',
-        component: PollingContentAddComponent
+        path: 'departemen/add/',
+        component: TicketingDepartemenEditComponent
       },
       {
-        path: 'content/edit/:Id',
-        component: PollingContentEditComponent
+        path: 'departemen/edit/:Id',
+        component: TicketingDepartemenEditComponent
       },
       {
-        path: 'vote',
-        component: PollingVoteListComponent
-      },
-      {
-        path: 'vote/:ContentId',
-        component: PollingVoteListComponent
-      },
+        path:'faq',
+        component:TicketingFaqListComponent
+      },{
+        path:'faq/add',
+        component:TicketingFaqEditComponent
+      }
+      ,{
+        path:'faq/edit/:id',
+        component:TicketingFaqEditComponent
+      }
+      // {
+      //   path: 'vote',
+      //   component: TicketingVoteListComponent
+      // },
+      // {
+      //   path: 'vote/:ContentId',
+      //   component: TicketingVoteListComponent
+      // },
     ]
   },
 ];
@@ -43,5 +52,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class PollingRouting {
+export class TicketingRouting {
 }

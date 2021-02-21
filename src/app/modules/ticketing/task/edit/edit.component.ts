@@ -5,8 +5,8 @@ import { MatStepper } from '@angular/material/stepper';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   AccessModel, ApplicationEnumService,
-  ApplicationAppModel,
-  ApplicationAppService,
+  TicketingTaskModel,
+  TicketingTaskService,
   CoreEnumService,
   DataFieldInfoModel,
   EnumModel,
@@ -30,14 +30,14 @@ import * as Leaflet from 'leaflet';
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.scss']
 })
-export class ApplicationAppEditComponent implements OnInit {
+export class TicketingTaskEditComponent implements OnInit {
   requestId = 0;
 
   constructor(private activatedRoute: ActivatedRoute,
               public publicHelper: PublicHelper,
               public coreEnumService: CoreEnumService,
               public applicationEnumService: ApplicationEnumService,
-              private applicationAppService: ApplicationAppService,
+              private ticketingTaskService: TicketingTaskService,
               private toasterService: CmsToastrService,
               private router: Router) {
     this.fileManagerTree = new TreeModel();
@@ -48,8 +48,8 @@ export class ApplicationAppEditComponent implements OnInit {
   formInfo: FormInfoModel = new FormInfoModel();
   dataAccessModel: AccessModel;
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
-  dataModel = new ApplicationAppModel();
-  dataModelResult: ErrorExceptionResult<ApplicationAppModel> = new ErrorExceptionResult<ApplicationAppModel>();
+  dataModel = new TicketingTaskModel();
+  dataModelResult: ErrorExceptionResult<TicketingTaskModel> = new ErrorExceptionResult<TicketingTaskModel>();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   dataModelEnumOsTypeResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
@@ -82,20 +82,12 @@ export class ApplicationAppEditComponent implements OnInit {
       this.toasterService.typeErrorFormInvalid();
       return;
     }
-    if (this.dataModel.LinkSourceId <= 0) {
-      this.toasterService.typeErrorEdit('سورس کد برنامه مشخص  کنید');
-
-      return;
-    }
-    if (this.dataModel.LinkThemeConfigId <= 0) {
-      this.toasterService.typeErrorEdit('قالب  برنامه مشخص  کنید');
-      return;
-    }
+  
     this.DataEditContent();
   }
 
   DataGetAccess(): void {
-    this.applicationAppService
+    this.ticketingTaskService
       .ServiceViewModel()
       .subscribe(
         async (next) => {
@@ -117,7 +109,7 @@ export class ApplicationAppEditComponent implements OnInit {
     this.formInfo.FormError = '';
     this.loading.display = true;
 
-    this.applicationAppService
+    this.ticketingTaskService
       .ServiceGetOneById(requestId)
       .subscribe(
         async (next) => {
@@ -127,11 +119,7 @@ export class ApplicationAppEditComponent implements OnInit {
 
           if (next.IsSuccess) {
             this.dataModel = next.Item;
-            const lat = this.dataModel.AboutUsGeolocationlatitude;
-            const lon = this.dataModel.AboutUsGeolocationlongitude;
-            if (lat > 0 && lon > 0) {
-              this.mapMarkerPoints.push({ lat, lon });
-            }
+            
           } else {
             this.toasterService.typeErrorGetOne(next.ErrorMessage);
           }
@@ -149,7 +137,7 @@ export class ApplicationAppEditComponent implements OnInit {
     this.formInfo.FormError = '';
     this.loading.display = true;
 
-    this.applicationAppService
+    this.ticketingTaskService
       .ServiceEdit(this.dataModel)
       .subscribe(
         async (next) => {
@@ -183,59 +171,15 @@ export class ApplicationAppEditComponent implements OnInit {
       // }
     }
   }
-  receiveMap(model: leafletMap): void {
-    this.mapModel = model;
 
-    if (this.mapMarkerPoints && this.mapMarkerPoints.length > 0) {
-      this.mapMarkerPoints.forEach(item => {
-        this.mapMarker = Leaflet.marker([item.lat, item.lon]).addTo(this.mapModel);
-      });
-      this.mapOptonCenter = this.mapMarkerPoints[0];
-      this.mapMarkerPoints = [];
-    }
-
-    this.mapModel.on('click', (e) => {
-      // @ts-ignore
-      const lat = e.latlng.lat;
-      // @ts-ignore
-      const lon = e.latlng.lng;
-      if (this.mapMarker !== undefined) {
-        this.mapModel.removeLayer(this.mapMarker);
-      }
-      if (lat === this.dataModel.AboutUsGeolocationlatitude && lon === this.dataModel.AboutUsGeolocationlongitude) {
-        this.dataModel.AboutUsGeolocationlatitude = null;
-        this.dataModel.AboutUsGeolocationlongitude = null;
-        return;
-      }
-      this.mapMarker = Leaflet.marker([lat, lon]).addTo(this.mapModel);
-      this.dataModel.AboutUsGeolocationlatitude = lat;
-      this.dataModel.AboutUsGeolocationlongitude = lon;
-    });
-
-  }
   onActionBackToParent(): void {
     this.router.navigate(['/application/app/']);
   }
   onActionFileSelectedLinkMainImageId(model: NodeInterface): void {
-    this.dataModel.LinkMainImageId = model.id;
-    this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
+    // this.dataModel.LinkMainImageId = model.id;
+    // this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
   }
-  onActionFileSelectedLinkFileIdIcon(model: NodeInterface): void {
-    this.dataModel.LinkFileIdIcon = model.id;
-    this.dataModel.LinkFileIdIconSrc = model.downloadLinksrc;
-  }
-  onActionFileSelectedLinkFileIdLogo(model: NodeInterface): void {
-    this.dataModel.LinkFileIdLogo = model.id;
-    this.dataModel.LinkFileIdLogoSrc = model.downloadLinksrc;
-  }
-  onActionFileSelectedLinkFileIdSplashScreen(model: NodeInterface): void {
-    this.dataModel.LinkFileIdSplashScreen = model.id;
-    this.dataModel.LinkFileIdSplashScreenSrc = model.downloadLinksrc;
-  }
-  onActionFileSelectedAboutUsLinkImageId(model: NodeInterface): void {
-    this.dataModel.AboutUsLinkImageId = model.id;
-    this.dataModel.AboutUsLinkImageIdSrc = model.downloadLinksrc;
-  }
+ 
   onActionSelectSource(model: ApplicationSourceModel | null): void {
     if (!model || model.Id <= 0) {
       this.toasterService.toastr.error(
@@ -244,22 +188,8 @@ export class ApplicationAppEditComponent implements OnInit {
       );
       return;
     }
-    if (this.dataModel.LinkSourceId !== model.Id) {
-      this.toasterService.toastr.error(
-        'سورس قابل تغییر نمی باشد',
-        'سورس اپلیکیشن در حالت ویرایش قابل تغییر نمی باشد'
-      );
-    }
+    
 
   }
-  onActionSelectTheme(model: ApplicationThemeConfigModel | null): void {
-    if (!model || model.Id <= 0) {
-      this.toasterService.toastr.error(
-        'قالب را مشخص کنید',
-        'قالب اپلیکیشن اطلاعات مشخص نیست'
-      );
-      return;
-    }
-    this.dataModel.LinkThemeConfigId = model.Id;
-  }
+ 
 }

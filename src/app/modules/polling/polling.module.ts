@@ -18,7 +18,7 @@ import { PollingCategoryDeleteComponent } from './category/delete/delete.compone
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TreeviewModule } from 'ngx-treeview';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { ProgressSpinnerModule } from 'src/app/shared/progress-spinner/progress-spinner.module';
+
 import { CmsFileManagerModule } from 'ntk-cms-filemanager';
 import { PollingCategorySelectorComponent } from './category/selector/selector.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
@@ -27,6 +27,9 @@ import { PollingContentAddComponent } from './content/add/add.component';
 import { PollingContentEditComponent } from './content/edit/edit.component';
 import { PollingCategoryTreeComponent } from './category/tree/tree.component';
 import { PollingContentDeleteComponent } from './content/delete/delete.component';
+import { PollingVoteEditComponent } from './vote/edit/edit.component';
+import { PollingVoteListComponent } from './vote/list/list.component';
+import { PollingVoteDeleteComponent } from './vote/delete/delete.component';
 
 
 @NgModule({
@@ -40,6 +43,9 @@ import { PollingContentDeleteComponent } from './content/delete/delete.component
     PollingContentAddComponent,
     PollingContentEditComponent,
     PollingContentDeleteComponent,
+    PollingVoteEditComponent,
+    PollingVoteListComponent,
+    PollingVoteDeleteComponent
   ],
   imports: [
     CommonModule,
@@ -50,7 +56,7 @@ import { PollingContentDeleteComponent } from './content/delete/delete.component
     SharedModule.forRoot(),
     AngularEditorModule,
     TagInputModule,
-    ProgressSpinnerModule,
+    //ProgressSpinnerModule,
     CmsFileManagerModule
   ],
   providers: [

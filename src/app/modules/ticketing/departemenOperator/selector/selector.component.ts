@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter } from '@angular/core';
-import { CoreEnumService, ErrorExceptionResult, FilterDataModel, FilterModel, ApplicationAppModel, ApplicationAppService } from 'ntk-cms-api';
+import { CoreEnumService, ErrorExceptionResult, FilterDataModel, FilterModel, TicketingDepartemenOperatorModel, TicketingDepartemenOperatorService } from 'ntk-cms-api';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
@@ -12,24 +12,24 @@ import { Output } from '@angular/core';
   templateUrl: './selector.component.html',
   styleUrls: ['./selector.component.scss']
 })
-export class ApplicationAppSelectorComponent implements OnInit {
+export class TicketingDepartemenOperatorSelectorComponent implements OnInit {
 
   constructor(
     public coreEnumService: CoreEnumService,
-    public categoryService: ApplicationAppService) {
+    public categoryService: TicketingDepartemenOperatorService) {
 
 
   }
-  dataModelResult: ErrorExceptionResult<ApplicationAppModel> = new ErrorExceptionResult<ApplicationAppModel>();
-  dataModelSelect: ApplicationAppModel = new ApplicationAppModel();
+  dataModelResult: ErrorExceptionResult<TicketingDepartemenOperatorModel> = new ErrorExceptionResult<TicketingDepartemenOperatorModel>();
+  dataModelSelect: TicketingDepartemenOperatorModel = new TicketingDepartemenOperatorModel();
   loading = new ProgressSpinnerModel();
   formControl = new FormControl();
-  filteredOptions: Observable<ApplicationAppModel[]>;
+  filteredOptions: Observable<TicketingDepartemenOperatorModel[]>;
   @Input() disabled = new EventEmitter<boolean>();
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Output() optionSelect = new EventEmitter();
   @Input() optionReload = () => this.onActionReload();
-  @Input() set optionSelectForce(x: number | ApplicationAppModel) {
+  @Input() set optionSelectForce(x: number | TicketingDepartemenOperatorModel) {
     this.onActionSelectForce(x);
   }
 
@@ -48,10 +48,10 @@ export class ApplicationAppSelectorComponent implements OnInit {
       );
   }
 
-  displayFn(user?: ApplicationAppModel): string | undefined {
-    return user ? user.Title : undefined;
+  displayFn(user?: TicketingDepartemenOperatorModel): string | undefined {
+    return user ? user.LinkUserId+'' : undefined;
   }
-  DataGetAll(text: string | number | any): Observable<ApplicationAppModel[]> {
+  DataGetAll(text: string | number | any): Observable<TicketingDepartemenOperatorModel[]> {
     const filteModel = new FilterModel();
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
@@ -88,12 +88,12 @@ export class ApplicationAppSelectorComponent implements OnInit {
           return response.ListItems;
         }));
   }
-  onActionSelect(model: ApplicationAppModel): void {
+  onActionSelect(model: TicketingDepartemenOperatorModel): void {
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
   }
 
-  push(newvalue: ApplicationAppModel): Observable<ApplicationAppModel[]> {
+  push(newvalue: TicketingDepartemenOperatorModel): Observable<TicketingDepartemenOperatorModel[]> {
     return this.filteredOptions.pipe(map(items => {
       if (items.find(x => x.Id === newvalue.Id)) {
         return items;
@@ -103,7 +103,7 @@ export class ApplicationAppSelectorComponent implements OnInit {
     }));
 
   }
-  onActionSelectForce(id: number | ApplicationAppModel): void {
+  onActionSelectForce(id: number | TicketingDepartemenOperatorModel): void {
     if (typeof id === 'number' && id > 0) {
       this.categoryService.ServiceGetOneById(id).subscribe((next) => {
         if (next.IsSuccess) {
@@ -113,15 +113,15 @@ export class ApplicationAppSelectorComponent implements OnInit {
         }
       });
     }
-    if (typeof id === typeof ApplicationAppModel) {
-      this.filteredOptions = this.push((id as ApplicationAppModel));
-      this.dataModelSelect = (id as ApplicationAppModel);
+    if (typeof id === typeof TicketingDepartemenOperatorModel) {
+      this.filteredOptions = this.push((id as TicketingDepartemenOperatorModel));
+      this.dataModelSelect = (id as TicketingDepartemenOperatorModel);
       this.formControl.setValue(id);
     }
   }
 
   onActionReload(): void {
-    this.dataModelSelect = new ApplicationAppModel();
+    this.dataModelSelect = new TicketingDepartemenOperatorModel();
     this.DataGetAll(null);
   }
 }

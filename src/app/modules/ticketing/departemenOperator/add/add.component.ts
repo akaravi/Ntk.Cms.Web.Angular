@@ -5,8 +5,8 @@ import { MatStepper } from '@angular/material/stepper';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   AccessModel, ApplicationEnumService,
-  ApplicationAppModel,
-  ApplicationAppService,
+  TicketingDepartemenOperatorModel,
+  TicketingDepartemenOperatorService,
   CoreEnumService,
   DataFieldInfoModel,
   EnumModel,
@@ -29,14 +29,14 @@ import * as Leaflet from 'leaflet';
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.scss']
 })
-export class ApplicationAppAddComponent implements OnInit {
-  requestSourceId = 0;
+export class TicketingDepartemenOperatorAddComponent implements OnInit {
+  requestDepartemenId = 0;
 
   constructor(private activatedRoute: ActivatedRoute,
               public publicHelper: PublicHelper,
               public coreEnumService: CoreEnumService,
               public applicationEnumService: ApplicationEnumService,
-              private applicationAppService: ApplicationAppService,
+              private ticketingDepartemenOperatorService: TicketingDepartemenOperatorService,
               private toasterService: CmsToastrService,
               private router: Router) {
     this.fileManagerTree = new TreeModel();
@@ -47,8 +47,8 @@ export class ApplicationAppAddComponent implements OnInit {
   formInfo: FormInfoModel = new FormInfoModel();
   dataAccessModel: AccessModel;
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
-  dataModel = new ApplicationAppModel();
-  dataModelResult: ErrorExceptionResult<ApplicationAppModel> = new ErrorExceptionResult<ApplicationAppModel>();
+  dataModel = new TicketingDepartemenOperatorModel();
+  dataModelResult: ErrorExceptionResult<TicketingDepartemenOperatorModel> = new ErrorExceptionResult<TicketingDepartemenOperatorModel>();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   dataModelEnumOsTypeResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
@@ -61,12 +61,12 @@ export class ApplicationAppAddComponent implements OnInit {
   private mapMarkerPoints: Array<PoinModel> = [];
   mapOptonCenter = {};
   ngOnInit(): void {
-    this.requestSourceId = Number(this.activatedRoute.snapshot.paramMap.get('SourceId'));
-    if (this.requestSourceId === 0) {
+    this.requestDepartemenId = Number(this.activatedRoute.snapshot.paramMap.get('SourceId'));
+    if (this.requestDepartemenId === 0) {
       this.toasterService.typeErrorAddRowParentIsNull();
       return;
     }
-    this.dataModel.LinkSourceId = this.requestSourceId;
+    this.dataModel.LinkDepartemenId = this.requestDepartemenId;
     this.DataGetAccess();
     this.getEnumRecordStatus();
   }
@@ -81,20 +81,17 @@ export class ApplicationAppAddComponent implements OnInit {
       this.toasterService.typeErrorFormInvalid();
       return;
     }
-    if (this.dataModel.LinkSourceId <= 0) {
-      this.toasterService.typeErrorEdit('سورس کد برنامه مشخص  کنید');
+    if (this.dataModel.LinkDepartemenId <= 0) {
+      this.toasterService.typeErrorEdit('دپارتمان را مشخص کنید');
 
       return;
     }
-    if (this.dataModel.LinkThemeConfigId <= 0) {
-      this.toasterService.typeErrorEdit('قالب  برنامه مشخص  کنید');
-      return;
-    }
+    
     this.DataAddContent();
   }
 
   DataGetAccess(): void {
-    this.applicationAppService
+    this.ticketingDepartemenOperatorService
       .ServiceViewModel()
       .subscribe(
         async (next) => {
@@ -117,7 +114,7 @@ export class ApplicationAppAddComponent implements OnInit {
     this.formInfo.FormError = '';
     this.loading.display = true;
 
-    this.applicationAppService
+    this.ticketingDepartemenOperatorService
       .ServiceAdd(this.dataModel)
       .subscribe(
         async (next) => {
@@ -151,59 +148,15 @@ export class ApplicationAppAddComponent implements OnInit {
       // }
     }
   }
-  receiveMap(model: leafletMap): void {
-    this.mapModel = model;
-
-    if (this.mapMarkerPoints && this.mapMarkerPoints.length > 0) {
-      this.mapMarkerPoints.forEach(item => {
-        this.mapMarker = Leaflet.marker([item.lat, item.lon]).addTo(this.mapModel);
-      });
-      this.mapOptonCenter = this.mapMarkerPoints[0];
-      this.mapMarkerPoints = [];
-    }
-
-    this.mapModel.on('click', (e) => {
-      // @ts-ignore
-      const lat = e.latlng.lat;
-      // @ts-ignore
-      const lon = e.latlng.lng;
-      if (this.mapMarker !== undefined) {
-        this.mapModel.removeLayer(this.mapMarker);
-      }
-      if (lat === this.dataModel.AboutUsGeolocationlatitude && lon === this.dataModel.AboutUsGeolocationlongitude) {
-        this.dataModel.AboutUsGeolocationlatitude = null;
-        this.dataModel.AboutUsGeolocationlongitude = null;
-        return;
-      }
-      this.mapMarker = Leaflet.marker([lat, lon]).addTo(this.mapModel);
-      this.dataModel.AboutUsGeolocationlatitude = lat;
-      this.dataModel.AboutUsGeolocationlongitude = lon;
-    });
-
-  }
+  
   onActionBackToParent(): void {
-    this.router.navigate(['/application/app/']);
+    this.router.navigate(['/ticketing/departeman/']);
   }
   onActionFileSelectedLinkMainImageId(model: NodeInterface): void {
     this.dataModel.LinkMainImageId = model.id;
     this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
   }
-  onActionFileSelectedLinkFileIdIcon(model: NodeInterface): void {
-    this.dataModel.LinkFileIdIcon = model.id;
-    this.dataModel.LinkFileIdIconSrc = model.downloadLinksrc;
-  }
-  onActionFileSelectedLinkFileIdLogo(model: NodeInterface): void {
-    this.dataModel.LinkFileIdLogo = model.id;
-    this.dataModel.LinkFileIdLogoSrc = model.downloadLinksrc;
-  }
-  onActionFileSelectedLinkFileIdSplashScreen(model: NodeInterface): void {
-    this.dataModel.LinkFileIdSplashScreen = model.id;
-    this.dataModel.LinkFileIdSplashScreenSrc = model.downloadLinksrc;
-  }
-  onActionFileSelectedAboutUsLinkImageId(model: NodeInterface): void {
-    this.dataModel.AboutUsLinkImageId = model.id;
-    this.dataModel.AboutUsLinkImageIdSrc = model.downloadLinksrc;
-  }
+  
   onActionSelectSource(model: ApplicationSourceModel | null): void {
     if (!model || model.Id <= 0) {
       this.toasterService.toastr.error(
@@ -212,16 +165,7 @@ export class ApplicationAppAddComponent implements OnInit {
       );
       return;
     }
-    this.dataModel.LinkSourceId = model.Id;
+    this.dataModel.LinkDepartemenId = model.Id;
   }
-  onActionSelectTheme(model: ApplicationThemeConfigModel | null): void {
-    if (!model || model.Id <= 0) {
-      this.toasterService.toastr.error(
-        'قالب را مشخص کنید',
-        'قالب اپلیکیشن اطلاعات مشخص نیست'
-      );
-      return;
-    }
-    this.dataModel.LinkThemeConfigId = model.Id;
-  }
+  
 }

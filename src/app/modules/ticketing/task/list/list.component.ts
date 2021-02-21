@@ -2,8 +2,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
-  ApplicationAppModel,
-  ApplicationAppService,
+  TicketingTaskModel,
+  TicketingTaskService,
   ApplicationSourceModel,
   CoreAuthService,
   EnumSortType,
@@ -22,9 +22,6 @@ import { ComponentOptionExportModel } from 'src/app/core/cmsComponentModels/base
 import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/base/componentOptionStatistModel';
 import { MatSort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
-import { ApplicationAppDownloadComponent } from '../download/download.component';
-import { ApplicationAppUploadAppComponent } from '../uploadApp/uploadApp.component';
-import { ApplicationAppUploadUpdateComponent } from '../uploadUpdate/uploadUpdate.component';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -32,9 +29,9 @@ import { Subscription } from 'rxjs';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ApplicationAppListComponent implements OnInit {
-  requestSourceId = 0;
-  constructor(private applicationAppService: ApplicationAppService,
+export class TicketingTaskListComponent implements OnInit {
+  requestDepartemenId = 0;
+  constructor(private ticketingTaskService: TicketingTaskService,
     private activatedRoute: ActivatedRoute,
     private cmsApiStore :ntkCmsApiStoreService,
     public publicHelper: PublicHelper,
@@ -52,15 +49,15 @@ export class ApplicationAppListComponent implements OnInit {
   tableContentSelected = [];
 
   filteModelContent = new FilterModel();
-  dataModelResult: ErrorExceptionResult<ApplicationAppModel> = new ErrorExceptionResult<ApplicationAppModel>();
+  dataModelResult: ErrorExceptionResult<TicketingTaskModel> = new ErrorExceptionResult<TicketingTaskModel>();
   optionsSearch: ComponentOptionSearchModel = new ComponentOptionSearchModel();
   optionsStatist: ComponentOptionStatistModel = new ComponentOptionStatistModel();
   optionsExport: ComponentOptionExportModel = new ComponentOptionExportModel();
   tokenInfo = new TokenInfoModel();
   loading = new ProgressSpinnerModel();
-  tableRowsSelected: Array<ApplicationAppModel> = [];
-  tableRowSelected: ApplicationAppModel = new ApplicationAppModel();
-  tableSource: MatTableDataSource<ApplicationAppModel> = new MatTableDataSource<ApplicationAppModel>();
+  tableRowsSelected: Array<TicketingTaskModel> = [];
+  tableRowSelected: TicketingTaskModel = new TicketingTaskModel();
+  tableSource: MatTableDataSource<TicketingTaskModel> = new MatTableDataSource<TicketingTaskModel>();
   categoryModelSelected: ApplicationSourceModel;
 
   tabledisplayedColumns: string[] = [
@@ -75,10 +72,10 @@ export class ApplicationAppListComponent implements OnInit {
 
 
   columnsToDisplay: string[] = ['Id', 'Writer'];
-  expandedElement: ApplicationAppModel | null;
+  expandedElement: TicketingTaskModel | null;
 
   ngOnInit(): void {
-    this.requestSourceId = Number(this.activatedRoute.snapshot.paramMap.get('SourceId'));
+    this.requestDepartemenId = Number(this.activatedRoute.snapshot.paramMap.get('SourceId'));
     this.DataGetAll();
     this.tokenInfo =  this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
     this.cmsApiStoreSubscribe =  this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
@@ -93,18 +90,18 @@ export class ApplicationAppListComponent implements OnInit {
 
   DataGetAll(): void {
     this.tableRowsSelected = [];
-    this.tableRowSelected = new ApplicationAppModel();
+    this.tableRowSelected = new TicketingTaskModel();
 
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
-    if (this.requestSourceId > 0) {
+    if (this.requestDepartemenId > 0) {
       const filter = new FilterDataModel();
       filter.PropertyName = 'LinkSourceId';
-      filter.Value = this.requestSourceId;
+      filter.Value = this.requestDepartemenId;
       this.filteModelContent.Filters.push(filter);
     }
-    this.applicationAppService.ServiceGetAll(this.filteModelContent).subscribe(
+    this.ticketingTaskService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
           this.dataModelResult = next;
@@ -121,7 +118,7 @@ export class ApplicationAppListComponent implements OnInit {
               'LinkSiteId'
             );
           }
-          if (this.requestSourceId === 0) {
+          if (this.requestDepartemenId === 0) {
             this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
               this.tabledisplayedColumns,
               'LinkSourceId'
@@ -175,8 +172,8 @@ export class ApplicationAppListComponent implements OnInit {
 
   onActionbuttonNewRow(): void {
     if (
-      this.requestSourceId == null ||
-      this.requestSourceId === 0
+      this.requestDepartemenId == null ||
+      this.requestDepartemenId === 0
     ) {
       const title = 'برروز خطا ';
       const message = 'محتوا انتخاب نشده است';
@@ -202,7 +199,7 @@ export class ApplicationAppListComponent implements OnInit {
     //     this.DataGetAll();
     //   }
     // });
-    this.router.navigate(['/application/app/add/', this.requestSourceId]);
+    this.router.navigate(['/application/app/add/', this.requestDepartemenId]);
 
   }
 
@@ -220,7 +217,7 @@ export class ApplicationAppListComponent implements OnInit {
     }
     this.DataGetAll();
   }
-  onActionbuttonEditRow(mode: ApplicationAppModel = this.tableRowSelected): void {
+  onActionbuttonEditRow(mode: TicketingTaskModel = this.tableRowSelected): void {
     if (!mode || !mode.Id || mode.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای ویرایش انتخاب نشده است';
@@ -251,7 +248,7 @@ export class ApplicationAppListComponent implements OnInit {
     this.router.navigate(['/application/app/edit/', this.tableRowSelected.Id]);
 
   }
-  onActionbuttonDeleteRow(mode: ApplicationAppModel = this.tableRowSelected): void {
+  onActionbuttonDeleteRow(mode: TicketingTaskModel = this.tableRowSelected): void {
     if (mode == null || !mode.Id || mode.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای ویرایش انتخاب نشده است';
@@ -296,13 +293,13 @@ export class ApplicationAppListComponent implements OnInit {
     this.filteModelContent.Filters = model;
     this.DataGetAll();
   }
-  onActionTableRowSelect(row: ApplicationAppModel): void {
+  onActionTableRowSelect(row: TicketingTaskModel): void {
     this.tableRowSelected = row;
   }
   onActionBackToParent(): void {
     this.router.navigate(['/application/app/']);
   }
-  onActionbuttonUploadApp(mode: ApplicationAppModel = this.tableRowSelected): void {
+  onActionbuttonUploadApp(mode: TicketingTaskModel = this.tableRowSelected): void {
     if (mode == null || !mode.Id || mode.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی  انتخاب نشده است';
@@ -310,79 +307,14 @@ export class ApplicationAppListComponent implements OnInit {
       return;
     }
     this.tableRowSelected = mode;
-    const dialogRef = this.dialog.open(ApplicationAppUploadAppComponent, {
-      data:  this.tableRowSelected ,
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result && result.dialogChangedDate) {
-        this.DataGetAll();
-      }
-    });
+    // const dialogRef = this.dialog.open(TicketingTaskUploadAppComponent, {
+    //   data:  this.tableRowSelected ,
+    // });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   if (result && result.dialogChangedDate) {
+    //     this.DataGetAll();
+    //   }
+    // });
   }
-  onActionbuttonUploadUpdate(mode: ApplicationAppModel = this.tableRowSelected): void {
-    if (mode == null || !mode.Id || mode.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی  انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
-      return;
-    }
-    this.tableRowSelected = mode;
-    const dialogRef = this.dialog.open(ApplicationAppUploadUpdateComponent, {
-      data:  this.tableRowSelected ,
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result && result.dialogChangedDate) {
-        this.DataGetAll();
-      }
-    });
-
-
-
-  }
-  onActionbuttonBuildApp(mode: ApplicationAppModel = this.tableRowSelected): void {
-    if (mode == null || !mode.Id || mode.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی  انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
-      return;
-    }
-    this.tableRowSelected = mode;
-    this.loading.display = true;
-    this.loading.Globally = false;
-    this.applicationAppService.ServiceBuild(this.tableRowSelected.Id).subscribe(
-      (next) => {
-        this.loading.display = false;
-        if (next.IsSuccess) {
-          this.cmsToastrService.typeSuccessAppBuild(next.ErrorMessage);
-        }
-        else {
-          this.cmsToastrService.typeErrorGetAll(next.ErrorMessage);
-        }
-      },
-      (error) => {
-        this.cmsToastrService.typeError(error);
-
-        this.loading.display = false;
-      }
-    );
-
-  }
-  onActionbuttonDownloadApp(mode: ApplicationAppModel = this.tableRowSelected): void {
-    if (mode == null || !mode.Id || mode.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی  انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
-      return;
-    }
-    this.tableRowSelected = mode;
-    const dialogRef = this.dialog.open(ApplicationAppDownloadComponent, {
-      data:  this.tableRowSelected ,
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result && result.dialogChangedDate) {
-        this.DataGetAll();
-      }
-    });
-
-  }
+ 
 }

@@ -17,7 +17,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TreeviewModule } from 'ngx-treeview';
 import { SharedModule } from 'src/app/shared/shared.module';
 
-import { ProgressSpinnerModule } from 'src/app/shared/progress-spinner/progress-spinner.module';
+
 import { CmsFileManagerModule } from 'ntk-cms-filemanager';
 import { FileCategorySelectorComponent } from './category/selector/selector.component';
 import { FileContentListComponent } from './content/list/list.component';
@@ -50,7 +50,7 @@ import { FileContentExplorerComponent } from './content/explorer/explorer.compon
     AngularEditorModule ,
     TagInputModule,
 
-    ProgressSpinnerModule,
+    //ProgressSpinnerModule,
     CmsFileManagerModule
   ],
   providers: [
