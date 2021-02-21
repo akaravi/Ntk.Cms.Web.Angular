@@ -36,3 +36,5 @@ ng update --next @angular/cli --force
 npm install typescript@latest
 =========================================
 ng build  --prod
+ng serve --disable-host-check
+ngrok http 4200 -host-header="localhost:4200"
