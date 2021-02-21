@@ -25,6 +25,8 @@ import { TicketingDepartemenSelectorComponent } from './departemen/selector/sele
 import { TicketingDepartemenTreeComponent } from './departemen/tree/tree.component';
 import { TicketingDepartemenDeleteComponent } from './departemen/delete/delete.component';
 import { TicketingDepartemenEditComponent } from './departemen/edit/edit.component';
+import { TicketingFaqEditComponent } from './faq/edit/edit.component';
+import { TicketingFaqListComponent } from './faq/list/list.component';
 
 
 
@@ -37,7 +39,8 @@ import { TicketingDepartemenEditComponent } from './departemen/edit/edit.compone
     TicketingDepartemenDeleteComponent,
     TicketingDepartemenSelectorComponent,
     TicketingDepartemenTreeComponent,
-    
+    TicketingFaqEditComponent,
+    TicketingFaqListComponent
   ],
   imports: [
     CommonModule,

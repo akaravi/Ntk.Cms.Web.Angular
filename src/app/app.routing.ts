@@ -15,6 +15,13 @@ const routes: Routes = [
 
   },
   {
+    path: 'barcode',
+    loadChildren: () =>
+    import('./modules/barcode/barcode.module').then((m) => m.BarcodeModule),
+
+
+  },
+  {
     path: '',
     canActivate: [CmsAuthGuard],
     loadChildren: () =>

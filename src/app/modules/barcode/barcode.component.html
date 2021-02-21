@@ -1,0 +1,21 @@
+<div class="card-content">
+  <div class="px-3">
+    <div>
+      
+    </div>
+barcode:{{this.modelDate|json}}
+
+<zxing-scanner
+[formats]="allowedFormats"
+    [enable]="scannerEnabled"
+    
+    (torchCompatible)="onTorchCompatible($event)"
+    (camerasFound)="camerasFoundHandler($event)"
+    (camerasNotFound)="camerasNotFoundHandler($event)"
+    (scanSuccess)="scanSuccessHandler($event)"
+    (scanError)="scanErrorHandler($event)"
+    (scanFailure)="scanFailureHandler($event)"
+    (scanComplete)="scanCompleteHandler($event)"
+></zxing-scanner> 
+</div>
+</div>
