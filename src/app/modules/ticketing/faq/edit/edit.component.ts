@@ -1,6 +1,6 @@
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { ChangeDetectorRef, Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -23,6 +23,9 @@ import { ApplicationThemeConfigModel } from 'ntk-cms-api';
 import { PoinModel } from 'src/app/core/models/pointModel';
 import { Map as leafletMap } from 'leaflet';
 import * as Leaflet from 'leaflet';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
+import { ComponentActionEnum } from 'src/app/core/helpers/model/component-action-enum';
 
 
 @Component({
@@ -32,169 +35,169 @@ import * as Leaflet from 'leaflet';
 })
 export class TicketingFaqEditComponent implements OnInit {
   requestId = 0;
+  requestParentId = 0;
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private dialogRef: MatDialogRef<TicketingFaqEditComponent>,
+    private changeDetectorRef: ChangeDetectorRef,
+    private publicHelper: PublicHelper,
+    public coreEnumService: CoreEnumService,
+    public ticketingFaqService: TicketingFaqService,
+    private cmsToastrService: CmsToastrService
+  ) {
+    if (data) {
+      this.requestId = +data.id || 0;
+      this.requestParentId = +data.parentId || 0;
+    }
 
-  constructor(private activatedRoute: ActivatedRoute,
-              public publicHelper: PublicHelper,
-              public coreEnumService: CoreEnumService,
-              public applicationEnumService: ApplicationEnumService,
-              private ticketingFaqService: TicketingFaqService,
-              private toasterService: CmsToastrService,
-              private router: Router) {
     this.fileManagerTree = new TreeModel();
   }
-
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
-  loading = new ProgressSpinnerModel();
-  formInfo: FormInfoModel = new FormInfoModel();
-  dataAccessModel: AccessModel;
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
-  dataModel = new TicketingFaqModel();
-  dataModelResult: ErrorExceptionResult<TicketingFaqModel> = new ErrorExceptionResult<TicketingFaqModel>();
-  dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
-  dataModelEnumOsTypeResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
-  fileManagerOpenForm = false;
-  appLanguage = 'fa';
 
   fileManagerTree: TreeModel;
-  mapMarker: any;
-  private mapModel: leafletMap;
-  private mapMarkerPoints: Array<PoinModel> = [];
-  mapOptonCenter = {};
+  appLanguage = 'fa';
+  formMatcher = new CmsFormsErrorStateMatcher();
+  formControlRequired = new FormControl('', [
+    Validators.required,
+  ]);
+  loading = new ProgressSpinnerModel();
+  dataModelResult: ErrorExceptionResult<TicketingFaqModel> = new ErrorExceptionResult<TicketingFaqModel>();
+  dataModel: TicketingFaqModel = new TicketingFaqModel();
+
+  ComponentAction = ComponentActionEnum.none;
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
+
+  formInfo: FormInfoModel = new FormInfoModel();
+  dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
+
+  fileManagerOpenForm = false;
+  onActionFileSelected(model: NodeInterface): void {
+    // this.dataModel.LinkMainImageId = model.id;
+    // this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
+
+  }
+
   ngOnInit(): void {
-    this.requestId = Number(this.activatedRoute.snapshot.paramMap.get('Id'));
-    if (this.requestId === 0) {
-      this.toasterService.typeErrorAddRowParentIsNull();
+    if (this.requestId > 0) {
+      this.ComponentAction = ComponentActionEnum.edit;
+      this.formInfo.FormTitle = 'ویرایش  دسته بندی';
+      this.DataGetOneContent();
+    } else if (this.requestId === 0) {
+      this.ComponentAction = ComponentActionEnum.add;
+      this.formInfo.FormTitle = 'ثبت دسته بندی جدید';
+    }
+
+    if (this.ComponentAction === ComponentActionEnum.none) {
+      this.cmsToastrService.typeErrorComponentAction();
+      this.dialogRef.close({ dialogChangedDate: false });
       return;
     }
-    this.DataGetAccess();
-    this.DataGetOne(this.requestId);
     this.getEnumRecordStatus();
   }
+
   getEnumRecordStatus(): void {
+    this.loading.display = true;
     this.coreEnumService.ServiceEnumRecordStatus().subscribe((res) => {
       this.dataModelEnumRecordStatusResult = res;
+      this.loading.display = false;
     });
   }
 
-  onFormSubmit(): void {
-    if (!this.formGroup.valid) {
-      this.toasterService.typeErrorFormInvalid();
+  DataGetOneContent(): void {
+    if (this.requestId <= 0) {
+      this.cmsToastrService.typeErrorEditRowIsNull();
       return;
     }
- 
-    this.DataEditContent();
-  }
 
-  DataGetAccess(): void {
-    this.ticketingFaqService
-      .ServiceViewModel()
-      .subscribe(
-        async (next) => {
-          if (next.IsSuccess) {
-            this.dataAccessModel = next.Access;
-            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
-          } else {
-            this.toasterService.typeErrorGetAccess(next.ErrorMessage);
-          }
-        },
-        (error) => {
-          this.toasterService.typeErrorGetAccess(error);
-        }
-      );
-  }
-  DataGetOne(requestId: number): void {
-    this.formInfo.FormAllowSubmit = false;
-    this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
+    this.formInfo.FormAlert = 'در دریافت ارسال اطلاعات از سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-
-    this.ticketingFaqService
-      .ServiceGetOneById(requestId)
-      .subscribe(
-        async (next) => {
-          this.loading.display = false;
-          this.dataModelResult = next;
-          this.formInfo.FormAllowSubmit = true;
-
-          if (next.IsSuccess) {
-            this.dataModel = next.Item;
-           
-          } else {
-            this.toasterService.typeErrorGetOne(next.ErrorMessage);
-          }
-        },
-        (error) => {
-          this.loading.display = false;
-          this.formInfo.FormAllowSubmit = true;
-          this.toasterService.typeErrorGetOne(error);
+    this.ticketingFaqService.ServiceGetOneById(this.requestId).subscribe(
+      (next) => {
+        this.dataModel = next.Item;
+        if (next.IsSuccess) {
+          this.formInfo.FormTitle = this.formInfo.FormTitle + ' ' + next.Item.Question;
+          this.formInfo.FormAlert = '';
+        } else {
+          this.formInfo.FormAlert = 'برروز خطا';
+          this.formInfo.FormError = next.ErrorMessage;
         }
-      );
+        this.loading.display = false;
+      },
+      (error) => {
+        this.cmsToastrService.typeError(error);
+        this.loading.display = false;
+      }
+    );
   }
-  DataEditContent(): void {
-    this.formInfo.FormAllowSubmit = false;
+  DataAddContent(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-
-    this.ticketingFaqService
-      .ServiceEdit(this.dataModel)
-      .subscribe(
-        async (next) => {
-          this.loading.display = false;
-          this.formInfo.FormAllowSubmit = !next.IsSuccess;
-          this.dataModelResult = next;
-          if (next.IsSuccess) {
-            this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
-            this.toasterService.typeSuccessEdit();
-            this.router.navigate(['/application/app/']);
-          } else {
-            this.toasterService.typeErrorEdit(next.ErrorMessage);
-          }
-        },
-        (error) => {
-          this.loading.display = false;
-          this.formInfo.FormAllowSubmit = true;
-          this.toasterService.typeErrorEdit(error);
-        }
-      );
-  }
-
-  onStepClick(event: StepperSelectionEvent, stepper: MatStepper): void {
-    if (event.previouslySelectedIndex < event.selectedIndex) {
-      // if (!this.formGroup.valid) {
-      //   this.toasterService.typeErrorFormInvalid();
-      //   setTimeout(() => {
-      //     stepper.selectedIndex = event.previouslySelectedIndex;
-      //     // stepper.previous();
-      //   }, 10);
-      // }
+    if (this.requestParentId > 0) {
+      this.dataModel.LinkTicketingDepartemenId = this.requestParentId;
     }
+    this.ticketingFaqService.ServiceAdd(this.dataModel).subscribe(
+      (next) => {
+        this.formInfo.FormAllowSubmit = true;
+        this.dataModelResult = next;
+        if (next.IsSuccess) {
+          this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
+          this.cmsToastrService.typeSuccessAdd();
+          this.dialogRef.close({ dialogChangedDate: true });
+        } else {
+          this.formInfo.FormAlert = 'برروز خطا';
+          this.formInfo.FormError = next.ErrorMessage;
+        }
+        this.loading.display = false;
+      },
+      (error) => {
+        this.formInfo.FormAllowSubmit = true;
+        this.cmsToastrService.typeError(error);
+        this.loading.display = false;
+      }
+    );
   }
- 
-  onActionBackToParent(): void {
-    this.router.navigate(['/application/app/']);
+  DataEditContent(): void {
+    this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
+    this.formInfo.FormError = '';
+    this.loading.display = true;
+    this.ticketingFaqService.ServiceEdit(this.dataModel).subscribe(
+      (next) => {
+        this.formInfo.FormAllowSubmit = true;
+        this.dataModelResult = next;
+        if (next.IsSuccess) {
+          this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
+          this.cmsToastrService.typeSuccessEdit();
+          this.dialogRef.close({ dialogChangedDate: true });
+
+        } else {
+          this.formInfo.FormAlert = 'برروز خطا';
+          this.formInfo.FormError = next.ErrorMessage;
+        }
+        this.loading.display = false;
+      },
+      (error) => {
+        this.formInfo.FormAllowSubmit = true;
+        this.cmsToastrService.typeError(error);
+        this.loading.display = false;
+      }
+    );
   }
-  onActionFileSelectedLinkMainImageId(model: NodeInterface): void {
-    // this.dataModel.LinkMainImageId = model.id;
-    // this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
-  }
- 
-  onActionSelectSource(model: ApplicationSourceModel | null): void {
-    if (!model || model.Id <= 0) {
-      this.toasterService.toastr.error(
-        'سورس را مشخص کنید',
-        'سورس اپلیکیشن اطلاعات مشخص نیست'
-      );
+  onFormSubmit(): void {
+    if (!this.formGroup.valid) {
       return;
     }
-    if (this.dataModel.LinkTicketingDepartemenId !== model.Id) {
-      this.toasterService.toastr.error(
-        'سورس قابل تغییر نمی باشد',
-        'سورس اپلیکیشن در حالت ویرایش قابل تغییر نمی باشد'
-      );
+    this.formInfo.FormAllowSubmit = false;
+    if (this.ComponentAction === ComponentActionEnum.add) {
+      this.DataAddContent();
+    }
+    if (this.ComponentAction === ComponentActionEnum.edit) {
+      this.DataEditContent();
     }
 
   }
- 
+  onFormCancel(): void {
+    this.dialogRef.close({ dialogChangedDate: false });
+  }
 }

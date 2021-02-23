@@ -37,4 +37,5 @@ npm install typescript@latest
 =========================================
 ng build  --prod
 ng serve --disable-host-check
-ngrok http 4200 -host-header="localhost:4200"
+./ngrok http 4200 -host-header=rewrite localhost:4200
+./ngrok http  -host-header=rewrite localhost:4200

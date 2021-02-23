@@ -11,7 +11,8 @@ import {
   FilterDataModel,
   FilterModel,
   ntkCmsApiStoreService,
-  TokenInfoModel
+  TokenInfoModel,
+  TicketingDepartemenModel
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -23,6 +24,7 @@ import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/bas
 import { MatSort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
+import { TicketingFaqEditComponent } from '../edit/edit.component';
 
 @Component({
   selector: 'app-application-app-list',
@@ -30,7 +32,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./list.component.scss']
 })
 export class TicketingFaqListComponent implements OnInit {
-  requestSourceId = 0;
+  requestDepartemenId = 0;
   constructor(private ticketingFaqService: TicketingFaqService,
     private activatedRoute: ActivatedRoute,
     private cmsApiStore :ntkCmsApiStoreService,
@@ -58,24 +60,20 @@ export class TicketingFaqListComponent implements OnInit {
   tableRowsSelected: Array<TicketingFaqModel> = [];
   tableRowSelected: TicketingFaqModel = new TicketingFaqModel();
   tableSource: MatTableDataSource<TicketingFaqModel> = new MatTableDataSource<TicketingFaqModel>();
-  categoryModelSelected: ApplicationSourceModel;
+  categoryModelSelected: TicketingDepartemenModel;
 
   tabledisplayedColumns: string[] = [
     'Id',
     'RecordStatus',
-    'Title',
-    'LinkSourceId',
-    'CreatedDate',
-    'UpdatedDate',
+    'Question',
+
     'Action'
   ];
 
 
-  columnsToDisplay: string[] = ['Id', 'Writer'];
-  expandedElement: TicketingFaqModel | null;
 
   ngOnInit(): void {
-    this.requestSourceId = Number(this.activatedRoute.snapshot.paramMap.get('SourceId'));
+    this.requestDepartemenId = Number(this.activatedRoute.snapshot.paramMap.get('DepartemenId'));
     this.DataGetAll();
     this.tokenInfo =  this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
     this.cmsApiStoreSubscribe =  this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
@@ -95,10 +93,10 @@ export class TicketingFaqListComponent implements OnInit {
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
-    if (this.requestSourceId > 0) {
+    if (this.requestDepartemenId > 0) {
       const filter = new FilterDataModel();
-      filter.PropertyName = 'LinkSourceId';
-      filter.Value = this.requestSourceId;
+      filter.PropertyName = 'LinkTicketingDepartemenId';
+      filter.Value = this.requestDepartemenId;
       this.filteModelContent.Filters.push(filter);
     }
     this.ticketingFaqService.ServiceGetAll(this.filteModelContent).subscribe(
@@ -116,12 +114,6 @@ export class TicketingFaqListComponent implements OnInit {
             this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
               this.tabledisplayedColumns,
               'LinkSiteId'
-            );
-          }
-          if (this.requestSourceId === 0) {
-            this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
-              this.tabledisplayedColumns,
-              'LinkSourceId'
             );
           }
           if (this.optionsSearch.childMethods) {
@@ -171,9 +163,9 @@ export class TicketingFaqListComponent implements OnInit {
 
 
   onActionbuttonNewRow(): void {
-    if (
-      this.requestSourceId == null ||
-      this.requestSourceId === 0
+    if((this.categoryModelSelected==null && this.categoryModelSelected.Id==0 )&&(
+      this.requestDepartemenId == null ||
+      this.requestDepartemenId === 0)
     ) {
       const title = 'برروز خطا ';
       const message = 'محتوا انتخاب نشده است';
@@ -190,25 +182,27 @@ export class TicketingFaqListComponent implements OnInit {
       this.cmsToastrService.toastr.error(message, title);
       return;
     }
-    // const dialogRef = this.dialog.open(NewsCommentEditComponent, {
-    //   data: { contentId: this.requestContentId }
-    // });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   // console.log(`Dialog result: ${result}`);
-    //   if (result && result.dialogChangedDate) {
-    //     this.DataGetAll();
-    //   }
-    // });
-    this.router.navigate(['/application/app/add/', this.requestSourceId]);
-
+    var parentId: number =this.requestDepartemenId ;
+    if(this.categoryModelSelected.Id>0){
+      parentId = this.categoryModelSelected.Id;
+    }
+    const dialogRef = this.dialog.open(TicketingFaqEditComponent, {
+      data: { requestParentId: parentId }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log(`Dialog result: ${result}`);
+      if (result && result.dialogChangedDate) {
+        this.DataGetAll();
+      }
+    });
   }
 
-  onActionCategorySelect(model: ApplicationSourceModel | null): void {
+  onActionCategorySelect(model: TicketingDepartemenModel | null): void {
     this.filteModelContent = new FilterModel();
     this.categoryModelSelected = model;
     if (model && model.Id > 0) {
       const aaa = {
-        PropertyName: 'LinkSourceId',
+        PropertyName: 'LinkTicketingDepartemenId',
         Value: model.Id,
       };
       this.filteModelContent.Filters.push(aaa as FilterDataModel);
@@ -236,16 +230,16 @@ export class TicketingFaqListComponent implements OnInit {
       return;
     }
 
-    // const dialogRef = this.dialog.open(NewsCommentEditComponent, {
-    //   data: { id: this.tableRowSelected.Id }
-    // });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   // console.log(`Dialog result: ${result}`);
-    //   if (result && result.dialogChangedDate) {
-    //     this.DataGetAll();
-    //   }
-    // });
-    this.router.navigate(['/application/app/edit/', this.tableRowSelected.Id]);
+    const dialogRef = this.dialog.open(TicketingFaqEditComponent, {
+      data: { id: this.tableRowSelected.Id }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log(`Dialog result: ${result}`);
+      if (result && result.dialogChangedDate) {
+        this.DataGetAll();
+      }
+    });
+    
 
   }
   onActionbuttonDeleteRow(mode: TicketingFaqModel = this.tableRowSelected): void {

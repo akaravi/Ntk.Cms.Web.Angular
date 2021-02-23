@@ -25,7 +25,7 @@ import { Subscription } from 'rxjs';
 
 
 @Component({
-  selector: 'app-application-source-tree',
+  selector: 'app-ticketing-departemen-tree',
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.scss'],
 })

@@ -1,8 +1,8 @@
 <div class="row">
-  <div *ngIf="requestSourceId===0" class="col-xl-3">
-    <app-application-source-tree (optionSelect)="onActionCategorySelect($event)"></app-application-source-tree>
+  <div *ngIf="requestDepartemenId===0" class="col-xl-3">
+    <app-ticketing-departemen-tree (optionSelect)="onActionCategorySelect($event)"></app-ticketing-departemen-tree>
   </div>
-  <div [ngClass]="(requestSourceId===0)?'col-xl-9':'col-xl-12'">
+  <div [ngClass]="(requestDepartemenId===0)?'col-xl-9':'col-xl-12'">
     <div class="button-row">
       <button *ngIf="dataModelResult.Access.AccessAddRow " (click)="onActionbuttonNewRow()" type="button"
         class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">اضافه</button>
@@ -21,11 +21,7 @@
       </a>
       <button (click)="onActionbuttonExport()" type="button" class="btn btn-bg-info BTN">خروجی فایل</button>
       <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">برسی مجدد</button>
-      <button (click)="onActionbuttonUploadApp()" *ngIf="tableRowSelected.Id>0 && this.tokenInfo.UserAccessAdminAllowToProfessionalData" type="button" class="btn btn-warning BTN">بارگزاری فایل نصب</button>
-      <button (click)="onActionbuttonUploadUpdate()"  *ngIf="tableRowSelected.Id>0 && this.tokenInfo.UserAccessAdminAllowToProfessionalData" type="button" class="btn btn-warning BTN">بارگزاری فایل برروزرسانی</button>
-      <button (click)="onActionbuttonBuildApp()"  *ngIf="tableRowSelected.Id>0" type="button" class="btn btn-warning BTN">ساخت اپ</button>
-      <button (click)="onActionbuttonDownloadApp()"  *ngIf="tableRowSelected.Id>0" type="button" class="btn btn-warning BTN">دانلود اپ</button>
-      <button (click)="onActionBackToParent()" *ngIf="requestSourceId>0" type="button" class="btn btn-warning BTN">بازگشت</button>
+      <button (click)="onActionBackToParent()" *ngIf="requestDepartemenId>0" type="button" class="btn btn-warning BTN">بازگشت</button>
       <app-cms-search-list [(options)]="optionsSearch"></app-cms-search-list>
       <app-cms-export-list [(options)]="optionsExport"></app-cms-export-list>
       <app-cms-statist-list [(options)]="optionsStatist"></app-cms-statist-list>
@@ -47,39 +43,26 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header> شناسه سایت </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.LinkSiteId}} </mat-cell>
         </ng-container>
-        <!-- LinkApplicationId Column -->
-        <ng-container matColumnDef="LinkSourceId">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> شناسه سورس </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.LinkSourceId}} </mat-cell>
-        </ng-container>
+ 
 
         <!-- RecordStatus Column -->
         <ng-container matColumnDef="RecordStatus">
           <mat-header-cell *matHeaderCellDef mat-sort-header> وضعیت </mat-header-cell>
           <mat-cell *matCellDef="let row"> <i [ngClass]="row.RecordStatus|statusClass" ></i> </mat-cell>
         </ng-container>
-        <!-- Title Column -->
-        <ng-container matColumnDef="Title">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> عنوان </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.Title}} </mat-cell>
+        <!-- Question Column -->
+        <ng-container matColumnDef="Question">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> سوال </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.Question}} </mat-cell>
         </ng-container>
-        <!-- CreatedDate Column -->
-        <ng-container matColumnDef="CreatedDate">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> ناریخ ایجاد </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.CreatedDate) }} </mat-cell>
-        </ng-container>
-        <!-- UpdatedDate Column -->
-        <ng-container matColumnDef="UpdatedDate">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> تاریخ ویرابش </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.UpdatedDate) }} </mat-cell>
-        </ng-container>
+
         <!-- Action Column -->
         <ng-container matColumnDef="Action">
           <mat-header-cell *matHeaderCellDef> ... </mat-header-cell>
           <mat-cell *matCellDef="let row" class=' Action'>
             <small (click)="onActionbuttonEditRow(row)">ویرایش</small>|
-            <small (click)="onActionbuttonDeleteRow(row)">حذف</small>|
-            <small (click)="onActionbuttonBuildApp(row)">ساخت اپ</small>
+            <small (click)="onActionbuttonDeleteRow(row)">حذف</small>
+            
           </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="tabledisplayedColumns"></mat-header-row>

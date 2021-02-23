@@ -49,7 +49,7 @@ export class PublicHelper {
         tag: 'h1',
       },
     ],
-    sanitize: true,
+    sanitize: false,
     toolbarPosition: 'top',
     toolbarHiddenButtons: [
       ['bold', 'italic'],
