@@ -27,6 +27,7 @@ import { TicketingDepartemenDeleteComponent } from './departemen/delete/delete.c
 import { TicketingDepartemenEditComponent } from './departemen/edit/edit.component';
 import { TicketingFaqEditComponent } from './faq/edit/edit.component';
 import { TicketingFaqListComponent } from './faq/list/list.component';
+import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 
 
 
@@ -61,7 +62,8 @@ import { TicketingFaqListComponent } from './faq/list/list.component';
     TicketingDepartemenLogService,
     TicketingDepartemenOperatorService,
     TicketingTaskService,
-    TicketingFaqService
+    TicketingFaqService,
+    CmsConfirmationDialogService
   ]
 })
 export class TicketingModule { }

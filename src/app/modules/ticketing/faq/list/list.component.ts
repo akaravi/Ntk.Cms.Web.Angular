@@ -25,6 +25,7 @@ import { MatSort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
 import { TicketingFaqEditComponent } from '../edit/edit.component';
+import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 
 @Component({
   selector: 'app-application-app-list',
@@ -38,6 +39,7 @@ export class TicketingFaqListComponent implements OnInit {
     private cmsApiStore :ntkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
+    private cmsConfirmationDialogService: CmsConfirmationDialogService,
     private router: Router,
     public dialog: MatDialog) {
     this.optionsSearch.parentMethods = {
@@ -260,6 +262,9 @@ export class TicketingFaqListComponent implements OnInit {
       this.cmsToastrService.toastr.error(message, title);
       return;
     }
+    this.cmsConfirmationDialogService.confirm('Please confirm..', 'Do you really want to ... ?')
+    .then((confirmed) => console.log('User confirmed:', confirmed))
+    .catch(() => console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
     // const dialogRef = this.dialog.open(NewsCommentDeleteComponent, {
     //   data: { id: this.tableRowSelected.Id }
     // });
