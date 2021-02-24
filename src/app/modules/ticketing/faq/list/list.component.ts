@@ -36,7 +36,7 @@ export class TicketingFaqListComponent implements OnInit {
   requestDepartemenId = 0;
   constructor(private ticketingFaqService: TicketingFaqService,
     private activatedRoute: ActivatedRoute,
-    private cmsApiStore :ntkCmsApiStoreService,
+    private cmsApiStore: ntkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
     private cmsConfirmationDialogService: CmsConfirmationDialogService,
@@ -77,13 +77,13 @@ export class TicketingFaqListComponent implements OnInit {
   ngOnInit(): void {
     this.requestDepartemenId = Number(this.activatedRoute.snapshot.paramMap.get('DepartemenId'));
     this.DataGetAll();
-    this.tokenInfo =  this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
-    this.cmsApiStoreSubscribe =  this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
+    this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
+    this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
     });
   }
-  cmsApiStoreSubscribe:Subscription;
+  cmsApiStoreSubscribe: Subscription;
   ngOnDestroy() {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
@@ -165,7 +165,7 @@ export class TicketingFaqListComponent implements OnInit {
 
 
   onActionbuttonNewRow(): void {
-    if((this.categoryModelSelected==null && this.categoryModelSelected.Id==0 )&&(
+    if ((this.categoryModelSelected == null && this.categoryModelSelected.Id == 0) && (
       this.requestDepartemenId == null ||
       this.requestDepartemenId === 0)
     ) {
@@ -184,8 +184,8 @@ export class TicketingFaqListComponent implements OnInit {
       this.cmsToastrService.toastr.error(message, title);
       return;
     }
-    var parentId: number =this.requestDepartemenId ;
-    if(this.categoryModelSelected.Id>0){
+    var parentId: number = this.requestDepartemenId;
+    if (this.categoryModelSelected.Id > 0) {
       parentId = this.categoryModelSelected.Id;
     }
     const dialogRef = this.dialog.open(TicketingFaqEditComponent, {
@@ -241,7 +241,7 @@ export class TicketingFaqListComponent implements OnInit {
         this.DataGetAll();
       }
     });
-    
+
 
   }
   onActionbuttonDeleteRow(mode: TicketingFaqModel = this.tableRowSelected): void {
@@ -262,20 +262,33 @@ export class TicketingFaqListComponent implements OnInit {
       this.cmsToastrService.toastr.error(message, title);
       return;
     }
-    this.cmsConfirmationDialogService.confirm('Please confirm..', 'Do you really want to ... ?')
-    .then((confirmed) => console.log('User confirmed:', confirmed))
-    .catch(() => console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
-    // const dialogRef = this.dialog.open(NewsCommentDeleteComponent, {
-    //   data: { id: this.tableRowSelected.Id }
-    // });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   // console.log(`Dialog result: ${result}`);
-    //   if (result && result.dialogChangedDate) {
-    //     this.DataGetAll();
-    //   }
-    // });
-    this.router.navigate(['/application/app/delete/', this.tableRowSelected.Id]);
-
+    const title = 'لطفا تایید کنید...';
+    const message = 'آیا مایل به حدف این محتوا می باشید ' + '?' + "<br> ( " + this.tableRowSelected.Question + " ) ";
+    this.cmsConfirmationDialogService.confirm(title, message)
+      .then((confirmed) => {
+        if (confirmed) {
+          this.loading.display = true;
+          this.ticketingFaqService.ServiceDelete(this.tableRowSelected.Id).subscribe(
+            (next) => {
+              if (next.IsSuccess) {
+                this.cmsToastrService.typeSuccessRemove();
+              } else {
+                this.cmsToastrService.typeErrorRemove();
+              }
+              this.loading.display = false;
+            },
+            (error) => {
+              this.cmsToastrService.typeError(error);
+              this.loading.display = false;
+            }
+          );
+        }
+      }
+      )
+      .catch(() => {
+        // console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)')
+      }
+      );
   }
   onActionbuttonStatist(): void {
     this.optionsStatist.childMethods.runStatist(this.filteModelContent.Filters);
@@ -298,5 +311,5 @@ export class TicketingFaqListComponent implements OnInit {
   onActionBackToParent(): void {
     this.router.navigate(['/application/app/']);
   }
- 
+
 }

@@ -13,12 +13,13 @@ import {
   ErrorExceptionResult,
   FormInfoModel,
   ApplicationSourceModel,
+  FileContentModel,
 } from 'ntk-cms-api';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { NodeInterface, TreeModel } from 'ntk-cms-filemanager';
-import { retry } from 'rxjs/operators';
+import { map, retry } from 'rxjs/operators';
 import { ApplicationThemeConfigModel } from 'ntk-cms-api';
 import { PoinModel } from 'src/app/core/models/pointModel';
 import { Map as leafletMap } from 'leaflet';
@@ -57,13 +58,11 @@ export class TicketingFaqEditComponent implements OnInit {
   fileManagerTree: TreeModel;
   appLanguage = 'fa';
   formMatcher = new CmsFormsErrorStateMatcher();
-  formControlRequired = new FormControl('', [
-    Validators.required,
-  ]);
+
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<TicketingFaqModel> = new ErrorExceptionResult<TicketingFaqModel>();
   dataModel: TicketingFaqModel = new TicketingFaqModel();
-
+  dataFileModel = new Map<number, string>();
   ComponentAction = ComponentActionEnum.none;
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
 
@@ -72,11 +71,13 @@ export class TicketingFaqEditComponent implements OnInit {
 
   fileManagerOpenForm = false;
   onActionFileSelected(model: NodeInterface): void {
-    // this.dataModel.LinkMainImageId = model.id;
-    // this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
-
+    this.dataFileModel.set(model.id, model.downloadLinksrc);
   }
-
+  onActionFileSelectedRemove(key: number): void {
+    if (this.dataFileModel.has(key)) {
+      this.dataFileModel.delete(key);
+    }
+  }
   ngOnInit(): void {
     if (this.requestId > 0) {
       this.ComponentAction = ComponentActionEnum.edit;
@@ -118,6 +119,18 @@ export class TicketingFaqEditComponent implements OnInit {
         if (next.IsSuccess) {
           this.formInfo.FormTitle = this.formInfo.FormTitle + ' ' + next.Item.Question;
           this.formInfo.FormAlert = '';
+          /**
+           * check file attach list
+           */
+          if (this.dataModel.LinkFileIds && this.dataModel.LinkFileIds.length > 0) {
+            this.dataModel.LinkFileIds.split(',').forEach((element, index) => {
+              var link = '';
+              if (this.dataModel.LinkFileIds.length >= this.dataModel.LinkFileIds.length) {
+                link = this.dataModel.LinkFileIds[index]
+              }
+              this.dataFileModel.set(+element, link);
+            });
+          }
         } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
@@ -136,6 +149,10 @@ export class TicketingFaqEditComponent implements OnInit {
     this.loading.display = true;
     if (this.requestParentId > 0) {
       this.dataModel.LinkTicketingDepartemenId = this.requestParentId;
+    }
+    this.dataModel.LinkFileIds = '';
+    if (this.dataFileModel) {
+      this.dataModel.LinkFileIds = this.dataFileModel.keys.toString();
     }
     this.ticketingFaqService.ServiceAdd(this.dataModel).subscribe(
       (next) => {
@@ -162,6 +179,10 @@ export class TicketingFaqEditComponent implements OnInit {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
+    this.dataModel.LinkFileIds = '';
+    if (this.dataFileModel) {
+      this.dataModel.LinkFileIds = this.dataFileModel.keys.toString();
+    }
     this.ticketingFaqService.ServiceEdit(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormAllowSubmit = true;
