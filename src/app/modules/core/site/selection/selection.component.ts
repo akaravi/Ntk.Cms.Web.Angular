@@ -10,7 +10,8 @@ import {
   CoreSiteModel,
   CoreSiteService,
   ErrorExceptionResult,
-  FilterModel
+  FilterModel,
+  FormInfoModel
 } from 'ntk-cms-api';
 import {PublicHelper} from '../../../../core/helpers/publicHelper';
 import {CmsToastrService} from '../../../../core/services/cmsToastr.service';
@@ -37,12 +38,14 @@ export class SelectionComponent implements OnInit {
   ) {
 
   }
+  formInfo: FormInfoModel = new FormInfoModel();
 
   ngOnInit(): void {
     this.dataModel = this.activatedRoute.snapshot.data.list;
   }
 
   clickSelectSite(id: number): void {
+    this.formInfo.DisabledButtonSubmitted=true;
     let authModel: AuthRenewTokenModel;
     authModel = new AuthRenewTokenModel();
     authModel.SiteId = id;
@@ -50,12 +53,18 @@ export class SelectionComponent implements OnInit {
       this.coreAuthService.ServiceRenewToken(authModel).subscribe(
         (res) => {
           if (res.IsSuccess) {
-            // localStorage.setItem('userInfo', JSON.stringify( res.Item));
+            this.cmsToastrService.typeSuccessSelected()
             this.router.navigate(['/']);
+          }
+          else
+          {
+            this.cmsToastrService.typeErrorSelected();
+            this.formInfo.DisabledButtonSubmitted=false;
           }
         },
         (error) => {
           this.cmsToastrService.typeError(error);
+          this.formInfo.DisabledButtonSubmitted=false;
         }
       )
     );

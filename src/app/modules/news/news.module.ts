@@ -39,6 +39,7 @@ import { NewsCommentEditComponent } from './comment/edit/edit.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { NewsContentSelectorComponent } from './content/selector/selector.component';
 import { NewsContentDeleteComponent } from './content/delete/delete.component';
+import { NewsCategoryAddComponent } from './category/add/add.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { NewsContentDeleteComponent } from './content/delete/delete.component';
     NewsContentSelectorComponent,
     NewsCategoryTreeComponent,
     NewsCategorySelectorComponent,
+    NewsCategoryAddComponent,
     NewsCategoryEditComponent,
     NewsCategoryDeleteComponent,
     NewsCommentListComponent,

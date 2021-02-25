@@ -26,6 +26,7 @@ import { PollingCategoryDeleteComponent } from '../delete/delete.component';
 
 import { Subscription } from 'rxjs';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
+import { PollingCategoryAddComponent } from '../add/add.component';
 
 
 @Component({
@@ -126,7 +127,7 @@ export class PollingCategoryTreeComponent implements OnInit {
     dialogConfig.data = { parentId };
 
 
-    const dialogRef = this.dialog.open(PollingCategoryEditComponent, dialogConfig);
+    const dialogRef = this.dialog.open(PollingCategoryAddComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(result => {
       // console.log(`Dialog result: ${result}`);
       if (result && result.dialogChangedDate) {

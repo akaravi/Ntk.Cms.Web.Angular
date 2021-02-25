@@ -30,12 +30,14 @@ import { PollingContentDeleteComponent } from './content/delete/delete.component
 import { PollingVoteEditComponent } from './vote/edit/edit.component';
 import { PollingVoteListComponent } from './vote/list/list.component';
 import { PollingVoteDeleteComponent } from './vote/delete/delete.component';
+import { PollingCategoryAddComponent } from './category/add/add.component';
 
 
 @NgModule({
   declarations: [
     PollingComponent,
     PollingCategorySelectorComponent,
+    PollingCategoryAddComponent,
     PollingCategoryEditComponent,
     PollingCategoryDeleteComponent,
     PollingCategoryTreeComponent,

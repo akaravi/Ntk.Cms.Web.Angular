@@ -63,6 +63,9 @@ export class CmsToastrService {
   typeSuccessRegistery(): void {
     this.toastr.success('با موفقیت حساب کاربری شما ساخته شد', this.now() + 'Success!');
   }
+  typeSuccessSelected(): void {
+    this.toastr.success('با موفقیت انتخاب شد', this.now() + 'Success!');
+  }
   typeSuccessAppBuild(str: string): void {
     let message = 'دستور ساخت اپ ثب شد';
 
@@ -292,6 +295,13 @@ export class CmsToastrService {
   }
   typeErrorRegistery(str: string = ''): void {
     let message = 'برروز خطا در ایجاد حساب کاربری';
+    if (str && str.length > 0) {
+      message = message + ' error: ' + str;
+    }
+    this.toastr.error(message, this.now() + 'Error!');
+  }
+  typeErrorSelected(str: string = ''): void {
+    let message = 'برروز خطا در انتخاب';
     if (str && str.length > 0) {
       message = message + ' error: ' + str;
     }

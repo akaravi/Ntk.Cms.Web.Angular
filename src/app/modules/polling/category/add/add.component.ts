@@ -3,8 +3,8 @@ import {
   EnumModel,
   ErrorExceptionResult,
   FormInfoModel,
-  ArticleCategoryService,
-  ArticleCategoryModel,
+  PollingCategoryService,
+  PollingCategoryModel,
   FileUploadedModel,
 } from 'ntk-cms-api';
 import {
@@ -31,23 +31,23 @@ import {
 import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
 
 @Component({
-  selector: 'app-article-category-edit',
-  templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.scss'],
+  selector: 'app-polling-category-add',
+  templateUrl: './add.component.html',
+  styleUrls: ['./add.component.scss'],
 })
-export class ArticleCategoryEditComponent implements OnInit {
-  requestId = 0;
+export class PollingCategoryAddComponent implements OnInit {
+  requestParentId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialogRef: MatDialogRef<ArticleCategoryEditComponent>,
+    private dialogRef: MatDialogRef<PollingCategoryAddComponent>,
     private changeDetectorRef: ChangeDetectorRef,
     private activatedRoute: ActivatedRoute,
     public coreEnumService: CoreEnumService,
-    public articleCategoryService: ArticleCategoryService,
+    public pollingCategoryService: PollingCategoryService,
     private cmsToastrService: CmsToastrService
   ) {
     if (data) {
-      this.requestId = +data.id || 0;
+      this.requestParentId = +data.parentId || 0;
     }
 
     this.fileManagerTree = new TreeModel();
@@ -61,8 +61,8 @@ export class ArticleCategoryEditComponent implements OnInit {
     Validators.required,
   ]);
   loading = new ProgressSpinnerModel();
-  dataModelResult: ErrorExceptionResult<ArticleCategoryModel> = new ErrorExceptionResult<ArticleCategoryModel>();
-  dataModel: ArticleCategoryModel = new ArticleCategoryModel();
+  dataModelResult: ErrorExceptionResult<PollingCategoryModel> = new ErrorExceptionResult<PollingCategoryModel>();
+  dataModel: PollingCategoryModel = new PollingCategoryModel();
 
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
 
@@ -77,15 +77,7 @@ export class ArticleCategoryEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.requestId > 0) {
-      this.formInfo.FormTitle = 'ویرایش  دسته بندی';
-      this.DataGetOneContent();
-    } else {
-
-      this.cmsToastrService.typeErrorComponentAction();
-      this.dialogRef.close({ dialogChangedDate: false });
-      return;
-    }
+    this.formInfo.FormTitle = 'ثبت دسته بندی جدید';
     this.getEnumRecordStatus();
   }
 
@@ -97,47 +89,22 @@ export class ArticleCategoryEditComponent implements OnInit {
     });
   }
 
-  DataGetOneContent(): void {
-    if (this.requestId <= 0) {
-      this.cmsToastrService.typeErrorEditRowIsNull();
-      return;
-    }
-
-    this.formInfo.FormAlert = 'در دریافت ارسال اطلاعات از سرور';
-    this.formInfo.FormError = '';
-    this.loading.display = true;
-    this.articleCategoryService.ServiceGetOneById(this.requestId).subscribe(
-      (next) => {
-        this.dataModel = next.Item;
-        if (next.IsSuccess) {
-          this.formInfo.FormTitle = this.formInfo.FormTitle + ' ' + next.Item.Title;
-          this.formInfo.FormAlert = '';
-        } else {
-          this.formInfo.FormAlert = 'برروز خطا';
-          this.formInfo.FormError = next.ErrorMessage;
-        }
-        this.loading.display = false;
-      },
-      (error) => {
-        this.cmsToastrService.typeError(error);
-        this.loading.display = false;
-      }
-    );
-  }
-
-  DataEditContent(): void {
+  
+  DataAddContent(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.articleCategoryService.ServiceEdit(this.dataModel).subscribe(
+    if (this.requestParentId > 0) {
+      this.dataModel.LinkParentId = this.requestParentId;
+    }
+    this.pollingCategoryService.ServiceAdd(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormAllowSubmit = true;
         this.dataModelResult = next;
         if (next.IsSuccess) {
           this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
-          this.cmsToastrService.typeSuccessEdit();
+          this.cmsToastrService.typeSuccessAdd();
           this.dialogRef.close({ dialogChangedDate: true });
-
         } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
@@ -151,14 +118,14 @@ export class ArticleCategoryEditComponent implements OnInit {
       }
     );
   }
+  
   onFormSubmit(): void {
     if (!this.formGroup.valid) {
       return;
     }
     this.formInfo.FormAllowSubmit = false;
-    this.DataEditContent();
 
-
+      this.DataAddContent();
   }
   onFormCancel(): void {
     this.dialogRef.close({ dialogChangedDate: false });

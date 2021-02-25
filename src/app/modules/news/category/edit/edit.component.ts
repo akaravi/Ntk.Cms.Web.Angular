@@ -37,7 +37,6 @@ import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateM
 })
 export class NewsCategoryEditComponent implements OnInit {
   requestId = 0;
-  requestParentId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<NewsCategoryEditComponent>,
@@ -49,7 +48,6 @@ export class NewsCategoryEditComponent implements OnInit {
   ) {
     if (data) {
       this.requestId = +data.id || 0;
-      this.requestParentId = +data.parentId || 0;
     }
 
     this.fileManagerTree = new TreeModel();
@@ -65,8 +63,6 @@ export class NewsCategoryEditComponent implements OnInit {
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<NewsCategoryModel> = new ErrorExceptionResult<NewsCategoryModel>();
   dataModel: NewsCategoryModel = new NewsCategoryModel();
-
-  ComponentAction = ComponentActionEnum.none;
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
 
   formInfo: FormInfoModel = new FormInfoModel();
@@ -81,15 +77,9 @@ export class NewsCategoryEditComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.requestId > 0) {
-      this.ComponentAction = ComponentActionEnum.edit;
       this.formInfo.FormTitle = 'ویرایش  دسته بندی';
       this.DataGetOneContent();
-    } else if (this.requestId === 0) {
-      this.ComponentAction = ComponentActionEnum.add;
-      this.formInfo.FormTitle = 'ثبت دسته بندی جدید';
-    }
-
-    if (this.ComponentAction === ComponentActionEnum.none) {
+    } else {
       this.cmsToastrService.typeErrorComponentAction();
       this.dialogRef.close({ dialogChangedDate: false });
       return;
@@ -132,34 +122,7 @@ export class NewsCategoryEditComponent implements OnInit {
       }
     );
   }
-  DataAddContent(): void {
-    this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
-    this.formInfo.FormError = '';
-    this.loading.display = true;
-    if (this.requestParentId > 0) {
-      this.dataModel.LinkParentId = this.requestParentId;
-    }
-    this.newsCategoryService.ServiceAdd(this.dataModel).subscribe(
-      (next) => {
-        this.formInfo.FormAllowSubmit = true;
-        this.dataModelResult = next;
-        if (next.IsSuccess) {
-          this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
-          this.cmsToastrService.typeSuccessAdd();
-          this.dialogRef.close({ dialogChangedDate: true });
-        } else {
-          this.formInfo.FormAlert = 'برروز خطا';
-          this.formInfo.FormError = next.ErrorMessage;
-        }
-        this.loading.display = false;
-      },
-      (error) => {
-        this.formInfo.FormAllowSubmit = true;
-        this.cmsToastrService.typeError(error);
-        this.loading.display = false;
-      }
-    );
-  }
+
   DataEditContent(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
@@ -191,12 +154,8 @@ export class NewsCategoryEditComponent implements OnInit {
       return;
     }
     this.formInfo.FormAllowSubmit = false;
-    if (this.ComponentAction === ComponentActionEnum.add) {
-      this.DataAddContent();
-    }
-    if (this.ComponentAction === ComponentActionEnum.edit) {
-      this.DataEditContent();
-    }
+    this.DataEditContent();
+
 
   }
   onFormCancel(): void {

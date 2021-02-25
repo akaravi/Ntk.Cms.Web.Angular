@@ -44,7 +44,7 @@
             </div>
 
             <br>
-            <button (click)="clickSelectSite(item.Id)" type="button" class="btn btn-warning BTN">ورود</button>
+            <button (click)="clickSelectSite(item.Id)" type="button" [disable]="this.formInfo.DisabledButtonSubmitted" class="btn btn-warning BTN">ورود</button>
 
           </div>
         </div>

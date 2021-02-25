@@ -24,6 +24,7 @@ import { NewsCategoryEditComponent } from '../edit/edit.component';
 import { NewsCategoryDeleteComponent } from '../delete/delete.component';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { Subscription } from 'rxjs';
+import { NewsCategoryAddComponent } from '../add/add.component';
 
 
 @Component({
@@ -124,7 +125,7 @@ export class NewsCategoryTreeComponent implements OnInit {
     dialogConfig.data = { parentId };
 
 
-    const dialogRef = this.dialog.open(NewsCategoryEditComponent, dialogConfig);
+    const dialogRef = this.dialog.open(NewsCategoryAddComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(result => {
       // console.log(`Dialog result: ${result}`);
       if (result && result.dialogChangedDate) {

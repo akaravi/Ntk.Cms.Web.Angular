@@ -39,6 +39,7 @@ import { ArticleCommentEditComponent } from './comment/edit/edit.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import {ArticleContentSelectorComponent} from './content/selector/selector.component';
 import { ArticleContentDeleteComponent } from './content/delete/delete.component';
+import { ArticleCategoryAddComponent } from './category/add/add.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { ArticleContentDeleteComponent } from './content/delete/delete.component
     ArticleContentSelectorComponent,
     ArticleCategoryTreeComponent,
     ArticleCategorySelectorComponent,
+    ArticleCategoryAddComponent,
     ArticleCategoryEditComponent,
     ArticleCategoryDeleteComponent,
     ArticleCommentListComponent,
