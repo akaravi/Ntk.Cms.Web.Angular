@@ -23,6 +23,7 @@ import { ApplicationThemeConfigModel } from 'ntk-cms-api';
 import { PoinModel } from 'src/app/core/models/pointModel';
 import { Map as leafletMap } from 'leaflet';
 import * as Leaflet from 'leaflet';
+import { CmsStoreService } from 'src/app/core/reducers/cmsStoreService';
 
 
 @Component({
@@ -34,6 +35,7 @@ export class ApplicationAppEditComponent implements OnInit {
   requestId = 0;
 
   constructor(private activatedRoute: ActivatedRoute,
+    private cmsStoreService: CmsStoreService,
               public publicHelper: PublicHelper,
               public coreEnumService: CoreEnumService,
               public applicationEnumService: ApplicationEnumService,
@@ -71,10 +73,12 @@ export class ApplicationAppEditComponent implements OnInit {
     this.DataGetOne(this.requestId);
     this.getEnumRecordStatus();
   }
+  
+  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
-    this.coreEnumService.ServiceEnumRecordStatus().subscribe((res) => {
-      this.dataModelEnumRecordStatusResult = res;
-    });
+    if (this.storeSnapshot && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus.IsSuccess && this.storeSnapshot.EnumRecordStatus.ListItems && this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
+      this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
+    }
   }
 
   onFormSubmit(): void {

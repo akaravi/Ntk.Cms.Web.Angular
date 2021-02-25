@@ -17,8 +17,6 @@ import {
   NewsContentOtherInfoModel
 } from 'ntk-cms-api';
 import { ActivatedRoute, Router } from '@angular/router';
-// import KTWizard from '../../../../../assets/js/components/wizard';
-// import { KTUtil } from '../../../../../assets/js/components/util';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -29,6 +27,7 @@ import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { MatStepper } from '@angular/material/stepper';
 import { MatTableDataSource } from '@angular/material/table';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
+import { CmsStoreService } from 'src/app/core/reducers/cmsStoreService';
 
 
 @Component({
@@ -41,6 +40,7 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
   requestCategoryId = 0;
   constructor(
     private activatedRoute: ActivatedRoute,
+    private cmsStoreService: CmsStoreService,
     public publicHelper: PublicHelper,
     public coreEnumService: CoreEnumService,
     private newsContentService: NewsContentService,
@@ -120,10 +120,11 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
   }
 
 
+  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
-    this.coreEnumService.ServiceEnumRecordStatus().subscribe((res) => {
-      this.dataModelEnumRecordStatusResult = res;
-    });
+    if (this.storeSnapshot && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus.IsSuccess && this.storeSnapshot.EnumRecordStatus.ListItems && this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
+      this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
+    }
   }
 
   receiveMap(model: leafletMap): void {

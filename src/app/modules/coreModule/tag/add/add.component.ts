@@ -16,7 +16,7 @@ import {
   NewsContentTagService,
   NewsContentTagModel,
   NewsContentSimilarService,
-  NewsContentSimilar,
+  NewsContentSimilarModel,
   NewsContentOtherInfoService,
   NewsContentOtherInfoModel
 } from 'ntk-cms-api';
@@ -31,6 +31,7 @@ import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { MatStepper } from '@angular/material/stepper';
 import { MatTableDataSource } from '@angular/material/table';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
+import { CmsStoreService } from 'src/app/core/reducers/cmsStoreService';
 
 @Component({
   selector: 'app-tag-add',
@@ -42,6 +43,7 @@ export class TagAddComponent implements OnInit, AfterViewInit {
   requestCategoryId = 0;
   constructor(
     private activatedRoute: ActivatedRoute,
+    private cmsStoreService: CmsStoreService,
     public coreEnumService: CoreEnumService,
     public publicHelper: PublicHelper,
     public coreModuleTagService: CoreModuleTagService,
@@ -149,11 +151,11 @@ export class TagAddComponent implements OnInit, AfterViewInit {
     this.dataModel.LinkFileMovieIdSrc = model.downloadLinksrc;
   }
 
-
+  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
-    this.coreEnumService.ServiceEnumRecordStatus().subscribe((res) => {
-      this.dataModelEnumRecordStatusResult = res;
-    });
+    if (this.storeSnapshot && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus.IsSuccess && this.storeSnapshot.EnumRecordStatus.ListItems && this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
+      this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
+    }
   }
 
   receiveMap(model: leafletMap): void {
@@ -240,7 +242,7 @@ export class TagAddComponent implements OnInit, AfterViewInit {
     this.tagDataModel.forEach(x => {
       const row = new NewsContentTagModel();
       row.LinkContentId = model.Id;
-      row.LinkTagid = x.Id;
+      row.LinkTagId = x.Id;
       dataList.push(row);
     });
     return this.newsContentTagService.ServiceAddBatch(dataList).pipe(
@@ -281,9 +283,9 @@ export class TagAddComponent implements OnInit, AfterViewInit {
     if (!this.similarDataModel || this.similarDataModel.length === 0) {
       return;
     }
-    const dataList = new Array<NewsContentSimilar>();
+    const dataList = new Array<NewsContentSimilarModel>();
     this.similarDataModel.forEach(x => {
-      const row = new NewsContentSimilar();
+      const row = new NewsContentSimilarModel();
       row.LinkSourceId = model.Id;
       row.LinkDestinationId = x.Id;
       dataList.push(row);

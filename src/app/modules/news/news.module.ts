@@ -5,8 +5,11 @@ import { NewsComponent } from './news.component';
 import { TagInputModule } from 'ngx-chips';
 
 import {
+  CmsStore,
   CoreEnumService,
   CoreModuleTagService,
+  EnumModel,
+  ErrorExceptionResult,
   NewsCategoryService,
   NewsCommentService,
   NewsConfigurationService,

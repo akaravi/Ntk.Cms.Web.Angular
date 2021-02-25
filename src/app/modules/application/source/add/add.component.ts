@@ -18,6 +18,7 @@ import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import {NodeInterface, TreeModel} from 'ntk-cms-filemanager';
+import { CmsStoreService } from 'src/app/core/reducers/cmsStoreService';
 
 @Component({
   selector: 'app-aplication-source-add',
@@ -26,6 +27,7 @@ import {NodeInterface, TreeModel} from 'ntk-cms-filemanager';
 })
 export class ApplicationSourceAddComponent implements OnInit {
    constructor(public publicHelper: PublicHelper,
+    private cmsStoreService: CmsStoreService,
                public coreEnumService: CoreEnumService,
                public applicationEnumService: ApplicationEnumService,
                private applicationSourceService: ApplicationSourceService,
@@ -53,10 +55,11 @@ export class ApplicationSourceAddComponent implements OnInit {
     this.getEnumRecordStatus();
     this.getEnumOsType();
   }
+  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
-    this.coreEnumService.ServiceEnumRecordStatus().subscribe((res) => {
-      this.dataModelEnumRecordStatusResult = res;
-    });
+    if (this.storeSnapshot && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus.IsSuccess && this.storeSnapshot.EnumRecordStatus.ListItems && this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
+      this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
+    }
   }
   getEnumOsType(): void {
     this.applicationEnumService.ServiceEnumOSType().subscribe((res) => {

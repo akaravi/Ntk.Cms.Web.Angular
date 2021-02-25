@@ -10,10 +10,8 @@ import {
   Component,
   OnInit,
   ViewChild,
-  ChangeDetectorRef,
   Inject,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
@@ -23,6 +21,7 @@ import {
   NodeInterface,
 } from 'ntk-cms-filemanager';
 import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
+import { CmsStoreService } from 'src/app/core/reducers/cmsStoreService';
 
 @Component({
   selector: 'app-ticketing-departemen-edit',
@@ -33,6 +32,7 @@ export class TicketingDepartemenEditComponent implements OnInit {
   requestId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
+    private cmsStoreService: CmsStoreService,
     private dialogRef: MatDialogRef<TicketingDepartemenEditComponent>,
     public coreEnumService: CoreEnumService,
     public ticketingDepartemenService: TicketingDepartemenService,
@@ -79,15 +79,12 @@ export class TicketingDepartemenEditComponent implements OnInit {
 
     this.getEnumRecordStatus();
   }
-
+  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
-    this.loading.display = true;
-    this.coreEnumService.ServiceEnumRecordStatus().subscribe((res) => {
-      this.dataModelEnumRecordStatusResult = res;
-      this.loading.display = false;
-    });
+    if (this.storeSnapshot && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus.IsSuccess && this.storeSnapshot.EnumRecordStatus.ListItems && this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
+      this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
+    }
   }
-
   DataGetOneContent(): void {
     if (this.requestId <= 0) {
       this.cmsToastrService.typeErrorEditRowIsNull();

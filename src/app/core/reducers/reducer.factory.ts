@@ -1,5 +1,7 @@
-import { TokenInfoModel } from "ntk-cms-api";
+import { EnumModel, ErrorExceptionResult, TokenInfoModel } from "ntk-cms-api";
 
-export interface AppStore {
+export interface ReducerCmsStore {
     tokenInfoState: TokenInfoModel;
+    EnumRecordStatus: ErrorExceptionResult<EnumModel> ;
   }
+  

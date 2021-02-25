@@ -12,8 +12,6 @@ import {
 } from 'ntk-cms-api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
-import { of } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { NodeInterface, TreeModel } from 'ntk-cms-filemanager';
 import { Map as leafletMap } from 'leaflet';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
@@ -21,6 +19,7 @@ import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { MatStepper } from '@angular/material/stepper';
 import { MatTableDataSource } from '@angular/material/table';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
+import { CmsStoreService } from 'src/app/core/reducers/cmsStoreService';
 
 
 @Component({
@@ -33,6 +32,7 @@ export class PollingContentAddComponent implements OnInit, AfterViewInit {
   requestCategoryId = 0;
   constructor(
     private activatedRoute: ActivatedRoute,
+    private cmsStoreService: CmsStoreService,
     public publicHelper: PublicHelper,
     public coreEnumService: CoreEnumService,
     private pollingContentService: PollingContentService,
@@ -103,10 +103,11 @@ export class PollingContentAddComponent implements OnInit, AfterViewInit {
   }
 
 
+  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
-    this.coreEnumService.ServiceEnumRecordStatus().subscribe((res) => {
-      this.dataModelEnumRecordStatusResult = res;
-    });
+    if (this.storeSnapshot && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus.IsSuccess && this.storeSnapshot.EnumRecordStatus.ListItems && this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
+      this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
+    }
   }
 
   receiveMap(model: leafletMap): void {
@@ -131,7 +132,7 @@ export class PollingContentAddComponent implements OnInit, AfterViewInit {
 
   }
 
-  receiveZoom(zoom: number): void {
+  receiveZoom(): void {
   }
   onFormSubmit(): void {
     if (this.dataModel.LinkCategoryId <= 0) {

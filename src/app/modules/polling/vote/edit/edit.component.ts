@@ -17,6 +17,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { ComponentActionEnum } from 'src/app/core/helpers/model/component-action-enum';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
+import { CmsStoreService } from 'src/app/core/reducers/cmsStoreService';
 
 
 @Component({
@@ -30,6 +31,7 @@ export class PollingVoteEditComponent implements OnInit {
   requestContentId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
+    private cmsStoreService: CmsStoreService,
     private dialogRef: MatDialogRef<PollingVoteEditComponent>,
     public coreEnumService: CoreEnumService,
     public pollingVoteService: PollingVoteService,
@@ -73,12 +75,11 @@ export class PollingVoteEditComponent implements OnInit {
     this.getEnumRecordStatus();
   }
 
+  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
-    this.loading.display = true;
-    this.coreEnumService.ServiceEnumRecordStatus().subscribe((res) => {
-      this.dataModelEnumRecordStatusResult = res;
-      this.loading.display = false;
-    });
+    if (this.storeSnapshot && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus.IsSuccess && this.storeSnapshot.EnumRecordStatus.ListItems && this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
+      this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
+    }
   }
 
   DataGetOneContent(): void {

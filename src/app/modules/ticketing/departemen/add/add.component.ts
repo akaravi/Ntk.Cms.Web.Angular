@@ -5,30 +5,25 @@ import {
   FormInfoModel,
   TicketingDepartemenService,
   TicketingDepartemenModel,
-  FileUploadedModel,
 } from 'ntk-cms-api';
 import {
   Component,
   OnInit,
-  Input,
   ViewChild,
   ChangeDetectorRef,
   Inject,
 } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
-import { ComponentActionEnum } from 'src/app/core/helpers/model/component-action-enum';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
-import { ComponentOptionFileUploadModel } from 'src/app/core/cmsComponentModels/files/componentOptionFileUploadModel';
 import {
-  ConfigInterface,
-  DownloadModeEnum,
   TreeModel,
   NodeInterface,
 } from 'ntk-cms-filemanager';
 import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
+import { CmsStoreService } from 'src/app/core/reducers/cmsStoreService';
 
 @Component({
   selector: 'app-ticketing-departemen-add',
@@ -38,9 +33,8 @@ import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateM
 export class TicketingDepartemenAddComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
+    private cmsStoreService: CmsStoreService,
     private dialogRef: MatDialogRef<TicketingDepartemenAddComponent>,
-    private changeDetectorRef: ChangeDetectorRef,
-    private activatedRoute: ActivatedRoute,
     public coreEnumService: CoreEnumService,
     public ticketingDepartemenService: TicketingDepartemenService,
     private cmsToastrService: CmsToastrService
@@ -79,12 +73,11 @@ export class TicketingDepartemenAddComponent implements OnInit {
     this.getEnumRecordStatus();
   }
 
+  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
-    this.loading.display = true;
-    this.coreEnumService.ServiceEnumRecordStatus().subscribe((res) => {
-      this.dataModelEnumRecordStatusResult = res;
-      this.loading.display = false;
-    });
+    if (this.storeSnapshot && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus.IsSuccess && this.storeSnapshot.EnumRecordStatus.ListItems && this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
+      this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
+    }
   }
 
 

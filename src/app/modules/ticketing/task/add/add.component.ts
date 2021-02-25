@@ -18,11 +18,9 @@ import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { NodeInterface, TreeModel } from 'ntk-cms-filemanager';
-import { retry } from 'rxjs/operators';
-import { ApplicationThemeConfigModel } from 'ntk-cms-api';
 import { PoinModel } from 'src/app/core/models/pointModel';
 import { Map as leafletMap } from 'leaflet';
-import * as Leaflet from 'leaflet';
+import { CmsStoreService } from 'src/app/core/reducers/cmsStoreService';
 
 @Component({
   selector: 'app-aplication-intro-add',
@@ -33,6 +31,7 @@ export class TicketingTaskAddComponent implements OnInit {
   requestDepartemenId = 0;
 
   constructor(private activatedRoute: ActivatedRoute,
+    private cmsStoreService: CmsStoreService,
               public publicHelper: PublicHelper,
               public coreEnumService: CoreEnumService,
               public applicationEnumService: ApplicationEnumService,
@@ -57,8 +56,6 @@ export class TicketingTaskAddComponent implements OnInit {
 
   fileManagerTree: TreeModel;
   mapMarker: any;
-  private mapModel: leafletMap;
-  private mapMarkerPoints: Array<PoinModel> = [];
   mapOptonCenter = {};
   ngOnInit(): void {
     this.requestDepartemenId = Number(this.activatedRoute.snapshot.paramMap.get('SourceId'));
@@ -70,12 +67,12 @@ export class TicketingTaskAddComponent implements OnInit {
     this.DataGetAccess();
     this.getEnumRecordStatus();
   }
+  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
-    this.coreEnumService.ServiceEnumRecordStatus().subscribe((res) => {
-      this.dataModelEnumRecordStatusResult = res;
-    });
+    if (this.storeSnapshot && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus.IsSuccess && this.storeSnapshot.EnumRecordStatus.ListItems && this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
+      this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
+    }
   }
-
   onFormSubmit(): void {
     if (!this.formGroup.valid) {
       this.toasterService.typeErrorFormInvalid();
@@ -132,7 +129,7 @@ export class TicketingTaskAddComponent implements OnInit {
       );
   }
 
-  onStepClick(event: StepperSelectionEvent, stepper: MatStepper): void {
+  onStepClick(event: StepperSelectionEvent): void {
     if (event.previouslySelectedIndex < event.selectedIndex) {
       // if (!this.formGroup.valid) {
       //   this.toasterService.typeErrorFormInvalid();
@@ -147,7 +144,7 @@ export class TicketingTaskAddComponent implements OnInit {
   onActionBackToParent(): void {
     this.router.navigate(['/application/app/']);
   }
-  onActionFileSelectedLinkMainImageId(model: NodeInterface): void {
+  onActionFileSelectedLinkMainImageId(): void {
     // this.dataModel.LinkMainImageId = model.id;
     // this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
   }

@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, OnInit } from '@angular/core';
 import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { CoreAuthService } from 'ntk-cms-api';
+import { CoreAuthService, CoreEnumService } from 'ntk-cms-api';
 import xml from 'highlight.js/lib/languages/xml';
 import json from 'highlight.js/lib/languages/json';
 import scss from 'highlight.js/lib/languages/scss';
@@ -20,6 +20,7 @@ import { NtkSmartModalModule } from 'ngx-ntk-smart-module';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { HttpConfigInterceptor } from './core/interceptor/httpConfigInterceptor';
 import { AppRouting } from './app.routing';
+import { CmsStoreModule } from './core/reducers/cmsStore.module';
 
 export function getHighlightLanguages(): any {
   return [
@@ -51,6 +52,8 @@ export function getHighlightLanguages(): any {
     }),
     SplashScreenModule,
     InlineSVGModule.forRoot(),
+    CmsStoreModule.forRoot(),
+    
     NgbModule,
     HighlightModule,
     ClipboardModule,
@@ -59,6 +62,7 @@ export function getHighlightLanguages(): any {
   ],
   providers: [
     CoreAuthService,
+    CoreEnumService,
     {
       provide: HIGHLIGHT_OPTIONS,
       useValue: {
@@ -71,4 +75,5 @@ export function getHighlightLanguages(): any {
   bootstrap: [AppComponent]
 })
 export class AppModule {
+ 
 }

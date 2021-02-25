@@ -20,6 +20,7 @@ import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { NodeInterface, TreeModel } from 'ntk-cms-filemanager';
 import { retry } from 'rxjs/operators';
 import { ApplicationThemeConfigModel, ApplicationAppModel } from 'ntk-cms-api';
+import { CmsStoreService } from 'src/app/core/reducers/cmsStoreService';
 
 
 @Component({
@@ -31,6 +32,7 @@ export class ApplicationIntroAddComponent implements OnInit {
   requestApplicationId = 0;
 
   constructor(private activatedRoute: ActivatedRoute,
+    private cmsStoreService: CmsStoreService,
               public publicHelper: PublicHelper,
               public coreEnumService: CoreEnumService,
               public applicationEnumService: ApplicationEnumService,
@@ -66,10 +68,11 @@ export class ApplicationIntroAddComponent implements OnInit {
     this.DataGetAccess();
     this.getEnumRecordStatus();
   }
+  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
-    this.coreEnumService.ServiceEnumRecordStatus().subscribe((res) => {
-      this.dataModelEnumRecordStatusResult = res;
-    });
+    if (this.storeSnapshot && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus.IsSuccess && this.storeSnapshot.EnumRecordStatus.ListItems && this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
+      this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
+    }
   }
 
   onFormSubmit(): void {

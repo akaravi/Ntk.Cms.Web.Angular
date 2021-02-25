@@ -17,7 +17,8 @@ import {
   NewsContentTagModel,
   NewsContentSimilarService,
   NewsContentOtherInfoService,
-  NewsContentOtherInfoModel
+  NewsContentOtherInfoModel,
+  NewsContentSimilarModel
 } from 'ntk-cms-api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
@@ -29,6 +30,7 @@ import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { MatStepper } from '@angular/material/stepper';
 import { MatTableDataSource } from '@angular/material/table';
+import { CmsStoreService } from 'src/app/core/reducers/cmsStoreService';
 
 @Component({
   selector: 'app-tag-edit',
@@ -40,6 +42,7 @@ export class TagEditComponent implements OnInit, AfterViewInit {
   requestId = 0;
   constructor(
     private activatedRoute: ActivatedRoute,
+    private cmsStoreService: CmsStoreService,
     public coreEnumService: CoreEnumService,
     public coreModuleTagService: CoreModuleTagService,
     private newsContentService: NewsContentService,
@@ -146,10 +149,11 @@ export class TagEditComponent implements OnInit, AfterViewInit {
   }
 
 
+  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
-    this.coreEnumService.ServiceEnumRecordStatus().subscribe((res) => {
-      this.dataModelEnumRecordStatusResult = res;
-    });
+    if (this.storeSnapshot && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus.IsSuccess && this.storeSnapshot.EnumRecordStatus.ListItems && this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
+      this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
+    }
   }
 
   receiveMap(model: leafletMap): void {
@@ -307,9 +311,9 @@ export class TagEditComponent implements OnInit, AfterViewInit {
     if (!this.similarDataModel || this.similarDataModel.length === 0) {
       return;
     }
-    const dataList = new Array<NewsContentSimilar>();
+    const dataList = new Array<NewsContentSimilarModel>();
     this.similarDataModel.forEach(x => {
-      const row = new NewsContentSimilar();
+      const row = new NewsContentSimilarModel();
       row.LinkSourceId = model.Id;
       row.LinkDestinationId = x.Id;
       dataList.push(row);

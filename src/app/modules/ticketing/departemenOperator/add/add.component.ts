@@ -1,7 +1,6 @@
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { MatStepper } from '@angular/material/stepper';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   AccessModel, ApplicationEnumService,
@@ -18,11 +17,7 @@ import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { NodeInterface, TreeModel } from 'ntk-cms-filemanager';
-import { retry } from 'rxjs/operators';
-import { ApplicationThemeConfigModel } from 'ntk-cms-api';
-import { PoinModel } from 'src/app/core/models/pointModel';
-import { Map as leafletMap } from 'leaflet';
-import * as Leaflet from 'leaflet';
+import { CmsStoreService } from 'src/app/core/reducers/cmsStoreService';
 
 @Component({
   selector: 'app-aplication-intro-add',
@@ -33,12 +28,13 @@ export class TicketingDepartemenOperatorAddComponent implements OnInit {
   requestDepartemenId = 0;
 
   constructor(private activatedRoute: ActivatedRoute,
-              public publicHelper: PublicHelper,
-              public coreEnumService: CoreEnumService,
-              public applicationEnumService: ApplicationEnumService,
-              private ticketingDepartemenOperatorService: TicketingDepartemenOperatorService,
-              private toasterService: CmsToastrService,
-              private router: Router) {
+    private cmsStoreService: CmsStoreService,
+    public publicHelper: PublicHelper,
+    public coreEnumService: CoreEnumService,
+    public applicationEnumService: ApplicationEnumService,
+    private ticketingDepartemenOperatorService: TicketingDepartemenOperatorService,
+    private toasterService: CmsToastrService,
+    private router: Router) {
     this.fileManagerTree = new TreeModel();
   }
 
@@ -57,8 +53,6 @@ export class TicketingDepartemenOperatorAddComponent implements OnInit {
 
   fileManagerTree: TreeModel;
   mapMarker: any;
-  private mapModel: leafletMap;
-  private mapMarkerPoints: Array<PoinModel> = [];
   mapOptonCenter = {};
   ngOnInit(): void {
     this.requestDepartemenId = Number(this.activatedRoute.snapshot.paramMap.get('SourceId'));
@@ -70,10 +64,11 @@ export class TicketingDepartemenOperatorAddComponent implements OnInit {
     this.DataGetAccess();
     this.getEnumRecordStatus();
   }
+  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
-    this.coreEnumService.ServiceEnumRecordStatus().subscribe((res) => {
-      this.dataModelEnumRecordStatusResult = res;
-    });
+    if (this.storeSnapshot && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus.IsSuccess && this.storeSnapshot.EnumRecordStatus.ListItems && this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
+      this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
+    }
   }
 
   onFormSubmit(): void {
@@ -86,7 +81,7 @@ export class TicketingDepartemenOperatorAddComponent implements OnInit {
 
       return;
     }
-    
+
     this.DataAddContent();
   }
 
@@ -137,7 +132,7 @@ export class TicketingDepartemenOperatorAddComponent implements OnInit {
       );
   }
 
-  onStepClick(event: StepperSelectionEvent, stepper: MatStepper): void {
+  onStepClick(event: StepperSelectionEvent): void {
     if (event.previouslySelectedIndex < event.selectedIndex) {
       // if (!this.formGroup.valid) {
       //   this.toasterService.typeErrorFormInvalid();
@@ -148,7 +143,7 @@ export class TicketingDepartemenOperatorAddComponent implements OnInit {
       // }
     }
   }
-  
+
   onActionBackToParent(): void {
     this.router.navigate(['/ticketing/departeman/']);
   }
@@ -156,7 +151,7 @@ export class TicketingDepartemenOperatorAddComponent implements OnInit {
     this.dataModel.LinkMainImageId = model.id;
     this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
   }
-  
+
   onActionSelectSource(model: ApplicationSourceModel | null): void {
     if (!model || model.Id <= 0) {
       this.toasterService.toastr.error(
@@ -167,5 +162,5 @@ export class TicketingDepartemenOperatorAddComponent implements OnInit {
     }
     this.dataModel.LinkDepartemenId = model.Id;
   }
-  
+
 }
