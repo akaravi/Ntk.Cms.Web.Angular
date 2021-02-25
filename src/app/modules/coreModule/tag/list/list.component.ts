@@ -33,7 +33,7 @@ import { Subscription } from 'rxjs';
 export class TagListComponent implements OnInit {
 
   constructor(
-    private cmsApiStore : ntkCmsApiStoreService,
+    private cmsApiStore: ntkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private newsContentService: NewsContentService,
     private cmsToastrService: CmsToastrService,
@@ -72,13 +72,13 @@ export class TagListComponent implements OnInit {
   ];
   ngOnInit(): void {
     this.DataGetAll();
-    this.tokenInfo =  this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
-    this.cmsApiStoreSubscribe =  this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
+    this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
+    this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
     });
   }
-  cmsApiStoreSubscribe:Subscription;
+  cmsApiStoreSubscribe: Subscription;
   ngOnDestroy() {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
@@ -150,11 +150,10 @@ export class TagListComponent implements OnInit {
     this.filteModelContent = new FilterModel();
     this.categoryModelSelected = model;
     if (model && model.Id > 0) {
-      const aaa = {
-        PropertyName: 'LinkCategoryId',
-        IntValue: model.Id,
-      };
-      this.filteModelContent.Filters.push(aaa as FilterDataModel);
+      const aaa = new FilterDataModel();
+      aaa.PropertyName = 'LinkCategoryId';
+      aaa.Value = model.Id;
+      this.filteModelContent.Filters.push(aaa);
     } else {
       // this.optionsCategoryTree.childMethods.ActionSelectForce(0);
     }
@@ -176,16 +175,14 @@ export class TagListComponent implements OnInit {
       this.dataModelResult.Access == null ||
       !this.dataModelResult.Access.AccessAddRow
     ) {
-      const title = 'برروز خطا ';
-      const message = 'شما دسترسی برای اضافه کردن ندارید';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorAccessAdd();
       return;
     }
     this.router.navigate(['/news/content/add', this.categoryModelSelected.Id]);
   }
 
   onActionbuttonEditRow(model: NewsContentModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0){
+    if (!model || !model.Id || model.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای ویرایش انتخاب نشده است';
       this.cmsToastrService.toastr.error(message, title);
@@ -197,9 +194,7 @@ export class TagListComponent implements OnInit {
       this.dataModelResult.Access == null ||
       !this.dataModelResult.Access.AccessEditRow
     ) {
-      const title = 'برروز خطا ';
-      const message = 'شما دسترسی برای ویرایش ندارید';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorAccessEdit();
       return;
     }
     this.router.navigate(['/news/content/edit', this.tableRowSelected.Id]);
@@ -218,9 +213,7 @@ export class TagListComponent implements OnInit {
       this.dataModelResult.Access == null ||
       !this.dataModelResult.Access.AccessDeleteRow
     ) {
-      const title = 'برروز خطا ';
-      const message = 'شما دسترسی برای حذف ندارید';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorAccessDelete();
       return;
     }
     const dialogRef = this.dialog.open(TagAddComponent);

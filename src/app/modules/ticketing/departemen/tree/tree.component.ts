@@ -22,6 +22,10 @@ import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { TicketingDepartemenDeleteComponent } from '../delete/delete.component';
+import { MatDialog } from '@angular/material/dialog';
+import { TicketingDepartemenEditComponent } from '../edit/edit.component';
+import { TicketingDepartemenAddComponent } from '../add/add.component';
 
 
 @Component({
@@ -36,7 +40,7 @@ export class TicketingDepartemenTreeComponent implements OnInit {
     public coreEnumService: CoreEnumService,
     public categoryService: TicketingDepartemenService,
     private router: Router,
-
+    public dialog: MatDialog
   ) {
   }
   dataModelSelect: TicketingDepartemenModel = new TicketingDepartemenModel();
@@ -105,8 +109,14 @@ export class TicketingDepartemenTreeComponent implements OnInit {
   }
 
   onActionAdd(): void {
-    this.router.navigate(['/application/source/add']);
-
+    const dialogRef = this.dialog.open(TicketingDepartemenAddComponent, {
+      data: {  }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.dialogChangedDate) {
+        this.DataGetAll();
+      }
+    });
   }
 
   onActionEdit(): void {
@@ -120,7 +130,14 @@ export class TicketingDepartemenTreeComponent implements OnInit {
       this.cmsToastrService.toastr.error(message, title);
       return;
     }
-    this.router.navigate(['/application/source/edit/', id]);
+    const dialogRef = this.dialog.open(TicketingDepartemenEditComponent, {
+      data: { id: id }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.dialogChangedDate) {
+        this.DataGetAll();
+      }
+    });
   }
 
   onActionDelete(): void {
@@ -135,7 +152,13 @@ export class TicketingDepartemenTreeComponent implements OnInit {
       this.cmsToastrService.toastr.error(message, title);
       return;
     }
-    this.router.navigate(['/application/source/delete/', id]);
-
+    const dialogRef = this.dialog.open(TicketingDepartemenDeleteComponent, {
+      data: { id: id }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.dialogChangedDate) {
+        this.DataGetAll();
+      }
+    });
   }
 }

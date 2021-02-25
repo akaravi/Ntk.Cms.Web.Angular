@@ -51,9 +51,9 @@
           <mat-cell *matCellDef="let row"> <i [ngClass]="row.RecordStatus|statusClass" ></i> </mat-cell>
         </ng-container>
         <!-- Question Column -->
-        <ng-container matColumnDef="Question">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> سوال </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.Question}} </mat-cell>
+        <ng-container matColumnDef="Title">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> عنوان </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.Title}} </mat-cell>
         </ng-container>
 
         <!-- Action Column -->

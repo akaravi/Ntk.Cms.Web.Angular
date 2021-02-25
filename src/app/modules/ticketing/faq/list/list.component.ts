@@ -26,6 +26,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
 import { TicketingFaqEditComponent } from '../edit/edit.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { TicketingFaqAddComponent } from '../add/add.component';
 
 @Component({
   selector: 'app-application-app-list',
@@ -165,7 +166,8 @@ export class TicketingFaqListComponent implements OnInit {
 
 
   onActionbuttonNewRow(): void {
-    if ((this.categoryModelSelected == null && this.categoryModelSelected.Id == 0) && (
+    if (this.categoryModelSelected == null &&
+      (this.categoryModelSelected && this.categoryModelSelected.Id == 0) && (
       this.requestDepartemenId == null ||
       this.requestDepartemenId === 0)
     ) {
@@ -179,16 +181,14 @@ export class TicketingFaqListComponent implements OnInit {
       this.dataModelResult.Access == null ||
       !this.dataModelResult.Access.AccessAddRow
     ) {
-      const title = 'برروز خطا ';
-      const message = 'شما دسترسی برای اضافه کردن ندارید';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorAccessAdd();
       return;
     }
     var parentId: number = this.requestDepartemenId;
-    if (this.categoryModelSelected.Id > 0) {
+    if (this.categoryModelSelected &&this.categoryModelSelected.Id > 0) {
       parentId = this.categoryModelSelected.Id;
     }
-    const dialogRef = this.dialog.open(TicketingFaqEditComponent, {
+    const dialogRef = this.dialog.open(TicketingFaqAddComponent, {
       data: { requestParentId: parentId }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -226,9 +226,7 @@ export class TicketingFaqListComponent implements OnInit {
       this.dataModelResult.Access == null ||
       !this.dataModelResult.Access.AccessEditRow
     ) {
-      const title = 'برروز خطا ';
-      const message = 'شما دسترسی برای ویرایش ندارید';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorAccessEdit();
       return;
     }
 
@@ -257,9 +255,7 @@ export class TicketingFaqListComponent implements OnInit {
       this.dataModelResult.Access == null ||
       !this.dataModelResult.Access.AccessDeleteRow
     ) {
-      const title = 'برروز خطا ';
-      const message = 'شما دسترسی برای حذف ندارید';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorAccessDelete();
       return;
     }
     const title = 'لطفا تایید کنید...';
@@ -309,7 +305,7 @@ export class TicketingFaqListComponent implements OnInit {
     this.tableRowSelected = row;
   }
   onActionBackToParent(): void {
-    this.router.navigate(['/application/app/']);
+    this.router.navigate(['/ticketing/departemen/']);
   }
 
 }

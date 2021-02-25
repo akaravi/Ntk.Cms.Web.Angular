@@ -5,6 +5,9 @@ import { TicketingDepartemenListComponent } from './departemen/list/list.compone
 import { TicketingDepartemenEditComponent } from './departemen/edit/edit.component';
 import { TicketingFaqListComponent } from './faq/list/list.component';
 import { TicketingFaqEditComponent } from './faq/edit/edit.component';
+import { TicketingTaskEditComponent } from './task/edit/edit.component';
+import { TicketingTaskListComponent } from './task/list/list.component';
+import { TicketingTemplateListComponent } from './template/list/list.component';
 
 
 
@@ -26,15 +29,33 @@ const routes: Routes = [
         component: TicketingDepartemenEditComponent
       },
       {
-        path:'faq',
-        component:TicketingFaqListComponent
-      },{
-        path:'faq/add',
-        component:TicketingFaqEditComponent
+        path: 'faq',
+        component: TicketingFaqListComponent
+      },
+      {
+        path: 'faq/:DepartemenId',
+        component: TicketingFaqListComponent
       }
-      ,{
-        path:'faq/edit/:id',
-        component:TicketingFaqEditComponent
+      , {
+        path: 'template',
+        component: TicketingTemplateListComponent
+      },
+      {
+        path: 'template/:DepartemenId',
+        component: TicketingTemplateListComponent
+      }
+      ,
+      {
+        path: 'task',
+        component: TicketingTaskListComponent
+      },
+      {
+        path: 'task/:DepartemenId',
+        component: TicketingTaskListComponent
+      }
+      , {
+        path: 'task/edit/:id',
+        component: TicketingTaskEditComponent
       }
       // {
       //   path: 'vote',

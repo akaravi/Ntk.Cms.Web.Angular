@@ -4,7 +4,7 @@
             <app-progress-spinner [options]="loading"> </app-progress-spinner>
             <div *ngIf="!loading.display" class="form-body">
                 <h4 class="form-section mb-8">
-                    <i class="ft-user"></i> {{ formInfo.FormTitle }}
+                    <i class="ft-user"></i> {{ formInfo.FormQuestion }}
                 </h4>
 
                 <div>
@@ -15,7 +15,7 @@
                             <mat-option *ngFor="
                 let item of dataModelEnumRecordStatusResult.ListItems;
                 index as i
-              " [value]="item.Value">{{ item.Description }}</mat-option>
+              " [value]="item.Value">{{ item.Answer }}</mat-option>
                         </mat-select>
                         <mat-hint align="end">انتخاب وضعیت این محتوا</mat-hint>
                         <mat-error *ngIf="RecordStatus.errors?.required">
@@ -24,29 +24,19 @@
                     </mat-form-field>
                     <mat-form-field class="example-full-width">
                         <mat-label>عنوان</mat-label>
-                        <input matInput [(ngModel)]="dataModel.Title" name="dataModel.Title" #Title type="text"
-                            placeholder="عنوان" minlength="3" maxlength="100" required />
-                        <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
-                            (click)="dataModel.Title = ''">close</mat-icon>
+                        <input matInput [(ngModel)]="dataModel.Question" name="dataModel.Question" #Question type="text"
+                            placeholder="عنوان" minlength="3" maxlength="1000" required />
+                        <mat-icon matSuffix *ngIf="dataModel.Question" matSuffix mat-icon-button aria-label="Clear"
+                            (click)="dataModel.Question = ''">close</mat-icon>
                         <mat-icon matSuffix>mode_edit</mat-icon>
-                        <mat-hint align="end">{{ Title.value.length }} / 100</mat-hint>
-                        <mat-error *ngIf="Title.errors?.required">
-                            Title is <strong>required</strong>
+                        <mat-hint align="end">{{ Question.value.length }} / 1000</mat-hint>
+                        <mat-error *ngIf="Question.errors?.required">
+                            Question is <strong>required</strong>
                         </mat-error>
                     </mat-form-field>
 
-                    <mat-form-field class="example-full-width">
-                        <mat-label>توضیحات</mat-label>
-                        <textarea matInput [(ngModel)]="dataModel.Description" name="dataModel.Description" #Description
-                            type="text" placeholder="توضیحات" minlength="1" maxlength="500" required rows=5></textarea>
-                        <mat-icon matSuffix *ngIf="dataModel.Description" matSuffix mat-icon-button aria-label="Clear"
-                            (click)="dataModel.Description = ''">close</mat-icon>
-                        <mat-icon matSuffix>mode_edit</mat-icon>
-                        <mat-hint align="end">{{ Description.value.length }} / 500</mat-hint>
-                        <mat-error *ngIf="Description.errors?.required">
-                            Description is <strong>required</strong>
-                        </mat-error>
-                    </mat-form-field>
+                    <angular-editor [placeholder]="'Enter text here...'" [config]="publicHelper.editorConfig"
+                        [(ngModel)]="dataModel.Answer" name="dataModel.Answer"></angular-editor>
 
                     <mat-form-field class="example-full-width">
                         <img *ngIf="dataModel?.LinkMainImageIdSrc?.length>0" style="vertical-align:middle;" aria-hidden
@@ -64,7 +54,22 @@
                         [selectFileType]="selectFileTypeMainImage" [isPopup]="true" [(openForm)]="fileManagerOpenForm"
                         [tree]="fileManagerTree" [openFilemanagerButtonLabelKey]="'select'"
                         [openFilemanagerButtonView]="false"></cms-file-manager>
-
+                    <!-- TABLE  -->
+                    <p>لیست فایل های پیوست</p>
+                    <table>
+                        <tr>
+                            <td>شناسه فایل</td>
+                            <td> لینک دانلود</td>
+                            <td>حذف</td>
+                        </tr>
+                         <tr *ngFor="let item of dataFileModel | keyvalue">
+                            <td>{{item.key}}</td>
+                            <td>{{item.value}}</td>
+                            <td><button (click)="onActionFileSelectedRemove(item.key)" type="button" class="btn btn-danger  ml-2">حذف</button></td>
+                        </tr> 
+                    
+                    </table>
+                    <!-- TABLE  -->
                 </div>
             </div>
             <div class="form-actions">

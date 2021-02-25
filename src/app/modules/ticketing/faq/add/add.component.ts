@@ -31,14 +31,14 @@ import { ComponentActionEnum } from 'src/app/core/helpers/model/component-action
 
 @Component({
   selector: 'app-ticketing-faq-add',
-  templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.scss']
+  templateUrl: './add.component.html',
+  styleUrls: ['./add.component.scss']
 })
-export class TicketingFaqEditComponent implements OnInit {
-  requestId = 0;
+export class TicketingFaqAddComponent implements OnInit {
+  requestParentId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialogRef: MatDialogRef<TicketingFaqEditComponent>,
+    private dialogRef: MatDialogRef<TicketingFaqAddComponent>,
     private changeDetectorRef: ChangeDetectorRef,
     private publicHelper: PublicHelper,
     public coreEnumService: CoreEnumService,
@@ -46,7 +46,7 @@ export class TicketingFaqEditComponent implements OnInit {
     private cmsToastrService: CmsToastrService
   ) {
     if (data) {
-      this.requestId = +data.id || 0;
+      this.requestParentId = +data.parentId || 0;
     }
 
     this.fileManagerTree = new TreeModel();
@@ -76,16 +76,8 @@ export class TicketingFaqEditComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-    if (this.requestId > 0) {
-      this.formInfo.FormTitle = 'ویرایش  دسته بندی';
-      this.DataGetOneContent();
-    } else {
-      this.cmsToastrService.typeErrorComponentAction();
-      this.dialogRef.close({ dialogChangedDate: false });
-      return;
-    }
 
-
+      this.formInfo.FormTitle = 'ثبت محتوای جدید';
     this.getEnumRecordStatus();
   }
 
@@ -97,33 +89,25 @@ export class TicketingFaqEditComponent implements OnInit {
     });
   }
 
-  DataGetOneContent(): void {
-    if (this.requestId <= 0) {
-      this.cmsToastrService.typeErrorEditRowIsNull();
-      return;
-    }
-
-    this.formInfo.FormAlert = 'در دریافت ارسال اطلاعات از سرور';
+  DataAddContent(): void {
+    this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.ticketingFaqService.ServiceGetOneById(this.requestId).subscribe(
+    if (this.requestParentId > 0) {
+      this.dataModel.LinkTicketingDepartemenId = this.requestParentId;
+    }
+    this.dataModel.LinkFileIds = '';
+    if (this.dataFileModel) {
+      this.dataModel.LinkFileIds = this.dataFileModel.keys.toString();
+    }
+    this.ticketingFaqService.ServiceAdd(this.dataModel).subscribe(
       (next) => {
-        this.dataModel = next.Item;
+        this.formInfo.FormAllowSubmit = true;
+        this.dataModelResult = next;
         if (next.IsSuccess) {
-          this.formInfo.FormTitle = this.formInfo.FormTitle + ' ' + next.Item.Question;
-          this.formInfo.FormAlert = '';
-          /**
-           * check file attach list
-           */
-          if (this.dataModel.LinkFileIds && this.dataModel.LinkFileIds.length > 0) {
-            this.dataModel.LinkFileIds.split(',').forEach((element, index) => {
-              var link = '';
-              if (this.dataModel.LinkFileIds.length >= this.dataModel.LinkFileIds.length) {
-                link = this.dataModel.LinkFileIds[index]
-              }
-              this.dataFileModel.set(+element, link);
-            });
-          }
+          this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
+          this.cmsToastrService.typeSuccessAdd();
+          this.dialogRef.close({ dialogChangedDate: true });
         } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
@@ -131,12 +115,12 @@ export class TicketingFaqEditComponent implements OnInit {
         this.loading.display = false;
       },
       (error) => {
+        this.formInfo.FormAllowSubmit = true;
         this.cmsToastrService.typeError(error);
         this.loading.display = false;
       }
     );
   }
-
   DataEditContent(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
@@ -172,10 +156,9 @@ export class TicketingFaqEditComponent implements OnInit {
       return;
     }
     this.formInfo.FormAllowSubmit = false;
-
-    this.DataEditContent();
-
-
+    
+      this.DataAddContent();
+    
   }
   onFormCancel(): void {
     this.dialogRef.close({ dialogChangedDate: false });

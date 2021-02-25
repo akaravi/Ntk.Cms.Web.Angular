@@ -160,9 +160,7 @@ export class ApplicationSourceListComponent implements OnInit {
       this.dataModelResult.Access == null ||
       !this.dataModelResult.Access.AccessAddRow
     ) {
-      const title = 'برروز خطا ';
-      const message = 'شما دسترسی برای اضافه کردن ندارید';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorAccessAdd();
       return;
     }
     this.router.navigate(['/application/source/add/']);
@@ -184,8 +182,7 @@ export class ApplicationSourceListComponent implements OnInit {
       !this.dataModelResult.Access.AccessEditRow
     ) {
       const title = 'برروز خطا ';
-      const message = 'شما دسترسی برای ویرایش ندارید';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorAccessEdit();
       return;
     }
     this.router.navigate(['/application/source/edit/', this.tableRowSelected.Id]);
@@ -204,9 +201,7 @@ export class ApplicationSourceListComponent implements OnInit {
       this.dataModelResult.Access == null ||
       !this.dataModelResult.Access.AccessDeleteRow
     ) {
-      const title = 'برروز خطا ';
-      const message = 'شما دسترسی برای حذف ندارید';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorAccessDelete();
       return;
     }
     // const dialogRef = this.dialog.open(NewsCommentDeleteComponent, {

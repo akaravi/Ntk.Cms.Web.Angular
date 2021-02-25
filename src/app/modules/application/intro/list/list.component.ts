@@ -179,9 +179,7 @@ export class ApplicationIntroListComponent implements OnInit {
       this.dataModelResult.Access == null ||
       !this.dataModelResult.Access.AccessAddRow
     ) {
-      const title = 'برروز خطا ';
-      const message = 'شما دسترسی برای اضافه کردن ندارید';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorAccessAdd();
       return;
     }
     this.router.navigate(['/application/intro/', this.requestApplicationId]);
@@ -202,9 +200,7 @@ export class ApplicationIntroListComponent implements OnInit {
       this.dataModelResult.Access == null ||
       !this.dataModelResult.Access.AccessEditRow
     ) {
-      const title = 'برروز خطا ';
-      const message = 'شما دسترسی برای ویرایش ندارید';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorAccessEdit();
       return;
     }
     this.router.navigate(['/application/intro/edit/', this.tableRowSelected]);
@@ -222,9 +218,7 @@ export class ApplicationIntroListComponent implements OnInit {
       this.dataModelResult.Access == null ||
       !this.dataModelResult.Access.AccessDeleteRow
     ) {
-      const title = 'برروز خطا ';
-      const message = 'شما دسترسی برای حذف ندارید';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorAccessDelete();
       return;
     }
     this.router.navigate(['/application/intro/delete/', this.tableRowSelected]);

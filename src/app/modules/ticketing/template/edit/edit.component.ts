@@ -5,8 +5,8 @@ import { MatStepper } from '@angular/material/stepper';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   AccessModel, ApplicationEnumService,
-  TicketingFaqModel,
-  TicketingFaqService,
+  TicketingTemplateModel,
+  TicketingTemplateService,
   CoreEnumService,
   DataFieldInfoModel,
   EnumModel,
@@ -30,19 +30,19 @@ import { ComponentActionEnum } from 'src/app/core/helpers/model/component-action
 
 
 @Component({
-  selector: 'app-ticketing-faq-add',
+  selector: 'app-ticketing-template-add',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.scss']
 })
-export class TicketingFaqEditComponent implements OnInit {
+export class TicketingTemplateEditComponent implements OnInit {
   requestId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialogRef: MatDialogRef<TicketingFaqEditComponent>,
+    private dialogRef: MatDialogRef<TicketingTemplateEditComponent>,
     private changeDetectorRef: ChangeDetectorRef,
     private publicHelper: PublicHelper,
     public coreEnumService: CoreEnumService,
-    public ticketingFaqService: TicketingFaqService,
+    public ticketingTemplateService: TicketingTemplateService,
     private cmsToastrService: CmsToastrService
   ) {
     if (data) {
@@ -58,23 +58,14 @@ export class TicketingFaqEditComponent implements OnInit {
   formMatcher = new CmsFormsErrorStateMatcher();
 
   loading = new ProgressSpinnerModel();
-  dataModelResult: ErrorExceptionResult<TicketingFaqModel> = new ErrorExceptionResult<TicketingFaqModel>();
-  dataModel: TicketingFaqModel = new TicketingFaqModel();
+  dataModelResult: ErrorExceptionResult<TicketingTemplateModel> = new ErrorExceptionResult<TicketingTemplateModel>();
+  dataModel: TicketingTemplateModel = new TicketingTemplateModel();
   dataFileModel = new Map<number, string>();
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
 
-  fileManagerOpenForm = false;
-  onActionFileSelected(model: NodeInterface): void {
-    this.dataFileModel.set(model.id, model.downloadLinksrc);
-  }
-  onActionFileSelectedRemove(key: number): void {
-    if (this.dataFileModel.has(key)) {
-      this.dataFileModel.delete(key);
-    }
-  }
   ngOnInit(): void {
     if (this.requestId > 0) {
       this.formInfo.FormTitle = 'ویرایش  دسته بندی';
@@ -106,24 +97,13 @@ export class TicketingFaqEditComponent implements OnInit {
     this.formInfo.FormAlert = 'در دریافت ارسال اطلاعات از سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.ticketingFaqService.ServiceGetOneById(this.requestId).subscribe(
+    this.ticketingTemplateService.ServiceGetOneById(this.requestId).subscribe(
       (next) => {
         this.dataModel = next.Item;
         if (next.IsSuccess) {
-          this.formInfo.FormTitle = this.formInfo.FormTitle + ' ' + next.Item.Question;
+          this.formInfo.FormTitle = this.formInfo.FormTitle + ' ' + next.Item.Title;
           this.formInfo.FormAlert = '';
-          /**
-           * check file attach list
-           */
-          if (this.dataModel.LinkFileIds && this.dataModel.LinkFileIds.length > 0) {
-            this.dataModel.LinkFileIds.split(',').forEach((element, index) => {
-              var link = '';
-              if (this.dataModel.LinkFileIds.length >= this.dataModel.LinkFileIds.length) {
-                link = this.dataModel.LinkFileIds[index]
-              }
-              this.dataFileModel.set(+element, link);
-            });
-          }
+          
         } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
@@ -141,11 +121,8 @@ export class TicketingFaqEditComponent implements OnInit {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.dataModel.LinkFileIds = '';
-    if (this.dataFileModel) {
-      this.dataModel.LinkFileIds = this.dataFileModel.keys.toString();
-    }
-    this.ticketingFaqService.ServiceEdit(this.dataModel).subscribe(
+   
+    this.ticketingTemplateService.ServiceEdit(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormAllowSubmit = true;
         this.dataModelResult = next;

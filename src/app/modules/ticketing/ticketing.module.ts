@@ -12,6 +12,7 @@ import {
   TicketingDepartemenService,
   TicketingFaqService,
   TicketingTaskService,
+  TicketingTemplateService,
 } from 'ntk-cms-api';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -28,6 +29,13 @@ import { TicketingDepartemenEditComponent } from './departemen/edit/edit.compone
 import { TicketingFaqEditComponent } from './faq/edit/edit.component';
 import { TicketingFaqListComponent } from './faq/list/list.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { TicketingTaskListComponent } from './task/list/list.component';
+import { TicketingTaskEditComponent } from './task/edit/edit.component';
+import { TicketingDepartemenAddComponent } from './departemen/add/add.component';
+import { TicketingTemplateListComponent } from './template/list/list.component';
+import { TicketingFaqAddComponent } from './faq/add/add.component';
+import { TicketingTemplateAddComponent } from './template/add/add.component';
+import { TicketingTemplateEditComponent } from './template/edit/edit.component';
 
 
 
@@ -35,13 +43,19 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
   declarations: [
     TicketingComponent,
     TicketingDepartemenListComponent,
-    
+    TicketingDepartemenAddComponent,
     TicketingDepartemenEditComponent,
     TicketingDepartemenDeleteComponent,
     TicketingDepartemenSelectorComponent,
     TicketingDepartemenTreeComponent,
+    TicketingFaqAddComponent,
     TicketingFaqEditComponent,
-    TicketingFaqListComponent
+    TicketingFaqListComponent,
+    TicketingTemplateAddComponent,
+    TicketingTemplateEditComponent,
+    TicketingTemplateListComponent,
+    TicketingTaskListComponent,
+    TicketingTaskEditComponent
   ],
   imports: [
     CommonModule,
@@ -63,6 +77,7 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
     TicketingDepartemenOperatorService,
     TicketingTaskService,
     TicketingFaqService,
+    TicketingTemplateService,
     CmsConfirmationDialogService
   ]
 })
