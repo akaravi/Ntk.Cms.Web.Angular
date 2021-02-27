@@ -35,7 +35,8 @@ git config --global core.ignorecase false
 ng update --next @angular/cli --force
 npm install typescript@latest
 =========================================
-ng build  --prod
+ng build --prod
+ng build --prod --build-optimizer
 ng serve --disable-host-check
 ./ngrok http 4200 -host-header=rewrite localhost:4200
 ./ngrok http  -host-header=rewrite localhost:4200
