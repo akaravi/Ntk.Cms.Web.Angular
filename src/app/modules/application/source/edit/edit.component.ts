@@ -18,7 +18,7 @@ import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { NodeInterface, TreeModel } from 'ntk-cms-filemanager';
 import { retry } from 'rxjs/operators';
-import { CmsStoreService } from 'src/app/core/reducers/cmsStoreService';
+import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 
 @Component({
   selector: 'app-aplication-source-edit',

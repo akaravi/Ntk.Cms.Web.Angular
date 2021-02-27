@@ -12,7 +12,7 @@ import { environment } from '../environments/environment';
 import { SplashScreenService } from './core/partials/layout/splash-screen/splash-screen.service';
 import { Subscription } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
-import { CmsStoreService } from './core/reducers/cmsStoreService';
+import { CmsStoreService } from './core/reducers/cmsStore.service';
 
 @Component({
   selector: 'app-root',

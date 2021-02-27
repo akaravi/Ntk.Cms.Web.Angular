@@ -24,7 +24,7 @@ import {
   NodeInterface,
 } from 'ntk-cms-filemanager';
 import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
-import { CmsStoreService } from 'src/app/core/reducers/cmsStoreService';
+import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 
 @Component({
   selector: 'app-news-category-add',

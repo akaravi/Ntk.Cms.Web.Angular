@@ -14,7 +14,7 @@ import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { TreeModel } from 'ntk-cms-filemanager';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
-import { CmsStoreService } from 'src/app/core/reducers/cmsStoreService';
+import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 
 
 @Component({
@@ -89,7 +89,7 @@ export class TicketingTemplateEditComponent implements OnInit {
         if (next.IsSuccess) {
           this.formInfo.FormTitle = this.formInfo.FormTitle + ' ' + next.Item.Title;
           this.formInfo.FormAlert = '';
-          
+
         } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
@@ -107,7 +107,7 @@ export class TicketingTemplateEditComponent implements OnInit {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-   
+
     this.ticketingTemplateService.ServiceEdit(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormAllowSubmit = true;

@@ -23,7 +23,7 @@ import {
   NodeInterface,
 } from 'ntk-cms-filemanager';
 import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
-import { CmsStoreService } from 'src/app/core/reducers/cmsStoreService';
+import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 
 @Component({
   selector: 'app-polling-category-add',
@@ -82,7 +82,7 @@ export class PollingCategoryAddComponent implements OnInit {
     }
   }
 
-  
+
   DataAddContent(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
@@ -111,7 +111,7 @@ export class PollingCategoryAddComponent implements OnInit {
       }
     );
   }
-  
+
   onFormSubmit(): void {
     if (!this.formGroup.valid) {
       return;

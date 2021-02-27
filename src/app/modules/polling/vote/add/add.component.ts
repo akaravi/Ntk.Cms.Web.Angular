@@ -16,7 +16,7 @@ import { FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
-import { CmsStoreService } from 'src/app/core/reducers/cmsStoreService';
+import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 
 
 @Component({
@@ -55,7 +55,7 @@ export class PollingVoteAddComponent implements OnInit {
   openFormFileManager = false;
 
   ngOnInit(): void {
-    
+
     this.getEnumRecordStatus();
   }
 
@@ -95,15 +95,15 @@ export class PollingVoteAddComponent implements OnInit {
       }
     );
   }
-  
+
   onFormSubmit(): void {
     if (!this.formGroup.valid) {
       return;
     }
     this.formInfo.FormAllowSubmit = false;
-    
+
       this.DataAddContent();
-    
+
   }
   onFormCancel(): void {
     this.dialogRef.close({ dialogChangedDate: false });

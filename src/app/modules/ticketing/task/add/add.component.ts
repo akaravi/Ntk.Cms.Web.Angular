@@ -20,7 +20,7 @@ import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { NodeInterface, TreeModel } from 'ntk-cms-filemanager';
 import { PoinModel } from 'src/app/core/models/pointModel';
 import { Map as leafletMap } from 'leaflet';
-import { CmsStoreService } from 'src/app/core/reducers/cmsStoreService';
+import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 
 @Component({
   selector: 'app-aplication-intro-add',
@@ -78,7 +78,7 @@ export class TicketingTaskAddComponent implements OnInit {
       this.toasterService.typeErrorFormInvalid();
       return;
     }
-   
+
     this.DataAddContent();
   }
 
@@ -140,7 +140,7 @@ export class TicketingTaskAddComponent implements OnInit {
       // }
     }
   }
- 
+
   onActionBackToParent(): void {
     this.router.navigate(['/application/app/']);
   }
@@ -148,7 +148,7 @@ export class TicketingTaskAddComponent implements OnInit {
     // this.dataModel.LinkMainImageId = model.id;
     // this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
   }
- 
+
   onActionSelectSource(model: ApplicationSourceModel | null): void {
     if (!model || model.Id <= 0) {
       this.toasterService.toastr.error(
@@ -159,5 +159,5 @@ export class TicketingTaskAddComponent implements OnInit {
     }
     this.dataModel.LinkTicketingDepartemenId = model.Id;
   }
- 
+
 }

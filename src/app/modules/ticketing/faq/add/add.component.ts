@@ -13,7 +13,7 @@ import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { NodeInterface, TreeModel } from 'ntk-cms-filemanager';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
-import { CmsStoreService } from 'src/app/core/reducers/cmsStoreService';
+import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 
 
 @Component({
@@ -141,9 +141,9 @@ export class TicketingFaqAddComponent implements OnInit {
       return;
     }
     this.formInfo.FormAllowSubmit = false;
-    
+
       this.DataAddContent();
-    
+
   }
   onFormCancel(): void {
     this.dialogRef.close({ dialogChangedDate: false });

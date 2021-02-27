@@ -53,7 +53,6 @@ export function getHighlightLanguages(): any {
     SplashScreenModule,
     InlineSVGModule.forRoot(),
     CmsStoreModule.forRoot(),
-    
     NgbModule,
     HighlightModule,
     ClipboardModule,
@@ -75,5 +74,5 @@ export function getHighlightLanguages(): any {
   bootstrap: [AppComponent]
 })
 export class AppModule {
- 
+
 }

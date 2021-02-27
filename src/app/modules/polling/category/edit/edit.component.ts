@@ -23,7 +23,7 @@ import {
   NodeInterface,
 } from 'ntk-cms-filemanager';
 import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
-import { CmsStoreService } from 'src/app/core/reducers/cmsStoreService';
+import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 
 @Component({
   selector: 'app-polling-category-edit',
@@ -32,7 +32,7 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStoreService';
 })
 export class PollingCategoryEditComponent implements OnInit {
   requestId = 0;
-  
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
@@ -117,7 +117,7 @@ export class PollingCategoryEditComponent implements OnInit {
       }
     );
   }
-  
+
   DataEditContent(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
@@ -149,9 +149,9 @@ export class PollingCategoryEditComponent implements OnInit {
       return;
     }
     this.formInfo.FormAllowSubmit = false;
-   
+
       this.DataEditContent();
-   
+
   }
   onFormCancel(): void {
     this.dialogRef.close({ dialogChangedDate: false });

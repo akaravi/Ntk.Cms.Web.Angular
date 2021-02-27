@@ -17,7 +17,7 @@ import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { NodeInterface, TreeModel } from 'ntk-cms-filemanager';
-import { CmsStoreService } from 'src/app/core/reducers/cmsStoreService';
+import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 
 
 @Component({
@@ -81,7 +81,7 @@ export class TicketingDepartemenOperatorEditComponent implements OnInit {
 
       return;
     }
-   
+
     this.DataEditContent();
   }
 
@@ -117,7 +117,7 @@ export class TicketingDepartemenOperatorEditComponent implements OnInit {
           this.formInfo.FormAllowSubmit = true;
 
           if (next.IsSuccess) {
-           
+
           } else {
             this.toasterService.typeErrorGetOne(next.ErrorMessage);
           }
@@ -169,7 +169,7 @@ export class TicketingDepartemenOperatorEditComponent implements OnInit {
       // }
     }
   }
- 
+
   onActionBackToParent(): void {
     this.router.navigate(['/application/app/']);
   }
@@ -177,7 +177,7 @@ export class TicketingDepartemenOperatorEditComponent implements OnInit {
     this.dataModel.LinkMainImageId = model.id;
     this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
   }
-  
+
   onActionSelectSource(model: ApplicationSourceModel | null): void {
     if (!model || model.Id <= 0) {
       this.toasterService.toastr.error(
@@ -194,5 +194,5 @@ export class TicketingDepartemenOperatorEditComponent implements OnInit {
     }
 
   }
-  
+
 }

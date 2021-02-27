@@ -1,5 +1,5 @@
-import { ModuleWithProviders, NgModule } from "@angular/core";
-import { CmsStoreService } from "./cmsStoreService";
+import { ModuleWithProviders, NgModule } from '@angular/core';
+import { CmsStoreService } from './cmsStore.service';
 
 @NgModule({
   declarations: [],
@@ -8,7 +8,7 @@ import { CmsStoreService } from "./cmsStoreService";
   providers: [CmsStoreService]
 })
 export class CmsStoreModule {
-  //**karavi:need This For Singelton Stor */
+  // **karavi:need This For Singelton Stor */
   public static forRoot(): ModuleWithProviders<CmsStoreModule> {
     return {
       ngModule: CmsStoreModule,

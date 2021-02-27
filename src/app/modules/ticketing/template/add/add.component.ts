@@ -13,7 +13,7 @@ import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
-import { CmsStoreService } from 'src/app/core/reducers/cmsStoreService';
+import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 
 
 @Component({
@@ -68,7 +68,7 @@ export class TicketingTemplateAddComponent implements OnInit {
     if (this.requestParentId > 0) {
       this.dataModel.LinkTicketingDepartemenId = this.requestParentId;
     }
-    
+
     this.ticketingTemplateService.ServiceAdd(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormAllowSubmit = true;
@@ -94,7 +94,7 @@ export class TicketingTemplateAddComponent implements OnInit {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    
+
     this.ticketingTemplateService.ServiceEdit(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormAllowSubmit = true;
@@ -122,9 +122,9 @@ export class TicketingTemplateAddComponent implements OnInit {
       return;
     }
     this.formInfo.FormAllowSubmit = false;
-    
+
       this.DataAddContent();
-    
+
   }
   onFormCancel(): void {
     this.dialogRef.close({ dialogChangedDate: false });

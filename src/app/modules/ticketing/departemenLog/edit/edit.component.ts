@@ -19,7 +19,7 @@ import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { TreeModel } from 'ntk-cms-filemanager';
 import { PoinModel } from 'src/app/core/models/pointModel';
 import { Map as leafletMap } from 'leaflet';
-import { CmsStoreService } from 'src/app/core/reducers/cmsStoreService';
+import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 
 
 @Component({
@@ -79,7 +79,7 @@ export class TicketingDepartemenLogEditComponent implements OnInit {
       this.toasterService.typeErrorFormInvalid();
       return;
     }
- 
+
     this.DataEditContent();
   }
 
@@ -116,7 +116,7 @@ export class TicketingDepartemenLogEditComponent implements OnInit {
 
           if (next.IsSuccess) {
             this.dataModel = next.Item;
-            
+
           } else {
             this.toasterService.typeErrorGetOne(next.ErrorMessage);
           }
@@ -168,9 +168,9 @@ export class TicketingDepartemenLogEditComponent implements OnInit {
       // }
     }
   }
-  
+
   onActionBackToParent(): void {
     this.router.navigate(['/application/app/']);
   }
-  
+
 }
