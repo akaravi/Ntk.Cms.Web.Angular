@@ -35,7 +35,7 @@ import { CoreUserAddComponent } from '../add/add.component';
 })
 export class CoreUserTreeComponent implements OnInit {
   constructor(
-    private cmsApiStore : ntkCmsApiStoreService,
+    private cmsApiStore: ntkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
     public coreEnumService: CoreEnumService,
     public categoryService: CoreUserService,
@@ -60,11 +60,11 @@ export class CoreUserTreeComponent implements OnInit {
 
   ngOnInit(): void {
     this.DataGetAll();
-     this.cmsApiStoreSubscribe =  this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe(() => {
+    this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe(() => {
       this.DataGetAll();
     });
   }
-  cmsApiStoreSubscribe:Subscription;
+  cmsApiStoreSubscribe: Subscription;
   ngOnDestroy() {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
@@ -110,7 +110,7 @@ export class CoreUserTreeComponent implements OnInit {
 
   onActionAdd(): void {
     const dialogRef = this.dialog.open(CoreUserAddComponent, {
-      data: {  }
+      data: {}
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.dialogChangedDate) {

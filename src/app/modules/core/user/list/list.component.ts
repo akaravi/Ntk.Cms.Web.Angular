@@ -64,7 +64,11 @@ export class CoreUserListComponent implements OnInit {
     'LinkMainImageIdSrc',
     'Id',
     'RecordStatus',
-    'Title',
+    'Username',
+    'Email',
+    'Name',
+    'LastName',
+    'CompanyName',
     'Action'
   ];
 
@@ -164,7 +168,7 @@ export class CoreUserListComponent implements OnInit {
       return;
     }
     const dialogRef = this.dialog.open(CoreUserAddComponent, {
-      data: {  }
+      data: {}
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.dialogChangedDate) {

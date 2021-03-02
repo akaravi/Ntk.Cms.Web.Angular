@@ -38,7 +38,6 @@ import { CoreUserTreeComponent } from './tree/tree.component';
     SharedModule.forRoot(),
     AngularEditorModule,
     TagInputModule,
-    //ProgressSpinnerModule,
     CmsFileManagerModule
   ],
   providers: [

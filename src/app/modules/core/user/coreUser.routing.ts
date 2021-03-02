@@ -10,7 +10,7 @@ const routes: Routes = [
     component: CoreUserComponent,
     children: [
       {
-        path: 'content',
+        path: '',
         component: CoreUserListComponent
       },
       // {
