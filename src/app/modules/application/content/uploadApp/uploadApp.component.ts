@@ -5,6 +5,7 @@ import { FilePreviewModel } from 'ngx-awesome-uploader';
 import { ApplicationAppModel, ApplicationAppService, DataFieldInfoModel, FormInfoModel, UploadApplictionDtoModel } from 'ntk-cms-api';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-upload-app',
@@ -18,7 +19,9 @@ export class ApplicationAppUploadAppComponent implements OnInit {
               private toasterService: CmsToastrService,
               private publicHelper: PublicHelper
   ) {
+
   }
+  optionApiPath=environment.cmsServerConfig.configRouteUploadFileContent;
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
   formInfo: FormInfoModel = new FormInfoModel();
   dataModel = new UploadApplictionDtoModel();
