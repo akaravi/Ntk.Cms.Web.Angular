@@ -12,11 +12,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
       },
-      {
-        path: 'site',
-        loadChildren: () =>
-          import('../modules/core/site/coreSite.module').then((m) => m.CoreSiteModule),
-      },
+      // {
+      //   path: 'site',
+      //   loadChildren: () =>
+      //     import('../modules/core/site/coreSite.module').then((m) => m.CoreSiteModule),
+      // },
       {
         path: 'core',
         loadChildren: () =>

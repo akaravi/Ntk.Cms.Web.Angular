@@ -1,25 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard.component';
-import {TranslationService} from '../../core/i18n/translation.service';
-import {TranslateService} from '@ngx-translate/core';
-import {CoreSiteModule} from '../../modules/core/site/coreSite.module';
-import {DashboardsModule} from '../../core/partials/content/dashboards/dashboards.module';
-import {RouterModule} from '@angular/router';
+import { DashboardRouting } from './dashboard.routing';
+import { DashboardOneComponent } from './one/one.component';
+import { DashboardTwoComponent } from './two/two.component';
 
 
 @NgModule({
-  declarations: [DashboardComponent],
+  declarations: [DashboardComponent, DashboardOneComponent, DashboardTwoComponent],
   imports: [
     CommonModule,
-    RouterModule.forChild([
-      {
-        path: '',
-        component: DashboardComponent,
-      },
-    ]),
-    DashboardsModule,
-    CoreSiteModule
+    DashboardRouting
   ]
 })
 export class DashboardModule { }

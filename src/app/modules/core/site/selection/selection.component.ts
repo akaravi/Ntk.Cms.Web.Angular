@@ -53,7 +53,7 @@ export class SelectionComponent implements OnInit {
       this.coreAuthService.ServiceRenewToken(authModel).subscribe(
         (res) => {
           if (res.IsSuccess) {
-            this.cmsToastrService.typeSuccessSelected()
+            this.cmsToastrService.typeSuccessSelected();
             this.router.navigate(['/']);
           }
           else
