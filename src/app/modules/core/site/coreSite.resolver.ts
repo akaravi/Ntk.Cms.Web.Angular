@@ -4,7 +4,7 @@ import {CoreSiteService, FilterModel} from 'ntk-cms-api';
 import {Observable} from 'rxjs';
 
 @Injectable()
-export class SiteResolver implements Resolve<any> {
+export class CoreSiteResolver implements Resolve<any> {
 
     filterModel = new FilterModel();
 

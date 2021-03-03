@@ -1,10 +1,10 @@
 
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
-  CoreUserModel,
-  CoreUserService,
+  CoreSiteModel,
+  CoreSiteService,
   CoreAuthService,
   EnumSortType,
   ErrorExceptionResult,
@@ -22,22 +22,22 @@ import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/bas
 import { MatSort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
-import { CoreUserDeleteComponent } from '../delete/delete.component';
-import { CoreUserEditComponent } from '../edit/edit.component';
-import { CoreUserAddComponent } from '../add/add.component';
+import { CoreSiteDeleteComponent } from '../delete/delete.component';
+import { CoreSiteEditComponent } from '../edit/edit.component';
+import { CoreSiteAddComponent } from '../add/add.component';
 
 @Component({
-  selector: 'app-core-user-list',
+  selector: 'app-core-site-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class CoreUserListComponent implements OnInit {
-  constructor(private coreUserService: CoreUserService,
-    private cmsApiStore: ntkCmsApiStoreService,
-    public publicHelper: PublicHelper,
-    private cmsToastrService: CmsToastrService,
-    private router: Router,
-    public dialog: MatDialog) {
+export class CoreSiteListComponent implements OnInit , OnDestroy {
+  constructor(private coreSiteService: CoreSiteService,
+              private cmsApiStore: ntkCmsApiStoreService,
+              public publicHelper: PublicHelper,
+              private cmsToastrService: CmsToastrService,
+              private router: Router,
+              public dialog: MatDialog) {
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
@@ -49,32 +49,34 @@ export class CoreUserListComponent implements OnInit {
   tableContentSelected = [];
 
   filteModelContent = new FilterModel();
-  dataModelResult: ErrorExceptionResult<CoreUserModel> = new ErrorExceptionResult<CoreUserModel>();
+  dataModelResult: ErrorExceptionResult<CoreSiteModel> = new ErrorExceptionResult<CoreSiteModel>();
   optionsSearch: ComponentOptionSearchModel = new ComponentOptionSearchModel();
   optionsStatist: ComponentOptionStatistModel = new ComponentOptionStatistModel();
   optionsExport: ComponentOptionExportModel = new ComponentOptionExportModel();
   tokenInfo = new TokenInfoModel();
   loading = new ProgressSpinnerModel();
-  tableRowsSelected: Array<CoreUserModel> = [];
-  tableRowSelected: CoreUserModel = new CoreUserModel();
-  tableSource: MatTableDataSource<CoreUserModel> = new MatTableDataSource<CoreUserModel>();
+  tableRowsSelected: Array<CoreSiteModel> = [];
+  tableRowSelected: CoreSiteModel = new CoreSiteModel();
+  tableSource: MatTableDataSource<CoreSiteModel> = new MatTableDataSource<CoreSiteModel>();
 
 
   tabledisplayedColumns: string[] = [
-    'LinkMainImageIdSrc',
+    'MainImageSrc',
     'Id',
+    'linkCreatedBySiteId',
     'RecordStatus',
-    'Username',
-    'Email',
-    'Name',
-    'LastName',
-    'CompanyName',
+    'Title',
+    'SubDomain',
+    'Domain',
+    'CreatedDate',
+    'UpdatedDate',
     'Action'
   ];
 
 
   columnsToDisplay: string[] = ['Id', 'Writer'];
-  expandedElement: CoreUserModel | null;
+  expandedElement: CoreSiteModel | null;
+  cmsApiStoreSubscribe: Subscription;
 
   ngOnInit(): void {
     this.filteModelContent.SortColumn = 'Title';
@@ -85,19 +87,18 @@ export class CoreUserListComponent implements OnInit {
       this.tokenInfo = next;
     });
   }
-  cmsApiStoreSubscribe: Subscription;
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
   DataGetAll(): void {
     this.tableRowsSelected = [];
-    this.tableRowSelected = new CoreUserModel();
+    this.tableRowSelected = new CoreSiteModel();
 
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
 
-    this.coreUserService.ServiceGetAll(this.filteModelContent).subscribe(
+    this.coreSiteService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
           this.dataModelResult = next;
@@ -105,13 +106,13 @@ export class CoreUserListComponent implements OnInit {
           if (this.tokenInfo.UserAccessAdminAllowToAllData) {
             this.tabledisplayedColumns = this.publicHelper.listAddIfNotExist(
               this.tabledisplayedColumns,
-              'LinkSiteId',
+              'linkCreatedBySiteId',
               0
             );
           } else {
             this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
               this.tabledisplayedColumns,
-              'LinkSiteId'
+              'linkCreatedBySiteId'
             );
           }
 
@@ -167,7 +168,7 @@ export class CoreUserListComponent implements OnInit {
       this.cmsToastrService.typeErrorAccessAdd();
       return;
     }
-    const dialogRef = this.dialog.open(CoreUserAddComponent, {
+    const dialogRef = this.dialog.open(CoreSiteAddComponent, {
       data: {}
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -177,7 +178,7 @@ export class CoreUserListComponent implements OnInit {
     });
   }
 
-  onActionbuttonEditRow(model: CoreUserModel = this.tableRowSelected): void {
+  onActionbuttonEditRow(model: CoreSiteModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id === 0) {
       const title = 'برروز خطا ';
@@ -194,7 +195,7 @@ export class CoreUserListComponent implements OnInit {
       this.cmsToastrService.typeErrorAccessEdit();
       return;
     }
-    const dialogRef = this.dialog.open(CoreUserEditComponent, {
+    const dialogRef = this.dialog.open(CoreSiteEditComponent, {
       data: { id: this.tableRowSelected.Id }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -203,7 +204,7 @@ export class CoreUserListComponent implements OnInit {
       }
     });
   }
-  onActionbuttonDeleteRow(model: CoreUserModel = this.tableRowSelected): void {
+  onActionbuttonDeleteRow(model: CoreSiteModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای ویرایش انتخاب نشده است';
@@ -220,7 +221,7 @@ export class CoreUserListComponent implements OnInit {
       this.cmsToastrService.typeErrorAccessDelete();
       return;
     }
-    const dialogRef = this.dialog.open(CoreUserDeleteComponent, {
+    const dialogRef = this.dialog.open(CoreSiteDeleteComponent, {
       data: { id: this.tableRowSelected.Id }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -230,7 +231,7 @@ export class CoreUserListComponent implements OnInit {
     });
 
   }
-  onActionbuttonFaqList(model: CoreUserModel = this.tableRowSelected): void {
+  onActionbuttonFaqList(model: CoreSiteModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای نمایش انتخاب نشده است';
@@ -241,7 +242,7 @@ export class CoreUserListComponent implements OnInit {
 
     this.router.navigate(['/core/faq/', this.tableRowSelected.Id]);
   }
-  onActionbuttonTemplateList(model: CoreUserModel = this.tableRowSelected): void {
+  onActionbuttonTemplateList(model: CoreSiteModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای نمایش انتخاب نشده است';
@@ -252,7 +253,7 @@ export class CoreUserListComponent implements OnInit {
 
     this.router.navigate(['/core/template/', this.tableRowSelected.Id]);
   }
-  onActionbuttonGoToSiteList(model: CoreUserModel = this.tableRowSelected): void {
+  onActionbuttonGoToSiteList(model: CoreSiteModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای نمایش انتخاب نشده است';
@@ -261,7 +262,7 @@ export class CoreUserListComponent implements OnInit {
     }
     this.tableRowSelected = model;
 
-    this.router.navigate(['/core/siteuser/', this.tableRowSelected.Id]);
+    this.router.navigate(['/core/siteSite/', this.tableRowSelected.Id]);
   }
   onActionbuttonStatist(): void {
     this.optionsStatist.childMethods.runStatist(this.filteModelContent.Filters);
@@ -278,7 +279,7 @@ export class CoreUserListComponent implements OnInit {
     this.filteModelContent.Filters = model;
     this.DataGetAll();
   }
-  onActionTableRowSelect(row: CoreUserModel): void {
+  onActionTableRowSelect(row: CoreSiteModel): void {
     this.tableRowSelected = row;
   }
 

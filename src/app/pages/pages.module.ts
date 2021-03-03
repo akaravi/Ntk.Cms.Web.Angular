@@ -17,7 +17,7 @@ import {ExtrasModule} from '../core/partials/layout/extras/extras.module';
 import {TranslationModule} from '../core/i18n/translation.module';
 import {CoreModule} from '../core';
 import {SubheaderModule} from '../core/partials/layout/subheader/subheader.module';
-import {SiteModule} from '../modules/core/site/site.module';
+import {CoreSiteModule} from '../modules/core/site/coreSite.module';
 import {CoreAuthService, CoreCpMainMenuService} from 'ntk-cms-api';
 
 
@@ -44,7 +44,7 @@ import {CoreAuthService, CoreCpMainMenuService} from 'ntk-cms-api';
     NgbProgressbarModule,
     CoreModule,
     SubheaderModule,
-    SiteModule
+    CoreSiteModule
   ],
   providers: [
     CoreCpMainMenuService,

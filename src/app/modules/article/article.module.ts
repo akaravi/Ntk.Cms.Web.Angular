@@ -67,8 +67,6 @@ import { ArticleCategoryAddComponent } from './category/add/add.component';
     SharedModule.forRoot(),
     AngularEditorModule ,
     TagInputModule,
-
-    //ProgressSpinnerModule,
     CmsFileManagerModule
   ],
   providers: [

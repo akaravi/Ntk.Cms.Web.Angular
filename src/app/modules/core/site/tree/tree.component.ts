@@ -2,6 +2,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
 } from '@angular/core';
@@ -14,48 +15,49 @@ import {
   CoreEnumService,
   ErrorExceptionResult,
   FilterModel,
-  CoreUserModel,
-  CoreUserService,
+  CoreSiteModel,
+  CoreSiteService,
   ntkCmsApiStoreService,
 } from 'ntk-cms-api';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { CoreUserDeleteComponent } from '../delete/delete.component';
+import { CoreSiteDeleteComponent } from '../delete/delete.component';
 import { MatDialog } from '@angular/material/dialog';
-import { CoreUserEditComponent } from '../edit/edit.component';
-import { CoreUserAddComponent } from '../add/add.component';
+import { CoreSiteEditComponent } from '../edit/edit.component';
+import { CoreSiteAddComponent } from '../add/add.component';
 
 
 @Component({
-  selector: 'app-core-user-tree',
+  selector: 'app-core-site-tree',
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.scss'],
 })
-export class CoreUserTreeComponent implements OnInit {
+export class CoreSiteTreeComponent implements OnInit , OnDestroy{
   constructor(
     private cmsApiStore: ntkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
     public coreEnumService: CoreEnumService,
-    public categoryService: CoreUserService,
+    public categoryService: CoreSiteService,
     private router: Router,
     public dialog: MatDialog
   ) {
   }
-  dataModelSelect: CoreUserModel = new CoreUserModel();
-  dataModelResult: ErrorExceptionResult<CoreUserModel> = new ErrorExceptionResult<CoreUserModel>();
-  filteModel = new FilterModel();
-  loading = new ProgressSpinnerModel();
-  treeControl = new NestedTreeControl<CoreUserModel>(node => null);
-  dataSource = new MatTreeNestedDataSource<CoreUserModel>();
-  @Output() optionSelect = new EventEmitter();
-  @Input() optionReload = () => this.onActionReload();
-  @Input() set optionSelectForce(x: number | CoreUserModel) {
+  @Input() set optionSelectForce(x: number | CoreSiteModel) {
     this.onActionSelectForce(x);
   }
+  dataModelSelect: CoreSiteModel = new CoreSiteModel();
+  dataModelResult: ErrorExceptionResult<CoreSiteModel> = new ErrorExceptionResult<CoreSiteModel>();
+  filteModel = new FilterModel();
+  loading = new ProgressSpinnerModel();
+  treeControl = new NestedTreeControl<CoreSiteModel>(node => null);
+  dataSource = new MatTreeNestedDataSource<CoreSiteModel>();
+  @Output() optionSelect = new EventEmitter();
+  cmsApiStoreSubscribe: Subscription;
+  @Input() optionReload = () => this.onActionReload();
 
-  hasChild = (_: number, node: CoreUserModel) => false;
+  hasChild = (_: number, node: CoreSiteModel) => false;
 
 
   ngOnInit(): void {
@@ -64,8 +66,7 @@ export class CoreUserTreeComponent implements OnInit {
       this.DataGetAll();
     });
   }
-  cmsApiStoreSubscribe: Subscription;
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
   DataGetAll(): void {
@@ -90,7 +91,7 @@ export class CoreUserTreeComponent implements OnInit {
       }
     );
   }
-  onActionSelect(model: CoreUserModel): void {
+  onActionSelect(model: CoreSiteModel): void {
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
   }
@@ -101,15 +102,15 @@ export class CoreUserTreeComponent implements OnInit {
     else {
       this.onActionSelect(null);
     }
-    this.dataModelSelect = new CoreUserModel();
+    this.dataModelSelect = new CoreSiteModel();
     this.DataGetAll();
   }
-  onActionSelectForce(id: number | CoreUserModel): void {
+  onActionSelectForce(id: number | CoreSiteModel): void {
 
   }
 
   onActionAdd(): void {
-    const dialogRef = this.dialog.open(CoreUserAddComponent, {
+    const dialogRef = this.dialog.open(CoreSiteAddComponent, {
       data: {}
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -130,8 +131,8 @@ export class CoreUserTreeComponent implements OnInit {
       this.cmsToastrService.toastr.error(message, title);
       return;
     }
-    const dialogRef = this.dialog.open(CoreUserEditComponent, {
-      data: { id: id }
+    const dialogRef = this.dialog.open(CoreSiteEditComponent, {
+      data: { id }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.dialogChangedDate) {
@@ -152,8 +153,8 @@ export class CoreUserTreeComponent implements OnInit {
       this.cmsToastrService.toastr.error(message, title);
       return;
     }
-    const dialogRef = this.dialog.open(CoreUserDeleteComponent, {
-      data: { id: id }
+    const dialogRef = this.dialog.open(CoreSiteDeleteComponent, {
+      data: { id }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.dialogChangedDate) {

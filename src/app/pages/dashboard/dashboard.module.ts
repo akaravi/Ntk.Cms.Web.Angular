@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard.component';
 import {TranslationService} from '../../core/i18n/translation.service';
 import {TranslateService} from '@ngx-translate/core';
-import {SiteModule} from '../../modules/core/site/site.module';
+import {CoreSiteModule} from '../../modules/core/site/coreSite.module';
 import {DashboardsModule} from '../../core/partials/content/dashboards/dashboards.module';
 import {RouterModule} from '@angular/router';
 
@@ -19,7 +19,7 @@ import {RouterModule} from '@angular/router';
       },
     ]),
     DashboardsModule,
-    SiteModule
+    CoreSiteModule
   ]
 })
 export class DashboardModule { }
