@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit,OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
   ApplicationAppModel,
@@ -32,11 +32,11 @@ import { Subscription } from 'rxjs';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ApplicationAppListComponent implements OnInit ,OnDestroy{
+export class ApplicationAppListComponent implements OnInit, OnDestroy {
   requestSourceId = 0;
   constructor(private applicationAppService: ApplicationAppService,
     private activatedRoute: ActivatedRoute,
-    private cmsApiStore :ntkCmsApiStoreService,
+    private cmsApiStore: ntkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
     private router: Router,
@@ -80,13 +80,13 @@ export class ApplicationAppListComponent implements OnInit ,OnDestroy{
   ngOnInit(): void {
     this.requestSourceId = Number(this.activatedRoute.snapshot.paramMap.get('SourceId'));
     this.DataGetAll();
-    this.tokenInfo =  this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
-    this.cmsApiStoreSubscribe =  this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
+    this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
+    this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
     });
   }
-  cmsApiStoreSubscribe:Subscription;
+  cmsApiStoreSubscribe: Subscription;
   ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
@@ -99,8 +99,8 @@ export class ApplicationAppListComponent implements OnInit ,OnDestroy{
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
     const filter = new FilterDataModel();
-    if(this.categoryModelSelected && this.categoryModelSelected.Id > 0)
-    {
+
+    if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
       filter.PropertyName = 'LinkSourceId';
       filter.Value = this.categoryModelSelected.Id;
       this.filteModelContent.Filters.push(filter);
@@ -180,10 +180,21 @@ export class ApplicationAppListComponent implements OnInit ,OnDestroy{
 
 
   onActionbuttonNewRow(): void {
+    let sourceId = 0;
+
     if (
-      this.requestSourceId == null ||
-      this.requestSourceId === 0
+      this.requestSourceId &&
+      this.requestSourceId > 0
     ) {
+      sourceId = this.requestSourceId;
+    }
+    if (
+      this.categoryModelSelected &&
+      this.categoryModelSelected.Id > 0
+    ) {
+      sourceId = this.requestSourceId;
+    }
+    if (sourceId === 0) {
       const title = 'برروز خطا ';
       const message = 'نوع سورس اپلیکیشن انتخاب نشده است';
       this.cmsToastrService.toastr.error(message, title);
@@ -303,7 +314,7 @@ export class ApplicationAppListComponent implements OnInit ,OnDestroy{
     }
     this.tableRowSelected = mode;
     const dialogRef = this.dialog.open(ApplicationAppUploadAppComponent, {
-      data:  this.tableRowSelected ,
+      data: this.tableRowSelected,
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.dialogChangedDate) {
@@ -320,7 +331,7 @@ export class ApplicationAppListComponent implements OnInit ,OnDestroy{
     }
     this.tableRowSelected = mode;
     const dialogRef = this.dialog.open(ApplicationAppUploadUpdateComponent, {
-      data:  this.tableRowSelected ,
+      data: this.tableRowSelected,
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.dialogChangedDate) {
@@ -368,7 +379,7 @@ export class ApplicationAppListComponent implements OnInit ,OnDestroy{
     }
     this.tableRowSelected = mode;
     const dialogRef = this.dialog.open(ApplicationAppDownloadComponent, {
-      data:  this.tableRowSelected ,
+      data: this.tableRowSelected,
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.dialogChangedDate) {
