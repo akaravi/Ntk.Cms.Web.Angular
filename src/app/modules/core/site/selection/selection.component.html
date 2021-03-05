@@ -1,11 +1,11 @@
 <ng-template #firstSite>
-  <app-core-site-add-first [dateInput]="{onActionAddFirstSite:clickSelectSite}"></app-core-site-add-first>
+  <app-core-site-add-first [dateInput]="{onActionAddFirstSite:onActionClickSelectSite}"></app-core-site-add-first>
 </ng-template>
 <div *ngIf="dataModel && dataModel.ListItems && dataModel.ListItems.length > 0; else firstSite">
   <div *ngIf="dataModel" class=" container ">
     <div class="row">
       <div *ngFor="let item of dataModel.ListItems" style="margin-left: 10px;">
-        <div (click)="clickSelectSite(item.Id)" class="card card-custom card-stretch gutter-b cursor-pointer"
+        <div (click)="onActionClickSelectSite(item.Id)" class="card card-custom card-stretch gutter-b cursor-pointer"
           style="top: 15px;width: fit-content;">
           <div class="card-body d-flex flex-column">
             <div class="flex-grow-1 pb-5">
@@ -44,7 +44,7 @@
             </div>
 
             <br>
-            <button (click)="clickSelectSite(item.Id)" type="button" [disable]="this.formInfo.DisabledButtonSubmitted" class="btn btn-warning BTN">ورود</button>
+            <button (click)="onActionClickSelectSite(item.Id)" type="button" [disable]="this.formInfo.DisabledButtonSubmitted" class="btn btn-warning BTN">ورود</button>
 
           </div>
         </div>

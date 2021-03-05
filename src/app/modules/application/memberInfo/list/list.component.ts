@@ -80,7 +80,7 @@ export class ApplicationMemberInfoListComponent implements OnInit {
     });
   }
   cmsApiStoreSubscribe:Subscription;
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
   DataGetAll(): void {
@@ -90,10 +90,15 @@ export class ApplicationMemberInfoListComponent implements OnInit {
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
+    const filter = new FilterDataModel();
     if (this.requestApplicationId > 0) {
-      const filter = new FilterDataModel();
       filter.PropertyName = 'LinkSourceId';
       filter.Value = this.requestApplicationId;
+      this.filteModelContent.Filters.push(filter);
+    }
+    if(this.categoryModelSelected && this.categoryModelSelected.Id){
+      filter.PropertyName = 'LinkSourceId';
+      filter.Value = this.categoryModelSelected.Id;
       this.filteModelContent.Filters.push(filter);
     }
     this.applicationMemberInfoService.ServiceGetAll(this.filteModelContent).subscribe(
@@ -218,15 +223,6 @@ export class ApplicationMemberInfoListComponent implements OnInit {
   onActionCategorySelect(model: ApplicationAppModel | null): void {
     this.filteModelContent = new FilterModel();
     this.categoryModelSelected = model;
-    if (model && model.Id > 0) {
-      const aaa = {
-        PropertyName: 'LinkApplicationId',
-        Value: model.Id,
-      };
-      this.filteModelContent.Filters.push(aaa as FilterDataModel);
-    } else {
-      // this.optionsCategoryTree.childMethods.ActionSelectForce(0);
-    }
     this.DataGetAll();
   }
   onActionbuttonStatist(): void {

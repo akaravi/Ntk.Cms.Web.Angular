@@ -32,15 +32,15 @@ export class CmsTokenAccessComponent implements OnInit {
   ) {
 
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
-    
+
     if (this.tokenInfo && this.tokenInfo.UserId > 0 && this.tokenInfo.SiteId <= 0) {
-      this.router.navigate(['/site/selection']);
+      this.router.navigate(['/core/site/selection']);
     }
 
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((value) => {
       this.tokenInfo = value;
       if (this.tokenInfo && this.tokenInfo.UserId > 0 && this.tokenInfo.SiteId <= 0) {
-        this.router.navigate(['/site/selection']);
+        this.router.navigate(['/core/site/selection']);
       }
     });
 

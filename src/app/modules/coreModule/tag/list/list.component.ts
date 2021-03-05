@@ -79,7 +79,7 @@ export class TagListComponent implements OnInit {
     });
   }
   cmsApiStoreSubscribe: Subscription;
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
   DataGetAll(): void {
@@ -89,6 +89,12 @@ export class TagListComponent implements OnInit {
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
+    if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
+      const aaa = new FilterDataModel();
+      aaa.PropertyName = 'LinkCategoryId';
+      aaa.Value = this.categoryModelSelected.Id;
+      this.filteModelContent.Filters.push(aaa);
+    }
     this.newsContentService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
@@ -149,14 +155,7 @@ export class TagListComponent implements OnInit {
   onActionCategorySelect(model: NewsCategoryModel | null): void {
     this.filteModelContent = new FilterModel();
     this.categoryModelSelected = model;
-    if (model && model.Id > 0) {
-      const aaa = new FilterDataModel();
-      aaa.PropertyName = 'LinkCategoryId';
-      aaa.Value = model.Id;
-      this.filteModelContent.Filters.push(aaa);
-    } else {
-      // this.optionsCategoryTree.childMethods.ActionSelectForce(0);
-    }
+
     this.DataGetAll();
   }
 

@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,OnDestroy } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
   ApplicationAppModel,
@@ -32,7 +32,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ApplicationAppListComponent implements OnInit {
+export class ApplicationAppListComponent implements OnInit ,OnDestroy{
   requestSourceId = 0;
   constructor(private applicationAppService: ApplicationAppService,
     private activatedRoute: ActivatedRoute,
@@ -87,7 +87,7 @@ export class ApplicationAppListComponent implements OnInit {
     });
   }
   cmsApiStoreSubscribe:Subscription;
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
 
@@ -98,8 +98,14 @@ export class ApplicationAppListComponent implements OnInit {
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
+    const filter = new FilterDataModel();
+    if(this.categoryModelSelected && this.categoryModelSelected.Id > 0)
+    {
+      filter.PropertyName = 'LinkSourceId';
+      filter.Value = this.categoryModelSelected.Id;
+      this.filteModelContent.Filters.push(filter);
+    }
     if (this.requestSourceId > 0) {
-      const filter = new FilterDataModel();
       filter.PropertyName = 'LinkSourceId';
       filter.Value = this.requestSourceId;
       this.filteModelContent.Filters.push(filter);
@@ -179,7 +185,7 @@ export class ApplicationAppListComponent implements OnInit {
       this.requestSourceId === 0
     ) {
       const title = 'برروز خطا ';
-      const message = 'محتوا انتخاب نشده است';
+      const message = 'نوع سورس اپلیکیشن انتخاب نشده است';
       this.cmsToastrService.toastr.error(message, title);
       return;
     }
@@ -207,15 +213,7 @@ export class ApplicationAppListComponent implements OnInit {
   onActionCategorySelect(model: ApplicationSourceModel | null): void {
     this.filteModelContent = new FilterModel();
     this.categoryModelSelected = model;
-    if (model && model.Id > 0) {
-      const aaa = {
-        PropertyName: 'LinkSourceId',
-        Value: model.Id,
-      };
-      this.filteModelContent.Filters.push(aaa as FilterDataModel);
-    } else {
-      // this.optionsCategoryTree.childMethods.ActionSelectForce(0);
-    }
+
     this.DataGetAll();
   }
   onActionbuttonEditRow(mode: ApplicationAppModel = this.tableRowSelected): void {

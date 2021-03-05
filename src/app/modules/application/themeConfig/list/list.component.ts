@@ -75,7 +75,7 @@ export class ApplicationThemeConfigListComponent implements OnInit {
     });
   }
   cmsApiStoreSubscribe:Subscription;
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
   DataGetAll(): void {
@@ -85,8 +85,14 @@ export class ApplicationThemeConfigListComponent implements OnInit {
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
+    const filter = new FilterDataModel();
     if (this.requestSourceId > 0) {
-      const filter = new FilterDataModel();
+      filter.PropertyName = 'LinkSourceId';
+      filter.Value = this.requestSourceId;
+      this.filteModelContent.Filters.push(filter);
+    }
+    if(this.categoryModelSelected && this.categoryModelSelected.Id>0){
+
       filter.PropertyName = 'LinkSourceId';
       filter.Value = this.requestSourceId;
       this.filteModelContent.Filters.push(filter);
@@ -188,15 +194,7 @@ export class ApplicationThemeConfigListComponent implements OnInit {
   onActionCategorySelect(model: ApplicationSourceModel | null): void {
     this.filteModelContent = new FilterModel();
     this.categoryModelSelected = model;
-    if (model && model.Id > 0) {
-      const aaa = {
-        PropertyName: 'LinkSourceId',
-        Value: model.Id,
-      };
-      this.filteModelContent.Filters.push(aaa as FilterDataModel);
-    } else {
-      // this.optionsCategoryTree.childMethods.ActionSelectForce(0);
-    }
+
     this.DataGetAll();
   }
   onActionbuttonEditRow(model: ApplicationThemeConfigModel = this.tableRowSelected): void {

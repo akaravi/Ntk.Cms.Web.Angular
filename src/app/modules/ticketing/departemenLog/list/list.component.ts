@@ -95,10 +95,16 @@ export class TicketingDepartemenLogListComponent implements OnInit {
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
+    const filter = new FilterDataModel();
     if (this.requestSourceId > 0) {
-      const filter = new FilterDataModel();
+
       filter.PropertyName = 'LinkSourceId';
       filter.Value = this.requestSourceId;
+      this.filteModelContent.Filters.push(filter);
+    }
+    if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
+      filter.PropertyName = 'LinkSourceId';
+      filter.Value = this.categoryModelSelected.Id;
       this.filteModelContent.Filters.push(filter);
     }
     this.ticketingDepartemenLogService.ServiceGetAll(this.filteModelContent).subscribe(
@@ -204,15 +210,7 @@ export class TicketingDepartemenLogListComponent implements OnInit {
   onActionCategorySelect(model: ApplicationSourceModel | null): void {
     this.filteModelContent = new FilterModel();
     this.categoryModelSelected = model;
-    if (model && model.Id > 0) {
-      const aaa = {
-        PropertyName: 'LinkSourceId',
-        Value: model.Id,
-      };
-      this.filteModelContent.Filters.push(aaa as FilterDataModel);
-    } else {
-      // this.optionsCategoryTree.childMethods.ActionSelectForce(0);
-    }
+
     this.DataGetAll();
   }
   onActionbuttonEditRow(mode: TicketingDepartemenLogModel = this.tableRowSelected): void {
@@ -293,5 +291,5 @@ export class TicketingDepartemenLogListComponent implements OnInit {
   onActionBackToParent(): void {
     this.router.navigate(['/application/app/']);
   }
-  
+
 }

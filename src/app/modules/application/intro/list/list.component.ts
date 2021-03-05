@@ -34,7 +34,7 @@ export class ApplicationIntroListComponent implements OnInit {
 
   constructor(private applicationIntroService: ApplicationIntroService,
     private activatedRoute: ActivatedRoute,
-    private cmsApiStore :ntkCmsApiStoreService,
+    private cmsApiStore: ntkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
     private router: Router,
@@ -76,13 +76,13 @@ export class ApplicationIntroListComponent implements OnInit {
   ngOnInit(): void {
     this.requestApplicationId = Number(this.activatedRoute.snapshot.paramMap.get('ApplicationId'));
     this.DataGetAll();
-    this.tokenInfo =  this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
-     this.cmsApiStoreSubscribe =  this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
+    this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
+    this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
     });
   }
-  cmsApiStoreSubscribe:Subscription;
+  cmsApiStoreSubscribe: Subscription;
   ngOnDestroy() {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
@@ -93,9 +93,14 @@ export class ApplicationIntroListComponent implements OnInit {
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
+    const filter = new FilterDataModel();
+    if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
+      filter.PropertyName = 'LinkApplicationId';
+      filter.Value = this.categoryModelSelected.Id;
+      this.filteModelContent.Filters.push(filter);
+    }
     if (this.requestApplicationId > 0) {
-      const filter = new FilterDataModel();
-      filter.PropertyName = 'LinkSourceId';
+      filter.PropertyName = 'LinkApplicationId';
       filter.Value = this.requestApplicationId;
       this.filteModelContent.Filters.push(filter);
     }
@@ -226,17 +231,7 @@ export class ApplicationIntroListComponent implements OnInit {
   onActionCategorySelect(model: ApplicationAppModel | null): void {
     this.filteModelContent = new FilterModel();
     this.categoryModelSelected = model;
-    this.requestApplicationId = 0;
-    if (model && model.Id > 0) {
-      this.requestApplicationId = model.Id;
-      const aaa = {
-        PropertyName: 'LinkApplicationId',
-        Value: model.Id,
-      };
-      this.filteModelContent.Filters.push(aaa as FilterDataModel);
-    } else {
-      // this.optionsCategoryTree.childMethods.ActionSelectForce(0);
-    }
+
     this.DataGetAll();
   }
   onActionbuttonStatist(): void {

@@ -86,7 +86,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       (res) => {
         if (res.IsSuccess) {
           this.cmsToastrService.typeSuccessLogin();
-          this.router.navigate(['/site/selection']);
+          this.router.navigate(['/core/site/selection']);
         } else {
           this.cmsToastrService.typeErrorLogin(res.ErrorMessage);
           this.onCaptchaOrder();

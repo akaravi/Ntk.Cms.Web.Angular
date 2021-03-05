@@ -85,7 +85,7 @@ export class TicketingFaqListComponent implements OnInit {
     });
   }
   cmsApiStoreSubscribe: Subscription;
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
 
@@ -96,10 +96,16 @@ export class TicketingFaqListComponent implements OnInit {
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
+    const filter = new FilterDataModel();
     if (this.requestDepartemenId > 0) {
-      const filter = new FilterDataModel();
       filter.PropertyName = 'LinkTicketingDepartemenId';
       filter.Value = this.requestDepartemenId;
+      this.filteModelContent.Filters.push(filter);
+    }
+    if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
+
+      filter.PropertyName = 'LinkTicketingDepartemenId';
+      filter.Value = this.categoryModelSelected.Id;
       this.filteModelContent.Filters.push(filter);
     }
     this.ticketingFaqService.ServiceGetAll(this.filteModelContent).subscribe(
@@ -168,8 +174,8 @@ export class TicketingFaqListComponent implements OnInit {
   onActionbuttonNewRow(): void {
     if (this.categoryModelSelected == null &&
       (this.categoryModelSelected && this.categoryModelSelected.Id == 0) && (
-      this.requestDepartemenId == null ||
-      this.requestDepartemenId === 0)
+        this.requestDepartemenId == null ||
+        this.requestDepartemenId === 0)
     ) {
       const title = 'برروز خطا ';
       const message = 'محتوا انتخاب نشده است';
@@ -185,7 +191,7 @@ export class TicketingFaqListComponent implements OnInit {
       return;
     }
     var parentId: number = this.requestDepartemenId;
-    if (this.categoryModelSelected &&this.categoryModelSelected.Id > 0) {
+    if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
       parentId = this.categoryModelSelected.Id;
     }
     const dialogRef = this.dialog.open(TicketingFaqAddComponent, {
@@ -202,15 +208,7 @@ export class TicketingFaqListComponent implements OnInit {
   onActionCategorySelect(model: TicketingDepartemenModel | null): void {
     this.filteModelContent = new FilterModel();
     this.categoryModelSelected = model;
-    if (model && model.Id > 0) {
-      const aaa = {
-        PropertyName: 'LinkTicketingDepartemenId',
-        Value: model.Id,
-      };
-      this.filteModelContent.Filters.push(aaa as FilterDataModel);
-    } else {
-      // this.optionsCategoryTree.childMethods.ActionSelectForce(0);
-    }
+
     this.DataGetAll();
   }
   onActionbuttonEditRow(mode: TicketingFaqModel = this.tableRowSelected): void {

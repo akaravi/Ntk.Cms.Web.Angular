@@ -77,6 +77,7 @@ export class ApplicationNotificationListComponent implements OnInit {
   ngOnDestroy() {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
+
   DataGetAll(): void {
     this.tableRowsSelected = [];
     this.tableRowSelected = new ApplicationLogNotificationModel();
@@ -84,10 +85,15 @@ export class ApplicationNotificationListComponent implements OnInit {
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
+    const filter = new FilterDataModel();
     if (this.requestApplicationId > 0) {
-      const filter = new FilterDataModel();
-      filter.PropertyName = 'LinkSourceId';
+      filter.PropertyName = 'LinkApplicationId';
       filter.Value = this.requestApplicationId;
+      this.filteModelContent.Filters.push(filter);
+    }
+    if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
+      filter.PropertyName = 'LinkApplicationId';
+      filter.Value = this.categoryModelSelected.Id;
       this.filteModelContent.Filters.push(filter);
     }
     this.applicationLogNotificationService.ServiceGetAll(this.filteModelContent).subscribe(
@@ -242,15 +248,7 @@ export class ApplicationNotificationListComponent implements OnInit {
   onActionCategorySelect(model: ApplicationAppModel | null): void {
     this.filteModelContent = new FilterModel();
     this.categoryModelSelected = model;
-    if (model && model.Id > 0) {
-      const aaa = {
-        PropertyName: 'LinkApplicationId',
-        Value: model.Id,
-      };
-      this.filteModelContent.Filters.push(aaa as FilterDataModel);
-    } else {
-      // this.optionsCategoryTree.childMethods.ActionSelectForce(0);
-    }
+
     this.DataGetAll();
   }
   onActionbuttonStatist(): void {

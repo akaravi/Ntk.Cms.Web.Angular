@@ -79,7 +79,7 @@ export class FileContentListComponent implements OnInit {
     });
   }
   cmsApiStoreSubscribe:Subscription;
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
   DataGetAll(): void {
@@ -89,6 +89,13 @@ export class FileContentListComponent implements OnInit {
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
+    if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
+      const aaa = {
+        PropertyName: 'LinkCategoryId',
+        Value: this.categoryModelSelected.Id,
+      };
+      this.filteModelContent.Filters.push(aaa as FilterDataModel);
+    } 
     this.fileContentService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
@@ -149,15 +156,7 @@ export class FileContentListComponent implements OnInit {
   onActionCategorySelect(model: FileCategoryModel | null): void {
     this.filteModelContent = new FilterModel();
     this.categoryModelSelected = model;
-    if (model && model.Id > 0) {
-      const aaa = {
-        PropertyName: 'LinkCategoryId',
-        Value: model.Id,
-      };
-      this.filteModelContent.Filters.push(aaa as FilterDataModel);
-    } else {
-      // this.optionsCategoryTree.childMethods.ActionSelectForce(0);
-    }
+
     this.DataGetAll();
   }
 

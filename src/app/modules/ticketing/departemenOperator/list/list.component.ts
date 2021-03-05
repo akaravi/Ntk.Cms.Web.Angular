@@ -84,7 +84,7 @@ export class TicketingDepartemenOperatorListComponent implements OnInit {
     });
   }
   cmsApiStoreSubscribe:Subscription;
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
 
@@ -95,10 +95,15 @@ export class TicketingDepartemenOperatorListComponent implements OnInit {
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
+    const filter = new FilterDataModel();
     if (this.requestDepartemenId > 0) {
-      const filter = new FilterDataModel();
       filter.PropertyName = 'LinkSourceId';
       filter.Value = this.requestDepartemenId;
+      this.filteModelContent.Filters.push(filter);
+    }
+    if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
+      filter.PropertyName = 'LinkSourceId';
+      filter.Value = this.categoryModelSelected.Id ;
       this.filteModelContent.Filters.push(filter);
     }
     this.ticketingDepartemenOperatorService.ServiceGetAll(this.filteModelContent).subscribe(
@@ -204,15 +209,7 @@ export class TicketingDepartemenOperatorListComponent implements OnInit {
   onActionCategorySelect(model: ApplicationSourceModel | null): void {
     this.filteModelContent = new FilterModel();
     this.categoryModelSelected = model;
-    if (model && model.Id > 0) {
-      const aaa = {
-        PropertyName: 'LinkSourceId',
-        Value: model.Id,
-      };
-      this.filteModelContent.Filters.push(aaa as FilterDataModel);
-    } else {
-      // this.optionsCategoryTree.childMethods.ActionSelectForce(0);
-    }
+
     this.DataGetAll();
   }
   onActionbuttonEditRow(mode: TicketingDepartemenOperatorModel = this.tableRowSelected): void {
@@ -293,5 +290,5 @@ export class TicketingDepartemenOperatorListComponent implements OnInit {
   onActionBackToParent(): void {
     this.router.navigate(['/ticketing/departeman/']);
   }
-  
+
 }

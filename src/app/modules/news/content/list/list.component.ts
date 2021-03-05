@@ -30,10 +30,10 @@ import { Observable, Subscription } from 'rxjs';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
-export class NewsContentListComponent implements OnInit , OnDestroy  {
+export class NewsContentListComponent implements OnInit, OnDestroy {
 
   constructor(
-    private cmsApiStore : ntkCmsApiStoreService,
+    private cmsApiStore: ntkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private newsContentService: NewsContentService,
     private cmsToastrService: CmsToastrService,
@@ -73,14 +73,14 @@ export class NewsContentListComponent implements OnInit , OnDestroy  {
   ngOnInit(): void {
 
     this.DataGetAll();
-    this.tokenInfo =  this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
-    this.cmsApiStoreSubscribe =  this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
+    this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
+    this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
     });
   }
-  cmsApiStoreSubscribe:Subscription;
-  ngOnDestroy() {
+  cmsApiStoreSubscribe: Subscription;
+  ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
   DataGetAll(): void {
@@ -90,6 +90,13 @@ export class NewsContentListComponent implements OnInit , OnDestroy  {
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
+    if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
+      const aaa = {
+        PropertyName: 'LinkCategoryId',
+        Value: this.categoryModelSelected.Id,
+      };
+      this.filteModelContent.Filters.push(aaa as FilterDataModel);
+    }
     this.newsContentService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
@@ -150,15 +157,7 @@ export class NewsContentListComponent implements OnInit , OnDestroy  {
   onActionCategorySelect(model: NewsCategoryModel | null): void {
     this.filteModelContent = new FilterModel();
     this.categoryModelSelected = model;
-    if (model && model.Id > 0) {
-      const aaa = {
-        PropertyName: 'LinkCategoryId',
-        Value: model.Id,
-      };
-      this.filteModelContent.Filters.push(aaa as FilterDataModel);
-    } else {
-      // this.optionsCategoryTree.childMethods.ActionSelectForce(0);
-    }
+
     this.DataGetAll();
   }
 

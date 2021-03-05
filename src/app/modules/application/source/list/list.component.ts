@@ -234,7 +234,34 @@ export class ApplicationSourceListComponent implements OnInit {
     this.optionsExport.data.show = !this.optionsExport.data.show;
     this.optionsExport.childMethods.runExport(this.filteModelContent.Filters);
   }
+  onActionbuttonBuildApps(mode: ApplicationSourceModel = this.tableRowSelected): void {
+    if (mode == null || !mode.Id || mode.Id === 0) {
+      const title = 'برروز خطا ';
+      const message = 'ردیفی  انتخاب نشده است';
+      this.cmsToastrService.toastr.error(message, title);
+      return;
+    }
+    this.tableRowSelected = mode;
+    this.loading.display = true;
+    this.loading.Globally = false;
+    this.applicationSourceService.ServiceBuildApp(this.tableRowSelected.Id).subscribe(
+      (next) => {
+        this.loading.display = false;
+        if (next.IsSuccess) {
+          this.cmsToastrService.typeSuccessAppBuild(next.ErrorMessage);
+        }
+        else {
+          this.cmsToastrService.typeErrorGetAll(next.ErrorMessage);
+        }
+      },
+      (error) => {
+        this.cmsToastrService.typeError(error);
 
+        this.loading.display = false;
+      }
+    );
+
+  }
   onActionbuttonReload(): void {
     this.DataGetAll();
   }

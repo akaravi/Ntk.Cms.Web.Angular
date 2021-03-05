@@ -80,7 +80,7 @@ export class ArticleContentListComponent implements OnInit {
     });
   }
   cmsApiStoreSubscribe: Subscription;
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
   DataGetAll(): void {
@@ -90,6 +90,13 @@ export class ArticleContentListComponent implements OnInit {
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
+    if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
+      const aaa = {
+        PropertyName: 'LinkCategoryId',
+        Value: this.categoryModelSelected.Id,
+      };
+      this.filteModelContent.Filters.push(aaa as FilterDataModel);
+    }
     this.articleContentService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
@@ -150,15 +157,7 @@ export class ArticleContentListComponent implements OnInit {
   onActionCategorySelect(model: ArticleCategoryModel | null): void {
     this.filteModelContent = new FilterModel();
     this.categoryModelSelected = model;
-    if (model && model.Id > 0) {
-      const aaa = {
-        PropertyName: 'LinkCategoryId',
-        Value: model.Id,
-      };
-      this.filteModelContent.Filters.push(aaa as FilterDataModel);
-    } else {
-      // this.optionsCategoryTree.childMethods.ActionSelectForce(0);
-    }
+
     this.DataGetAll();
   }
 

@@ -44,8 +44,12 @@ export class SelectionComponent implements OnInit {
     this.dataModel = this.activatedRoute.snapshot.data.list;
   }
 
-  clickSelectSite(id: number): void {
-    this.formInfo.DisabledButtonSubmitted=true;
+  onActionClickSelectSite(id: number): void {
+    if (this.formInfo.DisabledButtonSubmitted){
+      return;
+    }
+
+    this.formInfo.DisabledButtonSubmitted = true;
     let authModel: AuthRenewTokenModel;
     authModel = new AuthRenewTokenModel();
     authModel.SiteId = id;
@@ -54,17 +58,18 @@ export class SelectionComponent implements OnInit {
         (res) => {
           if (res.IsSuccess) {
             this.cmsToastrService.typeSuccessSelected();
+            this.formInfo.DisabledButtonSubmitted = false;
             this.router.navigate(['/']);
           }
           else
           {
             this.cmsToastrService.typeErrorSelected();
-            this.formInfo.DisabledButtonSubmitted=false;
+            this.formInfo.DisabledButtonSubmitted = false;
           }
         },
         (error) => {
           this.cmsToastrService.typeError(error);
-          this.formInfo.DisabledButtonSubmitted=false;
+          this.formInfo.DisabledButtonSubmitted = false;
         }
       )
     );
