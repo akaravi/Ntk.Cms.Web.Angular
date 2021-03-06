@@ -11,13 +11,13 @@ const routes: Routes = [
   {
     path: 'test',
     loadChildren: () =>
-    import('./modules/test/test.module').then((m) => m.TestModule),
+    import('./testModules/test/test.module').then((m) => m.TestModule),
 
   },
   {
     path: 'barcode',
     loadChildren: () =>
-    import('./modules/barcode/barcode.module').then((m) => m.BarcodeModule),
+    import('./testModules/barcode/barcode.module').then((m) => m.BarcodeModule),
 
 
   },

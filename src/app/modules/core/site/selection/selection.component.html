@@ -44,7 +44,7 @@
             </div>
 
             <br>
-            <button (click)="onActionClickSelectSite(item.Id)" type="button" [disable]="this.formInfo.DisabledButtonSubmitted" class="btn btn-warning BTN">ورود</button>
+            <button (click)="onActionClickSelectSite(item.Id)" type="button" [disable]="!this.formInfo.ButtonSubmittedEnabled" class="btn btn-warning BTN">ورود</button>
 
           </div>
         </div>

@@ -142,7 +142,7 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
   }
 
   DataGetOne(): void {
-    this.formInfo.FormAllowSubmit = false;
+    this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
@@ -153,7 +153,7 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
         async (next) => {
           this.loading.display = false;
           this.dataModelResult = next;
-          this.formInfo.FormAllowSubmit = true;
+          this.formInfo.FormSubmitAllow = true;
 
           if (next.IsSuccess) {
             this.dataModel = next.Item;
@@ -173,13 +173,13 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
         },
         (error) => {
           this.loading.display = false;
-          this.formInfo.FormAllowSubmit = true;
+          this.formInfo.FormSubmitAllow = true;
           this.toasterService.typeErrorGetOne(error);
         }
       );
   }
   DataTagGetAll(): void {
-    this.formInfo.FormAllowSubmit = false;
+    this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات تگها از سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
@@ -199,7 +199,7 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
         async (next) => {
           this.loading.display = false;
           this.dataContentTagModelResult = next;
-          this.formInfo.FormAllowSubmit = true;
+          this.formInfo.FormSubmitAllow = true;
 
           if (next.IsSuccess) {
             const list = [];
@@ -216,13 +216,13 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
         },
         (error) => {
           this.loading.display = false;
-          this.formInfo.FormAllowSubmit = true;
+          this.formInfo.FormSubmitAllow = true;
           this.toasterService.typeErrorGetAll(error);
         }
       );
   }
   DataOtherInfoGetAll(): void {
-    this.formInfo.FormAllowSubmit = false;
+    this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت سایر اطلاعات از سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
@@ -240,7 +240,7 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
       .subscribe(
         async (next) => {
           this.loading.display = false;
-          this.formInfo.FormAllowSubmit = true;
+          this.formInfo.FormSubmitAllow = true;
           this.dataContentOtherInfoModelResult = next;
           if (next.IsSuccess) {
             this.otherInfoDataModel = next.ListItems;
@@ -251,13 +251,13 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
         },
         (error) => {
           this.loading.display = false;
-          this.formInfo.FormAllowSubmit = true;
+          this.formInfo.FormSubmitAllow = true;
           this.toasterService.typeErrorGetAll(error);
         }
       );
   }
   DataSimilarGetAllIds(): void {
-    this.formInfo.FormAllowSubmit = false;
+    this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت سایر اطلاعات از سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
@@ -283,7 +283,7 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
       .subscribe(
         async (next) => {
           this.loading.display = false;
-          this.formInfo.FormAllowSubmit = true;
+          this.formInfo.FormSubmitAllow = true;
           this.dataContentSimilarModelResult = next;
           if (next.IsSuccess) {
             const listIds = Array<number>();
@@ -302,7 +302,7 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
         },
         (error) => {
           this.loading.display = false;
-          this.formInfo.FormAllowSubmit = true;
+          this.formInfo.FormSubmitAllow = true;
           this.toasterService.typeErrorGetAll(error);
         }
       );
@@ -312,7 +312,7 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    this.formInfo.FormAllowSubmit = false;
+    this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت سایر اطلاعات از سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
@@ -332,7 +332,7 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
       .subscribe(
         async (next) => {
           this.loading.display = false;
-          this.formInfo.FormAllowSubmit = true;
+          this.formInfo.FormSubmitAllow = true;
 
           if (next.IsSuccess) {
             this.similarDataModel = next.ListItems;
@@ -343,13 +343,13 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
         },
         (error) => {
           this.loading.display = false;
-          this.formInfo.FormAllowSubmit = true;
+          this.formInfo.FormSubmitAllow = true;
           this.toasterService.typeErrorGetAll(error);
         }
       );
   }
   DataEditContent(): void {
-    this.formInfo.FormAllowSubmit = false;
+    this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
@@ -359,7 +359,7 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
       .subscribe(
         async (next) => {
           this.loading.display = false;
-          this.formInfo.FormAllowSubmit = true;
+          this.formInfo.FormSubmitAllow = true;
           this.dataModelResult = next;
           if (next.IsSuccess) {
 
@@ -376,7 +376,7 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
         },
         (error) => {
           this.loading.display = false;
-          this.formInfo.FormAllowSubmit = true;
+          this.formInfo.FormSubmitAllow = true;
           this.toasterService.typeErrorAdd(error);
         }
       );

@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription, Observable, interval } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthUserSignInModel, CaptchaModel, CoreAuthService } from 'ntk-cms-api';
+import { AuthUserSignInModel, CaptchaModel, CoreAuthService, FormInfoModel } from 'ntk-cms-api';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 
 @Component({
@@ -11,6 +11,7 @@ import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit, OnDestroy {
+  formInfo: FormInfoModel = new FormInfoModel();
 
   modelData: AuthUserSignInModel = new AuthUserSignInModel();
   captchaModel: CaptchaModel = new CaptchaModel();
@@ -79,7 +80,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   submit(): void {
-
+    this.formInfo.ButtonSubmittedEnabled = false;
     this.hasError = false;
     this.modelData.CaptchaKey = this.captchaModel.Key;
     this.coreAuthService.ServiceSigninUser(this.modelData).subscribe(
@@ -88,6 +89,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.cmsToastrService.typeSuccessLogin();
           this.router.navigate(['/core/site/selection']);
         } else {
+          this.formInfo.ButtonSubmittedEnabled = true;
           this.cmsToastrService.typeErrorLogin(res.ErrorMessage);
           this.onCaptchaOrder();
         }

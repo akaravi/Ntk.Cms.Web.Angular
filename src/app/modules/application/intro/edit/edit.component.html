@@ -60,7 +60,7 @@
             </mat-error>
           </mat-form-field>
 
-          <div *ngIf="formInfo.FormAllowSubmit">
+          <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
               بعدی
@@ -130,7 +130,7 @@
 
 
 
-          <div *ngIf="formInfo.FormAllowSubmit">
+          <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
               قبلی

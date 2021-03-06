@@ -25,6 +25,7 @@ import { Subscription } from 'rxjs';
 import { CoreUserDeleteComponent } from '../delete/delete.component';
 import { CoreUserEditComponent } from '../edit/edit.component';
 import { CoreUserAddComponent } from '../add/add.component';
+import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 
 @Component({
   selector: 'app-core-user-list',
@@ -33,6 +34,7 @@ import { CoreUserAddComponent } from '../add/add.component';
 })
 export class CoreUserListComponent implements OnInit {
   constructor(private coreUserService: CoreUserService,
+    private cmsConfirmationDialogService: CmsConfirmationDialogService,
     private cmsApiStore: ntkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
@@ -203,15 +205,13 @@ export class CoreUserListComponent implements OnInit {
       }
     });
   }
-  onActionbuttonDeleteRow(model: CoreUserModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+
+  onActionbuttonDeleteRow(mode: CoreUserModel = this.tableRowSelected): void {
+    if (mode == null || !mode.Id || mode.Id === 0) {
+      this.cmsToastrService.typeErrorDeleteRowIsNull();
       return;
     }
-    this.tableRowSelected = model;
-
+    this.tableRowSelected = mode;
     if (
       this.dataModelResult == null ||
       this.dataModelResult.Access == null ||
@@ -220,15 +220,34 @@ export class CoreUserListComponent implements OnInit {
       this.cmsToastrService.typeErrorAccessDelete();
       return;
     }
-    const dialogRef = this.dialog.open(CoreUserDeleteComponent, {
-      data: { id: this.tableRowSelected.Id }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result && result.dialogChangedDate) {
-        this.DataGetAll();
+    const title = 'لطفا تایید کنید...';
+    const message = 'آیا مایل به حدف این محتوا می باشید ' + '?' + '<br> ( ' + this.tableRowSelected.Username + ' ) ';
+    this.cmsConfirmationDialogService.confirm(title, message)
+      .then((confirmed) => {
+        if (confirmed) {
+          this.loading.display = true;
+          this.coreUserService.ServiceDelete(this.tableRowSelected.Id).subscribe(
+            (next) => {
+              if (next.IsSuccess) {
+                this.cmsToastrService.typeSuccessRemove();
+                this.DataGetAll();
+              } else {
+                this.cmsToastrService.typeErrorRemove();
+              }
+              this.loading.display = false;
+            },
+            (error) => {
+              this.cmsToastrService.typeError(error);
+              this.loading.display = false;
+            }
+          );
+        }
       }
-    });
-
+      )
+      .catch(() => {
+        // console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)')
+      }
+      );
   }
   onActionbuttonFaqList(model: CoreUserModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {

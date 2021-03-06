@@ -34,19 +34,19 @@ import { TicketingFaqAddComponent } from '../add/add.component';
   styleUrls: ['./list.component.scss']
 })
 export class TicketingFaqListComponent implements OnInit {
-  requestDepartemenId = 0;
   constructor(private ticketingFaqService: TicketingFaqService,
-    private activatedRoute: ActivatedRoute,
-    private cmsApiStore: ntkCmsApiStoreService,
-    public publicHelper: PublicHelper,
-    private cmsToastrService: CmsToastrService,
-    private cmsConfirmationDialogService: CmsConfirmationDialogService,
-    private router: Router,
-    public dialog: MatDialog) {
+              private activatedRoute: ActivatedRoute,
+              private cmsApiStore: ntkCmsApiStoreService,
+              public publicHelper: PublicHelper,
+              private cmsToastrService: CmsToastrService,
+              private cmsConfirmationDialogService: CmsConfirmationDialogService,
+              private router: Router,
+              public dialog: MatDialog) {
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
   }
+  requestDepartemenId = 0;
   comment: string;
   author: string;
   dataSource: any;
@@ -72,6 +72,7 @@ export class TicketingFaqListComponent implements OnInit {
 
     'Action'
   ];
+  cmsApiStoreSubscribe: Subscription;
 
 
 
@@ -84,7 +85,6 @@ export class TicketingFaqListComponent implements OnInit {
       this.tokenInfo = next;
     });
   }
-  cmsApiStoreSubscribe: Subscription;
   ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
@@ -190,7 +190,7 @@ export class TicketingFaqListComponent implements OnInit {
       this.cmsToastrService.typeErrorAccessAdd();
       return;
     }
-    var parentId: number = this.requestDepartemenId;
+    let parentId: number = this.requestDepartemenId;
     if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
       parentId = this.categoryModelSelected.Id;
     }
@@ -242,9 +242,7 @@ export class TicketingFaqListComponent implements OnInit {
   }
   onActionbuttonDeleteRow(mode: TicketingFaqModel = this.tableRowSelected): void {
     if (mode == null || !mode.Id || mode.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorDeleteRowIsNull();
       return;
     }
     this.tableRowSelected = mode;
@@ -257,7 +255,7 @@ export class TicketingFaqListComponent implements OnInit {
       return;
     }
     const title = 'لطفا تایید کنید...';
-    const message = 'آیا مایل به حدف این محتوا می باشید ' + '?' + "<br> ( " + this.tableRowSelected.Question + " ) ";
+    const message = 'آیا مایل به حدف این محتوا می باشید ' + '?' + '<br> ( ' + this.tableRowSelected.Question + ' ) ';
     this.cmsConfirmationDialogService.confirm(title, message)
       .then((confirmed) => {
         if (confirmed) {
@@ -266,6 +264,7 @@ export class TicketingFaqListComponent implements OnInit {
             (next) => {
               if (next.IsSuccess) {
                 this.cmsToastrService.typeSuccessRemove();
+                this.DataGetAll();
               } else {
                 this.cmsToastrService.typeErrorRemove();
               }

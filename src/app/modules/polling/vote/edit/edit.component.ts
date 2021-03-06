@@ -118,7 +118,7 @@ export class PollingVoteEditComponent implements OnInit {
     this.dataModel.LinkPollingContentId = this.requestContentId;
     this.pollingVoteService.ServiceAdd(this.dataModel).subscribe(
       (next) => {
-        this.formInfo.FormAllowSubmit = true;
+        this.formInfo.FormSubmitAllow = true;
         this.dataModelResult = next;
         if (next.IsSuccess) {
           this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
@@ -131,7 +131,7 @@ export class PollingVoteEditComponent implements OnInit {
         this.loading.display = false;
       },
       (error) => {
-        this.formInfo.FormAllowSubmit = true;
+        this.formInfo.FormSubmitAllow = true;
         this.cmsToastrService.typeError(error);
         this.loading.display = false;
       }
@@ -143,7 +143,7 @@ export class PollingVoteEditComponent implements OnInit {
     this.loading.display = true;
     this.pollingVoteService.ServiceEdit(this.dataModel).subscribe(
       (next) => {
-        this.formInfo.FormAllowSubmit = true;
+        this.formInfo.FormSubmitAllow = true;
         this.dataModelResult = next;
         if (next.IsSuccess) {
           this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
@@ -157,7 +157,7 @@ export class PollingVoteEditComponent implements OnInit {
         this.loading.display = false;
       },
       (error) => {
-        this.formInfo.FormAllowSubmit = true;
+        this.formInfo.FormSubmitAllow = true;
         this.cmsToastrService.typeError(error);
         this.loading.display = false;
       }
@@ -167,7 +167,7 @@ export class PollingVoteEditComponent implements OnInit {
     if (!this.formGroup.valid) {
       return;
     }
-    this.formInfo.FormAllowSubmit = false;
+    this.formInfo.FormSubmitAllow = false;
     if (this.ComponentAction === ComponentActionEnum.add) {
       this.DataAddContent();
     }

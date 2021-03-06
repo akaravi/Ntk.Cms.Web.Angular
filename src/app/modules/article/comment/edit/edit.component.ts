@@ -118,7 +118,7 @@ export class ArticleCommentEditComponent implements OnInit {
     this.dataModel.LinkContentId = this.requestContentId;
     this.articleCommentService.ServiceAdd(this.dataModel).subscribe(
       (next) => {
-        this.formInfo.FormAllowSubmit = true;
+        this.formInfo.FormSubmitAllow = true;
         this.dataModelResult = next;
         if (next.IsSuccess) {
           this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
@@ -131,7 +131,7 @@ export class ArticleCommentEditComponent implements OnInit {
         this.loading.display = false;
       },
       (error) => {
-        this.formInfo.FormAllowSubmit = true;
+        this.formInfo.FormSubmitAllow = true;
         this.cmsToastrService.typeError(error);
         this.loading.display = false;
       }
@@ -143,7 +143,7 @@ export class ArticleCommentEditComponent implements OnInit {
     this.loading.display = true;
     this.articleCommentService.ServiceEdit(this.dataModel).subscribe(
       (next) => {
-        this.formInfo.FormAllowSubmit = true;
+        this.formInfo.FormSubmitAllow = true;
         this.dataModelResult = next;
         if (next.IsSuccess) {
           this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
@@ -157,7 +157,7 @@ export class ArticleCommentEditComponent implements OnInit {
         this.loading.display = false;
       },
       (error) => {
-        this.formInfo.FormAllowSubmit = true;
+        this.formInfo.FormSubmitAllow = true;
         this.cmsToastrService.typeError(error);
         this.loading.display = false;
       }
@@ -167,7 +167,7 @@ export class ArticleCommentEditComponent implements OnInit {
     if (!this.formGroup.valid) {
       return;
     }
-    this.formInfo.FormAllowSubmit = false;
+    this.formInfo.FormSubmitAllow = false;
     if (this.ComponentAction === ComponentActionEnum.add) {
       this.DataAddContent();
     }

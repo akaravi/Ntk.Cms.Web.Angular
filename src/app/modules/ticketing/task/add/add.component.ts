@@ -101,7 +101,7 @@ export class TicketingTaskAddComponent implements OnInit {
   }
 
   DataAddContent(): void {
-    this.formInfo.FormAllowSubmit = false;
+    this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
@@ -111,7 +111,7 @@ export class TicketingTaskAddComponent implements OnInit {
       .subscribe(
         async (next) => {
           this.loading.display = false;
-          this.formInfo.FormAllowSubmit = !next.IsSuccess;
+          this.formInfo.FormSubmitAllow = !next.IsSuccess;
           this.dataModelResult = next;
           if (next.IsSuccess) {
             this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
@@ -123,7 +123,7 @@ export class TicketingTaskAddComponent implements OnInit {
         },
         (error) => {
           this.loading.display = false;
-          this.formInfo.FormAllowSubmit = true;
+          this.formInfo.FormSubmitAllow = true;
           this.toasterService.typeErrorEdit(error);
         }
       );

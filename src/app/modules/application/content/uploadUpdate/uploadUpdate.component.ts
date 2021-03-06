@@ -28,7 +28,7 @@ export class ApplicationAppUploadUpdateComponent  implements OnInit {
     this.dataModel.AppVersion = this.dataItemModel.AppVersion;
     this.dataModel.LastBuildAppKey = this.dataItemModel.LastBuildAppKey;
     this.dataModel.LinkApplicationId = this.dataItemModel.Id;
-    this.formInfo.FormAllowSubmit = false;
+    this.formInfo.FormSubmitAllow = false;
     this.DataGetAccess();
   }
   DataGetAccess(): void {
@@ -59,19 +59,19 @@ export class ApplicationAppUploadUpdateComponent  implements OnInit {
       this.toasterService.typeErrorEdit('اپلکیشن مشخص نیست');
       return;
     }
-    this.formInfo.FormAllowSubmit = false;
+    this.formInfo.FormSubmitAllow = false;
     this.applicationAppService.ServiceUploadUpdate(this.dataModel).subscribe(
       (next) => {
         if (next.IsSuccess) {
-          this.formInfo.FormAllowSubmit = false;
+          this.formInfo.FormSubmitAllow = false;
           this.toasterService.typeSuccessAppUpload();
         } else {
-          this.formInfo.FormAllowSubmit = true;
+          this.formInfo.FormSubmitAllow = true;
           this.toasterService.typeErrorEdit(next.ErrorMessage);
         }
       },
       (error) => {
-        this.formInfo.FormAllowSubmit = true;
+        this.formInfo.FormSubmitAllow = true;
         this.toasterService.typeErrorEdit(error);
       });
 
@@ -84,7 +84,7 @@ export class ApplicationAppUploadUpdateComponent  implements OnInit {
     // console.log(model);
     if (model.uploadResponse && model.uploadResponse.Item && model.uploadResponse.Item.FileKey) {
       this.dataModel.UploadFileGUID = model.uploadResponse.Item.FileKey;
-      this.formInfo.FormAllowSubmit = true;
+      this.formInfo.FormSubmitAllow = true;
     }
   }
 }

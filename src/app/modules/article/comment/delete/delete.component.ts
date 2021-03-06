@@ -81,14 +81,14 @@ export class ArticleCommentDeleteComponent implements OnInit {
     if (!this.formGroup.valid) {
       return;
     }
-    this.formInfo.FormAllowSubmit = false;
-    this.formInfo.DisabledButtonSubmitted = true;
+    this.formInfo.FormSubmitAllow = false;
+    this.formInfo.ButtonSubmittedEnabled = false;
     this.loading.display = true;
     this.articleCommentService
       .ServiceDelete(this.requestId)
       .subscribe(
         (next) => {
-          this.formInfo.FormAllowSubmit = !next.IsSuccess;
+          this.formInfo.FormSubmitAllow = !next.IsSuccess;
           if (!next.IsSuccess) {
             this.formInfo.FormAlert = 'برروز خطا';
             this.formInfo.FormError = next.ErrorMessage;
@@ -99,14 +99,14 @@ export class ArticleCommentDeleteComponent implements OnInit {
             this.cmsToastrService.typeSuccessRemove();
             this.dialogRef.close({ dialogChangedDate: true });
           }
-          this.formInfo.DisabledButtonSubmitted = false;
+          this.formInfo.ButtonSubmittedEnabled = true;
           this.loading.display = false;
         },
         (error) => {
           this.formInfo.FormAlert = 'برروز خطا';
-          this.formInfo.FormAllowSubmit = true;
+          this.formInfo.FormSubmitAllow = true;
           this.cmsToastrService.typeError(error);
-          this.formInfo.DisabledButtonSubmitted = false;
+          this.formInfo.ButtonSubmittedEnabled = true;
           this.loading.display = false;
         }
       );

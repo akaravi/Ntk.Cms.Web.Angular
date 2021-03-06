@@ -68,13 +68,13 @@ export class TagDeleteComponent implements OnInit {
     }
 
     this.formInfo.FormError = '';
-    this.formInfo.FormAllowSubmit = false;
+    this.formInfo.FormSubmitAllow = false;
     this.dataModelItemStates.forEach((element) => {
       //
       element.ActionStart = true;
       this.newsContentService.ServiceDelete(element.Item.Id).subscribe(
         (next) => {
-          // this.formInfo.FormAllowSubmit = true;
+          // this.formInfo.FormSubmitAllow = true;
           // this.dataModelResult = next;
           element.ActionEnd = true;
           if (next.IsSuccess) {
@@ -87,7 +87,7 @@ export class TagDeleteComponent implements OnInit {
         },
         (error) => {
           element.ActionEnd = true;
-          // this.formInfo.FormAllowSubmit = true;
+          // this.formInfo.FormSubmitAllow = true;
           const title = 'برروی خطا در دریافت اطلاعات';
           this.cmsToastrService.typeError(error);
           element.Message = title + ' : ';

@@ -113,15 +113,15 @@ export class NewsCategoryDeleteComponent implements OnInit {
     if (!this.formGroup.valid) {
       return;
     }
-    this.formInfo.FormAllowSubmit = true;
+    this.formInfo.FormSubmitAllow = true;
     if (this.dataModel.NewCatId === this.requestId) {
       this.formInfo.FormAlert = 'برروز خطا';
       this.formInfo.FormError =
         'شناسه دسته بندی در حال حذف با دسته بندی جایگزین یکسان است';
-      this.formInfo.DisabledButtonSubmitted = false;
+      this.formInfo.ButtonSubmittedEnabled = true;
     }
 
-    this.formInfo.DisabledButtonSubmitted = true;
+    this.formInfo.ButtonSubmittedEnabled = false;
     this.loading.display = true;
     this.newsCategoryService
       .ServiceMove(this.requestId, this.dataModel.NewCatId)
@@ -135,15 +135,15 @@ export class NewsCategoryDeleteComponent implements OnInit {
             this.formInfo.FormAlert = 'جابجایی با موفقیت انجام شد';
             this.cmsToastrService.typeSuccessMove();
           }
-          this.formInfo.FormAllowSubmit = true;
-          this.formInfo.DisabledButtonSubmitted = false;
+          this.formInfo.FormSubmitAllow = true;
+          this.formInfo.ButtonSubmittedEnabled = true;
           this.loading.display = false;
         },
         (error) => {
           this.formInfo.FormAlert = 'برروز خطا';
           this.cmsToastrService.typeError(error);
-          this.formInfo.DisabledButtonSubmitted = false;
-          this.formInfo.FormAllowSubmit = true;
+          this.formInfo.ButtonSubmittedEnabled = true;
+          this.formInfo.FormSubmitAllow = true;
           this.loading.display = false;
         }
       );
@@ -156,14 +156,14 @@ export class NewsCategoryDeleteComponent implements OnInit {
     if (!this.formGroup.valid) {
       return;
     }
-    this.formInfo.FormAllowSubmit = false;
-    this.formInfo.DisabledButtonSubmitted = true;
+    this.formInfo.FormSubmitAllow = false;
+    this.formInfo.ButtonSubmittedEnabled = false;
     this.loading.display = true;
     this.newsCategoryService
       .ServiceDelete(this.requestId)
       .subscribe(
         (next) => {
-          this.formInfo.FormAllowSubmit = !next.IsSuccess;
+          this.formInfo.FormSubmitAllow = !next.IsSuccess;
           if (!next.IsSuccess) {
             this.formInfo.FormAlert = 'برروز خطا';
             this.formInfo.FormError = next.ErrorMessage;
@@ -174,14 +174,14 @@ export class NewsCategoryDeleteComponent implements OnInit {
             this.cmsToastrService.typeSuccessRemove();
             this.dialogRef.close({ dialogChangedDate: true });
           }
-          this.formInfo.DisabledButtonSubmitted = false;
+          this.formInfo.ButtonSubmittedEnabled = true;
           this.loading.display = false;
         },
         (error) => {
           this.formInfo.FormAlert = 'برروز خطا';
-          this.formInfo.FormAllowSubmit = true;
+          this.formInfo.FormSubmitAllow = true;
           this.cmsToastrService.typeError(error);
-          this.formInfo.DisabledButtonSubmitted = false;
+          this.formInfo.ButtonSubmittedEnabled = true;
           this.loading.display = false;
         }
       );
@@ -198,9 +198,9 @@ export class NewsCategoryDeleteComponent implements OnInit {
       this.formInfo.FormAlert = 'برروز خطا';
       this.formInfo.FormError =
         'شناسه دسته بندی در حال حذف با دسته بندی جایگزین یکسان است';
-      this.formInfo.DisabledButtonSubmitted = true;
+      this.formInfo.ButtonSubmittedEnabled = false;
     } else {
-      this.formInfo.DisabledButtonSubmitted = false;
+      this.formInfo.ButtonSubmittedEnabled = true;
       this.formInfo.FormError = '';
     }
   }

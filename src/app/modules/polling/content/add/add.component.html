@@ -66,7 +66,7 @@
           <angular-editor [placeholder]="'Enter text here...'" [config]="publicHelper.editorConfig" [(ngModel)]="dataModel.Body"
             name="dataModel.Body"></angular-editor>
 
-          <div *ngIf="formInfo.FormAllowSubmit">
+          <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
               بعدی
@@ -90,7 +90,7 @@
 
           </mat-form-field>
 
-          <div *ngIf="formInfo.FormAllowSubmit">
+          <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
               قبلی
@@ -165,7 +165,7 @@
               [openFilemanagerButtonLabelKey]="'select'" [selectFileType]="selectFileTypeMovie"
               [openFilemanagerButtonView]="false"></cms-file-manager>
           </div>
-          <div *ngIf="formInfo.FormAllowSubmit">
+          <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
               قبلی
@@ -188,7 +188,7 @@
 
 
 
-          <div *ngIf="formInfo.FormAllowSubmit">
+          <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
               قبلی
@@ -251,7 +251,7 @@
           </div>
           <!-- TABLE  -->
 
-          <div *ngIf="formInfo.FormAllowSubmit">
+          <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
               قبلی
@@ -265,7 +265,7 @@
         <mat-step label="موقعیت مکانی" state="loaction">
           <p>روی نقشه کلیک کنید تا موقیت مکانی مشخص گردد</p>
           <app-cms-map (map$)="receiveMap($event)" (zoom$)="receiveZoom($event)" id='main-map'></app-cms-map>
-          <div *ngIf="formInfo.FormAllowSubmit">
+          <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
               قبلی

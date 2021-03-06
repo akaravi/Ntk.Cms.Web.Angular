@@ -132,7 +132,7 @@ export class FileCategoryEditComponent implements OnInit {
     }
     this.fileCategoryService.ServiceAdd(this.dataModel).subscribe(
       (next) => {
-        this.formInfo.FormAllowSubmit = true;
+        this.formInfo.FormSubmitAllow = true;
         this.dataModelResult = next;
         if (next.IsSuccess) {
           this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
@@ -145,7 +145,7 @@ export class FileCategoryEditComponent implements OnInit {
         this.loading.display = false;
       },
       (error) => {
-        this.formInfo.FormAllowSubmit = true;
+        this.formInfo.FormSubmitAllow = true;
         this.cmsToastrService.typeError(error);
         this.loading.display = false;
       }
@@ -157,7 +157,7 @@ export class FileCategoryEditComponent implements OnInit {
     this.loading.display = true;
     this.fileCategoryService.ServiceEdit(this.dataModel).subscribe(
       (next) => {
-        this.formInfo.FormAllowSubmit = true;
+        this.formInfo.FormSubmitAllow = true;
         this.dataModelResult = next;
         if (next.IsSuccess) {
           this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
@@ -171,7 +171,7 @@ export class FileCategoryEditComponent implements OnInit {
         this.loading.display = false;
       },
       (error) => {
-        this.formInfo.FormAllowSubmit = true;
+        this.formInfo.FormSubmitAllow = true;
         this.cmsToastrService.typeError(error);
         this.loading.display = false;
       }
@@ -181,7 +181,7 @@ export class FileCategoryEditComponent implements OnInit {
     if (!this.formGroup.valid) {
       return;
     }
-    this.formInfo.FormAllowSubmit = false;
+    this.formInfo.FormSubmitAllow = false;
     if (this.ComponentAction === ComponentActionEnum.add) {
       this.DataAddContent();
     }

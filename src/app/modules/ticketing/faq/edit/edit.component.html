@@ -66,8 +66,8 @@
                             <td>{{item.key}}</td>
                             <td>{{item.value}}</td>
                             <td><button (click)="onActionFileSelectedRemove(item.key)" type="button" class="btn btn-danger  ml-2">حذف</button></td>
-                        </tr> 
-                    
+                        </tr>
+
                     </table>
                     <!-- TABLE  -->
                 </div>
@@ -77,7 +77,7 @@
                 <small class="form-text text-muted danger">{{ formInfo.FormError }}
                 </small>
             </div>
-            <div class="form-actions" *ngIf="formInfo.FormAllowSubmit">
+            <div class="form-actions" *ngIf="formInfo.FormSubmitAllow">
                 <button type="button" (click)="onFormCancel()" class="btn btn-raised btn-warning mr-1">
                     <i class="ft-x"></i> انصراف
                 </button>

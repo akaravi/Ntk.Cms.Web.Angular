@@ -15,7 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ClipboardModule } from 'ngx-clipboard';
-import { TestModule } from './modules/test/test.module';
+import { TestModule } from './testModules/test/test.module';
 import { NtkSmartModalModule } from 'ngx-ntk-smart-module';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { HttpConfigInterceptor } from './core/interceptor/httpConfigInterceptor';
@@ -48,7 +48,7 @@ export function getHighlightLanguages(): any {
       positionClass: 'toast-top-right',
       preventDuplicates: true,
       closeButton: true,
-      extendedTimeOut:0,
+      extendedTimeOut: 0,
     }),
     SplashScreenModule,
     InlineSVGModule.forRoot(),

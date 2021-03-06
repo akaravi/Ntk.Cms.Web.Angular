@@ -76,7 +76,7 @@ export class PollingVoteAddComponent implements OnInit {
     this.dataModel.LinkPollingContentId = this.requestContentId;
     this.pollingVoteService.ServiceAdd(this.dataModel).subscribe(
       (next) => {
-        this.formInfo.FormAllowSubmit = true;
+        this.formInfo.FormSubmitAllow = true;
         this.dataModelResult = next;
         if (next.IsSuccess) {
           this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
@@ -89,7 +89,7 @@ export class PollingVoteAddComponent implements OnInit {
         this.loading.display = false;
       },
       (error) => {
-        this.formInfo.FormAllowSubmit = true;
+        this.formInfo.FormSubmitAllow = true;
         this.cmsToastrService.typeError(error);
         this.loading.display = false;
       }
@@ -100,7 +100,7 @@ export class PollingVoteAddComponent implements OnInit {
     if (!this.formGroup.valid) {
       return;
     }
-    this.formInfo.FormAllowSubmit = false;
+    this.formInfo.FormSubmitAllow = false;
 
       this.DataAddContent();
 

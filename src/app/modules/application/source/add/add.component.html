@@ -135,7 +135,7 @@
 
 
 
-          <div *ngIf="formInfo.FormAllowSubmit">
+          <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
               بعدی
@@ -189,7 +189,7 @@
             <mat-icon *ngIf="fieldsInfo['FireBaseServerKey']?.AccessAddField" matSuffix>mode_edit</mat-icon>
           </mat-form-field>
 
-          <div *ngIf="formInfo.FormAllowSubmit">
+          <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
               قبلی
@@ -223,7 +223,7 @@
               [openFilemanagerButtonView]="false"></cms-file-manager>
           </div>
 
-          <div *ngIf="formInfo.FormAllowSubmit">
+          <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
               قبلی
@@ -402,7 +402,7 @@
 
 
 
-          <div *ngIf="formInfo.FormAllowSubmit">
+          <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
               قبلی
@@ -500,7 +500,7 @@
           </mat-form-field>
 
 
-          <div *ngIf="formInfo.FormAllowSubmit">
+          <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
               قبلی
