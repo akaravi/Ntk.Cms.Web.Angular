@@ -14,23 +14,23 @@ export class CmsStatistListComponent implements OnInit {
   public optionsData: ComponentOptionStatistModel = new ComponentOptionStatistModel();
   @Output()
   optionsChange: EventEmitter<ComponentOptionStatistModel> = new EventEmitter<ComponentOptionStatistModel>();
-  @Input() set options(model: ComponentOptionStatistModel) {
+    @Input() set options(model: ComponentOptionStatistModel) {
     if (!model) {
       model = new ComponentOptionStatistModel();
     }
     this.optionsData = model;
     this.optionsData.childMethods = {
-      runStatist: (model: Array<FilterDataModel>) => this.runStatist(model),
+      runStatist: (model: Map<string, number>) => this.runStatist(model),
     };
     this.optionsChange.emit(model);
   }
   get options(): ComponentOptionStatistModel {
     return this.optionsData;
   }
-  constructor() {}
-
-  ngOnInit(): void {}
-  runStatist(model: Array<FilterDataModel>): void {
-    // todo: karavi;
+  constructor() { }
+  modelData: Map<string, number> = new Map<string, number>();
+  ngOnInit(): void { }
+  runStatist(model: Map<string, number>): void {
+    this.modelData = model;
   }
 }

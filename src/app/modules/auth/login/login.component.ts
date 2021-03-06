@@ -79,7 +79,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
 
-  submit(): void {
+  onActionSubmit(): void {
     this.formInfo.ButtonSubmittedEnabled = false;
     this.hasError = false;
     this.modelData.CaptchaKey = this.captchaModel.Key;
@@ -93,7 +93,12 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.cmsToastrService.typeErrorLogin(res.ErrorMessage);
           this.onCaptchaOrder();
         }
-      });
+      },
+      (error)=>{
+        this.formInfo.ButtonSubmittedEnabled = true;
+        this.cmsToastrService.typeError(error);
+      }
+      );
   }
 
   onCaptchaOrder(): void {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CoreAuthService, EnumSortType, ErrorExceptionResult, NewsCommentModel, NewsCommentService, NewsContentModel, ntkCmsApiStoreService, TokenInfoModel } from 'ntk-cms-api';
+import { CoreAuthService, EnumRecordStatus, EnumSortType, ErrorExceptionResult, NewsCommentModel, NewsCommentService, NewsContentModel, ntkCmsApiStoreService, TokenInfoModel } from 'ntk-cms-api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FilterModel, FilterDataModel } from 'ntk-cms-api';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -76,7 +76,7 @@ export class NewsCommentListComponent implements OnInit {
 
   ngOnInit(): void {
     this.requestContentId = Number(this.activatedRoute.snapshot.paramMap.get('ContentId'));
-  
+
     this.DataGetAll();
     this.tokenInfo =  this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
       this.cmsApiStoreSubscribe =  this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
@@ -273,8 +273,44 @@ export class NewsCommentListComponent implements OnInit {
       }
     });
   }
-  onActionbuttonStatist(): void {
-    this.optionsStatist.childMethods.runStatist(this.filteModelContent.Filters);
+   onActionbuttonStatist(): void {
+    this.optionsStatist.data.show = !this.optionsStatist.data.show;
+    if (!this.optionsStatist.data.show) {
+      return;
+    }
+    const statist = new Map<string, number>();
+    statist.set('Active', 0);
+    statist.set('All', 0);
+    this.newsCommentService.ServiceGetCount(this.filteModelContent).subscribe(
+      (next) => {
+        if (next.IsSuccess) {
+          statist.set('All', next.TotalRowCount);
+          this.optionsStatist.childMethods.runStatist(statist);
+        }
+      },
+      (error) => {
+        this.cmsToastrService.typeError(error);
+      }
+    );
+
+    const filterStatist1 = this.filteModelContent;
+    const fastFilter = new FilterDataModel();
+    fastFilter.PropertyName = 'RecordStatus';
+    fastFilter.Value = EnumRecordStatus.Available;
+    filterStatist1.Filters.push(fastFilter);
+    this.newsCommentService.ServiceGetCount(filterStatist1).subscribe(
+      (next) => {
+        if (next.IsSuccess) {
+          statist.set('Active', next.TotalRowCount);
+          this.optionsStatist.childMethods.runStatist(statist);
+        }
+      }
+      ,
+      (error) => {
+        this.cmsToastrService.typeError(error);
+      }
+    );
+
   }
   onActionbuttonExport(): void {
     this.optionsExport.data.show = !this.optionsExport.data.show;

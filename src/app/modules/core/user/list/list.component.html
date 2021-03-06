@@ -13,7 +13,7 @@
       </a>
 
       <a class="btn btn-success btn-sm BTN">
-        <mat-slide-toggle [(ngModel)]="optionsStatist.data.show" (click)="onActionbuttonStatist()">آمار
+        <mat-slide-toggle  (click)="onActionbuttonStatist()">آمار
         </mat-slide-toggle>
       </a>
       <button (click)="onActionbuttonExport()" type="button" class="btn btn-bg-info BTN">خروجی فایل</button>
@@ -57,11 +57,16 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header> نام کاربری </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Username}} </mat-cell>
         </ng-container>
-        <!-- Email Column -->
-        <ng-container matColumnDef="Email">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.Email}} </mat-cell>
+        <!-- Mobile Column -->
+        <ng-container matColumnDef="Mobile">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Mobile </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.Mobile}} </mat-cell>
         </ng-container>
+           <!-- Email Column -->
+           <ng-container matColumnDef="Email">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.Email}} </mat-cell>
+          </ng-container>
         <!-- Name Column -->
         <ng-container matColumnDef="Name">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>

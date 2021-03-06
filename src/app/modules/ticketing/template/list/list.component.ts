@@ -10,7 +10,8 @@ import {
   FilterModel,
   ntkCmsApiStoreService,
   TokenInfoModel,
-  TicketingDepartemenModel
+  TicketingDepartemenModel,
+  EnumRecordStatus
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -278,8 +279,44 @@ export class TicketingTemplateListComponent implements OnInit {
       }
       );
   }
-  onActionbuttonStatist(): void {
-    this.optionsStatist.childMethods.runStatist(this.filteModelContent.Filters);
+   onActionbuttonStatist(): void {
+    this.optionsStatist.data.show = !this.optionsStatist.data.show;
+    if (!this.optionsStatist.data.show) {
+      return;
+    }
+    const statist = new Map<string, number>();
+    statist.set('Active', 0);
+    statist.set('All', 0);
+    this.ticketingTemplateService.ServiceGetCount(this.filteModelContent).subscribe(
+      (next) => {
+        if (next.IsSuccess) {
+          statist.set('All', next.TotalRowCount);
+          this.optionsStatist.childMethods.runStatist(statist);
+        }
+      },
+      (error) => {
+        this.cmsToastrService.typeError(error);
+      }
+    );
+
+    const filterStatist1 = this.filteModelContent;
+    const fastFilter = new FilterDataModel();
+    fastFilter.PropertyName = 'RecordStatus';
+    fastFilter.Value = EnumRecordStatus.Available;
+    filterStatist1.Filters.push(fastFilter);
+    this.ticketingTemplateService.ServiceGetCount(filterStatist1).subscribe(
+      (next) => {
+        if (next.IsSuccess) {
+          statist.set('Active', next.TotalRowCount);
+          this.optionsStatist.childMethods.runStatist(statist);
+        }
+      }
+      ,
+      (error) => {
+        this.cmsToastrService.typeError(error);
+      }
+    );
+
   }
   onActionbuttonExport(): void {
     this.optionsExport.data.show = !this.optionsExport.data.show;

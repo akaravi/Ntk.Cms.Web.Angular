@@ -11,6 +11,7 @@ import {
   PollingContentService,
   ntkCmsApiStoreService,
   TokenInfoModel,
+  EnumRecordStatus,
 } from 'ntk-cms-api';
 import { PublicHelper } from '../../../../core/helpers/publicHelper';
 import { CmsToastrService } from '../../../../core/services/cmsToastr.service';
@@ -225,8 +226,44 @@ export class PollingContentListComponent implements OnInit , OnDestroy  {
       }
     });
   }
-  onActionbuttonStatist(): void {
-    this.optionsStatist.childMethods.runStatist(this.filteModelContent.Filters);
+   onActionbuttonStatist(): void {
+    this.optionsStatist.data.show = !this.optionsStatist.data.show;
+    if (!this.optionsStatist.data.show) {
+      return;
+    }
+    const statist = new Map<string, number>();
+    statist.set('Active', 0);
+    statist.set('All', 0);
+    this.pollingContentService.ServiceGetCount(this.filteModelContent).subscribe(
+      (next) => {
+        if (next.IsSuccess) {
+          statist.set('All', next.TotalRowCount);
+          this.optionsStatist.childMethods.runStatist(statist);
+        }
+      },
+      (error) => {
+        this.cmsToastrService.typeError(error);
+      }
+    );
+
+    const filterStatist1 = this.filteModelContent;
+    const fastFilter = new FilterDataModel();
+    fastFilter.PropertyName = 'RecordStatus';
+    fastFilter.Value = EnumRecordStatus.Available;
+    filterStatist1.Filters.push(fastFilter);
+    this.pollingContentService.ServiceGetCount(filterStatist1).subscribe(
+      (next) => {
+        if (next.IsSuccess) {
+          statist.set('Active', next.TotalRowCount);
+          this.optionsStatist.childMethods.runStatist(statist);
+        }
+      }
+      ,
+      (error) => {
+        this.cmsToastrService.typeError(error);
+      }
+    );
+
   }
   onActionbuttonExport(): void {
     this.optionsExport.data.show = !this.optionsExport.data.show;

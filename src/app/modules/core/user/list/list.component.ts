@@ -10,7 +10,9 @@ import {
   ErrorExceptionResult,
   FilterModel,
   ntkCmsApiStoreService,
-  TokenInfoModel
+  TokenInfoModel,
+  FilterDataModel,
+  EnumRecordStatus
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -67,6 +69,7 @@ export class CoreUserListComponent implements OnInit {
     'Id',
     'RecordStatus',
     'Username',
+    'Mobile',
     'Email',
     'Name',
     'LastName',
@@ -77,6 +80,7 @@ export class CoreUserListComponent implements OnInit {
 
   columnsToDisplay: string[] = ['Id', 'Writer'];
   expandedElement: CoreUserModel | null;
+  cmsApiStoreSubscribe: Subscription;
 
   ngOnInit(): void {
     this.filteModelContent.SortColumn = 'Title';
@@ -87,8 +91,7 @@ export class CoreUserListComponent implements OnInit {
       this.tokenInfo = next;
     });
   }
-  cmsApiStoreSubscribe: Subscription;
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
   DataGetAll(): void {
@@ -283,7 +286,43 @@ export class CoreUserListComponent implements OnInit {
     this.router.navigate(['/core/siteuser/', this.tableRowSelected.Id]);
   }
   onActionbuttonStatist(): void {
-    this.optionsStatist.childMethods.runStatist(this.filteModelContent.Filters);
+    this.optionsStatist.data.show = !this.optionsStatist.data.show;
+    if (!this.optionsStatist.data.show) {
+      return;
+    }
+    const statist = new Map<string, number>();
+    statist.set('Active', 0);
+    statist.set('All', 0);
+    this.coreUserService.ServiceGetCount(this.filteModelContent).subscribe(
+      (next) => {
+        if (next.IsSuccess) {
+          statist.set('All', next.TotalRowCount);
+          this.optionsStatist.childMethods.runStatist(statist);
+        }
+      },
+      (error) => {
+        this.cmsToastrService.typeError(error);
+      }
+    );
+
+    const filterStatist1 = this.filteModelContent;
+    const fastFilter = new FilterDataModel();
+    fastFilter.PropertyName = 'RecordStatus';
+    fastFilter.Value = EnumRecordStatus.Available;
+    filterStatist1.Filters.push(fastFilter);
+    this.coreUserService.ServiceGetCount(filterStatist1).subscribe(
+      (next) => {
+        if (next.IsSuccess) {
+          statist.set('Active', next.TotalRowCount);
+          this.optionsStatist.childMethods.runStatist(statist);
+        }
+      }
+      ,
+      (error) => {
+        this.cmsToastrService.typeError(error);
+      }
+    );
+
   }
   onActionbuttonExport(): void {
     this.optionsExport.data.show = !this.optionsExport.data.show;

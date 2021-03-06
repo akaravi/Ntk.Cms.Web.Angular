@@ -1,4 +1,4 @@
-import { AccessModel, FilterDataModel } from 'ntk-cms-api';
+import {  FilterDataModel } from 'ntk-cms-api';
 import { ComponentOptionModel } from './componentOptionModel';
 
 export class ComponentOptionStatistModel
@@ -17,7 +17,7 @@ export class ComponentOptionStatistModel
 }
 
 export class ComponentOptionStatistChildMethodsModel {
-  runStatist: (x:  Array<FilterDataModel>) => void;
+  runStatist: (x:  Map<string,number>) => void;
 }
 export class ComponentOptionStatistParentMethodsModel {
   onSubmit: (x: Array<FilterDataModel>) => void;

@@ -197,7 +197,7 @@ export class CmsTokenAccessComponent implements OnInit {
         this.loadingStatus = false;
         if (next.IsSuccess) {
           const title = 'اطلاعات ';
-          if (next.Item.SiteId === this.SiteId) {
+          if (next.Item.SiteId === +this.SiteId) {
             const message = 'دسترسی به سایت جدید تایید شد';
             this.cmsToastrService.toastr.success(message, title);
           } else {

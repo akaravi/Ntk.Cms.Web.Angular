@@ -1,13 +1,8 @@
 <!--begin::Signin-->
 <div class="login-form login-signin">
   <!--begin::Form-->
-  <form
-    class="form"
-    [formGroup]="loginForm"
-    novalidate="novalidate"
-    id="kt_login_signin_form"
-    (ngSubmit)="submit()"
-  >
+  <form class="form" [formGroup]="loginForm" novalidate="novalidate" id="kt_login_signin_form"
+    (ngSubmit)="onActionSubmit()">
     <!--begin::Title-->
     <div class="pb-13 pt-lg-0 pt-5">
       <h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">
@@ -19,8 +14,7 @@
 
     <!-- begin::Alert error-->
     <ng-container *ngIf="hasError">
-      <div
-        class="mb-10 alert alert-custom alert-light-danger alert-dismissible">
+      <div class="mb-10 alert alert-custom alert-light-danger alert-dismissible">
         <div class="alert-text">The login details are incorrect</div>
       </div>
     </ng-container>
@@ -29,141 +23,91 @@
     <!--begin::Form group-->
     <div class="form-group">
       <label class="font-size-h6 font-weight-bolder text-dark">{{'AUTH.INPUT.EMAIL' | translate}}</label>
-      <input
-        [(ngModel)]="modelData.Email"
-        class="form-control form-control-solid h-auto py-7 px-6 rounded-lg"
-        type="email"
-        name="email"
-        formControlName="email"
-        autocomplete="off"
-        [ngClass]="{ 'is-invalid': loginForm.controls['email'].invalid }"
-      />
-      <ng-container
-        [ngTemplateOutlet]="formError"
-        [ngTemplateOutletContext]="{
+      <input [(ngModel)]="modelData.Email" class="form-control form-control-solid h-auto py-7 px-6 rounded-lg"
+        type="email" name="email" formControlName="email" autocomplete="off"
+        [ngClass]="{ 'is-invalid': loginForm.controls['email'].invalid }" />
+      <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
           validation: 'required',
           message: 'لطفا ایمیل خود را وارد کنید',
           control: loginForm.controls['email']
-        }"
-      ></ng-container>
-      <ng-container
-        [ngTemplateOutlet]="formError"
-        [ngTemplateOutletContext]="{
+        }"></ng-container>
+      <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
           validation: 'email',
           message: 'ایمیل مورد نظر نامعتبر است',
           control: loginForm.controls['email']
-        }"
-      ></ng-container>
-      <ng-container
-        [ngTemplateOutlet]="formError"
-        [ngTemplateOutletContext]="{
+        }"></ng-container>
+      <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
           validation: 'minLength',
           message: 'ایمیل باید حداقل 3 کارکتر داشته باشد',
           control: loginForm.controls['email']
-        }"
-      ></ng-container>
-      <ng-container
-        [ngTemplateOutlet]="formError"
-        [ngTemplateOutletContext]="{
+        }"></ng-container>
+      <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
           validation: 'maxLength',
           message: 'ایمیل باید حداکثر دارای 320 کاراکتر باشد',
           control: loginForm.controls['email']
-        }"
-      ></ng-container>
+        }"></ng-container>
     </div>
     <!--end::Form group-->
 
     <!--begin::Form group-->
     <div class="form-group">
       <div class="d-flex justify-content-between mt-n5">
-        <label class="font-size-h6 font-weight-bolder text-dark pt-5">{{'AUTH.INPUT.PASSWORD' | translate}}</label
-        >
+        <label class="font-size-h6 font-weight-bolder text-dark pt-5">{{'AUTH.INPUT.PASSWORD' | translate}}</label>
 
       </div>
 
-      <input
-        [(ngModel)]="modelData.Password"
-        class="form-control form-control-solid h-auto py-7 px-6 rounded-lg"
-        type="password"
-        name="password"
-        autocomplete="off"
-        formControlName="password"
-        [ngClass]="{ 'is-invalid': loginForm.controls['password'].invalid }"
-      />
-      <ng-container
-        [ngTemplateOutlet]="formError"
-        [ngTemplateOutletContext]="{
+      <input [(ngModel)]="modelData.Password" class="form-control form-control-solid h-auto py-7 px-6 rounded-lg"
+        type="password" name="password" autocomplete="off" formControlName="password"
+        [ngClass]="{ 'is-invalid': loginForm.controls['password'].invalid }" />
+      <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
           validation: 'required',
           message: 'لطفا پسورد خود را وارد کنید' +
            '',
           control: loginForm.controls['password']
-        }"
-      ></ng-container>
-      <ng-container
-        [ngTemplateOutlet]="formError"
-        [ngTemplateOutletContext]="{
+        }"></ng-container>
+      <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
           validation: 'minlength',
           message: 'پسورد باید حداقل 3 کارکتر داشته باشد',
           control: loginForm.controls['password']
-        }"
-      ></ng-container>
-      <ng-container
-        [ngTemplateOutlet]="formError"
-        [ngTemplateOutletContext]="{
+        }"></ng-container>
+      <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
           validation: 'maxLength',
           message: 'پسورد باید حداکثر دارای 320 کاراکتر باشد',
           control: loginForm.controls['password']
-        }"
-      ></ng-container>
+        }"></ng-container>
     </div>
     <!--end::Form group-->
 
     <!--begin::Form group-->
     <div class="form-group">
       <img src="{{captchaModel.Image}}" (click)="onCaptchaOrder()" class="mb-3" alt="">
-      <input
-              [(ngModel)]="modelData.CaptchaText"
-              class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6"
-              type="text"
-              placeholder="{{'AUTH.INPUT.CAPTCHACODE' | translate}}"
-              name="captcha"
-              autocomplete="off"
-              formControlName="captcha"
-              [ngClass]="{'is-invalid': loginForm.controls['captcha'].invalid}"/>
-      <ng-container
-              [ngTemplateOutlet]="formError"
-              [ngTemplateOutletContext]="{
+      <input [(ngModel)]="modelData.CaptchaText"
+        class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6" type="text"
+        placeholder="{{'AUTH.INPUT.CAPTCHACODE' | translate}}" name="captcha" autocomplete="off"
+        formControlName="captcha" [ngClass]="{'is-invalid': loginForm.controls['captcha'].invalid}" />
+      <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
           validation: 'required',
           message: 'لطفا کد کپچا را وارد کنید',
           control: loginForm.controls['captcha']
-        }"
-      ></ng-container>
+        }"></ng-container>
     </div>
     <!--end::Form group-->
 
     <!--begin::Action-->
     <div class="pb-lg-0 pb-5">
-      <button
-        type="submit"
-        class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3"
-        style="margin: 5px;"
-        [disabled]="loginForm.invalid">
+      <button  type="submit"
+        class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3" style="margin: 5px;"
+        [disabled]="loginForm.invalid || !formInfo.ButtonSubmittedEnabled">
         {{'AUTH.LOGIN.BUTTON' | translate}}
       </button>
-      <button
-      type="button"
-      [routerLink]="['/auth/forgot-password']"
-      class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3"
-      style="margin: 5px;">
-      {{'AUTH.FORGOT.TITLE' | translate}}
-    </button>
-    <button
-    type="button"
-    [routerLink]="['/auth/registration']"
-    class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3"
-    style="margin: 5px;">
-    {{ 'AUTH.GENERAL.SIGNUP_BUTTON' | translate }}
-  </button>
+      <button type="button" [routerLink]="['/auth/forgot-password']"
+        class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3" style="margin: 5px;">
+        {{'AUTH.FORGOT.TITLE' | translate}}
+      </button>
+      <button type="button" [routerLink]="['/auth/registration']"
+        class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3" style="margin: 5px;">
+        {{ 'AUTH.GENERAL.SIGNUP_BUTTON' | translate }}
+      </button>
 
 
 
@@ -177,15 +121,8 @@
 </div>
 <!--end::Signin-->
 
-<ng-template
-  #formError
-  let-control="control"
-  let-message="message"
-  let-validation="validation"
->
-  <ng-container
-    *ngIf="control.hasError(validation) && (control.dirty || control.touched)"
-  >
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+  <ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
     <div class="fv-plugins-message-container">
       <div class="fv-help-block">
         {{ message }}

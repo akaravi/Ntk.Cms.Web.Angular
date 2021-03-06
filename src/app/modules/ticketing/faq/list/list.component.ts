@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
   TicketingFaqModel,
@@ -12,7 +12,8 @@ import {
   FilterModel,
   ntkCmsApiStoreService,
   TokenInfoModel,
-  TicketingDepartemenModel
+  TicketingDepartemenModel,
+  EnumRecordStatus
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -33,15 +34,16 @@ import { TicketingFaqAddComponent } from '../add/add.component';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class TicketingFaqListComponent implements OnInit {
-  constructor(private ticketingFaqService: TicketingFaqService,
-              private activatedRoute: ActivatedRoute,
-              private cmsApiStore: ntkCmsApiStoreService,
-              public publicHelper: PublicHelper,
-              private cmsToastrService: CmsToastrService,
-              private cmsConfirmationDialogService: CmsConfirmationDialogService,
-              private router: Router,
-              public dialog: MatDialog) {
+export class TicketingFaqListComponent implements OnInit, OnDestroy {
+  constructor(
+    private ticketingFaqService: TicketingFaqService,
+    private activatedRoute: ActivatedRoute,
+    private cmsApiStore: ntkCmsApiStoreService,
+    public publicHelper: PublicHelper,
+    private cmsToastrService: CmsToastrService,
+    private cmsConfirmationDialogService: CmsConfirmationDialogService,
+    private router: Router,
+    public dialog: MatDialog) {
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
@@ -173,7 +175,7 @@ export class TicketingFaqListComponent implements OnInit {
 
   onActionbuttonNewRow(): void {
     if (this.categoryModelSelected == null &&
-      (this.categoryModelSelected && this.categoryModelSelected.Id == 0) && (
+      (this.categoryModelSelected && this.categoryModelSelected.Id === 0) && (
         this.requestDepartemenId == null ||
         this.requestDepartemenId === 0)
     ) {
@@ -283,8 +285,44 @@ export class TicketingFaqListComponent implements OnInit {
       }
       );
   }
-  onActionbuttonStatist(): void {
-    this.optionsStatist.childMethods.runStatist(this.filteModelContent.Filters);
+   onActionbuttonStatist(): void {
+    this.optionsStatist.data.show = !this.optionsStatist.data.show;
+    if (!this.optionsStatist.data.show) {
+      return;
+    }
+    const statist = new Map<string, number>();
+    statist.set('Active', 0);
+    statist.set('All', 0);
+    this.ticketingFaqService.ServiceGetCount(this.filteModelContent).subscribe(
+      (next) => {
+        if (next.IsSuccess) {
+          statist.set('All', next.TotalRowCount);
+          this.optionsStatist.childMethods.runStatist(statist);
+        }
+      },
+      (error) => {
+        this.cmsToastrService.typeError(error);
+      }
+    );
+
+    const filterStatist1 = this.filteModelContent;
+    const fastFilter = new FilterDataModel();
+    fastFilter.PropertyName = 'RecordStatus';
+    fastFilter.Value = EnumRecordStatus.Available;
+    filterStatist1.Filters.push(fastFilter);
+    this.ticketingFaqService.ServiceGetCount(filterStatist1).subscribe(
+      (next) => {
+        if (next.IsSuccess) {
+          statist.set('Active', next.TotalRowCount);
+          this.optionsStatist.childMethods.runStatist(statist);
+        }
+      }
+      ,
+      (error) => {
+        this.cmsToastrService.typeError(error);
+      }
+    );
+
   }
   onActionbuttonExport(): void {
     this.optionsExport.data.show = !this.optionsExport.data.show;
