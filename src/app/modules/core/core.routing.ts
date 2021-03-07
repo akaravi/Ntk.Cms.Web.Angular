@@ -19,6 +19,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('./site/coreSite.module').then((m) => m.CoreSiteModule),
       },
+      {
+        path: 'sitecategory',
+        loadChildren: () =>
+          import('./siteCategory/coreSiteCategory.module').then((m) => m.CoreSiteCategoryModule),
+      },
     ]
   },
 ];

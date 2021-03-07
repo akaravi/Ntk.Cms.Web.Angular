@@ -22,6 +22,9 @@ export class CmsToastrService {
   typeSuccessAccessChange(): void {
     this.toastr.success('دسترسی با موفقیت تایید شد', this.now() + 'Success!');
   }
+  typeSuccessAddFirstSite(): void {
+    this.toastr.success('با موفقیت  اولین سامانه شما اضافه شد', this.now() + 'Success!');
+  }
   typeSuccessAdd(): void {
     this.toastr.success('با موفقیت اضافه شد', this.now() + 'Success!');
   }
@@ -305,6 +308,10 @@ export class CmsToastrService {
     if (str && str.length > 0) {
       message = message + ' error: ' + str;
     }
+    this.toastr.error(message, this.now() + 'Error!');
+  }
+  typeErrorMessage(message: string ): void {
+
     this.toastr.error(message, this.now() + 'Error!');
   }
   typeError(model: any, str: string = ''): void {

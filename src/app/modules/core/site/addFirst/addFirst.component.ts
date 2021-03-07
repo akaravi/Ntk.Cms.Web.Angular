@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   AuthRenewTokenModel,
   CaptchaModel,
@@ -10,12 +10,13 @@ import {
   CoreSiteCategoryService,
   CoreSiteService,
   DomainModel, ErrorExceptionResult,
-  FilterModel
+  FilterModel,
+  FormInfoModel
 } from 'ntk-cms-api';
-import {environment} from '../../../../../environments/environment';
-import {Router} from '@angular/router';
-import {CmsToastrService} from '../../../../core/services/cmsToastr.service';
-import {PublicHelper} from '../../../../core/helpers/publicHelper';
+import { environment } from '../../../../../environments/environment';
+import { Router } from '@angular/router';
+import { CmsToastrService } from '../../../../core/services/cmsToastr.service';
+import { PublicHelper } from '../../../../core/helpers/publicHelper';
 
 
 @Component({
@@ -28,27 +29,15 @@ export class CoreSiteAddFirstComponent implements OnInit {
   dataModel = new CoreSiteAddFirstSiteDtoModel();
   dataModelResultCategory: ErrorExceptionResult<CoreSiteCategoryModel>;
   filterModel = new FilterModel();
-  dataModelLoad = false;
   dataModelResultDomains = new ErrorExceptionResult<DomainModel>();
   captchaModel: CaptchaModel = new CaptchaModel();
-  private dateModleInput: any;
-
-  @Input()
-  set dateInput(model: any) {
-    this.dateModleInput = model;
-  }
-
-  get dateInput(): any {
-    return this.dateModleInput;
-  }
+  formInfo: FormInfoModel = new FormInfoModel();
 
   constructor(
     private cmsToastrService: CmsToastrService,
     private publicHelper: PublicHelper,
     private coreSiteService: CoreSiteService,
-    private coreSiteCategoryModuleService: CoreSiteCategoryModuleService,
     private coreAuthService: CoreAuthService,
-    private coreModuleService: CoreModuleService,
     private coreSiteCategoryService: CoreSiteCategoryService,
     private router: Router
   ) {
@@ -70,10 +59,7 @@ export class CoreSiteAddFirstComponent implements OnInit {
         }
       },
       (error) => {
-        this.cmsToastrService.toastr.error(
-          this.publicHelper.CheckError(error),
-          'خطا در دریافت اطلاعات وب سایتها'
-        );
+        this.cmsToastrService.typeError(error);
       }
     );
   }
@@ -86,10 +72,7 @@ export class CoreSiteAddFirstComponent implements OnInit {
         }
       },
       (error) => {
-        this.cmsToastrService.toastr.error(
-          this.publicHelper.CheckError(error),
-          'خطا در دریافت لیست دامنه های قابل استفاده'
-        );
+        this.cmsToastrService.typeError(error);
       }
     );
   }
@@ -113,26 +96,36 @@ export class CoreSiteAddFirstComponent implements OnInit {
     );
 
   }
-
-  onClickAddSite(): void {
-
+  onFormSubmit(): void {
     this.dataModel.CaptchaKey = this.captchaModel.Key;
-
+    if (this.dataModel.LinkSiteCategoryId <= 0) {
+      this.cmsToastrService.typeErrorMessage("نوع سامانه انتخاب نشد است");
+      return;
+    }
+    if (this.dataModel.Title.length === 0) {
+      this.cmsToastrService.typeErrorMessage("عنوان سامانه انتخاب نشد است");
+      return;
+    }
+    if (this.dataModel.Domain.length === 0) {
+      this.cmsToastrService.typeErrorMessage("دامنه سامانه انتخاب نشد است");
+      return;
+    }
+    if (this.dataModel.SubDomain.length === 0) {
+      this.cmsToastrService.typeErrorMessage(" دامنه والد سامانه انتخاب نشد است");
+      return;
+    }
     this.coreSiteService.ServiceAddFirstSite(this.dataModel).subscribe(
       (next) => {
         if (next.IsSuccess) {
+          this.cmsToastrService.typeSuccessAddFirstSite();
           this.clickSelectSite(next.Item.Id);
         } else {
           this.cmsToastrService.typeErrorAdd(next.ErrorMessage);
         }
-
       },
       (error) => {
-        this.cmsToastrService.toastr.error(
-          this.publicHelper.CheckError(error),
-          'خطا در ساخت وب سایت'
-        );
-      }
+        this.cmsToastrService.typeError(error);
+            }
     );
   }
 

@@ -33,6 +33,10 @@ export class CmsTokenAccessComponent implements OnInit {
 
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
 
+    if (this.tokenInfo && this.tokenInfo.UserId<=0 ) {
+      this.router.navigate(['/auth/login']);
+    }
+
     if (this.tokenInfo && this.tokenInfo.UserId > 0 && this.tokenInfo.SiteId <= 0) {
       this.router.navigate(['/core/site/selection']);
     }

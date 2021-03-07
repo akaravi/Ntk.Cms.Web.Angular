@@ -88,10 +88,8 @@ export class SelectionComponent implements OnInit {
             }
           },
           (error) => {
-            this.cmsToastrService.toastr.error(
-              this.publicHelper.CheckError(error),
-              'خطا در ورود'
-            );
+            this.cmsToastrService.typeError(error);
+
           }
         )
       );
