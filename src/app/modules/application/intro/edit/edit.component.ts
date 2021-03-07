@@ -35,7 +35,7 @@ export class ApplicationIntroEditComponent implements OnInit {
     public coreEnumService: CoreEnumService,
     public applicationEnumService: ApplicationEnumService,
     private applicationIntroService: ApplicationIntroService,
-    private toasterService: CmsToastrService,
+    private cmsToastrService: CmsToastrService,
     private router: Router) {
     this.fileManagerTree = new TreeModel();
   }
@@ -59,7 +59,7 @@ export class ApplicationIntroEditComponent implements OnInit {
   ngOnInit(): void {
     this.requestId = Number(this.activatedRoute.snapshot.paramMap.get('Id'));
     if (this.requestId === 0) {
-      this.toasterService.typeErrorAddRowParentIsNull();
+      this.cmsToastrService.typeErrorAddRowParentIsNull();
       return;
     }
     this.DataGetAccess();
@@ -75,11 +75,11 @@ export class ApplicationIntroEditComponent implements OnInit {
 
   onFormSubmit(): void {
     if (!this.formGroup.valid) {
-      this.toasterService.typeErrorFormInvalid();
+      this.cmsToastrService.typeErrorFormInvalid();
       return;
     }
     if (this.dataModel.LinkApplicationId <= 0) {
-      this.toasterService.typeErrorEdit('  برنامه مشخص  کنید');
+      this.cmsToastrService.typeErrorEdit('  برنامه مشخص  کنید');
 
       return;
     }
@@ -96,11 +96,11 @@ export class ApplicationIntroEditComponent implements OnInit {
             this.dataAccessModel = next.Access;
             this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
           } else {
-            this.toasterService.typeErrorGetAccess(next.ErrorMessage);
+            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
           }
         },
         (error) => {
-          this.toasterService.typeErrorGetAccess(error);
+          this.cmsToastrService.typeErrorGetAccess(error);
         }
       );
   }
@@ -121,13 +121,13 @@ export class ApplicationIntroEditComponent implements OnInit {
           if (next.IsSuccess) {
             this.dataModel = next.Item;
           } else {
-            this.toasterService.typeErrorGetOne(next.ErrorMessage);
+            this.cmsToastrService.typeErrorGetOne(next.ErrorMessage);
           }
         },
         (error) => {
           this.loading.display = false;
           this.formInfo.FormSubmitAllow = true;
-          this.toasterService.typeErrorGetOne(error);
+          this.cmsToastrService.typeErrorGetOne(error);
         }
       );
   }
@@ -146,16 +146,16 @@ export class ApplicationIntroEditComponent implements OnInit {
           this.dataModelResult = next;
           if (next.IsSuccess) {
             this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
-            this.toasterService.typeSuccessEdit();
+            this.cmsToastrService.typeSuccessEdit();
             this.router.navigate(['/application/source/']);
           } else {
-            this.toasterService.typeErrorEdit(next.ErrorMessage);
+            this.cmsToastrService.typeErrorEdit(next.ErrorMessage);
           }
         },
         (error) => {
           this.loading.display = false;
           this.formInfo.FormSubmitAllow = true;
-          this.toasterService.typeErrorEdit(error);
+          this.cmsToastrService.typeErrorEdit(error);
         }
       );
   }
@@ -163,7 +163,7 @@ export class ApplicationIntroEditComponent implements OnInit {
   onStepClick(event: StepperSelectionEvent): void {
     if (event.previouslySelectedIndex < event.selectedIndex) {
       // if (!this.formGroup.valid) {
-      //   this.toasterService.typeErrorFormInvalid();
+      //   this.cmsToastrService.typeErrorFormInvalid();
       //   setTimeout(() => {
       //     stepper.selectedIndex = event.previouslySelectedIndex;
       //     // stepper.previous();
@@ -185,7 +185,7 @@ export class ApplicationIntroEditComponent implements OnInit {
   }
   onActionSelectApplication(model: ApplicationSourceModel | null): void {
     if (!model || model.Id <= 0) {
-      this.toasterService.toastr.error(
+      this.cmsToastrService.toastr.error(
         'اپلیکیشن را مشخص کنید',
         ' اپلیکیشن اطلاعات مشخص نیست'
       );

@@ -5,6 +5,8 @@ import {
   FormInfoModel,
   CoreUserService,
   CoreUserModel,
+  AccessModel,
+  DataFieldInfoModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -22,6 +24,9 @@ import {
 } from 'ntk-cms-filemanager';
 import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
+import { PublicHelper } from 'src/app/core/helpers/publicHelper';
+import { StepperSelectionEvent } from '@angular/cdk/stepper';
+import { MatStepper } from '@angular/material/stepper';
 
 @Component({
   selector: 'app-core-user-edit',
@@ -36,7 +41,8 @@ export class CoreUserEditComponent implements OnInit {
     private dialogRef: MatDialogRef<CoreUserEditComponent>,
     public coreEnumService: CoreEnumService,
     public coreUserService: CoreUserService,
-    private cmsToastrService: CmsToastrService
+    private cmsToastrService: CmsToastrService,
+    private publicHelper: PublicHelper
   ) {
     if (data) {
       this.requestId = +data.id || 0;
@@ -59,6 +65,8 @@ export class CoreUserEditComponent implements OnInit {
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
+  dataAccessModel: AccessModel;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
   fileManagerOpenForm = false;
   onActionFileSelected(model: NodeInterface): void {
@@ -78,10 +86,16 @@ export class CoreUserEditComponent implements OnInit {
     }
 
     this.getEnumRecordStatus();
+    this.DataGetAccess();
   }
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
-    if (this.storeSnapshot && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus.IsSuccess && this.storeSnapshot.EnumRecordStatus.ListItems && this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
+    if (this.storeSnapshot
+      && this.storeSnapshot.EnumRecordStatus
+      && this.storeSnapshot.EnumRecordStatus
+      && this.storeSnapshot.EnumRecordStatus.IsSuccess
+      && this.storeSnapshot.EnumRecordStatus.ListItems
+      && this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
       this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
     }
   }
@@ -112,7 +126,23 @@ export class CoreUserEditComponent implements OnInit {
       }
     );
   }
-
+  DataGetAccess(): void {
+    this.coreUserService
+      .ServiceViewModel()
+      .subscribe(
+        async (next) => {
+          if (next.IsSuccess) {
+            this.dataAccessModel = next.Access;
+            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+          } else {
+            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
+          }
+        },
+        (error) => {
+          this.cmsToastrService.typeErrorGetAccess(error);
+        }
+      );
+  }
   DataEditContent(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
@@ -148,5 +178,16 @@ export class CoreUserEditComponent implements OnInit {
   }
   onFormCancel(): void {
     this.dialogRef.close({ dialogChangedDate: false });
+  }
+  onStepClick(event: StepperSelectionEvent, stepper: MatStepper): void {
+    if (event.previouslySelectedIndex < event.selectedIndex) {
+      if (!this.formGroup.valid) {
+        this.cmsToastrService.typeErrorFormInvalid();
+        setTimeout(() => {
+          stepper.selectedIndex = event.previouslySelectedIndex;
+          // stepper.previous();
+        }, 10);
+      }
+    }
   }
 }

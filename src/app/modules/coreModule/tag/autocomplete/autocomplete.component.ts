@@ -16,7 +16,7 @@ import { Output } from '@angular/core';
 export class TagAutocompleteComponent implements OnInit {
   constructor(
     public coreModuleTagService: CoreModuleTagService,
-    private toasterService: CmsToastrService) {
+    private cmsToastrService: CmsToastrService) {
 
 
   }
@@ -110,7 +110,7 @@ export class TagAutocompleteComponent implements OnInit {
             });
           });
         } else {
-          this.toasterService.typeErrorGetAll(next.ErrorMessage);
+          this.cmsToastrService.typeErrorGetAll(next.ErrorMessage);
 
         }
 
@@ -119,7 +119,7 @@ export class TagAutocompleteComponent implements OnInit {
         (error) => {
 
           const title = 'برروی خطا در دریافت طلاعات تگ';
-          this.toasterService.typeErrorGetAll(error);
+          this.cmsToastrService.typeErrorGetAll(error);
         })).toPromise();
   }
 

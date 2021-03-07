@@ -13,9 +13,7 @@ import { CoreUserComponent } from './coreUser.component';
 import { CoreUserListComponent } from './list/list.component';
 import { CoreUserAddComponent } from './add/add.component';
 import { CoreUserEditComponent } from './edit/edit.component';
-import { CoreUserDeleteComponent } from './delete/delete.component';
 import { CoreUserSelectorComponent } from './selector/selector.component';
-import { CoreUserTreeComponent } from './tree/tree.component';
 
 
 
@@ -25,9 +23,7 @@ import { CoreUserTreeComponent } from './tree/tree.component';
     CoreUserListComponent,
     CoreUserAddComponent,
     CoreUserEditComponent,
-    CoreUserDeleteComponent,
     CoreUserSelectorComponent,
-    CoreUserTreeComponent,
   ],
   imports: [
     CommonModule,

@@ -31,7 +31,7 @@ export class ApplicationSourceAddComponent implements OnInit {
                public coreEnumService: CoreEnumService,
                public applicationEnumService: ApplicationEnumService,
                private applicationSourceService: ApplicationSourceService,
-               private toasterService: CmsToastrService,
+               private cmsToastrService: CmsToastrService,
                private router: Router) {
     this.fileManagerTree = new TreeModel();
   }
@@ -68,7 +68,7 @@ export class ApplicationSourceAddComponent implements OnInit {
   }
   onFormSubmit(): void {
     if (!this.formGroup.valid) {
-      this.toasterService.typeErrorFormInvalid();
+      this.cmsToastrService.typeErrorFormInvalid();
       return;
     }
     this.DataAddContent();
@@ -82,11 +82,11 @@ export class ApplicationSourceAddComponent implements OnInit {
             this.dataAccessModel = next.Access;
             this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
           } else {
-            this.toasterService.typeErrorGetAccess(next.ErrorMessage);
+            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
           }
         },
         (error) => {
-          this.toasterService.typeErrorGetAccess(error);
+          this.cmsToastrService.typeErrorGetAccess(error);
         }
       );
   }
@@ -106,17 +106,17 @@ export class ApplicationSourceAddComponent implements OnInit {
           if (next.IsSuccess) {
 
             this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
-            this.toasterService.typeSuccessAdd();
+            this.cmsToastrService.typeSuccessAdd();
             this.loading.display = false;
             this.router.navigate(['/application/source/']);
           } else {
-            this.toasterService.typeErrorAdd(next.ErrorMessage);
+            this.cmsToastrService.typeErrorAdd(next.ErrorMessage);
           }
         },
         (error) => {
           this.loading.display = false;
           this.formInfo.FormSubmitAllow = true;
-          this.toasterService.typeErrorAdd(error);
+          this.cmsToastrService.typeErrorAdd(error);
         }
       );
   }
@@ -124,7 +124,7 @@ export class ApplicationSourceAddComponent implements OnInit {
   onStepClick(event: StepperSelectionEvent, stepper: MatStepper): void {
     if (event.previouslySelectedIndex < event.selectedIndex) {
       if (!this.formGroup.valid) {
-        this.toasterService.typeErrorFormInvalid();
+        this.cmsToastrService.typeErrorFormInvalid();
         setTimeout(() => {
           stepper.selectedIndex = event.previouslySelectedIndex;
           // stepper.previous();
@@ -141,7 +141,7 @@ export class ApplicationSourceAddComponent implements OnInit {
   }
   onActionSourceCopySelect(model: ApplicationSourceModel | null): void {
     if (!model || model.Id <= 0) {
-      this.toasterService.toastr.error(
+      this.cmsToastrService.toastr.error(
         'سورس را مشخص کنید',
         'دسته بندی اطلاعات مشخص نیست'
       );

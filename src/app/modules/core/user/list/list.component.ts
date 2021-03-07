@@ -24,7 +24,6 @@ import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/bas
 import { MatSort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
-import { CoreUserDeleteComponent } from '../delete/delete.component';
 import { CoreUserEditComponent } from '../edit/edit.component';
 import { CoreUserAddComponent } from '../add/add.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
@@ -35,7 +34,8 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
   styleUrls: ['./list.component.scss']
 })
 export class CoreUserListComponent implements OnInit {
-  constructor(private coreUserService: CoreUserService,
+  constructor(
+    private coreUserService: CoreUserService,
     private cmsConfirmationDialogService: CmsConfirmationDialogService,
     private cmsApiStore: ntkCmsApiStoreService,
     public publicHelper: PublicHelper,

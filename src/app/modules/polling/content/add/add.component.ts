@@ -36,7 +36,7 @@ export class PollingContentAddComponent implements OnInit, AfterViewInit {
     public publicHelper: PublicHelper,
     public coreEnumService: CoreEnumService,
     private pollingContentService: PollingContentService,
-    private toasterService: CmsToastrService,
+    private cmsToastrService: CmsToastrService,
     private router: Router,
   ) {
     this.fileManagerTree = new TreeModel();
@@ -73,7 +73,7 @@ export class PollingContentAddComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.requestCategoryId = Number(this.activatedRoute.snapshot.paramMap.get('CategoryId'));
     if (this.requestCategoryId === 0) {
-      this.toasterService.typeErrorAddRowParentIsNull();
+      this.cmsToastrService.typeErrorAddRowParentIsNull();
       return;
     }
     this.dataModel.LinkCategoryId = this.requestCategoryId;
@@ -136,11 +136,11 @@ export class PollingContentAddComponent implements OnInit, AfterViewInit {
   }
   onFormSubmit(): void {
     if (this.dataModel.LinkCategoryId <= 0) {
-      this.toasterService.typeErrorAddRowParentIsNull();
+      this.cmsToastrService.typeErrorAddRowParentIsNull();
       return;
     }
     if (!this.formGroup.valid) {
-      this.toasterService.typeErrorFormInvalid();
+      this.cmsToastrService.typeErrorFormInvalid();
       return;
     }
 
@@ -164,27 +164,27 @@ export class PollingContentAddComponent implements OnInit, AfterViewInit {
           if (next.IsSuccess) {
 
             this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
-            this.toasterService.typeSuccessAdd();
+            this.cmsToastrService.typeSuccessAdd();
             // await this.DataActionAfterAddContentSuccessfulTag(this.dataModelResult.Item);
             // await this.DataActionAfterAddContentSuccessfulSimilar(this.dataModelResult.Item);
             // await this.DataActionAfterAddContentSuccessfulOtherInfo(this.dataModelResult.Item);
             this.loading.display = false;
             this.router.navigate(['/polling/content/']);
           } else {
-            this.toasterService.typeErrorAdd(next.ErrorMessage);
+            this.cmsToastrService.typeErrorAdd(next.ErrorMessage);
           }
         },
         (error) => {
           this.loading.display = false;
           this.formInfo.FormSubmitAllow = true;
-          this.toasterService.typeErrorAdd(error);
+          this.cmsToastrService.typeErrorAdd(error);
         }
       );
   }
 
   onActionCategorySelect(model: PollingCategoryModel | null): void {
     if (!model || model.Id <= 0) {
-      this.toasterService.toastr.error(
+      this.cmsToastrService.toastr.error(
         'دسته بندی را مشخص کنید',
         'دسته بندی اطلاعات مشخص نیست'
       );
@@ -203,7 +203,7 @@ export class PollingContentAddComponent implements OnInit, AfterViewInit {
       return;
     }
     if (this.similarDataModel.find(x => x.Id === this.contentSimilarSelected.Id)) {
-      this.toasterService.typeErrorAddDuplicate();
+      this.cmsToastrService.typeErrorAddDuplicate();
       return;
     }
     this.similarDataModel.push(this.contentSimilarSelected);
@@ -232,7 +232,7 @@ export class PollingContentAddComponent implements OnInit, AfterViewInit {
   onStepClick(event: StepperSelectionEvent, stepper: MatStepper): void {
     if (event.previouslySelectedIndex < event.selectedIndex) {
       if (!this.formGroup.valid) {
-        this.toasterService.typeErrorFormInvalid();
+        this.cmsToastrService.typeErrorFormInvalid();
         setTimeout(() => {
           stepper.selectedIndex = event.previouslySelectedIndex;
           // stepper.previous();

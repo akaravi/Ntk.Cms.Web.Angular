@@ -30,7 +30,7 @@ export class ForgotPasswordComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private coreAuthService: CoreAuthService,
-        private toasterService: ToastrService,
+        private cmsToastrService: ToastrService,
         private router: Router
     ) {
 
@@ -81,7 +81,7 @@ export class ForgotPasswordComponent implements OnInit {
             .pipe(first())
             .subscribe((res) => {
                 if (res.IsSuccess) {
-                    this.toasterService.success('عملیات با موفقیت انجام شد');
+                    this.cmsToastrService.success('عملیات با موفقیت انجام شد');
                     this.router.navigate(['/']);
                 }
             });

@@ -40,7 +40,7 @@ export class ApplicationAppEditComponent implements OnInit {
               public coreEnumService: CoreEnumService,
               public applicationEnumService: ApplicationEnumService,
               private applicationAppService: ApplicationAppService,
-              private toasterService: CmsToastrService,
+              private cmsToastrService: CmsToastrService,
               private router: Router) {
     this.fileManagerTree = new TreeModel();
   }
@@ -66,7 +66,7 @@ export class ApplicationAppEditComponent implements OnInit {
   ngOnInit(): void {
     this.requestId = Number(this.activatedRoute.snapshot.paramMap.get('Id'));
     if (this.requestId === 0) {
-      this.toasterService.typeErrorAddRowParentIsNull();
+      this.cmsToastrService.typeErrorAddRowParentIsNull();
       return;
     }
     this.DataGetAccess();
@@ -83,16 +83,16 @@ export class ApplicationAppEditComponent implements OnInit {
 
   onFormSubmit(): void {
     if (!this.formGroup.valid) {
-      this.toasterService.typeErrorFormInvalid();
+      this.cmsToastrService.typeErrorFormInvalid();
       return;
     }
     if (this.dataModel.LinkSourceId <= 0) {
-      this.toasterService.typeErrorEdit('سورس کد برنامه مشخص  کنید');
+      this.cmsToastrService.typeErrorEdit('سورس کد برنامه مشخص  کنید');
 
       return;
     }
     if (this.dataModel.LinkThemeConfigId <= 0) {
-      this.toasterService.typeErrorEdit('قالب  برنامه مشخص  کنید');
+      this.cmsToastrService.typeErrorEdit('قالب  برنامه مشخص  کنید');
       return;
     }
     this.DataEditContent();
@@ -107,11 +107,11 @@ export class ApplicationAppEditComponent implements OnInit {
             this.dataAccessModel = next.Access;
             this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
           } else {
-            this.toasterService.typeErrorGetAccess(next.ErrorMessage);
+            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
           }
         },
         (error) => {
-          this.toasterService.typeErrorGetAccess(error);
+          this.cmsToastrService.typeErrorGetAccess(error);
         }
       );
   }
@@ -137,13 +137,13 @@ export class ApplicationAppEditComponent implements OnInit {
               this.mapMarkerPoints.push({ lat, lon });
             }
           } else {
-            this.toasterService.typeErrorGetOne(next.ErrorMessage);
+            this.cmsToastrService.typeErrorGetOne(next.ErrorMessage);
           }
         },
         (error) => {
           this.loading.display = false;
           this.formInfo.FormSubmitAllow = true;
-          this.toasterService.typeErrorGetOne(error);
+          this.cmsToastrService.typeErrorGetOne(error);
         }
       );
   }
@@ -162,16 +162,16 @@ export class ApplicationAppEditComponent implements OnInit {
           this.dataModelResult = next;
           if (next.IsSuccess) {
             this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
-            this.toasterService.typeSuccessEdit();
+            this.cmsToastrService.typeSuccessEdit();
             this.router.navigate(['/application/app/']);
           } else {
-            this.toasterService.typeErrorEdit(next.ErrorMessage);
+            this.cmsToastrService.typeErrorEdit(next.ErrorMessage);
           }
         },
         (error) => {
           this.loading.display = false;
           this.formInfo.FormSubmitAllow = true;
-          this.toasterService.typeErrorEdit(error);
+          this.cmsToastrService.typeErrorEdit(error);
         }
       );
   }
@@ -179,7 +179,7 @@ export class ApplicationAppEditComponent implements OnInit {
   onStepClick(event: StepperSelectionEvent, stepper: MatStepper): void {
     if (event.previouslySelectedIndex < event.selectedIndex) {
       // if (!this.formGroup.valid) {
-      //   this.toasterService.typeErrorFormInvalid();
+      //   this.cmsToastrService.typeErrorFormInvalid();
       //   setTimeout(() => {
       //     stepper.selectedIndex = event.previouslySelectedIndex;
       //     // stepper.previous();
@@ -242,14 +242,14 @@ export class ApplicationAppEditComponent implements OnInit {
   }
   onActionSelectSource(model: ApplicationSourceModel | null): void {
     if (!model || model.Id <= 0) {
-      this.toasterService.toastr.error(
+      this.cmsToastrService.toastr.error(
         'سورس را مشخص کنید',
         'سورس اپلیکیشن اطلاعات مشخص نیست'
       );
       return;
     }
     if (this.dataModel.LinkSourceId !== model.Id) {
-      this.toasterService.toastr.error(
+      this.cmsToastrService.toastr.error(
         'سورس قابل تغییر نمی باشد',
         'سورس اپلیکیشن در حالت ویرایش قابل تغییر نمی باشد'
       );
@@ -258,7 +258,7 @@ export class ApplicationAppEditComponent implements OnInit {
   }
   onActionSelectTheme(model: ApplicationThemeConfigModel | null): void {
     if (!model || model.Id <= 0) {
-      this.toasterService.toastr.error(
+      this.cmsToastrService.toastr.error(
         'قالب را مشخص کنید',
         'قالب اپلیکیشن اطلاعات مشخص نیست'
       );

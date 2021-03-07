@@ -47,7 +47,7 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
     private articleContentTagService: ArticleContentTagService,
     private articleContentSimilarService: ArticleContentSimilarService,
     private articleContentOtherInfoService: ArticleContentOtherInfoService,
-    private toasterService: CmsToastrService,
+    private cmsToastrService: CmsToastrService,
     private router: Router,
 
   ) {
@@ -93,7 +93,7 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.requestId = Number(this.activatedRoute.snapshot.paramMap.get('Id'));
     if (this.requestId === 0) {
-      this.toasterService.typeErrorAddRowParentIsNull();
+      this.cmsToastrService.typeErrorAddRowParentIsNull();
       return;
     }
     this.DataGetOne();
@@ -126,11 +126,11 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
 
   onFormSubmit(): void {
     if (this.requestId <= 0) {
-      this.toasterService.typeErrorAddRowParentIsNull();
+      this.cmsToastrService.typeErrorAddRowParentIsNull();
       return;
     }
     if (!this.formGroup.valid) {
-      this.toasterService.typeErrorFormInvalid();
+      this.cmsToastrService.typeErrorFormInvalid();
       return;
     }
 
@@ -170,13 +170,13 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
             this.DataSimilarGetAllIds();
             this.loading.display = false;
           } else {
-            this.toasterService.typeErrorGetOne(next.ErrorMessage);
+            this.cmsToastrService.typeErrorGetOne(next.ErrorMessage);
           }
         },
         (error) => {
           this.loading.display = false;
           this.formInfo.FormSubmitAllow = true;
-          this.toasterService.typeErrorGetOne(error);
+          this.cmsToastrService.typeErrorGetOne(error);
         }
       );
   }
@@ -213,13 +213,13 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
 
             this.loading.display = false;
           } else {
-            this.toasterService.typeErrorGetAll(next.ErrorMessage);
+            this.cmsToastrService.typeErrorGetAll(next.ErrorMessage);
           }
         },
         (error) => {
           this.loading.display = false;
           this.formInfo.FormSubmitAllow = true;
-          this.toasterService.typeErrorGetAll(error);
+          this.cmsToastrService.typeErrorGetAll(error);
         }
       );
   }
@@ -248,13 +248,13 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
             this.otherInfoDataModel = next.ListItems;
             this.otherInfoTabledataSource.data = next.ListItems;
           } else {
-            this.toasterService.typeErrorGetAll(next.ErrorMessage);
+            this.cmsToastrService.typeErrorGetAll(next.ErrorMessage);
           }
         },
         (error) => {
           this.loading.display = false;
           this.formInfo.FormSubmitAllow = true;
-          this.toasterService.typeErrorGetAll(error);
+          this.cmsToastrService.typeErrorGetAll(error);
         }
       );
   }
@@ -299,13 +299,13 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
             this.DataSimilarGetAll(listIds);
 
           } else {
-            this.toasterService.typeErrorGetAll(next.ErrorMessage);
+            this.cmsToastrService.typeErrorGetAll(next.ErrorMessage);
           }
         },
         (error) => {
           this.loading.display = false;
           this.formInfo.FormSubmitAllow = true;
-          this.toasterService.typeErrorGetAll(error);
+          this.cmsToastrService.typeErrorGetAll(error);
         }
       );
   }
@@ -340,13 +340,13 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
             this.similarDataModel = next.ListItems;
             this.similarTabledataSource.data = next.ListItems;
           } else {
-            this.toasterService.typeErrorGetAll(next.ErrorMessage);
+            this.cmsToastrService.typeErrorGetAll(next.ErrorMessage);
           }
         },
         (error) => {
           this.loading.display = false;
           this.formInfo.FormSubmitAllow = true;
-          this.toasterService.typeErrorGetAll(error);
+          this.cmsToastrService.typeErrorGetAll(error);
         }
       );
   }
@@ -366,20 +366,20 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
           if (next.IsSuccess) {
 
             this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
-            this.toasterService.typeSuccessAdd();
+            this.cmsToastrService.typeSuccessAdd();
             await this.DataActionAfterAddContentSuccessfulTag(this.dataModelResult.Item);
             await this.DataActionAfterAddContentSuccessfulSimilar(this.dataModelResult.Item);
             await this.DataActionAfterAddContentSuccessfulOtherInfo(this.dataModelResult.Item);
             this.loading.display = false;
             this.router.navigate(['/article/edit/', this.requestId]);
           } else {
-            this.toasterService.typeErrorAdd(next.ErrorMessage);
+            this.cmsToastrService.typeErrorAdd(next.ErrorMessage);
           }
         },
         (error) => {
           this.loading.display = false;
           this.formInfo.FormSubmitAllow = true;
-          this.toasterService.typeErrorAdd(error);
+          this.cmsToastrService.typeErrorAdd(error);
         }
       );
   }
@@ -474,7 +474,7 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
   }
   onActionCategorySelect(model: ArticleCategoryModel | null): void {
     if (!model || model.Id <= 0) {
-      this.toasterService.toastr.error(
+      this.cmsToastrService.toastr.error(
         'دسته بندی را مشخص کنید',
         'دسته بندی اطلاعات مشخص نیست'
       );
@@ -496,7 +496,7 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
       return;
     }
     if (this.similarDataModel.find(x => x.Id === this.contentSimilarSelected.Id)) {
-      this.toasterService.typeErrorAddDuplicate();
+      this.cmsToastrService.typeErrorAddDuplicate();
       return;
     }
     this.similarDataModel.push(this.contentSimilarSelected);
@@ -525,7 +525,7 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
       return;
     }
     if (this.otherInfoDataModel.find(x => x.Title === this.contentOtherInfoSelected.Title)) {
-      this.toasterService.typeErrorAddDuplicate();
+      this.cmsToastrService.typeErrorAddDuplicate();
       return;
     }
     this.otherInfoDataModel.push(this.contentOtherInfoSelected);
@@ -561,7 +561,7 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
   onStepClick(event: StepperSelectionEvent, stepper: MatStepper): void {
     if (event.previouslySelectedIndex < event.selectedIndex) {
       if (!this.formGroup.valid) {
-        this.toasterService.typeErrorFormInvalid();
+        this.cmsToastrService.typeErrorFormInvalid();
         setTimeout(() => {
           stepper.selectedIndex = event.previouslySelectedIndex;
           // stepper.previous();

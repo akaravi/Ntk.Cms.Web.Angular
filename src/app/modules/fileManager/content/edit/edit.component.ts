@@ -36,7 +36,7 @@ export class FileContentEditComponent implements OnInit, AfterViewInit {
     public coreEnumService: CoreEnumService,
     public publicHelper: PublicHelper,
         private fileContentService: FileContentService,
-    private toasterService: CmsToastrService,
+    private cmsToastrService: CmsToastrService,
     private router: Router,
 
   ) {
@@ -75,7 +75,7 @@ export class FileContentEditComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.requestId = Number(this.activatedRoute.snapshot.paramMap.get('Id'));
     if (this.requestId === 0) {
-      this.toasterService.typeErrorAddRowParentIsNull();
+      this.cmsToastrService.typeErrorAddRowParentIsNull();
       return;
     }
     this.DataGetOne();
@@ -96,11 +96,11 @@ export class FileContentEditComponent implements OnInit, AfterViewInit {
 
   onFormSubmit(): void {
     if (this.requestId <= 0) {
-      this.toasterService.typeErrorAddRowParentIsNull();
+      this.cmsToastrService.typeErrorAddRowParentIsNull();
       return;
     }
     if (!this.formGroup.valid) {
-      this.toasterService.typeErrorFormInvalid();
+      this.cmsToastrService.typeErrorFormInvalid();
       return;
     }
 
@@ -137,13 +137,13 @@ export class FileContentEditComponent implements OnInit, AfterViewInit {
             this.keywordDataModel = this.dataModel.Keyword.split(',');
             this.loading.display = false;
           } else {
-            this.toasterService.typeErrorGetOne(next.ErrorMessage);
+            this.cmsToastrService.typeErrorGetOne(next.ErrorMessage);
           }
         },
         (error) => {
           this.loading.display = false;
           this.formInfo.FormSubmitAllow = true;
-          this.toasterService.typeErrorGetOne(error);
+          this.cmsToastrService.typeErrorGetOne(error);
         }
       );
   }
@@ -164,23 +164,23 @@ export class FileContentEditComponent implements OnInit, AfterViewInit {
           if (next.IsSuccess) {
 
             this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
-            this.toasterService.typeSuccessAdd();
+            this.cmsToastrService.typeSuccessAdd();
             this.loading.display = false;
             this.router.navigate(['/file/edit/', this.requestId]);
           } else {
-            this.toasterService.typeErrorAdd(next.ErrorMessage);
+            this.cmsToastrService.typeErrorAdd(next.ErrorMessage);
           }
         },
         (error) => {
           this.loading.display = false;
           this.formInfo.FormSubmitAllow = true;
-          this.toasterService.typeErrorAdd(error);
+          this.cmsToastrService.typeErrorAdd(error);
         }
       );
   }
   onActionCategorySelect(model: FileCategoryModel | null): void {
     if (!model || model.Id <= 0) {
-      this.toasterService.toastr.error(
+      this.cmsToastrService.toastr.error(
         'دسته بندی را مشخص کنید',
         'دسته بندی اطلاعات مشخص نیست'
       );
@@ -202,7 +202,7 @@ export class FileContentEditComponent implements OnInit, AfterViewInit {
       return;
     }
     if (this.similarDataModel.find(x => x.Id === this.contentSimilarSelected.Id)) {
-      this.toasterService.typeErrorAddDuplicate();
+      this.cmsToastrService.typeErrorAddDuplicate();
       return;
     }
     this.similarDataModel.push(this.contentSimilarSelected);
@@ -227,7 +227,7 @@ export class FileContentEditComponent implements OnInit, AfterViewInit {
   onStepClick(event: StepperSelectionEvent, stepper: MatStepper): void {
     if (event.previouslySelectedIndex < event.selectedIndex) {
       if (!this.formGroup.valid) {
-        this.toasterService.typeErrorFormInvalid();
+        this.cmsToastrService.typeErrorFormInvalid();
         setTimeout(() => {
           stepper.selectedIndex = event.previouslySelectedIndex;
           // stepper.previous();

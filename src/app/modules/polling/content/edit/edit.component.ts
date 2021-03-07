@@ -46,7 +46,7 @@ export class PollingContentEditComponent implements OnInit, AfterViewInit {
     private pollingContentService: PollingContentService,
     private pollingOptionService: PollingOptionService,
 
-    private toasterService: CmsToastrService,
+    private cmsToastrService: CmsToastrService,
     private router: Router,
 
   ) {
@@ -88,7 +88,7 @@ export class PollingContentEditComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.requestId = Number(this.activatedRoute.snapshot.paramMap.get('Id'));
     if (this.requestId === 0) {
-      this.toasterService.typeErrorAddRowParentIsNull();
+      this.cmsToastrService.typeErrorAddRowParentIsNull();
       return;
     }
     this.DataGetOne();
@@ -121,11 +121,11 @@ export class PollingContentEditComponent implements OnInit, AfterViewInit {
 
   onFormSubmit(): void {
     if (this.requestId <= 0) {
-      this.toasterService.typeErrorAddRowParentIsNull();
+      this.cmsToastrService.typeErrorAddRowParentIsNull();
       return;
     }
     if (!this.formGroup.valid) {
-      this.toasterService.typeErrorFormInvalid();
+      this.cmsToastrService.typeErrorFormInvalid();
       return;
     }
 
@@ -141,11 +141,11 @@ export class PollingContentEditComponent implements OnInit, AfterViewInit {
             this.dataAccessModel = next.Access;
             this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
           } else {
-            this.toasterService.typeErrorGetAccess(next.ErrorMessage);
+            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
           }
         },
         (error) => {
-          this.toasterService.typeErrorGetAccess(error);
+          this.cmsToastrService.typeErrorGetAccess(error);
         }
       );
   }
@@ -175,13 +175,13 @@ export class PollingContentEditComponent implements OnInit, AfterViewInit {
             // this.DataSimilarGetAllIds();
             this.loading.display = false;
           } else {
-            this.toasterService.typeErrorGetOne(next.ErrorMessage);
+            this.cmsToastrService.typeErrorGetOne(next.ErrorMessage);
           }
         },
         (error) => {
           this.loading.display = false;
           this.formInfo.FormSubmitAllow = true;
-          this.toasterService.typeErrorGetOne(error);
+          this.cmsToastrService.typeErrorGetOne(error);
         }
       );
   }
@@ -210,13 +210,13 @@ export class PollingContentEditComponent implements OnInit, AfterViewInit {
             this.optionDataModel = next.ListItems;
             this.optionTabledataSource.data = next.ListItems;
           } else {
-            this.toasterService.typeErrorGetAll(next.ErrorMessage);
+            this.cmsToastrService.typeErrorGetAll(next.ErrorMessage);
           }
         },
         (error) => {
           this.loading.display = false;
           this.formInfo.FormSubmitAllow = true;
-          this.toasterService.typeErrorGetAll(error);
+          this.cmsToastrService.typeErrorGetAll(error);
         }
       );
   }
@@ -236,20 +236,20 @@ export class PollingContentEditComponent implements OnInit, AfterViewInit {
           if (next.IsSuccess) {
 
             this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
-            this.toasterService.typeSuccessAdd();
+            this.cmsToastrService.typeSuccessAdd();
             await this.DataActionAfterAddContentSuccessfullOption(this.dataModelResult.Item);
             // await this.DataActionAfterAddContentSuccessfulSimilar(this.dataModelResult.Item);
             // await this.DataActionAfterAddContentSuccessfulOtherInfo(this.dataModelResult.Item);
             this.loading.display = false;
             this.router.navigate(['/polling/edit/', this.requestId]);
           } else {
-            this.toasterService.typeErrorAdd(next.ErrorMessage);
+            this.cmsToastrService.typeErrorAdd(next.ErrorMessage);
           }
         },
         (error) => {
           this.loading.display = false;
           this.formInfo.FormSubmitAllow = true;
-          this.toasterService.typeErrorAdd(error);
+          this.cmsToastrService.typeErrorAdd(error);
         }
       );
   }
@@ -279,7 +279,7 @@ export class PollingContentEditComponent implements OnInit, AfterViewInit {
   }
   onActionCategorySelect(model: PollingCategoryModel | null): void {
     if (!model || model.Id <= 0) {
-      this.toasterService.toastr.error(
+      this.cmsToastrService.toastr.error(
         'دسته بندی را مشخص کنید',
         'دسته بندی اطلاعات مشخص نیست'
       );
@@ -293,7 +293,7 @@ export class PollingContentEditComponent implements OnInit, AfterViewInit {
       return;
     }
     if (this.optionDataModel.find(x => x.Option === this.optionSelected.Option)) {
-      this.toasterService.typeErrorAddDuplicate();
+      this.cmsToastrService.typeErrorAddDuplicate();
       return;
     }
     this.optionDataModel.push(this.optionSelected);
@@ -331,7 +331,7 @@ export class PollingContentEditComponent implements OnInit, AfterViewInit {
   onStepClick(event: StepperSelectionEvent, stepper: MatStepper): void {
     if (event.previouslySelectedIndex < event.selectedIndex) {
       if (!this.formGroup.valid) {
-        this.toasterService.typeErrorFormInvalid();
+        this.cmsToastrService.typeErrorFormInvalid();
         setTimeout(() => {
           stepper.selectedIndex = event.previouslySelectedIndex;
           // stepper.previous();

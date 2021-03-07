@@ -50,7 +50,7 @@ export class TagAddComponent implements OnInit, AfterViewInit {
     private newsContentService: NewsContentService,
     private newsContentSimilarService: NewsContentSimilarService,
     private newsContentOtherInfoService: NewsContentOtherInfoService,
-    private toasterService: CmsToastrService,
+    private cmsToastrService: CmsToastrService,
     private router: Router,
     private newsContentTagService: NewsContentTagService
   ) {
@@ -89,7 +89,7 @@ export class TagAddComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.requestCategoryId = Number(this.activatedRoute.snapshot.paramMap.get('CategoryId'));
     if (this.requestCategoryId === 0) {
-      this.toasterService.typeErrorAddRowParentIsNull();
+      this.cmsToastrService.typeErrorAddRowParentIsNull();
       return;
     }
     this.dataModel.LinkCategoryId = this.requestCategoryId;
@@ -184,11 +184,11 @@ export class TagAddComponent implements OnInit, AfterViewInit {
   }
   onFormSubmit(): void {
     if (this.dataModel.LinkCategoryId <= 0) {
-      this.toasterService.typeErrorAddRowParentIsNull();
+      this.cmsToastrService.typeErrorAddRowParentIsNull();
       return;
     }
     if (!this.formGroup.valid) {
-      this.toasterService.typeErrorFormInvalid();
+      this.cmsToastrService.typeErrorFormInvalid();
       return;
     }
 
@@ -217,20 +217,20 @@ export class TagAddComponent implements OnInit, AfterViewInit {
           if (next.IsSuccess) {
 
             this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
-            this.toasterService.typeSuccessAdd();
+            this.cmsToastrService.typeSuccessAdd();
             await this.DataActionAfterAddContentSuccessfulTag(this.dataModelResult.Item);
             await this.DataActionAfterAddContentSuccessfulSimilar(this.dataModelResult.Item);
             await this.DataActionAfterAddContentSuccessfulOtherInfo(this.dataModelResult.Item);
             this.loading.display = false;
             this.router.navigate(['/news/content/']);
           } else {
-            this.toasterService.typeErrorAdd(next.ErrorMessage);
+            this.cmsToastrService.typeErrorAdd(next.ErrorMessage);
           }
         },
         (error) => {
           this.loading.display = false;
           this.formInfo.FormSubmitAllow = true;
-          this.toasterService.typeErrorAdd(error);
+          this.cmsToastrService.typeErrorAdd(error);
         }
       );
   }
@@ -248,9 +248,9 @@ export class TagAddComponent implements OnInit, AfterViewInit {
     return this.newsContentTagService.ServiceAddBatch(dataList).pipe(
       map(response => {
         if (response.IsSuccess) {
-          this.toasterService.typeSuccessAddSimilar();
+          this.cmsToastrService.typeSuccessAddSimilar();
         } else {
-          this.toasterService.typeErrorAddSimilar();
+          this.cmsToastrService.typeErrorAddSimilar();
         }
         console.log(response.ListItems);
         return of(response);
@@ -266,16 +266,16 @@ export class TagAddComponent implements OnInit, AfterViewInit {
     return this.newsContentOtherInfoService.ServiceAddBatch(this.otherInfoDataModel).pipe(
       map(response => {
         if (response.IsSuccess) {
-          this.toasterService.typeSuccessAddOtherInfo();
+          this.cmsToastrService.typeSuccessAddOtherInfo();
         } else {
-          this.toasterService.typeErrorAddOtherInfo();
+          this.cmsToastrService.typeErrorAddOtherInfo();
         }
         return of(response);
       },
         (error) => {
           this.loading.display = false;
           this.formInfo.FormSubmitAllow = true;
-          this.toasterService.typeErrorAdd(error);
+          this.cmsToastrService.typeErrorAdd(error);
         }
       )).toPromise();
   }
@@ -293,22 +293,22 @@ export class TagAddComponent implements OnInit, AfterViewInit {
     return this.newsContentSimilarService.ServiceAddBatch(dataList).pipe(
       map(response => {
         if (response.IsSuccess) {
-          this.toasterService.typeSuccessAddSimilar();
+          this.cmsToastrService.typeSuccessAddSimilar();
         } else {
-          this.toasterService.typeErrorAddSimilar();
+          this.cmsToastrService.typeErrorAddSimilar();
         }
         return of(response);
       },
         (error) => {
           this.loading.display = false;
           this.formInfo.FormSubmitAllow = true;
-          this.toasterService.typeErrorAdd(error);
+          this.cmsToastrService.typeErrorAdd(error);
         }
       )).toPromise();
   }
   onActionCategorySelect(model: NewsCategoryModel | null): void {
     if (!model || model.Id <= 0) {
-      this.toasterService.toastr.error(
+      this.cmsToastrService.toastr.error(
         'دسته بندی را مشخص کنید',
         'دسته بندی اطلاعات مشخص نیست'
       );
@@ -327,7 +327,7 @@ export class TagAddComponent implements OnInit, AfterViewInit {
       return;
     }
     if (this.similarDataModel.find(x => x.Id === this.contentSimilarSelected.Id)) {
-      this.toasterService.typeErrorAddDuplicate();
+      this.cmsToastrService.typeErrorAddDuplicate();
       return;
     }
     this.similarDataModel.push(this.contentSimilarSelected);
@@ -356,7 +356,7 @@ export class TagAddComponent implements OnInit, AfterViewInit {
       return;
     }
     if (this.otherInfoDataModel.find(x => x.Title === this.contentOtherInfoSelected.Title)) {
-      this.toasterService.typeErrorAddDuplicate();
+      this.cmsToastrService.typeErrorAddDuplicate();
       return;
     }
     this.otherInfoDataModel.push(this.contentOtherInfoSelected);
@@ -390,7 +390,7 @@ export class TagAddComponent implements OnInit, AfterViewInit {
   onStepClick(event: StepperSelectionEvent, stepper: MatStepper): void {
     if (event.previouslySelectedIndex < event.selectedIndex) {
       if (!this.formGroup.valid) {
-        this.toasterService.typeErrorFormInvalid();
+        this.cmsToastrService.typeErrorFormInvalid();
         setTimeout(() => {
           stepper.selectedIndex = event.previouslySelectedIndex;
           // stepper.previous();

@@ -18,7 +18,7 @@ export class UserOffcanvasComponent implements OnInit {
   loading = new ProgressSpinnerModel();
 
   constructor(private layout: LayoutService, private auth: CoreAuthService,
-    private toasterService: CmsToastrService,
+    private cmsToastrService: CmsToastrService,
     private cmsApiStore: ntkCmsApiStoreService,
 
   ) {
@@ -41,13 +41,13 @@ export class UserOffcanvasComponent implements OnInit {
   }
   async logout(): Promise<void> {
     this.loading.display = true;
-    this.toasterService.typeOrderActionLogout();
+    this.cmsToastrService.typeOrderActionLogout();
     const retOut = await this.auth.ServiceLogout().pipe(map(next => {
       this.loading.display = false;
       if (next.IsSuccess) {
-        this.toasterService.typeSuccessLogout();
+        this.cmsToastrService.typeSuccessLogout();
       } else {
-        this.toasterService.typeErrorLogout();
+        this.cmsToastrService.typeErrorLogout();
       }
       return;
     })).toPromise();

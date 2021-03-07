@@ -17,7 +17,7 @@ export class UserDropdownInnerComponent implements OnInit {
     private cmsApiStore :ntkCmsApiStoreService,
 
               private auth: CoreAuthService,
-              private toasterService: CmsToastrService,
+              private cmsToastrService: CmsToastrService,
   ) { }
 
   ngOnInit(): void {
@@ -36,9 +36,9 @@ export class UserDropdownInnerComponent implements OnInit {
   async logout(): Promise<void> {
     const retOut = await this.auth.ServiceLogout().pipe(map(next => {
       if (next.IsSuccess) {
-        this.toasterService.typeSuccessLogout();
+        this.cmsToastrService.typeSuccessLogout();
       } else {
-        this.toasterService.typeErrorLogout();
+        this.cmsToastrService.typeErrorLogout();
       }
       return;
     })).toPromise();

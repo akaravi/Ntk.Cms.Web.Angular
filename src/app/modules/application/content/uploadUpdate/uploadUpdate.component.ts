@@ -15,7 +15,7 @@ export class ApplicationAppUploadUpdateComponent  implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public dataItemModel: ApplicationAppModel,
               private dialogRef: MatDialogRef<ApplicationAppUploadUpdateComponent>,
               private applicationAppService: ApplicationAppService,
-              private toasterService: CmsToastrService,
+              private cmsToastrService: CmsToastrService,
               private publicHelper: PublicHelper
   ) {
   }
@@ -39,11 +39,11 @@ export class ApplicationAppUploadUpdateComponent  implements OnInit {
           if (next.IsSuccess) {
             this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
           } else {
-            this.toasterService.typeErrorGetAccess(next.ErrorMessage);
+            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
           }
         },
         (error) => {
-          this.toasterService.typeErrorGetAccess(error);
+          this.cmsToastrService.typeErrorGetAccess(error);
         }
       );
   }
@@ -52,11 +52,11 @@ export class ApplicationAppUploadUpdateComponent  implements OnInit {
       return;
     }
     if (!this.dataModel.UploadFileGUID || this.dataModel.UploadFileGUID.length === 0) {
-      this.toasterService.typeErrorEdit('فایل آپلود نشده است');
+      this.cmsToastrService.typeErrorEdit('فایل آپلود نشده است');
       return;
     }
     if (!this.dataModel.LinkApplicationId || this.dataModel.LinkApplicationId > 0) {
-      this.toasterService.typeErrorEdit('اپلکیشن مشخص نیست');
+      this.cmsToastrService.typeErrorEdit('اپلکیشن مشخص نیست');
       return;
     }
     this.formInfo.FormSubmitAllow = false;
@@ -64,15 +64,15 @@ export class ApplicationAppUploadUpdateComponent  implements OnInit {
       (next) => {
         if (next.IsSuccess) {
           this.formInfo.FormSubmitAllow = false;
-          this.toasterService.typeSuccessAppUpload();
+          this.cmsToastrService.typeSuccessAppUpload();
         } else {
           this.formInfo.FormSubmitAllow = true;
-          this.toasterService.typeErrorEdit(next.ErrorMessage);
+          this.cmsToastrService.typeErrorEdit(next.ErrorMessage);
         }
       },
       (error) => {
         this.formInfo.FormSubmitAllow = true;
-        this.toasterService.typeErrorEdit(error);
+        this.cmsToastrService.typeErrorEdit(error);
       });
 
   }

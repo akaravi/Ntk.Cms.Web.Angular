@@ -36,7 +36,7 @@ export class TicketingTaskAddComponent implements OnInit {
               public coreEnumService: CoreEnumService,
               public applicationEnumService: ApplicationEnumService,
               private ticketingTaskService: TicketingTaskService,
-              private toasterService: CmsToastrService,
+              private cmsToastrService: CmsToastrService,
               private router: Router) {
     this.fileManagerTree = new TreeModel();
   }
@@ -60,7 +60,7 @@ export class TicketingTaskAddComponent implements OnInit {
   ngOnInit(): void {
     this.requestDepartemenId = Number(this.activatedRoute.snapshot.paramMap.get('SourceId'));
     if (this.requestDepartemenId === 0) {
-      this.toasterService.typeErrorAddRowParentIsNull();
+      this.cmsToastrService.typeErrorAddRowParentIsNull();
       return;
     }
     this.dataModel.LinkTicketingDepartemenId = this.requestDepartemenId;
@@ -75,7 +75,7 @@ export class TicketingTaskAddComponent implements OnInit {
   }
   onFormSubmit(): void {
     if (!this.formGroup.valid) {
-      this.toasterService.typeErrorFormInvalid();
+      this.cmsToastrService.typeErrorFormInvalid();
       return;
     }
 
@@ -91,11 +91,11 @@ export class TicketingTaskAddComponent implements OnInit {
             this.dataAccessModel = next.Access;
             this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
           } else {
-            this.toasterService.typeErrorGetAccess(next.ErrorMessage);
+            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
           }
         },
         (error) => {
-          this.toasterService.typeErrorGetAccess(error);
+          this.cmsToastrService.typeErrorGetAccess(error);
         }
       );
   }
@@ -115,16 +115,16 @@ export class TicketingTaskAddComponent implements OnInit {
           this.dataModelResult = next;
           if (next.IsSuccess) {
             this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
-            this.toasterService.typeSuccessEdit();
+            this.cmsToastrService.typeSuccessEdit();
             this.router.navigate(['/application/app/']);
           } else {
-            this.toasterService.typeErrorEdit(next.ErrorMessage);
+            this.cmsToastrService.typeErrorEdit(next.ErrorMessage);
           }
         },
         (error) => {
           this.loading.display = false;
           this.formInfo.FormSubmitAllow = true;
-          this.toasterService.typeErrorEdit(error);
+          this.cmsToastrService.typeErrorEdit(error);
         }
       );
   }
@@ -132,7 +132,7 @@ export class TicketingTaskAddComponent implements OnInit {
   onStepClick(event: StepperSelectionEvent): void {
     if (event.previouslySelectedIndex < event.selectedIndex) {
       // if (!this.formGroup.valid) {
-      //   this.toasterService.typeErrorFormInvalid();
+      //   this.cmsToastrService.typeErrorFormInvalid();
       //   setTimeout(() => {
       //     stepper.selectedIndex = event.previouslySelectedIndex;
       //     // stepper.previous();
@@ -151,7 +151,7 @@ export class TicketingTaskAddComponent implements OnInit {
 
   onActionSelectSource(model: ApplicationSourceModel | null): void {
     if (!model || model.Id <= 0) {
-      this.toasterService.toastr.error(
+      this.cmsToastrService.toastr.error(
         'سورس را مشخص کنید',
         'سورس اپلیکیشن اطلاعات مشخص نیست'
       );

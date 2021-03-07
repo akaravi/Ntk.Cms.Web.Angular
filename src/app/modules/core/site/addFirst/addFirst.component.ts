@@ -43,7 +43,7 @@ export class CoreSiteAddFirstComponent implements OnInit {
   }
 
   constructor(
-    private toasterService: CmsToastrService,
+    private cmsToastrService: CmsToastrService,
     private publicHelper: PublicHelper,
     private coreSiteService: CoreSiteService,
     private coreSiteCategoryModuleService: CoreSiteCategoryModuleService,
@@ -70,7 +70,7 @@ export class CoreSiteAddFirstComponent implements OnInit {
         }
       },
       (error) => {
-        this.toasterService.toastr.error(
+        this.cmsToastrService.toastr.error(
           this.publicHelper.CheckError(error),
           'خطا در دریافت اطلاعات وب سایتها'
         );
@@ -86,7 +86,7 @@ export class CoreSiteAddFirstComponent implements OnInit {
         }
       },
       (error) => {
-        this.toasterService.toastr.error(
+        this.cmsToastrService.toastr.error(
           this.publicHelper.CheckError(error),
           'خطا در دریافت لیست دامنه های قابل استفاده'
         );
@@ -108,7 +108,7 @@ export class CoreSiteAddFirstComponent implements OnInit {
         this.captchaModel = next.Item;
       },
       (error) => {
-        this.toasterService.typeError(error, 'خطا در دریافت عکس کپچا');
+        this.cmsToastrService.typeError(error, 'خطا در دریافت عکس کپچا');
       }
     );
 
@@ -123,12 +123,12 @@ export class CoreSiteAddFirstComponent implements OnInit {
         if (next.IsSuccess) {
           this.clickSelectSite(next.Item.Id);
         } else {
-          this.toasterService.typeErrorAdd(next.ErrorMessage);
+          this.cmsToastrService.typeErrorAdd(next.ErrorMessage);
         }
 
       },
       (error) => {
-        this.toasterService.toastr.error(
+        this.cmsToastrService.toastr.error(
           this.publicHelper.CheckError(error),
           'خطا در ساخت وب سایت'
         );
@@ -147,7 +147,7 @@ export class CoreSiteAddFirstComponent implements OnInit {
         }
       },
       (error) => {
-        this.toasterService.typeError(error);
+        this.cmsToastrService.typeError(error);
       }
     );
   }
