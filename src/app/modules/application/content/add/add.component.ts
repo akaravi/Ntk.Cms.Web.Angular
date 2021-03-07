@@ -85,12 +85,12 @@ export class ApplicationAppAddComponent implements OnInit {
       return;
     }
     if (this.dataModel.LinkSourceId <= 0) {
-      this.cmsToastrService.typeErrorEdit('سورس کد برنامه مشخص  کنید');
+      this.cmsToastrService.typeErrorAdd('سورس کد برنامه مشخص  کنید');
 
       return;
     }
     if (this.dataModel.LinkThemeConfigId <= 0) {
-      this.cmsToastrService.typeErrorEdit('قالب  برنامه مشخص  کنید');
+      this.cmsToastrService.typeErrorAdd('قالب  برنامه مشخص  کنید');
       return;
     }
     this.DataAddContent();
@@ -129,16 +129,16 @@ export class ApplicationAppAddComponent implements OnInit {
           this.dataModelResult = next;
           if (next.IsSuccess) {
             this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
-            this.cmsToastrService.typeSuccessEdit();
+            this.cmsToastrService.typeSuccessAdd();
             this.router.navigate(['/application/app/']);
           } else {
-            this.cmsToastrService.typeErrorEdit(next.ErrorMessage);
+            this.cmsToastrService.typeErrorAdd(next.ErrorMessage);
           }
         },
         (error) => {
           this.loading.display = false;
           this.formInfo.FormSubmitAllow = true;
-          this.cmsToastrService.typeErrorEdit(error);
+          this.cmsToastrService.typeErrorAdd(error);
         }
       );
   }

@@ -94,7 +94,7 @@
             <mat-label>{{ fieldsInfo['AboutUsDescription']?.FieldAboutUsDescription }}</mat-label>
             <textarea matInput [(ngModel)]="dataModel.AboutUsDescription"
               [disabled]="!fieldsInfo['AboutUsDescription']?.AccessAddField" name="dataModel.AboutUsDescription"
-              #AboutUsDescription type="text" placeholder="عنوان" row="5" minlength="0" maxlength="1000"></textarea>
+              #AboutUsDescription type="text" placeholder="توضیحات" row="5" minlength="0" maxlength="1000"></textarea>
             <mat-icon matSuffix
               *ngIf="dataModel.AboutUsDescription && fieldsInfo['AboutUsDescription']?.AccessAddField" matSuffix
               mat-icon-button aria-label="Clear" (click)="dataModel.AboutUsDescription = ''">close</mat-icon>
@@ -106,7 +106,7 @@
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['AboutUsTel']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['AboutUsTel']?.FieldAboutUsTel }}</mat-label>
             <input matInput [(ngModel)]="dataModel.AboutUsTel" [disabled]="!fieldsInfo['AboutUsTel']?.AccessAddField"
-              name="dataModel.AboutUsTel" #AboutUsTel type="text" placeholder="عنوان" minlength="0" maxlength="100" />
+              name="dataModel.AboutUsTel" #AboutUsTel type="text" placeholder="021444444444" minlength="0" maxlength="100" />
             <mat-icon matSuffix *ngIf="dataModel.AboutUsTel && fieldsInfo['AboutUsTel']?.AccessAddField" matSuffix
               mat-icon-button aria-label="Clear" (click)="dataModel.AboutUsTel = ''">close</mat-icon>
             <mat-icon *ngIf="fieldsInfo['AboutUsTel']?.AccessAddField" matSuffix>mode_edit</mat-icon>
@@ -117,7 +117,7 @@
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['AboutUsFax']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['AboutUsFax']?.FieldAboutUsFax }}</mat-label>
             <input matInput [(ngModel)]="dataModel.AboutUsFax" [disabled]="!fieldsInfo['AboutUsFax']?.AccessAddField"
-              name="dataModel.AboutUsFax" #AboutUsFax type="text" placeholder="عنوان" minlength="0" maxlength="100" />
+              name="dataModel.AboutUsFax" #AboutUsFax type="text" placeholder="02133333333" minlength="0" maxlength="100" />
             <mat-icon matSuffix *ngIf="dataModel.AboutUsFax && fieldsInfo['AboutUsFax']?.AccessAddField" matSuffix
               mat-icon-button aria-label="Clear" (click)="dataModel.AboutUsFax = ''">close</mat-icon>
             <mat-icon *ngIf="fieldsInfo['AboutUsFax']?.AccessAddField" matSuffix>mode_edit</mat-icon>
@@ -129,7 +129,7 @@
             <mat-label>{{ fieldsInfo['AboutUsEmail']?.FieldAboutUsEmail }}</mat-label>
             <input matInput [(ngModel)]="dataModel.AboutUsEmail"
               [disabled]="!fieldsInfo['AboutUsEmail']?.AccessAddField" name="dataModel.AboutUsEmail" #AboutUsEmail
-              type="text" placeholder="عنوان" minlength="0" maxlength="100" />
+              type="text" placeholder="info@yourdomain.com" minlength="0" maxlength="100" />
             <mat-icon matSuffix *ngIf="dataModel.AboutUsEmail && fieldsInfo['AboutUsEmail']?.AccessAddField" matSuffix
               mat-icon-button aria-label="Clear" (click)="dataModel.AboutUsEmail = ''">close</mat-icon>
             <mat-icon *ngIf="fieldsInfo['AboutUsEmail']?.AccessAddField" matSuffix>mode_edit</mat-icon>
@@ -141,7 +141,7 @@
             <mat-label>{{ fieldsInfo['AboutUsAddress']?.FieldAboutUsAddress }}</mat-label>
             <textarea matInput [(ngModel)]="dataModel.AboutUsAddress"
               [disabled]="!fieldsInfo['AboutUsAddress']?.AccessAddField" name="dataModel.AboutUsAddress"
-              #AboutUsAddress type="text" placeholder="عنوان" row="5" minlength="0" maxlength="100"></textarea>
+              #AboutUsAddress type="text" placeholder="ایران - تهران - ..." row="5" minlength="0" maxlength="100"></textarea>
             <mat-icon matSuffix *ngIf="dataModel.AboutUsAddress && fieldsInfo['AboutUsAddress']?.AccessAddField"
               matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.AboutUsAddress = ''">close</mat-icon>
             <mat-icon *ngIf="fieldsInfo['AboutUsAddress']?.AccessAddField" matSuffix>mode_edit</mat-icon>

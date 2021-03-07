@@ -193,7 +193,7 @@ export class ApplicationAppListComponent implements OnInit, OnDestroy {
       this.categoryModelSelected &&
       this.categoryModelSelected.Id > 0
     ) {
-      sourceId = this.requestSourceId;
+      sourceId = this.categoryModelSelected.Id;
     }
     if (sourceId === 0) {
       const title = 'برروز خطا ';
@@ -209,17 +209,7 @@ export class ApplicationAppListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessAdd();
       return;
     }
-    // const dialogRef = this.dialog.open(NewsCommentEditComponent, {
-    //   data: { contentId: this.requestContentId }
-    // });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   // console.log(`Dialog result: ${result}`);
-    //   if (result && result.dialogChangedDate) {
-    //     this.DataGetAll();
-    //   }
-    // });
-    this.router.navigate(['/application/app/add/', this.requestSourceId]);
-
+    this.router.navigate(['/application/app/add/',sourceId]);
   }
 
   onActionCategorySelect(model: ApplicationSourceModel | null): void {
