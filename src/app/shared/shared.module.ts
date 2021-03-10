@@ -73,7 +73,7 @@ import { OverlayService } from './overlay/overlay.service';
     TagAutocompleteComponent,
     ProgressSpinnerComponent
   ],
-  providers:[OverlayService]
+  providers: [OverlayService]
   /* No providers here! Since they’ll be already provided in AppModule. */
 })
 export class SharedModule {

@@ -82,7 +82,6 @@ import { CmsFileUploaderModule } from 'ntk-cms-fileuploader';
     SharedModule.forRoot(),
     AngularEditorModule,
     TagInputModule,
-    //ProgressSpinnerModule,
     CmsFileManagerModule,
     MatIconModule,
     MatFormFieldModule,

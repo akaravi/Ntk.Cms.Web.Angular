@@ -13,12 +13,13 @@
           <mat-form-field class="example-full-width">
             <mat-label> {{'AUTH.INPUT.FIRSTNAME' | translate}}</mat-label>
             <input matInput [(ngModel)]="dataModel.Name" name="dataModel.Name" #Name type="text" autocomplete="off"
-              placeholder=" {{'AUTH.INPUT.FIRSTNAME' | translate}}" minlength="3" maxlength="100" required />
+            class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6"
+              placeholder=" {{'AUTH.INPUT.FIRSTNAME' | translate}}" minlength="3" maxlength="20" required />
             <mat-icon matSuffix *ngIf="dataModel.Name" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.Name = ''">
               close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
-            <mat-hint align="end">{{ Name.value.length }} / 100</mat-hint>
+            <mat-hint align="end">{{ Name.value.length }} / 20</mat-hint>
             <mat-error *ngIf="Name.errors?.required">
               Name is <strong>required</strong>
             </mat-error>
@@ -26,13 +27,14 @@
           <mat-form-field class="example-full-width">
             <mat-label> {{'AUTH.INPUT.LASTNAME' | translate}}</mat-label>
             <input matInput [(ngModel)]="dataModel.Family" name="dataModel.Family" #Family type="text"
-              autocomplete="off" placeholder=" {{'AUTH.INPUT.LASTNAME' | translate}}" minlength="3" maxlength="100"
+            class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6"
+              autocomplete="off" placeholder=" {{'AUTH.INPUT.LASTNAME' | translate}}" minlength="3" maxlength="20"
               required />
             <mat-icon matSuffix *ngIf="dataModel.Family" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.Family = ''">
               close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
-            <mat-hint align="end">{{ Family.value.length }} / 100</mat-hint>
+            <mat-hint align="end">{{ Family.value.length }} / 20</mat-hint>
             <mat-error *ngIf="Family.errors?.required">
               Family is <strong>required</strong>
             </mat-error>
@@ -41,12 +43,13 @@
           <mat-form-field class="example-full-width">
             <mat-label> {{'AUTH.INPUT.EMAIL' | translate}}</mat-label>
             <input matInput [(ngModel)]="dataModel.Email" name="dataModel.Email" #Email type="email" autocomplete="off"
-              placeholder=" {{'AUTH.INPUT.EMAIL' | translate}}" minlength="3" maxlength="100" required />
+            class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6"
+              placeholder=" {{'AUTH.INPUT.EMAIL' | translate}}" minlength="3" maxlength="20" required />
             <mat-icon matSuffix *ngIf="dataModel.Email" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.Email = ''">
               close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
-            <mat-hint align="end">{{ Email.value.length }} / 100</mat-hint>
+            <mat-hint align="end">{{ Email.value.length }} / 20</mat-hint>
             <mat-error *ngIf="Email.errors?.required">
               Email is <strong>required</strong>
             </mat-error>
@@ -55,13 +58,14 @@
           <mat-form-field class="example-full-width">
             <mat-label> {{'AUTH.INPUT.PASSWORD' | translate}}</mat-label>
             <input matInput [(ngModel)]="dataModel.Password" name="dataModel.Password" #Password type="password"
-              autocomplete="off" placeholder=" {{'AUTH.INPUT.PASSWORD' | translate}}" minlength="3" maxlength="100"
+            class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6"
+              autocomplete="off" placeholder=" {{'AUTH.INPUT.PASSWORD' | translate}}" minlength="3" maxlength="20"
               required />
             <mat-icon matSuffix *ngIf="dataModel.Password" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.Password = ''">
               close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
-            <mat-hint align="end">{{ Password.value.length }} / 100</mat-hint>
+            <mat-hint align="end">{{ Password.value.length }} / 20</mat-hint>
             <mat-error *ngIf="Password.errors?.required">
               Password is <strong>required</strong>
             </mat-error>
@@ -71,13 +75,14 @@
           <mat-form-field class="example-full-width">
             <mat-label> {{'AUTH.INPUT.CONFIRM_PASSWORD' | translate}}</mat-label>
             <input matInput [(ngModel)]="dataModel.RePassword" name="dataModel.RePassword" #RePassword type="password"
+            class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6"
               autocomplete="off" placeholder=" {{'AUTH.INPUT.CONFIRM_PASSWORD' | translate}}" minlength="3"
-              maxlength="100" required />
+              maxlength="20" required />
             <mat-icon matSuffix *ngIf="dataModel.RePassword" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.RePassword = ''">
               close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
-            <mat-hint align="end">{{ RePassword.value.length }} / 100</mat-hint>
+            <mat-hint align="end">{{ RePassword.value.length }} / 20</mat-hint>
             <mat-error *ngIf="RePassword.errors?.required">
               RePassword is <strong>required</strong>
             </mat-error>
@@ -92,13 +97,13 @@
           <mat-form-field class="example-full-width">
             <mat-label> {{'AUTH.INPUT.CAPTCHACODE' | translate}}</mat-label>
             <input matInput [(ngModel)]="dataModel.CaptchaText" name="dataModel.CaptchaText" #CaptchaText type="text"
-              autocomplete="off" placeholder=" {{'AUTH.INPUT.CAPTCHACODE' | translate}}" minlength="3" maxlength="100"
+            class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6"
+              autocomplete="off" placeholder=" {{'AUTH.INPUT.CAPTCHACODE' | translate}}"
               required />
             <mat-icon matSuffix *ngIf="dataModel.CaptchaText" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.CaptchaText = ''">
               close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
-            <mat-hint align="end">{{ CaptchaText.value.length }} / 100</mat-hint>
             <mat-error *ngIf="CaptchaText.errors?.required">
               CaptchaText is <strong>required</strong>
             </mat-error>

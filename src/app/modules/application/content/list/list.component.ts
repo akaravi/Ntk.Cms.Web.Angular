@@ -34,8 +34,8 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./list.component.scss']
 })
 export class ApplicationAppListComponent implements OnInit, OnDestroy {
-  requestSourceId = 0;
-  constructor(private applicationAppService: ApplicationAppService,
+  constructor(
+    private applicationAppService: ApplicationAppService,
     private activatedRoute: ActivatedRoute,
     private cmsApiStore: ntkCmsApiStoreService,
     public publicHelper: PublicHelper,
@@ -46,6 +46,7 @@ export class ApplicationAppListComponent implements OnInit, OnDestroy {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
   }
+  requestSourceId = 0;
   comment: string;
   author: string;
   dataSource: any;
@@ -77,6 +78,7 @@ export class ApplicationAppListComponent implements OnInit, OnDestroy {
 
   columnsToDisplay: string[] = ['Id', 'Writer'];
   expandedElement: ApplicationAppModel | null;
+  cmsApiStoreSubscribe: Subscription;
 
   ngOnInit(): void {
     this.requestSourceId = Number(this.activatedRoute.snapshot.paramMap.get('SourceId'));
@@ -87,7 +89,6 @@ export class ApplicationAppListComponent implements OnInit, OnDestroy {
       this.tokenInfo = next;
     });
   }
-  cmsApiStoreSubscribe: Subscription;
   ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
