@@ -34,14 +34,15 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 export class ApplicationAppEditComponent implements OnInit {
   requestId = 0;
 
-  constructor(private activatedRoute: ActivatedRoute,
+  constructor(
+    private activatedRoute: ActivatedRoute,
     private cmsStoreService: CmsStoreService,
-              public publicHelper: PublicHelper,
-              public coreEnumService: CoreEnumService,
-              public applicationEnumService: ApplicationEnumService,
-              private applicationAppService: ApplicationAppService,
-              private cmsToastrService: CmsToastrService,
-              private router: Router) {
+    public publicHelper: PublicHelper,
+    public coreEnumService: CoreEnumService,
+    public applicationEnumService: ApplicationEnumService,
+    private applicationAppService: ApplicationAppService,
+    private cmsToastrService: CmsToastrService,
+    private router: Router) {
     this.fileManagerTree = new TreeModel();
   }
 
