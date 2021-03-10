@@ -1,6 +1,10 @@
+
 <ng-template #firstSite>
   <app-core-site-add-first [dateInput]="{onActionAddFirstSite:onActionClickSelectSite}"></app-core-site-add-first>
 </ng-template>
+
+
+
 <div *ngIf="dataModel && dataModel.ListItems && dataModel.ListItems.length > 0; else firstSite">
   <div *ngIf="dataModel" class=" container ">
     <div class="row">

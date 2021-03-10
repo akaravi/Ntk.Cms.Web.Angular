@@ -22,7 +22,7 @@ const routes: Routes = [
       {
         path: 'sitecategory',
         loadChildren: () =>
-          import('./siteCategory/coreSiteCategory.module').then((m) => m.CoreSiteCategoryModule),
+          import('./siteCategory/coreSiteCategory.module').then((m) => m.CoreSiteCategoryCmsModule),
       },
     ]
   },

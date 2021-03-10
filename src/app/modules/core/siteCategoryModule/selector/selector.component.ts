@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter } from '@angular/core';
-import { CoreEnumService, ErrorExceptionResult, FilterDataModel, FilterModel, CoreSiteCategoryModel, CoreSiteCategoryService } from 'ntk-cms-api';
+import { CoreEnumService, ErrorExceptionResult, FilterDataModel, FilterModel, CoreSiteCategoryCmsModuleModel, CoreSiteCategoryCmsModuleService } from 'ntk-cms-api';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
@@ -8,26 +8,26 @@ import { Output } from '@angular/core';
 
 
 @Component({
-  selector: 'app-core-sitecategory-selector',
+  selector: 'app-core-SiteCategoryCmsModule-selector',
   templateUrl: './selector.component.html',
   styleUrls: ['./selector.component.scss']
 })
-export class CoreSiteCategorySelectorComponent implements OnInit {
+export class CoreSiteCategoryCmsModuleSelectorComponent implements OnInit {
 
   constructor(
     public coreEnumService: CoreEnumService,
-    public categoryService: CoreSiteCategoryService) {
+    public categoryService: CoreSiteCategoryCmsModuleService) {
   }
-  dataModelResult: ErrorExceptionResult<CoreSiteCategoryModel> = new ErrorExceptionResult<CoreSiteCategoryModel>();
-  dataModelSelect: CoreSiteCategoryModel = new CoreSiteCategoryModel();
+  dataModelResult: ErrorExceptionResult<CoreSiteCategoryCmsModuleModel> = new ErrorExceptionResult<CoreSiteCategoryCmsModuleModel>();
+  dataModelSelect: CoreSiteCategoryCmsModuleModel = new CoreSiteCategoryCmsModuleModel();
   loading = new ProgressSpinnerModel();
   formControl = new FormControl();
-  filteredOptions: Observable<CoreSiteCategoryModel[]>;
+  filteredOptions: Observable<CoreSiteCategoryCmsModuleModel[]>;
   @Input() disabled = new EventEmitter<boolean>();
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Output() optionSelect = new EventEmitter();
   @Input() optionReload = () => this.onActionReload();
-  @Input() set optionSelectForce(x: number | CoreSiteCategoryModel) {
+  @Input() set optionSelectForce(x: number | CoreSiteCategoryCmsModuleModel) {
     this.onActionSelectForce(x);
   }
 
@@ -46,10 +46,10 @@ export class CoreSiteCategorySelectorComponent implements OnInit {
       );
   }
 
-  displayFn(SiteCategory?: CoreSiteCategoryModel): string | undefined {
-    return SiteCategory ? (SiteCategory.Title  ) : undefined;
+  displayFn(SiteCategoryCmsModule?: CoreSiteCategoryCmsModuleModel): string | undefined {
+    return SiteCategoryCmsModule ? (SiteCategoryCmsModule.LinkCmsModuleId + ''  ) : undefined;
   }
-  DataGetAll(text: string | number | any): Observable<CoreSiteCategoryModel[]> {
+  DataGetAll(text: string | number | any): Observable<CoreSiteCategoryCmsModuleModel[]> {
     const filteModel = new FilterModel();
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
@@ -86,12 +86,12 @@ export class CoreSiteCategorySelectorComponent implements OnInit {
           return response.ListItems;
         }));
   }
-  onActionSelect(model: CoreSiteCategoryModel): void {
+  onActionSelect(model: CoreSiteCategoryCmsModuleModel): void {
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
   }
 
-  push(newvalue: CoreSiteCategoryModel): Observable<CoreSiteCategoryModel[]> {
+  push(newvalue: CoreSiteCategoryCmsModuleModel): Observable<CoreSiteCategoryCmsModuleModel[]> {
     return this.filteredOptions.pipe(map(items => {
       if (items.find(x => x.Id === newvalue.Id)) {
         return items;
@@ -101,7 +101,7 @@ export class CoreSiteCategorySelectorComponent implements OnInit {
     }));
 
   }
-  onActionSelectForce(id: number | CoreSiteCategoryModel): void {
+  onActionSelectForce(id: number | CoreSiteCategoryCmsModuleModel): void {
     if (typeof id === 'number' && id > 0) {
       this.categoryService.ServiceGetOneById(id).subscribe((next) => {
         if (next.IsSuccess) {
@@ -111,9 +111,9 @@ export class CoreSiteCategorySelectorComponent implements OnInit {
         }
       });
     }
-    if (typeof id === typeof CoreSiteCategoryModel) {
-      this.filteredOptions = this.push((id as CoreSiteCategoryModel));
-      this.dataModelSelect = (id as CoreSiteCategoryModel);
+    if (typeof id === typeof CoreSiteCategoryCmsModuleModel) {
+      this.filteredOptions = this.push((id as CoreSiteCategoryCmsModuleModel));
+      this.dataModelSelect = (id as CoreSiteCategoryCmsModuleModel);
       this.formControl.setValue(id);
     }
   }
@@ -122,8 +122,8 @@ export class CoreSiteCategorySelectorComponent implements OnInit {
     // if (this.dataModelSelect && this.dataModelSelect.Id > 0) {
     //   this.onActionSelect(null);
     // }
-    this.dataModelSelect = new CoreSiteCategoryModel();
-    // this.optionsData.Select = new CoreSiteCategoryModel();
+    this.dataModelSelect = new CoreSiteCategoryCmsModuleModel();
+    // this.optionsData.Select = new CoreSiteCategoryCmsModuleModel();
     this.DataGetAll(null);
   }
 }

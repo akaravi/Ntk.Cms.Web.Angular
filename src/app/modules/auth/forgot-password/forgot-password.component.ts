@@ -13,11 +13,11 @@ enum ErrorStates {
 }
 
 @Component({
-    selector: 'app-forgot-password',
+    selector: 'app-auth-forgot-password',
     templateUrl: './forgot-password.component.html',
     styleUrls: ['./forgot-password.component.scss'],
 })
-export class ForgotPasswordComponent implements OnInit {
+export class AuthForgotPasswordComponent implements OnInit {
     forgotPasswordForm: FormGroup;
     errorState: ErrorStates = ErrorStates.NotSubmitted;
     errorStates = ErrorStates;

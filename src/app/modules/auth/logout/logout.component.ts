@@ -3,11 +3,11 @@ import { CoreAuthService } from 'ntk-cms-api';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 
 @Component({
-  selector: 'app-logout',
+  selector: 'app-auth-logout',
   templateUrl: './logout.component.html',
   styleUrls: ['./logout.component.scss'],
 })
-export class LogoutComponent implements OnInit {
+export class AuthLogoutComponent implements OnInit {
   constructor(private authService: CoreAuthService,
               private cmsToastrService: CmsToastrService,
   ) {

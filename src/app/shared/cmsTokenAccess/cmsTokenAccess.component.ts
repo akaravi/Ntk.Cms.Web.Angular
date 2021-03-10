@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   AuthRenewTokenModel,
@@ -16,7 +16,7 @@ import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
   templateUrl: './cmsTokenAccess.component.html',
   styleUrls: ['./cmsTokenAccess.component.scss'],
 })
-export class CmsTokenAccessComponent implements OnInit {
+export class CmsTokenAccessComponent implements OnInit, OnDestroy {
 
   tokenInfo: TokenInfoModel = new TokenInfoModel();
   loadingStatus = false;
@@ -33,7 +33,7 @@ export class CmsTokenAccessComponent implements OnInit {
 
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
 
-    if (this.tokenInfo && this.tokenInfo.UserId<=0 ) {
+    if (this.tokenInfo && this.tokenInfo.UserId <= 0) {
       this.router.navigate(['/auth/login']);
     }
 
@@ -43,6 +43,10 @@ export class CmsTokenAccessComponent implements OnInit {
 
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((value) => {
       this.tokenInfo = value;
+      if (this.tokenInfo && this.tokenInfo.UserId <= 0) {
+        this.router.navigate(['/auth/login']);
+      }
+
       if (this.tokenInfo && this.tokenInfo.UserId > 0 && this.tokenInfo.SiteId <= 0) {
         this.router.navigate(['/core/site/selection']);
       }
@@ -55,7 +59,7 @@ export class CmsTokenAccessComponent implements OnInit {
 
   }
   cmsApiStoreSubscribe: Subscription;
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
   onActionbuttonUserAccessAdminAllowToAllData(): void {

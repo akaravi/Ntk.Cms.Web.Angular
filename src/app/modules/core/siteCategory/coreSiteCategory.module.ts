@@ -4,7 +4,7 @@ import { CoreSiteCategoryRouting } from './coreSiteCategory.routing';
 import { CoreSiteCategoryComponent } from './coreSiteCategory.component';
 import {
   CoreModuleService,
-  CoreSiteCategoryModuleService,
+  CoreSiteCategoryCmsModuleService,
   CoreSiteCategoryService,
 } from 'ntk-cms-api';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -31,6 +31,15 @@ import { CmsFileManagerModule } from 'ntk-cms-filemanager';
     CoreSiteCategorySelectorComponent,
     CoreSiteCategoryTreeComponent,
   ],
+  exports:[
+    CoreSiteCategoryComponent,
+    CoreSiteCategoryListComponent,
+    CoreSiteCategoryAddComponent,
+    CoreSiteCategoryEditComponent,
+    CoreSiteCategoryDeleteComponent,
+    CoreSiteCategorySelectorComponent,
+    CoreSiteCategoryTreeComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -45,9 +54,9 @@ import { CmsFileManagerModule } from 'ntk-cms-filemanager';
   ],
   providers: [
     CoreSiteCategoryService,
-    CoreSiteCategoryModuleService,
+    CoreSiteCategoryCmsModuleService,
     CoreModuleService,
   ]
 })
-export class CoreSiteCategoryModule {
+export class CoreSiteCategoryCmsModule {
 }
