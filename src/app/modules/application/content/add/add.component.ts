@@ -54,7 +54,12 @@ export class ApplicationAppAddComponent implements OnInit {
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   dataModelEnumOsTypeResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
-  fileManagerOpenForm = false;
+  fileManagerOpenFormAboutUsLinkImageId = false;
+  fileManagerOpenFormLinkFileIdIcon = false;
+  fileManagerOpenFormLinkFileIdLogo = false;
+  fileManagerOpenFormLinkFileIdSplashScreen = false;
+  fileManagerOpenFormLinkMainImageId = false;
+
   appLanguage = 'fa';
 
   fileManagerTree: TreeModel;
