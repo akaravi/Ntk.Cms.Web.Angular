@@ -24,22 +24,24 @@ import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/bas
 import { MatSort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
-import { CoreSiteCategoryDeleteComponent } from '../delete/delete.component';
 import { CoreSiteCategoryEditComponent } from '../edit/edit.component';
 import { CoreSiteCategoryAddComponent } from '../add/add.component';
+import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 
 @Component({
   selector: 'app-core-sitecategory-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class CoreSiteCategoryListComponent implements OnInit , OnDestroy {
-  constructor(private coreSiteCategoryService: CoreSiteCategoryService,
-              private cmsApiStore: ntkCmsApiStoreService,
-              public publicHelper: PublicHelper,
-              private cmsToastrService: CmsToastrService,
-              private router: Router,
-              public dialog: MatDialog) {
+export class CoreSiteCategoryListComponent implements OnInit, OnDestroy {
+  constructor(
+    private coreSiteCategoryService: CoreSiteCategoryService,
+    private cmsApiStore: ntkCmsApiStoreService,
+    public publicHelper: PublicHelper,
+    private cmsToastrService: CmsToastrService,
+    private cmsConfirmationDialogService: CmsConfirmationDialogService,
+    private router: Router,
+    public dialog: MatDialog) {
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
@@ -223,14 +225,36 @@ export class CoreSiteCategoryListComponent implements OnInit , OnDestroy {
       this.cmsToastrService.typeErrorAccessDelete();
       return;
     }
-    const dialogRef = this.dialog.open(CoreSiteCategoryDeleteComponent, {
-      data: { id: this.tableRowSelected.Id }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result && result.dialogChangedDate) {
-        this.DataGetAll();
+
+
+    const title = 'لطفا تایید کنید...';
+    const message = 'آیا مایل به حدف این محتوا می باشید ' + '?' + '<br> ( ' + this.tableRowSelected.Title + ' ) ';
+    this.cmsConfirmationDialogService.confirm(title, message)
+      .then((confirmed) => {
+        if (confirmed) {
+          this.loading.display = true;
+          this.coreSiteCategoryService.ServiceDelete(this.tableRowSelected.Id).subscribe(
+            (next) => {
+              if (next.IsSuccess) {
+                this.cmsToastrService.typeSuccessRemove();
+                this.DataGetAll();
+              } else {
+                this.cmsToastrService.typeErrorRemove();
+              }
+              this.loading.display = false;
+            },
+            (error) => {
+              this.cmsToastrService.typeError(error);
+              this.loading.display = false;
+            }
+          );
+        }
       }
-    });
+      )
+      .catch(() => {
+        // console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)')
+      }
+      );
 
   }
   onActionbuttonFaqList(model: CoreSiteCategoryModel = this.tableRowSelected): void {
@@ -266,7 +290,7 @@ export class CoreSiteCategoryListComponent implements OnInit , OnDestroy {
 
     this.router.navigate(['/core/siteSiteCategory/', this.tableRowSelected.Id]);
   }
-   onActionbuttonStatist(): void {
+  onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;
     if (!this.optionsStatist.data.show) {
       return;
