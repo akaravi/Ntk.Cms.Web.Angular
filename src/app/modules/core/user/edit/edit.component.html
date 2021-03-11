@@ -100,7 +100,8 @@
 
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['ExpireDate']?.AccessWatchField">
             <mat-label>{{fieldsInfo['ExpireDate']?.FieldTitle}}</mat-label>
-            <input matInput [matDatepicker]="ExpireDate" [(ngModel)]="dataModel.ExpireDate" name="dataModel.ExpireDate" />
+            <input matInput [matDatepicker]="ExpireDate" [(ngModel)]="dataModel.ExpireDate"
+              name="dataModel.ExpireDate" />
             <mat-datepicker-toggle matSuffix [for]="ExpireDate"></mat-datepicker-toggle>
             <mat-datepicker touchUi #ExpireDate></mat-datepicker>
           </mat-form-field>
@@ -110,7 +111,8 @@
 
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['ExpireLockAccount']?.AccessWatchField">
             <mat-label>{{fieldsInfo['ExpireLockAccount']?.FieldTitle}}</mat-label>
-            <input matInput [matDatepicker]="ExpireLockAccount" [(ngModel)]="dataModel.ExpireLockAccount" name="dataModel.ExpireLockAccount" />
+            <input matInput [matDatepicker]="ExpireLockAccount" [(ngModel)]="dataModel.ExpireLockAccount"
+              name="dataModel.ExpireLockAccount" />
             <mat-datepicker-toggle matSuffix [for]="ExpireLockAccount"></mat-datepicker-toggle>
             <mat-datepicker touchUi #ExpireLockAccount></mat-datepicker>
           </mat-form-field>
@@ -119,13 +121,12 @@
 
 
           <div *ngIf="formInfo.FormSubmitAllow">
-            <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
+            <a class="btn btn-secondary btn-sm BTN">
+              <button (click)="onActionBackToParent()" type="button" class="btn btn-warning BTN">بازگشت</button>
+            </a> <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-primary font-weight-bold text-uppercase px-9 py-4">
               بعدی
             </button>
-            <a class="btn btn-secondary btn-sm BTN">
-              <button (click)="onActionBackToParent()" type="button" class="btn btn-warning BTN">بازگشت</button>
-            </a>
           </div>
         </mat-step>
 
@@ -352,4 +353,3 @@
   </div>
   <!--end::Container-->
 </div>
-

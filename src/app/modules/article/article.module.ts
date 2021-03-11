@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ArticleRouting } from './article.routing';
 import { ArticleComponent } from './article.component';
-import {TagInputModule} from 'ngx-chips';
+import { TagInputModule } from 'ngx-chips';
 
 import {
   CoreEnumService,
@@ -34,12 +34,12 @@ import { ArticleCategorySelectorComponent } from './category/selector/selector.c
 import { ArticleContentListComponent } from './content/list/list.component';
 import { ArticleCategoryTreeComponent } from './category/tree/tree.component';
 import { ArticleCommentListComponent } from './comment/list/list.component';
-import { ArticleCommentDeleteComponent } from './comment/delete/delete.component';
 import { ArticleCommentEditComponent } from './comment/edit/edit.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
-import {ArticleContentSelectorComponent} from './content/selector/selector.component';
+import { ArticleContentSelectorComponent } from './content/selector/selector.component';
 import { ArticleContentDeleteComponent } from './content/delete/delete.component';
 import { ArticleCategoryAddComponent } from './category/add/add.component';
+import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 
 @NgModule({
   declarations: [
@@ -55,22 +55,23 @@ import { ArticleCategoryAddComponent } from './category/add/add.component';
     ArticleCategoryEditComponent,
     ArticleCategoryDeleteComponent,
     ArticleCommentListComponent,
-    ArticleCommentDeleteComponent,
     ArticleCommentEditComponent,
   ],
   imports: [
     ArticleRouting,
-     CommonModule,
-     FormsModule,
-     ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
     TreeviewModule.forRoot(),
     SharedModule.forRoot(),
-    AngularEditorModule ,
+    AngularEditorModule,
     TagInputModule,
     CmsFileManagerModule
   ],
   providers: [
-    // CategoryResolver,
+    CoreEnumService,
+    CoreModuleTagService,
+    CmsConfirmationDialogService,
     ArticleCategoryService,
     ArticleCommentService,
     ArticleConfigurationService,
@@ -84,8 +85,7 @@ import { ArticleCategoryAddComponent } from './category/add/add.component';
     ArticleShareMainAdminSettingService,
     ArticleShareReciverCategoryService,
     ArticleShareServerCategoryService,
-    CoreEnumService,
-    CoreModuleTagService
+
   ]
 })
 export class ArticleModule { }

@@ -9,7 +9,6 @@ import { ApplicationSourceListComponent } from './source/list/list.component';
 import { ApplicationThemeConfigListComponent } from './themeConfig/list/list.component';
 import { ApplicationSourceAddComponent } from './source/add/add.component';
 import { ApplicationSourceEditComponent } from './source/edit/edit.component';
-import { ApplicationSourceDeleteComponent } from './source/delete/delete.component';
 import { ApplicationAppEditComponent } from './content/edit/edit.component';
 import { ApplicationAppAddComponent } from './content/add/add.component';
 
@@ -29,10 +28,6 @@ const routes: Routes = [
       {
         path: 'source/edit/:Id',
         component: ApplicationSourceEditComponent
-      },
-      {
-        path: 'source/delete/:Id',
-        component: ApplicationSourceDeleteComponent
       },
       {
         path: 'app',

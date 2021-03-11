@@ -18,11 +18,6 @@ import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 })
 export class CmsTokenAccessComponent implements OnInit, OnDestroy {
 
-  tokenInfo: TokenInfoModel = new TokenInfoModel();
-  loadingStatus = false;
-  SiteId: number;
-  UserId: number;
-
   constructor(
     public coreAuthService: CoreAuthService,
     private cmsApiStore: ntkCmsApiStoreService,
@@ -55,10 +50,15 @@ export class CmsTokenAccessComponent implements OnInit, OnDestroy {
 
   }
 
+  tokenInfo: TokenInfoModel = new TokenInfoModel();
+  loadingStatus = false;
+  SiteId: number;
+  UserId: number;
+  cmsApiStoreSubscribe: Subscription;
+
   ngOnInit(): void {
 
   }
-  cmsApiStoreSubscribe: Subscription;
   ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }

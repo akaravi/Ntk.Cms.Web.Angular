@@ -113,7 +113,12 @@ export class PollingContentEditComponent implements OnInit, AfterViewInit {
 
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
-    if (this.storeSnapshot && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus.IsSuccess && this.storeSnapshot.EnumRecordStatus.ListItems && this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
+    if (this.storeSnapshot &&
+      this.storeSnapshot.EnumRecordStatus &&
+      this.storeSnapshot.EnumRecordStatus &&
+      this.storeSnapshot.EnumRecordStatus.IsSuccess &&
+      this.storeSnapshot.EnumRecordStatus.ListItems &&
+      this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
       this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
     }
   }
@@ -241,7 +246,7 @@ export class PollingContentEditComponent implements OnInit, AfterViewInit {
             // await this.DataActionAfterAddContentSuccessfulSimilar(this.dataModelResult.Item);
             // await this.DataActionAfterAddContentSuccessfulOtherInfo(this.dataModelResult.Item);
             this.loading.display = false;
-            this.router.navigate(['/polling/edit/', this.requestId]);
+            setTimeout(() => this.router.navigate(['/polling/edit/', this.requestId]), 100);
           } else {
             this.cmsToastrService.typeErrorAdd(next.ErrorMessage);
           }

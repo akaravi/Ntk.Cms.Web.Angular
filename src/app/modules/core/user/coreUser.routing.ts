@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CoreUserListComponent } from './list/list.component';
 import { CoreUserComponent } from './coreUser.component';
+import { CoreUserEditComponent } from './edit/edit.component';
 
 
 const routes: Routes = [
@@ -13,22 +14,10 @@ const routes: Routes = [
         path: '',
         component: CoreUserListComponent
       },
-      // {
-      //   path: 'content/add/:CategoryId',
-      //   component: UserContentAddComponent
-      // },
-      // {
-      //   path: 'content/edit/:Id',
-      //   component: UserContentEditComponent
-      // },
-      // {
-      //   path: 'comment',
-      //   component: UserCommentListComponent
-      // },
-      // {
-      //   path: 'comment/:ContentId',
-      //   component: UserCommentListComponent
-      // },
+      {
+        path: 'edit/:Id',
+        component: CoreUserEditComponent
+      }
 
     ]
   },

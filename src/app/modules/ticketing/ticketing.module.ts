@@ -36,6 +36,10 @@ import { TicketingTemplateListComponent } from './template/list/list.component';
 import { TicketingFaqAddComponent } from './faq/add/add.component';
 import { TicketingTemplateAddComponent } from './template/add/add.component';
 import { TicketingTemplateEditComponent } from './template/edit/edit.component';
+import { TicketingDepartemenLogEditComponent } from './departemenLog/edit/edit.component';
+import { TicketingDepartemenOperatorAddComponent } from './departemenOperator/add/add.component';
+import { TicketingDepartemenOperatorEditComponent } from './departemenOperator/edit/edit.component';
+import { TicketingTaskAddComponent } from './task/add/add.component';
 
 
 
@@ -55,7 +59,11 @@ import { TicketingTemplateEditComponent } from './template/edit/edit.component';
     TicketingTemplateEditComponent,
     TicketingTemplateListComponent,
     TicketingTaskListComponent,
-    TicketingTaskEditComponent
+    TicketingTaskEditComponent,
+    TicketingTaskAddComponent,
+    TicketingDepartemenLogEditComponent,
+    TicketingDepartemenOperatorAddComponent,
+    TicketingDepartemenOperatorEditComponent,
   ],
   imports: [
     CommonModule,
@@ -66,7 +74,6 @@ import { TicketingTemplateEditComponent } from './template/edit/edit.component';
     SharedModule.forRoot(),
     AngularEditorModule,
     TagInputModule,
-    //ProgressSpinnerModule,
     CmsFileManagerModule
   ],
   providers: [

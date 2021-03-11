@@ -35,7 +35,7 @@ export class FileContentEditComponent implements OnInit, AfterViewInit {
     private cmsStoreService: CmsStoreService,
     public coreEnumService: CoreEnumService,
     public publicHelper: PublicHelper,
-        private fileContentService: FileContentService,
+    private fileContentService: FileContentService,
     private cmsToastrService: CmsToastrService,
     private router: Router,
 
@@ -49,7 +49,7 @@ export class FileContentEditComponent implements OnInit, AfterViewInit {
   similarDataModel = new Array<FileContentModel>();
   contentSimilarSelected: FileContentModel = new FileContentModel();
   otherInfoTabledisplayedColumns = ['Id', 'Title', 'TypeId', 'Action'];
-  similarTabledisplayedColumns = [ 'Id', 'RecordStatus', 'Title', 'Action'];
+  similarTabledisplayedColumns = ['Id', 'RecordStatus', 'Title', 'Action'];
   similarTabledataSource = new MatTableDataSource<FileContentModel>();
 
   loading = new ProgressSpinnerModel();
@@ -89,7 +89,12 @@ export class FileContentEditComponent implements OnInit, AfterViewInit {
 
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
-    if (this.storeSnapshot && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus.IsSuccess && this.storeSnapshot.EnumRecordStatus.ListItems && this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
+    if (this.storeSnapshot &&
+      this.storeSnapshot.EnumRecordStatus &&
+      this.storeSnapshot.EnumRecordStatus &&
+      this.storeSnapshot.EnumRecordStatus.IsSuccess &&
+      this.storeSnapshot.EnumRecordStatus.ListItems &&
+      this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
       this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
     }
   }
@@ -166,7 +171,7 @@ export class FileContentEditComponent implements OnInit, AfterViewInit {
             this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
             this.cmsToastrService.typeSuccessAdd();
             this.loading.display = false;
-            this.router.navigate(['/file/edit/', this.requestId]);
+            setTimeout(() => this.router.navigate(['/file/edit/', this.requestId]), 100);
           } else {
             this.cmsToastrService.typeErrorAdd(next.ErrorMessage);
           }

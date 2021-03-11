@@ -30,14 +30,15 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 export class TicketingDepartemenLogEditComponent implements OnInit {
   requestId = 0;
 
-  constructor(private activatedRoute: ActivatedRoute,
+  constructor(
+    private activatedRoute: ActivatedRoute,
     private cmsStoreService: CmsStoreService,
-              public publicHelper: PublicHelper,
-              public coreEnumService: CoreEnumService,
-              public applicationEnumService: ApplicationEnumService,
-              private ticketingDepartemenLogService: TicketingDepartemenLogService,
-              private cmsToastrService: CmsToastrService,
-              private router: Router) {
+    public publicHelper: PublicHelper,
+    public coreEnumService: CoreEnumService,
+    public applicationEnumService: ApplicationEnumService,
+    private ticketingDepartemenLogService: TicketingDepartemenLogService,
+    private cmsToastrService: CmsToastrService,
+    private router: Router) {
     this.fileManagerTree = new TreeModel();
   }
 
@@ -69,7 +70,12 @@ export class TicketingDepartemenLogEditComponent implements OnInit {
   }
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
-    if (this.storeSnapshot && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus.IsSuccess && this.storeSnapshot.EnumRecordStatus.ListItems && this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
+    if (this.storeSnapshot &&
+      this.storeSnapshot.EnumRecordStatus &&
+      this.storeSnapshot.EnumRecordStatus &&
+      this.storeSnapshot.EnumRecordStatus.IsSuccess &&
+      this.storeSnapshot.EnumRecordStatus.ListItems &&
+      this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
       this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
     }
   }
@@ -144,7 +150,7 @@ export class TicketingDepartemenLogEditComponent implements OnInit {
           if (next.IsSuccess) {
             this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
             this.cmsToastrService.typeSuccessEdit();
-            this.router.navigate(['/application/app/']);
+            setTimeout(() => this.router.navigate(['/application/app/']), 100);
           } else {
             this.cmsToastrService.typeErrorEdit(next.ErrorMessage);
           }

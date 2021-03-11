@@ -37,12 +37,12 @@ import { NewsCategorySelectorComponent } from './category/selector/selector.comp
 import { NewsContentListComponent } from './content/list/list.component';
 import { NewsCategoryTreeComponent } from './category/tree/tree.component';
 import { NewsCommentListComponent } from './comment/list/list.component';
-import { NewsCommentDeleteComponent } from './comment/delete/delete.component';
 import { NewsCommentEditComponent } from './comment/edit/edit.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { NewsContentSelectorComponent } from './content/selector/selector.component';
 import { NewsContentDeleteComponent } from './content/delete/delete.component';
 import { NewsCategoryAddComponent } from './category/add/add.component';
+import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 
 @NgModule({
   declarations: [
@@ -58,7 +58,6 @@ import { NewsCategoryAddComponent } from './category/add/add.component';
     NewsCategoryEditComponent,
     NewsCategoryDeleteComponent,
     NewsCommentListComponent,
-    NewsCommentDeleteComponent,
     NewsCommentEditComponent,
   ],
   imports: [
@@ -76,6 +75,7 @@ import { NewsCategoryAddComponent } from './category/add/add.component';
   providers: [
     CoreEnumService,
     CoreModuleTagService,
+    CmsConfirmationDialogService,
     NewsCategoryService,
     NewsCommentService,
     NewsConfigurationService,

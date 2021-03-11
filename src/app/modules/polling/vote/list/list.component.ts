@@ -14,8 +14,8 @@ import { MatSort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { PollingVoteEditComponent } from '../edit/edit.component';
-import { PollingVoteDeleteComponent } from '../delete/delete.component';
 import { Subscription } from 'rxjs';
+import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 
 
 @Component({
@@ -30,14 +30,16 @@ import { Subscription } from 'rxjs';
     ]),
   ],
 })
-export class PollingVoteListComponent implements OnInit,OnDestroy {
-  constructor(private pollingVoteService: PollingVoteService,
-              private activatedRoute: ActivatedRoute,
-              private cmsApiStore: ntkCmsApiStoreService,
-              public publicHelper: PublicHelper,
-              private cmsToastrService: CmsToastrService,
-              private router: Router,
-              public dialog: MatDialog) {
+export class PollingVoteListComponent implements OnInit, OnDestroy {
+  constructor(
+    private pollingVoteService: PollingVoteService,
+    private activatedRoute: ActivatedRoute,
+    private cmsApiStore: ntkCmsApiStoreService,
+    public publicHelper: PublicHelper,
+    private cmsToastrService: CmsToastrService,
+    private cmsConfirmationDialogService: CmsConfirmationDialogService,
+    private router: Router,
+    public dialog: MatDialog) {
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
@@ -79,8 +81,8 @@ export class PollingVoteListComponent implements OnInit,OnDestroy {
     this.requestContentId = Number(this.activatedRoute.snapshot.paramMap.get('ContentId'));
 
     this.DataGetAll();
-    this.tokenInfo =  this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
-    this.cmsApiStoreSubscribe =  this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
+    this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
+    this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
     });
@@ -248,7 +250,7 @@ export class PollingVoteListComponent implements OnInit,OnDestroy {
     });
   }
   onActionbuttonDeleteRow(model: NewsContentModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0)  {
+    if (!model || !model.Id || model.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای ویرایش انتخاب نشده است';
       this.cmsToastrService.toastr.error(message, title);
@@ -264,17 +266,38 @@ export class PollingVoteListComponent implements OnInit,OnDestroy {
       this.cmsToastrService.typeErrorAccessDelete();
       return;
     }
-    const dialogRef = this.dialog.open(PollingVoteDeleteComponent, {
-      data: { id: this.tableRowSelected.Id }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      // console.log(`Dialog result: ${result}`);
-      if (result && result.dialogChangedDate) {
-        this.DataGetAll();
+
+
+    const title = 'لطفا تایید کنید...';
+    const message = 'آیا مایل به حدف این محتوا می باشید ' + '?' + '<br> ( ' + this.tableRowSelected.Title + ' ) ';
+    this.cmsConfirmationDialogService.confirm(title, message)
+      .then((confirmed) => {
+        if (confirmed) {
+          this.loading.display = true;
+          this.pollingVoteService.ServiceDelete(this.tableRowSelected.Id).subscribe(
+            (next) => {
+              if (next.IsSuccess) {
+                this.cmsToastrService.typeSuccessRemove();
+                this.DataGetAll();
+              } else {
+                this.cmsToastrService.typeErrorRemove();
+              }
+              this.loading.display = false;
+            },
+            (error) => {
+              this.cmsToastrService.typeError(error);
+              this.loading.display = false;
+            }
+          );
+        }
       }
-    });
+      )
+      .catch(() => {
+        // console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)')
+      }
+      );
   }
-   onActionbuttonStatist(): void {
+  onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;
     if (!this.optionsStatist.data.show) {
       return;

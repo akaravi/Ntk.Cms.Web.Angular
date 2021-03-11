@@ -68,7 +68,12 @@ export class ApplicationIntroEditComponent implements OnInit {
   }
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
-    if (this.storeSnapshot && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus.IsSuccess && this.storeSnapshot.EnumRecordStatus.ListItems && this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
+    if (this.storeSnapshot &&
+      this.storeSnapshot.EnumRecordStatus &&
+      this.storeSnapshot.EnumRecordStatus &&
+      this.storeSnapshot.EnumRecordStatus.IsSuccess &&
+      this.storeSnapshot.EnumRecordStatus.ListItems &&
+      this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
       this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
     }
   }
@@ -147,7 +152,7 @@ export class ApplicationIntroEditComponent implements OnInit {
           if (next.IsSuccess) {
             this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
             this.cmsToastrService.typeSuccessEdit();
-            this.router.navigate(['/application/source/']);
+            setTimeout(() => this.router.navigate(['/application/source/']), 100);
           } else {
             this.cmsToastrService.typeErrorEdit(next.ErrorMessage);
           }

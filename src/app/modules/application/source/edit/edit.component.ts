@@ -30,12 +30,12 @@ export class ApplicationSourceEditComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
     private cmsStoreService: CmsStoreService,
-              public publicHelper: PublicHelper,
-              public coreEnumService: CoreEnumService,
-              public applicationEnumService: ApplicationEnumService,
-              private applicationSourceService: ApplicationSourceService,
-              private cmsToastrService: CmsToastrService,
-              private router: Router) {
+    public publicHelper: PublicHelper,
+    public coreEnumService: CoreEnumService,
+    public applicationEnumService: ApplicationEnumService,
+    private applicationSourceService: ApplicationSourceService,
+    private cmsToastrService: CmsToastrService,
+    private router: Router) {
     this.fileManagerTree = new TreeModel();
   }
 
@@ -66,7 +66,12 @@ export class ApplicationSourceEditComponent implements OnInit {
   }
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
-    if (this.storeSnapshot && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus.IsSuccess && this.storeSnapshot.EnumRecordStatus.ListItems && this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
+    if (this.storeSnapshot &&
+      this.storeSnapshot.EnumRecordStatus &&
+      this.storeSnapshot.EnumRecordStatus &&
+      this.storeSnapshot.EnumRecordStatus.IsSuccess &&
+      this.storeSnapshot.EnumRecordStatus.ListItems &&
+      this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
       this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
     }
   }
@@ -143,7 +148,7 @@ export class ApplicationSourceEditComponent implements OnInit {
           if (next.IsSuccess) {
             this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
             this.cmsToastrService.typeSuccessEdit();
-            this.router.navigate(['/application/source/']);
+            setTimeout(() => this.router.navigate(['/application/source/']), 100);
           } else {
             this.cmsToastrService.typeErrorEdit(next.ErrorMessage);
           }

@@ -29,8 +29,8 @@ import { PollingCategoryTreeComponent } from './category/tree/tree.component';
 import { PollingContentDeleteComponent } from './content/delete/delete.component';
 import { PollingVoteEditComponent } from './vote/edit/edit.component';
 import { PollingVoteListComponent } from './vote/list/list.component';
-import { PollingVoteDeleteComponent } from './vote/delete/delete.component';
 import { PollingCategoryAddComponent } from './category/add/add.component';
+import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 
 
 @NgModule({
@@ -47,7 +47,6 @@ import { PollingCategoryAddComponent } from './category/add/add.component';
     PollingContentDeleteComponent,
     PollingVoteEditComponent,
     PollingVoteListComponent,
-    PollingVoteDeleteComponent
   ],
   imports: [
     CommonModule,
@@ -58,12 +57,12 @@ import { PollingCategoryAddComponent } from './category/add/add.component';
     SharedModule.forRoot(),
     AngularEditorModule,
     TagInputModule,
-    //ProgressSpinnerModule,
     CmsFileManagerModule
   ],
   providers: [
     CoreEnumService,
     CoreModuleTagService,
+    CmsConfirmationDialogService,
     PollingCategoryService,
     PollingContentService,
     PollingOptionService,

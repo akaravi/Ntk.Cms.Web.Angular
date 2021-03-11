@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
   ApplicationAppModel,
@@ -24,26 +24,29 @@ import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/bas
 import { MatSort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
+import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 
 @Component({
   selector: 'app-application-intro-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ApplicationIntroListComponent implements OnInit {
-  requestApplicationId = 0;
+export class ApplicationIntroListComponent implements OnInit, OnDestroy {
 
-  constructor(private applicationIntroService: ApplicationIntroService,
+  constructor(
+    private applicationIntroService: ApplicationIntroService,
     private activatedRoute: ActivatedRoute,
     private cmsApiStore: ntkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
     private router: Router,
+    private cmsConfirmationDialogService: CmsConfirmationDialogService,
     public dialog: MatDialog) {
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
   }
+  requestApplicationId = 0;
   comment: string;
   author: string;
   dataSource: any;
@@ -73,6 +76,7 @@ export class ApplicationIntroListComponent implements OnInit {
 
   columnsToDisplay: string[] = ['Id', 'Writer'];
   expandedElement: ApplicationIntroModel | null;
+  cmsApiStoreSubscribe: Subscription;
 
   ngOnInit(): void {
     this.requestApplicationId = Number(this.activatedRoute.snapshot.paramMap.get('ApplicationId'));
@@ -83,8 +87,7 @@ export class ApplicationIntroListComponent implements OnInit {
       this.tokenInfo = next;
     });
   }
-  cmsApiStoreSubscribe: Subscription;
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
   DataGetAll(): void {
@@ -227,7 +230,34 @@ export class ApplicationIntroListComponent implements OnInit {
       this.cmsToastrService.typeErrorAccessDelete();
       return;
     }
-    this.router.navigate(['/application/intro/delete/', this.tableRowSelected]);
+    const title = 'لطفا تایید کنید...';
+    const message = 'آیا مایل به حدف این محتوا می باشید ' + '?' + '<br> ( ' + this.tableRowSelected.Title + ' ) ';
+    this.cmsConfirmationDialogService.confirm(title, message)
+      .then((confirmed) => {
+        if (confirmed) {
+          this.loading.display = true;
+          this.applicationIntroService.ServiceDelete(this.tableRowSelected.Id).subscribe(
+            (next) => {
+              if (next.IsSuccess) {
+                this.cmsToastrService.typeSuccessRemove();
+                this.DataGetAll();
+              } else {
+                this.cmsToastrService.typeErrorRemove();
+              }
+              this.loading.display = false;
+            },
+            (error) => {
+              this.cmsToastrService.typeError(error);
+              this.loading.display = false;
+            }
+          );
+        }
+      }
+      )
+      .catch(() => {
+        // console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)')
+      }
+      );
   }
   onActionCategorySelect(model: ApplicationAppModel | null): void {
     this.filteModelContent = new FilterModel();
@@ -235,7 +265,7 @@ export class ApplicationIntroListComponent implements OnInit {
 
     this.DataGetAll();
   }
-   onActionbuttonStatist(): void {
+  onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;
     if (!this.optionsStatist.data.show) {
       return;

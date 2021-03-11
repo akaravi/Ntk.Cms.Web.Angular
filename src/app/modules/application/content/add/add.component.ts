@@ -35,12 +35,12 @@ export class ApplicationAppAddComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
     private cmsStoreService: CmsStoreService,
-              public publicHelper: PublicHelper,
-              public coreEnumService: CoreEnumService,
-              public applicationEnumService: ApplicationEnumService,
-              private applicationAppService: ApplicationAppService,
-              private cmsToastrService: CmsToastrService,
-              private router: Router) {
+    public publicHelper: PublicHelper,
+    public coreEnumService: CoreEnumService,
+    public applicationEnumService: ApplicationEnumService,
+    private applicationAppService: ApplicationAppService,
+    private cmsToastrService: CmsToastrService,
+    private router: Router) {
     this.fileManagerTree = new TreeModel();
   }
 
@@ -79,7 +79,12 @@ export class ApplicationAppAddComponent implements OnInit {
   }
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
-    if (this.storeSnapshot && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus.IsSuccess && this.storeSnapshot.EnumRecordStatus.ListItems && this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
+    if (this.storeSnapshot &&
+      this.storeSnapshot.EnumRecordStatus &&
+      this.storeSnapshot.EnumRecordStatus &&
+      this.storeSnapshot.EnumRecordStatus.IsSuccess &&
+      this.storeSnapshot.EnumRecordStatus.ListItems &&
+      this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
       this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
     }
   }
@@ -135,7 +140,7 @@ export class ApplicationAppAddComponent implements OnInit {
           if (next.IsSuccess) {
             this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
             this.cmsToastrService.typeSuccessAdd();
-            this.router.navigate(['/application/app/']);
+            setTimeout(() => this.router.navigate(['/application/app/']), 100);
           } else {
             this.cmsToastrService.typeErrorAdd(next.ErrorMessage);
           }

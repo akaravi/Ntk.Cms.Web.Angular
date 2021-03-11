@@ -131,7 +131,7 @@ export class CoreSiteAddFirstComponent implements OnInit {
     this.coreAuthService.ServiceRenewToken(authModel).subscribe(
       (res) => {
         if (res.IsSuccess) {
-          this.router.navigate([environment.cmsUiConfig.Pathdashboard]);
+          setTimeout(() => this.router.navigate([environment.cmsUiConfig.Pathdashboard]), 100);
         } else {
           this.onCaptchaOrder();
         }

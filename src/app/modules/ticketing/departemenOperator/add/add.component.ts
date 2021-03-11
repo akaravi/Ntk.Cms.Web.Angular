@@ -25,9 +25,9 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
   styleUrls: ['./add.component.scss']
 })
 export class TicketingDepartemenOperatorAddComponent implements OnInit {
-  requestDepartemenId = 0;
 
-  constructor(private activatedRoute: ActivatedRoute,
+  constructor(
+    private activatedRoute: ActivatedRoute,
     private cmsStoreService: CmsStoreService,
     public publicHelper: PublicHelper,
     public coreEnumService: CoreEnumService,
@@ -37,6 +37,7 @@ export class TicketingDepartemenOperatorAddComponent implements OnInit {
     private router: Router) {
     this.fileManagerTree = new TreeModel();
   }
+  requestDepartemenId = 0;
 
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
   loading = new ProgressSpinnerModel();
@@ -54,6 +55,7 @@ export class TicketingDepartemenOperatorAddComponent implements OnInit {
   fileManagerTree: TreeModel;
   mapMarker: any;
   mapOptonCenter = {};
+  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   ngOnInit(): void {
     this.requestDepartemenId = Number(this.activatedRoute.snapshot.paramMap.get('SourceId'));
     if (this.requestDepartemenId === 0) {
@@ -64,9 +66,13 @@ export class TicketingDepartemenOperatorAddComponent implements OnInit {
     this.DataGetAccess();
     this.getEnumRecordStatus();
   }
-  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
-    if (this.storeSnapshot && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus.IsSuccess && this.storeSnapshot.EnumRecordStatus.ListItems && this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
+    if (this.storeSnapshot &&
+      this.storeSnapshot.EnumRecordStatus &&
+      this.storeSnapshot.EnumRecordStatus &&
+      this.storeSnapshot.EnumRecordStatus.IsSuccess &&
+      this.storeSnapshot.EnumRecordStatus.ListItems &&
+      this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
       this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
     }
   }
@@ -119,7 +125,7 @@ export class TicketingDepartemenOperatorAddComponent implements OnInit {
           if (next.IsSuccess) {
             this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
             this.cmsToastrService.typeSuccessEdit();
-            this.router.navigate(['/application/app/']);
+            setTimeout(() => this.router.navigate(['/application/app/']), 100);
           } else {
             this.cmsToastrService.typeErrorEdit(next.ErrorMessage);
           }

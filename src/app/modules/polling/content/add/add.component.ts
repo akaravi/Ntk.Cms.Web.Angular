@@ -60,8 +60,8 @@ export class PollingContentAddComponent implements OnInit, AfterViewInit {
   fileManagerTree: TreeModel;
   tagDataModel = [];
   similarDataModel = new Array<PollingContentModel>();
-    contentSimilarSelected: PollingContentModel = new PollingContentModel();
-    otherInfoTabledisplayedColumns = ['Title', 'TypeId', 'Action'];
+  contentSimilarSelected: PollingContentModel = new PollingContentModel();
+  otherInfoTabledisplayedColumns = ['Title', 'TypeId', 'Action'];
   similarTabledisplayedColumns = ['LinkMainImageIdSrc', 'Id', 'RecordStatus', 'Title', 'Action'];
   similarTabledataSource = new MatTableDataSource<PollingContentModel>();
 
@@ -105,7 +105,12 @@ export class PollingContentAddComponent implements OnInit, AfterViewInit {
 
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
-    if (this.storeSnapshot && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus.IsSuccess && this.storeSnapshot.EnumRecordStatus.ListItems && this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
+    if (this.storeSnapshot &&
+      this.storeSnapshot.EnumRecordStatus &&
+      this.storeSnapshot.EnumRecordStatus &&
+      this.storeSnapshot.EnumRecordStatus.IsSuccess &&
+      this.storeSnapshot.EnumRecordStatus.ListItems &&
+      this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
       this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
     }
   }
@@ -169,7 +174,7 @@ export class PollingContentAddComponent implements OnInit, AfterViewInit {
             // await this.DataActionAfterAddContentSuccessfulSimilar(this.dataModelResult.Item);
             // await this.DataActionAfterAddContentSuccessfulOtherInfo(this.dataModelResult.Item);
             this.loading.display = false;
-            this.router.navigate(['/polling/content/']);
+            setTimeout(() => this.router.navigate(['/polling/content/']), 100);
           } else {
             this.cmsToastrService.typeErrorAdd(next.ErrorMessage);
           }

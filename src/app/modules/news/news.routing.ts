@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { NewsComponent } from './news.component';
 import { NewsContentListComponent } from './content/list/list.component';
 import { NewsCommentListComponent } from './comment/list/list.component';
-import { NewsCommentEditComponent } from './comment/edit/edit.component';
 import { NewsContentEditComponent } from './content/edit/edit.component';
 import { NewsContentAddComponent } from './content/add/add.component';
 

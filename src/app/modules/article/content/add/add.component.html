@@ -66,14 +66,14 @@
           <angular-editor [placeholder]="'Enter text here...'" [config]="publicHelper.editorConfig" [(ngModel)]="dataModel.Body"
             name="dataModel.Body"></angular-editor>
 
-          <div *ngIf="formInfo.FormSubmitAllow">
+       <div *ngIf="formInfo.FormSubmitAllow">
+            <a class="btn btn-secondary btn-sm BTN">
+              <button (click)="onActionBackToParent()" type="button" class="btn btn-warning BTN">بازگشت</button>
+            </a>
             <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
               بعدی
             </button>
-            <a class="btn btn-secondary btn-sm BTN">
-              <button (click)="onActionBackToParent()" type="button" class="btn btn-warning BTN">بازگشت</button>
-            </a>
           </div>
         </mat-step>
 

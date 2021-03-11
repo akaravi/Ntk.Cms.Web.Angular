@@ -22,8 +22,8 @@ export class CoreSiteWidgetStatusComponent implements OnInit, OnDestroy {
     private persianCalendarService: PersianCalendarService
   ) { }
   ngOnInit(): void {
-    this.widgetInfoModel.title = 'سایت فعال :';
-    this.widgetInfoModel.description = '';
+    this.widgetInfoModel.title = 'سامانه فعال :';
+    this.widgetInfoModel.description = 'خلاصه مشخصات حساب این سامانه ';
     this.widgetInfoModel.link = '/core/site';
 
     this.onActionStatist();

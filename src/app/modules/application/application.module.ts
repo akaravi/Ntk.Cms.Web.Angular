@@ -30,7 +30,6 @@ import { ApplicationSourceTreeComponent } from './source/tree/tree.component';
 import { ApplicationAppTreeComponent } from './content/tree/tree.component';
 import { ApplicationSourceAddComponent } from './source/add/add.component';
 import { ApplicationSourceEditComponent } from './source/edit/edit.component';
-import { ApplicationSourceDeleteComponent } from './source/delete/delete.component';
 import {MatIconModule} from '@angular/material/icon';
 import { TranslationModule } from '../../core/i18n/translation.module';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -46,6 +45,7 @@ import { ApplicationAppDownloadComponent } from './content/download/download.com
 import { ApplicationAppUploadAppComponent } from './content/uploadApp/uploadApp.component';
 import { ApplicationAppUploadUpdateComponent } from './content/uploadUpdate/uploadUpdate.component';
 import { CmsFileUploaderModule } from 'ntk-cms-fileuploader';
+import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 
 @NgModule({
   declarations: [
@@ -54,7 +54,6 @@ import { CmsFileUploaderModule } from 'ntk-cms-fileuploader';
     ApplicationSourceTreeComponent,
     ApplicationSourceAddComponent,
     ApplicationSourceEditComponent,
-    ApplicationSourceDeleteComponent,
     ApplicationSourceSelectorComponent,
     ApplicationAppListComponent,
     ApplicationAppAddComponent,
@@ -91,6 +90,7 @@ import { CmsFileUploaderModule } from 'ntk-cms-fileuploader';
   providers: [
     CoreEnumService,
     CoreAuthService,
+    CmsConfirmationDialogService ,
     ApplicationEnumService,
     CoreModuleTagService,
     ApplicationAppService,

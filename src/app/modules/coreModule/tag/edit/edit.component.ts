@@ -151,7 +151,12 @@ export class TagEditComponent implements OnInit, AfterViewInit {
 
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
-    if (this.storeSnapshot && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus.IsSuccess && this.storeSnapshot.EnumRecordStatus.ListItems && this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
+    if (this.storeSnapshot &&
+      this.storeSnapshot.EnumRecordStatus &&
+      this.storeSnapshot.EnumRecordStatus &&
+      this.storeSnapshot.EnumRecordStatus.IsSuccess &&
+      this.storeSnapshot.EnumRecordStatus.ListItems &&
+      this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
       this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
     }
   }
@@ -250,7 +255,7 @@ export class TagEditComponent implements OnInit, AfterViewInit {
             // await this.DataActionAfterAddContentSuccessfulSimilar(this.dataModelResult.Item);
             // await this.DataActionAfterAddContentSuccessfulOtherInfo(this.dataModelResult.Item);
             this.loading.display = false;
-            this.router.navigate(['/news/edit/', this.requestId]);
+            setTimeout(() => this.router.navigate(['/news/edit/', this.requestId]), 100);
           } else {
             this.cmsToastrService.typeErrorAdd(next.ErrorMessage);
           }

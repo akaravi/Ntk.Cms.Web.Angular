@@ -17,7 +17,7 @@ import {
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
-import {NodeInterface, TreeModel} from 'ntk-cms-filemanager';
+import { NodeInterface, TreeModel } from 'ntk-cms-filemanager';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 
 @Component({
@@ -26,13 +26,13 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
   styleUrls: ['./add.component.scss']
 })
 export class ApplicationSourceAddComponent implements OnInit {
-   constructor(public publicHelper: PublicHelper,
+  constructor(public publicHelper: PublicHelper,
     private cmsStoreService: CmsStoreService,
-               public coreEnumService: CoreEnumService,
-               public applicationEnumService: ApplicationEnumService,
-               private applicationSourceService: ApplicationSourceService,
-               private cmsToastrService: CmsToastrService,
-               private router: Router) {
+    public coreEnumService: CoreEnumService,
+    public applicationEnumService: ApplicationEnumService,
+    private applicationSourceService: ApplicationSourceService,
+    private cmsToastrService: CmsToastrService,
+    private router: Router) {
     this.fileManagerTree = new TreeModel();
   }
 
@@ -57,7 +57,12 @@ export class ApplicationSourceAddComponent implements OnInit {
   }
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
-    if (this.storeSnapshot && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus.IsSuccess && this.storeSnapshot.EnumRecordStatus.ListItems && this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
+    if (this.storeSnapshot &&
+      this.storeSnapshot.EnumRecordStatus &&
+      this.storeSnapshot.EnumRecordStatus &&
+      this.storeSnapshot.EnumRecordStatus.IsSuccess &&
+      this.storeSnapshot.EnumRecordStatus.ListItems &&
+      this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
       this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
     }
   }
@@ -108,7 +113,7 @@ export class ApplicationSourceAddComponent implements OnInit {
             this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
             this.cmsToastrService.typeSuccessAdd();
             this.loading.display = false;
-            this.router.navigate(['/application/source/']);
+            setTimeout(() => this.router.navigate(['/application/source/']), 100);
           } else {
             this.cmsToastrService.typeErrorAdd(next.ErrorMessage);
           }

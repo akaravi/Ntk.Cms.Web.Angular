@@ -285,7 +285,7 @@ export class TicketingFaqListComponent implements OnInit, OnDestroy {
       }
       );
   }
-   onActionbuttonStatist(): void {
+  onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;
     if (!this.optionsStatist.data.show) {
       return;

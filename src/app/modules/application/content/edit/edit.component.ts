@@ -32,7 +32,6 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
   styleUrls: ['./edit.component.scss']
 })
 export class ApplicationAppEditComponent implements OnInit {
-  requestId = 0;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -45,6 +44,7 @@ export class ApplicationAppEditComponent implements OnInit {
     private router: Router) {
     this.fileManagerTree = new TreeModel();
   }
+  requestId = 0;
 
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
   loading = new ProgressSpinnerModel();
@@ -61,13 +61,15 @@ export class ApplicationAppEditComponent implements OnInit {
   fileManagerOpenFormLinkFileIdLogo = false;
   fileManagerOpenFormLinkFileIdSplashScreen = false;
   fileManagerOpenFormLinkMainImageId = false;
-    appLanguage = 'fa';
+  appLanguage = 'fa';
 
   fileManagerTree: TreeModel;
   mapMarker: any;
   private mapModel: leafletMap;
   private mapMarkerPoints: Array<PoinModel> = [];
   mapOptonCenter = {};
+
+  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   ngOnInit(): void {
     this.requestId = Number(this.activatedRoute.snapshot.paramMap.get('Id'));
     if (this.requestId === 0) {
@@ -78,10 +80,13 @@ export class ApplicationAppEditComponent implements OnInit {
     this.DataGetOne(this.requestId);
     this.getEnumRecordStatus();
   }
-
-  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
-    if (this.storeSnapshot && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus && this.storeSnapshot.EnumRecordStatus.IsSuccess && this.storeSnapshot.EnumRecordStatus.ListItems && this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
+    if (this.storeSnapshot &&
+      this.storeSnapshot.EnumRecordStatus &&
+      this.storeSnapshot.EnumRecordStatus &&
+      this.storeSnapshot.EnumRecordStatus.IsSuccess &&
+      this.storeSnapshot.EnumRecordStatus.ListItems &&
+      this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
       this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
     }
   }
@@ -168,7 +173,8 @@ export class ApplicationAppEditComponent implements OnInit {
           if (next.IsSuccess) {
             this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
             this.cmsToastrService.typeSuccessEdit();
-            this.router.navigate(['/application/app/']);
+            setTimeout(() => this.router.navigate(['/application/app/']), 100);
+
           } else {
             this.cmsToastrService.typeErrorEdit(next.ErrorMessage);
           }
