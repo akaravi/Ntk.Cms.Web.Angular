@@ -76,7 +76,7 @@ export class PersianCalendarService {
     this.toPersian(gregorianDate);
     return this.strMonth;
   }
-  toPersian(gregorianDate: Date) {
+  toPersian(gregorianDate: Date): void {
     if ((this.gregorianYear % 4) !== 0) {
       this.farsiDate = this.func1();
     } else {
