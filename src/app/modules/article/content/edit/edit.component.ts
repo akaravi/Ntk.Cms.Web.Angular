@@ -37,7 +37,6 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
   ]
 })
 export class ArticleContentEditComponent implements OnInit, AfterViewInit {
-  requestId = 0;
   constructor(
     private activatedRoute: ActivatedRoute,
     private cmsStoreService: CmsStoreService,
@@ -53,12 +52,14 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
   ) {
     this.fileManagerTree = new TreeModel();
   }
+  requestId = 0;
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
   dataModel = new ArticleContentModel();
   dataModelResult: ErrorExceptionResult<ArticleContentModel> = new ErrorExceptionResult<ArticleContentModel>();
   dataContentTagModelResult: ErrorExceptionResult<ArticleContentTagModel> = new ErrorExceptionResult<ArticleContentTagModel>();
   dataContentSimilarModelResult: ErrorExceptionResult<ArticleContentSimilarModel> = new ErrorExceptionResult<ArticleContentSimilarModel>();
-  dataContentOtherInfoModelResult: ErrorExceptionResult<ArticleContentOtherInfoModel> = new ErrorExceptionResult<ArticleContentOtherInfoModel>();
+  dataContentOtherInfoModelResult: ErrorExceptionResult<ArticleContentOtherInfoModel>
+    = new ErrorExceptionResult<ArticleContentOtherInfoModel>();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   similarDataModel = new Array<ArticleContentModel>();
   otherInfoDataModel = new Array<ArticleContentOtherInfoModel>();
@@ -90,6 +91,9 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
   private mapModel: leafletMap;
   private mapMarkerPoints: Array<PoinModel> = [];
   mapOptonCenter = {};
+
+
+  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   ngOnInit(): void {
     this.requestId = Number(this.activatedRoute.snapshot.paramMap.get('Id'));
     if (this.requestId === 0) {
@@ -114,9 +118,6 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
     this.dataModel.LinkFileMovieId = model.id;
     this.dataModel.LinkFileMovieIdSrc = model.downloadLinksrc;
   }
-
-
-  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
       this.storeSnapshot.EnumRecordStatus &&
@@ -423,7 +424,9 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
       this.otherInfoDataModel.forEach(item => {
         const row = new ArticleContentOtherInfoModel();
         row.LinkContentId = model.Id;
-        if (!this.dataContentOtherInfoModelResult.ListItems || !item.Id || !this.dataContentOtherInfoModelResult.ListItems.find(x => x.Id === item.Id)) {
+        if (!this.dataContentOtherInfoModelResult.ListItems ||
+          !item.Id ||
+          !this.dataContentOtherInfoModelResult.ListItems.find(x => x.Id === item.Id)) {
           dataListAdd.push(row);
         }
       });

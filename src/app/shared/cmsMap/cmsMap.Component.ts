@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-cms-map',
   templateUrl: './cmsMap.component.html',
-  styleUrls: ['./cmsMap.component.scss',]
+  styleUrls: ['./cmsMap.component.scss']
 })
 export class CmsMapComponent implements OnInit, OnDestroy {
   @Output() map$: EventEmitter<Map> = new EventEmitter<Map>();
@@ -25,9 +25,7 @@ export class CmsMapComponent implements OnInit, OnDestroy {
   };
   @Input() set optonCenter(model: PoinModel) {
     if (model && model.lat && model.lon && model.lat !== 0 && model.lon !== 0) {
-      //this.options.center = [model.lat, model.lon];
       this.map.setView(new L.LatLng(model.lat, model.lon), this.zoom);
-
     }
   }
   public map: Map;
@@ -61,7 +59,7 @@ export class CmsMapComponent implements OnInit, OnDestroy {
   }
 
   onMapReady(map: Map): void {
-    setTimeout(function () {
+    setTimeout(() => {
       map.invalidateSize();
     }, 500);
     this.map = map;

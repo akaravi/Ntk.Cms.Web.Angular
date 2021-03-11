@@ -26,7 +26,7 @@ import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateM
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 
 @Component({
-  selector: 'app-core-SiteCategoryCmsModule-add',
+  selector: 'app-core-sitecategorycmsmodule-add',
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.scss'],
 })
@@ -39,8 +39,6 @@ export class CoreSiteCategoryCmsModuleAddComponent implements OnInit {
     public coreSiteCategoryCmsModuleService: CoreSiteCategoryCmsModuleService,
     private cmsToastrService: CmsToastrService
   ) {
-
-
     this.fileManagerTree = new TreeModel();
   }
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
@@ -59,17 +57,13 @@ export class CoreSiteCategoryCmsModuleAddComponent implements OnInit {
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
-
   fileManagerOpenForm = false;
-
-
+  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   ngOnInit(): void {
 
     this.formInfo.FormTitle = 'اضافه کردن  ';
     this.getEnumRecordStatus();
   }
-
-  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
       this.storeSnapshot.EnumRecordStatus &&

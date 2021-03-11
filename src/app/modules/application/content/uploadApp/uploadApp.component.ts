@@ -13,15 +13,16 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./uploadApp.component.scss']
 })
 export class ApplicationAppUploadAppComponent implements OnInit {
-  constructor(@Inject(MAT_DIALOG_DATA) public dataItemModel: ApplicationAppModel,
-              private dialogRef: MatDialogRef<ApplicationAppUploadAppComponent>,
-              private applicationAppService: ApplicationAppService,
-              private cmsToastrService: CmsToastrService,
-              private publicHelper: PublicHelper
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public dataItemModel: ApplicationAppModel,
+    private dialogRef: MatDialogRef<ApplicationAppUploadAppComponent>,
+    private applicationAppService: ApplicationAppService,
+    private cmsToastrService: CmsToastrService,
+    private publicHelper: PublicHelper
   ) {
 
   }
-  optionApiPath=environment.cmsServerConfig.configRouteUploadFileContent;
+  optionApiPath = environment.cmsServerConfig.configRouteUploadFileContent;
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
   formInfo: FormInfoModel = new FormInfoModel();
   dataModel = new UploadApplictionDtoModel();

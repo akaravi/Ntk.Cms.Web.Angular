@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   CoreAuthService,
@@ -32,7 +32,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
-export class ArticleContentListComponent implements OnInit {
+export class ArticleContentListComponent implements OnInit , OnDestroy {
 
   constructor(
     private cmsApiStore: ntkCmsApiStoreService,
@@ -72,6 +72,7 @@ export class ArticleContentListComponent implements OnInit {
     'UpdatedDate',
     'Action'
   ];
+  cmsApiStoreSubscribe: Subscription;
   ngOnInit(): void {
     this.DataGetAll();
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
@@ -80,7 +81,6 @@ export class ArticleContentListComponent implements OnInit {
       this.tokenInfo = next;
     });
   }
-  cmsApiStoreSubscribe: Subscription;
   ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }

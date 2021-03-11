@@ -61,6 +61,8 @@ export class CoreSiteAddComponent implements OnInit {
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
 
   fileManagerOpenForm = false;
+
+  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   onActionFileSelected(model: NodeInterface): void {
     this.dataModel.AboutUsLinkImageId = model.id + '';
     this.dataModel.AboutUsLinkImageIdSrc = model.downloadLinksrc;
@@ -72,8 +74,6 @@ export class CoreSiteAddComponent implements OnInit {
     this.formInfo.FormTitle = 'اضافه کردن  ';
     this.getEnumRecordStatus();
   }
-
-  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
       this.storeSnapshot.EnumRecordStatus &&

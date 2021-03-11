@@ -31,7 +31,6 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
   styleUrls: ['./add.component.scss'],
 })
 export class PollingCategoryAddComponent implements OnInit {
-  requestParentId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
@@ -46,6 +45,7 @@ export class PollingCategoryAddComponent implements OnInit {
 
     this.fileManagerTree = new TreeModel();
   }
+  requestParentId = 0;
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
 
   fileManagerTree: TreeModel;
@@ -64,6 +64,8 @@ export class PollingCategoryAddComponent implements OnInit {
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
 
   fileManagerOpenForm = false;
+
+  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   onActionFileSelected(model: NodeInterface): void {
     this.dataModel.LinkMainImageId = model.id;
     this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
@@ -74,8 +76,6 @@ export class PollingCategoryAddComponent implements OnInit {
     this.formInfo.FormTitle = 'ثبت دسته بندی جدید';
     this.getEnumRecordStatus();
   }
-
-  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
       this.storeSnapshot.EnumRecordStatus &&
@@ -122,8 +122,7 @@ export class PollingCategoryAddComponent implements OnInit {
       return;
     }
     this.formInfo.FormSubmitAllow = false;
-
-      this.DataAddContent();
+    this.DataAddContent();
   }
   onFormCancel(): void {
     this.dialogRef.close({ dialogChangedDate: false });

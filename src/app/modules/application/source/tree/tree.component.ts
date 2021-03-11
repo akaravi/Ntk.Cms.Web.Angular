@@ -2,6 +2,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
 } from '@angular/core';
@@ -29,15 +30,18 @@ import { Subscription } from 'rxjs';
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.scss'],
 })
-export class ApplicationSourceTreeComponent implements OnInit {
+export class ApplicationSourceTreeComponent implements OnInit , OnDestroy {
   constructor(
-    private cmsApiStore : ntkCmsApiStoreService,
+    private cmsApiStore: ntkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
     public coreEnumService: CoreEnumService,
     public categoryService: ApplicationSourceService,
     private router: Router,
 
   ) {
+  }
+  @Input() set optionSelectForce(x: number | ApplicationSourceModel) {
+    this.onActionSelectForce(x);
   }
   dataModelSelect: ApplicationSourceModel = new ApplicationSourceModel();
   dataModelResult: ErrorExceptionResult<ApplicationSourceModel> = new ErrorExceptionResult<ApplicationSourceModel>();
@@ -46,22 +50,19 @@ export class ApplicationSourceTreeComponent implements OnInit {
   treeControl = new NestedTreeControl<ApplicationSourceModel>(node => null);
   dataSource = new MatTreeNestedDataSource<ApplicationSourceModel>();
   @Output() optionSelect = new EventEmitter();
+  cmsApiStoreSubscribe: Subscription;
   @Input() optionReload = () => this.onActionReload();
-  @Input() set optionSelectForce(x: number | ApplicationSourceModel) {
-    this.onActionSelectForce(x);
-  }
 
   hasChild = (_: number, node: ApplicationSourceModel) => false;
 
 
   ngOnInit(): void {
     this.DataGetAll();
-     this.cmsApiStoreSubscribe =  this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe(() => {
+    this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe(() => {
       this.DataGetAll();
     });
   }
-  cmsApiStoreSubscribe:Subscription;
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
   DataGetAll(): void {

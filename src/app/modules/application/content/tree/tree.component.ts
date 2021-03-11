@@ -2,6 +2,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
 } from '@angular/core';
@@ -29,15 +30,18 @@ import { Subscription } from 'rxjs';
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.scss'],
 })
-export class ApplicationAppTreeComponent implements OnInit {
+export class ApplicationAppTreeComponent implements OnInit , OnDestroy {
   constructor(
-    private cmsApiStore :ntkCmsApiStoreService,
+    private cmsApiStore: ntkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
     public coreEnumService: CoreEnumService,
     public categoryService: ApplicationAppService,
     private router: Router,
 
   ) {
+  }
+  @Input() set optionSelectForce(x: number | ApplicationAppModel) {
+    this.onActionSelectForce(x);
   }
   dataModelSelect: ApplicationAppModel = new ApplicationAppModel();
   dataModelResult: ErrorExceptionResult<ApplicationAppModel> = new ErrorExceptionResult<ApplicationAppModel>();
@@ -46,22 +50,19 @@ export class ApplicationAppTreeComponent implements OnInit {
   treeControl = new NestedTreeControl<ApplicationAppModel>(node => null);
   dataSource = new MatTreeNestedDataSource<ApplicationAppModel>();
   @Output() optionSelect = new EventEmitter();
+  cmsApiStoreSubscribe: Subscription;
   @Input() optionReload = () => this.onActionReload();
-  @Input() set optionSelectForce(x: number | ApplicationAppModel) {
-    this.onActionSelectForce(x);
-  }
 
   hasChild = (_: number, node: ApplicationAppModel) => false;
 
 
   ngOnInit(): void {
     this.DataGetAll();
-    this.cmsApiStoreSubscribe =  this.cmsApiStore.getState((state) =>  state.ntkCmsAPiState.tokenInfo).subscribe(() => {
+    this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe(() => {
       this.DataGetAll();
     });
   }
-  cmsApiStoreSubscribe:Subscription;
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
   DataGetAll(): void {

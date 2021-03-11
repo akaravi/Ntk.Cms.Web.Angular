@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FileManagerRouting } from './fileManager.routing';
 import { FileManagerComponent } from './fileManager.component';
-import {TagInputModule} from 'ngx-chips';
+import { TagInputModule } from 'ngx-chips';
 
 import {
   CoreEnumService,
@@ -23,7 +23,7 @@ import { FileCategorySelectorComponent } from './category/selector/selector.comp
 import { FileContentListComponent } from './content/list/list.component';
 import { FileCategoryTreeComponent } from './category/tree/tree.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
-import {FileContentSelectorComponent} from './content/selector/selector.component';
+import { FileContentSelectorComponent } from './content/selector/selector.component';
 import { FileContentDeleteComponent } from './content/delete/delete.component';
 import { FileContentExplorerComponent } from './content/explorer/explorer.component';
 
@@ -42,15 +42,13 @@ import { FileContentExplorerComponent } from './content/explorer/explorer.compon
   ],
   imports: [
     FileManagerRouting,
-     CommonModule,
-     FormsModule,
-     ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
     TreeviewModule.forRoot(),
     SharedModule.forRoot(),
-    AngularEditorModule ,
+    AngularEditorModule,
     TagInputModule,
-
-    //ProgressSpinnerModule,
     CmsFileManagerModule
   ],
   providers: [

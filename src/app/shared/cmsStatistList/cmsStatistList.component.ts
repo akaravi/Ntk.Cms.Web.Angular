@@ -20,7 +20,7 @@ export class CmsStatistListComponent implements OnInit {
     }
     this.optionsData = model;
     this.optionsData.childMethods = {
-      runStatist: (model: Map<string, number>) => this.runStatist(model),
+      runStatist: (x: Map<string, number>) => this.runStatist(x),
     };
     this.optionsChange.emit(model);
   }

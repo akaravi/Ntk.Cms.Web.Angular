@@ -216,9 +216,9 @@ export class ApplicationIntroListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonDeleteRow(model: ApplicationIntroModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      const etitle = 'برروز خطا ';
+      const emessage = 'ردیفی برای ویرایش انتخاب نشده است';
+      this.cmsToastrService.toastr.error(emessage, etitle);
       return;
     }
     this.tableRowSelected = model;

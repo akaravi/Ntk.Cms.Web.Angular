@@ -1,5 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { CoreAuthService, EnumSortType, ErrorExceptionResult, PollingVoteModel, PollingVoteService, NewsContentModel, ntkCmsApiStoreService, TokenInfoModel, EnumRecordStatus } from 'ntk-cms-api';
+import {
+  CoreAuthService,
+  EnumSortType,
+  ErrorExceptionResult,
+  PollingVoteModel,
+  PollingVoteService,
+  NewsContentModel,
+  ntkCmsApiStoreService,
+  TokenInfoModel,
+  EnumRecordStatus
+} from 'ntk-cms-api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FilterModel, FilterDataModel } from 'ntk-cms-api';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -82,7 +92,7 @@ export class PollingVoteListComponent implements OnInit, OnDestroy {
 
     this.DataGetAll();
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
-    this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
+    this.cmsApiStoreSubscribe = this.cmsApiStore.getState((x) => x.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
     });
@@ -251,9 +261,9 @@ export class PollingVoteListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonDeleteRow(model: NewsContentModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      const etitle = 'برروز خطا ';
+      const emessage = 'ردیفی برای ویرایش انتخاب نشده است';
+      this.cmsToastrService.toastr.error(emessage, etitle);
       return;
     }
     this.tableRowSelected = model;

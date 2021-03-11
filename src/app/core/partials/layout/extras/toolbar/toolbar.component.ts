@@ -11,7 +11,7 @@ export class ToolbarComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  navigateToBuilder() {
+  navigateToBuilder(): void {
     this.router.navigate(['/builder']);
   }
 }

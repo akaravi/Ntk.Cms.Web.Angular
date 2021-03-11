@@ -9,7 +9,7 @@ import { SubheaderModel } from '../_models/subheader.model';
 @Injectable({
   providedIn: 'root',
 })
-export class SubheaderService implements OnDestroy {
+export class SubheaderService implements OnDestroy, OnDestroy {
   titleSubject: BehaviorSubject<string> = new BehaviorSubject<string>(
     'Dashboard'
   );
@@ -27,28 +27,28 @@ export class SubheaderService implements OnDestroy {
     this.setDefaultSubheader();
   }
 
-  setDefaultSubheader() {
+  setDefaultSubheader(): void {
     this.setSubheaderVersion(this.layout.getProp('subheader.layoutVersion'));
   }
 
-  setBreadcrumbs(breadcrumbs: BreadcrumbItemModel[] = []) {
+  setBreadcrumbs(breadcrumbs: BreadcrumbItemModel[] = []): void {
     this.breadCrumbsSubject.next(breadcrumbs);
   }
 
-  setTitle(title: string = '') {
+  setTitle(title: string = ''): void {
     this.titleSubject.next(title);
   }
 
-  setDescription(description: string) {
+  setDescription(description: string): void {
     this.descriptionSubject.next(description);
   }
 
-  private setSubheaderVersion(version: string = 'v1') {
+  private setSubheaderVersion(version: string = 'v1'): void {
     this.subheaderVersionSubject.next(version);
   }
 
   // use this method in SubheaderWrapper
-  updateAfterRouteChanges(pathName) {
+  updateAfterRouteChanges(pathName): void {
     const aside = this.getBreadcrumbsAndTitle('kt_aside_menu', pathName);
     const header = this.getBreadcrumbsAndTitle('kt_header_menu', pathName);
     const breadcrumbs =
@@ -125,7 +125,7 @@ export class SubheaderService implements OnDestroy {
     }
 
     activeLinks.forEach((link) => {
-      const titleSpans =  link.getElementsByClassName('menu-text') ;
+      const titleSpans = link.getElementsByClassName('menu-text');
       if (titleSpans) {
         const titleSpan = Array.from(titleSpans).find(
           (t) => t.innerHTML && t.innerHTML.trim().length > 0
@@ -151,7 +151,7 @@ export class SubheaderService implements OnDestroy {
     return url.pathname;
   }
 
-  private getTitle(breadCrumbs, pathname) {
+  private getTitle(breadCrumbs, pathname): string {
     if (!breadCrumbs || !pathname) {
       return '';
     }
@@ -164,7 +164,7 @@ export class SubheaderService implements OnDestroy {
     return breadCrumbs[length - 1].title;
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.unsubscribe.forEach((sb) => sb.unsubscribe());
   }
 }

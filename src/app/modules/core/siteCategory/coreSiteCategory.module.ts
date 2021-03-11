@@ -28,7 +28,7 @@ import { TagInputModule } from 'ngx-chips';
     CoreSiteCategorySelectorComponent,
     CoreSiteCategoryTreeComponent,
   ],
-  exports:[
+  exports: [
     CoreSiteCategoryComponent,
     CoreSiteCategoryListComponent,
     CoreSiteCategoryAddComponent,

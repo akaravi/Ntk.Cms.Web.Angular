@@ -26,7 +26,8 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
   styleUrls: ['./add.component.scss']
 })
 export class ApplicationSourceAddComponent implements OnInit {
-  constructor(public publicHelper: PublicHelper,
+  constructor(
+    public publicHelper: PublicHelper,
     private cmsStoreService: CmsStoreService,
     public coreEnumService: CoreEnumService,
     public applicationEnumService: ApplicationEnumService,
@@ -50,12 +51,12 @@ export class ApplicationSourceAddComponent implements OnInit {
   appLanguage = 'fa';
 
   fileManagerTree: TreeModel;
+  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   ngOnInit(): void {
     this.DataGetAccess();
     this.getEnumRecordStatus();
     this.getEnumOsType();
   }
-  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
       this.storeSnapshot.EnumRecordStatus &&

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { LayoutService } from '../../../../..';
 import { Observable, Subscription } from 'rxjs';
 import { CoreAuthService, ntkCmsApiStoreService, TokenInfoModel } from 'ntk-cms-api';
@@ -12,12 +12,11 @@ import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
   templateUrl: './user-offcanvas.component.html',
   styleUrls: ['./user-offcanvas.component.scss'],
 })
-export class UserOffcanvasComponent implements OnInit {
-  extrasUserOffcanvasDirection = 'offcanvas-right';
-  tokenInfo: TokenInfoModel;
-  loading = new ProgressSpinnerModel();
+export class UserOffcanvasComponent implements OnInit, OnDestroy {
 
-  constructor(private layout: LayoutService, private auth: CoreAuthService,
+  constructor(
+    private layout: LayoutService,
+    private auth: CoreAuthService,
     private cmsToastrService: CmsToastrService,
     private cmsApiStore: ntkCmsApiStoreService,
 
@@ -28,15 +27,18 @@ export class UserOffcanvasComponent implements OnInit {
     });
     this.developing = environment.developing;
   }
+  extrasUserOffcanvasDirection = 'offcanvas-right';
+  tokenInfo: TokenInfoModel;
+  loading = new ProgressSpinnerModel();
   developing = false;
+  cmsApiStoreSubscribe: Subscription;
   ngOnInit(): void {
     this.extrasUserOffcanvasDirection = `offcanvas-${this.layout.getProp(
       'extras.user.offcanvas.direction'
     )}`;
 
   }
-  cmsApiStoreSubscribe: Subscription;
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
   async logout(): Promise<void> {

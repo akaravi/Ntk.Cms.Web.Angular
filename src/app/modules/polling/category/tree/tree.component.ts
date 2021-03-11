@@ -3,6 +3,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
 } from '@angular/core';
@@ -34,14 +35,17 @@ import { PollingCategoryAddComponent } from '../add/add.component';
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.scss'],
 })
-export class PollingCategoryTreeComponent implements OnInit {
+export class PollingCategoryTreeComponent implements OnInit , OnDestroy{
   constructor(
-    private cmsApiStore : ntkCmsApiStoreService,
+    private cmsApiStore: ntkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
     public coreEnumService: CoreEnumService,
     public categoryService: PollingCategoryService,
     public dialog: MatDialog,
   ) {
+  }
+  @Input() set optionSelectForce(x: number | PollingCategoryModel) {
+    this.onActionSelectForce(x);
   }
   dataModelSelect: PollingCategoryModel = new PollingCategoryModel();
   dataModelResult: ErrorExceptionResult<PollingCategoryModel> = new ErrorExceptionResult<PollingCategoryModel>();
@@ -50,22 +54,19 @@ export class PollingCategoryTreeComponent implements OnInit {
   treeControl = new NestedTreeControl<PollingCategoryModel>(node => node.Children);
   dataSource = new MatTreeNestedDataSource<PollingCategoryModel>();
   @Output() optionSelect = new EventEmitter();
+  cmsApiStoreSubscribe: Subscription;
   @Input() optionReload = () => this.onActionReload();
-  @Input() set optionSelectForce(x: number | PollingCategoryModel) {
-    this.onActionSelectForce(x);
-  }
 
   hasChild = (_: number, node: PollingCategoryModel) => !!node.Children && node.Children.length > 0;
 
 
   ngOnInit(): void {
     this.DataGetAll();
-    this.cmsApiStoreSubscribe =  this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe(() => {
+    this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe(() => {
       this.DataGetAll();
     });
   }
-  cmsApiStoreSubscribe:Subscription;
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
   DataGetAll(): void {

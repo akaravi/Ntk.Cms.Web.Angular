@@ -22,7 +22,6 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
   styleUrls: ['./add.component.scss']
 })
 export class TicketingFaqAddComponent implements OnInit {
-  requestParentId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
@@ -37,6 +36,7 @@ export class TicketingFaqAddComponent implements OnInit {
 
     this.fileManagerTree = new TreeModel();
   }
+  requestParentId = 0;
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
 
   fileManagerTree: TreeModel;
@@ -53,6 +53,8 @@ export class TicketingFaqAddComponent implements OnInit {
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
 
   fileManagerOpenForm = false;
+
+  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   onActionFileSelected(model: NodeInterface): void {
     this.dataFileModel.set(model.id, model.downloadLinksrc);
   }
@@ -63,11 +65,9 @@ export class TicketingFaqAddComponent implements OnInit {
   }
   ngOnInit(): void {
 
-      this.formInfo.FormTitle = 'ثبت محتوای جدید';
+    this.formInfo.FormTitle = 'ثبت محتوای جدید';
     this.getEnumRecordStatus();
   }
-
-  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
       this.storeSnapshot.EnumRecordStatus &&
@@ -147,7 +147,7 @@ export class TicketingFaqAddComponent implements OnInit {
     }
     this.formInfo.FormSubmitAllow = false;
 
-      this.DataAddContent();
+    this.DataAddContent();
 
   }
   onFormCancel(): void {

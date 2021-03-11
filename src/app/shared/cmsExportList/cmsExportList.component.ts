@@ -20,7 +20,7 @@ export class CmsExportListComponent implements OnInit {
     }
     this.optionsData = model;
     this.optionsData.childMethods = {
-      runExport: (model: Array<FilterDataModel>) => this.runExport(model),
+      runExport: (x: Array<FilterDataModel>) => this.runExport(x),
     };
     this.optionsChange.emit(model);
   }

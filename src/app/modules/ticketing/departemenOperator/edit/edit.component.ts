@@ -26,7 +26,6 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
   styleUrls: ['./edit.component.scss']
 })
 export class TicketingDepartemenOperatorEditComponent implements OnInit {
-  requestId = 0;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -39,6 +38,7 @@ export class TicketingDepartemenOperatorEditComponent implements OnInit {
     private router: Router) {
     this.fileManagerTree = new TreeModel();
   }
+  requestId = 0;
 
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
   loading = new ProgressSpinnerModel();
@@ -56,6 +56,7 @@ export class TicketingDepartemenOperatorEditComponent implements OnInit {
   fileManagerTree: TreeModel;
   mapMarker: any;
   mapOptonCenter = {};
+  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   ngOnInit(): void {
     this.requestId = Number(this.activatedRoute.snapshot.paramMap.get('Id'));
     if (this.requestId === 0) {
@@ -66,7 +67,6 @@ export class TicketingDepartemenOperatorEditComponent implements OnInit {
     this.DataGetOne(this.requestId);
     this.getEnumRecordStatus();
   }
-  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
       this.storeSnapshot.EnumRecordStatus &&

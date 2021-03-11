@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   CoreAuthService,
@@ -31,10 +31,10 @@ import { Subscription } from 'rxjs';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
-export class FileContentListComponent implements OnInit {
+export class FileContentListComponent implements OnInit , OnDestroy{
 
   constructor(
-    private cmsApiStore : ntkCmsApiStoreService,
+    private cmsApiStore: ntkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private fileContentService: FileContentService,
     private cmsToastrService: CmsToastrService,
@@ -71,15 +71,15 @@ export class FileContentListComponent implements OnInit {
     'UpdatedDate',
     'Action'
   ];
+  cmsApiStoreSubscribe: Subscription;
   ngOnInit(): void {
     this.DataGetAll();
-    this.tokenInfo =  this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
-     this.cmsApiStoreSubscribe =  this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
+    this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
+    this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
     });
   }
-  cmsApiStoreSubscribe:Subscription;
   ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
@@ -183,13 +183,13 @@ export class FileContentListComponent implements OnInit {
   }
 
   onActionbuttonEditRow(model: FileContentModel = this.tableRowSelected): void {
-    if (!model ||!model.Id || model.Id === 0) {
+    if (!model || !model.Id || model.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای ویرایش انتخاب نشده است';
       this.cmsToastrService.toastr.error(message, title);
       return;
     }
-    this.tableRowSelected=model;
+    this.tableRowSelected = model;
     if (
       this.dataModelResult == null ||
       this.dataModelResult.Access == null ||
@@ -201,13 +201,13 @@ export class FileContentListComponent implements OnInit {
     this.router.navigate(['/file/content/edit', this.tableRowSelected.Id]);
   }
   onActionbuttonDeleteRow(model: FileContentModel = this.tableRowSelected): void {
-    if (!model ||!model.Id || model.Id === 0) {
+    if (!model || !model.Id || model.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای ویرایش انتخاب نشده است';
       this.cmsToastrService.toastr.error(message, title);
       return;
     }
-    this.tableRowSelected=model;
+    this.tableRowSelected = model;
 
     if (
       this.dataModelResult == null ||
@@ -225,7 +225,7 @@ export class FileContentListComponent implements OnInit {
       }
     });
   }
-   onActionbuttonStatist(): void {
+  onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;
     if (!this.optionsStatist.data.show) {
       return;

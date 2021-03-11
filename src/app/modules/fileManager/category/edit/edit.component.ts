@@ -49,6 +49,7 @@ export class FileCategoryEditComponent implements OnInit {
     this.fileManagerTree = new TreeModel();
   }
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
+  storeSnapshot = this.cmsStoreService.getStateSnapshot();
 
   fileManagerTree: TreeModel;
   appLanguage = 'fa';
@@ -89,7 +90,6 @@ export class FileCategoryEditComponent implements OnInit {
     this.getEnumRecordStatus();
   }
 
-  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
       this.storeSnapshot.EnumRecordStatus &&

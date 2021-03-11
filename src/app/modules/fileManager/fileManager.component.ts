@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Map} from 'leaflet';
 
 @Component({
-  selector: 'app-fileManager',
+  selector: 'app-filemanager',
   templateUrl: './fileManager.component.html',
   styleUrls: ['./fileManager.component.scss']
 })

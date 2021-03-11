@@ -138,7 +138,7 @@ export class CoreSiteAddFirstComponent implements OnInit {
       },
       (error) => {
         this.cmsToastrService.typeError(error);
-        this.onCaptchaOrder()
+        this.onCaptchaOrder();
       }
     );
   }

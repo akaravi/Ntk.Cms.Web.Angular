@@ -35,7 +35,6 @@ import { OverlayService } from './overlay/overlay.service';
     NgxQueryBuilderModule,
     LeafletModule,
     TagInputModule,
-    //ProgressSpinnerModule,
   ],
   entryComponents: [
     // All components about to be loaded "dynamically" need to be declared in the entryComponents section.

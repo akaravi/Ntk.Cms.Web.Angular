@@ -31,9 +31,9 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
   styleUrls: ['./add.component.scss']
 })
 export class ApplicationAppAddComponent implements OnInit {
-  requestSourceId = 0;
 
-  constructor(private activatedRoute: ActivatedRoute,
+  constructor(
+    private activatedRoute: ActivatedRoute,
     private cmsStoreService: CmsStoreService,
     public publicHelper: PublicHelper,
     public coreEnumService: CoreEnumService,
@@ -43,6 +43,7 @@ export class ApplicationAppAddComponent implements OnInit {
     private router: Router) {
     this.fileManagerTree = new TreeModel();
   }
+  requestSourceId = 0;
 
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
   loading = new ProgressSpinnerModel();
@@ -67,6 +68,7 @@ export class ApplicationAppAddComponent implements OnInit {
   private mapModel: leafletMap;
   private mapMarkerPoints: Array<PoinModel> = [];
   mapOptonCenter = {};
+  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   ngOnInit(): void {
     this.requestSourceId = Number(this.activatedRoute.snapshot.paramMap.get('SourceId'));
     if (this.requestSourceId === 0) {
@@ -77,7 +79,6 @@ export class ApplicationAppAddComponent implements OnInit {
     this.DataGetAccess();
     this.getEnumRecordStatus();
   }
-  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
       this.storeSnapshot.EnumRecordStatus &&

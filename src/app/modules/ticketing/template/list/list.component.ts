@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
   TicketingTemplateModel,
@@ -32,9 +32,9 @@ import { TicketingTemplateAddComponent } from '../add/add.component';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class TicketingTemplateListComponent implements OnInit {
-  requestDepartemenId = 0;
-  constructor(private ticketingTemplateService: TicketingTemplateService,
+export class TicketingTemplateListComponent implements OnInit , OnDestroy {
+  constructor(
+    private ticketingTemplateService: TicketingTemplateService,
     private activatedRoute: ActivatedRoute,
     private cmsApiStore: ntkCmsApiStoreService,
     public publicHelper: PublicHelper,
@@ -46,6 +46,7 @@ export class TicketingTemplateListComponent implements OnInit {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
   }
+  requestDepartemenId = 0;
   comment: string;
   author: string;
   dataSource: any;
@@ -70,6 +71,7 @@ export class TicketingTemplateListComponent implements OnInit {
     'Title',
     'Action'
   ];
+  cmsApiStoreSubscribe: Subscription;
 
 
 
@@ -82,7 +84,6 @@ export class TicketingTemplateListComponent implements OnInit {
       this.tokenInfo = next;
     });
   }
-  cmsApiStoreSubscribe: Subscription;
   ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
@@ -100,7 +101,7 @@ export class TicketingTemplateListComponent implements OnInit {
       filter.Value = this.requestDepartemenId;
       this.filteModelContent.Filters.push(filter);
     }
-    if (this.categoryModelSelected  && this.categoryModelSelected .Id > 0) {
+    if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
       filter.PropertyName = 'LinkTicketingDepartemenId';
       filter.Value = this.categoryModelSelected.Id;
       this.filteModelContent.Filters.push(filter);
@@ -169,8 +170,8 @@ export class TicketingTemplateListComponent implements OnInit {
 
   onActionbuttonNewRow(): void {
     if (this.categoryModelSelected == null &&
-       (this.categoryModelSelected && this.categoryModelSelected.Id == 0) &&
-        (this.requestDepartemenId == null || this.requestDepartemenId === 0)
+      (this.categoryModelSelected && this.categoryModelSelected.Id === 0) &&
+      (this.requestDepartemenId == null || this.requestDepartemenId === 0)
     ) {
       const title = 'برروز خطا ';
       const message = 'محتوا انتخاب نشده است';
@@ -185,8 +186,8 @@ export class TicketingTemplateListComponent implements OnInit {
       this.cmsToastrService.typeErrorAccessAdd();
       return;
     }
-    var parentId: number = this.requestDepartemenId;
-    if (this.categoryModelSelected &&this.categoryModelSelected.Id > 0) {
+    let parentId: number = this.requestDepartemenId;
+    if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
       parentId = this.categoryModelSelected.Id;
     }
     const dialogRef = this.dialog.open(TicketingTemplateAddComponent, {
@@ -237,9 +238,9 @@ export class TicketingTemplateListComponent implements OnInit {
   }
   onActionbuttonDeleteRow(mode: TicketingTemplateModel = this.tableRowSelected): void {
     if (mode == null || !mode.Id || mode.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      const etitle = 'برروز خطا ';
+      const emessage = 'ردیفی برای ویرایش انتخاب نشده است';
+      this.cmsToastrService.toastr.error(emessage, etitle);
       return;
     }
     this.tableRowSelected = mode;
@@ -252,7 +253,7 @@ export class TicketingTemplateListComponent implements OnInit {
       return;
     }
     const title = 'لطفا تایید کنید...';
-    const message = 'آیا مایل به حدف این محتوا می باشید ' + '?' + "<br> ( " + this.tableRowSelected.Title + " ) ";
+    const message = 'آیا مایل به حدف این محتوا می باشید ' + '?' + '<br> ( ' + this.tableRowSelected.Title + ' ) ';
     this.cmsConfirmationDialogService.confirm(title, message)
       .then((confirmed) => {
         if (confirmed) {
@@ -279,7 +280,7 @@ export class TicketingTemplateListComponent implements OnInit {
       }
       );
   }
-   onActionbuttonStatist(): void {
+  onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;
     if (!this.optionsStatist.data.show) {
       return;

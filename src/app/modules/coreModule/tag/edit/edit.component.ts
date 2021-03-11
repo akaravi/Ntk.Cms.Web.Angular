@@ -31,7 +31,6 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
   ]
 })
 export class CoreModuleTagEditComponent implements OnInit, AfterViewInit {
-  requestId = 0;
   constructor(
     private activatedRoute: ActivatedRoute,
     private cmsStoreService: CmsStoreService,
@@ -43,6 +42,7 @@ export class CoreModuleTagEditComponent implements OnInit, AfterViewInit {
   ) {
     this.fileManagerTree = new TreeModel();
   }
+  requestId = 0;
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
   dataModel = new CoreModuleTagModel();
   dataModelResult: ErrorExceptionResult<CoreModuleTagModel> = new ErrorExceptionResult<CoreModuleTagModel>();
@@ -63,6 +63,10 @@ export class CoreModuleTagEditComponent implements OnInit, AfterViewInit {
 
   viewMap = false;
   private mapModel: leafletMap;
+
+
+
+  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   ngOnInit(): void {
     this.requestId = Number(this.activatedRoute.snapshot.paramMap.get('Id'));
     if (this.requestId === 0) {
@@ -114,10 +118,6 @@ export class CoreModuleTagEditComponent implements OnInit, AfterViewInit {
       })))
     );
   }
-
-
-
-  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
       this.storeSnapshot.EnumRecordStatus &&
@@ -156,7 +156,7 @@ export class CoreModuleTagEditComponent implements OnInit, AfterViewInit {
         async (next) => {
           this.loading.display = false;
           this.dataModelResult = next;
-          this.formInfo.FormSubmitAllow = true;;
+          this.formInfo.FormSubmitAllow = true;
 
           if (next.IsSuccess) {
             this.dataModel = next.Item;

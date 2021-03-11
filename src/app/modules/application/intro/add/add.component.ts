@@ -29,9 +29,9 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
   styleUrls: ['./add.component.scss']
 })
 export class ApplicationIntroAddComponent implements OnInit {
-  requestApplicationId = 0;
 
-  constructor(private activatedRoute: ActivatedRoute,
+  constructor(
+    private activatedRoute: ActivatedRoute,
     private cmsStoreService: CmsStoreService,
     public publicHelper: PublicHelper,
     public coreEnumService: CoreEnumService,
@@ -41,6 +41,7 @@ export class ApplicationIntroAddComponent implements OnInit {
     private router: Router) {
     this.fileManagerTree = new TreeModel();
   }
+  requestApplicationId = 0;
 
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
   loading = new ProgressSpinnerModel();
@@ -57,6 +58,7 @@ export class ApplicationIntroAddComponent implements OnInit {
   appLanguage = 'fa';
 
   fileManagerTree: TreeModel;
+  storeSnapshot = this.cmsStoreService.getStateSnapshot();
 
   ngOnInit(): void {
     this.requestApplicationId = Number(this.activatedRoute.snapshot.paramMap.get('ApplicationId'));
@@ -68,7 +70,6 @@ export class ApplicationIntroAddComponent implements OnInit {
     this.DataGetAccess();
     this.getEnumRecordStatus();
   }
-  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
       this.storeSnapshot.EnumRecordStatus &&

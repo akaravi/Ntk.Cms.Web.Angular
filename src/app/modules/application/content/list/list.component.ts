@@ -212,7 +212,7 @@ export class ApplicationAppListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessAdd();
       return;
     }
-    this.router.navigate(['/application/app/add/',sourceId]);
+    this.router.navigate(['/application/app/add/', sourceId]);
   }
 
   onActionCategorySelect(model: ApplicationSourceModel | null): void {
@@ -252,9 +252,9 @@ export class ApplicationAppListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonDeleteRow(mode: ApplicationAppModel = this.tableRowSelected): void {
     if (mode == null || !mode.Id || mode.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      const etitle = 'برروز خطا ';
+      const emessage = 'ردیفی برای ویرایش انتخاب نشده است';
+      this.cmsToastrService.toastr.error(emessage, etitle);
       return;
     }
     this.tableRowSelected = mode;
@@ -296,7 +296,7 @@ export class ApplicationAppListComponent implements OnInit, OnDestroy {
       );
 
   }
-   onActionbuttonStatist(): void {
+  onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;
     if (!this.optionsStatist.data.show) {
       return;

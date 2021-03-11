@@ -31,10 +31,10 @@ import { Observable, Subscription } from 'rxjs';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
-export class PollingContentListComponent implements OnInit , OnDestroy  {
+export class PollingContentListComponent implements OnInit, OnDestroy {
 
   constructor(
-    private cmsApiStore : ntkCmsApiStoreService,
+    private cmsApiStore: ntkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private pollingContentService: PollingContentService,
     private cmsToastrService: CmsToastrService,
@@ -71,16 +71,16 @@ export class PollingContentListComponent implements OnInit , OnDestroy  {
     'UpdatedDate',
     'Action'
   ];
+  cmsApiStoreSubscribe: Subscription;
   ngOnInit(): void {
 
     this.DataGetAll();
-    this.tokenInfo =  this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
-    this.cmsApiStoreSubscribe =  this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
+    this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
+    this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
     });
   }
-  cmsApiStoreSubscribe:Subscription;
   ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
@@ -226,7 +226,7 @@ export class PollingContentListComponent implements OnInit , OnDestroy  {
       }
     });
   }
-   onActionbuttonStatist(): void {
+  onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;
     if (!this.optionsStatist.data.show) {
       return;

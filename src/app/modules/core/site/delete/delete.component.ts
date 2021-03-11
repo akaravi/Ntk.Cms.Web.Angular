@@ -9,7 +9,7 @@ export class CoreSiteDeleteComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
 }

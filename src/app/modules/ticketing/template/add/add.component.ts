@@ -22,7 +22,6 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
   styleUrls: ['./add.component.scss']
 })
 export class TicketingTemplateAddComponent implements OnInit {
-  requestParentId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
@@ -36,6 +35,7 @@ export class TicketingTemplateAddComponent implements OnInit {
     }
 
   }
+  requestParentId = 0;
 
   formMatcher = new CmsFormsErrorStateMatcher();
 
@@ -47,14 +47,14 @@ export class TicketingTemplateAddComponent implements OnInit {
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
 
+  storeSnapshot = this.cmsStoreService.getStateSnapshot();
+
 
   ngOnInit(): void {
 
-      this.formInfo.FormTitle = 'ثبت محتوای جدید';
+    this.formInfo.FormTitle = 'ثبت محتوای جدید';
     this.getEnumRecordStatus();
   }
-
-  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
       this.storeSnapshot.EnumRecordStatus &&
@@ -128,7 +128,7 @@ export class TicketingTemplateAddComponent implements OnInit {
     }
     this.formInfo.FormSubmitAllow = false;
 
-      this.DataAddContent();
+    this.DataAddContent();
 
   }
   onFormCancel(): void {

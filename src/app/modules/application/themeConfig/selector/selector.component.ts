@@ -101,7 +101,7 @@ export class ApplicationThemeConfigSelectorComponent implements OnInit {
       filteModel.Filters.push(parent as FilterDataModel);
       const tree = {
         Filters: filters,
-      }
+      };
       if (filters && filters.length > 0) {
         filteModel.Filters.push(tree as FilterDataModel);
       }

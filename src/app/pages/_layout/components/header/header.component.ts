@@ -45,10 +45,10 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   );
   private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
 
-  constructor(private layout: LayoutService,
-     private router: Router,
-    
-    ) {
+  constructor(
+    private layout: LayoutService,
+    private router: Router,
+  ) {
     this.loader$ = this.loaderSubject;
     // page progress bar percentage
     const routerSubscription = this.router.events.subscribe((event) => {
@@ -79,7 +79,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   developing = false;
 
   ngOnInit(): void {
- 
+
     this.headerContainerCSSClasses = this.layout.getStringCSSClasses(
       'header_container'
     );

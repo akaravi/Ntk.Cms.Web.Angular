@@ -1,7 +1,19 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { ApplicationAppModel, ApplicationLogNotificationModel, ApplicationLogNotificationService, CoreAuthService, EnumRecordStatus, EnumSortType, ErrorExceptionResult, FilterDataModel, FilterModel, ntkCmsApiStoreService, TokenInfoModel } from 'ntk-cms-api';
+import {
+  ApplicationAppModel,
+  ApplicationLogNotificationModel,
+  ApplicationLogNotificationService,
+  CoreAuthService,
+  EnumRecordStatus,
+  EnumSortType,
+  ErrorExceptionResult,
+  FilterDataModel,
+  FilterModel,
+  ntkCmsApiStoreService,
+  TokenInfoModel
+} from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
@@ -18,12 +30,12 @@ import { Subscription } from 'rxjs';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ApplicationNotificationListComponent implements OnInit {
-  requestApplicationId = 0;
+export class ApplicationNotificationListComponent implements OnInit , OnDestroy {
 
-  constructor(private applicationLogNotificationService: ApplicationLogNotificationService,
+  constructor(
+    private applicationLogNotificationService: ApplicationLogNotificationService,
     private activatedRoute: ActivatedRoute,
-    private cmsApiStore :ntkCmsApiStoreService,
+    private cmsApiStore: ntkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
     private router: Router,
@@ -32,6 +44,7 @@ export class ApplicationNotificationListComponent implements OnInit {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
   }
+  requestApplicationId = 0;
   comment: string;
   author: string;
   dataSource: any;
@@ -63,18 +76,18 @@ export class ApplicationNotificationListComponent implements OnInit {
 
   columnsToDisplay: string[] = ['Id', 'Writer'];
   expandedElement: ApplicationLogNotificationModel | null;
+  cmsApiStoreSubscribe: Subscription;
 
   ngOnInit(): void {
     this.requestApplicationId = Number(this.activatedRoute.snapshot.paramMap.get('ApplicationId'));
     this.DataGetAll();
-    this.tokenInfo =  this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
-    this.cmsApiStoreSubscribe =  this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
+    this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
+    this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
     });
   }
-  cmsApiStoreSubscribe:Subscription;
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
 
@@ -251,7 +264,7 @@ export class ApplicationNotificationListComponent implements OnInit {
 
     this.DataGetAll();
   }
-   onActionbuttonStatist(): void {
+  onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;
     if (!this.optionsStatist.data.show) {
       return;

@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { LayoutService } from '../../../../core';
 import KTLayoutQuickSearch from '../../../../../assets/js/layout/extended/quick-search';
@@ -17,9 +17,19 @@ import { environment } from 'src/environments/environment';
   templateUrl: './topbar.component.html',
   styleUrls: ['./topbar.component.scss'],
 })
-export class TopbarComponent implements OnInit, AfterViewInit {
+export class TopbarComponent implements OnInit, AfterViewInit , OnDestroy {
+
+  constructor(
+    private layout: LayoutService,
+    private cmsApiStore: ntkCmsApiStoreService,
+  ) {
+    this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
+    this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((value) => {
+      this.tokenInfo = value;
+    });
+    this.developing = environment.developing;
+  }
   tokenInfo = new TokenInfoModel();
-  // tobbar extras
   extraSearchDisplay: boolean;
   extrasSearchLayout: 'offcanvas' | 'dropdown';
   extrasNotificationsDisplay: boolean;
@@ -32,21 +42,11 @@ export class TopbarComponent implements OnInit, AfterViewInit {
   extrasLanguagesDisplay: boolean;
   extrasUserDisplay: boolean;
   extrasUserLayout: 'offcanvas' | 'dropdown';
-
-  constructor(private layout: LayoutService,
-    private cmsApiStore: ntkCmsApiStoreService,
-  ) {
-    this.tokenInfo =  this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
-    this.cmsApiStoreSubscribe =  this.cmsApiStore.getState((state) =>  state.ntkCmsAPiState.tokenInfo).subscribe((value) => {
-      this.tokenInfo = value;
-    });
-    this.developing = environment.developing;
-  }
-  cmsApiStoreSubscribe:Subscription;
-  ngOnDestroy() {
+  cmsApiStoreSubscribe: Subscription;
+  developing = false;
+  ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
-  developing = false;
 
   ngOnInit(): void {
 

@@ -71,6 +71,7 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
     'UpdatedDate',
     'Action'
   ];
+  cmsApiStoreSubscribe: Subscription;
   ngOnInit(): void {
 
     this.DataGetAll();
@@ -80,7 +81,6 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
       this.tokenInfo = next;
     });
   }
-  cmsApiStoreSubscribe: Subscription;
   ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }

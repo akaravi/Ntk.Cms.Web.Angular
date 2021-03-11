@@ -2,6 +2,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
 } from '@angular/core';
@@ -31,14 +32,17 @@ import { Subscription } from 'rxjs';
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.scss'],
 })
-export class FileCategoryTreeComponent implements OnInit {
+export class FileCategoryTreeComponent implements OnInit , OnDestroy{
   constructor(
-    private cmsApiStore : ntkCmsApiStoreService,
+    private cmsApiStore: ntkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
     public coreEnumService: CoreEnumService,
     public categoryService: FileCategoryService,
     public dialog: MatDialog,
   ) {
+  }
+  @Input() set optionSelectForce(x: number | FileCategoryModel) {
+    this.onActionSelectForce(x);
   }
   dataModelSelect: FileCategoryModel = new FileCategoryModel();
   dataModelResult: ErrorExceptionResult<FileCategoryModel> = new ErrorExceptionResult<FileCategoryModel>();
@@ -47,22 +51,19 @@ export class FileCategoryTreeComponent implements OnInit {
   treeControl = new NestedTreeControl<FileCategoryModel>(node => node.Children);
   dataSource = new MatTreeNestedDataSource<FileCategoryModel>();
   @Output() optionSelect = new EventEmitter();
+  cmsApiStoreSubscribe: Subscription;
   @Input() optionReload = () => this.onActionReload();
-  @Input() set optionSelectForce(x: number | FileCategoryModel) {
-    this.onActionSelectForce(x);
-  }
 
   hasChild = (_: number, node: FileCategoryModel) => !!node.Children && node.Children.length > 0;
 
 
   ngOnInit(): void {
     this.DataGetAll();
-    this.cmsApiStoreSubscribe =  this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe(() => {
+    this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe(() => {
       this.DataGetAll();
     });
   }
-  cmsApiStoreSubscribe:Subscription;
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
   DataGetAll(): void {

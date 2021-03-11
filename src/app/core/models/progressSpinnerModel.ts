@@ -5,9 +5,9 @@ export class ProgressSpinnerModel {
   display = false;
   message = 'Loading ... ';
   color?: ThemePalette;
-  diameter?: number = 20;
+  diameter = 20;
   mode?: ProgressSpinnerMode;
-  strokeWidth?: number = 50;
+  strokeWidth = 50;
   value?: number;
   backdropEnabled = true;
   Globally = true;

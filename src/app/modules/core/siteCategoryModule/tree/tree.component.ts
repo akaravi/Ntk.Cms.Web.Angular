@@ -30,7 +30,7 @@ import { CoreSiteCategoryCmsModuleAddComponent } from '../add/add.component';
 
 
 @Component({
-  selector: 'app-core-SiteCategoryCmsModule-tree',
+  selector: 'app-core-sitecategorycmsmodule-tree',
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.scss'],
 })

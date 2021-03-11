@@ -1,6 +1,6 @@
 
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
   TicketingDepartemenModel,
@@ -33,8 +33,9 @@ import { TicketingDepartemenAddComponent } from '../add/add.component';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class TicketingDepartemenListComponent implements OnInit {
-  constructor(private ticketingDepartemenService: TicketingDepartemenService,
+export class TicketingDepartemenListComponent implements OnInit , OnDestroy {
+  constructor(
+    private ticketingDepartemenService: TicketingDepartemenService,
     private cmsApiStore: ntkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
@@ -73,6 +74,7 @@ export class TicketingDepartemenListComponent implements OnInit {
 
   columnsToDisplay: string[] = ['Id', 'Writer'];
   expandedElement: TicketingDepartemenModel | null;
+  cmsApiStoreSubscribe: Subscription;
 
   ngOnInit(): void {
     this.filteModelContent.SortColumn = 'Title';
@@ -83,8 +85,7 @@ export class TicketingDepartemenListComponent implements OnInit {
       this.tokenInfo = next;
     });
   }
-  cmsApiStoreSubscribe: Subscription;
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
   DataGetAll(): void {
@@ -166,7 +167,7 @@ export class TicketingDepartemenListComponent implements OnInit {
       return;
     }
     const dialogRef = this.dialog.open(TicketingDepartemenAddComponent, {
-      data: {  }
+      data: {}
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.dialogChangedDate) {
@@ -261,7 +262,7 @@ export class TicketingDepartemenListComponent implements OnInit {
 
     this.router.navigate(['/ticketing/task/', this.tableRowSelected.Id]);
   }
-   onActionbuttonStatist(): void {
+  onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;
     if (!this.optionsStatist.data.show) {
       return;

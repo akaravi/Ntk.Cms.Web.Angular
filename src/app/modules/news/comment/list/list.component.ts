@@ -1,5 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { CoreAuthService, EnumRecordStatus, EnumSortType, ErrorExceptionResult, NewsCommentModel, NewsCommentService, NewsContentModel, ntkCmsApiStoreService, TokenInfoModel } from 'ntk-cms-api';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  CoreAuthService,
+  EnumRecordStatus,
+  EnumSortType,
+  ErrorExceptionResult,
+  NewsCommentModel,
+  NewsCommentService,
+  NewsContentModel,
+  ntkCmsApiStoreService,
+  TokenInfoModel
+} from 'ntk-cms-api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FilterModel, FilterDataModel } from 'ntk-cms-api';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -30,13 +40,9 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
     ]),
   ],
 })
-export class NewsCommentListComponent implements OnInit {
-  comment: string;
-  author: string;
-  dataSource: any;
-  flag = false;
-  tableContentSelected = [];
-  constructor(private newsCommentService: NewsCommentService,
+export class NewsCommentListComponent implements OnInit , OnDestroy {
+  constructor(
+    private newsCommentService: NewsCommentService,
     private activatedRoute: ActivatedRoute,
     private cmsApiStore: ntkCmsApiStoreService,
     public publicHelper: PublicHelper,
@@ -49,6 +55,11 @@ export class NewsCommentListComponent implements OnInit {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
   }
+  comment: string;
+  author: string;
+  dataSource: any;
+  flag = false;
+  tableContentSelected = [];
   requestContentId = 0;
   filteModelContent = new FilterModel();
   dataModelResult: ErrorExceptionResult<NewsCommentModel> = new ErrorExceptionResult<NewsCommentModel>();
@@ -75,19 +86,19 @@ export class NewsCommentListComponent implements OnInit {
 
   columnsToDisplay: string[] = ['Id', 'Writer'];
   expandedElement: NewsContentModel | null;
+  cmsApiStoreSubscribe: Subscription;
 
   ngOnInit(): void {
     this.requestContentId = Number(this.activatedRoute.snapshot.paramMap.get('ContentId'));
 
     this.DataGetAll();
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
-    this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
+    this.cmsApiStoreSubscribe = this.cmsApiStore.getState((x) => x.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
     });
   }
-  cmsApiStoreSubscribe: Subscription;
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
   DataGetAll(): void {
@@ -250,9 +261,9 @@ export class NewsCommentListComponent implements OnInit {
   }
   onActionbuttonDeleteRow(model: NewsContentModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      const etitle = 'برروز خطا ';
+      const emessage = 'ردیفی برای ویرایش انتخاب نشده است';
+      this.cmsToastrService.toastr.error(emessage, etitle);
       return;
     }
     this.tableRowSelected = model;

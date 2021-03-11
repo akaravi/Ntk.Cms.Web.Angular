@@ -15,7 +15,7 @@ export class CoreUserWidgetComponent implements OnInit, OnDestroy {
   modelData = new Map<string, string>();
   widgetInfoModel = new WidgetInfoModel();
   cmsApiStoreSubscribe: Subscription;
-  indexTheme = ['symbol-light-success', 'symbol-light-warning', 'symbol-light-danger', 'symbol-light-info', 'symbol-light-info', 'symbol-light-info','symbol-light-info','symbol-light-info','symbol-light-info']
+  indexTheme = ['symbol-light-success', 'symbol-light-warning', 'symbol-light-danger', 'symbol-light-info', 'symbol-light-info', 'symbol-light-info', 'symbol-light-info', 'symbol-light-info', 'symbol-light-info'];
   constructor(
     private service: CoreUserService,
     private cmsApiStore: ntkCmsApiStoreService,

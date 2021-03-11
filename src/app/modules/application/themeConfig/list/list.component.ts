@@ -1,7 +1,20 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { ApplicationThemeConfigModel, ApplicationAppService, ApplicationSourceModel, ApplicationThemeConfigService, CoreAuthService, EnumSortType, ErrorExceptionResult, FilterDataModel, FilterModel, TokenInfoModel, ntkCmsApiStoreService, EnumRecordStatus } from 'ntk-cms-api';
+import {
+  ApplicationThemeConfigModel,
+  ApplicationAppService,
+  ApplicationSourceModel,
+  ApplicationThemeConfigService,
+  CoreAuthService,
+  EnumSortType,
+  ErrorExceptionResult,
+  FilterDataModel,
+  FilterModel,
+  TokenInfoModel,
+  ntkCmsApiStoreService,
+  EnumRecordStatus
+} from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
@@ -18,11 +31,11 @@ import { Subscription } from 'rxjs';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ApplicationThemeConfigListComponent implements OnInit {
-  requestSourceId = 0;
-  constructor(private applicationThemeConfigService: ApplicationThemeConfigService,
+export class ApplicationThemeConfigListComponent implements OnInit , OnDestroy {
+  constructor(
+    private applicationThemeConfigService: ApplicationThemeConfigService,
     private activatedRoute: ActivatedRoute,
-    private cmsApiStore : ntkCmsApiStoreService,
+    private cmsApiStore: ntkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
     private router: Router,
@@ -31,6 +44,7 @@ export class ApplicationThemeConfigListComponent implements OnInit {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
   }
+  requestSourceId = 0;
   comment: string;
   author: string;
   dataSource: any;
@@ -64,17 +78,17 @@ export class ApplicationThemeConfigListComponent implements OnInit {
 
   columnsToDisplay: string[] = ['Id', 'Writer'];
   expandedElement: ApplicationThemeConfigModel | null;
+  cmsApiStoreSubscribe: Subscription;
 
   ngOnInit(): void {
     this.requestSourceId = Number(this.activatedRoute.snapshot.paramMap.get('SourceId'));
     this.DataGetAll();
-    this.tokenInfo =  this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
-     this.cmsApiStoreSubscribe =  this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
+    this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
+    this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
     });
   }
-  cmsApiStoreSubscribe:Subscription;
   ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
@@ -91,7 +105,7 @@ export class ApplicationThemeConfigListComponent implements OnInit {
       filter.Value = this.requestSourceId;
       this.filteModelContent.Filters.push(filter);
     }
-    if(this.categoryModelSelected && this.categoryModelSelected.Id>0){
+    if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
 
       filter.PropertyName = 'LinkSourceId';
       filter.Value = this.requestSourceId;
@@ -251,7 +265,7 @@ export class ApplicationThemeConfigListComponent implements OnInit {
     //   }
     // });
   }
-   onActionbuttonStatist(): void {
+  onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;
     if (!this.optionsStatist.data.show) {
       return;

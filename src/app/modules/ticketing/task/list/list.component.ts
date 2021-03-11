@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
   TicketingTaskModel,
@@ -33,9 +33,9 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class TicketingTaskListComponent implements OnInit {
-  requestDepartemenId = 0;
-  constructor(private ticketingTaskService: TicketingTaskService,
+export class TicketingTaskListComponent implements OnInit , OnDestroy{
+  constructor(
+    private ticketingTaskService: TicketingTaskService,
     private activatedRoute: ActivatedRoute,
     private cmsApiStore: ntkCmsApiStoreService,
     public publicHelper: PublicHelper,
@@ -47,6 +47,7 @@ export class TicketingTaskListComponent implements OnInit {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
   }
+  requestDepartemenId = 0;
   comment: string;
   author: string;
   dataSource: any;
@@ -69,10 +70,11 @@ export class TicketingTaskListComponent implements OnInit {
     'Id',
     'RecordStatus',
     'Title',
-'CreatedDate',
-'UpdatedDate',
+    'CreatedDate',
+    'UpdatedDate',
     'Action'
   ];
+  cmsApiStoreSubscribe: Subscription;
 
 
 
@@ -85,8 +87,7 @@ export class TicketingTaskListComponent implements OnInit {
       this.tokenInfo = next;
     });
   }
-  cmsApiStoreSubscribe: Subscription;
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
 
@@ -175,9 +176,9 @@ export class TicketingTaskListComponent implements OnInit {
 
   onActionbuttonNewRow(): void {
     if (this.categoryModelSelected == null &&
-      (this.categoryModelSelected && this.categoryModelSelected.Id == 0) && (
-      this.requestDepartemenId == null ||
-      this.requestDepartemenId === 0)
+      (this.categoryModelSelected && this.categoryModelSelected.Id === 0) && (
+        this.requestDepartemenId == null ||
+        this.requestDepartemenId === 0)
     ) {
       const title = 'برروز خطا ';
       const message = 'محتوا انتخاب نشده است';
@@ -192,8 +193,8 @@ export class TicketingTaskListComponent implements OnInit {
       this.cmsToastrService.typeErrorAccessAdd();
       return;
     }
-    var parentId: number = this.requestDepartemenId;
-    if (this.categoryModelSelected &&this.categoryModelSelected.Id > 0) {
+    let parentId: number = this.requestDepartemenId;
+    if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
       parentId = this.categoryModelSelected.Id;
     }
     const dialogRef = this.dialog.open(TicketingTaskEditComponent, {
@@ -244,9 +245,9 @@ export class TicketingTaskListComponent implements OnInit {
   }
   onActionbuttonDeleteRow(mode: TicketingTaskModel = this.tableRowSelected): void {
     if (mode == null || !mode.Id || mode.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      const etitle = 'برروز خطا ';
+      const emessage = 'ردیفی برای ویرایش انتخاب نشده است';
+      this.cmsToastrService.toastr.error(emessage, etitle);
       return;
     }
     this.tableRowSelected = mode;
@@ -259,7 +260,7 @@ export class TicketingTaskListComponent implements OnInit {
       return;
     }
     const title = 'لطفا تایید کنید...';
-    const message = 'آیا مایل به حدف این محتوا می باشید ' + '?' + "<br> ( " + this.tableRowSelected.Title + " ) ";
+    const message = 'آیا مایل به حدف این محتوا می باشید ' + '?' + '<br> ( ' + this.tableRowSelected.Title + ' ) ';
     this.cmsConfirmationDialogService.confirm(title, message)
       .then((confirmed) => {
         if (confirmed) {
@@ -286,7 +287,7 @@ export class TicketingTaskListComponent implements OnInit {
       }
       );
   }
-   onActionbuttonStatist(): void {
+  onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;
     if (!this.optionsStatist.data.show) {
       return;

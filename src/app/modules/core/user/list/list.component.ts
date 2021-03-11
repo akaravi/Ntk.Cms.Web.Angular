@@ -1,6 +1,6 @@
 
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
   CoreUserModel,
@@ -33,7 +33,7 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class CoreUserListComponent implements OnInit {
+export class CoreUserListComponent implements OnInit , OnDestroy {
   constructor(
     private coreUserService: CoreUserService,
     private cmsConfirmationDialogService: CmsConfirmationDialogService,

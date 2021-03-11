@@ -23,7 +23,7 @@ export class CmsSearchListComponent implements OnInit {
     }
     this.optionsData = model;
     this.optionsData.childMethods = {
-      setAccess: (model: AccessModel) => this.setAccess(model),
+      setAccess: (x: AccessModel) => this.setAccess(x),
     };
     this.optionsChange.emit(model);
   }

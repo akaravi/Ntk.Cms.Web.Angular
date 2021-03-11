@@ -51,7 +51,7 @@ export class FileContentEditComponent implements OnInit, AfterViewInit {
   otherInfoTabledisplayedColumns = ['Id', 'Title', 'TypeId', 'Action'];
   similarTabledisplayedColumns = ['Id', 'RecordStatus', 'Title', 'Action'];
   similarTabledataSource = new MatTableDataSource<FileContentModel>();
-
+  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   loading = new ProgressSpinnerModel();
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
   selectFileTypePodcast = ['mp3'];
@@ -84,10 +84,6 @@ export class FileContentEditComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
 
   }
-
-
-
-  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
       this.storeSnapshot.EnumRecordStatus &&

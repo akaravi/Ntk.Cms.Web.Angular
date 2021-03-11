@@ -37,7 +37,6 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
   ]
 })
 export class ArticleContentAddComponent implements OnInit, AfterViewInit {
-  requestCategoryId = 0;
   constructor(
     private activatedRoute: ActivatedRoute,
     private cmsStoreService: CmsStoreService,
@@ -52,6 +51,7 @@ export class ArticleContentAddComponent implements OnInit, AfterViewInit {
   ) {
     this.fileManagerTree = new TreeModel();
   }
+  requestCategoryId = 0;
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
   dataModel = new ArticleContentModel();
   dataModelResult: ErrorExceptionResult<ArticleContentModel> = new ErrorExceptionResult<ArticleContentModel>();
@@ -85,6 +85,9 @@ export class ArticleContentAddComponent implements OnInit, AfterViewInit {
 
   viewMap = false;
   private mapModel: leafletMap;
+
+
+  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   ngOnInit(): void {
     this.requestCategoryId = Number(this.activatedRoute.snapshot.paramMap.get('CategoryId'));
     if (this.requestCategoryId === 0) {
@@ -119,9 +122,6 @@ export class ArticleContentAddComponent implements OnInit, AfterViewInit {
     this.dataModel.LinkFileMovieId = model.id;
     this.dataModel.LinkFileMovieIdSrc = model.downloadLinksrc;
   }
-
-
-  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
       this.storeSnapshot.EnumRecordStatus &&

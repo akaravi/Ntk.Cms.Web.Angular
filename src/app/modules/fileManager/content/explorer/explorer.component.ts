@@ -10,12 +10,11 @@ export class FileContentExplorerComponent implements OnInit {
 
   constructor() {
     this.fileManagerTree = new TreeModel();
-   }
-
-  ngOnInit() {
   }
   appLanguage = 'fa';
   fileManagerOpenForm = true;
   fileManagerTree: TreeModel;
   selectFileType = [];
+  ngOnInit(): void {
+  }
 }

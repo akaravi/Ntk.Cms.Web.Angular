@@ -69,7 +69,6 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
     SharedModule.forRoot(),
     AngularEditorModule,
     TagInputModule,
-    //ProgressSpinnerModule,
     CmsFileManagerModule
   ],
   providers: [

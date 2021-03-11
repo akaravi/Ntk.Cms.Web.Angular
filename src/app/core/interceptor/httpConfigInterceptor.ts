@@ -16,6 +16,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
       // if there is no internet, throw a HttpErrorResponse error
       // since an error is thrown, the function will terminate here
       this.cmsToastrService.typeErrorInternetConnection();
+      // tslint:disable-next-line: deprecation
       return Observable.throw(new HttpErrorResponse({ error: 'Internet is required.' }));
     }
     return next.handle(request).pipe(

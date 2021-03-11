@@ -23,7 +23,6 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
   styleUrls: ['./edit.component.scss']
 })
 export class TicketingTemplateEditComponent implements OnInit {
-  requestId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
@@ -38,6 +37,7 @@ export class TicketingTemplateEditComponent implements OnInit {
 
     this.fileManagerTree = new TreeModel();
   }
+  requestId = 0;
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
 
   fileManagerTree: TreeModel;
@@ -53,6 +53,8 @@ export class TicketingTemplateEditComponent implements OnInit {
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
 
+  storeSnapshot = this.cmsStoreService.getStateSnapshot();
+
   ngOnInit(): void {
     if (this.requestId > 0) {
       this.formInfo.FormTitle = 'ویرایش  دسته بندی';
@@ -66,8 +68,6 @@ export class TicketingTemplateEditComponent implements OnInit {
 
     this.getEnumRecordStatus();
   }
-
-  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
       this.storeSnapshot.EnumRecordStatus &&

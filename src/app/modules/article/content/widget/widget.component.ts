@@ -13,7 +13,7 @@ export class ArticleContentWidgetComponent implements OnInit, OnDestroy {
   modelData = new Map<string, number>();
   widgetInfoModel = new WidgetInfoModel();
   cmsApiStoreSubscribe: Subscription;
-  indexTheme = ['symbol-light-success', 'symbol-light-warning', 'symbol-light-danger','symbol-light-info']
+  indexTheme = ['symbol-light-success', 'symbol-light-warning', 'symbol-light-danger', 'symbol-light-info'];
   constructor(
     private service: ArticleContentService,
     private cmsApiStore: ntkCmsApiStoreService,

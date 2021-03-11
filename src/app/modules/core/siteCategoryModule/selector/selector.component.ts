@@ -1,5 +1,12 @@
 import { Component, OnInit, Input, EventEmitter } from '@angular/core';
-import { CoreEnumService, ErrorExceptionResult, FilterDataModel, FilterModel, CoreSiteCategoryCmsModuleModel, CoreSiteCategoryCmsModuleService } from 'ntk-cms-api';
+import {
+  CoreEnumService,
+  ErrorExceptionResult,
+  FilterDataModel,
+  FilterModel,
+  CoreSiteCategoryCmsModuleModel,
+  CoreSiteCategoryCmsModuleService
+} from 'ntk-cms-api';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
@@ -8,7 +15,7 @@ import { Output } from '@angular/core';
 
 
 @Component({
-  selector: 'app-core-SiteCategoryCmsModule-selector',
+  selector: 'app-core-site-categorycmsmodule-selector',
   templateUrl: './selector.component.html',
   styleUrls: ['./selector.component.scss']
 })
@@ -47,7 +54,7 @@ export class CoreSiteCategoryCmsModuleSelectorComponent implements OnInit {
   }
 
   displayFn(SiteCategoryCmsModule?: CoreSiteCategoryCmsModuleModel): string | undefined {
-    return SiteCategoryCmsModule ? (SiteCategoryCmsModule.LinkCmsModuleId + ''  ) : undefined;
+    return SiteCategoryCmsModule ? (SiteCategoryCmsModule.LinkCmsModuleId + '') : undefined;
   }
   DataGetAll(text: string | number | any): Observable<CoreSiteCategoryCmsModuleModel[]> {
     const filteModel = new FilterModel();

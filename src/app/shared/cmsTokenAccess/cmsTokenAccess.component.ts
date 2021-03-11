@@ -84,14 +84,14 @@ export class CmsTokenAccessComponent implements OnInit, OnDestroy {
       (next) => {
         this.loadingStatus = false;
         if (next.IsSuccess) {
-          const title = 'اطلاعات ';
-          let message = '';
+          const etitle = 'اطلاعات ';
+          const emessage = '';
           if (next.Item.UserAccessAdminAllowToAllData === NewToall) {
             message = 'دسترسی تایید شد';
-            this.cmsToastrService.toastr.success(message, title);
+            this.cmsToastrService.toastr.success(emessage, etitle);
           } else {
             message = 'دسترسی  جدید تایید نشد';
-            this.cmsToastrService.toastr.warning(message, title);
+            this.cmsToastrService.toastr.warning(emessage, etitle);
           }
         } else {
           this.cmsToastrService.typeErrorAccessChange(next.ErrorMessage);
@@ -125,13 +125,13 @@ export class CmsTokenAccessComponent implements OnInit, OnDestroy {
       (next) => {
         this.loadingStatus = false;
         if (next.IsSuccess) {
-          const title = 'اطلاعات ';
+          const etitle = 'اطلاعات ';
           if (next.Item.UserAccessAdminAllowToProfessionalData === NewToPerf) {
-            const message = 'دسترسی تایید شد';
-            this.cmsToastrService.toastr.success(message, title);
+            const emessage = 'دسترسی تایید شد';
+            this.cmsToastrService.toastr.success(emessage, etitle);
           } else {
-            const message = 'دسترسی  جدید تایید نشد';
-            this.cmsToastrService.toastr.warning(message, title);
+            const emessage = 'دسترسی  جدید تایید نشد';
+            this.cmsToastrService.toastr.warning(emessage, etitle);
           }
         } else {
           this.cmsToastrService.typeErrorAccessChange(next.ErrorMessage);
@@ -145,9 +145,9 @@ export class CmsTokenAccessComponent implements OnInit, OnDestroy {
 
   onActionbuttonSelectUser(): void {
     if (this.UserId === this.tokenInfo.UserId) {
-      const title = 'هشدار';
-      const message = 'شناسه درخواستی این کاربر با کاربری که در آن هستید یکسان است';
-      this.cmsToastrService.toastr.warning(message, title);
+      const etitle = 'هشدار';
+      const emessage = 'شناسه درخواستی این کاربر با کاربری که در آن هستید یکسان است';
+      this.cmsToastrService.toastr.warning(emessage, etitle);
       return;
     }
     const authModel: AuthRenewTokenModel = new AuthRenewTokenModel();
@@ -166,11 +166,11 @@ export class CmsTokenAccessComponent implements OnInit, OnDestroy {
         this.loadingStatus = false;
         if (next.IsSuccess) {
           if (next.Item.UserId === this.UserId) {
-            const message = 'دسترسی به کاربر جدید تایید شد';
-            this.cmsToastrService.toastr.success(message, title);
+
+            this.cmsToastrService.toastr.success('دسترسی به کاربر جدید تایید شد', title);
           } else {
-            const message = 'دسترسی به کاربر جدید تایید نشد';
-            this.cmsToastrService.toastr.warning(message, title);
+
+            this.cmsToastrService.toastr.warning('دسترسی به کاربر جدید تایید نشد', title);
           }
         } else {
           this.cmsToastrService.typeErrorAccessChange(next.ErrorMessage);
@@ -184,9 +184,9 @@ export class CmsTokenAccessComponent implements OnInit, OnDestroy {
 
   onActionbuttonSelectSite(): void {
     if (this.SiteId === this.tokenInfo.SiteId) {
-      const title = 'هشدار';
-      const message = 'شناسه این وب سایت با وب سایتی که در آن هستید یکسان است';
-      this.cmsToastrService.toastr.warning(message, title);
+      const etitle = 'هشدار';
+      const emessage = 'شناسه این وب سایت با وب سایتی که در آن هستید یکسان است';
+      this.cmsToastrService.toastr.warning(emessage, etitle);
       return;
     }
     const authModel: AuthRenewTokenModel = new AuthRenewTokenModel();
@@ -204,13 +204,10 @@ export class CmsTokenAccessComponent implements OnInit, OnDestroy {
       (next) => {
         this.loadingStatus = false;
         if (next.IsSuccess) {
-          const title = 'اطلاعات ';
           if (next.Item.SiteId === +this.SiteId) {
-            const message = 'دسترسی به سایت جدید تایید شد';
-            this.cmsToastrService.toastr.success(message, title);
+            this.cmsToastrService.toastr.success('دسترسی به سایت جدید تایید شد', title);
           } else {
-            const message = 'دسترسی به سایت جدید تایید نشد';
-            this.cmsToastrService.toastr.warning(message, title);
+            this.cmsToastrService.toastr.warning( 'دسترسی به سایت جدید تایید نشد', title);
           }
         } else {
           this.cmsToastrService.typeErrorAccessChange(next.ErrorMessage);

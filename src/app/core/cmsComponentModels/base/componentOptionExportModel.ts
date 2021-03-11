@@ -3,11 +3,11 @@ import { ComponentOptionModel } from './componentOptionModel';
 
 export class ComponentOptionExportModel
   implements
-    ComponentOptionModel<
-      ComponentOptionExportDataModel,
-      ComponentOptionExportChildMethodsModel,
-      ComponentOptionExportParentMethodsModel
-    > {
+  ComponentOptionModel<
+  ComponentOptionExportDataModel,
+  ComponentOptionExportChildMethodsModel,
+  ComponentOptionExportParentMethodsModel
+  > {
   childMethods: ComponentOptionExportChildMethodsModel;
   parentMethods: ComponentOptionExportParentMethodsModel;
   data: ComponentOptionExportDataModel = new ComponentOptionExportDataModel();
@@ -17,7 +17,7 @@ export class ComponentOptionExportModel
 }
 
 export class ComponentOptionExportChildMethodsModel {
-  runExport: (x:  Array<FilterDataModel>) => void;
+  runExport: (x: Array<FilterDataModel>) => void;
 }
 export class ComponentOptionExportParentMethodsModel {
   onSubmit: (x: Array<FilterDataModel>) => void;

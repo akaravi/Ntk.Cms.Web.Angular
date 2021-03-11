@@ -34,7 +34,6 @@ import { MatStepper } from '@angular/material/stepper';
   styleUrls: ['./edit.component.scss'],
 })
 export class CoreUserEditComponent implements OnInit {
-  requestId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
@@ -50,6 +49,7 @@ export class CoreUserEditComponent implements OnInit {
 
     this.fileManagerTree = new TreeModel();
   }
+  requestId = 0;
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
 
   fileManagerTree: TreeModel;
@@ -69,6 +69,7 @@ export class CoreUserEditComponent implements OnInit {
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
   fileManagerOpenForm = false;
+  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   onActionFileSelected(model: NodeInterface): void {
     this.dataModel.LinkMainImageId = model.id;
     this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
@@ -88,7 +89,6 @@ export class CoreUserEditComponent implements OnInit {
     this.getEnumRecordStatus();
     this.DataGetAccess();
   }
-  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
     if (this.storeSnapshot
       && this.storeSnapshot.EnumRecordStatus

@@ -2,6 +2,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
 } from '@angular/core';
@@ -33,15 +34,18 @@ import { TicketingDepartemenAddComponent } from '../add/add.component';
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.scss'],
 })
-export class TicketingDepartemenTreeComponent implements OnInit {
+export class TicketingDepartemenTreeComponent implements OnInit , OnDestroy {
   constructor(
-    private cmsApiStore : ntkCmsApiStoreService,
+    private cmsApiStore: ntkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
     public coreEnumService: CoreEnumService,
     public categoryService: TicketingDepartemenService,
     private router: Router,
     public dialog: MatDialog
   ) {
+  }
+  @Input() set optionSelectForce(x: number | TicketingDepartemenModel) {
+    this.onActionSelectForce(x);
   }
   dataModelSelect: TicketingDepartemenModel = new TicketingDepartemenModel();
   dataModelResult: ErrorExceptionResult<TicketingDepartemenModel> = new ErrorExceptionResult<TicketingDepartemenModel>();
@@ -50,22 +54,19 @@ export class TicketingDepartemenTreeComponent implements OnInit {
   treeControl = new NestedTreeControl<TicketingDepartemenModel>(node => null);
   dataSource = new MatTreeNestedDataSource<TicketingDepartemenModel>();
   @Output() optionSelect = new EventEmitter();
+  cmsApiStoreSubscribe: Subscription;
   @Input() optionReload = () => this.onActionReload();
-  @Input() set optionSelectForce(x: number | TicketingDepartemenModel) {
-    this.onActionSelectForce(x);
-  }
 
   hasChild = (_: number, node: TicketingDepartemenModel) => false;
 
 
   ngOnInit(): void {
     this.DataGetAll();
-     this.cmsApiStoreSubscribe =  this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe(() => {
+    this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe(() => {
       this.DataGetAll();
     });
   }
-  cmsApiStoreSubscribe:Subscription;
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
   DataGetAll(): void {
@@ -110,7 +111,7 @@ export class TicketingDepartemenTreeComponent implements OnInit {
 
   onActionAdd(): void {
     const dialogRef = this.dialog.open(TicketingDepartemenAddComponent, {
-      data: {  }
+      data: {}
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.dialogChangedDate) {
@@ -131,7 +132,7 @@ export class TicketingDepartemenTreeComponent implements OnInit {
       return;
     }
     const dialogRef = this.dialog.open(TicketingDepartemenEditComponent, {
-      data: { id: id }
+      data: { id }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.dialogChangedDate) {
@@ -153,7 +154,7 @@ export class TicketingDepartemenTreeComponent implements OnInit {
       return;
     }
     const dialogRef = this.dialog.open(TicketingDepartemenDeleteComponent, {
-      data: { id: id }
+      data: { id }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.dialogChangedDate) {

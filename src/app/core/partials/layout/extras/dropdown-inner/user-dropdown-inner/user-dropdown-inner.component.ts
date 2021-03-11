@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { LayoutService } from '../../../../..';
 import { CoreAuthService, ntkCmsApiStoreService, TokenInfoModel } from 'ntk-cms-api';
@@ -9,28 +9,29 @@ import { map } from 'rxjs/operators';
   templateUrl: './user-dropdown-inner.component.html',
   styleUrls: ['./user-dropdown-inner.component.scss'],
 })
-export class UserDropdownInnerComponent implements OnInit {
+export class UserDropdownInnerComponent implements OnInit , OnDestroy {
+
+  constructor(
+    private layout: LayoutService,
+    private cmsApiStore: ntkCmsApiStoreService,
+
+    private auth: CoreAuthService,
+    private cmsToastrService: CmsToastrService,
+  ) { }
   extrasUserDropdownStyle: 'light' | 'dark' = 'light';
   tokenInfo: TokenInfoModel;
-
-  constructor(private layout: LayoutService,
-    private cmsApiStore :ntkCmsApiStoreService,
-
-              private auth: CoreAuthService,
-              private cmsToastrService: CmsToastrService,
-  ) { }
+  cmsApiStoreSubscribe: Subscription;
 
   ngOnInit(): void {
     this.extrasUserDropdownStyle = this.layout.getProp(
       'extras.user.dropdown.style'
     );
-    this.tokenInfo =  this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
-    this.cmsApiStoreSubscribe =  this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((value) => {
+    this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
+    this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((value) => {
       this.tokenInfo = value;
     });
   }
-  cmsApiStoreSubscribe:Subscription;
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
   async logout(): Promise<void> {

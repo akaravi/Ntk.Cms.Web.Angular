@@ -53,8 +53,8 @@ export class LayoutComponent implements OnInit, AfterViewInit {
   }
   developing = false;
   ngOnInit(): void {
-       // First Token Info
-       this.coreAuthService.CurrentTokenInfoRenew();
+    // First Token Info
+    this.coreAuthService.CurrentTokenInfoRenew();
     // build view by layout config settings
     this.selfLayout = this.layout.getProp('self.layout');
     this.asideSelfDisplay = this.layout.getProp('aside.self.display');

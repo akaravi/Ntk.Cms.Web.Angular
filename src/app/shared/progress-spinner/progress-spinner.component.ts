@@ -41,7 +41,7 @@ export class ProgressSpinnerComponent implements DoCheck, OnInit {
   constructor(
     private vcRef: ViewContainerRef,
     private overlayService: OverlayService
-  ) {}
+  ) { }
   ngOnInit(): void {
     if (!this.optionsData || !this.optionsData.Globally) {
       return;
@@ -51,9 +51,7 @@ export class ProgressSpinnerComponent implements DoCheck, OnInit {
       hasBackdrop: this.optionsData.backdropEnabled,
     };
     if (this.optionsData.positionGloballyCenter) {
-      this.progressSpinnerOverlayConfig[
-        'positionStrategy'
-      ] = this.overlayService.positionGloballyCenter();
+      this.progressSpinnerOverlayConfig.positionStrategy = this.overlayService.positionGloballyCenter();
     }
     this.overlayRef = this.overlayService.createOverlay(
       this.progressSpinnerOverlayConfig

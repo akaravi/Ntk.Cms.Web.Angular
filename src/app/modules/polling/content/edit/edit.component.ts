@@ -37,7 +37,6 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
   ]
 })
 export class PollingContentEditComponent implements OnInit, AfterViewInit {
-  requestId = 0;
   constructor(
     private activatedRoute: ActivatedRoute,
     private cmsStoreService: CmsStoreService,
@@ -52,6 +51,7 @@ export class PollingContentEditComponent implements OnInit, AfterViewInit {
   ) {
     this.fileManagerTree = new TreeModel();
   }
+  requestId = 0;
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
   dataModel = new PollingContentModel();
   dataAccessModel: AccessModel;
@@ -85,6 +85,8 @@ export class PollingContentEditComponent implements OnInit, AfterViewInit {
   private mapModel: leafletMap;
   private mapMarkerPoints: Array<PoinModel> = [];
   mapOptonCenter = {};
+
+  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   ngOnInit(): void {
     this.requestId = Number(this.activatedRoute.snapshot.paramMap.get('Id'));
     if (this.requestId === 0) {
@@ -110,8 +112,6 @@ export class PollingContentEditComponent implements OnInit, AfterViewInit {
     this.dataModel.LinkFileMovieId = model.id;
     this.dataModel.LinkFileMovieIdSrc = model.downloadLinksrc;
   }
-
-  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
       this.storeSnapshot.EnumRecordStatus &&

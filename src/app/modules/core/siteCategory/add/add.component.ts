@@ -62,14 +62,14 @@ export class CoreSiteCategoryAddComponent implements OnInit {
 
   fileManagerOpenForm = false;
 
+  storeSnapshot = this.cmsStoreService.getStateSnapshot();
+
 
   ngOnInit(): void {
 
     this.formInfo.FormTitle = 'اضافه کردن  ';
     this.getEnumRecordStatus();
   }
-
-  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
       this.storeSnapshot.EnumRecordStatus &&

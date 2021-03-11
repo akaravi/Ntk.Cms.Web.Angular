@@ -37,7 +37,6 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
   ]
 })
 export class NewsContentEditComponent implements OnInit, AfterViewInit {
-  requestId = 0;
   constructor(
     private activatedRoute: ActivatedRoute,
     private cmsStoreService: CmsStoreService,
@@ -53,6 +52,7 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
   ) {
     this.fileManagerTree = new TreeModel();
   }
+  requestId = 0;
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
   dataModel = new NewsContentModel();
   dataModelResult: ErrorExceptionResult<NewsContentModel> = new ErrorExceptionResult<NewsContentModel>();
@@ -89,6 +89,8 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
   private mapModel: leafletMap;
   private mapMarkerPoints: Array<PoinModel> = [];
   mapOptonCenter = {};
+
+  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   ngOnInit(): void {
     this.requestId = Number(this.activatedRoute.snapshot.paramMap.get('Id'));
     if (this.requestId === 0) {
@@ -113,8 +115,6 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
     this.dataModel.LinkFileMovieId = model.id;
     this.dataModel.LinkFileMovieIdSrc = model.downloadLinksrc;
   }
-
-  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
       this.storeSnapshot.EnumRecordStatus &&
@@ -421,7 +421,9 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
       this.otherInfoDataModel.forEach(item => {
         const row = new NewsContentOtherInfoModel();
         row.LinkContentId = model.Id;
-        if (!this.dataContentOtherInfoModelResult.ListItems || !item.Id || !this.dataContentOtherInfoModelResult.ListItems.find(x => x.Id === item.Id)) {
+        if (!this.dataContentOtherInfoModelResult.ListItems ||
+          !item.Id ||
+          !this.dataContentOtherInfoModelResult.ListItems.find(x => x.Id === item.Id)) {
           dataListAdd.push(row);
         }
       });

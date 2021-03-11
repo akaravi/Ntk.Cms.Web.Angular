@@ -26,9 +26,6 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
   styleUrls: ['./edit.component.scss'],
 })
 export class ArticleCommentEditComponent implements OnInit {
-  requestId = 0;
-  requestParentId = 0;
-  requestContentId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
@@ -45,6 +42,9 @@ export class ArticleCommentEditComponent implements OnInit {
 
 
   }
+  requestId = 0;
+  requestParentId = 0;
+  requestContentId = 0;
 
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<ArticleCommentModel> = new ErrorExceptionResult<ArticleCommentModel>();
@@ -58,6 +58,8 @@ export class ArticleCommentEditComponent implements OnInit {
 
   selected: any;
   openFormFileManager = false;
+
+  storeSnapshot = this.cmsStoreService.getStateSnapshot();
 
   ngOnInit(): void {
     if (this.requestId > 0) {
@@ -74,8 +76,6 @@ export class ArticleCommentEditComponent implements OnInit {
     }
     this.getEnumRecordStatus();
   }
-
-  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
       this.storeSnapshot.EnumRecordStatus &&

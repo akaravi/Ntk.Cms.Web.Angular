@@ -94,11 +94,11 @@ export class AuthLoginComponent implements OnInit, OnDestroy {
           this.onCaptchaOrder();
         }
       },
-      (error)=>{
+      (error) => {
         this.formInfo.ButtonSubmittedEnabled = true;
         this.cmsToastrService.typeError(error);
       }
-      );
+    );
   }
 
   onCaptchaOrder(): void {

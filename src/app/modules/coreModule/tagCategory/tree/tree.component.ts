@@ -2,6 +2,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
 } from '@angular/core';
@@ -31,33 +32,18 @@ import { CoreModuleTagCategoryDeleteComponent } from '../delete/delete.component
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.scss'],
 })
-export class CoreModuleTagCategoryTreeComponent implements OnInit {
-  // public optionsData: ComponentOptionTreeModel<CoreModuleTagCategoryModel> = new ComponentOptionTreeModel<CoreModuleTagCategoryModel>();
-  // @Output()
-  // // tslint:disable-next-line: max-line-length
-  // optionsChange: EventEmitter<ComponentOptionTreeModel<CoreModuleTagCategoryModel>> = new EventEmitter<ComponentOptionTreeModel<CoreModuleTagCategoryModel>>();
-  // @Input() set options(model: ComponentOptionTreeModel<CoreModuleTagCategoryModel>) {
-  //   if (!model) {
-  //     model = new ComponentOptionTreeModel<CoreModuleTagCategoryModel>();
-  //   }
-  //   this.optionsData = model;
-  //   this.optionsData.childMethods = {
-  //     ActionReload: () => this.onActionReload(),
-  //     ActionSelectForce: (id) => this.onActionSelectForce(),
-  //   };
-  //   this.optionsChange.emit(model);
-  // }
-  // get options(): ComponentOptionTreeModel<CoreModuleTagCategoryModel> {
-  //   return this.optionsData;
-  // }
+export class CoreModuleTagCategoryTreeComponent implements OnInit , OnDestroy {
 
   constructor(
-    private cmsApiStore : ntkCmsApiStoreService,
+    private cmsApiStore: ntkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
     public coreEnumService: CoreEnumService,
     public categoryService: CoreModuleTagCategoryService,
     public dialog: MatDialog,
   ) {
+  }
+  @Input() set optionSelectForce(x: number | CoreModuleTagCategoryModel) {
+    this.onActionSelectForce(x);
   }
   dataModelSelect: CoreModuleTagCategoryModel = new CoreModuleTagCategoryModel();
   dataModelResult: ErrorExceptionResult<CoreModuleTagCategoryModel> = new ErrorExceptionResult<CoreModuleTagCategoryModel>();
@@ -66,22 +52,19 @@ export class CoreModuleTagCategoryTreeComponent implements OnInit {
   treeControl = new NestedTreeControl<CoreModuleTagCategoryModel>(node => node.Children);
   dataSource = new MatTreeNestedDataSource<CoreModuleTagCategoryModel>();
   @Output() optionSelect = new EventEmitter();
+  cmsApiStoreSubscribe: Subscription;
   @Input() optionReload = () => this.onActionReload();
-  @Input() set optionSelectForce(x: number | CoreModuleTagCategoryModel) {
-    this.onActionSelectForce(x);
-  }
 
   hasChild = (_: number, node: CoreModuleTagCategoryModel) => !!node.Children && node.Children.length > 0;
 
 
   ngOnInit(): void {
     this.DataGetAll();
-    this.cmsApiStoreSubscribe =  this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe(() => {
+    this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe(() => {
       this.DataGetAll();
     });
   }
-  cmsApiStoreSubscribe:Subscription;
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
   DataGetAll(): void {
