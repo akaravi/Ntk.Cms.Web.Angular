@@ -3,22 +3,14 @@ import * as Leaflet from 'leaflet';
 import { FormGroup } from '@angular/forms';
 import {
   CoreEnumService,
-  CoreModuleTagService,
   EnumModel,
   ErrorExceptionResult,
   FilterModel,
   FormInfoModel,
-  NewsContentModel,
-  NewsContentService,
-  FilterDataModel,
   CoreModuleTagModel,
-  NewsCategoryModel,
-  NewsContentTagService,
-  NewsContentTagModel,
-  NewsContentSimilarService,
-  NewsContentOtherInfoService,
-  NewsContentOtherInfoModel,
-  NewsContentSimilarModel
+  CoreModuleTagService,
+  FilterDataModel,
+  CoreModuleTagCategoryModel,
 } from 'ntk-cms-api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
@@ -38,25 +30,22 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
   styleUrls: ['./edit.component.scss'
   ]
 })
-export class TagEditComponent implements OnInit, AfterViewInit {
+export class CoreModuleTagEditComponent implements OnInit, AfterViewInit {
   requestId = 0;
   constructor(
     private activatedRoute: ActivatedRoute,
     private cmsStoreService: CmsStoreService,
     public coreEnumService: CoreEnumService,
     public coreModuleTagService: CoreModuleTagService,
-    private newsContentService: NewsContentService,
-    private newsContentSimilarService: NewsContentSimilarService,
-    private newsContentOtherInfoService: NewsContentOtherInfoService,
-    private cmsToastrService: CmsToastrService,
+    private newsContentService: CoreModuleTagService,
     private router: Router,
-    private newsContentTagService: NewsContentTagService
+    private cmsToastrService: CmsToastrService,
   ) {
     this.fileManagerTree = new TreeModel();
   }
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
-  dataModel = new NewsContentModel();
-  dataModelResult: ErrorExceptionResult<NewsContentModel> = new ErrorExceptionResult<NewsContentModel>();
+  dataModel = new CoreModuleTagModel();
+  dataModelResult: ErrorExceptionResult<CoreModuleTagModel> = new ErrorExceptionResult<CoreModuleTagModel>();
   datatagDataModelResult: ErrorExceptionResult<CoreModuleTagModel> = new ErrorExceptionResult<CoreModuleTagModel>();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   loading = new ProgressSpinnerModel();
@@ -69,16 +58,6 @@ export class TagEditComponent implements OnInit, AfterViewInit {
   fileManagerOpenFormPodcast = false;
   fileManagerOpenFormMovie = false;
   fileManagerTree: TreeModel;
-  keywordDataModel = [];
-  tagDataModel = [];
-  similarDataModel = new Array<NewsContentModel>();
-  otherInfoDataModel = new Array<NewsContentOtherInfoModel>();
-  contentSimilarSelected: NewsContentModel = new NewsContentModel();
-  contentOtherInfoSelected: NewsContentOtherInfoModel = new NewsContentOtherInfoModel();
-  otherInfoTabledisplayedColumns = ['Title', 'TypeId', 'Action']
-  similarTabledisplayedColumns = ['LinkMainImageIdSrc', 'Id', 'RecordStatus', 'Title', 'Action']
-  similarTabledataSource = new MatTableDataSource<NewsContentModel>();
-  otherInfoTabledataSource = new MatTableDataSource<NewsContentOtherInfoModel>();
 
   appLanguage = 'fa';
 
@@ -135,18 +114,7 @@ export class TagEditComponent implements OnInit, AfterViewInit {
       })))
     );
   }
-  onActionFileSelectedLinkMainImageId(model: NodeInterface): void {
-    this.dataModel.LinkMainImageId = model.id;
-    this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
-  }
-  onActionFileSelectedLinkFilePodcastId(model: NodeInterface): void {
-    this.dataModel.LinkFilePodcastId = model.id;
-    this.dataModel.LinkFilePodcastIdSrc = model.downloadLinksrc;
-  }
-  onActionFileSelectedLinkFileMovieId(model: NodeInterface): void {
-    this.dataModel.LinkFileMovieId = model.id;
-    this.dataModel.LinkFileMovieIdSrc = model.downloadLinksrc;
-  }
+
 
 
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
@@ -161,30 +129,7 @@ export class TagEditComponent implements OnInit, AfterViewInit {
     }
   }
 
-  receiveMap(model: leafletMap): void {
-    this.mapModel = model;
-    this.mapModel.on('click', (e) => {
-      // @ts-ignore
-      const lat = e.latlng.lat;
-      // @ts-ignore
-      const lon = e.latlng.lng;
-      if (this.mapMarker !== undefined) {
-        this.mapModel.removeLayer(this.mapMarker);
-      }
-      if (lat === this.dataModel.Geolocationlatitude && lon === this.dataModel.Geolocationlongitude) {
-        this.dataModel.Geolocationlatitude = null;
-        this.dataModel.Geolocationlongitude = null;
-        return;
-      }
-      this.mapMarker = Leaflet.marker([lat, lon]).addTo(this.mapModel);
-      this.dataModel.Geolocationlatitude = lat;
-      this.dataModel.Geolocationlongitude = lon;
-    });
 
-  }
-
-  receiveZoom(zoom: number): void {
-  }
   onFormSubmit(): void {
     if (this.requestId <= 0) {
       this.cmsToastrService.typeErrorAddRowParentIsNull();
@@ -195,12 +140,7 @@ export class TagEditComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    if (this.keywordDataModel && this.keywordDataModel.length > 0) {
-      const listKeyword = this.keywordDataModel.map(x => x.display);
-      if (listKeyword && listKeyword.length > 0) {
-        this.dataModel.Keyword = listKeyword.join(',');
-      }
-    }
+
     this.DataEditContent();
   }
 
@@ -267,79 +207,8 @@ export class TagEditComponent implements OnInit, AfterViewInit {
         }
       );
   }
-  DataActionAfterAddContentSuccessfulTag(model: NewsContentModel): Promise<any> {
-    if (!this.tagDataModel || this.tagDataModel.length === 0) {
-      return;
-    }
-    const dataList = new Array<NewsContentTagModel>();
-    this.tagDataModel.forEach(x => {
-      const row = new NewsContentTagModel();
-      row.LinkContentId = model.Id;
-      row.LinkTagId = x.Id;
-      dataList.push(row);
-    });
-    return this.newsContentTagService.ServiceAddBatch(dataList).pipe(
-      map(response => {
-        if (response.IsSuccess) {
-          this.cmsToastrService.typeSuccessAddSimilar();
-        } else {
-          this.cmsToastrService.typeErrorAddSimilar();
-        }
-        console.log(response.ListItems);
-        return of(response);
-      })).toPromise();
-  }
-  DataActionAfterAddContentSuccessfulOtherInfo(model: NewsContentModel): Promise<any> {
-    if (!this.otherInfoDataModel || this.otherInfoDataModel.length === 0) {
-      return;
-    }
-    this.otherInfoDataModel.forEach(x => {
-      x.LinkContentId = model.Id;
-    });
-    return this.newsContentOtherInfoService.ServiceAddBatch(this.otherInfoDataModel).pipe(
-      map(response => {
-        if (response.IsSuccess) {
-          this.cmsToastrService.typeSuccessAddOtherInfo();
-        } else {
-          this.cmsToastrService.typeErrorAddOtherInfo();
-        }
-        return of(response);
-      },
-        (error) => {
-          this.loading.display = false;
-          this.formInfo.FormSubmitAllow = true;
-          this.cmsToastrService.typeErrorAdd(error);
-        }
-      )).toPromise();
-  }
-  DataActionAfterAddContentSuccessfulSimilar(model: NewsContentModel): Promise<any> {
-    if (!this.similarDataModel || this.similarDataModel.length === 0) {
-      return;
-    }
-    const dataList = new Array<NewsContentSimilarModel>();
-    this.similarDataModel.forEach(x => {
-      const row = new NewsContentSimilarModel();
-      row.LinkSourceId = model.Id;
-      row.LinkDestinationId = x.Id;
-      dataList.push(row);
-    });
-    return this.newsContentSimilarService.ServiceAddBatch(dataList).pipe(
-      map(response => {
-        if (response.IsSuccess) {
-          this.cmsToastrService.typeSuccessAddSimilar();
-        } else {
-          this.cmsToastrService.typeErrorAddSimilar();
-        }
-        return of(response);
-      },
-        (error) => {
-          this.loading.display = false;
-          this.formInfo.FormSubmitAllow = true;
-          this.cmsToastrService.typeErrorAdd(error);
-        }
-      )).toPromise();
-  }
-  onActionCategorySelect(model: NewsCategoryModel | null): void {
+
+  onActionCategorySelect(model: CoreModuleTagCategoryModel | null): void {
     if (!model || model.Id <= 0) {
       this.cmsToastrService.toastr.error(
         'دسته بندی را مشخص کنید',
@@ -349,78 +218,7 @@ export class TagEditComponent implements OnInit, AfterViewInit {
     }
     this.dataModel.LinkCategoryId = model.Id;
   }
-  onActionContentSimilarSelect(model: NewsContentModel | null): void {
-    if (!model || model.Id <= 0) {
-      return;
-    }
-    this.contentSimilarSelected = model;
-  }
-  onActionContentSimilarAddToLIst(): void {
-    if (!this.contentSimilarSelected || this.contentSimilarSelected.Id <= 0) {
-      return;
-    }
-    if (this.similarDataModel.find(x => x.Id === this.contentSimilarSelected.Id)) {
-      this.cmsToastrService.typeErrorAddDuplicate();
-      return;
-    }
-    this.similarDataModel.push(this.contentSimilarSelected);
-    this.similarTabledataSource.data = this.similarDataModel;
-  }
-  onActionContentSimilarRemoveFromLIst(model: NewsContentModel | null): void {
-    if (!model || model.Id <= 0) {
-      return;
-    }
-    if (!this.similarDataModel || this.similarDataModel.length === 0) {
-      return;
-    }
-    const retOut = new Array<NewsContentModel>();
-    this.similarDataModel.forEach(x => {
-      if (x.Id !== model.Id) {
-        retOut.push(x);
-      }
-    });
-    this.similarDataModel = retOut;
-    this.similarTabledataSource.data = this.similarDataModel;
-  }
 
-
-  onActionContentOtherInfoAddToLIst(): void {
-    if (!this.contentOtherInfoSelected) {
-      return;
-    }
-    if (this.otherInfoDataModel.find(x => x.Title === this.contentOtherInfoSelected.Title)) {
-      this.cmsToastrService.typeErrorAddDuplicate();
-      return;
-    }
-    this.otherInfoDataModel.push(this.contentOtherInfoSelected);
-    this.contentOtherInfoSelected = new NewsContentOtherInfoModel();
-    this.otherInfoTabledataSource.data = this.otherInfoDataModel;
-  }
-  onActionContentOtherInfoRemoveFromLIst(index: number): void {
-
-    if (index < 0) {
-      return;
-    }
-    if (!this.otherInfoDataModel || this.otherInfoDataModel.length === 0) {
-      return;
-    }
-    this.otherInfoDataModel.splice(index, 1);
-    this.otherInfoTabledataSource.data = this.otherInfoDataModel;
-
-  }
-  onActionContentOtherInfoEditFromLIst(index: number): void {
-
-    if (index < 0) {
-      return;
-    }
-    if (!this.otherInfoDataModel || this.otherInfoDataModel.length === 0) {
-      return;
-    }
-    this.contentOtherInfoSelected = this.otherInfoDataModel[index];
-    this.otherInfoDataModel.splice(index, 1);
-    this.otherInfoTabledataSource.data = this.otherInfoDataModel;
-
-  }
 
   onStepClick(event: StepperSelectionEvent, stepper: MatStepper): void {
     if (event.previouslySelectedIndex < event.selectedIndex) {

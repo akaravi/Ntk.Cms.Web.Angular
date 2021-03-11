@@ -13,11 +13,11 @@ import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
   templateUrl: './delete.component.html',
   styleUrls: ['./delete.component.scss']
 })
-export class TagCategoryDeleteComponent implements OnInit {
+export class CoreModuleTagCategoryDeleteComponent implements OnInit {
   requestId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialogRef: MatDialogRef<TagCategoryDeleteComponent>,
+    private dialogRef: MatDialogRef<CoreModuleTagCategoryDeleteComponent>,
     private activatedRoute: ActivatedRoute,
     private newsCategoryService: NewsCategoryService,
     private cmsToastrService: CmsToastrService

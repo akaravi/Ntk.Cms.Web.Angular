@@ -1,22 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {
-  CoreAuthService,
-  EnumRecordStatus,
-  EnumSortType,
+  CoreEnumService,
+  EnumModel,
   ErrorExceptionResult,
-  FilterDataModel,
   FilterModel,
-  NewsCategoryModel,
-  NewsContentModel,
-  NewsContentService,
+  FormInfoModel,
+  CoreModuleTagModel,
+  CoreModuleTagService,
+  FilterDataModel,
   ntkCmsApiStoreService,
   TokenInfoModel,
+  CoreModuleTagCategoryModel,
+  EnumSortType,
+  EnumRecordStatus,
 } from 'ntk-cms-api';
 import { PublicHelper } from '../../../../core/helpers/publicHelper';
 import { CmsToastrService } from '../../../../core/services/cmsToastr.service';
 import { MatDialog } from '@angular/material/dialog';
-import { TagAddComponent } from '../add/add.component';
+import { CoreModuleTagAddComponent } from '../add/add.component';
 import { ProgressSpinnerModel } from '../../../../core/models/progressSpinnerModel';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/base/componentOptionStatistModel';
@@ -32,12 +34,12 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
-export class TagListComponent implements OnInit {
+export class CoreModuleTagListComponent implements OnInit, OnDestroy {
 
   constructor(
     private cmsApiStore: ntkCmsApiStoreService,
     public publicHelper: PublicHelper,
-    private newsContentService: NewsContentService,
+    private tagContentService: CoreModuleTagService,
     private cmsToastrService: CmsToastrService,
     private cmsConfirmationDialogService: CmsConfirmationDialogService,
     private router: Router,
@@ -53,17 +55,17 @@ export class TagListComponent implements OnInit {
 
   }
   filteModelContent = new FilterModel();
-  categoryModelSelected: NewsCategoryModel;
-  dataModelResult: ErrorExceptionResult<NewsContentModel> = new ErrorExceptionResult<NewsContentModel>();
+  categoryModelSelected: CoreModuleTagCategoryModel;
+  dataModelResult: ErrorExceptionResult<CoreModuleTagModel> = new ErrorExceptionResult<CoreModuleTagModel>();
 
   optionsSearch: ComponentOptionSearchModel = new ComponentOptionSearchModel();
   optionsStatist: ComponentOptionStatistModel = new ComponentOptionStatistModel();
   optionsExport: ComponentOptionExportModel = new ComponentOptionExportModel();
   tokenInfo = new TokenInfoModel();
   loading = new ProgressSpinnerModel();
-  tableRowsSelected: Array<NewsContentModel> = [];
-  tableRowSelected: NewsContentModel = new NewsContentModel();
-  tableSource: MatTableDataSource<NewsContentModel> = new MatTableDataSource<NewsContentModel>();
+  tableRowsSelected: Array<CoreModuleTagModel> = [];
+  tableRowSelected: CoreModuleTagModel = new CoreModuleTagModel();
+  tableSource: MatTableDataSource<CoreModuleTagModel> = new MatTableDataSource<CoreModuleTagModel>();
   tabledisplayedColumns: string[] = [
     'LinkMainImageIdSrc',
     'Id',
@@ -87,7 +89,7 @@ export class TagListComponent implements OnInit {
   }
   DataGetAll(): void {
     this.tableRowsSelected = [];
-    this.tableRowSelected = new NewsContentModel();
+    this.tableRowSelected = new CoreModuleTagModel();
 
     this.loading.display = true;
     this.loading.Globally = false;
@@ -98,7 +100,7 @@ export class TagListComponent implements OnInit {
       aaa.Value = this.categoryModelSelected.Id;
       this.filteModelContent.Filters.push(aaa);
     }
-    this.newsContentService.ServiceGetAll(this.filteModelContent).subscribe(
+    this.tagContentService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
           this.dataModelResult = next;
@@ -155,7 +157,7 @@ export class TagListComponent implements OnInit {
     this.DataGetAll();
   }
 
-  onActionCategorySelect(model: NewsCategoryModel | null): void {
+  onActionCategorySelect(model: CoreModuleTagCategoryModel | null): void {
     this.filteModelContent = new FilterModel();
     this.categoryModelSelected = model;
 
@@ -180,10 +182,10 @@ export class TagListComponent implements OnInit {
       this.cmsToastrService.typeErrorAccessAdd();
       return;
     }
-    this.router.navigate(['/news/content/add', this.categoryModelSelected.Id]);
+    this.router.navigate(['/tag/content/add', this.categoryModelSelected.Id]);
   }
 
-  onActionbuttonEditRow(model: NewsContentModel = this.tableRowSelected): void {
+  onActionbuttonEditRow(model: CoreModuleTagModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای ویرایش انتخاب نشده است';
@@ -199,9 +201,9 @@ export class TagListComponent implements OnInit {
       this.cmsToastrService.typeErrorAccessEdit();
       return;
     }
-    this.router.navigate(['/news/content/edit', this.tableRowSelected.Id]);
+    this.router.navigate(['/tag/content/edit', this.tableRowSelected.Id]);
   }
-  onActionbuttonDeleteRow(model: NewsContentModel = this.tableRowSelected): void {
+  onActionbuttonDeleteRow(model: CoreModuleTagModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای ویرایش انتخاب نشده است';
@@ -225,7 +227,7 @@ export class TagListComponent implements OnInit {
       .then((confirmed) => {
         if (confirmed) {
           this.loading.display = true;
-          this.newsContentService.ServiceDelete(this.tableRowSelected.Id).subscribe(
+          this.tagContentService.ServiceDelete(this.tableRowSelected.Id).subscribe(
             (next) => {
               if (next.IsSuccess) {
                 this.cmsToastrService.typeSuccessRemove();
@@ -248,7 +250,7 @@ export class TagListComponent implements OnInit {
       }
       );
   }
-   onActionbuttonStatist(): void {
+  onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;
     if (!this.optionsStatist.data.show) {
       return;
@@ -256,7 +258,7 @@ export class TagListComponent implements OnInit {
     const statist = new Map<string, number>();
     statist.set('Active', 0);
     statist.set('All', 0);
-    this.newsContentService.ServiceGetCount(this.filteModelContent).subscribe(
+    this.tagContentService.ServiceGetCount(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('All', next.TotalRowCount);
@@ -273,7 +275,7 @@ export class TagListComponent implements OnInit {
     fastFilter.PropertyName = 'RecordStatus';
     fastFilter.Value = EnumRecordStatus.Available;
     filterStatist1.Filters.push(fastFilter);
-    this.newsContentService.ServiceGetCount(filterStatist1).subscribe(
+    this.tagContentService.ServiceGetCount(filterStatist1).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('Active', next.TotalRowCount);
@@ -299,7 +301,7 @@ export class TagListComponent implements OnInit {
     this.filteModelContent.Filters = model;
     this.DataGetAll();
   }
-  onActionTableRowSelect(row: NewsContentModel): void {
+  onActionTableRowSelect(row: CoreModuleTagModel): void {
     this.tableRowSelected = row;
   }
 

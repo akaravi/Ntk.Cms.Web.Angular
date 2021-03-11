@@ -11,14 +11,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CoreSiteCategoryTreeComponent } from './tree/tree.component';
 import { CoreSiteCategorySelectorComponent } from './selector/selector.component';
-import { CoreSiteCategoryDeleteComponent } from './delete/delete.component';
 import { CoreSiteCategoryEditComponent } from './edit/edit.component';
 import { CoreSiteCategoryAddComponent } from './add/add.component';
 import { CoreSiteCategoryListComponent } from './list/list.component';
 import { TreeviewModule } from 'ngx-treeview';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { TagInputModule } from 'ngx-chips';
-import { CmsFileManagerModule } from 'ntk-cms-filemanager';
 
 
 @NgModule({
@@ -27,7 +25,6 @@ import { CmsFileManagerModule } from 'ntk-cms-filemanager';
     CoreSiteCategoryListComponent,
     CoreSiteCategoryAddComponent,
     CoreSiteCategoryEditComponent,
-    CoreSiteCategoryDeleteComponent,
     CoreSiteCategorySelectorComponent,
     CoreSiteCategoryTreeComponent,
   ],
@@ -36,7 +33,6 @@ import { CmsFileManagerModule } from 'ntk-cms-filemanager';
     CoreSiteCategoryListComponent,
     CoreSiteCategoryAddComponent,
     CoreSiteCategoryEditComponent,
-    CoreSiteCategoryDeleteComponent,
     CoreSiteCategorySelectorComponent,
     CoreSiteCategoryTreeComponent,
   ],

@@ -14,31 +14,31 @@ import {
   CoreEnumService,
   ErrorExceptionResult,
   FilterModel,
-  NewsCategoryModel,
-  NewsCategoryService,
+  CoreModuleTagCategoryModel,
+  CoreModuleTagCategoryService,
   ntkCmsApiStoreService,
 } from 'ntk-cms-api';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
-import { TagCategoryEditComponent } from '../edit/edit.component';
-import { TagCategoryDeleteComponent } from '../delete/delete.component';
 import { Subscription } from 'rxjs';
+import { CoreModuleTagCategoryEditComponent } from '../edit/edit.component';
+import { CoreModuleTagCategoryDeleteComponent } from '../delete/delete.component';
 
 
 @Component({
-  selector: 'app-news-category-tree',
+  selector: 'app-coremodule-tag-category-tree',
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.scss'],
 })
-export class NewsCategoryTreeComponent implements OnInit {
-  // public optionsData: ComponentOptionTreeModel<NewsCategoryModel> = new ComponentOptionTreeModel<NewsCategoryModel>();
+export class CoreModuleTagCategoryTreeComponent implements OnInit {
+  // public optionsData: ComponentOptionTreeModel<CoreModuleTagCategoryModel> = new ComponentOptionTreeModel<CoreModuleTagCategoryModel>();
   // @Output()
   // // tslint:disable-next-line: max-line-length
-  // optionsChange: EventEmitter<ComponentOptionTreeModel<NewsCategoryModel>> = new EventEmitter<ComponentOptionTreeModel<NewsCategoryModel>>();
-  // @Input() set options(model: ComponentOptionTreeModel<NewsCategoryModel>) {
+  // optionsChange: EventEmitter<ComponentOptionTreeModel<CoreModuleTagCategoryModel>> = new EventEmitter<ComponentOptionTreeModel<CoreModuleTagCategoryModel>>();
+  // @Input() set options(model: ComponentOptionTreeModel<CoreModuleTagCategoryModel>) {
   //   if (!model) {
-  //     model = new ComponentOptionTreeModel<NewsCategoryModel>();
+  //     model = new ComponentOptionTreeModel<CoreModuleTagCategoryModel>();
   //   }
   //   this.optionsData = model;
   //   this.optionsData.childMethods = {
@@ -47,7 +47,7 @@ export class NewsCategoryTreeComponent implements OnInit {
   //   };
   //   this.optionsChange.emit(model);
   // }
-  // get options(): ComponentOptionTreeModel<NewsCategoryModel> {
+  // get options(): ComponentOptionTreeModel<CoreModuleTagCategoryModel> {
   //   return this.optionsData;
   // }
 
@@ -55,23 +55,23 @@ export class NewsCategoryTreeComponent implements OnInit {
     private cmsApiStore : ntkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
     public coreEnumService: CoreEnumService,
-    public categoryService: NewsCategoryService,
+    public categoryService: CoreModuleTagCategoryService,
     public dialog: MatDialog,
   ) {
   }
-  dataModelSelect: NewsCategoryModel = new NewsCategoryModel();
-  dataModelResult: ErrorExceptionResult<NewsCategoryModel> = new ErrorExceptionResult<NewsCategoryModel>();
+  dataModelSelect: CoreModuleTagCategoryModel = new CoreModuleTagCategoryModel();
+  dataModelResult: ErrorExceptionResult<CoreModuleTagCategoryModel> = new ErrorExceptionResult<CoreModuleTagCategoryModel>();
   filteModel = new FilterModel();
   loading = new ProgressSpinnerModel();
-  treeControl = new NestedTreeControl<NewsCategoryModel>(node => node.Children);
-  dataSource = new MatTreeNestedDataSource<NewsCategoryModel>();
+  treeControl = new NestedTreeControl<CoreModuleTagCategoryModel>(node => node.Children);
+  dataSource = new MatTreeNestedDataSource<CoreModuleTagCategoryModel>();
   @Output() optionSelect = new EventEmitter();
   @Input() optionReload = () => this.onActionReload();
-  @Input() set optionSelectForce(x: number | NewsCategoryModel) {
+  @Input() set optionSelectForce(x: number | CoreModuleTagCategoryModel) {
     this.onActionSelectForce(x);
   }
 
-  hasChild = (_: number, node: NewsCategoryModel) => !!node.Children && node.Children.length > 0;
+  hasChild = (_: number, node: CoreModuleTagCategoryModel) => !!node.Children && node.Children.length > 0;
 
 
   ngOnInit(): void {
@@ -106,7 +106,7 @@ export class NewsCategoryTreeComponent implements OnInit {
       }
     );
   }
-  onActionSelect(model: NewsCategoryModel): void {
+  onActionSelect(model: CoreModuleTagCategoryModel): void {
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
     // if (this.optionsData) {
@@ -123,11 +123,11 @@ export class NewsCategoryTreeComponent implements OnInit {
     else {
       this.onActionSelect(null);
     }
-    this.dataModelSelect = new NewsCategoryModel();
-    // this.optionsData.data.Select = new NewsCategoryModel();
+    this.dataModelSelect = new CoreModuleTagCategoryModel();
+    // this.optionsData.data.Select = new CoreModuleTagCategoryModel();
     this.DataGetAll();
   }
-  onActionSelectForce(id: number | NewsCategoryModel): void {
+  onActionSelectForce(id: number | CoreModuleTagCategoryModel): void {
 
   }
 
@@ -143,7 +143,7 @@ export class NewsCategoryTreeComponent implements OnInit {
     dialogConfig.data = { parentId };
 
 
-    const dialogRef = this.dialog.open(TagCategoryEditComponent, dialogConfig);
+    const dialogRef = this.dialog.open(CoreModuleTagCategoryEditComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(result => {
       // console.log(`Dialog result: ${result}`);
       if (result && result.dialogChangedDate) {
@@ -163,7 +163,7 @@ export class NewsCategoryTreeComponent implements OnInit {
       this.cmsToastrService.toastr.error(message, title);
       return;
     }
-    const dialogRef = this.dialog.open(TagCategoryEditComponent, {
+    const dialogRef = this.dialog.open(CoreModuleTagCategoryEditComponent, {
       data: { id }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -189,7 +189,7 @@ export class NewsCategoryTreeComponent implements OnInit {
       this.cmsToastrService.toastr.error(message, title);
       return;
     }
-    const dialogRef = this.dialog.open(TagCategoryDeleteComponent, {
+    const dialogRef = this.dialog.open(CoreModuleTagCategoryDeleteComponent, {
       data: { id }
     });
     dialogRef.afterClosed().subscribe(result => {

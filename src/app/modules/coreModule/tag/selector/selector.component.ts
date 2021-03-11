@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter } from '@angular/core';
-import { CoreEnumService, ErrorExceptionResult, FilterDataModel, FilterModel, NewsContentModel, NewsContentService } from 'ntk-cms-api';
+import { CoreEnumService, CoreModuleTagModel, CoreModuleTagService, ErrorExceptionResult, FilterDataModel, FilterModel,  } from 'ntk-cms-api';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
@@ -14,22 +14,22 @@ import { Output } from '@angular/core';
   templateUrl: './selector.component.html',
   styleUrls: ['./selector.component.scss']
 })
-export class TagSelectorComponent implements OnInit {
+export class CoreModuleTagSelectorComponent implements OnInit {
   constructor(
     public coreEnumService: CoreEnumService,
-    public contentService: NewsContentService) {
+    public coreModuleTagService: CoreModuleTagService) {
 
 
   }
-  dataModelResult: ErrorExceptionResult<NewsContentModel> = new ErrorExceptionResult<NewsContentModel>();
-  dataModelSelect: NewsContentModel = new NewsContentModel();
+  dataModelResult: ErrorExceptionResult<CoreModuleTagModel> = new ErrorExceptionResult<CoreModuleTagModel>();
+  dataModelSelect: CoreModuleTagModel = new CoreModuleTagModel();
   loading = new ProgressSpinnerModel();
   formControl = new FormControl();
-  filteredOptions: Observable<NewsContentModel[]>;
+  filteredOptions: Observable<CoreModuleTagModel[]>;
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Output() optionSelect = new EventEmitter();
   @Input() optionReload = () => this.onActionReload();
-  @Input() set optionSelectForce(x: number | NewsContentModel) {
+  @Input() set optionSelectForce(x: number | CoreModuleTagModel) {
     this.onActionSelectForce(x);
   }
   ngOnInit(): void {
@@ -47,10 +47,10 @@ export class TagSelectorComponent implements OnInit {
       );
   }
 
-  displayFn(user?: NewsContentModel): string | undefined {
+  displayFn(user?: CoreModuleTagModel): string | undefined {
     return user ? user.Title : undefined;
   }
-  DataGetAll(text: string | number | any): Observable<NewsContentModel[]> {
+  DataGetAll(text: string | number | any): Observable<CoreModuleTagModel[]> {
     const filteModel = new FilterModel();
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
@@ -80,14 +80,14 @@ export class TagSelectorComponent implements OnInit {
     }
     this.loading.Globally = false;
     this.loading.display = true;
-    return this.contentService.ServiceGetAll(filteModel)
+    return this.coreModuleTagService.ServiceGetAll(filteModel)
       .pipe(
         map(response => {
           this.dataModelResult = response;
           return response.ListItems;
         }));
   }
-  onActionSelect(model: NewsContentModel): void {
+  onActionSelect(model: CoreModuleTagModel): void {
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
     // this.optionsData.Select = this.dataModelSelect;
@@ -99,7 +99,7 @@ export class TagSelectorComponent implements OnInit {
     // }
   }
 
-  push(newvalue: NewsContentModel): Observable<NewsContentModel[]> {
+  push(newvalue: CoreModuleTagModel): Observable<CoreModuleTagModel[]> {
     return this.filteredOptions.pipe(map(items => {
       if (items.find(x => x.Id === newvalue.Id)) {
         return items;
@@ -109,9 +109,9 @@ export class TagSelectorComponent implements OnInit {
     }));
 
   }
-  onActionSelectForce(id: number | NewsContentModel): void {
+  onActionSelectForce(id: number | CoreModuleTagModel): void {
     if (typeof id === 'number' && id > 0) {
-      this.contentService.ServiceGetOneById(id).subscribe((next) => {
+      this.coreModuleTagService.ServiceGetOneById(id).subscribe((next) => {
         if (next.IsSuccess) {
           this.filteredOptions = this.push(next.Item);
           this.dataModelSelect = next.Item;
@@ -119,9 +119,9 @@ export class TagSelectorComponent implements OnInit {
         }
       });
     }
-    if (typeof id === typeof NewsContentModel) {
-      this.filteredOptions = this.push((id as NewsContentModel));
-      this.dataModelSelect = (id as NewsContentModel);
+    if (typeof id === typeof CoreModuleTagModel) {
+      this.filteredOptions = this.push((id as CoreModuleTagModel));
+      this.dataModelSelect = (id as CoreModuleTagModel);
       this.formControl.setValue(id);
     }
   }
@@ -130,8 +130,8 @@ export class TagSelectorComponent implements OnInit {
     // if (this.dataModelSelect && this.dataModelSelect.Id > 0) {
     //   this.onActionSelect(null);
     // }
-    this.dataModelSelect = new NewsContentModel();
-    // this.optionsData.Select = new NewsContentModel();
+    this.dataModelSelect = new CoreModuleTagModel();
+    // this.optionsData.Select = new CoreModuleTagModel();
     this.DataGetAll(null);
   }
 }

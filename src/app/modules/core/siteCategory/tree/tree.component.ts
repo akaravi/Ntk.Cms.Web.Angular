@@ -23,7 +23,6 @@ import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { CoreSiteCategoryDeleteComponent } from '../delete/delete.component';
 import { MatDialog } from '@angular/material/dialog';
 import { CoreSiteCategoryEditComponent } from '../edit/edit.component';
 import { CoreSiteCategoryAddComponent } from '../add/add.component';
@@ -132,28 +131,6 @@ export class CoreSiteCategoryTreeComponent implements OnInit , OnDestroy{
       return;
     }
     const dialogRef = this.dialog.open(CoreSiteCategoryEditComponent, {
-      data: { id }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result && result.dialogChangedDate) {
-        this.DataGetAll();
-      }
-    });
-  }
-
-  onActionDelete(): void {
-
-    let id = 0;
-    if (this.dataModelSelect && this.dataModelSelect.Id > 0) {
-      id = this.dataModelSelect.Id;
-    }
-    if (id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'دسته بندی انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
-      return;
-    }
-    const dialogRef = this.dialog.open(CoreSiteCategoryDeleteComponent, {
       data: { id }
     });
     dialogRef.afterClosed().subscribe(result => {

@@ -29,13 +29,13 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.scss'],
 })
-export class TagCategoryEditComponent implements OnInit {
+export class CoreModuleTagCategoryEditComponent implements OnInit {
   requestId = 0;
   requestParentId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
-    private dialogRef: MatDialogRef<TagCategoryEditComponent>,
+    private dialogRef: MatDialogRef<CoreModuleTagCategoryEditComponent>,
 
     public coreEnumService: CoreEnumService,
     public newsCategoryService: NewsCategoryService,
