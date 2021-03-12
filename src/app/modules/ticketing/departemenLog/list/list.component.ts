@@ -10,7 +10,7 @@ import {
   ErrorExceptionResult,
   FilterDataModel,
   FilterModel,
-  ntkCmsApiStoreService,
+  NtkCmsApiStoreService,
   TokenInfoModel,
   EnumRecordStatus
 } from 'ntk-cms-api';
@@ -34,7 +34,7 @@ export class TicketingDepartemenLogListComponent implements OnInit {
   requestSourceId = 0;
   constructor(private ticketingDepartemenLogService: TicketingDepartemenLogService,
     private activatedRoute: ActivatedRoute,
-    private cmsApiStore :ntkCmsApiStoreService,
+    private cmsApiStore :NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
     private router: Router,

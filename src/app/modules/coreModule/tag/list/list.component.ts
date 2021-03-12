@@ -9,7 +9,7 @@ import {
   CoreModuleTagModel,
   CoreModuleTagService,
   FilterDataModel,
-  ntkCmsApiStoreService,
+  NtkCmsApiStoreService,
   TokenInfoModel,
   CoreModuleTagCategoryModel,
   EnumSortType,
@@ -37,7 +37,7 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
 export class CoreModuleTagListComponent implements OnInit, OnDestroy {
 
   constructor(
-    private cmsApiStore: ntkCmsApiStoreService,
+    private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private tagContentService: CoreModuleTagService,
     private cmsToastrService: CmsToastrService,

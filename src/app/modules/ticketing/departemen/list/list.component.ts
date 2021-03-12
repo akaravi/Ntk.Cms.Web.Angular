@@ -9,7 +9,7 @@ import {
   EnumSortType,
   ErrorExceptionResult,
   FilterModel,
-  ntkCmsApiStoreService,
+  NtkCmsApiStoreService,
   TokenInfoModel,
   EnumRecordStatus,
   FilterDataModel
@@ -36,7 +36,7 @@ import { TicketingDepartemenAddComponent } from '../add/add.component';
 export class TicketingDepartemenListComponent implements OnInit , OnDestroy {
   constructor(
     private ticketingDepartemenService: TicketingDepartemenService,
-    private cmsApiStore: ntkCmsApiStoreService,
+    private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
     private router: Router,

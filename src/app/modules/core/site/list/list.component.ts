@@ -9,7 +9,7 @@ import {
   EnumSortType,
   ErrorExceptionResult,
   FilterModel,
-  ntkCmsApiStoreService,
+  NtkCmsApiStoreService,
   TokenInfoModel,
   FilterDataModel,
   EnumRecordStatus
@@ -35,7 +35,7 @@ import { CoreSiteAddComponent } from '../add/add.component';
 })
 export class CoreSiteListComponent implements OnInit , OnDestroy {
   constructor(private coreSiteService: CoreSiteService,
-              private cmsApiStore: ntkCmsApiStoreService,
+              private cmsApiStore: NtkCmsApiStoreService,
               public publicHelper: PublicHelper,
               private cmsToastrService: CmsToastrService,
               private router: Router,

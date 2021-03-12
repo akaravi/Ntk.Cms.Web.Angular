@@ -10,7 +10,7 @@ import {
   FileContentModel,
   FileContentService,
   TokenInfoModel,
-  ntkCmsApiStoreService,
+  NtkCmsApiStoreService,
   EnumRecordStatus,
 } from 'ntk-cms-api';
 import { PublicHelper } from '../../../../core/helpers/publicHelper';
@@ -34,7 +34,7 @@ import { Subscription } from 'rxjs';
 export class FileContentListComponent implements OnInit , OnDestroy{
 
   constructor(
-    private cmsApiStore: ntkCmsApiStoreService,
+    private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private fileContentService: FileContentService,
     private cmsToastrService: CmsToastrService,

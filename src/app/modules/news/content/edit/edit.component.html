@@ -53,16 +53,16 @@
 
           <mat-form-field class="example-full-width">
             <mat-label>تاریخ شروع</mat-label>
-            <input matInput [matDatepicker]="picker1" [(ngModel)]="dataModel.FromDate" name="dataModel.FromDate" />
-            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-            <mat-datepicker touchUi #picker1></mat-datepicker>
+            <input matInput [matDatepicker]="FromDate" [(ngModel)]="dataModel.FromDate" name="dataModel.FromDate" />
+            <mat-datepicker-toggle matSuffix [for]="FromDate"></mat-datepicker-toggle>
+            <mat-datepicker touchUi #FromDate></mat-datepicker>
           </mat-form-field>
 
           <mat-form-field class="example-full-width">
             <mat-label>تاریخ پاپان</mat-label>
-            <input matInput [matDatepicker]="picker2" [(ngModel)]="dataModel.ExpireDate" name="dataModel.ExpireDate" />
-            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-            <mat-datepicker touchUi #picker2></mat-datepicker>
+            <input matInput [matDatepicker]="ExpireDate" [(ngModel)]="dataModel.ExpireDate" name="dataModel.ExpireDate" />
+            <mat-datepicker-toggle matSuffix [for]="ExpireDate"></mat-datepicker-toggle>
+            <mat-datepicker touchUi #ExpireDate></mat-datepicker>
           </mat-form-field>
           <hr class="pb-5" />
           <angular-editor [placeholder]="'Enter text here...'" [config]="publicHelper.editorConfig" [(ngModel)]="dataModel.Body"

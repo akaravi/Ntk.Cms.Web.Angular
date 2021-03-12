@@ -11,7 +11,7 @@ import {
   ErrorExceptionResult,
   FilterDataModel,
   FilterModel,
-  ntkCmsApiStoreService,
+  NtkCmsApiStoreService,
   TokenInfoModel
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
@@ -34,7 +34,7 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
 export class ApplicationSourceListComponent implements OnInit , OnDestroy {
   constructor(
     private applicationSourceService: ApplicationSourceService,
-    private cmsApiStore: ntkCmsApiStoreService,
+    private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
     private router: Router,

@@ -54,10 +54,10 @@
           <mat-form-field class="example-full-width">
             <mat-label>حداکثر مجموع امتیاز</mat-label>
             <input matInput [(ngModel)]="dataModel.MaxVoteForThisContent" name="dataModel.MaxVoteForThisContent"
-              #MaxVoteForThisContent type="text" placeholder="حداکثر امتیازی که کاربری می تواند بدهد" min="1" max="100"
+              #MaxVoteForThisContent type="number" placeholder="حداکثر امتیازی که کاربری می تواند بدهد" min="1" max="100"
               required />
             <mat-icon matSuffix *ngIf="dataModel.MaxVoteForThisContent" matSuffix mat-icon-button aria-label="Clear"
-              (click)="dataModel.MaxVoteForThisContent = ''">close</mat-icon>
+              (click)="dataModel.MaxVoteForThisContent = '1'">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
             <mat-error *ngIf="MaxVoteForThisContent.errors?.required">
               MaxVoteForThisContent is <strong>required</strong>
@@ -67,10 +67,10 @@
           <mat-form-field class="example-full-width">
             <mat-label>حداکثر امتیاز به هر گزینه</mat-label>
             <input matInput [(ngModel)]="dataModel.MaxVoteForEachOption" name="dataModel.MaxVoteForEachOption"
-              #MaxVoteForEachOption type="text" placeholder="حداکثر امتیازی که کاربری می تواند بدهد" min="1" max="100"
+              #MaxVoteForEachOption type="number" placeholder="حداکثر امتیازی که کاربری می تواند بدهد" min="1" max="100"
               required />
             <mat-icon matSuffix *ngIf="dataModel.MaxVoteForEachOption" matSuffix mat-icon-button aria-label="Clear"
-              (click)="dataModel.MaxVoteForEachOption = ''">close</mat-icon>
+              (click)="dataModel.MaxVoteForEachOption = '1'">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
             <mat-error *ngIf="MaxVoteForEachOption.errors?.required">
               MaxVoteForEachOption is <strong>required</strong>
@@ -100,22 +100,23 @@
 
           <mat-form-field class="example-full-width">
             <mat-label>تاریخ شروع</mat-label>
-            <input matInput [matDatepicker]="picker1" [(ngModel)]="dataModel.FromDate" name="dataModel.FromDate" />
-            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-            <mat-datepicker touchUi #picker1></mat-datepicker>
+            <input matInput [matDatepicker]="FromDate" [(ngModel)]="dataModel.FromDate" name="dataModel.FromDate" />
+            <mat-datepicker-toggle matSuffix [for]="FromDate"></mat-datepicker-toggle>
+            <mat-datepicker touchUi #FromDate></mat-datepicker>
           </mat-form-field>
 
           <mat-form-field class="example-full-width">
             <mat-label>تاریخ پاپان</mat-label>
-            <input matInput [matDatepicker]="picker2" [(ngModel)]="dataModel.ExpireDate" name="dataModel.ExpireDate" />
-            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-            <mat-datepicker touchUi #picker2></mat-datepicker>
+            <input matInput [matDatepicker]="ExpireDate" [(ngModel)]="dataModel.ExpireDate"
+              name="dataModel.ExpireDate" />
+            <mat-datepicker-toggle matSuffix [for]="ExpireDate"></mat-datepicker-toggle>
+            <mat-datepicker touchUi #ExpireDate></mat-datepicker>
           </mat-form-field>
           <hr class="pb-5" />
 
 
 
-               <div *ngIf="formInfo.FormSubmitAllow">
+          <div *ngIf="formInfo.FormSubmitAllow">
             <a class="btn btn-secondary btn-sm BTN">
               <button (click)="onActionBackToParent()" type="button" class="btn btn-warning BTN">بازگشت</button>
             </a> <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
@@ -155,14 +156,15 @@
             </mat-slide-toggle>
           </div>
 
-          <button (click)="onActionOptionAddToLIst()" type="button" mat-button
+          <button (click)="onActionOptionAddToList()" type="button" mat-button
             class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
-            اضافه به لیست ...
+         {{optionActionTitle}} ...
           </button>
           <p>لیست سایر اطلاعات</p>
-
+          <app-progress-spinner [options]="loadingOption">
+          </app-progress-spinner>
           <!-- TABLE  -->
-          <div class="example-container mat-elevation-z8">
+          <div class="example-container mat-elevation-z8"  *ngIf="!loadingOption.display">
             <mat-table [dataSource]="optionTabledataSource">
               <!-- Id Column -->
               <ng-container matColumnDef="Id">
@@ -198,8 +200,8 @@
               <ng-container matColumnDef="Action">
                 <mat-header-cell *matHeaderCellDef> ... </mat-header-cell>
                 <mat-cell *matCellDef="let row; let i = index" class='Action'>
-                  <small (click)="onActionOptionEditFromLIst(i)">ویرایش</small>|
-                  <small (click)="onActionOptionRemoveFromLIst(i)">حذف</small>
+                  <small (click)="onActionOptionEditFromList(i)">ویرایش</small>|
+                  <small (click)="onActionOptionRemoveFromList(i)">حذف</small>
                 </mat-cell>
               </ng-container>
               <mat-header-row *matHeaderRowDef="optionTabledisplayedColumns"></mat-header-row>

@@ -14,22 +14,22 @@ export const environment = {
   leafletUrl: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   cmsServerConfig: {
     configApiRetry: 1,
-    configApiServerPath: 'https://apicms.ir/api/v1/',
-    // configApiServerPath: 'http://localhost:2390/api/v1/',
+    // configApiServerPath: 'https://apicms.ir/api/v1/',
+    configApiServerPath: 'http://localhost:2390/api/v1/',
     configMvcServerPath: 'https://oco.ir',
     configCpanelImages: '/cpanelv1/images/',
     configPathFileByIdAndName: 'https://oco.ir/files/',
     configRouteThumbnails: 'https://oco.ir/imageThumbnails/',
-     configRouteUploadFileContent: 'https://apifile.ir/api/v1/upload/',
-      // configRouteUploadFileContent: 'https://apicms.ir/api/v1/upload/',
-    //  configRouteUploadFileContent: 'http://localhost:2392/api/v1/upload/'
+    configRouteUploadFileContent: 'https://apifile.ir/api/v1/upload/',
+    // configRouteUploadFileContent: 'https://apicms.ir/api/v1/upload/',
+    // configRouteUploadFileContent: 'http://localhost:2392/api/v1/upload/'
   },
   cmsUiConfig: {
     Pathlogin: '/auth/login',
     Pathlogout: '/auth/logout',
     PathRegistery: '/auth/registery',
     PathSelectSite: '/core/site/select',
-    Pathdashboard: '/dashboard/dashboard1',
+    Pathdashboard: '/dashboard/',
   },
   cmsTokenConfig: {
     SecurityKey: '123456789',

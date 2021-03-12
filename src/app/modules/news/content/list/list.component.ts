@@ -10,7 +10,7 @@ import {
   NewsCategoryModel,
   NewsContentModel,
   NewsContentService,
-  ntkCmsApiStoreService,
+  NtkCmsApiStoreService,
   TokenInfoModel,
 } from 'ntk-cms-api';
 import { PublicHelper } from '../../../../core/helpers/publicHelper';
@@ -34,7 +34,7 @@ import { Observable, Subscription } from 'rxjs';
 export class NewsContentListComponent implements OnInit, OnDestroy {
 
   constructor(
-    private cmsApiStore: ntkCmsApiStoreService,
+    private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private newsContentService: NewsContentService,
     private cmsToastrService: CmsToastrService,

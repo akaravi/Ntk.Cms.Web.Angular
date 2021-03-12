@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { LayoutService } from '../../../../core';
-import { CoreAuthService, CoreCpMainMenuModel, CoreCpMainMenuService, ErrorExceptionResult, ntkCmsApiStoreService } from 'ntk-cms-api';
+import { CoreAuthService, CoreCpMainMenuModel, CoreCpMainMenuService, ErrorExceptionResult, NtkCmsApiStoreService } from 'ntk-cms-api';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -16,7 +16,7 @@ export class AsideComponent implements OnInit, OnDestroy {
     private loc: Location,
     private coreCpMainMenuService: CoreCpMainMenuService,
     public coreAuthService: CoreAuthService,
-    private cmsApiStore: ntkCmsApiStoreService,
+    private cmsApiStore: NtkCmsApiStoreService,
   ) {
   }
 

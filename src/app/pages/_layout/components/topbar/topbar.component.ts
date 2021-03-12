@@ -9,7 +9,7 @@ import KTLayoutQuickPanel from '../../../../../assets/js/layout/extended/quick-p
 import KTLayoutQuickUser from '../../../../../assets/js/layout/extended/quick-user';
 import KTLayoutHeaderTopbar from '../../../../../assets/js/layout/base/header-topbar';
 import { KTUtil } from '../../../../../assets/js/components/util';
-import { TokenInfoModel, CoreAuthService, ntkCmsApiStoreService } from 'ntk-cms-api';
+import { TokenInfoModel, CoreAuthService, NtkCmsApiStoreService } from 'ntk-cms-api';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -21,7 +21,7 @@ export class TopbarComponent implements OnInit, AfterViewInit , OnDestroy {
 
   constructor(
     private layout: LayoutService,
-    private cmsApiStore: ntkCmsApiStoreService,
+    private cmsApiStore: NtkCmsApiStoreService,
   ) {
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((value) => {

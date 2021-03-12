@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ApplicationAppService, ApplicationMemberInfoService, EnumRecordStatus, FilterDataModel, FilterModel, ntkCmsApiStoreService } from 'ntk-cms-api';
+import { ApplicationAppService, ApplicationMemberInfoService, EnumRecordStatus, FilterDataModel, FilterModel, NtkCmsApiStoreService } from 'ntk-cms-api';
 import { Subscription } from 'rxjs';
 import { WidgetInfoModel } from 'src/app/core/models/widget-info-model';
 
@@ -16,7 +16,7 @@ export class ApplicationMemberInfoWidgetComponent implements OnInit, OnDestroy {
   indexTheme = ['symbol-light-success', 'symbol-light-warning', 'symbol-light-danger', 'symbol-light-info'];
   constructor(
     private service: ApplicationMemberInfoService,
-    private cmsApiStore: ntkCmsApiStoreService,
+    private cmsApiStore: NtkCmsApiStoreService,
   ) { }
   ngOnInit(): void {
     this.widgetInfoModel.title = 'کاربران های شما';

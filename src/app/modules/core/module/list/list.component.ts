@@ -9,7 +9,7 @@ import {
   EnumSortType,
   ErrorExceptionResult,
   FilterModel,
-  ntkCmsApiStoreService,
+  NtkCmsApiStoreService,
   TokenInfoModel,
   FilterDataModel,
   EnumRecordStatus
@@ -36,7 +36,7 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
 export class CoreModuleListComponent implements OnInit, OnDestroy {
   constructor(
     private coreModuleService: CoreModuleService,
-    private cmsApiStore: ntkCmsApiStoreService,
+    private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
     private cmsConfirmationDialogService: CmsConfirmationDialogService,

@@ -17,7 +17,7 @@ import {
   FilterModel,
   FileCategoryModel,
   FileCategoryService,
-  ntkCmsApiStoreService,
+  NtkCmsApiStoreService,
 } from 'ntk-cms-api';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -34,7 +34,7 @@ import { Subscription } from 'rxjs';
 })
 export class FileCategoryTreeComponent implements OnInit , OnDestroy{
   constructor(
-    private cmsApiStore: ntkCmsApiStoreService,
+    private cmsApiStore: NtkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
     public coreEnumService: CoreEnumService,
     public categoryService: FileCategoryService,

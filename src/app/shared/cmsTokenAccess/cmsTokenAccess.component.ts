@@ -4,7 +4,7 @@ import {
   AuthRenewTokenModel,
   CoreAuthService,
   TokenInfoModel,
-  ntkCmsApiStoreService
+  NtkCmsApiStoreService
 } from 'ntk-cms-api';
 import { Subscription } from 'rxjs';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
@@ -20,7 +20,7 @@ export class CmsTokenAccessComponent implements OnInit, OnDestroy {
 
   constructor(
     public coreAuthService: CoreAuthService,
-    private cmsApiStore: ntkCmsApiStoreService,
+    private cmsApiStore: NtkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
     private router: Router,
 

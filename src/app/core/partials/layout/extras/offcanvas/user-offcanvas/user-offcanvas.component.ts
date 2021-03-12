@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { LayoutService } from '../../../../..';
 import { Observable, Subscription } from 'rxjs';
-import { CoreAuthService, ntkCmsApiStoreService, TokenInfoModel } from 'ntk-cms-api';
+import { CoreAuthService, NtkCmsApiStoreService, TokenInfoModel } from 'ntk-cms-api';
 import { environment } from '../../../../../../../environments/environment';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { map } from 'rxjs/operators';
@@ -18,7 +18,7 @@ export class UserOffcanvasComponent implements OnInit, OnDestroy {
     private layout: LayoutService,
     private auth: CoreAuthService,
     private cmsToastrService: CmsToastrService,
-    private cmsApiStore: ntkCmsApiStoreService,
+    private cmsApiStore: NtkCmsApiStoreService,
 
   ) {
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;

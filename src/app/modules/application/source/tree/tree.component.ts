@@ -17,7 +17,7 @@ import {
   FilterModel,
   ApplicationSourceModel,
   ApplicationSourceService,
-  ntkCmsApiStoreService,
+  NtkCmsApiStoreService,
 } from 'ntk-cms-api';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
@@ -32,7 +32,7 @@ import { Subscription } from 'rxjs';
 })
 export class ApplicationSourceTreeComponent implements OnInit , OnDestroy {
   constructor(
-    private cmsApiStore: ntkCmsApiStoreService,
+    private cmsApiStore: NtkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
     public coreEnumService: CoreEnumService,
     public categoryService: ApplicationSourceService,

@@ -10,7 +10,7 @@ import {
   ErrorExceptionResult,
   FilterDataModel,
   FilterModel,
-  ntkCmsApiStoreService,
+  NtkCmsApiStoreService,
   TokenInfoModel,
   TicketingDepartemenModel,
   EnumRecordStatus
@@ -38,7 +38,7 @@ export class TicketingFaqListComponent implements OnInit, OnDestroy {
   constructor(
     private ticketingFaqService: TicketingFaqService,
     private activatedRoute: ActivatedRoute,
-    private cmsApiStore: ntkCmsApiStoreService,
+    private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
     private cmsConfirmationDialogService: CmsConfirmationDialogService,

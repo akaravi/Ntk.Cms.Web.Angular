@@ -17,7 +17,7 @@ import {
   FilterModel,
   NewsCategoryModel,
   NewsCategoryService,
-  ntkCmsApiStoreService,
+  NtkCmsApiStoreService,
 } from 'ntk-cms-api';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -35,7 +35,7 @@ import { NewsCategoryAddComponent } from '../add/add.component';
 })
 export class NewsCategoryTreeComponent implements OnInit , OnDestroy{
   constructor(
-    private cmsApiStore: ntkCmsApiStoreService,
+    private cmsApiStore: NtkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
     public coreEnumService: CoreEnumService,
     public categoryService: NewsCategoryService,

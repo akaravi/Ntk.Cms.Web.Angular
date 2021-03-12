@@ -9,7 +9,7 @@ import {
   PollingCategoryModel,
   PollingContentModel,
   PollingContentService,
-  ntkCmsApiStoreService,
+  NtkCmsApiStoreService,
   TokenInfoModel,
   EnumRecordStatus,
 } from 'ntk-cms-api';
@@ -34,7 +34,7 @@ import { Observable, Subscription } from 'rxjs';
 export class PollingContentListComponent implements OnInit, OnDestroy {
 
   constructor(
-    private cmsApiStore: ntkCmsApiStoreService,
+    private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private pollingContentService: PollingContentService,
     private cmsToastrService: CmsToastrService,

@@ -9,7 +9,7 @@ import {
   EnumSortType,
   ErrorExceptionResult,
   FilterModel,
-  ntkCmsApiStoreService,
+  NtkCmsApiStoreService,
   TokenInfoModel,
   FilterDataModel,
   EnumRecordStatus
@@ -37,7 +37,7 @@ export class CoreUserListComponent implements OnInit , OnDestroy {
   constructor(
     private coreUserService: CoreUserService,
     private cmsConfirmationDialogService: CmsConfirmationDialogService,
-    private cmsApiStore: ntkCmsApiStoreService,
+    private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
     private router: Router,

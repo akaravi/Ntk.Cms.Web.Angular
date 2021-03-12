@@ -7,7 +7,7 @@ import {
   ArticleCommentService,
   ArticleContentModel,
   TokenInfoModel,
-  ntkCmsApiStoreService,
+  NtkCmsApiStoreService,
   EnumRecordStatus
 } from 'ntk-cms-api';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -44,7 +44,7 @@ export class ArticleCommentListComponent implements OnInit, OnDestroy {
   constructor(
     private articleCommentService: ArticleCommentService,
     private activatedRoute: ActivatedRoute,
-    private cmsApiStore: ntkCmsApiStoreService,
+    private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
     private cmsConfirmationDialogService: CmsConfirmationDialogService,

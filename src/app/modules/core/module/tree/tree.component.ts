@@ -17,7 +17,7 @@ import {
   FilterModel,
   CoreModuleModel,
   CoreModuleService,
-  ntkCmsApiStoreService,
+  NtkCmsApiStoreService,
 } from 'ntk-cms-api';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
@@ -36,7 +36,7 @@ import { CoreModuleAddComponent } from '../add/add.component';
 })
 export class CoreModuleTreeComponent implements OnInit , OnDestroy{
   constructor(
-    private cmsApiStore: ntkCmsApiStoreService,
+    private cmsApiStore: NtkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
     public coreEnumService: CoreEnumService,
     public categoryService: CoreModuleService,

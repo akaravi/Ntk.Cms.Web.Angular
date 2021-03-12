@@ -18,7 +18,7 @@ import {
   FilterModel,
   PollingCategoryModel,
   PollingCategoryService,
-  ntkCmsApiStoreService,
+  NtkCmsApiStoreService,
 } from 'ntk-cms-api';
 
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -37,7 +37,7 @@ import { PollingCategoryAddComponent } from '../add/add.component';
 })
 export class PollingCategoryTreeComponent implements OnInit , OnDestroy{
   constructor(
-    private cmsApiStore: ntkCmsApiStoreService,
+    private cmsApiStore: NtkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
     public coreEnumService: CoreEnumService,
     public categoryService: PollingCategoryService,

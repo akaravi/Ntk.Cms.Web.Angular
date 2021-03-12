@@ -8,7 +8,7 @@ import {
   ErrorExceptionResult,
   FilterDataModel,
   FilterModel,
-  ntkCmsApiStoreService,
+  NtkCmsApiStoreService,
   TokenInfoModel
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
@@ -35,7 +35,7 @@ export class CoreSiteCategoryCmsModuleListViewComponent implements OnInit, OnDes
   linkSiteCategoryId = 0;
   constructor(
     private coreSiteCategoryCmsModuleService: CoreSiteCategoryCmsModuleService,
-    private cmsApiStore: ntkCmsApiStoreService,
+    private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
     public dialog: MatDialog) {

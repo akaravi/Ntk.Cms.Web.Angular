@@ -17,7 +17,7 @@ import {
   FilterModel,
   CoreModuleTagCategoryModel,
   CoreModuleTagCategoryService,
-  ntkCmsApiStoreService,
+  NtkCmsApiStoreService,
 } from 'ntk-cms-api';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -35,7 +35,7 @@ import { CoreModuleTagCategoryDeleteComponent } from '../delete/delete.component
 export class CoreModuleTagCategoryTreeComponent implements OnInit , OnDestroy {
 
   constructor(
-    private cmsApiStore: ntkCmsApiStoreService,
+    private cmsApiStore: NtkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
     public coreEnumService: CoreEnumService,
     public categoryService: CoreModuleTagCategoryService,

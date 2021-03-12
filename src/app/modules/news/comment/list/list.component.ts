@@ -7,7 +7,7 @@ import {
   NewsCommentModel,
   NewsCommentService,
   NewsContentModel,
-  ntkCmsApiStoreService,
+  NtkCmsApiStoreService,
   TokenInfoModel
 } from 'ntk-cms-api';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -44,7 +44,7 @@ export class NewsCommentListComponent implements OnInit , OnDestroy {
   constructor(
     private newsCommentService: NewsCommentService,
     private activatedRoute: ActivatedRoute,
-    private cmsApiStore: ntkCmsApiStoreService,
+    private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
     private cmsConfirmationDialogService: CmsConfirmationDialogService,

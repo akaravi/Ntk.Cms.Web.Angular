@@ -6,7 +6,7 @@ import {
   PollingVoteModel,
   PollingVoteService,
   NewsContentModel,
-  ntkCmsApiStoreService,
+  NtkCmsApiStoreService,
   TokenInfoModel,
   EnumRecordStatus
 } from 'ntk-cms-api';
@@ -44,7 +44,7 @@ export class PollingVoteListComponent implements OnInit, OnDestroy {
   constructor(
     private pollingVoteService: PollingVoteService,
     private activatedRoute: ActivatedRoute,
-    private cmsApiStore: ntkCmsApiStoreService,
+    private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
     private cmsConfirmationDialogService: CmsConfirmationDialogService,

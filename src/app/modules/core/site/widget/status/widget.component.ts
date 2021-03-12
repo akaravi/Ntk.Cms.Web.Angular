@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { CoreSiteService, EnumRecordStatus, FilterDataModel, FilterModel, ntkCmsApiStoreService, TokenInfoModel } from 'ntk-cms-api';
+import { CoreSiteService, EnumRecordStatus, FilterDataModel, FilterModel, NtkCmsApiStoreService, TokenInfoModel } from 'ntk-cms-api';
 import { Subscription } from 'rxjs';
 import { WidgetInfoModel } from 'src/app/core/models/widget-info-model';
 import { PersianCalendarService } from 'src/app/core/pipe/PersianDatePipe/persian-date.service';
@@ -18,7 +18,7 @@ export class CoreSiteWidgetStatusComponent implements OnInit, OnDestroy {
   indexTheme = ['symbol-light-success', 'symbol-light-warning', 'symbol-light-danger', 'symbol-light-info', 'symbol-light-info', 'symbol-light-info'];
   constructor(
     private service: CoreSiteService,
-    private cmsApiStore: ntkCmsApiStoreService,
+    private cmsApiStore: NtkCmsApiStoreService,
     private persianCalendarService: PersianCalendarService
   ) { }
   ngOnInit(): void {

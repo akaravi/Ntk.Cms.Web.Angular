@@ -2,7 +2,7 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-import {EnumDeviceType, EnumOperatingSystemType} from 'ntk-cms-api';
+import { EnumDeviceType, EnumOperatingSystemType } from 'ntk-cms-api';
 
 export const environment = {
   production: false,
@@ -15,19 +15,18 @@ export const environment = {
   cmsServerConfig: {
     configApiRetry: 1,
     configApiServerPath: 'https://apicms.ir/api/v1/',
-    // configApiServerPath: 'http://localhost:2390/api/v1/',
     configMvcServerPath: 'https://oco.ir',
     configCpanelImages: '/cpanelv1/images/',
     configPathFileByIdAndName: 'https://oco.ir/files/',
     configRouteThumbnails: 'https://oco.ir/imageThumbnails/',
-    configRouteUploadFileContent: 'https://apicms.ir/api/v1/FileContent/upload/',
+    configRouteUploadFileContent: 'https://apifile.ir/api/v1/upload/',
   },
   cmsUiConfig: {
     Pathlogin: '/auth/login',
     Pathlogout: '/auth/logout',
     PathRegistery: '/auth/registery',
     PathSelectSite: '/core/site/select',
-    Pathdashboard: '/dashboard/dashboard1',
+    Pathdashboard: '/dashboard/',
   },
   cmsTokenConfig: {
     SecurityKey: '123456789',

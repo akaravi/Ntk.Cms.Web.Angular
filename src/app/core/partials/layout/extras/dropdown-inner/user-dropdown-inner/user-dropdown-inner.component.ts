@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { LayoutService } from '../../../../..';
-import { CoreAuthService, ntkCmsApiStoreService, TokenInfoModel } from 'ntk-cms-api';
+import { CoreAuthService, NtkCmsApiStoreService, TokenInfoModel } from 'ntk-cms-api';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { map } from 'rxjs/operators';
 @Component({
@@ -13,7 +13,7 @@ export class UserDropdownInnerComponent implements OnInit , OnDestroy {
 
   constructor(
     private layout: LayoutService,
-    private cmsApiStore: ntkCmsApiStoreService,
+    private cmsApiStore: NtkCmsApiStoreService,
 
     private auth: CoreAuthService,
     private cmsToastrService: CmsToastrService,
