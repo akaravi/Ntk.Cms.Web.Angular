@@ -12,11 +12,6 @@ const routes: Routes = [
         loadChildren: () =>
           import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
       },
-      // {
-      //   path: 'site',
-      //   loadChildren: () =>
-      //     import('../modules/core/site/coreSite.module').then((m) => m.CoreSiteModule),
-      // },
       {
         path: 'core',
         loadChildren: () =>
@@ -33,9 +28,14 @@ const routes: Routes = [
           import('../modules/coreToken/coreToken.module').then(m => m.CoreTokenModule)
       },
       {
-        path: 'news',
+        path: 'apitelegram',
         loadChildren: () =>
-          import('../modules/news/news.module').then(m => m.NewsModule)
+          import('../modules/apiTelegram/apiTelegram.module').then(m => m.ApiTelegramModule)
+      },
+      {
+        path: 'application',
+        loadChildren: () =>
+          import('../modules/application/application.module').then(m => m.ApplicationModule)
       },
       {
         path: 'article',
@@ -43,15 +43,49 @@ const routes: Routes = [
           import('../modules/article/article.module').then(m => m.ArticleModule)
       },
       {
+        path: 'bankPayment',
+        loadChildren: () =>
+          import('../modules/bankPayment/bankPayment.module').then(m => m.BankPaymentModule)
+      },
+      {
+        path: 'biography',
+        loadChildren: () =>
+          import('../modules/biography/biography.module').then(m => m.BiographyModule)
+      },
+      {
+        path: 'blog',
+        loadChildren: () =>
+          import('../modules/blog/blog.module').then(m => m.BlogModule)
+      },
+      {
+        path: 'hypershop',
+        loadChildren: () =>
+          import('../modules/hyperShop/hyperShop.module').then(m => m.HyperShopModule)
+      },
+      {
+        path: 'linkmanagment',
+        loadChildren: () =>
+          import('../modules/linkManagment/linkManagment.module').then(m => m.LinkManagmentModule)
+      },
+      {
+        path: 'member',
+        loadChildren: () =>
+          import('../modules/member/member.module').then(m => m.MemberModule)
+      },
+
+      {
+        path: 'news',
+        loadChildren: () =>
+          import('../modules/news/news.module').then(m => m.NewsModule)
+      },
+
+      {
         path: 'filemanager',
         loadChildren: () =>
           import('../modules/filemanager/filemanager.module').then(m => m.FileManagerModule)
       },
-      {
-        path: 'application',
-        loadChildren: () =>
-          import('../modules/application/application.module').then(m => m.ApplicationModule)
-      },
+
+
       {
         path: 'polling',
         loadChildren: () =>
