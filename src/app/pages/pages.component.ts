@@ -5,17 +5,17 @@ import {
   ElementRef,
   AfterViewInit,
 } from '@angular/core';
-import { LayoutService, LayoutInitService } from '../../core';
-import KTLayoutContent from '../../../assets/js/layout/base/content';
+import { LayoutService, LayoutInitService } from '../core';
+import KTLayoutContent from '../../assets/js/layout/base/content';
 import { environment } from 'src/environments/environment';
 import { CoreAuthService } from 'ntk-cms-api';
 
 @Component({
-  selector: 'app-layout',
-  templateUrl: './layout.component.html',
-  styleUrls: ['./layout.component.scss'],
+  selector: 'app-pages',
+  templateUrl: './pages.component.html',
+  styleUrls: ['./pages.component.scss'],
 })
-export class LayoutComponent implements OnInit, AfterViewInit {
+export class PagesComponent implements OnInit, AfterViewInit {
   // Public variables
   selfLayout = 'default';
   asideSelfDisplay: true;

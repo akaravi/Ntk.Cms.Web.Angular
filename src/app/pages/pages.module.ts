@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {PagesRouting} from './pages.routing';
-import {LayoutComponent} from './_layout/layout.component';
+import {PagesComponent} from './pages.component';
 import {ScriptsInitComponent} from './_layout/init/scipts-init/scripts-init.component';
 import {AsideComponent} from './_layout/components/aside/aside.component';
 import {AsideDynamicComponent} from './_layout/components/aside-dynamic/aside-dynamic.component';
@@ -23,7 +23,7 @@ import {CoreAuthService, CoreCpMainMenuService} from 'ntk-cms-api';
 
 @NgModule({
   declarations: [
-    LayoutComponent,
+    PagesComponent,
     ScriptsInitComponent,
     HeaderMobileComponent,
     AsideComponent,

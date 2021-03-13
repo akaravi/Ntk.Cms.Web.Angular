@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LayoutComponent } from './_layout/layout.component';
+import { PagesComponent } from './pages.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: LayoutComponent,
+    component: PagesComponent,
     children: [
       {
         path: 'dashboard',
@@ -84,12 +84,15 @@ const routes: Routes = [
         loadChildren: () =>
           import('../modules/filemanager/filemanager.module').then(m => m.FileManagerModule)
       },
-
-
       {
         path: 'polling',
         loadChildren: () =>
           import('../modules/polling/polling.module').then(m => m.PollingModule)
+      },
+      {
+        path: 'sms',
+        loadChildren: () =>
+          import('../modules/sms/sms.module').then(m => m.SmsModule)
       },
       {
         path: 'ticketing',
@@ -97,10 +100,22 @@ const routes: Routes = [
           import('../modules/ticketing/ticketing.module').then(m => m.TicketingModule)
       },
       {
+        path: 'universalmenu',
+        loadChildren: () =>
+          import('../modules/universalMenu/universalMenu.module').then(m => m.UniversalMenuModule)
+      },
+      {
+        path: 'webdesigner',
+        loadChildren: () =>
+          import('../modules/webDesigner/webDesigner.module').then(m => m.WebDesignerModule)
+      },
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',
       },
+
+
     ]
   }
 ];

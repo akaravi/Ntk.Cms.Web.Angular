@@ -276,7 +276,7 @@ export class PollingContentAddComponent implements OnInit, AfterViewInit {
             this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
             this.cmsToastrService.typeSuccessAdd();
             this.loading.display = false;
-            setTimeout(() => this.router.navigate(['/polling/']), 100);
+            setTimeout(() => this.router.navigate(['/polling/content']), 100);
           } else {
             this.cmsToastrService.typeErrorAdd(next.ErrorMessage);
           }
