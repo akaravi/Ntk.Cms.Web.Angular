@@ -14,12 +14,12 @@
             <mat-label> {{'AUTH.INPUT.FIRSTNAME' | translate}}</mat-label>
             <input matInput [(ngModel)]="dataModel.Name" name="dataModel.Name" #Name type="text" autocomplete="off"
             class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6"
-              placeholder=" {{'AUTH.INPUT.FIRSTNAME' | translate}}" minlength="3" maxlength="20" required />
+              placeholder=" {{'AUTH.INPUT.FIRSTNAME' | translate}}" minlength="3" maxlength="50" required />
             <mat-icon matSuffix *ngIf="dataModel.Name" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.Name = ''">
               close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
-            <mat-hint align="end">{{ Name.value.length }} / 20</mat-hint>
+            <mat-hint align="end">{{ Name.value.length }} / 50</mat-hint>
             <mat-error *ngIf="Name.errors?.required">
               Name is <strong>required</strong>
             </mat-error>
@@ -28,13 +28,13 @@
             <mat-label> {{'AUTH.INPUT.LASTNAME' | translate}}</mat-label>
             <input matInput [(ngModel)]="dataModel.Family" name="dataModel.Family" #Family type="text"
             class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6"
-              autocomplete="off" placeholder=" {{'AUTH.INPUT.LASTNAME' | translate}}" minlength="3" maxlength="20"
+              autocomplete="off" placeholder=" {{'AUTH.INPUT.LASTNAME' | translate}}" minlength="3" maxlength="50"
               required />
             <mat-icon matSuffix *ngIf="dataModel.Family" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.Family = ''">
               close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
-            <mat-hint align="end">{{ Family.value.length }} / 20</mat-hint>
+            <mat-hint align="end">{{ Family.value.length }} / 50</mat-hint>
             <mat-error *ngIf="Family.errors?.required">
               Family is <strong>required</strong>
             </mat-error>
@@ -44,12 +44,12 @@
             <mat-label> {{'AUTH.INPUT.EMAIL' | translate}}</mat-label>
             <input matInput [(ngModel)]="dataModel.Email" name="dataModel.Email" #Email type="email" autocomplete="off"
             class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6"
-              placeholder=" {{'AUTH.INPUT.EMAIL' | translate}}" minlength="3" maxlength="20" required />
+              placeholder=" {{'AUTH.INPUT.EMAIL' | translate}}" minlength="5" maxlength="100" required />
             <mat-icon matSuffix *ngIf="dataModel.Email" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.Email = ''">
               close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
-            <mat-hint align="end">{{ Email.value.length }} / 20</mat-hint>
+            <mat-hint align="end">{{ Email.value.length }} / 100</mat-hint>
             <mat-error *ngIf="Email.errors?.required">
               Email is <strong>required</strong>
             </mat-error>
