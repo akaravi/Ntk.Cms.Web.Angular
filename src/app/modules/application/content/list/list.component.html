@@ -16,16 +16,23 @@
       </a>
 
       <a class="btn btn-success btn-sm BTN">
-        <mat-slide-toggle  (click)="onActionbuttonStatist()">آمار
+        <mat-slide-toggle (click)="onActionbuttonStatist()">آمار
         </mat-slide-toggle>
       </a>
       <button (click)="onActionbuttonExport()" type="button" class="btn btn-bg-info BTN">خروجی فایل</button>
       <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">برسی مجدد</button>
-      <button (click)="onActionbuttonUploadApp()" *ngIf="tableRowSelected.Id>0 && this.tokenInfo.UserAccessAdminAllowToProfessionalData" type="button" class="btn btn-warning BTN">بارگزاری فایل نصب</button>
-      <button (click)="onActionbuttonUploadUpdate()"  *ngIf="tableRowSelected.Id>0 && this.tokenInfo.UserAccessAdminAllowToProfessionalData" type="button" class="btn btn-warning BTN">بارگزاری فایل برروزرسانی</button>
-      <button (click)="onActionbuttonBuildApp()"  *ngIf="tableRowSelected.Id>0" type="button" class="btn btn-warning BTN">ساخت اپ</button>
-      <button (click)="onActionbuttonDownloadApp()"  *ngIf="tableRowSelected.Id>0" type="button" class="btn btn-warning BTN">دانلود اپ</button>
-      <button (click)="onActionBackToParent()" *ngIf="requestSourceId>0" type="button" class="btn btn-warning BTN">بازگشت</button>
+      <button (click)="onActionbuttonUploadApp()"
+        *ngIf="tableRowSelected.Id>0 && this.tokenInfo.UserAccessAdminAllowToProfessionalData" type="button"
+        class="btn btn-warning BTN">بارگزاری فایل نصب</button>
+      <button (click)="onActionbuttonUploadUpdate()"
+        *ngIf="tableRowSelected.Id>0 && this.tokenInfo.UserAccessAdminAllowToProfessionalData" type="button"
+        class="btn btn-warning BTN">بارگزاری فایل برروزرسانی</button>
+      <button (click)="onActionbuttonBuildApp()" *ngIf="tableRowSelected.Id>0" type="button"
+        class="btn btn-warning BTN">ساخت اپ</button>
+      <button (click)="onActionbuttonDownloadApp()" *ngIf="tableRowSelected.Id>0" type="button"
+        class="btn btn-warning BTN">دانلود اپ</button>
+      <button (click)="onActionBackToParent()" *ngIf="requestSourceId>0" type="button"
+        class="btn btn-warning BTN">بازگشت</button>
       <app-cms-search-list [(options)]="optionsSearch"></app-cms-search-list>
       <app-cms-export-list [(options)]="optionsExport"></app-cms-export-list>
       <app-cms-statist-list [(options)]="optionsStatist"></app-cms-statist-list>
@@ -56,12 +63,18 @@
         <!-- RecordStatus Column -->
         <ng-container matColumnDef="RecordStatus">
           <mat-header-cell *matHeaderCellDef mat-sort-header> وضعیت </mat-header-cell>
-          <mat-cell *matCellDef="let row"> <i [ngClass]="row.RecordStatus|statusClass" ></i> </mat-cell>
+          <mat-cell *matCellDef="let row"> <i [ngClass]="row.RecordStatus|statusClass"></i> </mat-cell>
         </ng-container>
         <!-- Title Column -->
         <ng-container matColumnDef="Title">
           <mat-header-cell *matHeaderCellDef mat-sort-header> عنوان </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Title}} </mat-cell>
+        </ng-container>
+        <!-- AppVersion Column -->
+        <ng-container matColumnDef="AppVersion">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>{{fieldsInfo['AppVersion']?.FieldTitle }}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.AppVersion}} </mat-cell>
         </ng-container>
         <!-- CreatedDate Column -->
         <ng-container matColumnDef="CreatedDate">
@@ -73,6 +86,11 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header> تاریخ ویرابش </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.UpdatedDate) }} </mat-cell>
         </ng-container>
+                <!-- LastSuccessfullyBuildDate Column -->
+                <ng-container matColumnDef="LastSuccessfullyBuildDate">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>{{fieldsInfo['LastSuccessfullyBuildDate']?.FieldTitle }} </mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.LastSuccessfullyBuildDate) }} </mat-cell>
+                </ng-container>
         <!-- Action Column -->
         <ng-container matColumnDef="Action">
           <mat-header-cell *matHeaderCellDef> ... </mat-header-cell>

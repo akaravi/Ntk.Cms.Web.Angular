@@ -6,6 +6,7 @@ import {
   ApplicationAppService,
   ApplicationSourceModel,
   CoreAuthService,
+  DataFieldInfoModel,
   EnumRecordStatus,
   EnumSortType,
   ErrorExceptionResult,
@@ -66,14 +67,17 @@ export class ApplicationAppListComponent implements OnInit, OnDestroy {
   tableRowSelected: ApplicationAppModel = new ApplicationAppModel();
   tableSource: MatTableDataSource<ApplicationAppModel> = new MatTableDataSource<ApplicationAppModel>();
   categoryModelSelected: ApplicationSourceModel;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
   tabledisplayedColumns: string[] = [
     'Id',
     'RecordStatus',
     'Title',
+    'AppVersion',
     'LinkSourceId',
     'CreatedDate',
     'UpdatedDate',
+    'LastSuccessfullyBuildDate',
     'Action'
   ];
 
@@ -117,6 +121,8 @@ export class ApplicationAppListComponent implements OnInit, OnDestroy {
     this.applicationAppService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
+          this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;
           if (this.tokenInfo.UserAccessAdminAllowToAllData) {
