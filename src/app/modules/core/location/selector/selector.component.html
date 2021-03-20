@@ -1,0 +1,10 @@
+<mat-form-field class="example-full-width">
+    <input type="text" placeholder="{{optionPlaceholder}}" [disabled]="disabled" aria-label="Assignee" matInput [formControl]="formControl" [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"  (optionSelected)="onActionSelect($event.option.value)">
+        <mat-option *ngFor="let state of filteredOptions | async" [value]="state"  [disabled]="disabled">
+            <img style="vertical-align:middle;" aria-hidden src="{{state.LinkMainImageIdSrc}}" height="25" width="25" />
+            <span>{{ state.Title }}</span>
+        </mat-option>
+    </mat-autocomplete>
+    <ng-content></ng-content>
+</mat-form-field>

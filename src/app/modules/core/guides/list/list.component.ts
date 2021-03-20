@@ -1,79 +1,89 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+
 import { Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
 import {
+  CoreGuideModel,
+  CoreGuideService,
   CoreAuthService,
-  EnumRecordStatus,
   EnumSortType,
   ErrorExceptionResult,
-  FilterDataModel,
   FilterModel,
-  NewsCategoryModel,
-  NewsContentModel,
-  NewsContentService,
   NtkCmsApiStoreService,
   TokenInfoModel,
+  FilterDataModel,
+  EnumRecordStatus
 } from 'ntk-cms-api';
-import { PublicHelper } from '../../../../core/helpers/publicHelper';
-import { CmsToastrService } from '../../../../core/services/cmsToastr.service';
-import { MatDialog } from '@angular/material/dialog';
-import { ProgressSpinnerModel } from '../../../../core/models/progressSpinnerModel';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
-import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/base/componentOptionStatistModel';
+import { PublicHelper } from 'src/app/core/helpers/publicHelper';
+import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
+import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
+import { MatDialog } from '@angular/material/dialog';
 import { ComponentOptionExportModel } from 'src/app/core/cmsComponentModels/base/componentOptionExportModel';
-import { PageEvent } from '@angular/material/paginator';
+import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/base/componentOptionStatistModel';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { NewsContentDeleteComponent } from '../delete/delete.component';
-import { Observable, Subscription } from 'rxjs';
+import { PageEvent } from '@angular/material/paginator';
+import { Subscription } from 'rxjs';
+import { CoreGuideEditComponent } from '../edit/edit.component';
+import { CoreGuideAddComponent } from '../add/add.component';
+import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 
 @Component({
-  selector: 'app-news-content-list',
+  selector: 'app-core-sitecategory-list',
   templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss'],
+  styleUrls: ['./list.component.scss']
 })
-export class NewsContentListComponent implements OnInit, OnDestroy {
-
+export class CoreGuideListComponent implements OnInit, OnDestroy {
   constructor(
+    private coreGuideService: CoreGuideService,
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
-    private newsContentService: NewsContentService,
     private cmsToastrService: CmsToastrService,
+    private cmsConfirmationDialogService: CmsConfirmationDialogService,
     private router: Router,
-    public dialog: MatDialog
-  ) {
-    // this.optionsCategoryTree.parentMethods = {
-    //   onActionSelect: (x) => this.onActionCategorySelect(x),
-    // };
-
+    public dialog: MatDialog) {
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
-
   }
-  filteModelContent = new FilterModel();
-  categoryModelSelected: NewsCategoryModel;
-  dataModelResult: ErrorExceptionResult<NewsContentModel> = new ErrorExceptionResult<NewsContentModel>();
+  comment: string;
+  author: string;
+  dataSource: any;
+  flag = false;
+  tableContentSelected = [];
 
+  filteModelContent = new FilterModel();
+  dataModelResult: ErrorExceptionResult<CoreGuideModel> = new ErrorExceptionResult<CoreGuideModel>();
   optionsSearch: ComponentOptionSearchModel = new ComponentOptionSearchModel();
   optionsStatist: ComponentOptionStatistModel = new ComponentOptionStatistModel();
   optionsExport: ComponentOptionExportModel = new ComponentOptionExportModel();
   tokenInfo = new TokenInfoModel();
   loading = new ProgressSpinnerModel();
-  tableRowsSelected: Array<NewsContentModel> = [];
-  tableRowSelected: NewsContentModel = new NewsContentModel();
-  tableSource: MatTableDataSource<NewsContentModel> = new MatTableDataSource<NewsContentModel>();
+  tableRowsSelected: Array<CoreGuideModel> = [];
+  tableRowSelected: CoreGuideModel = new CoreGuideModel();
+  tableSource: MatTableDataSource<CoreGuideModel> = new MatTableDataSource<CoreGuideModel>();
+
+
   tabledisplayedColumns: string[] = [
-    'LinkMainImageIdSrc',
+    'MainImageSrc',
     'Id',
+    'linkCreatedBySiteCategoryId',
     'RecordStatus',
     'Title',
+    'SubDomain',
+    'Domain',
     'CreatedDate',
     'UpdatedDate',
     'Action'
   ];
-  cmsApiStoreSubscribe: Subscription;
-  ngOnInit(): void {
 
+
+  columnsToDisplay: string[] = ['Id', 'Writer'];
+  expandedElement: CoreGuideModel | null;
+  cmsApiStoreSubscribe: Subscription;
+
+  ngOnInit(): void {
+    this.filteModelContent.SortColumn = 'Title';
     this.DataGetAll();
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
@@ -86,19 +96,13 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
   }
   DataGetAll(): void {
     this.tableRowsSelected = [];
-    this.tableRowSelected = new NewsContentModel();
+    this.tableRowSelected = new CoreGuideModel();
 
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
-    if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
-      const filter =new FilterDataModel() ;
-      filter.PropertyName= 'LinkCategoryId';
-      filter.Value= this.categoryModelSelected.Id;
 
-      this.filteModelContent.Filters.push(filter);
-    }
-    this.newsContentService.ServiceGetAll(this.filteModelContent).subscribe(
+    this.coreGuideService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
           this.dataModelResult = next;
@@ -106,15 +110,16 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
           if (this.tokenInfo.UserAccessAdminAllowToAllData) {
             this.tabledisplayedColumns = this.publicHelper.listAddIfNotExist(
               this.tabledisplayedColumns,
-              'LinkSiteId',
+              'linkCreatedBySiteCategoryId',
               0
             );
           } else {
             this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
               this.tabledisplayedColumns,
-              'LinkSiteId'
+              'linkCreatedBySiteCategoryId'
             );
           }
+
           if (this.optionsSearch.childMethods) {
             this.optionsSearch.childMethods.setAccess(next.Access);
           }
@@ -128,6 +133,7 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
       }
     );
   }
+
 
   onTableSortData(sort: MatSort): void {
     if (this.tableSource && this.tableSource.sort && this.tableSource.sort.active === sort.active) {
@@ -155,23 +161,9 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
     this.DataGetAll();
   }
 
-  onActionCategorySelect(model: NewsCategoryModel | null): void {
-    this.filteModelContent = new FilterModel();
-    this.categoryModelSelected = model;
-
-    this.DataGetAll();
-  }
 
   onActionbuttonNewRow(): void {
-    if (
-      this.categoryModelSelected == null ||
-      this.categoryModelSelected.Id === 0
-    ) {
-      const title = 'برروز خطا ';
-      const message = 'دسته بندی انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
-      return;
-    }
+
     if (
       this.dataModelResult == null ||
       this.dataModelResult.Access == null ||
@@ -180,10 +172,18 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessAdd();
       return;
     }
-    this.router.navigate(['/news/content/add', this.categoryModelSelected.Id]);
+    const dialogRef = this.dialog.open(CoreGuideAddComponent, {
+      data: {}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.dialogChangedDate) {
+        this.DataGetAll();
+      }
+    });
   }
 
-  onActionbuttonEditRow(model: NewsContentModel = this.tableRowSelected): void {
+  onActionbuttonEditRow(model: CoreGuideModel = this.tableRowSelected): void {
+
     if (!model || !model.Id || model.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای ویرایش انتخاب نشده است';
@@ -199,13 +199,20 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessEdit();
       return;
     }
-    this.router.navigate(['/news/content/edit', this.tableRowSelected.Id]);
+    const dialogRef = this.dialog.open(CoreGuideEditComponent, {
+      data: { id: this.tableRowSelected.Id }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.dialogChangedDate) {
+        this.DataGetAll();
+      }
+    });
   }
-  onActionbuttonDeleteRow(model: NewsContentModel = this.tableRowSelected): void {
+  onActionbuttonDeleteRow(model: CoreGuideModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      const etitle = 'برروز خطا ';
+      const emessage = 'ردیفی برای ویرایش انتخاب نشده است';
+      this.cmsToastrService.toastr.error(emessage, etitle);
       return;
     }
     this.tableRowSelected = model;
@@ -218,15 +225,72 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessDelete();
       return;
     }
-    const dialogRef = this.dialog.open(NewsContentDeleteComponent, { data: { id: this.tableRowSelected.Id } });
-    dialogRef.afterClosed().subscribe(result => {
-      // console.log(`Dialog result: ${result}`);
-      if (result && result.dialogChangedDate) {
-        this.DataGetAll();
+
+
+    const title = 'لطفا تایید کنید...';
+    const message = 'آیا مایل به حدف این محتوا می باشید ' + '?' + '<br> ( ' + this.tableRowSelected.Title + ' ) ';
+    this.cmsConfirmationDialogService.confirm(title, message)
+      .then((confirmed) => {
+        if (confirmed) {
+          this.loading.display = true;
+          this.coreGuideService.ServiceDelete(this.tableRowSelected.Id).subscribe(
+            (next) => {
+              if (next.IsSuccess) {
+                this.cmsToastrService.typeSuccessRemove();
+                this.DataGetAll();
+              } else {
+                this.cmsToastrService.typeErrorRemove();
+              }
+              this.loading.display = false;
+            },
+            (error) => {
+              this.cmsToastrService.typeError(error);
+              this.loading.display = false;
+            }
+          );
+        }
       }
-    });
+      )
+      .catch(() => {
+        // console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)')
+      }
+      );
+
   }
-   onActionbuttonStatist(): void {
+  onActionbuttonFaqList(model: CoreGuideModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id === 0) {
+      const title = 'برروز خطا ';
+      const message = 'ردیفی برای نمایش انتخاب نشده است';
+      this.cmsToastrService.toastr.error(message, title);
+      return;
+    }
+    this.tableRowSelected = model;
+
+    this.router.navigate(['/core/faq/', this.tableRowSelected.Id]);
+  }
+  onActionbuttonTemplateList(model: CoreGuideModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id === 0) {
+      const title = 'برروز خطا ';
+      const message = 'ردیفی برای نمایش انتخاب نشده است';
+      this.cmsToastrService.toastr.error(message, title);
+      return;
+    }
+    this.tableRowSelected = model;
+
+    this.router.navigate(['/core/template/', this.tableRowSelected.Id]);
+  }
+  onActionbuttonGoToSiteCategoryList(model: CoreGuideModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id === 0) {
+      const title = 'برروز خطا ';
+      const message = 'ردیفی برای نمایش انتخاب نشده است';
+      this.cmsToastrService.toastr.error(message, title);
+      return;
+    }
+    this.tableRowSelected = model;
+
+    this.router.navigate(['/core/siteSiteCategory/', this.tableRowSelected.Id]);
+  }
+  onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;
     if (!this.optionsStatist.data.show) {
       return;
@@ -234,7 +298,7 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
     const statist = new Map<string, number>();
     statist.set('Active', 0);
     statist.set('All', 0);
-    this.newsContentService.ServiceGetCount(this.filteModelContent).subscribe(
+    this.coreGuideService.ServiceGetCount(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('All', next.TotalRowCount);
@@ -251,7 +315,7 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
     fastFilter.PropertyName = 'RecordStatus';
     fastFilter.Value = EnumRecordStatus.Available;
     filterStatist1.Filters.push(fastFilter);
-    this.newsContentService.ServiceGetCount(filterStatist1).subscribe(
+    this.coreGuideService.ServiceGetCount(filterStatist1).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('Active', next.TotalRowCount);
@@ -277,16 +341,8 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
     this.filteModelContent.Filters = model;
     this.DataGetAll();
   }
-  onActionTableRowSelect(row: NewsContentModel): void {
+  onActionTableRowSelect(row: CoreGuideModel): void {
     this.tableRowSelected = row;
   }
-  onActionbuttonComment(model: NewsContentModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
-      return;
-    }
-    this.router.navigate(['/news/comment/', model.Id]);
-  }
+
 }

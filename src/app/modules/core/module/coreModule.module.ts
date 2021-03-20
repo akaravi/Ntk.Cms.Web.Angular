@@ -9,7 +9,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CoreModuleTreeComponent } from './tree/tree.component';
 import { CoreModuleSelectorComponent } from './selector/selector.component';
-import { CoreModuleDeleteComponent } from './delete/delete.component';
 import { CoreModuleEditComponent } from './edit/edit.component';
 import { CoreModuleAddComponent } from './add/add.component';
 import { CoreModuleListComponent } from './list/list.component';
@@ -24,7 +23,6 @@ import { TagInputModule } from 'ngx-chips';
     CoreModuleListComponent,
     CoreModuleAddComponent,
     CoreModuleEditComponent,
-    CoreModuleDeleteComponent,
     CoreModuleSelectorComponent,
     CoreModuleTreeComponent,
   ],
@@ -33,7 +31,6 @@ import { TagInputModule } from 'ngx-chips';
     CoreModuleListComponent,
     CoreModuleAddComponent,
     CoreModuleEditComponent,
-    CoreModuleDeleteComponent,
     CoreModuleSelectorComponent,
     CoreModuleTreeComponent,
   ],

@@ -3,8 +3,8 @@ import {
   EnumModel,
   ErrorExceptionResult,
   FormInfoModel,
-  CoreModuleService,
-  CoreModuleModel,
+  CoreLocationService,
+  CoreLocationModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -26,17 +26,17 @@ import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateM
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 
 @Component({
-  selector: 'app-core-module-add',
+  selector: 'app-core-sitecategory-add',
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.scss'],
 })
-export class CoreModuleAddComponent implements OnInit {
+export class CoreLocationAddComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
-    private dialogRef: MatDialogRef<CoreModuleAddComponent>,
+    private dialogRef: MatDialogRef<CoreLocationAddComponent>,
     public coreEnumService: CoreEnumService,
-    public coreModuleService: CoreModuleService,
+    public coreLocationService: CoreLocationService,
     private cmsToastrService: CmsToastrService
   ) {
 
@@ -52,8 +52,8 @@ export class CoreModuleAddComponent implements OnInit {
     Validators.required,
   ]);
   loading = new ProgressSpinnerModel();
-  dataModelResult: ErrorExceptionResult<CoreModuleModel> = new ErrorExceptionResult<CoreModuleModel>();
-  dataModel: CoreModuleModel = new CoreModuleModel();
+  dataModelResult: ErrorExceptionResult<CoreLocationModel> = new ErrorExceptionResult<CoreLocationModel>();
+  dataModel: CoreLocationModel = new CoreLocationModel();
 
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
 
@@ -62,14 +62,14 @@ export class CoreModuleAddComponent implements OnInit {
 
   fileManagerOpenForm = false;
 
+  storeSnapshot = this.cmsStoreService.getStateSnapshot();
+
 
   ngOnInit(): void {
 
     this.formInfo.FormTitle = 'اضافه کردن  ';
     this.getEnumRecordStatus();
   }
-
-  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
       this.storeSnapshot.EnumRecordStatus &&
@@ -86,7 +86,7 @@ export class CoreModuleAddComponent implements OnInit {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.coreModuleService.ServiceEdit(this.dataModel).subscribe(
+    this.coreLocationService.ServiceEdit(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormSubmitAllow = true;
         this.dataModelResult = next;
