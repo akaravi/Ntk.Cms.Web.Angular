@@ -8,7 +8,7 @@ import { Output } from '@angular/core';
 
 
 @Component({
-  selector: 'app-core-Module-selector',
+  selector: 'app-core-module-selector',
   templateUrl: './selector.component.html',
   styleUrls: ['./selector.component.scss']
 })

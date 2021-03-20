@@ -15,6 +15,7 @@ import { CoreCpMainMenuAddComponent } from './add/add.component';
 import { CoreCpMainMenuEditComponent } from './edit/edit.component';
 import { CoreCpMainMenuSelectorComponent } from './selector/selector.component';
 import { CoreCpMainMenuTreeComponent } from './tree/tree.component';
+import { CoreModuleModule } from '../module/coreModule.module';
 
 
 
@@ -29,6 +30,7 @@ import { CoreCpMainMenuTreeComponent } from './tree/tree.component';
   ],
   imports: [
     CommonModule,
+    // CoreModuleModule,
     CoreCpMainMenuRouting,
     FormsModule,
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),

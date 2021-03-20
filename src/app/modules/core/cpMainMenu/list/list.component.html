@@ -1,8 +1,8 @@
 <div class="row">
-  <div class="col-xl-3">
+  <div class="col-xl-6">
     <app-core-cpmainmenu-tree (optionSelect)="onActionCategorySelect($event)"></app-core-cpmainmenu-tree>
   </div>
-  <div class="col-xl-9">
+  <div class="col-xl-6">
     <div class="button-row">
       <button *ngIf="dataModelResult.Access.AccessAddRow " (click)="onActionbuttonNewRow()" type="button"
         class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">اضافه</button>
@@ -34,7 +34,7 @@
         <!-- Icon Column -->
         <ng-container matColumnDef="Icon">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Icon']?.FieldTitle}} </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.Icon}} </mat-cell>
+          <mat-cell *matCellDef="let row"><i [ngClass]="row.Icon" aria-hidden="true"></i>  </mat-cell>
         </ng-container>
         <!-- ID Column -->
         <ng-container matColumnDef="Id">

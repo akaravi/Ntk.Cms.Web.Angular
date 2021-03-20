@@ -23,7 +23,6 @@ import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { CoreModuleDeleteComponent } from '../delete/delete.component';
 import { MatDialog } from '@angular/material/dialog';
 import { CoreModuleEditComponent } from '../edit/edit.component';
 import { CoreModuleAddComponent } from '../add/add.component';
@@ -153,13 +152,13 @@ export class CoreModuleTreeComponent implements OnInit , OnDestroy{
       this.cmsToastrService.toastr.error(message, title);
       return;
     }
-    const dialogRef = this.dialog.open(CoreModuleDeleteComponent, {
-      data: { id }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result && result.dialogChangedDate) {
-        this.DataGetAll();
-      }
-    });
+    // const dialogRef = this.dialog.open(CoreModuleDeleteComponent, {
+    //   data: { id }
+    // });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   if (result && result.dialogChangedDate) {
+    //     this.DataGetAll();
+    //   }
+    // });
   }
 }

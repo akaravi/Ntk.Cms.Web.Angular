@@ -17,8 +17,6 @@ export class CoreCpMainMenuSelectorComponent implements OnInit {
   constructor(
     public coreEnumService: CoreEnumService,
     public categoryService: CoreCpMainMenuService) {
-
-
   }
   dataModelResult: ErrorExceptionResult<CoreCpMainMenuModel> = new ErrorExceptionResult<CoreCpMainMenuModel>();
   dataModelSelect: CoreCpMainMenuModel = new CoreCpMainMenuModel();

@@ -20,11 +20,10 @@ import {
   NtkCmsApiStoreService,
 } from 'ntk-cms-api';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
-import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { CoreCpMainMenuEditComponent } from '../edit/edit.component';
+import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
+import { Subscription } from 'rxjs';
 import { CoreCpMainMenuAddComponent } from '../add/add.component';
 
 
@@ -39,8 +38,7 @@ export class CoreCpMainMenuTreeComponent implements OnInit , OnDestroy{
     private cmsToastrService: CmsToastrService,
     public coreEnumService: CoreEnumService,
     public categoryService: CoreCpMainMenuService,
-    private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
   ) {
   }
   @Input() set optionSelectForce(x: number | CoreCpMainMenuModel) {
@@ -50,13 +48,13 @@ export class CoreCpMainMenuTreeComponent implements OnInit , OnDestroy{
   dataModelResult: ErrorExceptionResult<CoreCpMainMenuModel> = new ErrorExceptionResult<CoreCpMainMenuModel>();
   filteModel = new FilterModel();
   loading = new ProgressSpinnerModel();
-  treeControl = new NestedTreeControl<CoreCpMainMenuModel>(node => null);
+  treeControl = new NestedTreeControl<CoreCpMainMenuModel>(node => node.Children);
   dataSource = new MatTreeNestedDataSource<CoreCpMainMenuModel>();
   @Output() optionSelect = new EventEmitter();
   cmsApiStoreSubscribe: Subscription;
   @Input() optionReload = () => this.onActionReload();
 
-  hasChild = (_: number, node: CoreCpMainMenuModel) => false;
+  hasChild = (_: number, node: CoreCpMainMenuModel) => !!node.Children && node.Children.length > 0;
 
 
   ngOnInit(): void {
@@ -73,7 +71,7 @@ export class CoreCpMainMenuTreeComponent implements OnInit , OnDestroy{
     this.filteModel.AccessLoad = true;
     this.loading.Globally = false;
     this.loading.display = true;
-    this.categoryService.ServiceGetAll(this.filteModel).subscribe(
+    this.categoryService.ServiceGetAllMenu(this.filteModel).subscribe(
       (next) => {
         if (next.IsSuccess) {
           this.dataModelResult = next;
@@ -93,6 +91,12 @@ export class CoreCpMainMenuTreeComponent implements OnInit , OnDestroy{
   onActionSelect(model: CoreCpMainMenuModel): void {
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
+    // if (this.optionsData) {
+    //   this.optionsData.data.Select = this.dataModelSelect;
+    //   if (this.optionsData.parentMethods && this.optionsData.parentMethods.onActionSelect) {
+    //     this.optionsData.parentMethods.onActionSelect(this.dataModelSelect);
+    //   }
+    // }
   }
   onActionReload(): void {
     if (this.dataModelSelect && this.dataModelSelect.Id > 0) {
@@ -102,6 +106,7 @@ export class CoreCpMainMenuTreeComponent implements OnInit , OnDestroy{
       this.onActionSelect(null);
     }
     this.dataModelSelect = new CoreCpMainMenuModel();
+    // this.optionsData.data.Select = new CoreCpMainMenuModel();
     this.DataGetAll();
   }
   onActionSelectForce(id: number | CoreCpMainMenuModel): void {
@@ -109,10 +114,20 @@ export class CoreCpMainMenuTreeComponent implements OnInit , OnDestroy{
   }
 
   onActionAdd(): void {
-    const dialogRef = this.dialog.open(CoreCpMainMenuAddComponent, {
-      data: {}
-    });
+    let parentId = 0;
+    if (this.dataModelSelect && this.dataModelSelect.Id > 0) {
+      parentId = this.dataModelSelect.Id;
+    }
+
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = { parentId };
+
+
+    const dialogRef = this.dialog.open(CoreCpMainMenuAddComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(result => {
+      // console.log(`Dialog result: ${result}`);
       if (result && result.dialogChangedDate) {
         this.DataGetAll();
       }
@@ -134,9 +149,37 @@ export class CoreCpMainMenuTreeComponent implements OnInit , OnDestroy{
       data: { id }
     });
     dialogRef.afterClosed().subscribe(result => {
+      // console.log(`Dialog result: ${result}`);
       if (result && result.dialogChangedDate) {
         this.DataGetAll();
       }
     });
   }
+
+  onActionDelete(): void {
+    // this.categoryService.ServiceDelete(this.getNodeOfId.id).subscribe((res) => {
+    //   if (res.IsSuccess) {
+    //   }
+    // });
+    let id = 0;
+    if (this.dataModelSelect && this.dataModelSelect.Id > 0) {
+      id = this.dataModelSelect.Id;
+    }
+    if (id === 0) {
+      const title = 'برروز خطا ';
+      const message = 'دسته بندی انتخاب نشده است';
+      this.cmsToastrService.toastr.error(message, title);
+      return;
+    }
+    // const dialogRef = this.dialog.open(CoreCpMainMenuDeleteComponent, {
+    //   data: { id }
+    // });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   // console.log(`Dialog result: ${result}`);
+    //   if (result && result.dialogChangedDate) {
+    //     this.DataGetAll();
+    //   }
+    // });
+  }
+
 }

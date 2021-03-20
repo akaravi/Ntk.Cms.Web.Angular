@@ -7,6 +7,7 @@ import {
   CoreCpMainMenuModel,
   AccessModel,
   DataFieldInfoModel,
+  CoreModuleModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -181,6 +182,18 @@ export class CoreCpMainMenuEditComponent implements OnInit {
           // stepper.previous();
         }, 10);
       }
+    }
+  }
+  onActionCategoryModuleSelect(model: CoreModuleModel): void {
+    this.dataModel.LinkModuleId = null;
+    if (model && model.Id > 0) {
+      this.dataModel.LinkModuleId = model.Id;
+    }
+  }
+  onActionCategorySelect(model: CoreCpMainMenuModel): void {
+    this.dataModel.LinkParentId = null;
+    if (model && model.Id > 0) {
+      this.dataModel.LinkParentId = model.Id;
     }
   }
 }
