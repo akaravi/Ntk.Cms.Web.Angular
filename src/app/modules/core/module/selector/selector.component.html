@@ -6,5 +6,7 @@
             <span>{{ state.Title }}</span>
         </mat-option>
     </mat-autocomplete>
+    <mat-icon matSuffix *ngIf="dataModelSelect.Id" matSuffix mat-icon-button aria-label="Clear"
+        (click)="onActionEmpty()">close</mat-icon>
     <ng-content></ng-content>
 </mat-form-field>

@@ -43,8 +43,6 @@ import { TagInputModule } from 'ngx-chips';
     SharedModule.forRoot(),
     AngularEditorModule,
     TagInputModule,
-    // CmsFileManagerModule
-
   ],
   providers: [
     CoreModuleService,

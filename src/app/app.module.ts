@@ -1,14 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, OnInit } from '@angular/core';
 import { AppComponent } from './app.component';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CoreAuthService, CoreEnumService } from 'ntk-cms-api';
 import xml from 'highlight.js/lib/languages/xml';
 import json from 'highlight.js/lib/languages/json';
 import scss from 'highlight.js/lib/languages/scss';
 import typescript from 'highlight.js/lib/languages/typescript';
 import { HIGHLIGHT_OPTIONS, HighlightModule } from 'ngx-highlightjs';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { ToastrModule } from 'ngx-toastr';
 import { SplashScreenModule } from './core/partials/layout/splash-screen/splash-screen.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,6 +21,7 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { HttpConfigInterceptor } from './core/interceptor/httpConfigInterceptor';
 import { AppRouting } from './app.routing';
 import { CmsStoreModule } from './core/reducers/cmsStore.module';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 export function getHighlightLanguages(): any {
   return [
@@ -30,7 +31,9 @@ export function getHighlightLanguages(): any {
     { name: 'json', func: json },
   ];
 }
-
+export function CreateTranslateLoader(http: HttpClient): any {
+  return new TranslateHttpLoader(http, '/assets/i18n/', '.json');
+}
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,6 +52,13 @@ export function getHighlightLanguages(): any {
       preventDuplicates: true,
       closeButton: true,
       extendedTimeOut: 0,
+    }),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (CreateTranslateLoader),
+        deps: [HttpClient]
+      }
     }),
     SplashScreenModule,
     InlineSVGModule.forRoot(),

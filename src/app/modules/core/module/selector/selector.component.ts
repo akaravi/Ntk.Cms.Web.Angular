@@ -90,7 +90,11 @@ export class CoreModuleSelectorComponent implements OnInit {
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
   }
-
+  onActionEmpty(): void {
+    this.formControl.setValue(0);
+    this.dataModelSelect = new CoreModuleModel();
+    this.optionSelect.emit(this.dataModelSelect);
+  }
   push(newvalue: CoreModuleModel): Observable<CoreModuleModel[]> {
     return this.filteredOptions.pipe(map(items => {
       if (items.find(x => x.Id === newvalue.Id)) {

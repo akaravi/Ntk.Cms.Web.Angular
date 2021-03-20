@@ -16,6 +16,8 @@ import { CoreCpMainMenuEditComponent } from './edit/edit.component';
 import { CoreCpMainMenuSelectorComponent } from './selector/selector.component';
 import { CoreCpMainMenuTreeComponent } from './tree/tree.component';
 import { CoreModuleModule } from '../module/coreModule.module';
+import { ColorPickerModule } from 'ngx-color-picker';
+import { IconPickerModule } from 'ngx-icon-picker';
 
 
 
@@ -28,9 +30,16 @@ import { CoreModuleModule } from '../module/coreModule.module';
     CoreCpMainMenuTreeComponent,
     CoreCpMainMenuSelectorComponent,
   ],
+  exports: [
+    CoreCpMainMenuComponent,
+    CoreCpMainMenuListComponent,
+    CoreCpMainMenuAddComponent,
+    CoreCpMainMenuEditComponent,
+    CoreCpMainMenuTreeComponent,
+    CoreCpMainMenuSelectorComponent,
+  ],
   imports: [
     CommonModule,
-    // CoreModuleModule,
     CoreCpMainMenuRouting,
     FormsModule,
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
@@ -38,7 +47,9 @@ import { CoreModuleModule } from '../module/coreModule.module';
     SharedModule.forRoot(),
     AngularEditorModule,
     TagInputModule,
-    CmsFileManagerModule
+    CoreModuleModule,
+    ColorPickerModule,
+    IconPickerModule
   ],
   providers: [
     CoreEnumService,

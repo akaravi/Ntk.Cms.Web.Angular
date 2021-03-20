@@ -106,6 +106,35 @@
             <mat-hint align="end">{{ RouteAddressLink.value.length }} / 100</mat-hint>
 
           </mat-form-field>
+
+              <!-- Color Field -->
+              <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Color']?.AccessWatchField">
+                <mat-label> {{fieldsInfo['Color']?.FieldTitle}}</mat-label>
+                <input matInput [(ngModel)]="dataModel.Color" name="dataModel.Color" #Color
+                [value]="dataModel.Color"
+       [style.background]="dataModel.Color"
+       [(colorPicker)]="dataModel.Color"
+
+                  type="text" [disabled]="!fieldsInfo['Color']?.AccessEditField"
+                  placeholder="{{fieldsInfo['Color']?.FieldTitle}}"  />
+                <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
+                  (click)="dataModel.Color = ''">close</mat-icon>
+                <mat-icon matSuffix>mode_edit</mat-icon>
+
+              </mat-form-field>
+                   <!-- Icon Field -->
+          <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Icon']?.AccessWatchField">
+            <mat-label> {{fieldsInfo['Icon']?.FieldTitle}}</mat-label>
+            <input matInput [(ngModel)]="dataModel.Icon" name="dataModel.Icon" #Icon
+            [iconPicker]="dataModel.Icon"
+            [value]="dataModel.Icon"
+              type="text" [disabled]="!fieldsInfo['Icon']?.AccessEditField"
+              placeholder="{{fieldsInfo['Icon']?.FieldTitle}}"  />
+            <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
+              (click)="dataModel.Icon = ''">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
+
+          </mat-form-field>
           <!-- Description Field -->
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Description']?.AccessWatchField">
             <mat-label>{{fieldsInfo['Description']?.FieldTitle}}</mat-label>
@@ -134,7 +163,7 @@
 
           <div *ngIf="formInfo.FormSubmitAllow">
             <a class="btn btn-secondary btn-sm BTN">
-              <button (click)="onActionBackToParent()" type="button" class="btn btn-warning BTN">بازگشت</button>
+              <button (click)="onFormCancel()" type="button" class="btn btn-warning BTN">بازگشت</button>
             </a> <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-primary font-weight-bold text-uppercase px-9 py-4">
               بعدی
@@ -155,9 +184,9 @@
               {{fieldsInfo['ShowInAccessAdminAllowToProfessionalData']?.FieldTitle}}
             </mat-slide-toggle>
           </div>
-
+          <!-- LinkModuleId Field -->
           <app-core-module-selector (optionSelect)="onActionCategoryModuleSelect($event)" [disabled]="false"
-          [optionSelectForce]="dataModel.LinkModuleId" [optionPlaceholder]="'منوی والد'">
+          [optionSelectForce]="dataModel.LinkModuleId" [optionPlaceholder]="'ماژول'">
         </app-core-module-selector>
 
 

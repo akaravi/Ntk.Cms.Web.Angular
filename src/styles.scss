@@ -2,10 +2,9 @@
 @font-face {
   font-family: IRANSansWeb;
   src: url(assets/fonts/IRANSansWeb.ttf);
-
 }
-body{
-  font-family: 'IRANSansWeb';
+body {
+  font-family: "IRANSansWeb";
   margin: 0;
   padding: 0;
 }
@@ -15,7 +14,7 @@ body{
 // => Material
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
-@import '~ngx-toastr/toastr.css';
+@import "~ngx-toastr/toastr.css";
 @import "~highlight.js/styles/googlecode.css";
 @import "~perfect-scrollbar/css/perfect-scrollbar.css";
 
@@ -35,9 +34,8 @@ body{
 @import "./assets/sass/themes/layout/brand/dark.scss";
 @import "./assets/sass/themes/layout/aside/dark.scss";
 
-
 @import "~leaflet/dist/leaflet.css";
- @import "~ntk-cms-filemanager/src/assets/styles.scss";
+@import "~ntk-cms-filemanager/src/assets/styles.scss";
 
 // Header themes
 // .header-base-light {
@@ -92,9 +90,9 @@ body{
   padding-right: 8px;
   border-radius: 5px;
   background: white;
-  box-shadow: 0 0 6px 1px rgba(0, 0, 0, .1);
+  box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.1);
 }
-.mat-form-field-wrapper{
+.mat-form-field-wrapper {
   // font-size:medium;
 }
 table {
@@ -102,10 +100,10 @@ table {
   margin-top: 20px;
   font-family: IRANSansWeb;
 }
-mat-paginator{
+mat-paginator {
   display: flex;
 }
-.align-Btn{
+.align-Btn {
   margin-top: 20px;
   width: 100%;
   height: auto;
@@ -114,23 +112,22 @@ mat-paginator{
   padding-right: 8px;
   border-radius: 5px;
   background: white;
-  box-shadow: 0 0 6px 1px rgba(0, 0, 0, .1);
+  box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.1);
 }
-.BTN{
+.BTN {
   margin-right: 5px;
 }
 ::ng-deep .mat-slide-toggle-content {
-  font-family: 'IRANSansWeb' !important;
+  font-family: "IRANSansWeb" !important;
 }
 .btn-bg-info {
   color: white;
 }
 @media (max-width: 475px) {
-  .BTN{
+  .BTN {
     margin-right: 0;
   }
-  .align-Btn{
-
+  .align-Btn {
     margin-top: 20px;
     width: 100%;
     height: auto;
@@ -145,9 +142,9 @@ mat-paginator{
     box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.1);
   }
 }
-.Query{
+.Query {
   padding: 10px;
 }
-.Action{
+.Action {
   font-size: x-small;
 }
