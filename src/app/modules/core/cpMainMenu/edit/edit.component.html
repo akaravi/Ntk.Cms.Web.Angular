@@ -45,7 +45,7 @@
             <input matInput [(ngModel)]="dataModel.TitleML" name="dataModel.TitleML" #TitleML type="text"
               [disabled]="!fieldsInfo['TitleML']?.AccessEditField" placeholder="{{fieldsInfo['TitleML']?.FieldTitle}}"
               minlength="3" maxlength="100" required />
-            <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
+            <mat-icon matSuffix *ngIf="dataModel.TitleML" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.TitleML = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
             <mat-hint align="end">{{ TitleML.value.length }} / 100</mat-hint>
@@ -59,7 +59,7 @@
             <input matInput [(ngModel)]="dataModel.TitleEn" name="dataModel.TitleEn" #TitleEn type="text"
               [disabled]="!fieldsInfo['TitleEn']?.AccessEditField" placeholder="{{fieldsInfo['TitleEn']?.FieldTitle}}"
               minlength="3" maxlength="100" required />
-            <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
+            <mat-icon matSuffix *ngIf="dataModel.TitleEn" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.TitleEn = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
             <mat-hint align="end">{{ TitleEn.value.length }} / 100</mat-hint>
@@ -74,7 +74,7 @@
               #TitleResourceLanguage type="text" [disabled]="!fieldsInfo['TitleResourceLanguage']?.AccessEditField"
               placeholder="{{fieldsInfo['TitleResourceLanguage']?.FieldTitle}}" minlength="3" maxlength="100"
               required />
-            <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
+            <mat-icon matSuffix *ngIf="dataModel.TitleResourceLanguage" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.TitleResourceLanguage = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
             <mat-hint align="end">{{ TitleResourceLanguage.value.length }} / 100</mat-hint>
@@ -88,7 +88,7 @@
             <input matInput [(ngModel)]="dataModel.AddressLink" name="dataModel.AddressLink" #AddressLink type="text"
               [disabled]="!fieldsInfo['AddressLink']?.AccessEditField"
               placeholder="{{fieldsInfo['AddressLink']?.FieldTitle}}" minlength="0" maxlength="100" />
-            <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
+            <mat-icon matSuffix *ngIf="dataModel.AddressLink" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.AddressLink = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
             <mat-hint align="end">{{ AddressLink.value.length }} / 100</mat-hint>
@@ -100,37 +100,40 @@
             <input matInput [(ngModel)]="dataModel.RouteAddressLink" name="dataModel.RouteAddressLink" #RouteAddressLink
               type="text" [disabled]="!fieldsInfo['RouteAddressLink']?.AccessEditField"
               placeholder="{{fieldsInfo['RouteAddressLink']?.FieldTitle}}" minlength="0" maxlength="100" />
-            <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
+            <mat-icon matSuffix *ngIf="dataModel.RouteAddressLink" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.RouteAddressLink = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
             <mat-hint align="end">{{ RouteAddressLink.value.length }} / 100</mat-hint>
 
           </mat-form-field>
 
-              <!-- Color Field -->
-              <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Color']?.AccessWatchField">
-                <mat-label> {{fieldsInfo['Color']?.FieldTitle}}</mat-label>
-                <input matInput [(ngModel)]="dataModel.Color" name="dataModel.Color" #Color
-                [value]="dataModel.Color"
-       [style.background]="dataModel.Color"
-       [(colorPicker)]="dataModel.Color"
+          <!-- Color Field -->
+          <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Color']?.AccessWatchField">
+            <mat-label> {{fieldsInfo['Color']?.FieldTitle}}</mat-label>
+            <input matInput [(ngModel)]="dataModel.Color" name="dataModel.Color" #Color [value]="dataModel.Color"
+              [style.background]="dataModel.Color" [(colorPicker)]="dataModel.Color" type="text"
+              [disabled]="!fieldsInfo['Color']?.AccessEditField" placeholder="{{fieldsInfo['Color']?.FieldTitle}}" />
+            <mat-icon matSuffix *ngIf="dataModel.Color" matSuffix mat-icon-button aria-label="Clear"
+              (click)="dataModel.Color = ''">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
 
-                  type="text" [disabled]="!fieldsInfo['Color']?.AccessEditField"
-                  placeholder="{{fieldsInfo['Color']?.FieldTitle}}"  />
-                <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
-                  (click)="dataModel.Color = ''">close</mat-icon>
-                <mat-icon matSuffix>mode_edit</mat-icon>
+          </mat-form-field>
 
-              </mat-form-field>
-                   <!-- Icon Field -->
+
+
+
+
+          <!-- Icon Field -->
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Icon']?.AccessWatchField">
             <mat-label> {{fieldsInfo['Icon']?.FieldTitle}}</mat-label>
-            <input matInput [(ngModel)]="dataModel.Icon" name="dataModel.Icon" #Icon
-            [iconPicker]="dataModel.Icon"
-            [value]="dataModel.Icon"
-              type="text" [disabled]="!fieldsInfo['Icon']?.AccessEditField"
-              placeholder="{{fieldsInfo['Icon']?.FieldTitle}}"  />
-            <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
+            <input matInput [(ngModel)]="dataModel.Icon" name="dataModel.Icon" #Icon [iconPicker]="dataModel.Icon"
+            [ipIconPack]="['fa']"
+            [ipPosition] ="'top'"              (iconPickerSelect)="onIconPickerSelect($event)" type="text"
+              [disabled]="!fieldsInfo['Icon']?.AccessEditField" placeholder="{{fieldsInfo['Icon']?.FieldTitle}}" />
+            <span class="input-group-addon"><i [ngClass]="dataModel.Icon"></i></span>
+            <mat-icon  >{{dataModel.Icon}}</mat-icon>
+
+            <mat-icon matSuffix *ngIf="dataModel.Icon" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.Icon = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
 
@@ -149,11 +152,6 @@
               {{fieldsInfo['Description']?.FieldTitle}} is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-
-
-
-
-
 
 
 
@@ -186,8 +184,8 @@
           </div>
           <!-- LinkModuleId Field -->
           <app-core-module-selector (optionSelect)="onActionCategoryModuleSelect($event)" [disabled]="false"
-          [optionSelectForce]="dataModel.LinkModuleId" [optionPlaceholder]="'ماژول'">
-        </app-core-module-selector>
+            [optionSelectForce]="dataModel.LinkModuleId" [optionPlaceholder]="'ماژول'">
+          </app-core-module-selector>
 
 
           <div *ngIf="formInfo.FormSubmitAllow">

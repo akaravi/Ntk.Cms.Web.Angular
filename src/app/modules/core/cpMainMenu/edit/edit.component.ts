@@ -196,4 +196,7 @@ export class CoreCpMainMenuEditComponent implements OnInit {
       this.dataModel.LinkParentId = model.Id;
     }
   }
+  onIconPickerSelect(model: any): void {
+    this.dataModel.Icon = model;
+  }
 }

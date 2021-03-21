@@ -6,7 +6,6 @@ import { TreeviewModule } from 'ngx-treeview';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { TagInputModule } from 'ngx-chips';
-import { CmsFileManagerModule } from 'ntk-cms-filemanager';
 import { CoreEnumService, CoreSiteUserService,  CoreCpMainMenuService } from 'ntk-cms-api';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 import { CoreCpMainMenuComponent } from './coreCpMainMenu.component';
