@@ -34,7 +34,7 @@
         <!-- Icon Column -->
         <ng-container matColumnDef="Icon">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Icon']?.FieldTitle}} </mat-header-cell>
-          <mat-cell *matCellDef="let row"><i [ngClass]="row.Icon" aria-hidden="true"></i>  </mat-cell>
+          <mat-cell *matCellDef="let row"><i [ngClass]="row.Icon" [style.color]="row.Color" aria-hidden="true"></i>  </mat-cell>
         </ng-container>
         <!-- ID Column -->
         <ng-container matColumnDef="Id">

@@ -54,8 +54,14 @@ export class CoreUserGroupChecklistComponent implements OnInit {
         this.fieldsStatus = new Map<number, boolean>();
         if (next.IsSuccess) {
           this.dataModelResult = next;
-          this.dataModelResult.ListItems.forEach((el) => this.fieldsStatus[el.Id] = false);
-          this.dataIdsSelect.forEach((el) => this.fieldsStatus[el] = true);
+          this.dataModelResult.ListItems.forEach((el) => this.fieldsStatus.set(el.Id, false));
+          this.dataIdsSelect.forEach((el) => this.fieldsStatus.set(el, true));
+          this.dataModelResult.ListItems.forEach((el) => {
+            if (this.fieldsStatus.get(el.Id)) {
+              this.dataModelSelect.push(el);
+            }
+          });
+
         }
         this.loading.display = false;
       },
@@ -66,11 +72,14 @@ export class CoreUserGroupChecklistComponent implements OnInit {
     );
   }
   onActionSelect(value: CoreUserGroupModel): void {
-    debugger
-    if (this.dataModelSelect.includes(value)) {
+    
+    var item = this.dataModelSelect.filter(function (obj) { return obj.Id == value.Id; }).shift();
+    if (item) {
+      this.fieldsStatus.set(value.Id, false);
       this.optionSelectRemoved.emit(value);
       this.dataModelSelect.splice(this.dataModelSelect.indexOf(value), 1);
     } else {
+      this.fieldsStatus.set(value.Id, true);
       this.optionSelectAdded.emit(value);
       this.dataModelSelect.push(value);
     }

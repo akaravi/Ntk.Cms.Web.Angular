@@ -28,7 +28,7 @@
               {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
             </mat-icon>
           </button>
-          <i [ngClass]="node.Icon" aria-hidden="true"></i>
+          <i [ngClass]="node.Icon"  [style.color]="node.Color" aria-hidden="true"></i>
           &nbsp;&nbsp;&nbsp;&nbsp;
           {{node.Title}}
         </div>
