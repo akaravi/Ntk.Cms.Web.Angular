@@ -8,7 +8,6 @@ import { AuthSingUpComponent } from './singup/singup.component';
 import { AuthForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { AuthLogoutComponent } from './logout/logout.component';
 import { AuthComponent } from './auth.component';
-import { TranslationModule } from '../../core/i18n/translation.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
@@ -21,12 +20,12 @@ import { SharedModule } from 'src/app/shared/shared.module';
   ],
   imports: [
     CommonModule,
-    TranslationModule,
+    SharedModule,
     AuthRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    SharedModule
+
   ]
 })
 export class AuthModule { }

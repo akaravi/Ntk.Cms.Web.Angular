@@ -22,14 +22,23 @@ export class PersianDateFull {
   /*
     Takes a value and convert it to
    */
-  transform(value: string): string {
-    if (!value || value.length === 0) {
-      return '';
+  transform(value: string | Date): string {
+    if (typeof value === 'string') {
+      if (!value || value.length === 0) {
+        return '';
+      }
+      const d = new Date(value);
+      if (!d) {
+        return '';
+      }
+      return this.persianCalendarService.PersianCalendar(d) + ' ' + d.getHours() + ':' + d.getMinutes();
     }
-    const d = new Date(value);
-    if (!d) {
-      return '';
+    if (typeof value === typeof Date) {
+      if (!value) {
+        return '';
+      }
+      return this.persianCalendarService.PersianCalendar(value) + ' ' + value.getHours() + ':' + value.getMinutes();
     }
-    return this.persianCalendarService.PersianCalendar(d) + ' ' + d.getHours() + ':' + d.getMinutes();
   }
+
 }

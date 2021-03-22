@@ -16,6 +16,7 @@ import { CoreUserGroupListComponent } from './list/list.component';
 import { TreeviewModule } from 'ngx-treeview';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { TagInputModule } from 'ngx-chips';
+import { CoreUserGroupChecklistComponent } from './checklist/checklist.component';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { TagInputModule } from 'ngx-chips';
     CoreUserGroupEditComponent,
     CoreUserGroupSelectorComponent,
     CoreUserGroupTreeComponent,
+    CoreUserGroupChecklistComponent,
   ],
   exports: [
     CoreUserGroupComponent,
@@ -34,6 +36,7 @@ import { TagInputModule } from 'ngx-chips';
     CoreUserGroupEditComponent,
     CoreUserGroupSelectorComponent,
     CoreUserGroupTreeComponent,
+    CoreUserGroupChecklistComponent,
   ],
   imports: [
     CommonModule,

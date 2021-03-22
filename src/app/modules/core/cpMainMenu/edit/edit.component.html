@@ -127,11 +127,10 @@
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Icon']?.AccessWatchField">
             <mat-label> {{fieldsInfo['Icon']?.FieldTitle}}</mat-label>
             <input matInput [(ngModel)]="dataModel.Icon" name="dataModel.Icon" #Icon [iconPicker]="dataModel.Icon"
-            [ipIconPack]="['fa']"
-            [ipPosition] ="'top'"              (iconPickerSelect)="onIconPickerSelect($event)" type="text"
+              [ipIconPack]="['fa']" [ipPosition]="'top'" (iconPickerSelect)="onIconPickerSelect($event)" type="text"
               [disabled]="!fieldsInfo['Icon']?.AccessEditField" placeholder="{{fieldsInfo['Icon']?.FieldTitle}}" />
             <span class="input-group-addon"><i [ngClass]="dataModel.Icon"></i></span>
-            <mat-icon  >{{dataModel.Icon}}</mat-icon>
+            <mat-icon>{{dataModel.Icon}}</mat-icon>
 
             <mat-icon matSuffix *ngIf="dataModel.Icon" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.Icon = ''">close</mat-icon>
@@ -187,7 +186,10 @@
             [optionSelectForce]="dataModel.LinkModuleId" [optionPlaceholder]="'ماژول'">
           </app-core-module-selector>
 
-
+          <app-core-usercategory-checklist [optionSelectForce]="dataCoreCpMainMenuIds"
+            (optionSelect)="onActionCategoryUserCategorySelect($event)"
+            (optionSelectAdded)="onActionCategoryUserCategorySelectAdded($event)"
+            (optionSelectRemoved)="onActionCategoryUserCategorySelectRemoved($event)"></app-core-usercategory-checklist>
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">

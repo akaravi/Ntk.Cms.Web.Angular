@@ -8,6 +8,11 @@ import {
   AccessModel,
   DataFieldInfoModel,
   CoreModuleModel,
+  CoreUserGroupModel,
+  CoreCpMainMenuCmsUserGroupModel,
+  CoreCpMainMenuCmsUserGroupService,
+  FilterModel,
+  FilterDataModel
 } from 'ntk-cms-api';
 import {
   Component,
@@ -41,6 +46,7 @@ export class CoreCpMainMenuEditComponent implements OnInit {
     private dialogRef: MatDialogRef<CoreCpMainMenuEditComponent>,
     public coreEnumService: CoreEnumService,
     public coreCpMainMenuService: CoreCpMainMenuService,
+    public coreCpMainMenuCmsUserGroupService: CoreCpMainMenuCmsUserGroupService,
     private cmsToastrService: CmsToastrService,
     private publicHelper: PublicHelper
   ) {
@@ -68,7 +74,9 @@ export class CoreCpMainMenuEditComponent implements OnInit {
 
   fileManagerOpenForm = false;
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
-
+  dataCoreCpMainMenuModel: CoreUserGroupModel[];
+  dataCoreCpMainMenuIds: number[] = [];
+  dataCoreCpMainMenuCmsUserGroupModel: CoreCpMainMenuCmsUserGroupModel[];
 
   ngOnInit(): void {
     if (this.requestId > 0) {
@@ -106,7 +114,48 @@ export class CoreCpMainMenuEditComponent implements OnInit {
       (next) => {
         this.dataModel = next.Item;
         if (next.IsSuccess) {
+          this.DataGetAllMenuCoreUserGroup();
           this.formInfo.FormTitle = this.formInfo.FormTitle + ' ' + next.Item.Title;
+          this.formInfo.FormAlert = '';
+        } else {
+          this.formInfo.FormAlert = 'برروز خطا';
+          this.formInfo.FormError = next.ErrorMessage;
+        }
+        this.loading.display = false;
+      },
+      (error) => {
+        this.cmsToastrService.typeError(error);
+        this.loading.display = false;
+      }
+    );
+  }
+  DataGetAllMenuCoreUserGroup(): void {
+
+    if (this.requestId <= 0) {
+      this.cmsToastrService.typeErrorEditRowIsNull();
+      return;
+    }
+
+    this.formInfo.FormAlert = 'در دریافت ارسال اطلاعات از سرور';
+    this.formInfo.FormError = '';
+    this.loading.display = true;
+    const filteModelContent = new FilterModel();
+    const filter = new FilterDataModel();
+    filter.PropertyName = 'CmsCpMainMenu_Id';
+    filter.Value = this.dataModel.Id;
+    filteModelContent.Filters.push(filter);
+
+    this.coreCpMainMenuCmsUserGroupService.ServiceGetAll(filteModelContent).subscribe(
+      (next) => {
+        debugger
+
+        this.dataCoreCpMainMenuCmsUserGroupModel = next.ListItems;
+        const listG: number[] = [];
+        this.dataCoreCpMainMenuCmsUserGroupModel.forEach(element => {
+          listG.push(element.CmsUserGroup_Id);
+        });
+        this.dataCoreCpMainMenuIds = listG;
+        if (next.IsSuccess) {
           this.formInfo.FormAlert = '';
         } else {
           this.formInfo.FormAlert = 'برروز خطا';
@@ -149,7 +198,6 @@ export class CoreCpMainMenuEditComponent implements OnInit {
           this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
           this.cmsToastrService.typeSuccessEdit();
           this.dialogRef.close({ dialogChangedDate: true });
-
         } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
@@ -196,7 +244,56 @@ export class CoreCpMainMenuEditComponent implements OnInit {
       this.dataModel.LinkParentId = model.Id;
     }
   }
+  onActionCategoryUserCategorySelect(model: CoreUserGroupModel[]): void {
+    this.dataCoreCpMainMenuModel = model;
+  }
+  onActionCategoryUserCategorySelectAdded(model: CoreUserGroupModel): void {
+    const entity = new CoreCpMainMenuCmsUserGroupModel();
+    entity.CmsUserGroup_Id = model.Id;
+    entity.CmsCpMainMenu_Id = this.dataModel.Id;
+
+    this.coreCpMainMenuCmsUserGroupService.ServiceAdd(entity).subscribe(
+      (next) => {
+        if (next.IsSuccess) {
+          this.formInfo.FormAlert = 'ثبت در این گروه با موفقیت انجام شد';
+          this.cmsToastrService.typeSuccessEdit();
+          //this.dialogRef.close({ dialogChangedDate: true });
+        } else {
+          this.formInfo.FormAlert = 'برروز خطا';
+          this.formInfo.FormError = next.ErrorMessage;
+        }
+
+      },
+      (error) => {
+        this.formInfo.FormSubmitAllow = true;
+        this.cmsToastrService.typeError(error);
+
+      }
+    );
+  }
+  onActionCategoryUserCategorySelectRemoved(model: CoreUserGroupModel): void {
+    const entity = new CoreCpMainMenuCmsUserGroupModel();
+    entity.CmsUserGroup_Id = model.Id;
+    entity.CmsCpMainMenu_Id = this.dataModel.Id;
+    this.coreCpMainMenuCmsUserGroupService.ServiceDeleteEntity(entity).subscribe(
+      (next) => {
+        if (next.IsSuccess) {
+          this.formInfo.FormAlert = 'حذف از این گروه با موفقیت انجام شد';
+          this.cmsToastrService.typeSuccessEdit();
+          //this.dialogRef.close({ dialogChangedDate: true });
+        } else {
+          this.formInfo.FormAlert = 'برروز خطا';
+          this.formInfo.FormError = next.ErrorMessage;
+        }
+      },
+      (error) => {
+        this.formInfo.FormSubmitAllow = true;
+        this.cmsToastrService.typeError(error);
+      }
+    );
+  }
   onIconPickerSelect(model: any): void {
     this.dataModel.Icon = model;
   }
+
 }

@@ -163,7 +163,7 @@ export class TicketingDepartemenLogEditComponent implements OnInit {
       );
   }
 
-  onStepClick(event: StepperSelectionEvent): void {
+  onStepClick(event: StepperSelectionEvent, stepper: any): void {
     if (event.previouslySelectedIndex < event.selectedIndex) {
       // if (!this.formGroup.valid) {
       //   this.cmsToastrService.typeErrorFormInvalid();

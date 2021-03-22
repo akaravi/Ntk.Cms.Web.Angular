@@ -34,7 +34,7 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class CoreCpMainMenuListComponent implements OnInit , OnDestroy {
+export class CoreCpMainMenuListComponent implements OnInit, OnDestroy {
   constructor(
     private coreCpMainMenuService: CoreCpMainMenuService,
     private cmsConfirmationDialogService: CmsConfirmationDialogService,
@@ -103,10 +103,9 @@ export class CoreCpMainMenuListComponent implements OnInit , OnDestroy {
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
     if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
-      const filter =new FilterDataModel() ;
-      filter.PropertyName= 'LinkParentId';
-      filter.Value= this.categoryModelSelected.Id;
-
+      const filter = new FilterDataModel();
+      filter.PropertyName = 'LinkParentId';
+      filter.Value = this.categoryModelSelected.Id;
       this.filteModelContent.Filters.push(filter);
     }
     this.coreCpMainMenuService.ServiceGetAll(this.filteModelContent).subscribe(

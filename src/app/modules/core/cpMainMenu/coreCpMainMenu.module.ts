@@ -6,7 +6,11 @@ import { TreeviewModule } from 'ngx-treeview';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { TagInputModule } from 'ngx-chips';
-import { CoreEnumService, CoreSiteUserService,  CoreCpMainMenuService } from 'ntk-cms-api';
+import {
+   CoreEnumService,
+   CoreSiteUserService,
+    CoreCpMainMenuService ,
+    CoreCpMainMenuCmsUserGroupService} from 'ntk-cms-api';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 import { CoreCpMainMenuComponent } from './coreCpMainMenu.component';
 import { CoreCpMainMenuListComponent } from './list/list.component';
@@ -17,6 +21,7 @@ import { CoreCpMainMenuTreeComponent } from './tree/tree.component';
 import { CoreModuleModule } from '../module/coreModule.module';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { IconPickerModule } from 'ngx-icon-picker';
+import { CoreUserGroupCmsModule } from '../userCategory/coreUserGroup.module';
 
 
 
@@ -47,12 +52,14 @@ import { IconPickerModule } from 'ngx-icon-picker';
     AngularEditorModule,
     TagInputModule,
     CoreModuleModule,
+    CoreUserGroupCmsModule,
     ColorPickerModule,
     IconPickerModule
   ],
   providers: [
     CoreEnumService,
     CoreCpMainMenuService,
+    CoreCpMainMenuCmsUserGroupService,
     CoreSiteUserService,
     CmsConfirmationDialogService
   ]

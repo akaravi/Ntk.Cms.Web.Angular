@@ -22,7 +22,6 @@ import {
   CoreModuleTagService
 } from 'ntk-cms-api';
 import {MatIconModule} from '@angular/material/icon';
-import { TranslationModule } from '../../core/i18n/translation.module';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatStepperModule} from '@angular/material/stepper';
 
@@ -35,7 +34,6 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
   ],
   imports: [
     CommonModule,
-    TranslationModule,
     LinkManagmentRoutes,
     FormsModule,
     ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),

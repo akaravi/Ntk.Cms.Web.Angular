@@ -21,6 +21,7 @@ import { BoolStatusClassPipe } from '../core/pipe/boolStatusClass.pipe';
 import { PersianDateFull } from '../core/pipe/PersianDatePipe/persian-date-full.pipe';
 import { ProgressSpinnerComponent } from './progress-spinner/progress-spinner.component';
 import { OverlayService } from './overlay/overlay.service';
+import { TranslationModule } from '../core/i18n/translation.module';
 
 
 
@@ -28,6 +29,7 @@ import { OverlayService } from './overlay/overlay.service';
 @NgModule({
   imports: [
     CommonModule,
+    TranslationModule,
     FormsModule,
     HttpClientModule,
     MaterialModule,
@@ -56,6 +58,7 @@ import { OverlayService } from './overlay/overlay.service';
   exports: [
     // common and shared components/directives/pipes between more than one module and components will be listed here.
     CommonModule,
+    TranslationModule,
     FormsModule,
     HttpClientModule,
     MaterialModule,

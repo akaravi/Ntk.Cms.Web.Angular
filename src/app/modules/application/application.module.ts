@@ -31,7 +31,6 @@ import { ApplicationAppTreeComponent } from './content/tree/tree.component';
 import { ApplicationSourceAddComponent } from './source/add/add.component';
 import { ApplicationSourceEditComponent } from './source/edit/edit.component';
 import {MatIconModule} from '@angular/material/icon';
-import { TranslationModule } from '../../core/i18n/translation.module';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatStepperModule} from '@angular/material/stepper';
 import { ApplicationSourceSelectorComponent } from './source/selector/selector.component';
@@ -73,7 +72,6 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
   ],
   imports: [
     CommonModule,
-    TranslationModule,
     ApplicationRoutes,
     FormsModule,
     ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),

@@ -29,7 +29,7 @@ import { TicketingDepartemenEditComponent } from '../edit/edit.component';
 import { TicketingDepartemenAddComponent } from '../add/add.component';
 
 @Component({
-  selector: 'app-application-source-list',
+  selector: 'app-ticketing-departemen-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })

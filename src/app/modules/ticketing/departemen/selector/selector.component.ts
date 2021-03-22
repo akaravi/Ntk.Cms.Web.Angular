@@ -8,7 +8,7 @@ import { Output } from '@angular/core';
 
 
 @Component({
-  selector: 'app-application-source-selector',
+  selector: 'app-ticketing-departemen-selector',
   templateUrl: './selector.component.html',
   styleUrls: ['./selector.component.scss']
 })
