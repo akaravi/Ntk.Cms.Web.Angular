@@ -4,7 +4,7 @@
             <app-progress-spinner [options]="loading"> </app-progress-spinner>
             <div *ngIf="!loading.display" class="form-body">
                 <h4 class="form-section mb-8">
-                    <i class="ft-user"></i> {{ formInfo.FormQuestion }}
+                    <i class="ft-user"></i>
                 </h4>
 
                 <div>
@@ -35,20 +35,7 @@
                         </mat-error>
                     </mat-form-field>
 
-                    <angular-editor [placeholder]="'Enter text here...'" [config]="publicHelper.editorConfig"
-                        [(ngModel)]="dataModel.Answer" name="dataModel.Answer"></angular-editor>
 
-                    <mat-form-field class="example-full-width">
-                        <img *ngIf="dataModel?.LinkMainImageIdSrc?.length>0" style="vertical-align:middle;" aria-hidden
-                            src="{{dataModel.LinkMainImageIdSrc}}" height="50" width="50" />
-                        <mat-label (click)="fileManagerOpenForm = true">فایل آیکن</mat-label>
-                        <input matInput [(ngModel)]="dataModel.LinkMainImageId" name="dataModel.LinkMainImageId"
-                            #LinkMainImageId type="text" placeholder="شناسه فایل آیکن"
-                            (click)="fileManagerOpenForm = true" />
-                        <mat-icon matSuffix *ngIf="dataModel.LinkMainImageId" matSuffix mat-icon-button
-                            aria-label="Clear" (click)="dataModel.LinkMainImageId = ''">close</mat-icon>
-                        <mat-icon matSuffix (click)="fileManagerOpenForm = true">mode_edit</mat-icon>
-                    </mat-form-field>
 
                     <cms-file-manager (itemSelected)="onActionFileSelected($event)" [language]="appLanguage"
                         [selectFileType]="selectFileTypeMainImage" [isPopup]="true" [(openForm)]="fileManagerOpenForm"

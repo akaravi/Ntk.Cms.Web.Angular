@@ -15,7 +15,7 @@
       <input matInput [(ngModel)]="dataModel.AppVersion" [disabled]="!fieldsInfo['AppVersion']?.AccessEditField"
         name="dataModel.AppVersion" #AppVersion type="number" placeholder="ورژن" min="0" max="1000" required />
       <mat-icon matSuffix *ngIf="dataModel.AppVersion && fieldsInfo['AppVersion']?.AccessEditField" matSuffix
-        mat-icon-button aria-label="Clear" (click)="dataModel.AppVersion = ''">close</mat-icon>
+        mat-icon-button aria-label="Clear" (click)="dataModel.AppVersion = 0">close</mat-icon>
       <mat-icon *ngIf="fieldsInfo['AppVersion']?.AccessEditField" matSuffix>mode_edit</mat-icon>
       <mat-error *ngIf="AppVersion.errors?.required">
         {{ fieldsInfo['AppVersion']?.FieldAppVersion }} is <strong>required</strong>

@@ -25,8 +25,7 @@ import { MatSort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
 import { CoreSiteCategoryCmsModuleDeleteComponent } from '../delete/delete.component';
-import { CoreSiteCategoryCmsModuleEditComponent } from '../edit/edit.component';
-import { CoreSiteCategoryCmsModuleAddComponent } from '../add/add.component';
+
 
 @Component({
   selector: 'app-core-sitecategorycmsmodule-list',
@@ -170,14 +169,14 @@ export class CoreSiteCategoryCmsModuleListComponent implements OnInit , OnDestro
       this.cmsToastrService.typeErrorAccessAdd();
       return;
     }
-    const dialogRef = this.dialog.open(CoreSiteCategoryCmsModuleAddComponent, {
-      data: {}
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result && result.dialogChangedDate) {
-        this.DataGetAll();
-      }
-    });
+    // const dialogRef = this.dialog.open(CoreSiteCategoryCmsModuleAddComponent, {
+    //   data: {}
+    // });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   if (result && result.dialogChangedDate) {
+    //     this.DataGetAll();
+    //   }
+    // });
   }
 
   onActionbuttonEditRow(model: CoreSiteCategoryCmsModuleModel = this.tableRowSelected): void {
@@ -197,15 +196,15 @@ export class CoreSiteCategoryCmsModuleListComponent implements OnInit , OnDestro
       this.cmsToastrService.typeErrorAccessEdit();
       return;
     }
-    const dialogRef = this.dialog.open(CoreSiteCategoryCmsModuleEditComponent, {
-      data: { id: this.tableRowSelected.Id }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result && result.dialogChangedDate) {
-        this.DataGetAll();
-      }
-    });
-  }
+  //   const dialogRef = this.dialog.open(CoreSiteCategoryCmsModuleEditComponent, {
+  //     data: { id: this.tableRowSelected.Id }
+  //   });
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     if (result && result.dialogChangedDate) {
+  //       this.DataGetAll();
+  //     }
+  //   });
+   }
   onActionbuttonDeleteRow(model: CoreSiteCategoryCmsModuleModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
       const title = 'برروز خطا ';

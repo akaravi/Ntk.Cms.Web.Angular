@@ -22,35 +22,26 @@
                   </mat-form-field>
                   <mat-form-field class="example-full-width">
                       <mat-label>عنوان</mat-label>
-                      <input matInput [(ngModel)]="dataModel.Title" name="dataModel.Title" #Title type="text" placeholder="عنوان" minlength="3" maxlength="100" required />
-                      <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.Title = ''">close</mat-icon>
+                      <input matInput [(ngModel)]="dataModel.Username" name="dataModel.Username" #Username type="text" placeholder="Username" minlength="3" maxlength="100" required />
+                      <mat-icon matSuffix *ngIf="dataModel.Username" matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.Username = ''">close</mat-icon>
                       <mat-icon matSuffix>mode_edit</mat-icon>
-                      <mat-hint align="end">{{ Title.value.length }} / 100</mat-hint>
-                      <mat-error *ngIf="Title.errors?.required">
-                          Title is <strong>required</strong>
+                      <mat-hint align="end">{{ Username.value.length }} / 100</mat-hint>
+                      <mat-error *ngIf="Username.errors?.required">
+                        Username is <strong>required</strong>
                       </mat-error>
                   </mat-form-field>
 
                   <mat-form-field class="example-full-width">
-                      <mat-label>توضیحات</mat-label>
-                      <textarea matInput [(ngModel)]="dataModel.Description" name="dataModel.Description" #Description type="text" placeholder="توضیحات" minlength="1" maxlength="500" required rows=5></textarea>
-                      <mat-icon matSuffix *ngIf="dataModel.Description" matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.Description = ''">close</mat-icon>
+                      <mat-label>Email</mat-label>
+                      <textarea matInput [(ngModel)]="dataModel.Email" name="dataModel.Email" #Email type="text" placeholder="Email" minlength="1" maxlength="500" required rows=5></textarea>
+                      <mat-icon matSuffix *ngIf="dataModel.Email" matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.Email = ''">close</mat-icon>
                       <mat-icon matSuffix>mode_edit</mat-icon>
-                      <mat-hint align="end">{{ Description.value.length }} / 500</mat-hint>
-                      <mat-error *ngIf="Description.errors?.required">
-                          Description is <strong>required</strong>
+                      <mat-hint align="end">{{ Email.value.length }} / 500</mat-hint>
+                      <mat-error *ngIf="Email.errors?.required">
+                        Email is <strong>required</strong>
                       </mat-error>
                   </mat-form-field>
 
-                  <mat-form-field class="example-full-width">
-                      <img *ngIf="dataModel?.LinkMainImageIdSrc?.length>0" style="vertical-align:middle;" aria-hidden src="{{dataModel.LinkMainImageIdSrc}}" height="50" width="50" />
-                      <mat-label (click)="fileManagerOpenForm = true">فایل آیکن</mat-label>
-                      <input matInput [(ngModel)]="dataModel.LinkMainImageId" name="dataModel.LinkMainImageId" #LinkMainImageId type="text" placeholder="شناسه فایل آیکن" (click)="fileManagerOpenForm = true" />
-                      <mat-icon matSuffix *ngIf="dataModel.LinkMainImageId" matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.LinkMainImageId = ''">close</mat-icon>
-                      <mat-icon matSuffix (click)="fileManagerOpenForm = true">mode_edit</mat-icon>
-                  </mat-form-field>
-
-                  <cms-file-manager (itemSelected)="onActionFileSelected($event)" [language]="appLanguage" [selectFileType]="selectFileTypeMainImage" [isPopup]="true" [(openForm)]="fileManagerOpenForm" [tree]="fileManagerTree" [openFilemanagerButtonLabelKey]="'select'" [openFilemanagerButtonView]="false"></cms-file-manager>
 
               </div>
           </div>

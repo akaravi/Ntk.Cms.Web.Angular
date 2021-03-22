@@ -4,7 +4,7 @@
             <app-progress-spinner [options]="loading"> </app-progress-spinner>
             <div *ngIf="!loading.display" class="form-body">
                 <h4 class="form-section mb-8">
-                    <i class="ft-user"></i> {{ formInfo.FormQuestion }}
+                    <i class="ft-user"></i>
                 </h4>
 
                 <div>
@@ -24,19 +24,17 @@
                     </mat-form-field>
                     <mat-form-field class="example-full-width">
                         <mat-label>عنوان</mat-label>
-                        <input matInput [(ngModel)]="dataModel.Question" name="dataModel.Question" #Question type="text"
+                        <input matInput [(ngModel)]="dataModel.HtmlBody" name="dataModel.HtmlBody" #HtmlBody type="text"
                             placeholder="عنوان" minlength="3" maxlength="1000" required />
-                        <mat-icon matSuffix *ngIf="dataModel.Question" matSuffix mat-icon-button aria-label="Clear"
-                            (click)="dataModel.Question = ''">close</mat-icon>
+                        <mat-icon matSuffix *ngIf="dataModel.HtmlBody" matSuffix mat-icon-button aria-label="Clear"
+                            (click)="dataModel.HtmlBody = ''">close</mat-icon>
                         <mat-icon matSuffix>mode_edit</mat-icon>
-                        <mat-hint align="end">{{ Question.value.length }} / 1000</mat-hint>
-                        <mat-error *ngIf="Question.errors?.required">
+                        <mat-hint align="end">{{ HtmlBody.value.length }} / 1000</mat-hint>
+                        <mat-error *ngIf="HtmlBody.errors?.required">
                             Title is <strong>required</strong>
                         </mat-error>
                     </mat-form-field>
 
-                    <angular-editor [placeholder]="'Enter text here...'" [config]="publicHelper.editorConfig"
-                        [(ngModel)]="dataModel.HtmlBody" name="dataModel.HtmlBody"></angular-editor>
 
                 </div>
             </div>

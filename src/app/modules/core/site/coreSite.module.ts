@@ -19,6 +19,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { TagInputModule } from 'ngx-chips';
 import { CoreSiteCategoryCmsModule } from '../siteCategory/coreSiteCategory.module';
 import { CoreSiteCategoryCmsModuleModule } from '../siteCategoryModule/coreSiteCategoryCmsModule.module';
+import { CmsFileManagerModule } from 'ntk-cms-filemanager';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { CoreSiteCategoryCmsModuleModule } from '../siteCategoryModule/coreSiteC
     AngularEditorModule,
     TagInputModule,
     CoreSiteCategoryCmsModule,
-    CoreSiteCategoryCmsModuleModule
+    CoreSiteCategoryCmsModuleModule,
+    CmsFileManagerModule
   ],
   providers: [
     CoreSiteService,

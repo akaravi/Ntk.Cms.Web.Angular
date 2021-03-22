@@ -611,6 +611,6 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
 
   }
 
-  receiveZoom(): void {
+  receiveZoom(mode: leafletMap): void {
   }
 }

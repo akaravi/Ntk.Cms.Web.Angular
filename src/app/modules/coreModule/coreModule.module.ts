@@ -14,6 +14,7 @@ import { CoreModuleTagListComponent } from './tag/list/list.component';
 import { CoreModuleTagCategoryDeleteComponent } from './tagCategory/delete/delete.component';
 import { CoreModuleTagCategoryEditComponent } from './tagCategory/edit/edit.component';
 import { CoreModuleTagCategoryTreeComponent } from './tagCategory/tree/tree.component';
+import { CoreModuleTagCategorySelectorComponent } from './tagCategory/selector/selector.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { CoreModuleTagCategoryTreeComponent } from './tagCategory/tree/tree.comp
     CoreModuleTagCategoryEditComponent,
     CoreModuleTagCategoryDeleteComponent,
     CoreModuleTagCategoryTreeComponent,
+    CoreModuleTagCategorySelectorComponent
 
   ]
 })

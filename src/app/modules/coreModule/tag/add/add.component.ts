@@ -200,5 +200,8 @@ export class CoreModuleTagAddComponent implements OnInit, AfterViewInit {
       }
     }
   }
+  onActionBackToParent(): void {
+    this.router.navigate(['/news/content/']);
+  }
 
 }

@@ -66,6 +66,7 @@ export class CoreUserGroupChecklistComponent implements OnInit {
     );
   }
   onActionSelect(value: CoreUserGroupModel): void {
+    debugger
     if (this.dataModelSelect.includes(value)) {
       this.optionSelectRemoved.emit(value);
       this.dataModelSelect.splice(this.dataModelSelect.indexOf(value), 1);
@@ -78,7 +79,6 @@ export class CoreUserGroupChecklistComponent implements OnInit {
 
 
   onActionSelectForce(ids: number[] | CoreUserGroupModel[]): void {
-    debugger
     if (typeof ids === typeof Array(Number)) {
       ids.forEach(element => {
         this.dataIdsSelect.push(element);
@@ -88,7 +88,7 @@ export class CoreUserGroupChecklistComponent implements OnInit {
         this.dataIdsSelect.push(element.Id);
       });
     }
-    this.dataIdsSelect.forEach( (el) => this.fieldsStatus[el] = true);
+    this.dataIdsSelect.forEach((el) => this.fieldsStatus[el] = true);
   }
 
   onActionReload(): void {

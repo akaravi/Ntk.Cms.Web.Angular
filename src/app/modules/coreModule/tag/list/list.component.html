@@ -11,7 +11,6 @@
         type="button" class="btn btn-warning ml-2" data-toggle="modal" data-target="#categoryModal">ویرایش</button>
       <button *ngIf="dataModelResult.Access.AccessDeleteRow && tableRowSelected.Id>0"
         (click)="onActionbuttonDeleteRow()" type="button" class="btn btn-danger  ml-2">حذف</button>
-        <button *ngIf="tableRowSelected.Id>0" (click)="onActionbuttonComment()"  type="button" class="btn btn-warning BTN">کامنت ها</button>
       <a class="btn btn-secondary btn-sm BTN">
         <mat-slide-toggle [(ngModel)]="optionsSearch.data.show">پرس و جو ساز</mat-slide-toggle>
       </a>
@@ -77,7 +76,6 @@
           <mat-cell *matCellDef="let row" class='Action'>
             <small (click)="onActionbuttonEditRow(row)">ویرایش</small>|
             <small (click)="onActionbuttonDeleteRow(row)">حذف</small>|
-            <small (click)="onActionbuttonComment(row)">کامنت</small>
           </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="tabledisplayedColumns"></mat-header-row>

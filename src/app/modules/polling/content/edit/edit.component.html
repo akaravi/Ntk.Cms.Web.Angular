@@ -57,7 +57,7 @@
               #MaxVoteForThisContent type="number" placeholder="حداکثر امتیازی که کاربری می تواند بدهد" min="1" max="100"
               required />
             <mat-icon matSuffix *ngIf="dataModel.MaxVoteForThisContent" matSuffix mat-icon-button aria-label="Clear"
-              (click)="dataModel.MaxVoteForThisContent = '1'">close</mat-icon>
+              (click)="dataModel.MaxVoteForThisContent = 1">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
             <mat-error *ngIf="MaxVoteForThisContent.errors?.required">
               MaxVoteForThisContent is <strong>required</strong>
@@ -70,7 +70,7 @@
               #MaxVoteForEachOption type="number" placeholder="حداکثر امتیازی که کاربری می تواند بدهد" min="1" max="100"
               required />
             <mat-icon matSuffix *ngIf="dataModel.MaxVoteForEachOption" matSuffix mat-icon-button aria-label="Clear"
-              (click)="dataModel.MaxVoteForEachOption = '1'">close</mat-icon>
+              (click)="dataModel.MaxVoteForEachOption = 1">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
             <mat-error *ngIf="MaxVoteForEachOption.errors?.required">
               MaxVoteForEachOption is <strong>required</strong>
@@ -240,7 +240,7 @@
               <input matInput [(ngModel)]="dataModel.LinkMainImageId" name="dataModel.LinkMainImageId" #LinkMainImageId
                 type="text" placeholder="شناسه فایل اصلی" (click)="fileManagerOpenForm = true" />
               <mat-icon matSuffix *ngIf="dataModel.LinkMainImageId" matSuffix mat-icon-button aria-label="Clear"
-                (click)="dataModel.LinkMainImageId = ''">close</mat-icon>
+                (click)="dataModel.LinkMainImageId = null">close</mat-icon>
               <mat-icon matSuffix (click)="fileManagerOpenForm = true">mode_edit</mat-icon>
             </mat-form-field>
 
@@ -261,7 +261,7 @@
                 #LinkFilePodcastId type="text" placeholder="شناسه فایل صوتی"
                 (click)="fileManagerOpenFormPodcast = true" />
               <mat-icon matSuffix *ngIf="dataModel.LinkFilePodcastId" matSuffix mat-icon-button aria-label="Clear"
-                (click)="dataModel.LinkFilePodcastId = ''">close</mat-icon>
+                (click)="dataModel.LinkFilePodcastId = null">close</mat-icon>
               <mat-icon matSuffix (click)="fileManagerOpenFormPodcast = true">mode_edit</mat-icon>
             </mat-form-field>
 
@@ -281,7 +281,7 @@
               <input matInput [(ngModel)]="dataModel.LinkFileMovieId" name="dataModel.LinkFileMovieId" #LinkFileMovieId
                 type="text" placeholder="شناسه فایل ویدیو" (click)="fileManagerOpenFormMovie = true" />
               <mat-icon matSuffix *ngIf="dataModel.LinkFileMovieId" matSuffix mat-icon-button aria-label="Clear"
-                (click)="dataModel.LinkFileMovieId = ''">close</mat-icon>
+                (click)="dataModel.LinkFileMovieId = null">close</mat-icon>
               <mat-icon matSuffix (click)="fileManagerOpenFormMovie = true">mode_edit</mat-icon>
             </mat-form-field>
 

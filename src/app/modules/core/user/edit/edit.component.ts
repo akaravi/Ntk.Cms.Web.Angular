@@ -176,7 +176,7 @@ export class CoreUserEditComponent implements OnInit {
     this.formInfo.FormSubmitAllow = false;
     this.DataEditContent();
   }
-  onFormCancel(): void {
+  onActionBackToParent(): void {
     this.dialogRef.close({ dialogChangedDate: false });
   }
   onStepClick(event: StepperSelectionEvent, stepper: MatStepper): void {
@@ -190,4 +190,5 @@ export class CoreUserEditComponent implements OnInit {
       }
     }
   }
+
 }

@@ -25,8 +25,6 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CoreSiteCategoryCmsModuleDeleteComponent } from '../delete/delete.component';
 import { MatDialog } from '@angular/material/dialog';
-import { CoreSiteCategoryCmsModuleEditComponent } from '../edit/edit.component';
-import { CoreSiteCategoryCmsModuleAddComponent } from '../add/add.component';
 
 
 @Component({
@@ -110,14 +108,14 @@ export class CoreSiteCategoryCmsModuleTreeComponent implements OnInit , OnDestro
   }
 
   onActionAdd(): void {
-    const dialogRef = this.dialog.open(CoreSiteCategoryCmsModuleAddComponent, {
-      data: {}
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result && result.dialogChangedDate) {
-        this.DataGetAll();
-      }
-    });
+    // const dialogRef = this.dialog.open(CoreSiteCategoryCmsModuleAddComponent, {
+    //   data: {}
+    // });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   if (result && result.dialogChangedDate) {
+    //     this.DataGetAll();
+    //   }
+    // });
   }
 
   onActionEdit(): void {
@@ -131,14 +129,14 @@ export class CoreSiteCategoryCmsModuleTreeComponent implements OnInit , OnDestro
       this.cmsToastrService.toastr.error(message, title);
       return;
     }
-    const dialogRef = this.dialog.open(CoreSiteCategoryCmsModuleEditComponent, {
-      data: { id }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result && result.dialogChangedDate) {
-        this.DataGetAll();
-      }
-    });
+    // const dialogRef = this.dialog.open(CoreSiteCategoryCmsModuleEditComponent, {
+    //   data: { id }
+    // });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   if (result && result.dialogChangedDate) {
+    //     this.DataGetAll();
+    //   }
+    // });
   }
 
   onActionDelete(): void {

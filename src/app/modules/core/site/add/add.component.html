@@ -43,10 +43,10 @@
                   </mat-form-field>
 
                   <mat-form-field class="example-full-width">
-                      <img *ngIf="dataModel?.LinkMainImageIdSrc?.length>0" style="vertical-align:middle;" aria-hidden src="{{dataModel.AboutUsLinkImageIdSrc}}" height="50" width="50" />
+                      <img *ngIf="dataModel?.AboutUsLinkImageId?.length>0" style="vertical-align:middle;" aria-hidden src="{{dataModel.AboutUsLinkImageIdSrc}}" height="50" width="50" />
                       <mat-label (click)="fileManagerOpenForm = true">فایل درباره ما</mat-label>
-                      <input matInput [(ngModel)]="dataModel.LinkMainImageId" name="dataModel.LinkMainImageId" #LinkMainImageId type="text" placeholder="شناسه فایل آیکن" (click)="fileManagerOpenForm = true" />
-                      <mat-icon matSuffix *ngIf="dataModel.LinkMainImageId" matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.LinkMainImageId = ''">close</mat-icon>
+                      <input matInput [(ngModel)]="dataModel.AboutUsLinkImageId" name="dataModel.AboutUsLinkImageId" #AboutUsLinkImageId type="text" placeholder="شناسه فایل آیکن" (click)="fileManagerOpenForm = true" />
+                      <mat-icon matSuffix *ngIf="dataModel.AboutUsLinkImageId" matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.AboutUsLinkImageId = null">close</mat-icon>
                       <mat-icon matSuffix (click)="fileManagerOpenForm = true">mode_edit</mat-icon>
                   </mat-form-field>
 

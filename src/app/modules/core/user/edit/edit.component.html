@@ -35,7 +35,7 @@
             <input matInput [(ngModel)]="dataModel.Username" name="dataModel.Username" #Username type="text"
               [disabled]="!fieldsInfo['Username']?.AccessEditField" placeholder="{{fieldsInfo['Username']?.FieldTitle}}"
               minlength="3" maxlength="100" required />
-            <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
+            <mat-icon matSuffix *ngIf="dataModel.Username" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.Username = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
             <mat-hint align="end">{{ Username.value.length }} / 100</mat-hint>
@@ -48,7 +48,7 @@
             <input matInput [(ngModel)]="dataModel.Email" name="dataModel.Email" #Email type="text"
               [disabled]="!fieldsInfo['Email']?.AccessEditField" placeholder="{{fieldsInfo['Email']?.FieldTitle}}"
               minlength="3" maxlength="100" required />
-            <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
+            <mat-icon matSuffix *ngIf="dataModel.Email" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.Email = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
             <mat-hint align="end">{{ Email.value.length }} / 100</mat-hint>
@@ -69,7 +69,7 @@
             <input matInput [(ngModel)]="dataModel.Mobile" name="dataModel.Mobile" #Mobile type="text"
               [disabled]="!fieldsInfo['Mobile']?.AccessEditField" placeholder="{{fieldsInfo['Mobile']?.FieldTitle}}"
               minlength="3" maxlength="100" required />
-            <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
+            <mat-icon matSuffix *ngIf="dataModel.Mobile" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.Mobile = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
             <mat-hint align="end">{{ Mobile.value.length }} / 100</mat-hint>
@@ -141,7 +141,7 @@
             <input matInput [(ngModel)]="dataModel.Name" name="dataModel.Name" #Name type="text"
               [disabled]="!fieldsInfo['Name']?.AccessEditField" placeholder="{{fieldsInfo['Name']?.FieldTitle}}"
               minlength="3" maxlength="100" required />
-            <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
+            <mat-icon matSuffix *ngIf="dataModel.Name" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.Name = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
             <mat-hint align="end">{{ Name.value.length }} / 100</mat-hint>
@@ -157,7 +157,7 @@
             <input matInput [(ngModel)]="dataModel.LastName" name="dataModel.LastName" #LastName type="text"
               [disabled]="!fieldsInfo['LastName']?.AccessEditField" placeholder="{{fieldsInfo['LastName']?.FieldTitle}}"
               minlength="3" maxlength="100" required />
-            <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
+            <mat-icon matSuffix *ngIf="dataModel.LastName" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.LastName = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
             <mat-hint align="end">{{ LastName.value.length }} / 100</mat-hint>
@@ -166,22 +166,6 @@
             </mat-error>
           </mat-form-field>
 
-
-
-
-          <mat-form-field class="example-full-width" *ngIf="fieldsInfo['NationalCode']?.AccessWatchField">
-            <mat-label> {{fieldsInfo['NationalCode']?.FieldTitle}}</mat-label>
-            <input matInput [(ngModel)]="dataModel.NationalCode" name="dataModel.NationalCode" #NationalCode type="text"
-              [disabled]="!fieldsInfo['NationalCode']?.AccessEditField"
-              placeholder="{{fieldsInfo['NationalCode']?.FieldTitle}}" minlength="3" maxlength="100" />
-            <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
-              (click)="dataModel.NationalCode = ''">close</mat-icon>
-            <mat-icon matSuffix>mode_edit</mat-icon>
-            <mat-hint align="end">{{ NationalCode.value.length }} / 100</mat-hint>
-            <mat-error *ngIf="NationalCode.errors?.required">
-              NationalCode is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
 
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['BirthDay']?.AccessWatchField">
             <mat-label>{{fieldsInfo['BirthDay']?.FieldTitle}}</mat-label>
@@ -195,7 +179,7 @@
             <input matInput [(ngModel)]="dataModel.CompanyName" name="dataModel.CompanyName" #CompanyName type="text"
               [disabled]="!fieldsInfo['CompanyName']?.AccessEditField"
               placeholder="{{fieldsInfo['CompanyName']?.FieldTitle}}" minlength="3" maxlength="100" />
-            <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
+            <mat-icon matSuffix *ngIf="dataModel.CompanyName" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.CompanyName = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
             <mat-hint align="end">{{ CompanyName.value.length }} / 100</mat-hint>
@@ -210,7 +194,7 @@
             <input matInput [(ngModel)]="dataModel.Tell" name="dataModel.Tell" #Tell type="text"
               [disabled]="!fieldsInfo['Tell']?.AccessEditField" placeholder="{{fieldsInfo['Tell']?.FieldTitle}}"
               minlength="3" maxlength="100" />
-            <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
+            <mat-icon matSuffix *ngIf="dataModel.Tell" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.Tell = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
             <mat-hint align="end">{{ Tell.value.length }} / 100</mat-hint>
@@ -224,7 +208,7 @@
             <input matInput [(ngModel)]="dataModel.PostalCode" name="dataModel.PostalCode" #PostalCode type="text"
               [disabled]="!fieldsInfo['PostalCode']?.AccessEditField"
               placeholder="{{fieldsInfo['PostalCode']?.FieldTitle}}" minlength="3" maxlength="100" />
-            <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
+            <mat-icon matSuffix *ngIf="dataModel.PostalCode" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.PostalCode = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
             <mat-hint align="end">{{ PostalCode.value.length }} / 100</mat-hint>
@@ -296,7 +280,7 @@
             <input matInput [(ngModel)]="dataModel.LinkMainImageId" name="dataModel.LinkMainImageId" #LinkMainImageId
               type="text" placeholder="شناسه فایل آیکن" (click)="fileManagerOpenForm = true" />
             <mat-icon matSuffix *ngIf="dataModel.LinkMainImageId" matSuffix mat-icon-button aria-label="Clear"
-              (click)="dataModel.LinkMainImageId = ''">close</mat-icon>
+              (click)="dataModel.LinkMainImageId = null">close</mat-icon>
             <mat-icon matSuffix (click)="fileManagerOpenForm = true">mode_edit</mat-icon>
           </mat-form-field>
 
@@ -309,28 +293,14 @@
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
               قبلی
             </button>
-            <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
-              class="btn btn-primary font-weight-bold text-uppercase px-9 py-4">
-              بعدی
-            </button>
+            <button type="submit" mat-button [disabled]="!vform.form.valid"
+            class="btn btn-success font-weight-bold text-uppercase px-9 py-4">
+            ذخیره
+          </button>
           </div>
         </mat-step>
 
-        <mat-step label="موقعیت مکانی" state="loaction">
-          <p>روی نقشه کلیک کنید تا موقیت مکانی مشخص گردد</p>
-          <app-cms-map (map$)="receiveMap($event)" (zoom$)="receiveZoom($event)" [optonCenter]="mapOptonCenter"
-            id='main-map'></app-cms-map>
-          <div *ngIf="formInfo.FormSubmitAllow">
-            <button type="button" mat-button matStepperPrevious
-              class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
-              قبلی
-            </button>
-            <button type="submit" mat-button [disabled]="!vform.form.valid"
-              class="btn btn-success font-weight-bold text-uppercase px-9 py-4">
-              ذخیره
-            </button>
-          </div>
-        </mat-step>
+      
 
         <!-- Icon overrides. -->
         <ng-template matStepperIcon="main">

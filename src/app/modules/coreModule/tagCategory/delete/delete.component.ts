@@ -44,7 +44,6 @@ export class CoreModuleTagCategoryDeleteComponent implements OnInit {
     this.DataGetOne();
     this.DataGetAll();
   }
-
   DataGetOne(): void {
     if (this.requestId === 0) {
       this.cmsToastrService.typeErrorDeleteRowIsNull();

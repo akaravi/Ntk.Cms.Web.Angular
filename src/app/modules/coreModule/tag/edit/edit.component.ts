@@ -234,4 +234,5 @@ export class CoreModuleTagEditComponent implements OnInit, AfterViewInit {
   onActionBackToParent(): void {
     this.router.navigate(['/news/content/']);
   }
+
 }

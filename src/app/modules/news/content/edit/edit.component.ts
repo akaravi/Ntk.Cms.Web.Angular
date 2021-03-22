@@ -608,6 +608,6 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
 
   }
 
-  receiveZoom(): void {
+  receiveZoom(mode: leafletMap): void {
   }
 }

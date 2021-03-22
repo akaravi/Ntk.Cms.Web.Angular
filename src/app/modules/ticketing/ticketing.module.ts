@@ -40,6 +40,7 @@ import { TicketingDepartemenLogEditComponent } from './departemenLog/edit/edit.c
 import { TicketingDepartemenOperatorAddComponent } from './departemenOperator/add/add.component';
 import { TicketingDepartemenOperatorEditComponent } from './departemenOperator/edit/edit.component';
 import { TicketingTaskAddComponent } from './task/add/add.component';
+import { TicketingDepartemenLogListComponent } from './departemenLog/list/list.component';
 
 
 
@@ -64,6 +65,7 @@ import { TicketingTaskAddComponent } from './task/add/add.component';
     TicketingDepartemenLogEditComponent,
     TicketingDepartemenOperatorAddComponent,
     TicketingDepartemenOperatorEditComponent,
+    TicketingDepartemenLogListComponent
   ],
   imports: [
     CommonModule,

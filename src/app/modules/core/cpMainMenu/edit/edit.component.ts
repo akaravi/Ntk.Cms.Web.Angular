@@ -248,6 +248,7 @@ export class CoreCpMainMenuEditComponent implements OnInit {
     this.dataCoreCpMainMenuModel = model;
   }
   onActionCategoryUserCategorySelectAdded(model: CoreUserGroupModel): void {
+    debugger
     const entity = new CoreCpMainMenuCmsUserGroupModel();
     entity.CmsUserGroup_Id = model.Id;
     entity.CmsCpMainMenu_Id = this.dataModel.Id;
@@ -272,6 +273,7 @@ export class CoreCpMainMenuEditComponent implements OnInit {
     );
   }
   onActionCategoryUserCategorySelectRemoved(model: CoreUserGroupModel): void {
+    debugger
     const entity = new CoreCpMainMenuCmsUserGroupModel();
     entity.CmsUserGroup_Id = model.Id;
     entity.CmsCpMainMenu_Id = this.dataModel.Id;

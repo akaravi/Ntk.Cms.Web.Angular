@@ -610,6 +610,6 @@ export class BiographyContentEditComponent implements OnInit, AfterViewInit {
 
   }
 
-  receiveZoom(): void {
+  receiveZoom(mode: leafletMap): void {
   }
 }

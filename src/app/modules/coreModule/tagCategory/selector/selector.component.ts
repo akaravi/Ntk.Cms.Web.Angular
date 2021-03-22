@@ -12,32 +12,8 @@ import { Output } from '@angular/core';
   templateUrl: './selector.component.html',
   styleUrls: ['./selector.component.scss']
 })
-export class TagCategorySelectorComponent implements OnInit {
+export class CoreModuleTagCategorySelectorComponent implements OnInit {
 
-  // public optionsData: ComponentOptionSelectorModel<NewsCategoryModel> = new ComponentOptionSelectorModel<NewsCategoryModel>();
-  // @Output()
-  // // tslint:disable-next-line: max-line-length
-  // tslint:disable-next-line: max-line-length
-  // optionsChange: EventEmitter<ComponentOptionSelectorModel<NewsCategoryModel>> = new EventEmitter<ComponentOptionSelectorModel<NewsCategoryModel>>();
-  // @Input() set options(model: ComponentOptionSelectorModel<NewsCategoryModel>) {
-  //   if (!model) {
-  //     model = new ComponentOptionSelectorModel<NewsCategoryModel>();
-  //   }
-  //   this.optionsData = model;
-  //   this.optionsData.childMethods = {
-  //     ActionReload: () => this.onActionReload(),
-  //     ActionSelectForce: (id) => this.onActionSelectForce(id),
-  //   };
-  //   this.optionsChange.emit(model);
-  // }
-  // get options(): ComponentOptionSelectorModel<NewsCategoryModel> {
-  //   this.optionsData.childMethods = {
-  //     ActionReload: () => this.onActionReload(),
-  //     ActionSelectForce: (id) => this.onActionSelectForce(id),
-  //   };
-  //   this.optionsChange.emit(this.optionsData);
-  //   return this.optionsData;
-  // }
 
   constructor(
     public coreEnumService: CoreEnumService,

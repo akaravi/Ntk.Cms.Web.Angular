@@ -186,7 +186,7 @@
             [optionSelectForce]="dataModel.LinkModuleId" [optionPlaceholder]="'ماژول'">
           </app-core-module-selector>
 
-          <app-core-usercategory-checklist [optionSelectForce]="dataCoreCpMainMenuIds"
+          <app-core-usercategory-checklist [optionSelectForce]="dataCoreCpMainMenuIds" [disabled]="false"
             (optionSelect)="onActionCategoryUserCategorySelect($event)"
             (optionSelectAdded)="onActionCategoryUserCategorySelectAdded($event)"
             (optionSelectRemoved)="onActionCategoryUserCategorySelectRemoved($event)"></app-core-usercategory-checklist>

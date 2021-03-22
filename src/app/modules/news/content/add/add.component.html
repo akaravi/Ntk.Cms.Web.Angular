@@ -121,7 +121,7 @@
               <input matInput [(ngModel)]="dataModel.LinkMainImageId" name="dataModel.LinkMainImageId" #LinkMainImageId
                 type="text" placeholder="شناسه فایل اصلی" (click)="fileManagerOpenForm = true" />
               <mat-icon matSuffix *ngIf="dataModel.LinkMainImageId" matSuffix mat-icon-button aria-label="Clear"
-                (click)="dataModel.LinkMainImageId = ''">close</mat-icon>
+                (click)="dataModel.LinkMainImageId = null">close</mat-icon>
               <mat-icon matSuffix (click)="fileManagerOpenForm = true">mode_edit</mat-icon>
             </mat-form-field>
 
@@ -142,7 +142,7 @@
                 #LinkFilePodcastId type="text" placeholder="شناسه فایل صوتی"
                 (click)="fileManagerOpenFormPodcast = true" />
               <mat-icon matSuffix *ngIf="dataModel.LinkFilePodcastId" matSuffix mat-icon-button aria-label="Clear"
-                (click)="dataModel.LinkFilePodcastId = ''">close</mat-icon>
+                (click)="dataModel.LinkFilePodcastId = null">close</mat-icon>
               <mat-icon matSuffix (click)="fileManagerOpenFormPodcast = true">mode_edit</mat-icon>
             </mat-form-field>
 
@@ -163,7 +163,7 @@
                 #LinkFileMovieId type="text" placeholder="شناسه فایل ویدیو"
                 (click)="fileManagerOpenFormMovie = true" />
               <mat-icon matSuffix *ngIf="dataModel.LinkFileMovieId" matSuffix mat-icon-button aria-label="Clear"
-                (click)="dataModel.LinkFileMovieId = ''">close</mat-icon>
+                (click)="dataModel.LinkFileMovieId = null">close</mat-icon>
               <mat-icon matSuffix (click)="fileManagerOpenFormMovie = true">mode_edit</mat-icon>
             </mat-form-field>
 
@@ -203,7 +203,7 @@
               #contentOtherInfoSelected_TypeId type="number"
               placeholder="عددی توافقی برای نمایش" />
             <mat-icon matSuffix *ngIf="contentOtherInfoSelected.TypeId" matSuffix mat-icon-button aria-label="Clear"
-              (click)="contentOtherInfoSelected.TypeId = ''">close</mat-icon>
+              (click)="contentOtherInfoSelected.TypeId = null">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
 
           </mat-form-field>

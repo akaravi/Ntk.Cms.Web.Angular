@@ -608,6 +608,6 @@ export class BlogContentEditComponent implements OnInit, AfterViewInit {
 
   }
 
-  receiveZoom(): void {
+  receiveZoom(mode: leafletMap): void {
   }
 }
