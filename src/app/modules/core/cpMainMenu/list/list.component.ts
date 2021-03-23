@@ -97,12 +97,7 @@ export class CoreCpMainMenuListComponent implements OnInit, OnDestroy {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
 
-  dropTable(event: CdkDragDrop<CoreCpMainMenuModel[]>): void {
-    debugger
-    const previousIndex = this.tableSource.data.findIndex(row => row === event.item.data);
-    moveItemInArray(this.tableSource.data, previousIndex, event.currentIndex);
-    this.tableSource.data = this.tableSource.data.slice();
-  }
+
   DataGetAll(): void {
     this.tableRowsSelected = [];
     this.tableRowSelected = new CoreCpMainMenuModel();
@@ -166,7 +161,12 @@ export class CoreCpMainMenuListComponent implements OnInit, OnDestroy {
     this.DataGetAll();
   }
 
-
+  onTableDropRow(event: CdkDragDrop<CoreCpMainMenuModel[]>): void {
+    debugger
+    const previousIndex = this.tableSource.data.findIndex(row => row === event.item.data);
+    moveItemInArray(this.tableSource.data, previousIndex, event.currentIndex);
+    this.tableSource.data = this.tableSource.data.slice();
+  }
   onActionCategorySelect(model: CoreCpMainMenuModel | null): void {
     this.filteModelContent = new FilterModel();
     this.categoryModelSelected = model;
