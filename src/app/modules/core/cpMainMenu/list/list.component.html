@@ -30,11 +30,17 @@
     </app-progress-spinner>
 
     <div class="example-container mat-elevation-z8">
-      <mat-table [dataSource]="tableSource" matSort #tableSort="matSort" (matSortChange)="onTableSortData(tableSort)">
+      <mat-table [dataSource]="tableSource" matSort  #tableSort="matSort" (matSortChange)="onTableSortData(tableSort)"
+
+      cdkDropList
+  [cdkDropListData]="tableSource"
+  (cdkDropListDropped)="dropTable($event)"
+      >
         <!-- Icon Column -->
         <ng-container matColumnDef="Icon">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Icon']?.FieldTitle}} </mat-header-cell>
-          <mat-cell *matCellDef="let row"><i [ngClass]="row.Icon" [style.color]="row.Color" aria-hidden="true"></i>  </mat-cell>
+          <mat-cell *matCellDef="let row"><i [ngClass]="row.Icon" [style.color]="row.Color" aria-hidden="true"></i>
+          </mat-cell>
         </ng-container>
         <!-- ID Column -->
         <ng-container matColumnDef="Id">
@@ -80,17 +86,48 @@
         <ng-container matColumnDef="Action">
           <mat-header-cell *matHeaderCellDef> ... </mat-header-cell>
           <mat-cell *matCellDef="let row" class=' Action'>
-            <small (click)="onActionbuttonEditRow(row)">ویرایش</small>|
-            <small (click)="onActionbuttonDeleteRow(row)">حذف</small>|
-            <small (click)="onActionbuttonGoToSiteList(row)">سایت ها</small>|
-            <small (click)="onActionbuttonFaqList(row)">سوالات</small>|
-            <small (click)="onActionbuttonTemplateList(row)">قالب ها</small>
 
+            <button mat-icon-button [matMenuTriggerFor]="actionMenu" aria-label="Action Menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #actionMenu="matMenu">
+              <button mat-menu-item (click)="onActionbuttonEditRow(row)">
+                <mat-icon>dialpad</mat-icon>
+                <span>ویرایش</span>
+              </button>
+              <button mat-menu-item (click)="onActionbuttonDeleteRow(row)">
+                <mat-icon>voicemail</mat-icon>
+                <span>حذف</span>
+              </button>
+              <button mat-menu-item (click)="onActionbuttonGoToSiteList(row)">
+                <mat-icon>notifications_off</mat-icon>
+                <span>سایت ها</span>
+              </button>
+              <button mat-menu-item (click)="onActionbuttonFaqList(row)">
+                <mat-icon>notifications_off</mat-icon>
+                <span>سوالات</span>
+              </button>
+              <button mat-menu-item (click)="onActionbuttonTemplateList(row)">
+                <mat-icon>notifications_off</mat-icon>
+                <span>قالب ها</span>
+              </button>
+            </mat-menu>
+
+          </mat-cell>
+        </ng-container>
+        <!-- position Column -->
+        <ng-container matColumnDef="position">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>.
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <mat-icon style="pointer-events: all;" cdkDragHandle>reorder</mat-icon>
           </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="tabledisplayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: tabledisplayedColumns;" (click)="onActionTableRowSelect(row)"
-          [ngStyle]="{'background': row.Id === tableRowSelected.Id ? '#d3d3da' : '' }">
+          [ngStyle]="{'background': row.Id === tableRowSelected.Id ? '#d3d3da' : '' }"
+          cdkDrag
+          [cdkDragData]=row>
         </mat-row>
       </mat-table>
 

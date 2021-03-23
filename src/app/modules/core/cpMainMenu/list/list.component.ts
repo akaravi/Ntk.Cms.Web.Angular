@@ -1,7 +1,7 @@
 
 import { Router } from '@angular/router';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import {
   CoreCpMainMenuModel,
   CoreCpMainMenuService,
@@ -28,7 +28,7 @@ import { Subscription } from 'rxjs';
 import { CoreCpMainMenuEditComponent } from '../edit/edit.component';
 import { CoreCpMainMenuAddComponent } from '../add/add.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
-
+import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDragHandle } from '@angular/cdk/drag-drop';
 @Component({
   selector: 'app-core-user-list',
   templateUrl: './list.component.html',
@@ -49,7 +49,6 @@ export class CoreCpMainMenuListComponent implements OnInit, OnDestroy {
   }
   comment: string;
   author: string;
-  dataSource: any;
   flag = false;
   tableContentSelected = [];
 
@@ -74,7 +73,8 @@ export class CoreCpMainMenuListComponent implements OnInit, OnDestroy {
     'ShowInAccessAdminAllowToProfessionalData',
     'MenuPlaceType',
     'ShowInMenuOrder',
-    'Action'
+    'Action',
+    'position'
   ];
 
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
@@ -84,7 +84,8 @@ export class CoreCpMainMenuListComponent implements OnInit, OnDestroy {
   cmsApiStoreSubscribe: Subscription;
   categoryModelSelected: CoreCpMainMenuModel;
   ngOnInit(): void {
-    this.filteModelContent.SortColumn = 'Title';
+    this.filteModelContent.SortColumn = 'ShowInMenuOrder';
+    this.filteModelContent.SortType = EnumSortType.Ascending;
     this.DataGetAll();
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
@@ -94,6 +95,13 @@ export class CoreCpMainMenuListComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
+  }
+
+  dropTable(event: CdkDragDrop<CoreCpMainMenuModel[]>): void {
+    debugger
+    const previousIndex = this.tableSource.data.findIndex(row => row === event.item.data);
+    moveItemInArray(this.tableSource.data, previousIndex, event.currentIndex);
+    this.tableSource.data = this.tableSource.data.slice();
   }
   DataGetAll(): void {
     this.tableRowsSelected = [];
@@ -162,7 +170,6 @@ export class CoreCpMainMenuListComponent implements OnInit, OnDestroy {
   onActionCategorySelect(model: CoreCpMainMenuModel | null): void {
     this.filteModelContent = new FilterModel();
     this.categoryModelSelected = model;
-
     this.DataGetAll();
   }
   onActionbuttonNewRow(): void {
@@ -333,6 +340,8 @@ export class CoreCpMainMenuListComponent implements OnInit, OnDestroy {
   }
 
   onActionbuttonReload(): void {
+    this.filteModelContent.SortColumn = 'ShowInMenuOrder';
+    this.filteModelContent.SortType = EnumSortType.Ascending;
     this.DataGetAll();
   }
   onSubmitOptionsSearch(model: any): void {

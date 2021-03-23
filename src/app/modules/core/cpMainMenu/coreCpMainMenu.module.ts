@@ -22,6 +22,7 @@ import { CoreModuleModule } from '../module/coreModule.module';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { IconPickerModule } from 'ngx-icon-picker';
 import { CoreUserGroupCmsModule } from '../userCategory/coreUserGroup.module';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 
@@ -54,7 +55,8 @@ import { CoreUserGroupCmsModule } from '../userCategory/coreUserGroup.module';
     CoreModuleModule,
     CoreUserGroupCmsModule,
     ColorPickerModule,
-    IconPickerModule
+    IconPickerModule,
+    DragDropModule
   ],
   providers: [
     CoreEnumService,

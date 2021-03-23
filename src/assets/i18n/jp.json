@@ -1,31 +1,31 @@
 {
-  "lang": "en",
+  "lang": "jp",
   "TRANSLATOR": {
-    "SELECT": "Select your language"
+    "SELECT": "あなたが使う言語を選んでください"
   },
   "MENU": {
-    "NEW": "new",
-    "ACTIONS": "Actions",
-    "CREATE_POST": "Create New Post",
+    "NEW": "新しい",
+    "ACTIONS": "行動",
+    "CREATE_POST": "新しい投稿を作成",
     "PAGES": "Pages",
-    "FEATURES": "Features",
-    "APPS": "Apps",
-    "DASHBOARD": "Dashboard"
+    "FEATURES": "特徴",
+    "APPS": "アプリ",
+    "DASHBOARD": "ダッシュボード"
   },
   "AUTH": {
     "GENERAL": {
-      "OR": "Or",
-      "SUBMIT_BUTTON": "Submit",
-      "NO_ACCOUNT": "Don\"t have an account?",
-      "SIGNUP_BUTTON": "Sign Up",
-      "FORGOT_BUTTON": "Forgot Password",
-      "BACK_BUTTON": "Back",
-      "PRIVACY": "Privacy",
-      "LEGAL": "Legal",
-      "CONTACT": "Contact"
+      "OR": "または",
+      "SUBMIT_BUTTON": "提出する",
+      "NO_ACCOUNT": "アカウントを持っていない？",
+      "SIGNUP_BUTTON": "サインアップ",
+      "FORGOT_BUTTON": "パスワードをお忘れですか",
+      "BACK_BUTTON": "バック",
+      "PRIVACY": "プライバシー",
+      "LEGAL": "法的",
+      "CONTACT": "接触"
     },
     "LOGIN": {
-      "TITLE": "Login Account",
+      "TITLE": "Create Account",
       "BUTTON": "Sign In"
     },
     "FORGOT": {
@@ -43,7 +43,7 @@
       "FULLNAME": "Fullname",
       "PASSWORD": "Password",
       "CONFIRM_PASSWORD": "Confirm Password",
-      "USERNAME": "Username"
+      "USERNAME": "ユーザー名"
     },
     "VALIDATION": {
       "INVALID": "{{name}} is not valid",

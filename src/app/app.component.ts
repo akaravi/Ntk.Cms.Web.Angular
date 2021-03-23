@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslationService } from './core/i18n/translation.service';
-import { locale as enLang } from './core/i18n/vocabs/en';
-import { locale as chLang } from './core/i18n/vocabs/ch';
-import { locale as esLang } from './core/i18n/vocabs/es';
-import { locale as jpLang } from './core/i18n/vocabs/jp';
-import { locale as deLang } from './core/i18n/vocabs/de';
-import { locale as frLang } from './core/i18n/vocabs/fr';
-import { locale as faLang } from './core/i18n/vocabs/fa';
+// import { locale as enLang } from '../assets/i18n/en';
+// import { locale as chLang } from '../assets/i18n/ch';
+// import { locale as esLang } from '../assets/i18n/es';
+// import { locale as jpLang } from '../assets/i18n/jp';
+// import { locale as deLang } from '../assets/i18n/de';
+// import { locale as frLang } from '../assets/i18n/fr';
+// import { locale as faLang } from '../assets/i18n/fa';
 import { CoreAuthService, CoreEnumService, EnumDeviceType, EnumOperatingSystemType, TokenDeviceClientInfoDtoModel } from 'ntk-cms-api';
 import { environment } from '../environments/environment';
 import { SplashScreenService } from './core/partials/layout/splash-screen/splash-screen.service';
@@ -34,13 +34,13 @@ export class AppComponent implements OnInit, OnDestroy {
       this.coreAuthService.setConfig(environment.cmsServerConfig.configApiServerPath);
     }
     this.translationService.loadTranslations(
-      faLang,
-      enLang,
-      chLang,
-      esLang,
-      jpLang,
-      deLang,
-      frLang,
+      // faLang,
+      // enLang,
+      // chLang,
+      // esLang,
+      // jpLang,
+      // deLang,
+      // frLang,
     );
   }
 

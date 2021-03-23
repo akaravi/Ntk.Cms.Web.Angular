@@ -1,31 +1,31 @@
 {
-  "lang": "en",
+  "lang": "de",
   "TRANSLATOR": {
-    "SELECT": "Select your language"
+    "SELECT": "Wähle deine Sprache"
   },
   "MENU": {
-    "NEW": "new",
-    "ACTIONS": "Actions",
-    "CREATE_POST": "Create New Post",
+    "NEW": "Neu",
+    "ACTIONS": "Aktionen",
+    "CREATE_POST": "Erstellen Sie einen neuen Beitrag",
     "PAGES": "Pages",
-    "FEATURES": "Features",
+    "FEATURES": "Eigenschaften",
     "APPS": "Apps",
-    "DASHBOARD": "Dashboard"
+    "DASHBOARD": "Instrumententafel"
   },
   "AUTH": {
     "GENERAL": {
-      "OR": "Or",
-      "SUBMIT_BUTTON": "Submit",
-      "NO_ACCOUNT": "Don\"t have an account?",
-      "SIGNUP_BUTTON": "Sign Up",
-      "FORGOT_BUTTON": "Forgot Password",
-      "BACK_BUTTON": "Back",
-      "PRIVACY": "Privacy",
+      "OR": "Oder",
+      "SUBMIT_BUTTON": "einreichen",
+      "NO_ACCOUNT": "Hast du kein Konto?",
+      "SIGNUP_BUTTON": "Anmelden",
+      "FORGOT_BUTTON": "Passwort vergessen",
+      "BACK_BUTTON": "Zurück",
+      "PRIVACY": "Privatsphäre",
       "LEGAL": "Legal",
-      "CONTACT": "Contact"
+      "CONTACT": "Kontakt"
     },
     "LOGIN": {
-      "TITLE": "Login Account",
+      "TITLE": "Create Account",
       "BUTTON": "Sign In"
     },
     "FORGOT": {
@@ -43,7 +43,7 @@
       "FULLNAME": "Fullname",
       "PASSWORD": "Password",
       "CONFIRM_PASSWORD": "Confirm Password",
-      "USERNAME": "Username"
+      "USERNAME": "Nutzername"
     },
     "VALIDATION": {
       "INVALID": "{{name}} is not valid",
