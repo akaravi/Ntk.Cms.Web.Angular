@@ -257,28 +257,7 @@ export class CoreGuideListComponent implements OnInit, OnDestroy {
       );
 
   }
-  onActionbuttonFaqList(model: CoreGuideModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای نمایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
-      return;
-    }
-    this.tableRowSelected = model;
 
-    this.router.navigate(['/core/faq/', this.tableRowSelected.Id]);
-  }
-  onActionbuttonTemplateList(model: CoreGuideModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای نمایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
-      return;
-    }
-    this.tableRowSelected = model;
-
-    this.router.navigate(['/core/template/', this.tableRowSelected.Id]);
-  }
   onActionbuttonGoToSiteCategoryList(model: CoreGuideModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
       const title = 'برروز خطا ';

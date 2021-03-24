@@ -33,13 +33,13 @@ import { CoreSiteAddComponent } from '../add/add.component';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class CoreSiteListComponent implements OnInit , OnDestroy {
+export class CoreSiteListComponent implements OnInit, OnDestroy {
   constructor(private coreSiteService: CoreSiteService,
-              private cmsApiStore: NtkCmsApiStoreService,
-              public publicHelper: PublicHelper,
-              private cmsToastrService: CmsToastrService,
-              private router: Router,
-              public dialog: MatDialog) {
+    private cmsApiStore: NtkCmsApiStoreService,
+    public publicHelper: PublicHelper,
+    private cmsToastrService: CmsToastrService,
+    private router: Router,
+    public dialog: MatDialog) {
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
@@ -233,40 +233,10 @@ export class CoreSiteListComponent implements OnInit , OnDestroy {
     });
 
   }
-  onActionbuttonFaqList(model: CoreSiteModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای نمایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
-      return;
-    }
-    this.tableRowSelected = model;
 
-    this.router.navigate(['/core/faq/', this.tableRowSelected.Id]);
-  }
-  onActionbuttonTemplateList(model: CoreSiteModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای نمایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
-      return;
-    }
-    this.tableRowSelected = model;
 
-    this.router.navigate(['/core/template/', this.tableRowSelected.Id]);
-  }
-  onActionbuttonGoToSiteList(model: CoreSiteModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای نمایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
-      return;
-    }
-    this.tableRowSelected = model;
 
-    this.router.navigate(['/core/siteSite/', this.tableRowSelected.Id]);
-  }
-   onActionbuttonStatist(): void {
+  onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;
     if (!this.optionsStatist.data.show) {
       return;

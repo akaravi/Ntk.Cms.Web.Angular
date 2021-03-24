@@ -16,7 +16,7 @@
         <mat-slide-toggle [(ngModel)]="optionsSearch.data.show">پرس و جو ساز</mat-slide-toggle>
       </a>
       <a class="btn btn-success btn-sm BTN">
-        <mat-slide-toggle  (click)="onActionbuttonStatist()">آمار
+        <mat-slide-toggle (click)="onActionbuttonStatist()">آمار
         </mat-slide-toggle>
       </a>
       <button (click)="onActionbuttonExport()" type="button" class="btn btn-bg-info BTN">خروجی فایل</button>
@@ -45,7 +45,7 @@
         <!-- RecordStatus Column -->
         <ng-container matColumnDef="RecordStatus">
           <mat-header-cell *matHeaderCellDef mat-sort-header> وضعیت </mat-header-cell>
-          <mat-cell *matCellDef="let row"> <i [ngClass]="row.RecordStatus|statusClass" ></i> </mat-cell>
+          <mat-cell *matCellDef="let row"> <i [ngClass]="row.RecordStatus|statusClass"></i> </mat-cell>
         </ng-container>
         <!-- FileName Column -->
         <ng-container matColumnDef="FileName">
@@ -71,9 +71,24 @@
         <ng-container matColumnDef="Action">
           <mat-header-cell *matHeaderCellDef> ... </mat-header-cell>
           <mat-cell *matCellDef="let row" class='Action'>
-            <small (click)="onActionbuttonEditRow(row)">ویرایش</small>|
-            <small (click)="onActionbuttonDeleteRow(row)">حذف</small>|
-            <small (click)="onClickDownload(row)">دانلود</small>
+            <!-- Action Menu -->
+            <button mat-icon-button [matMenuTriggerFor]="actionMenu" aria-label="Action Menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #actionMenu="matMenu">
+              <button mat-menu-item (click)="onActionbuttonEditRow(row)">
+                <mat-icon>mode_edit</mat-icon>
+                <span>ویرایش</span>
+              </button>
+              <button mat-menu-item (click)="onActionbuttonDeleteRow(row)">
+                <mat-icon>delete_forever</mat-icon>
+                <span>حذف</span>
+              </button>
+              <button mat-menu-item (click)="onClickDownload(row)">
+                <mat-icon>download</mat-icon>
+                <span>دانلود</span>
+              </button>
+            </mat-menu>
           </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="tabledisplayedColumns"></mat-header-row>

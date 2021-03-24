@@ -13,7 +13,7 @@
       </a>
 
       <a class="btn btn-success btn-sm BTN">
-        <mat-slide-toggle  (click)="onActionbuttonStatist()">آمار
+        <mat-slide-toggle (click)="onActionbuttonStatist()">آمار
         </mat-slide-toggle>
       </a>
       <button (click)="onActionbuttonExport()" type="button" class="btn btn-bg-info BTN">خروجی فایل</button>
@@ -62,11 +62,11 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header> Mobile </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Mobile}} </mat-cell>
         </ng-container>
-           <!-- Email Column -->
-           <ng-container matColumnDef="Email">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.Email}} </mat-cell>
-          </ng-container>
+        <!-- Email Column -->
+        <ng-container matColumnDef="Email">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.Email}} </mat-cell>
+        </ng-container>
         <!-- Name Column -->
         <ng-container matColumnDef="Name">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
@@ -96,12 +96,20 @@
         <ng-container matColumnDef="Action">
           <mat-header-cell *matHeaderCellDef> ... </mat-header-cell>
           <mat-cell *matCellDef="let row" class=' Action'>
-            <small (click)="onActionbuttonEditRow(row)">ویرایش</small>|
-            <small (click)="onActionbuttonDeleteRow(row)">حذف</small>|
-            <small (click)="onActionbuttonGoToSiteList(row)">سایت ها</small>|
-            <small (click)="onActionbuttonFaqList(row)">سوالات</small>|
-            <small (click)="onActionbuttonTemplateList(row)">قالب ها</small>
-
+            <!-- Action Menu -->
+            <button mat-icon-button [matMenuTriggerFor]="actionMenu" aria-label="Action Menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #actionMenu="matMenu">
+              <button mat-menu-item (click)="onActionbuttonEditRow(row)">
+                <mat-icon>mode_edit</mat-icon>
+                <span>ویرایش</span>
+              </button>
+              <button mat-menu-item (click)="onActionbuttonDeleteRow(row)">
+                <mat-icon>delete_forever</mat-icon>
+                <span>حذف</span>
+              </button>
+            </mat-menu>
           </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="tabledisplayedColumns"></mat-header-row>
