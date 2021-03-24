@@ -1,11 +1,9 @@
-
 import { Router } from '@angular/router';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import {
   CoreCpMainMenuModel,
   CoreCpMainMenuService,
-  CoreAuthService,
   EnumSortType,
   ErrorExceptionResult,
   FilterModel,
@@ -13,7 +11,9 @@ import {
   TokenInfoModel,
   FilterDataModel,
   EnumRecordStatus,
-  DataFieldInfoModel
+  DataFieldInfoModel,
+  EnumActionGoStep,
+  EditStepDtoModel
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -162,10 +162,28 @@ export class CoreCpMainMenuListComponent implements OnInit, OnDestroy {
   }
 
   onTableDropRow(event: CdkDragDrop<CoreCpMainMenuModel[]>): void {
-    debugger
     const previousIndex = this.tableSource.data.findIndex(row => row === event.item.data);
-    moveItemInArray(this.tableSource.data, previousIndex, event.currentIndex);
-    this.tableSource.data = this.tableSource.data.slice();
+    const model = new EditStepDtoModel<number>();
+    model.Id = this.tableSource.data[previousIndex].Id;
+    model.CenterId = this.tableSource.data[event.currentIndex].Id;
+    if (previousIndex > event.currentIndex) {
+      model.ActionGo = EnumActionGoStep.GoUp;
+    }
+    else {
+      model.ActionGo = EnumActionGoStep.GoDown;
+    }
+    this.coreCpMainMenuService.ServiceEditStep(model).subscribe(
+      (next) => {
+        if (next.IsSuccess) {
+          moveItemInArray(this.tableSource.data, previousIndex, event.currentIndex);
+          this.tableSource.data = this.tableSource.data.slice();
+        }
+      },
+      (error) => {
+        this.cmsToastrService.typeError(error);
+
+      }
+    );
   }
   onActionCategorySelect(model: CoreCpMainMenuModel | null): void {
     this.filteModelContent = new FilterModel();
