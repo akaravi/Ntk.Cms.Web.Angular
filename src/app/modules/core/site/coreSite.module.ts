@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CoreSiteRouting } from './coreSite.routing';
 import { CoreSiteComponent } from './coreSite.component';
-import { CoreModuleService, CoreSiteCategoryCmsModuleService, CoreSiteCategoryService, CoreSiteService } from 'ntk-cms-api';
+import { CoreModuleService, CoreModuleSiteService, CoreSiteCategoryCmsModuleService, CoreSiteCategoryService, CoreSiteService } from 'ntk-cms-api';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SelectionComponent } from './selection/selection.component';
 import { CoreSiteAddFirstComponent } from './addFirst/addFirst.component';
@@ -20,6 +20,7 @@ import { TagInputModule } from 'ngx-chips';
 import { CoreSiteCategoryCmsModule } from '../siteCategory/coreSiteCategory.module';
 import { CoreSiteCategoryCmsModuleModule } from '../siteCategoryModule/coreSiteCategoryCmsModule.module';
 import { CmsFileManagerModule } from 'ntk-cms-filemanager';
+import { CoreSiteModuleListComponent } from './moduleList/moduleList.component';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { CmsFileManagerModule } from 'ntk-cms-filemanager';
     CoreSiteDeleteComponent,
     CoreSiteSelectorComponent,
     CoreSiteTreeComponent,
+    CoreSiteModuleListComponent,
   ],
   imports: [
     CommonModule,
@@ -45,14 +47,15 @@ import { CmsFileManagerModule } from 'ntk-cms-filemanager';
     TagInputModule,
     CoreSiteCategoryCmsModule,
     CoreSiteCategoryCmsModuleModule,
-    CmsFileManagerModule
+    CmsFileManagerModule,
   ],
   providers: [
     CoreSiteService,
     CoreSiteCategoryCmsModuleService,
     CoreModuleService,
     CoreSiteCategoryService,
-    CoreSiteResolver
+    CoreSiteResolver,
+    CoreModuleSiteService
   ]
 })
 export class CoreSiteModule {

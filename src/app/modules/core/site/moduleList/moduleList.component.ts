@@ -1,45 +1,54 @@
 
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
   CoreSiteModel,
   CoreSiteService,
-  CoreAuthService,
   EnumSortType,
   ErrorExceptionResult,
   FilterModel,
   NtkCmsApiStoreService,
   TokenInfoModel,
   FilterDataModel,
-  EnumRecordStatus
+  EnumRecordStatus,
+  CoreModuleSiteService,
+  CoreModuleSiteModel
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
-import { MatDialog } from '@angular/material/dialog';
 import { ComponentOptionExportModel } from 'src/app/core/cmsComponentModels/base/componentOptionExportModel';
 import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/base/componentOptionStatistModel';
 import { MatSort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
-import { CoreSiteDeleteComponent } from '../delete/delete.component';
-import { CoreSiteEditComponent } from '../edit/edit.component';
-import { CoreSiteAddComponent } from '../add/add.component';
 
 @Component({
-  selector: 'app-core-site-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss']
+  selector: 'app-core-site-modulelist',
+  templateUrl: './moduleList.component.html',
+  styleUrls: ['./moduleList.component.scss']
 })
-export class CoreSiteListComponent implements OnInit, OnDestroy {
-  constructor(private coreSiteService: CoreSiteService,
+export class CoreSiteModuleListComponent implements OnInit, OnDestroy {
+  requestId = 0;
+  constructor(
+    private coreModuleSiteService: CoreModuleSiteService,
+    private coreSiteService: CoreSiteService,
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
-    private router: Router,
-    public dialog: MatDialog) {
+    private activatedRoute: ActivatedRoute,
+  ) {
+    this.requestId = Number(this.activatedRoute.snapshot.paramMap.get('Id'));
+    if (this.requestId === 0) {
+      this.cmsToastrService.typeErrorAddRowParentIsNull();
+      return;
+    }
+    const filter = new FilterDataModel();
+    filter.PropertyName = 'LinkSiteId';
+    filter.Value = this.requestId;
+    this.filteModelContent.Filters.push(filter);
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
@@ -51,7 +60,7 @@ export class CoreSiteListComponent implements OnInit, OnDestroy {
   tableContentSelected = [];
 
   filteModelContent = new FilterModel();
-  dataModelResult: ErrorExceptionResult<CoreSiteModel> = new ErrorExceptionResult<CoreSiteModel>();
+  dataModelResult: ErrorExceptionResult<CoreModuleSiteModel> = new ErrorExceptionResult<CoreModuleSiteModel>();
   optionsSearch: ComponentOptionSearchModel = new ComponentOptionSearchModel();
   optionsStatist: ComponentOptionStatistModel = new ComponentOptionStatistModel();
   optionsExport: ComponentOptionExportModel = new ComponentOptionExportModel();
@@ -100,11 +109,11 @@ export class CoreSiteListComponent implements OnInit, OnDestroy {
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
 
-    this.coreSiteService.ServiceGetAll(this.filteModelContent).subscribe(
+    this.coreModuleSiteService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
           this.dataModelResult = next;
-          this.tableSource.data = next.ListItems;
+          // this.tableSource.data = next.ListItems;
           if (this.tokenInfo.UserAccessAdminAllowToAllData) {
             this.tabledisplayedColumns = this.publicHelper.listAddIfNotExist(
               this.tabledisplayedColumns,
@@ -170,14 +179,14 @@ export class CoreSiteListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessAdd();
       return;
     }
-    const dialogRef = this.dialog.open(CoreSiteAddComponent, {
-      data: {}
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result && result.dialogChangedDate) {
-        this.DataGetAll();
-      }
-    });
+    // const dialogRef = this.dialog.open(CoreSiteAddComponent, {
+    //   data: {}
+    // });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   if (result && result.dialogChangedDate) {
+    //     this.DataGetAll();
+    //   }
+    // });
   }
 
   onActionbuttonEditRow(model: CoreSiteModel = this.tableRowSelected): void {
@@ -197,14 +206,14 @@ export class CoreSiteListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessEdit();
       return;
     }
-    const dialogRef = this.dialog.open(CoreSiteEditComponent, {
-      data: { id: this.tableRowSelected.Id }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result && result.dialogChangedDate) {
-        this.DataGetAll();
-      }
-    });
+    // const dialogRef = this.dialog.open(CoreSiteEditComponent, {
+    //   data: { id: this.tableRowSelected.Id }
+    // });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   if (result && result.dialogChangedDate) {
+    //     this.DataGetAll();
+    //   }
+    // });
   }
   onActionbuttonDeleteRow(model: CoreSiteModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
@@ -223,35 +232,14 @@ export class CoreSiteListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessDelete();
       return;
     }
-    const dialogRef = this.dialog.open(CoreSiteDeleteComponent, {
-      data: { id: this.tableRowSelected.Id }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result && result.dialogChangedDate) {
-        this.DataGetAll();
-      }
-    });
-
-  }
-  onActionbuttonModuleListRow(model: CoreSiteModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
-      return;
-    }
-    this.tableRowSelected = model;
-
-    if (
-      this.dataModelResult == null ||
-      this.dataModelResult.Access == null ||
-      !this.dataModelResult.Access.AccessDeleteRow
-    ) {
-      this.cmsToastrService.typeErrorSelected();
-      return;
-    }
-    this.router.navigate(['/core/site/modulelist/', this.tableRowSelected.Id]);
-
+    // const dialogRef = this.dialog.open(CoreSiteDeleteComponent, {
+    //   data: { id: this.tableRowSelected.Id }
+    // });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   if (result && result.dialogChangedDate) {
+    //     this.DataGetAll();
+    //   }
+    // });
 
   }
 
