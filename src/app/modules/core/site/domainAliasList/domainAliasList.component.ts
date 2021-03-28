@@ -12,8 +12,8 @@ import {
   TokenInfoModel,
   FilterDataModel,
   EnumRecordStatus,
-  CoreModuleSiteService,
-  CoreModuleSiteModel,
+  CoreSiteDomainAliasService,
+  CoreSiteDomainAliasModel,
   DataFieldInfoModel
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
@@ -27,14 +27,14 @@ import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-core-site-module-list',
-  templateUrl: './moduleList.component.html',
-  styleUrls: ['./moduleList.component.scss']
+  selector: 'app-core-site-domainalias-list',
+  templateUrl: './domainAliasList.component.html',
+  styleUrls: ['./domainAliasList.component.scss']
 })
-export class CoreSiteModuleListComponent implements OnInit, OnDestroy {
+export class CoreSiteDomainAliasListComponent implements OnInit, OnDestroy {
   requestId = 0;
   constructor(
-    private coreModuleSiteService: CoreModuleSiteService,
+    private coreSiteDomainAliasService: CoreSiteDomainAliasService,
     private coreSiteService: CoreSiteService,
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
@@ -61,7 +61,7 @@ export class CoreSiteModuleListComponent implements OnInit, OnDestroy {
   tableContentSelected = [];
 
   filteModelContent = new FilterModel();
-  dataModelResult: ErrorExceptionResult<CoreModuleSiteModel> = new ErrorExceptionResult<CoreModuleSiteModel>();
+  dataModelResult: ErrorExceptionResult<CoreSiteDomainAliasModel> = new ErrorExceptionResult<CoreSiteDomainAliasModel>();
   optionsSearch: ComponentOptionSearchModel = new ComponentOptionSearchModel();
   optionsStatist: ComponentOptionStatistModel = new ComponentOptionStatistModel();
   optionsExport: ComponentOptionExportModel = new ComponentOptionExportModel();
@@ -73,9 +73,7 @@ export class CoreSiteModuleListComponent implements OnInit, OnDestroy {
 
 
   tabledisplayedColumns: string[] = [
-    'MainImageSrc',
     'Id',
-    'linkCreatedBySiteId',
     'RecordStatus',
     'Title',
     'SubDomain',
@@ -85,7 +83,6 @@ export class CoreSiteModuleListComponent implements OnInit, OnDestroy {
     'Action'
   ];
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
-
 
 
   expandedElement: CoreSiteModel | null;
@@ -111,25 +108,25 @@ export class CoreSiteModuleListComponent implements OnInit, OnDestroy {
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
 
-    this.coreModuleSiteService.ServiceGetAll(this.filteModelContent).subscribe(
+    this.coreSiteDomainAliasService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
           this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
 
           this.dataModelResult = next;
           // this.tableSource.data = next.ListItems;
-          // if (this.tokenInfo.UserAccessAdminAllowToAllData) {
-          //   this.tabledisplayedColumns = this.publicHelper.listAddIfNotExist(
-          //     this.tabledisplayedColumns,
-          //     'linkCreatedBySiteId',
-          //     0
-          //   );
-          // } else {
-          //   this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
-          //     this.tabledisplayedColumns,
-          //     'linkCreatedBySiteId'
-          //   );
-          // }
+          if (this.tokenInfo.UserAccessAdminAllowToAllData) {
+            this.tabledisplayedColumns = this.publicHelper.listAddIfNotExist(
+              this.tabledisplayedColumns,
+              'LinkCmsSiteId',
+              0
+            );
+          } else {
+            this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
+              this.tabledisplayedColumns,
+              'LinkCmsSiteId'
+            );
+          }
 
           if (this.optionsSearch.childMethods) {
             this.optionsSearch.childMethods.setAccess(next.Access);

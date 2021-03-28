@@ -28,16 +28,16 @@ export class CmsTokenAccessComponent implements OnInit, OnDestroy {
 
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
 
-    if (this.tokenInfo && this.tokenInfo.UserId <= 0) {
-      this.router.navigate(['/auth/login']);
-    }
-
-    if (this.tokenInfo && this.tokenInfo.UserId > 0 && this.tokenInfo.SiteId <= 0) {
-      this.router.navigate(['/core/site/selection']);
-    }
-
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((value) => {
       this.tokenInfo = value;
+
+      if (!this.tokenInfo || !this.tokenInfo.Token || this.tokenInfo.Token.length === 0) {
+        this.router.navigate(['/auth/login']);
+      } else if (this.tokenInfo.UserId <= 0) {
+        this.router.navigate(['/auth/login']);
+      } else if (this.tokenInfo.UserId > 0 && this.tokenInfo.SiteId <= 0) {
+        this.router.navigate(['/core/site/selection']);
+      }
       if (this.tokenInfo && this.tokenInfo.UserId <= 0) {
         this.router.navigate(['/auth/login']);
       }
@@ -207,7 +207,7 @@ export class CmsTokenAccessComponent implements OnInit, OnDestroy {
           if (next.Item.SiteId === +this.SiteId) {
             this.cmsToastrService.toastr.success('دسترسی به سایت جدید تایید شد', title);
           } else {
-            this.cmsToastrService.toastr.warning( 'دسترسی به سایت جدید تایید نشد', title);
+            this.cmsToastrService.toastr.warning('دسترسی به سایت جدید تایید نشد', title);
           }
         } else {
           this.cmsToastrService.typeErrorAccessChange(next.ErrorMessage);

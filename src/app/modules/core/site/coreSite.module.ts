@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CoreSiteRouting } from './coreSite.routing';
 import { CoreSiteComponent } from './coreSite.component';
-import { CoreModuleService, CoreModuleSiteService, CoreSiteCategoryCmsModuleService, CoreSiteCategoryService, CoreSiteService } from 'ntk-cms-api';
+import { CoreModuleService, CoreModuleSiteService, CoreSiteCategoryCmsModuleService, CoreSiteCategoryService, CoreSiteDomainAliasService, CoreSiteService } from 'ntk-cms-api';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SelectionComponent } from './selection/selection.component';
 import { CoreSiteAddFirstComponent } from './addFirst/addFirst.component';
@@ -21,6 +21,7 @@ import { CoreSiteCategoryCmsModule } from '../siteCategory/coreSiteCategory.modu
 import { CoreSiteCategoryCmsModuleModule } from '../siteCategoryModule/coreSiteCategoryCmsModule.module';
 import { CmsFileManagerModule } from 'ntk-cms-filemanager';
 import { CoreSiteModuleListComponent } from './moduleList/moduleList.component';
+import { CoreSiteDomainAliasListComponent } from './domainAliasList/domainAliasList.component';
 
 
 @NgModule({
@@ -35,6 +36,20 @@ import { CoreSiteModuleListComponent } from './moduleList/moduleList.component';
     CoreSiteSelectorComponent,
     CoreSiteTreeComponent,
     CoreSiteModuleListComponent,
+    CoreSiteDomainAliasListComponent,
+  ],
+  exports:[
+    CoreSiteComponent,
+    CoreSiteAddFirstComponent,
+    SelectionComponent,
+    CoreSiteListComponent,
+    CoreSiteAddComponent,
+    CoreSiteEditComponent,
+    CoreSiteDeleteComponent,
+    CoreSiteSelectorComponent,
+    CoreSiteTreeComponent,
+    CoreSiteModuleListComponent,
+    CoreSiteDomainAliasListComponent,
   ],
   imports: [
     CommonModule,
@@ -55,7 +70,8 @@ import { CoreSiteModuleListComponent } from './moduleList/moduleList.component';
     CoreModuleService,
     CoreSiteCategoryService,
     CoreSiteResolver,
-    CoreModuleSiteService
+    CoreModuleSiteService,
+    CoreSiteDomainAliasService
   ]
 })
 export class CoreSiteModule {

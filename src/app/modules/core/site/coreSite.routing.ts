@@ -6,6 +6,7 @@ import { CoreSiteResolver } from './coreSite.resolver';
 import { CoreSiteListComponent } from './list/list.component';
 import { CoreSiteEditComponent } from './edit/edit.component';
 import { CoreSiteModuleListComponent } from './moduleList/moduleList.component';
+import { CoreSiteDomainAliasListComponent } from './domainAliasList/domainAliasList.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,15 @@ const routes: Routes = [
       {
         path: 'modulelist/:Id',
         component: CoreSiteModuleListComponent
+      },
+      {
+        path: 'domainalias',
+        component: CoreSiteDomainAliasListComponent
+      }
+      ,
+      {
+        path: 'domainalias/:Id',
+        component: CoreSiteDomainAliasListComponent
       }
     ]
   },
