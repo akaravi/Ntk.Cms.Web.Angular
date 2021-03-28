@@ -42,14 +42,12 @@ export class CoreSiteDomainAliasListComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
   ) {
     this.requestId = Number(this.activatedRoute.snapshot.paramMap.get('Id'));
-    if (this.requestId === 0) {
-      this.cmsToastrService.typeErrorAddRowParentIsNull();
-      return;
+    if (this.requestId > 0) {
+      const filter = new FilterDataModel();
+      filter.PropertyName = 'LinkSiteId';
+      filter.Value = this.requestId;
+      this.filteModelContent.Filters.push(filter);
     }
-    const filter = new FilterDataModel();
-    filter.PropertyName = 'LinkSiteId';
-    filter.Value = this.requestId;
-    this.filteModelContent.Filters.push(filter);
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
@@ -67,17 +65,17 @@ export class CoreSiteDomainAliasListComponent implements OnInit, OnDestroy {
   optionsExport: ComponentOptionExportModel = new ComponentOptionExportModel();
   tokenInfo = new TokenInfoModel();
   loading = new ProgressSpinnerModel();
-  tableRowsSelected: Array<CoreSiteModel> = [];
-  tableRowSelected: CoreSiteModel = new CoreSiteModel();
-  tableSource: MatTableDataSource<CoreSiteModel> = new MatTableDataSource<CoreSiteModel>();
+  tableRowsSelected: Array<CoreSiteDomainAliasModel> = [];
+  tableRowSelected: CoreSiteDomainAliasModel = new CoreSiteDomainAliasModel();
+  tableSource: MatTableDataSource<CoreSiteDomainAliasModel> = new MatTableDataSource<CoreSiteDomainAliasModel>();
 
 
   tabledisplayedColumns: string[] = [
     'Id',
     'RecordStatus',
-    'Title',
     'SubDomain',
     'Domain',
+    'Redirect',
     'CreatedDate',
     'UpdatedDate',
     'Action'
@@ -89,7 +87,8 @@ export class CoreSiteDomainAliasListComponent implements OnInit, OnDestroy {
   cmsApiStoreSubscribe: Subscription;
 
   ngOnInit(): void {
-    this.filteModelContent.SortColumn = 'Title';
+    this.filteModelContent.SortColumn = 'Id';
+    this.filteModelContent.SortType = EnumSortType.Descending;
     this.DataGetAll();
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
@@ -102,7 +101,7 @@ export class CoreSiteDomainAliasListComponent implements OnInit, OnDestroy {
   }
   DataGetAll(): void {
     this.tableRowsSelected = [];
-    this.tableRowSelected = new CoreSiteModel();
+    this.tableRowSelected = new CoreSiteDomainAliasModel();
 
     this.loading.display = true;
     this.loading.Globally = false;
@@ -114,7 +113,7 @@ export class CoreSiteDomainAliasListComponent implements OnInit, OnDestroy {
           this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
 
           this.dataModelResult = next;
-          // this.tableSource.data = next.ListItems;
+          this.tableSource.data = next.ListItems;
           if (this.tokenInfo.UserAccessAdminAllowToAllData) {
             this.tabledisplayedColumns = this.publicHelper.listAddIfNotExist(
               this.tabledisplayedColumns,
@@ -190,7 +189,7 @@ export class CoreSiteDomainAliasListComponent implements OnInit, OnDestroy {
     // });
   }
 
-  onActionbuttonEditRow(model: CoreSiteModel = this.tableRowSelected): void {
+  onActionbuttonEditRow(model: CoreSiteDomainAliasModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id === 0) {
       const title = 'برروز خطا ';
@@ -216,7 +215,7 @@ export class CoreSiteDomainAliasListComponent implements OnInit, OnDestroy {
     //   }
     // });
   }
-  onActionbuttonDeleteRow(model: CoreSiteModel = this.tableRowSelected): void {
+  onActionbuttonDeleteRow(model: CoreSiteDomainAliasModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای ویرایش انتخاب نشده است';
@@ -297,7 +296,7 @@ export class CoreSiteDomainAliasListComponent implements OnInit, OnDestroy {
     this.filteModelContent.Filters = model;
     this.DataGetAll();
   }
-  onActionTableRowSelect(row: CoreSiteModel): void {
+  onActionTableRowSelect(row: CoreSiteDomainAliasModel): void {
     this.tableRowSelected = row;
   }
 

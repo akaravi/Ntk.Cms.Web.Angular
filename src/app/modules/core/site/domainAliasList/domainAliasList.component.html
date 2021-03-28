@@ -39,13 +39,13 @@
         </ng-container>
         <!-- ID Column -->
         <ng-container matColumnDef="Id">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> شناسه </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Id']?.FieldTitle}}  </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Id}} </mat-cell>
         </ng-container>
         <!-- LinkSiteId Column -->
-        <ng-container matColumnDef="LinkSiteId">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkSiteId']?.FieldTitle}}  </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.LinkSiteId}} </mat-cell>
+        <ng-container matColumnDef="LinkCmsSiteId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkCmsSiteId']?.FieldTitle}}  </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.LinkCmsSiteId}} </mat-cell>
         </ng-container>
         <!-- RecordStatus Column -->
         <ng-container matColumnDef="RecordStatus">
