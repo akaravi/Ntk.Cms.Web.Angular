@@ -78,7 +78,7 @@ export class CoreUserGroupListComponent implements OnInit, OnDestroy {
   ];
 
 
-  columnsToDisplay: string[] = ['Id', 'Writer'];
+
   expandedElement: CoreUserGroupModel | null;
   cmsApiStoreSubscribe: Subscription;
 

@@ -12,7 +12,8 @@ import {
   NtkCmsApiStoreService,
   TokenInfoModel,
   FilterDataModel,
-  EnumRecordStatus
+  EnumRecordStatus,
+  DataFieldInfoModel
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -65,22 +66,21 @@ export class CoreLocationListComponent implements OnInit, OnDestroy {
 
 
   tabledisplayedColumns: string[] = [
-    'MainImageSrc',
     'Id',
-    'linkCreatedBySiteCategoryId',
     'RecordStatus',
     'Title',
-    'SubDomain',
-    'Domain',
-    'CreatedDate',
-    'UpdatedDate',
+    'LocationType',
+    'GeoLocationLatitude',
+    'GeoLocationLongitude',
     'Action'
   ];
 
 
-  columnsToDisplay: string[] = ['Id', 'Writer'];
+
   expandedElement: CoreLocationModel | null;
   cmsApiStoreSubscribe: Subscription;
+  categoryModelSelected: CoreLocationModel;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
   ngOnInit(): void {
     this.filteModelContent.SortColumn = 'Title';
@@ -101,24 +101,20 @@ export class CoreLocationListComponent implements OnInit, OnDestroy {
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
-
+    if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
+      const filter = new FilterDataModel();
+      filter.PropertyName = 'LinkParentId';
+      filter.Value = this.categoryModelSelected.Id;
+      this.filteModelContent.Filters.push(filter);
+    }
     this.coreLocationService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
+          this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;
-          if (this.tokenInfo.UserAccessAdminAllowToAllData) {
-            this.tabledisplayedColumns = this.publicHelper.listAddIfNotExist(
-              this.tabledisplayedColumns,
-              'linkCreatedBySiteCategoryId',
-              0
-            );
-          } else {
-            this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
-              this.tabledisplayedColumns,
-              'linkCreatedBySiteCategoryId'
-            );
-          }
+
 
           if (this.optionsSearch.childMethods) {
             this.optionsSearch.childMethods.setAccess(next.Access);
@@ -161,6 +157,11 @@ export class CoreLocationListComponent implements OnInit, OnDestroy {
     this.DataGetAll();
   }
 
+  onActionCategorySelect(model: CoreLocationModel | null): void {
+    this.filteModelContent = new FilterModel();
+    this.categoryModelSelected = model;
+    this.DataGetAll();
+  }
 
   onActionbuttonNewRow(): void {
 

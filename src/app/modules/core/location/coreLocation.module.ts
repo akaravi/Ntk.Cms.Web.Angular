@@ -16,6 +16,7 @@ import { CoreLocationListComponent } from './list/list.component';
 import { TreeviewModule } from 'ngx-treeview';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { TagInputModule } from 'ngx-chips';
+import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 
 
 @NgModule({
@@ -50,6 +51,7 @@ import { TagInputModule } from 'ngx-chips';
   providers: [
     CoreLocationService,
     CoreModuleService,
+    CmsConfirmationDialogService
   ]
 })
 export class CoreLocationCmsModule {

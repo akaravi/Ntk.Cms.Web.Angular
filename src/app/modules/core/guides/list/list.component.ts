@@ -78,7 +78,7 @@ export class CoreGuideListComponent implements OnInit, OnDestroy {
   ];
 
 
-  columnsToDisplay: string[] = ['Id', 'Writer'];
+
   expandedElement: CoreGuideModel | null;
   cmsApiStoreSubscribe: Subscription;
 

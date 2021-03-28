@@ -74,7 +74,7 @@ export class ApplicationIntroListComponent implements OnInit, OnDestroy {
   ];
 
 
-  columnsToDisplay: string[] = ['Id', 'Writer'];
+
   expandedElement: ApplicationIntroModel | null;
   cmsApiStoreSubscribe: Subscription;
 

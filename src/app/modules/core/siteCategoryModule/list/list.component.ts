@@ -75,7 +75,7 @@ export class CoreSiteCategoryCmsModuleListComponent implements OnInit , OnDestro
   ];
 
 
-  columnsToDisplay: string[] = ['Id', 'Writer'];
+
   expandedElement: CoreSiteCategoryCmsModuleModel | null;
   cmsApiStoreSubscribe: Subscription;
 

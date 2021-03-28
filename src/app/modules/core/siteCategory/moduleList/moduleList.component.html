@@ -1,8 +1,5 @@
 <div class="row">
-  <div class="col-xl-6">
-    <app-core-cpmainmenu-tree (optionSelect)="onActionCategorySelect($event)"></app-core-cpmainmenu-tree>
-  </div>
-  <div class="col-xl-6">
+  <div class="col-xl-12">
     <div class="button-row">
       <button *ngIf="dataModelResult.Access.AccessAddRow " (click)="onActionbuttonNewRow()" type="button"
         class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">اضافه</button>
@@ -30,53 +27,60 @@
     </app-progress-spinner>
 
     <div class="example-container mat-elevation-z8">
-      <mat-table [dataSource]="tableSource" matSort #tableSort="matSort" (matSortChange)="onTableSortData(tableSort)"
-        cdkDropList [cdkDropListData]="tableSource" (cdkDropListDropped)="onTableDropRow($event)">
-        <!-- Icon Column -->
-        <ng-container matColumnDef="Icon">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Icon']?.FieldTitle}} </mat-header-cell>
-          <mat-cell *matCellDef="let row"><i [ngClass]="row.Icon" [style.color]="row.Color" aria-hidden="true"></i>
+      <mat-table [dataSource]="tableSource" matSort #tableSort="matSort" (matSortChange)="onTableSortData(tableSort)">
+        <!-- MainImageSrc Column -->
+        <ng-container matColumnDef="MainImageSrc">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> عکس </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <img *ngIf="row?.MainImageSrc?.length>0" style="vertical-align:middle;" aria-hidden
+              src="{{row.MainImageSrc}}" height="40" width="40" />
+
           </mat-cell>
         </ng-container>
         <!-- ID Column -->
         <ng-container matColumnDef="Id">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Id']?.FieldTitle}} </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> شناسه </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Id}} </mat-cell>
+        </ng-container>
+        <!-- linkCreatedBySiteId Column -->
+        <ng-container matColumnDef="linkCreatedBySiteId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> سایت والد </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.linkCreatedBySiteId}} </mat-cell>
         </ng-container>
         <!-- RecordStatus Column -->
         <ng-container matColumnDef="RecordStatus">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>  {{fieldsInfo['RecordStatus']?.FieldTitle}} </mat-header-cell>
-          <mat-cell *matCellDef="let row">
-            <i [ngClass]="row.RecordStatus|statusClass"></i>
-          </mat-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> وضعیت </mat-header-cell>
+          <mat-cell *matCellDef="let row"> <i [ngClass]="row.RecordStatus|statusClass"></i> </mat-cell>
         </ng-container>
         <!-- Title Column -->
         <ng-container matColumnDef="Title">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Title']?.FieldTitle}}</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> عنوان </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Title}} </mat-cell>
         </ng-container>
-        <!-- TitleML Column -->
-        <ng-container matColumnDef="TitleML">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['TitleML']?.FieldTitle}}</mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.TitleML}} </mat-cell>
+        <!-- SubDomain Column -->
+        <ng-container matColumnDef="SubDomain">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> SubDomain </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.SubDomain}} </mat-cell>
         </ng-container>
-        <!-- ShowInAccessAdminAllowToProfessionalData Column -->
-        <ng-container matColumnDef="ShowInAccessAdminAllowToProfessionalData">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>
-            {{fieldsInfo['ShowInAccessAdminAllowToProfessionalData']?.FieldTitle}}</mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.ShowInAccessAdminAllowToProfessionalData}} </mat-cell>
+        <!-- Domain Column -->
+        <ng-container matColumnDef="Domain">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Domain </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.Domain}} </mat-cell>
         </ng-container>
-        <!-- MenuPlaceType Column -->
-        <ng-container matColumnDef="MenuPlaceType">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['MenuPlaceType']?.FieldTitle}}
-          </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.MenuPlaceType}} </mat-cell>
+        <!-- CreatedDate Column -->
+        <ng-container matColumnDef="CreatedDate">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> ناریخ ایجاد </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.CreatedDate) }} </mat-cell>
         </ng-container>
-        <!-- ShowInMenuOrder Column -->
-        <ng-container matColumnDef="ShowInMenuOrder">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['ShowInMenuOrder']?.FieldTitle}}
-          </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.ShowInMenuOrder}} </mat-cell>
+        <!-- UpdatedDate Column -->
+        <ng-container matColumnDef="UpdatedDate">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> تاریخ ویرابش </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.UpdatedDate) }} </mat-cell>
+        </ng-container>
+        <!-- ExpireDate Column -->
+        <ng-container matColumnDef="ExpireDate">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> تاریخ انقضا </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.ExpireDate) }} </mat-cell>
         </ng-container>
         <!-- Action Column -->
         <ng-container matColumnDef="Action">
@@ -96,19 +100,14 @@
                 <span>حذف</span>
               </button>
             </mat-menu>
-          </mat-cell>
-        </ng-container>
-        <!-- position Column -->
-        <ng-container matColumnDef="position">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>.
-          </mat-header-cell>
-          <mat-cell *matCellDef="let row">
-            <mat-icon style="pointer-events: all;" cdkDragHandle>reorder</mat-icon>
+
+
+
           </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="tabledisplayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: tabledisplayedColumns;" (click)="onActionTableRowSelect(row)"
-          [ngStyle]="{'background': row.Id === tableRowSelected.Id ? '#d3d3da' : '' }" cdkDrag [cdkDragData]=row>
+          [ngStyle]="{'background': row.Id === tableRowSelected.Id ? '#d3d3da' : '' }">
         </mat-row>
       </mat-table>
 

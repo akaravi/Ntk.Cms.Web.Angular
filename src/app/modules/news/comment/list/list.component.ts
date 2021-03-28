@@ -84,7 +84,7 @@ export class NewsCommentListComponent implements OnInit , OnDestroy {
 
 
 
-  columnsToDisplay: string[] = ['Id', 'Writer'];
+
   expandedElement: NewsContentModel | null;
   cmsApiStoreSubscribe: Subscription;
 

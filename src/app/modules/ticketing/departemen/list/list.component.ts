@@ -72,7 +72,7 @@ export class TicketingDepartemenListComponent implements OnInit , OnDestroy {
   ];
 
 
-  columnsToDisplay: string[] = ['Id', 'Writer'];
+
   expandedElement: TicketingDepartemenModel | null;
   cmsApiStoreSubscribe: Subscription;
 

@@ -78,7 +78,7 @@ export class CoreUserListComponent implements OnInit , OnDestroy {
   ];
 
 
-  columnsToDisplay: string[] = ['Id', 'Writer'];
+
   expandedElement: CoreUserModel | null;
   cmsApiStoreSubscribe: Subscription;
 

@@ -84,7 +84,7 @@ export class BlogCommentListComponent implements OnInit , OnDestroy {
 
 
 
-  columnsToDisplay: string[] = ['Id', 'Writer'];
+
   expandedElement: BlogContentModel | null;
   cmsApiStoreSubscribe: Subscription;
 

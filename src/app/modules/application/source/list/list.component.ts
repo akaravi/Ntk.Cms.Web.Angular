@@ -75,7 +75,7 @@ export class ApplicationSourceListComponent implements OnInit , OnDestroy {
   ];
 
 
-  columnsToDisplay: string[] = ['Id', 'Writer'];
+
   expandedElement: ApplicationSourceModel | null;
   cmsApiStoreSubscribe: Subscription;
 

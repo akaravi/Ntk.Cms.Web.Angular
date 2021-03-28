@@ -83,7 +83,7 @@ export class PollingVoteListComponent implements OnInit, OnDestroy {
 
 
 
-  columnsToDisplay: string[] = ['Id', 'Writer'];
+
   expandedElement: NewsContentModel | null;
   cmsApiStoreSubscribe: Subscription;
 

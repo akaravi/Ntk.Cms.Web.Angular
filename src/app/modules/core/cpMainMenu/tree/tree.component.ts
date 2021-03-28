@@ -18,6 +18,7 @@ import {
   CoreCpMainMenuModel,
   CoreCpMainMenuService,
   NtkCmsApiStoreService,
+  EnumSortType,
 } from 'ntk-cms-api';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -40,6 +41,8 @@ export class CoreCpMainMenuTreeComponent implements OnInit , OnDestroy{
     public categoryService: CoreCpMainMenuService,
     public dialog: MatDialog,
   ) {
+    this.filteModel.SortColumn = 'ShowInMenuOrder';
+    this.filteModel.SortType = EnumSortType.Ascending;
   }
   @Input() set optionSelectForce(x: number | CoreCpMainMenuModel) {
     this.onActionSelectForce(x);
@@ -71,7 +74,7 @@ export class CoreCpMainMenuTreeComponent implements OnInit , OnDestroy{
     this.filteModel.AccessLoad = true;
     this.loading.Globally = false;
     this.loading.display = true;
-    this.categoryService.ServiceGetAllMenu(this.filteModel).subscribe(
+    this.categoryService.ServiceGetAllTree(this.filteModel).subscribe(
       (next) => {
         if (next.IsSuccess) {
           this.dataModelResult = next;

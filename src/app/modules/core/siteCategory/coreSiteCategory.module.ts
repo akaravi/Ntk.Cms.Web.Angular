@@ -17,6 +17,7 @@ import { CoreSiteCategoryListComponent } from './list/list.component';
 import { TreeviewModule } from 'ngx-treeview';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { TagInputModule } from 'ngx-chips';
+import { CoreSiteCategoryModuleListComponent } from './moduleList/moduleList.component';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { TagInputModule } from 'ngx-chips';
     CoreSiteCategoryEditComponent,
     CoreSiteCategorySelectorComponent,
     CoreSiteCategoryTreeComponent,
+    CoreSiteCategoryModuleListComponent,
   ],
   exports: [
     CoreSiteCategoryComponent,
@@ -35,6 +37,7 @@ import { TagInputModule } from 'ngx-chips';
     CoreSiteCategoryEditComponent,
     CoreSiteCategorySelectorComponent,
     CoreSiteCategoryTreeComponent,
+    CoreSiteCategoryModuleListComponent,
   ],
   imports: [
     CommonModule,

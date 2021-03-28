@@ -84,7 +84,7 @@ export class BiographyCommentListComponent implements OnInit , OnDestroy {
 
 
 
-  columnsToDisplay: string[] = ['Id', 'Writer'];
+
   expandedElement: BiographyContentModel | null;
   cmsApiStoreSubscribe: Subscription;
 

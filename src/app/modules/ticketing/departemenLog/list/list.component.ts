@@ -72,7 +72,7 @@ export class TicketingDepartemenLogListComponent implements OnInit {
   ];
 
 
-  columnsToDisplay: string[] = ['Id', 'Writer'];
+
   expandedElement: TicketingDepartemenLogModel | null;
 
   ngOnInit(): void {

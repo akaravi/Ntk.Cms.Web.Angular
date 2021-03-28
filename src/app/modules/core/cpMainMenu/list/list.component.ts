@@ -46,6 +46,8 @@ export class CoreCpMainMenuListComponent implements OnInit, OnDestroy {
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
+    this.filteModelContent.SortColumn = 'ShowInMenuOrder';
+    this.filteModelContent.SortType = EnumSortType.Ascending;
   }
   comment: string;
   author: string;
@@ -79,13 +81,12 @@ export class CoreCpMainMenuListComponent implements OnInit, OnDestroy {
 
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
-  columnsToDisplay: string[] = ['Id', 'Writer'];
+
   expandedElement: CoreCpMainMenuModel | null;
   cmsApiStoreSubscribe: Subscription;
   categoryModelSelected: CoreCpMainMenuModel;
   ngOnInit(): void {
-    this.filteModelContent.SortColumn = 'ShowInMenuOrder';
-    this.filteModelContent.SortType = EnumSortType.Ascending;
+
     this.DataGetAll();
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {

@@ -38,10 +38,10 @@
             <!-- Material-UI -->
             <!-- begin::1 Level -->
             <li *ngFor="let firstItem of resultCoreCpMainMenu.ListItems" class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" routerLinkActive="menu-item-active">
-                <a *ngIf="firstItem.Children.length===0" class="menu-link" routerLink="{{firstItem.RouteAddressLink}}" routerLinkActive="active">
+                <a *ngIf="!firstItem.Children || firstItem.Children.length===0" class="menu-link" routerLink="{{firstItem.RouteAddressLink}}" routerLinkActive="active">
                     <span [style.color]="firstItem.Color?.length>0 ? firstItem.Color:''" class="menu-text"><i [ngClass]="firstItem.Icon" [style.color]="firstItem.Color?.length>0 ? firstItem.Color:''" aria-hidden="true"></i>&nbsp;&nbsp;{{firstItem.Title}}</span>
                 </a>
-                <a *ngIf="firstItem.Children.length>0" class="menu-link menu-toggle" routerLinkActive="active">
+                <a *ngIf="firstItem.Children && firstItem.Children.length>0" class="menu-link menu-toggle" routerLinkActive="active">
                     <!--          <span [inlineSVG]="'./assets/media/svg/icons/Design/Cap-2.svg'" cacheSVG="true"-->
                     <!--            class="svg-icon menu-icon">-->
                     <!--          </span>-->

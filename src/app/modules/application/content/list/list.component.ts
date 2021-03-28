@@ -82,7 +82,7 @@ export class ApplicationAppListComponent implements OnInit, OnDestroy {
   ];
 
 
-  columnsToDisplay: string[] = ['Id', 'Writer'];
+
   expandedElement: ApplicationAppModel | null;
   cmsApiStoreSubscribe: Subscription;
 

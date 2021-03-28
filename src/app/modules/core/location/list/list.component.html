@@ -1,5 +1,8 @@
 <div class="row">
-  <div class="col-xl-12">
+  <div class="col-xl-6">
+    <app-core-location-tree (optionSelect)="onActionCategorySelect($event)"></app-core-location-tree>
+  </div>
+  <div class="col-xl-6">
     <div class="button-row">
       <button *ngIf="dataModelResult.Access.AccessAddRow " (click)="onActionbuttonNewRow()" type="button"
         class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">اضافه</button>
@@ -28,60 +31,43 @@
 
     <div class="example-container mat-elevation-z8">
       <mat-table [dataSource]="tableSource" matSort #tableSort="matSort" (matSortChange)="onTableSortData(tableSort)">
-        <!-- MainImageSrc Column -->
-        <ng-container matColumnDef="MainImageSrc">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> عکس </mat-header-cell>
-          <mat-cell *matCellDef="let row">
-            <img *ngIf="row?.MainImageSrc?.length>0" style="vertical-align:middle;" aria-hidden
-              src="{{row.MainImageSrc}}" height="40" width="40" />
-
-          </mat-cell>
-        </ng-container>
         <!-- ID Column -->
         <ng-container matColumnDef="Id">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> شناسه </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Id']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Id}} </mat-cell>
-        </ng-container>
-        <!-- linkCreatedBySiteId Column -->
-        <ng-container matColumnDef="linkCreatedBySiteId">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> سایت والد </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.linkCreatedBySiteId}} </mat-cell>
         </ng-container>
         <!-- RecordStatus Column -->
         <ng-container matColumnDef="RecordStatus">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> وضعیت </mat-header-cell>
-          <mat-cell *matCellDef="let row"> <i [ngClass]="row.RecordStatus|statusClass"></i> </mat-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['RecordStatus']?.FieldTitle}}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <i [ngClass]="row.RecordStatus|statusClass"></i>
+          </mat-cell>
         </ng-container>
         <!-- Title Column -->
         <ng-container matColumnDef="Title">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> عنوان </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Title']?.FieldTitle}}</mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Title}} </mat-cell>
         </ng-container>
-        <!-- SubDomain Column -->
-        <ng-container matColumnDef="SubDomain">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> SubDomain </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.SubDomain}} </mat-cell>
+        <!-- LocationType Column -->
+        <ng-container matColumnDef="LocationType">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LocationType']?.FieldTitle}}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.LocationType}} </mat-cell>
         </ng-container>
-        <!-- Domain Column -->
-        <ng-container matColumnDef="Domain">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Domain </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.Domain}} </mat-cell>
+        <!-- GeoLocationLatitude Column -->
+        <ng-container matColumnDef="GeoLocationLatitude">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['GeoLocationLatitude']?.FieldTitle}}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.GeoLocationLatitude}} </mat-cell>
         </ng-container>
-        <!-- CreatedDate Column -->
-        <ng-container matColumnDef="CreatedDate">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> ناریخ ایجاد </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.CreatedDate) }} </mat-cell>
+        <!-- GeoLocationLongitude Column -->
+        <ng-container matColumnDef="GeoLocationLongitude">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['GeoLocationLongitude']?.FieldTitle}}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.GeoLocationLongitude}} </mat-cell>
         </ng-container>
-        <!-- UpdatedDate Column -->
-        <ng-container matColumnDef="UpdatedDate">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> تاریخ ویرابش </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.UpdatedDate) }} </mat-cell>
-        </ng-container>
-        <!-- ExpireDate Column -->
-        <ng-container matColumnDef="ExpireDate">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> تاریخ انقضا </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.ExpireDate) }} </mat-cell>
-        </ng-container>
+
         <!-- Action Column -->
         <ng-container matColumnDef="Action">
           <mat-header-cell *matHeaderCellDef> ... </mat-header-cell>

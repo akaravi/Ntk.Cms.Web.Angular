@@ -1,24 +1,24 @@
+
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
-  TicketingDepartemenOperatorModel,
-  TicketingDepartemenOperatorService,
-  ApplicationSourceModel,
-  CoreAuthService,
+  CoreSiteModel,
+  CoreSiteService,
   EnumSortType,
   ErrorExceptionResult,
-  FilterDataModel,
   FilterModel,
   NtkCmsApiStoreService,
   TokenInfoModel,
-  EnumRecordStatus
+  FilterDataModel,
+  EnumRecordStatus,
+  CoreModuleSiteService,
+  CoreModuleSiteModel
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
-import { MatDialog } from '@angular/material/dialog';
 import { ComponentOptionExportModel } from 'src/app/core/cmsComponentModels/base/componentOptionExportModel';
 import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/base/componentOptionStatistModel';
 import { MatSort } from '@angular/material/sort';
@@ -26,19 +26,29 @@ import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-application-app-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss']
+  selector: 'app-core-site-modulelist',
+  templateUrl: './moduleList.component.html',
+  styleUrls: ['./moduleList.component.scss']
 })
-export class TicketingDepartemenOperatorListComponent implements OnInit {
-  requestDepartemenId = 0;
-  constructor(private ticketingDepartemenOperatorService: TicketingDepartemenOperatorService,
-    private activatedRoute: ActivatedRoute,
-    private cmsApiStore :NtkCmsApiStoreService,
+export class CoreSiteCategoryModuleListComponent implements OnInit, OnDestroy {
+  requestId = 0;
+  constructor(
+    private coreModuleSiteService: CoreModuleSiteService,
+    private coreSiteService: CoreSiteService,
+    private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
-    private router: Router,
-    public dialog: MatDialog) {
+    private activatedRoute: ActivatedRoute,
+  ) {
+    this.requestId = Number(this.activatedRoute.snapshot.paramMap.get('Id'));
+    if (this.requestId === 0) {
+      this.cmsToastrService.typeErrorAddRowParentIsNull();
+      return;
+    }
+    const filter = new FilterDataModel();
+    filter.PropertyName = 'LinkSiteId';
+    filter.Value = this.requestId;
+    this.filteModelContent.Filters.push(filter);
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
@@ -50,22 +60,25 @@ export class TicketingDepartemenOperatorListComponent implements OnInit {
   tableContentSelected = [];
 
   filteModelContent = new FilterModel();
-  dataModelResult: ErrorExceptionResult<TicketingDepartemenOperatorModel> = new ErrorExceptionResult<TicketingDepartemenOperatorModel>();
+  dataModelResult: ErrorExceptionResult<CoreModuleSiteModel> = new ErrorExceptionResult<CoreModuleSiteModel>();
   optionsSearch: ComponentOptionSearchModel = new ComponentOptionSearchModel();
   optionsStatist: ComponentOptionStatistModel = new ComponentOptionStatistModel();
   optionsExport: ComponentOptionExportModel = new ComponentOptionExportModel();
   tokenInfo = new TokenInfoModel();
   loading = new ProgressSpinnerModel();
-  tableRowsSelected: Array<TicketingDepartemenOperatorModel> = [];
-  tableRowSelected: TicketingDepartemenOperatorModel = new TicketingDepartemenOperatorModel();
-  tableSource: MatTableDataSource<TicketingDepartemenOperatorModel> = new MatTableDataSource<TicketingDepartemenOperatorModel>();
-  categoryModelSelected: ApplicationSourceModel;
+  tableRowsSelected: Array<CoreSiteModel> = [];
+  tableRowSelected: CoreSiteModel = new CoreSiteModel();
+  tableSource: MatTableDataSource<CoreSiteModel> = new MatTableDataSource<CoreSiteModel>();
+
 
   tabledisplayedColumns: string[] = [
+    'MainImageSrc',
     'Id',
+    'linkCreatedBySiteId',
     'RecordStatus',
     'Title',
-    'LinkSourceId',
+    'SubDomain',
+    'Domain',
     'CreatedDate',
     'UpdatedDate',
     'Action'
@@ -73,70 +86,50 @@ export class TicketingDepartemenOperatorListComponent implements OnInit {
 
 
 
-  expandedElement: TicketingDepartemenOperatorModel | null;
+  expandedElement: CoreSiteModel | null;
+  cmsApiStoreSubscribe: Subscription;
 
   ngOnInit(): void {
-    this.requestDepartemenId = Number(this.activatedRoute.snapshot.paramMap.get('SourceId'));
+    this.filteModelContent.SortColumn = 'Title';
     this.DataGetAll();
-    this.tokenInfo =  this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
-    this.cmsApiStoreSubscribe =  this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
+    this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
+    this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
     });
   }
-  cmsApiStoreSubscribe:Subscription;
   ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
-
   DataGetAll(): void {
     this.tableRowsSelected = [];
-    this.tableRowSelected = new TicketingDepartemenOperatorModel();
+    this.tableRowSelected = new CoreSiteModel();
 
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
-    const filter = new FilterDataModel();
-    if (this.requestDepartemenId > 0) {
-      filter.PropertyName = 'LinkSourceId';
-      filter.Value = this.requestDepartemenId;
-      this.filteModelContent.Filters.push(filter);
-    }
-    if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
-      filter.PropertyName = 'LinkSourceId';
-      filter.Value = this.categoryModelSelected.Id ;
-      this.filteModelContent.Filters.push(filter);
-    }
-    this.ticketingDepartemenOperatorService.ServiceGetAll(this.filteModelContent).subscribe(
+
+    this.coreModuleSiteService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
           this.dataModelResult = next;
-          this.tableSource.data = next.ListItems;
+          // this.tableSource.data = next.ListItems;
           if (this.tokenInfo.UserAccessAdminAllowToAllData) {
             this.tabledisplayedColumns = this.publicHelper.listAddIfNotExist(
               this.tabledisplayedColumns,
-              'LinkSiteId',
+              'linkCreatedBySiteId',
               0
             );
           } else {
             this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
               this.tabledisplayedColumns,
-              'LinkSiteId'
+              'linkCreatedBySiteId'
             );
           }
-          if (this.requestDepartemenId === 0) {
-            this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
-              this.tabledisplayedColumns,
-              'LinkSourceId'
-            );
-          }
+
           if (this.optionsSearch.childMethods) {
             this.optionsSearch.childMethods.setAccess(next.Access);
           }
-        }
-        else {
-          this.cmsToastrService.typeErrorGetAll(next.ErrorMessage);
-
         }
         this.loading.display = false;
       },
@@ -177,15 +170,7 @@ export class TicketingDepartemenOperatorListComponent implements OnInit {
 
 
   onActionbuttonNewRow(): void {
-    if (
-      this.requestDepartemenId == null ||
-      this.requestDepartemenId === 0
-    ) {
-      const title = 'برروز خطا ';
-      const message = 'محتوا انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
-      return;
-    }
+
     if (
       this.dataModelResult == null ||
       this.dataModelResult.Access == null ||
@@ -194,33 +179,25 @@ export class TicketingDepartemenOperatorListComponent implements OnInit {
       this.cmsToastrService.typeErrorAccessAdd();
       return;
     }
-    // const dialogRef = this.dialog.open(NewsCommentEditComponent, {
-    //   data: { contentId: this.requestContentId }
+    // const dialogRef = this.dialog.open(CoreSiteAddComponent, {
+    //   data: {}
     // });
     // dialogRef.afterClosed().subscribe(result => {
-    //   // console.log(`Dialog result: ${result}`);
     //   if (result && result.dialogChangedDate) {
     //     this.DataGetAll();
     //   }
     // });
-    this.router.navigate(['/application/app/add/', this.requestDepartemenId]);
-
   }
 
-  onActionCategorySelect(model: ApplicationSourceModel | null): void {
-    this.filteModelContent = new FilterModel();
-    this.categoryModelSelected = model;
+  onActionbuttonEditRow(model: CoreSiteModel = this.tableRowSelected): void {
 
-    this.DataGetAll();
-  }
-  onActionbuttonEditRow(mode: TicketingDepartemenOperatorModel = this.tableRowSelected): void {
-    if (!mode || !mode.Id || mode.Id === 0) {
+    if (!model || !model.Id || model.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای ویرایش انتخاب نشده است';
       this.cmsToastrService.toastr.error(message, title);
       return;
     }
-    this.tableRowSelected = mode;
+    this.tableRowSelected = model;
     if (
       this.dataModelResult == null ||
       this.dataModelResult.Access == null ||
@@ -229,27 +206,24 @@ export class TicketingDepartemenOperatorListComponent implements OnInit {
       this.cmsToastrService.typeErrorAccessEdit();
       return;
     }
-
-    // const dialogRef = this.dialog.open(NewsCommentEditComponent, {
+    // const dialogRef = this.dialog.open(CoreSiteEditComponent, {
     //   data: { id: this.tableRowSelected.Id }
     // });
     // dialogRef.afterClosed().subscribe(result => {
-    //   // console.log(`Dialog result: ${result}`);
     //   if (result && result.dialogChangedDate) {
     //     this.DataGetAll();
     //   }
     // });
-    this.router.navigate(['/application/app/edit/', this.tableRowSelected.Id]);
-
   }
-  onActionbuttonDeleteRow(mode: TicketingDepartemenOperatorModel = this.tableRowSelected): void {
-    if (mode == null || !mode.Id || mode.Id === 0) {
+  onActionbuttonDeleteRow(model: CoreSiteModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای ویرایش انتخاب نشده است';
       this.cmsToastrService.toastr.error(message, title);
       return;
     }
-    this.tableRowSelected = mode;
+    this.tableRowSelected = model;
+
     if (
       this.dataModelResult == null ||
       this.dataModelResult.Access == null ||
@@ -258,19 +232,20 @@ export class TicketingDepartemenOperatorListComponent implements OnInit {
       this.cmsToastrService.typeErrorAccessDelete();
       return;
     }
-    // const dialogRef = this.dialog.open(NewsCommentDeleteComponent, {
+    // const dialogRef = this.dialog.open(CoreSiteDeleteComponent, {
     //   data: { id: this.tableRowSelected.Id }
     // });
     // dialogRef.afterClosed().subscribe(result => {
-    //   // console.log(`Dialog result: ${result}`);
     //   if (result && result.dialogChangedDate) {
     //     this.DataGetAll();
     //   }
     // });
-    this.router.navigate(['/application/app/delete/', this.tableRowSelected.Id]);
 
   }
-   onActionbuttonStatist(): void {
+
+
+
+  onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;
     if (!this.optionsStatist.data.show) {
       return;
@@ -278,7 +253,7 @@ export class TicketingDepartemenOperatorListComponent implements OnInit {
     const statist = new Map<string, number>();
     statist.set('Active', 0);
     statist.set('All', 0);
-    this.ticketingDepartemenOperatorService.ServiceGetCount(this.filteModelContent).subscribe(
+    this.coreSiteService.ServiceGetCount(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('All', next.TotalRowCount);
@@ -295,7 +270,7 @@ export class TicketingDepartemenOperatorListComponent implements OnInit {
     fastFilter.PropertyName = 'RecordStatus';
     fastFilter.Value = EnumRecordStatus.Available;
     filterStatist1.Filters.push(fastFilter);
-    this.ticketingDepartemenOperatorService.ServiceGetCount(filterStatist1).subscribe(
+    this.coreSiteService.ServiceGetCount(filterStatist1).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('Active', next.TotalRowCount);
@@ -321,11 +296,8 @@ export class TicketingDepartemenOperatorListComponent implements OnInit {
     this.filteModelContent.Filters = model;
     this.DataGetAll();
   }
-  onActionTableRowSelect(row: TicketingDepartemenOperatorModel): void {
+  onActionTableRowSelect(row: CoreSiteModel): void {
     this.tableRowSelected = row;
-  }
-  onActionBackToParent(): void {
-    this.router.navigate(['/ticketing/departeman/']);
   }
 
 }

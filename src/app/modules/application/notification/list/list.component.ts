@@ -74,7 +74,7 @@ export class ApplicationNotificationListComponent implements OnInit , OnDestroy 
   ];
 
 
-  columnsToDisplay: string[] = ['Id', 'Writer'];
+
   expandedElement: ApplicationLogNotificationModel | null;
   cmsApiStoreSubscribe: Subscription;
 

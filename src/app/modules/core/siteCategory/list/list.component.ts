@@ -78,7 +78,7 @@ export class CoreSiteCategoryListComponent implements OnInit, OnDestroy {
   ];
 
 
-  columnsToDisplay: string[] = ['Id', 'Writer'];
+
   expandedElement: CoreSiteCategoryModel | null;
   cmsApiStoreSubscribe: Subscription;
 

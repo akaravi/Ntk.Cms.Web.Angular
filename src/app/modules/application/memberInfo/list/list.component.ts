@@ -80,7 +80,7 @@ export class ApplicationMemberInfoListComponent implements OnInit , OnDestroy{
   ];
 
 
-  columnsToDisplay: string[] = ['Id', 'Writer'];
+
   expandedElement: ApplicationMemberInfoModel | null;
   cmsApiStoreSubscribe: Subscription;
 

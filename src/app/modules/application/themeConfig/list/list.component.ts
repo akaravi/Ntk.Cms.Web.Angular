@@ -76,7 +76,7 @@ export class ApplicationThemeConfigListComponent implements OnInit , OnDestroy {
   ];
 
 
-  columnsToDisplay: string[] = ['Id', 'Writer'];
+
   expandedElement: ApplicationThemeConfigModel | null;
   cmsApiStoreSubscribe: Subscription;
 
