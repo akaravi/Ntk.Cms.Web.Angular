@@ -40,6 +40,7 @@ export class CoreSiteModuleListComponent implements OnInit, OnDestroy {
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
     private activatedRoute: ActivatedRoute,
+    private router: Router,
   ) {
     this.requestId = Number(this.activatedRoute.snapshot.paramMap.get('Id'));
     if (this.requestId === 0) {
@@ -67,28 +68,29 @@ export class CoreSiteModuleListComponent implements OnInit, OnDestroy {
   optionsExport: ComponentOptionExportModel = new ComponentOptionExportModel();
   tokenInfo = new TokenInfoModel();
   loading = new ProgressSpinnerModel();
-  tableRowsSelected: Array<CoreSiteModel> = [];
-  tableRowSelected: CoreSiteModel = new CoreSiteModel();
-  tableSource: MatTableDataSource<CoreSiteModel> = new MatTableDataSource<CoreSiteModel>();
+  tableRowsSelected: Array<CoreModuleSiteModel> = [];
+  tableRowSelected: CoreModuleSiteModel = new CoreModuleSiteModel();
+  tableSource: MatTableDataSource<CoreModuleSiteModel> = new MatTableDataSource<CoreModuleSiteModel>();
 
 
   tabledisplayedColumns: string[] = [
-    'MainImageSrc',
-    'Id',
-    'linkCreatedBySiteId',
+    'LinkSiteId',
+    'LinkModuleId',
     'RecordStatus',
-    'Title',
-    'SubDomain',
-    'Domain',
+    'virtual_CmsSite.Title',
+    'virtual_CmsModule.Title',
     'CreatedDate',
     'UpdatedDate',
+    'RenewDate',
+    'HasBuyed',
+    'ExpireDate',
     'Action'
   ];
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
 
 
-  expandedElement: CoreSiteModel | null;
+  expandedElement: CoreModuleSiteModel | null;
   cmsApiStoreSubscribe: Subscription;
 
   ngOnInit(): void {
@@ -105,7 +107,7 @@ export class CoreSiteModuleListComponent implements OnInit, OnDestroy {
   }
   DataGetAll(): void {
     this.tableRowsSelected = [];
-    this.tableRowSelected = new CoreSiteModel();
+    this.tableRowSelected = new CoreModuleSiteModel();
 
     this.loading.display = true;
     this.loading.Globally = false;
@@ -117,19 +119,8 @@ export class CoreSiteModuleListComponent implements OnInit, OnDestroy {
           this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
 
           this.dataModelResult = next;
-          // this.tableSource.data = next.ListItems;
-          // if (this.tokenInfo.UserAccessAdminAllowToAllData) {
-          //   this.tabledisplayedColumns = this.publicHelper.listAddIfNotExist(
-          //     this.tabledisplayedColumns,
-          //     'linkCreatedBySiteId',
-          //     0
-          //   );
-          // } else {
-          //   this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
-          //     this.tabledisplayedColumns,
-          //     'linkCreatedBySiteId'
-          //   );
-          // }
+          this.tableSource.data = next.ListItems;
+
 
           if (this.optionsSearch.childMethods) {
             this.optionsSearch.childMethods.setAccess(next.Access);
@@ -193,7 +184,7 @@ export class CoreSiteModuleListComponent implements OnInit, OnDestroy {
     // });
   }
 
-  onActionbuttonEditRow(model: CoreSiteModel = this.tableRowSelected): void {
+  onActionbuttonEditRow(model: CoreModuleSiteModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id === 0) {
       const title = 'برروز خطا ';
@@ -219,7 +210,7 @@ export class CoreSiteModuleListComponent implements OnInit, OnDestroy {
     //   }
     // });
   }
-  onActionbuttonDeleteRow(model: CoreSiteModel = this.tableRowSelected): void {
+  onActionbuttonDeleteRow(model: CoreModuleSiteModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
       const title = 'برروز خطا ';
       const message = 'ردیفی برای ویرایش انتخاب نشده است';
@@ -300,8 +291,11 @@ export class CoreSiteModuleListComponent implements OnInit, OnDestroy {
     this.filteModelContent.Filters = model;
     this.DataGetAll();
   }
-  onActionTableRowSelect(row: CoreSiteModel): void {
+  onActionTableRowSelect(row: CoreModuleSiteModel): void {
     this.tableRowSelected = row;
+  }
+  onActionBackToParent(): void {
+    this.router.navigate(['/core/site/']);
   }
 
 }

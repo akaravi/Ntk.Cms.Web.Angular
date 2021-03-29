@@ -129,4 +129,26 @@ export class PublicHelper {
     dataAccessModel.FieldsInfo.forEach((el) => retOut[el.FieldName] = el);
     return retOut;
   }
+  RowStyleExpireDate(row: Date): string {
+    if (!row) {
+      return '';
+    }
+    const dateTime = new Date();
+    if (new Date(row) < dateTime) {
+      return '#fc6868';
+    }
+    dateTime.setMonth(dateTime.getMonth() + 1);
+    if (new Date(row) < dateTime) {
+      return '#ffc691';
+    }
+    dateTime.setMonth(dateTime.getMonth() + 2);
+    if (new Date(row) < dateTime) {
+      return '#ffe291';
+    }
+    dateTime.setMonth(dateTime.getMonth() + 12);
+    if (new Date(row) < dateTime) {
+      return '#d7ff91';
+    }
+    return '#91ffa5';
+  }
 }

@@ -4,7 +4,6 @@ import { CoreSiteAddFirstComponent } from './addFirst/addFirst.component';
 import { SelectionComponent } from './selection/selection.component';
 import { CoreSiteResolver } from './coreSite.resolver';
 import { CoreSiteListComponent } from './list/list.component';
-import { CoreSiteEditComponent } from './edit/edit.component';
 import { CoreSiteModuleListComponent } from './moduleList/moduleList.component';
 
 const routes: Routes = [
@@ -24,6 +23,10 @@ const routes: Routes = [
         path: 'addFirst',
         component: CoreSiteAddFirstComponent
       },
+      {
+        path: 'modulelist/:Id',
+        component: CoreSiteModuleListComponent
+      }
     ]
   },
 ];
