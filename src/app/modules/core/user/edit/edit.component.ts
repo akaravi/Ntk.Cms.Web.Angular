@@ -73,7 +73,6 @@ export class CoreUserEditComponent implements OnInit {
   onActionFileSelected(model: NodeInterface): void {
     this.dataModel.LinkMainImageId = model.id;
     this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
-
   }
 
   ngOnInit(): void {

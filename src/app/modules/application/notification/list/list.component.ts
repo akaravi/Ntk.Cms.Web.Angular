@@ -284,7 +284,7 @@ export class ApplicationNotificationListComponent implements OnInit , OnDestroy 
       }
     );
 
-    const filterStatist1 = this.filteModelContent;
+    const filterStatist1 = JSON.parse(JSON.stringify(this.filteModelContent));
     const fastFilter = new FilterDataModel();
     fastFilter.PropertyName = 'RecordStatus';
     fastFilter.Value = EnumRecordStatus.Available;

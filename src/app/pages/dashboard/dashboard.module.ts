@@ -20,6 +20,7 @@ import { ArticleContentWidgetComponent } from 'src/app/modules/article/content/w
 import { CoreSiteWidgetCountComponent } from 'src/app/modules/core/site/widget/count/widget.component';
 import { CoreSiteWidgetStatusComponent } from 'src/app/modules/core/site/widget/status/widget.component';
 import { CoreUserWidgetComponent } from 'src/app/modules/core/user/widget/widget.component';
+import { CoreSiteWidgetModuleComponent } from 'src/app/modules/core/site/widget/module/widget.component';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { CoreUserWidgetComponent } from 'src/app/modules/core/user/widget/widget
     ArticleContentWidgetComponent,
     CoreSiteWidgetCountComponent,
     CoreSiteWidgetStatusComponent,
+    CoreSiteWidgetModuleComponent,
     CoreUserWidgetComponent,
   ],
 

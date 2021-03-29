@@ -24,6 +24,10 @@ const routes: Routes = [
         component: CoreSiteAddFirstComponent
       },
       {
+        path: 'modulelist',
+        component: CoreSiteModuleListComponent
+      },
+      {
         path: 'modulelist/:Id',
         component: CoreSiteModuleListComponent
       }

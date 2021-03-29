@@ -264,7 +264,7 @@ export class CoreSiteCategoryCmsModuleListComponent implements OnInit , OnDestro
       }
     );
 
-    const filterStatist1 = this.filteModelContent;
+    const filterStatist1 = JSON.parse(JSON.stringify(this.filteModelContent));
     const fastFilter = new FilterDataModel();
     fastFilter.PropertyName = 'RecordStatus';
     fastFilter.Value = EnumRecordStatus.Available;

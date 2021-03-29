@@ -1,27 +1,27 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NewsContentService, EnumRecordStatus, FilterDataModel, FilterModel, NtkCmsApiStoreService } from 'ntk-cms-api';
+import { CoreModuleSiteService, CoreSiteService, EnumClauseType, EnumFilterDataModelSearchTypes, EnumRecordStatus, FilterDataModel, FilterModel, NtkCmsApiStoreService } from 'ntk-cms-api';
 import { Subscription } from 'rxjs';
 import { WidgetInfoModel } from 'src/app/core/models/widget-info-model';
 
 @Component({
-  selector: 'app-news-content-widget',
+  selector: 'app-core-site-widget-module',
   templateUrl: './widget.component.html',
   styleUrls: ['./widget.component.scss']
 })
-export class NewsContentWidgetComponent implements OnInit, OnDestroy {
+export class CoreSiteWidgetModuleComponent implements OnInit, OnDestroy {
   filteModelContent = new FilterModel();
   modelData = new Map<string, number>();
   widgetInfoModel = new WidgetInfoModel();
   cmsApiStoreSubscribe: Subscription;
   indexTheme = ['symbol-light-success', 'symbol-light-warning', 'symbol-light-danger', 'symbol-light-info'];
   constructor(
-    private service: NewsContentService,
+    private service: CoreModuleSiteService,
     private cmsApiStore: NtkCmsApiStoreService,
   ) { }
   ngOnInit(): void {
-    this.widgetInfoModel.title = 'اخبار های ثبت شده';
+    this.widgetInfoModel.title = 'ماژول های ثبت شده';
     this.widgetInfoModel.description = '';
-    this.widgetInfoModel.link = '/news/content';
+    this.widgetInfoModel.link = '/core/site/modulelist';
 
     this.onActionStatist();
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
@@ -34,8 +34,7 @@ export class NewsContentWidgetComponent implements OnInit, OnDestroy {
   }
 
   onActionStatist(): void {
-    this.modelData.set('Active', 0);
-    this.modelData.set('All', 0);
+
     this.service.ServiceGetCount(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
@@ -55,6 +54,24 @@ export class NewsContentWidgetComponent implements OnInit, OnDestroy {
       (next) => {
         if (next.IsSuccess) {
           this.modelData.set('Active', next.TotalRowCount);
+        }
+      }
+      ,
+      (error) => {
+      }
+    );
+
+
+    const filterStatist2 = JSON.parse(JSON.stringify(this.filteModelContent));
+    const fastFilter2 = new FilterDataModel();
+    fastFilter2.PropertyName = 'ExpireDate';
+    fastFilter2.Value = new Date();
+    fastFilter2.SearchType = EnumFilterDataModelSearchTypes.GreaterThan;
+    filterStatist2.Filters.push(fastFilter2);
+    this.service.ServiceGetCount(filterStatist2).subscribe(
+      (next) => {
+        if (next.IsSuccess) {
+          this.modelData.set('Expired Date', next.TotalRowCount);
         }
       }
       ,

@@ -14,7 +14,8 @@ import {
   EnumRecordStatus,
   CoreModuleSiteService,
   CoreModuleSiteModel,
-  DataFieldInfoModel
+  DataFieldInfoModel,
+  EnumFilterDataModelSearchTypes
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -43,14 +44,12 @@ export class CoreSiteModuleListComponent implements OnInit, OnDestroy {
     private router: Router,
   ) {
     this.requestId = Number(this.activatedRoute.snapshot.paramMap.get('Id'));
-    if (this.requestId === 0) {
-      this.cmsToastrService.typeErrorAddRowParentIsNull();
-      return;
+    if (this.requestId > 0) {
+      const filter = new FilterDataModel();
+      filter.PropertyName = 'LinkSiteId';
+      filter.Value = this.requestId;
+      this.filteModelContent.Filters.push(filter);
     }
-    const filter = new FilterDataModel();
-    filter.PropertyName = 'LinkSiteId';
-    filter.Value = this.requestId;
-    this.filteModelContent.Filters.push(filter);
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
@@ -165,7 +164,6 @@ export class CoreSiteModuleListComponent implements OnInit, OnDestroy {
 
 
   onActionbuttonNewRow(): void {
-
     if (
       this.dataModelResult == null ||
       this.dataModelResult.Access == null ||
@@ -247,8 +245,9 @@ export class CoreSiteModuleListComponent implements OnInit, OnDestroy {
     }
     const statist = new Map<string, number>();
     statist.set('Active', 0);
+    statist.set('Expired Date', 0);
     statist.set('All', 0);
-    this.coreSiteService.ServiceGetCount(this.filteModelContent).subscribe(
+    this.coreModuleSiteService.ServiceGetCount(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('All', next.TotalRowCount);
@@ -260,12 +259,12 @@ export class CoreSiteModuleListComponent implements OnInit, OnDestroy {
       }
     );
 
-    const filterStatist1 = this.filteModelContent;
+    const filterStatist1 = JSON.parse(JSON.stringify(this.filteModelContent));
     const fastFilter = new FilterDataModel();
     fastFilter.PropertyName = 'RecordStatus';
     fastFilter.Value = EnumRecordStatus.Available;
     filterStatist1.Filters.push(fastFilter);
-    this.coreSiteService.ServiceGetCount(filterStatist1).subscribe(
+    this.coreModuleSiteService.ServiceGetCount(filterStatist1).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('Active', next.TotalRowCount);
@@ -277,7 +276,23 @@ export class CoreSiteModuleListComponent implements OnInit, OnDestroy {
         this.cmsToastrService.typeError(error);
       }
     );
-
+    const filterStatist2 = JSON.parse(JSON.stringify(this.filteModelContent));
+    const fastFilter2 = new FilterDataModel();
+    fastFilter2.PropertyName = 'ExpireDate';
+    fastFilter2.Value = new Date();
+    fastFilter2.SearchType = EnumFilterDataModelSearchTypes.GreaterThan;
+    filterStatist2.Filters.push(fastFilter2);
+    this.coreModuleSiteService.ServiceGetCount(filterStatist2).subscribe(
+      (next) => {
+        if (next.IsSuccess) {
+          statist.set('Expired Date', next.TotalRowCount);
+          this.optionsStatist.childMethods.runStatist(statist);
+        }
+      }
+      ,
+      (error) => {
+      }
+    );
   }
   onActionbuttonExport(): void {
     this.optionsExport.data.show = !this.optionsExport.data.show;
