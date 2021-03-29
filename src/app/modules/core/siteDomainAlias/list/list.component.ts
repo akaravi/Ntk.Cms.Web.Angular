@@ -28,6 +28,7 @@ import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { CoreSiteDomainAliasAddComponent } from '../add/add.component';
 import { CoreSiteDomainAliasEditComponent } from '../edit/edit.component';
+import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 
 @Component({
   selector: 'app-core-site-domainalias-list',
@@ -42,6 +43,8 @@ export class CoreSiteDomainAliasListComponent implements OnInit, OnDestroy {
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
+    private cmsConfirmationDialogService: CmsConfirmationDialogService,
+
     private activatedRoute: ActivatedRoute,
     public dialog: MatDialog,
   ) {
@@ -76,6 +79,7 @@ export class CoreSiteDomainAliasListComponent implements OnInit, OnDestroy {
 
   tabledisplayedColumns: string[] = [
     'Id',
+    'LinkCmsSiteId',
     'RecordStatus',
     'SubDomain',
     'Domain',
@@ -118,7 +122,7 @@ export class CoreSiteDomainAliasListComponent implements OnInit, OnDestroy {
 
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;
-          if (this.tokenInfo.UserAccessAdminAllowToAllData) {
+          if (this.tokenInfo.UserAccessAdminAllowToAllData || this.tokenInfo.UserAccessAdminAllowToProfessionalData) {
             this.tabledisplayedColumns = this.publicHelper.listAddIfNotExist(
               this.tabledisplayedColumns,
               'LinkCmsSiteId',
@@ -221,9 +225,9 @@ export class CoreSiteDomainAliasListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonDeleteRow(model: CoreSiteDomainAliasModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      const etitle = 'برروز خطا ';
+      const emessage = 'ردیفی برای ویرایش انتخاب نشده است';
+      this.cmsToastrService.toastr.error(emessage, etitle);
       return;
     }
     this.tableRowSelected = model;
@@ -236,16 +240,39 @@ export class CoreSiteDomainAliasListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessDelete();
       return;
     }
-    // const dialogRef = this.dialog.open(CoreSiteDeleteComponent, {
-    //   data: { id: this.tableRowSelected.Id }
-    // });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   if (result && result.dialogChangedDate) {
-    //     this.DataGetAll();
-    //   }
-    // });
+
+
+    const title = 'لطفا تایید کنید...';
+    const message = 'آیا مایل به حدف این محتوا می باشید ' + '?' + '<br> ( ' + this.tableRowSelected.SubDomain+"."+this.tableRowSelected.Domain + ' ) ';
+    this.cmsConfirmationDialogService.confirm(title, message)
+      .then((confirmed) => {
+        if (confirmed) {
+          this.loading.display = true;
+          this.coreSiteDomainAliasService.ServiceDelete(this.tableRowSelected.Id).subscribe(
+            (next) => {
+              if (next.IsSuccess) {
+                this.cmsToastrService.typeSuccessRemove();
+                this.DataGetAll();
+              } else {
+                this.cmsToastrService.typeErrorRemove();
+              }
+              this.loading.display = false;
+            },
+            (error) => {
+              this.cmsToastrService.typeError(error);
+              this.loading.display = false;
+            }
+          );
+        }
+      }
+      )
+      .catch(() => {
+        // console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)')
+      }
+      );
 
   }
+
 
 
 

@@ -5,6 +5,7 @@ import {
   FormInfoModel,
   CoreSiteDomainAliasService,
   CoreSiteDomainAliasModel,
+  CoreSiteModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -41,12 +42,8 @@ export class CoreSiteDomainAliasAddComponent implements OnInit {
   ) {
 
 
-    this.fileManagerTree = new TreeModel();
   }
-  selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
 
-  fileManagerTree: TreeModel;
-  appLanguage = 'fa';
   formMatcher = new CmsFormsErrorStateMatcher();
   formControlRequired = new FormControl('', [
     Validators.required,
@@ -59,11 +56,8 @@ export class CoreSiteDomainAliasAddComponent implements OnInit {
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
-
   fileManagerOpenForm = false;
-
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
-
 
   ngOnInit(): void {
 
@@ -82,22 +76,22 @@ export class CoreSiteDomainAliasAddComponent implements OnInit {
   }
 
 
-  DataEditContent(): void {
+  DataAddContent(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.coreSiteDomainAliasService.ServiceEdit(this.dataModel).subscribe(
+    this.coreSiteDomainAliasService.ServiceAdd(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormSubmitAllow = true;
         this.dataModelResult = next;
         if (next.IsSuccess) {
           this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
-          this.cmsToastrService.typeSuccessEdit();
+          this.cmsToastrService.typeSuccessAdd();
           this.dialogRef.close({ dialogChangedDate: true });
-
         } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
+          this.cmsToastrService.typeErrorAdd(next.ErrorMessage);
         }
         this.loading.display = false;
       },
@@ -112,11 +106,18 @@ export class CoreSiteDomainAliasAddComponent implements OnInit {
     if (!this.formGroup.valid) {
       return;
     }
+    if(!this.dataModel.LinkCmsSiteId||this.dataModel.LinkCmsSiteId<=0){
+      this.cmsToastrService.typeErrorAdd('شناسه وب سایت مشخص نشده است');
+      return;
+    }
     this.formInfo.FormSubmitAllow = false;
-
-    this.DataEditContent();
-
-
+    this.DataAddContent();
+  }
+  onActionSiteSelect(model: CoreSiteModel): void {
+    this.dataModel.LinkCmsSiteId = null;
+    if (model && model.Id > 0) {
+      this.dataModel.LinkCmsSiteId = model.Id;
+    }
   }
   onFormCancel(): void {
     this.dialogRef.close({ dialogChangedDate: false });

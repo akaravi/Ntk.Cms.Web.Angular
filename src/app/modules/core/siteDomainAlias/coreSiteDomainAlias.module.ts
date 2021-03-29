@@ -16,6 +16,7 @@ import { TreeviewModule } from 'ngx-treeview';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { TagInputModule } from 'ngx-chips';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { CoreSiteModule } from '../site/coreSite.module';
 
 
 @NgModule({
@@ -42,7 +43,7 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
     SharedModule.forRoot(),
     AngularEditorModule,
     TagInputModule,
-    // CmsFileManagerModule
+    CoreSiteModule
 
   ],
   providers: [

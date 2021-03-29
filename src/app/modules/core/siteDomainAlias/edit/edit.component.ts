@@ -5,6 +5,7 @@ import {
   FormInfoModel,
   CoreSiteDomainAliasService,
   CoreSiteDomainAliasModel,
+  CoreSiteModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -41,13 +42,9 @@ export class CoreSiteDomainAliasEditComponent implements OnInit {
       this.requestId = +data.id || 0;
     }
 
-    this.fileManagerTree = new TreeModel();
   }
   requestId = 0;
-  selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
 
-  fileManagerTree: TreeModel;
-  appLanguage = 'fa';
   formMatcher = new CmsFormsErrorStateMatcher();
   formControlRequired = new FormControl('', [
     Validators.required,
@@ -129,6 +126,8 @@ export class CoreSiteDomainAliasEditComponent implements OnInit {
         } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
+          this.cmsToastrService.typeErrorEdit(next.ErrorMessage);
+
         }
         this.loading.display = false;
       },
@@ -139,8 +138,18 @@ export class CoreSiteDomainAliasEditComponent implements OnInit {
       }
     );
   }
+  onActionSiteSelect(model: CoreSiteModel): void {
+    this.dataModel.LinkCmsSiteId = null;
+    if (model && model.Id > 0) {
+      this.dataModel.LinkCmsSiteId = model.Id;
+    }
+  }
   onFormSubmit(): void {
     if (!this.formGroup.valid) {
+      return;
+    }
+    if(!this.dataModel.LinkCmsSiteId||this.dataModel.LinkCmsSiteId<=0){
+      this.cmsToastrService.typeErrorEdit('شناسه وب سایت مشخص نشده است');
       return;
     }
     this.formInfo.FormSubmitAllow = false;
