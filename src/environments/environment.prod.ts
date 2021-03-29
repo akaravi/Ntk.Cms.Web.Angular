@@ -7,13 +7,13 @@ import { EnumDeviceType, EnumOperatingSystemType } from 'ntk-cms-api';
 export const environment = {
   production: false,
   developing: false,
-  appVersion: '991111',
+  appVersion: '14000109',
   USERDATA_KEY: 'authf649fc9a5f55',
   isMockEnabled: true,
   apiUrl: 'api',
   leafletUrl: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   cmsServerConfig: {
-    configApiRetry: 1,
+    configApiRetry: 0,
     configApiServerPath: 'https://apicms.ir/api/v1/',
     configMvcServerPath: 'https://oco.ir',
     configCpanelImages: '/cpanelv1/images/',
