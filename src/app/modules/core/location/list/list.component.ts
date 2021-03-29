@@ -30,7 +30,7 @@ import { CoreLocationAddComponent } from '../add/add.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 
 @Component({
-  selector: 'app-core-sitecategory-list',
+  selector: 'app-core-location-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
@@ -173,8 +173,9 @@ export class CoreLocationListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessAdd();
       return;
     }
+
     const dialogRef = this.dialog.open(CoreLocationAddComponent, {
-      data: {}
+      data: { id: this.categoryModelSelected?.Id }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.dialogChangedDate) {

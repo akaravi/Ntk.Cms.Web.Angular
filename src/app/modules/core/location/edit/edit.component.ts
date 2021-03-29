@@ -59,6 +59,7 @@ export class CoreLocationEditComponent implements OnInit {
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
+  dataModelEnumLocationTypeResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
 
   fileManagerOpenForm = false;
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
@@ -74,6 +75,12 @@ export class CoreLocationEditComponent implements OnInit {
     }
 
     this.getEnumRecordStatus();
+    this.getEnumLocationType();
+  }
+  getEnumLocationType(): void {
+    this.coreEnumService.ServiceEnumLocationType().subscribe((next) => {
+      this.dataModelEnumLocationTypeResult = next;
+    });
   }
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
@@ -139,6 +146,13 @@ export class CoreLocationEditComponent implements OnInit {
       }
     );
   }
+
+  onActionParentSelect(model: CoreLocationModel): void {
+    this.dataModel.LinkParentId = null;
+    if (model && model.Id > 0) {
+      this.dataModel.LinkParentId = model.Id;
+    }
+  }
   onFormSubmit(): void {
     if (!this.formGroup.valid) {
       return;
@@ -149,4 +163,5 @@ export class CoreLocationEditComponent implements OnInit {
   onFormCancel(): void {
     this.dialogRef.close({ dialogChangedDate: false });
   }
+
 }

@@ -8,7 +8,7 @@ import { Output } from '@angular/core';
 
 
 @Component({
-  selector: 'app-core-sitecategory-selector',
+  selector: 'app-core-location-selector',
   templateUrl: './selector.component.html',
   styleUrls: ['./selector.component.scss']
 })

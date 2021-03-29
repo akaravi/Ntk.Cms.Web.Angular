@@ -31,6 +31,7 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
   styleUrls: ['./add.component.scss'],
 })
 export class CoreLocationAddComponent implements OnInit {
+  requestId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
@@ -40,7 +41,12 @@ export class CoreLocationAddComponent implements OnInit {
     private cmsToastrService: CmsToastrService
   ) {
 
-
+    if (data) {
+      this.requestId = +data.id || 0;
+    }
+    if (this.requestId > 0) {
+      this.dataModel.LinkParentId = this.requestId;
+    }
     this.fileManagerTree = new TreeModel();
   }
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
@@ -59,6 +65,7 @@ export class CoreLocationAddComponent implements OnInit {
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
+  dataModelEnumLocationTypeResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
 
   fileManagerOpenForm = false;
 
@@ -69,6 +76,12 @@ export class CoreLocationAddComponent implements OnInit {
 
     this.formInfo.FormTitle = 'اضافه کردن  ';
     this.getEnumRecordStatus();
+    this.getEnumLocationType();
+  }
+  getEnumLocationType(): void {
+    this.coreEnumService.ServiceEnumLocationType().subscribe((next) => {
+      this.dataModelEnumLocationTypeResult = next;
+    });
   }
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
@@ -120,5 +133,11 @@ export class CoreLocationAddComponent implements OnInit {
   }
   onFormCancel(): void {
     this.dialogRef.close({ dialogChangedDate: false });
+  }
+  onActionParentSelect(model: CoreLocationModel): void {
+    this.dataModel.LinkParentId = null;
+    if (model && model.Id > 0) {
+      this.dataModel.LinkParentId = model.Id;
+    }
   }
 }

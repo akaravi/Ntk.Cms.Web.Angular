@@ -32,7 +32,7 @@ import { CoreLocationAddComponent } from '../add/add.component';
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.scss'],
 })
-export class CoreLocationTreeComponent implements OnInit , OnDestroy{
+export class CoreLocationTreeComponent implements OnInit, OnDestroy {
   constructor(
     private cmsApiStore: NtkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
@@ -122,7 +122,7 @@ export class CoreLocationTreeComponent implements OnInit , OnDestroy{
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.data = { parentId };
+    dialogConfig.data = { id: parentId };
 
 
     const dialogRef = this.dialog.open(CoreLocationAddComponent, dialogConfig);
