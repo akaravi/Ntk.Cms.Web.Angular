@@ -25,11 +25,14 @@ import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/bas
 import { MatSort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { CoreSiteDomainAliasAddComponent } from '../add/add.component';
+import { CoreSiteDomainAliasEditComponent } from '../edit/edit.component';
 
 @Component({
   selector: 'app-core-site-domainalias-list',
-  templateUrl: './domainAliasList.component.html',
-  styleUrls: ['./domainAliasList.component.scss']
+  templateUrl: './list.component.html',
+  styleUrls: ['./list.component.scss']
 })
 export class CoreSiteDomainAliasListComponent implements OnInit, OnDestroy {
   requestId = 0;
@@ -40,6 +43,7 @@ export class CoreSiteDomainAliasListComponent implements OnInit, OnDestroy {
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
     private activatedRoute: ActivatedRoute,
+    public dialog: MatDialog,
   ) {
     this.requestId = Number(this.activatedRoute.snapshot.paramMap.get('Id'));
     if (this.requestId > 0) {
@@ -179,14 +183,14 @@ export class CoreSiteDomainAliasListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessAdd();
       return;
     }
-    // const dialogRef = this.dialog.open(CoreSiteAddComponent, {
-    //   data: {}
-    // });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   if (result && result.dialogChangedDate) {
-    //     this.DataGetAll();
-    //   }
-    // });
+    const dialogRef = this.dialog.open(CoreSiteDomainAliasAddComponent, {
+      data: {}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.dialogChangedDate) {
+        this.DataGetAll();
+      }
+    });
   }
 
   onActionbuttonEditRow(model: CoreSiteDomainAliasModel = this.tableRowSelected): void {
@@ -206,14 +210,14 @@ export class CoreSiteDomainAliasListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessEdit();
       return;
     }
-    // const dialogRef = this.dialog.open(CoreSiteEditComponent, {
-    //   data: { id: this.tableRowSelected.Id }
-    // });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   if (result && result.dialogChangedDate) {
-    //     this.DataGetAll();
-    //   }
-    // });
+    const dialogRef = this.dialog.open(CoreSiteDomainAliasEditComponent, {
+      data: { id: this.tableRowSelected.Id }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.dialogChangedDate) {
+        this.DataGetAll();
+      }
+    });
   }
   onActionbuttonDeleteRow(model: CoreSiteDomainAliasModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {

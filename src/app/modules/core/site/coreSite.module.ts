@@ -21,7 +21,7 @@ import { CoreSiteCategoryCmsModule } from '../siteCategory/coreSiteCategory.modu
 import { CoreSiteCategoryCmsModuleModule } from '../siteCategoryModule/coreSiteCategoryCmsModule.module';
 import { CmsFileManagerModule } from 'ntk-cms-filemanager';
 import { CoreSiteModuleListComponent } from './moduleList/moduleList.component';
-import { CoreSiteDomainAliasListComponent } from './domainAliasList/domainAliasList.component';
+
 
 
 @NgModule({
@@ -36,7 +36,6 @@ import { CoreSiteDomainAliasListComponent } from './domainAliasList/domainAliasL
     CoreSiteSelectorComponent,
     CoreSiteTreeComponent,
     CoreSiteModuleListComponent,
-    CoreSiteDomainAliasListComponent,
   ],
   exports:[
     CoreSiteComponent,
@@ -49,7 +48,6 @@ import { CoreSiteDomainAliasListComponent } from './domainAliasList/domainAliasL
     CoreSiteSelectorComponent,
     CoreSiteTreeComponent,
     CoreSiteModuleListComponent,
-    CoreSiteDomainAliasListComponent,
   ],
   imports: [
     CommonModule,

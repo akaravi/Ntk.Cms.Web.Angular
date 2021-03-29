@@ -25,6 +25,11 @@ const routes: Routes = [
           import('./siteCategory/coreSiteCategory.module').then((m) => m.CoreSiteCategoryCmsModule),
       },
       {
+        path: 'sitedomainalias',
+        loadChildren: () =>
+          import('./siteDomainAlias/coreSiteDomainAlias.module').then((m) => m.CoreSiteDomainAliasModule),
+      },
+      {
         path: 'cpmainmenu',
         loadChildren: () =>
           import('./cpMainMenu/coreCpMainMenu.module').then((m) => m.CoreCpMainMenu),
