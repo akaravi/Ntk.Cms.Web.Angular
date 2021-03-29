@@ -236,7 +236,7 @@ export class CoreSiteListComponent implements OnInit, OnDestroy {
   onActionbuttonModuleListRow(model: CoreSiteModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
       const title = 'برروز خطا ';
-      const message = 'ردیفی برای ویرایش انتخاب نشده است';
+      const message = 'ردیفیانتخاب نشده است';
       this.cmsToastrService.toastr.error(message, title);
       return;
     }
@@ -251,6 +251,27 @@ export class CoreSiteListComponent implements OnInit, OnDestroy {
       return;
     }
     this.router.navigate(['/core/site/modulelist/', this.tableRowSelected.Id]);
+
+
+  }
+  onActionbuttonDomainAliasListRow(model: CoreSiteModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id === 0) {
+      const title = 'برروز خطا ';
+      const message = 'ردیفی انتخاب نشده است';
+      this.cmsToastrService.toastr.error(message, title);
+      return;
+    }
+    this.tableRowSelected = model;
+
+    if (
+      this.dataModelResult == null ||
+      this.dataModelResult.Access == null ||
+      !this.dataModelResult.Access.AccessDeleteRow
+    ) {
+      this.cmsToastrService.typeErrorSelected();
+      return;
+    }
+    this.router.navigate(['/core/sitedomainalias/', this.tableRowSelected.Id]);
 
 
   }

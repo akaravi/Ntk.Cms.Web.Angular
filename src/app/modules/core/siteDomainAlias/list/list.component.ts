@@ -44,14 +44,15 @@ export class CoreSiteDomainAliasListComponent implements OnInit, OnDestroy {
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
     private cmsConfirmationDialogService: CmsConfirmationDialogService,
-
     private activatedRoute: ActivatedRoute,
     public dialog: MatDialog,
+    private router: Router,
   ) {
     this.requestId = Number(this.activatedRoute.snapshot.paramMap.get('Id'));
+
     if (this.requestId > 0) {
       const filter = new FilterDataModel();
-      filter.PropertyName = 'LinkSiteId';
+      filter.PropertyName = 'LinkCmsSiteId';
       filter.Value = this.requestId;
       this.filteModelContent.Filters.push(filter);
     }
@@ -188,7 +189,7 @@ export class CoreSiteDomainAliasListComponent implements OnInit, OnDestroy {
       return;
     }
     const dialogRef = this.dialog.open(CoreSiteDomainAliasAddComponent, {
-      data: {}
+      data: { id: this.requestId }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.dialogChangedDate) {
@@ -330,5 +331,7 @@ export class CoreSiteDomainAliasListComponent implements OnInit, OnDestroy {
   onActionTableRowSelect(row: CoreSiteDomainAliasModel): void {
     this.tableRowSelected = row;
   }
-
+  onActionBackToParent(): void {
+    this.router.navigate(['/core/site/']);
+  }
 }

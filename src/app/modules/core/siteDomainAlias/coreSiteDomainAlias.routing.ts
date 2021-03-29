@@ -11,7 +11,7 @@ const routes: Routes = [
         component: CoreSiteDomainAliasListComponent
       },
       {
-        path: '/Id',
+        path: ':Id',
         component: CoreSiteDomainAliasListComponent
       },
     ]

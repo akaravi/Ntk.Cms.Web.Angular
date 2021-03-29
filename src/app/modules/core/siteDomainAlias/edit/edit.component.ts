@@ -30,6 +30,7 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
   styleUrls: ['./edit.component.scss'],
 })
 export class CoreSiteDomainAliasEditComponent implements OnInit {
+  requestId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
@@ -43,7 +44,6 @@ export class CoreSiteDomainAliasEditComponent implements OnInit {
     }
 
   }
-  requestId = 0;
 
   formMatcher = new CmsFormsErrorStateMatcher();
   formControlRequired = new FormControl('', [

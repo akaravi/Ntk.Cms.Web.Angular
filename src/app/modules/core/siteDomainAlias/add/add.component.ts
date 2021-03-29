@@ -32,6 +32,7 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
   styleUrls: ['./add.component.scss'],
 })
 export class CoreSiteDomainAliasAddComponent implements OnInit {
+  requestId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
@@ -41,7 +42,13 @@ export class CoreSiteDomainAliasAddComponent implements OnInit {
     private cmsToastrService: CmsToastrService
   ) {
 
-
+    if (data) {
+      this.requestId = +data.id || 0;
+    }
+    if(this.requestId>0)
+    {
+      this.dataModel .LinkCmsSiteId=this.requestId;
+    }
   }
 
   formMatcher = new CmsFormsErrorStateMatcher();

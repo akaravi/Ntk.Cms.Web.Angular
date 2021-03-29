@@ -21,6 +21,7 @@ import { CoreSiteCategoryCmsModule } from '../siteCategory/coreSiteCategory.modu
 import { CoreSiteCategoryCmsModuleModule } from '../siteCategoryModule/coreSiteCategoryCmsModule.module';
 import { CmsFileManagerModule } from 'ntk-cms-filemanager';
 import { CoreSiteModuleListComponent } from './moduleList/moduleList.component';
+import { CoreSiteDomainAliasModule } from '../siteDomainAlias/coreSiteDomainAlias.module';
 
 
 

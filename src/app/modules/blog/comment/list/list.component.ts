@@ -48,7 +48,6 @@ export class BlogCommentListComponent implements OnInit , OnDestroy {
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
     private cmsConfirmationDialogService: CmsConfirmationDialogService,
-
     private router: Router,
     public dialog: MatDialog) {
     this.optionsSearch.parentMethods = {
