@@ -13,7 +13,8 @@ import {
   FilterDataModel,
   EnumRecordStatus,
   CoreModuleSiteService,
-  CoreModuleSiteModel
+  CoreModuleSiteModel,
+  DataFieldInfoModel
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -69,6 +70,7 @@ export class CoreSiteCategoryModuleListComponent implements OnInit, OnDestroy {
   tableRowsSelected: Array<CoreSiteModel> = [];
   tableRowSelected: CoreSiteModel = new CoreSiteModel();
   tableSource: MatTableDataSource<CoreSiteModel> = new MatTableDataSource<CoreSiteModel>();
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
 
   tabledisplayedColumns: string[] = [
@@ -112,6 +114,8 @@ export class CoreSiteCategoryModuleListComponent implements OnInit, OnDestroy {
     this.coreModuleSiteService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
+          this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
           this.dataModelResult = next;
           // this.tableSource.data = next.ListItems;
           if (this.tokenInfo.UserAccessAdminAllowToAllData) {

@@ -12,7 +12,8 @@ import {
   NtkCmsApiStoreService,
   TokenInfoModel,
   FilterDataModel,
-  EnumRecordStatus
+  EnumRecordStatus,
+  DataFieldInfoModel
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -29,7 +30,7 @@ import { CoreModuleAddComponent } from '../add/add.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 
 @Component({
-  selector: 'app-core-Module-list',
+  selector: 'app-core-module-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
@@ -63,6 +64,7 @@ export class CoreModuleListComponent implements OnInit, OnDestroy {
   tableRowsSelected: Array<CoreModuleModel> = [];
   tableRowSelected: CoreModuleModel = new CoreModuleModel();
   tableSource: MatTableDataSource<CoreModuleModel> = new MatTableDataSource<CoreModuleModel>();
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
 
   tabledisplayedColumns: string[] = [
@@ -106,6 +108,8 @@ export class CoreModuleListComponent implements OnInit, OnDestroy {
     this.coreModuleService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
+          this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;
           if (this.tokenInfo.UserAccessAdminAllowToAllData) {

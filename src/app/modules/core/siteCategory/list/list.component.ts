@@ -12,7 +12,8 @@ import {
   NtkCmsApiStoreService,
   TokenInfoModel,
   FilterDataModel,
-  EnumRecordStatus
+  EnumRecordStatus,
+  DataFieldInfoModel
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -62,6 +63,7 @@ export class CoreSiteCategoryListComponent implements OnInit, OnDestroy {
   tableRowsSelected: Array<CoreSiteCategoryModel> = [];
   tableRowSelected: CoreSiteCategoryModel = new CoreSiteCategoryModel();
   tableSource: MatTableDataSource<CoreSiteCategoryModel> = new MatTableDataSource<CoreSiteCategoryModel>();
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
 
   tabledisplayedColumns: string[] = [
@@ -105,6 +107,8 @@ export class CoreSiteCategoryListComponent implements OnInit, OnDestroy {
     this.coreSiteCategoryService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
+          this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;
           if (this.tokenInfo.UserAccessAdminAllowToAllData) {

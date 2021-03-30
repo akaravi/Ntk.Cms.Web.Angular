@@ -79,8 +79,11 @@
         </ng-container>
         <!-- ExpireDate Column -->
         <ng-container matColumnDef="ExpireDate">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>  {{fieldsInfo['ExpireDate']?.FieldTitle}} </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.ExpireDate) }} </mat-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['ExpireDate']?.FieldTitle}}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"
+          [ngStyle]="{'background':publicHelper.RowStyleExpireDate(row.ExpireDate) }"
+          > {{ publicHelper.LocaleDate(row.ExpireDate) }} </mat-cell>
         </ng-container>
         <!-- Action Column -->
         <ng-container matColumnDef="Action">
@@ -115,7 +118,7 @@
         </ng-container>
         <mat-header-row *matHeaderRowDef="tabledisplayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: tabledisplayedColumns;" (click)="onActionTableRowSelect(row)"
-          [ngStyle]="{'background': row.Id === tableRowSelected.Id ? '#d3d3da' :publicHelper. RowStyleExpireDate(row.ExpireDate) }">
+          [ngStyle]="{'background': row.Id === tableRowSelected.Id ? '#d3d3da' :'' }">
         </mat-row>
       </mat-table>
 

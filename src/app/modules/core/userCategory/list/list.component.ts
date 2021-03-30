@@ -12,7 +12,8 @@ import {
   NtkCmsApiStoreService,
   TokenInfoModel,
   FilterDataModel,
-  EnumRecordStatus
+  EnumRecordStatus,
+  DataFieldInfoModel
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -62,6 +63,7 @@ export class CoreUserGroupListComponent implements OnInit, OnDestroy {
   tableRowsSelected: Array<CoreUserGroupModel> = [];
   tableRowSelected: CoreUserGroupModel = new CoreUserGroupModel();
   tableSource: MatTableDataSource<CoreUserGroupModel> = new MatTableDataSource<CoreUserGroupModel>();
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
 
   tabledisplayedColumns: string[] = [
@@ -105,6 +107,8 @@ export class CoreUserGroupListComponent implements OnInit, OnDestroy {
     this.coreUserGroupService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
+          this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;
           if (this.tokenInfo.UserAccessAdminAllowToAllData) {
