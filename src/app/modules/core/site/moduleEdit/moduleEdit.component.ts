@@ -8,6 +8,7 @@ import {
   FilterDataModel,
   CoreModuleSiteService,
   CoreModuleSiteModel,
+  CoreModuleModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -47,7 +48,6 @@ export class CoreSiteModuleEditComponent implements OnInit {
   }
   requestLinkSiteId = 0;
   requestLinkModuleId = 0;
-  selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
 
 
   formMatcher = new CmsFormsErrorStateMatcher();
@@ -156,6 +156,18 @@ export class CoreSiteModuleEditComponent implements OnInit {
         this.loading.display = false;
       }
     );
+  }
+  onActionSiteSelect(model: CoreSiteModel): void {
+    this.dataModel.LinkSiteId = null;
+    if (model && model.Id > 0) {
+      this.dataModel.LinkSiteId = model.Id;
+    }
+  }
+  onActionCategoryModuleSelect(model: CoreModuleModel): void {
+    this.dataModel.LinkModuleId = null;
+    if (model && model.Id > 0) {
+      this.dataModel.LinkModuleId = model.Id;
+    }
   }
   onFormSubmit(): void {
     if (!this.formGroup.valid) {

@@ -178,8 +178,9 @@ export class CoreSiteModuleListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessAdd();
       return;
     }
+
     const dialogRef = this.dialog.open(CoreSiteModuleAddComponent, {
-      data: {}
+      data: { LinkSiteId: this.requestId }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.dialogChangedDate) {
@@ -223,55 +224,55 @@ export class CoreSiteModuleListComponent implements OnInit, OnDestroy {
       }
     });
   }
-    onActionbuttonDeleteRow(model: CoreModuleSiteModel = this.tableRowSelected): void {
-      if (!model || !model.Id || model.Id === 0) {
-        const etitle = 'برروز خطا ';
-        const emessage = 'ردیفی برای ویرایش انتخاب نشده است';
-        this.cmsToastrService.toastr.error(emessage, etitle);
-        return;
-      }
-      this.tableRowSelected = model;
-
-      if (
-        this.dataModelResult == null ||
-        this.dataModelResult.Access == null ||
-        !this.dataModelResult.Access.AccessDeleteRow
-      ) {
-        this.cmsToastrService.typeErrorAccessDelete();
-        return;
-      }
-
-
-      const title = 'لطفا تایید کنید...';
-      const message = 'آیا مایل به حدف این محتوا می باشید ' + '?' + '<br> ( ' + this.tableRowSelected.Title + ' ) ';
-      this.cmsConfirmationDialogService.confirm(title, message)
-        .then((confirmed) => {
-          if (confirmed) {
-            this.loading.display = true;
-            this.coreModuleSiteService.ServiceDelete(this.tableRowSelected.Id).subscribe(
-              (next) => {
-                if (next.IsSuccess) {
-                  this.cmsToastrService.typeSuccessRemove();
-                  this.DataGetAll();
-                } else {
-                  this.cmsToastrService.typeErrorRemove();
-                }
-                this.loading.display = false;
-              },
-              (error) => {
-                this.cmsToastrService.typeError(error);
-                this.loading.display = false;
-              }
-            );
-          }
-        }
-        )
-        .catch(() => {
-          // console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)')
-        }
-        );
-
+  onActionbuttonDeleteRow(model: CoreModuleSiteModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id === 0) {
+      const etitle = 'برروز خطا ';
+      const emessage = 'ردیفی برای ویرایش انتخاب نشده است';
+      this.cmsToastrService.toastr.error(emessage, etitle);
+      return;
     }
+    this.tableRowSelected = model;
+
+    if (
+      this.dataModelResult == null ||
+      this.dataModelResult.Access == null ||
+      !this.dataModelResult.Access.AccessDeleteRow
+    ) {
+      this.cmsToastrService.typeErrorAccessDelete();
+      return;
+    }
+
+
+    const title = 'لطفا تایید کنید...';
+    const message = 'آیا مایل به حدف این محتوا می باشید ' + '?' + '<br> ( ' + this.tableRowSelected.Title + ' ) ';
+    this.cmsConfirmationDialogService.confirm(title, message)
+      .then((confirmed) => {
+        if (confirmed) {
+          this.loading.display = true;
+          this.coreModuleSiteService.ServiceDelete(this.tableRowSelected.Id).subscribe(
+            (next) => {
+              if (next.IsSuccess) {
+                this.cmsToastrService.typeSuccessRemove();
+                this.DataGetAll();
+              } else {
+                this.cmsToastrService.typeErrorRemove();
+              }
+              this.loading.display = false;
+            },
+            (error) => {
+              this.cmsToastrService.typeError(error);
+              this.loading.display = false;
+            }
+          );
+        }
+      }
+      )
+      .catch(() => {
+        // console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)')
+      }
+      );
+
+  }
 
 
 

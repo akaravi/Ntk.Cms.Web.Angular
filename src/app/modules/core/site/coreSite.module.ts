@@ -25,6 +25,7 @@ import { CoreSiteDomainAliasModule } from '../siteDomainAlias/coreSiteDomainAlia
 import { CoreSiteModuleEditComponent } from './moduleEdit/moduleEdit.component';
 import { CoreSiteModuleAddComponent } from './moduleAdd/moduleAdd.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { CoreModuleModule } from '../module/coreModule.module';
 
 
 
@@ -69,6 +70,7 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
     CoreSiteCategoryCmsModule,
     CoreSiteCategoryCmsModuleModule,
     CmsFileManagerModule,
+    CoreModuleModule,
   ],
   providers: [
     CoreSiteService,

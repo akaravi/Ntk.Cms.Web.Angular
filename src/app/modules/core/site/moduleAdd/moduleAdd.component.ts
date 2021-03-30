@@ -5,6 +5,9 @@ import {
   FormInfoModel,
   CoreSiteService,
   CoreSiteModel,
+  CoreModuleSiteModel,
+  CoreModuleSiteService,
+  CoreModuleModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -34,27 +37,32 @@ export class CoreSiteModuleAddComponent implements OnInit {
     private cmsStoreService: CmsStoreService,
     private dialogRef: MatDialogRef<CoreSiteModuleAddComponent>,
     public coreEnumService: CoreEnumService,
-    public coreSiteService: CoreSiteService,
+    public coreSiteService: CoreModuleSiteService,
     private cmsToastrService: CmsToastrService
   ) {
+    
     if (data) {
-      this.requestId = +data.id || 0;
+      this.requestLinkModuleId = +data.LinkModuleId || 0;
+      this.requestLinkSiteId = +data.LinkSiteId || 0;
     }
-
-    this.fileManagerTree = new TreeModel();
+    if (this.requestLinkSiteId > 0) {
+      this.dataModel.LinkSiteId = this.requestLinkSiteId;
+    }
+    if (this.requestLinkModuleId > 0) {
+      this.dataModel.LinkModuleId = this.requestLinkModuleId;
+    }
   }
-  requestId = 0;
-  selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
+  requestLinkSiteId = 0;
+  requestLinkModuleId = 0;
 
-  fileManagerTree: TreeModel;
-  appLanguage = 'fa';
+
   formMatcher = new CmsFormsErrorStateMatcher();
   formControlRequired = new FormControl('', [
     Validators.required,
   ]);
   loading = new ProgressSpinnerModel();
-  dataModelResult: ErrorExceptionResult<CoreSiteModel> = new ErrorExceptionResult<CoreSiteModel>();
-  dataModel: CoreSiteModel = new CoreSiteModel();
+  dataModelResult: ErrorExceptionResult<CoreModuleSiteModel> = new ErrorExceptionResult<CoreModuleSiteModel>();
+  dataModel: CoreModuleSiteModel = new CoreModuleSiteModel();
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
 
   formInfo: FormInfoModel = new FormInfoModel();
@@ -62,20 +70,8 @@ export class CoreSiteModuleAddComponent implements OnInit {
 
   fileManagerOpenForm = false;
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
-  onActionFileSelected(model: NodeInterface): void {
-    this.dataModel.AboutUsLinkImageId = model.id + '';
-    this.dataModel.AboutUsLinkImageIdSrc = model.downloadLinksrc;
-  }
-  ngOnInit(): void {
-    if (this.requestId > 0) {
-      this.formInfo.FormTitle = 'ویرایش  ';
-      this.DataGetOneContent();
-    } else {
-      this.cmsToastrService.typeErrorComponentAction();
-      this.dialogRef.close({ dialogChangedDate: false });
-      return;
-    }
 
+  ngOnInit(): void {
     this.getEnumRecordStatus();
   }
   getEnumRecordStatus(): void {
@@ -88,35 +84,9 @@ export class CoreSiteModuleAddComponent implements OnInit {
       this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
     }
   }
-  DataGetOneContent(): void {
-    if (this.requestId <= 0) {
-      this.cmsToastrService.typeErrorEditRowIsNull();
-      return;
-    }
 
-    this.formInfo.FormAlert = 'در دریافت ارسال اطلاعات از سرور';
-    this.formInfo.FormError = '';
-    this.loading.display = true;
-    this.coreSiteService.ServiceGetOneById(this.requestId).subscribe(
-      (next) => {
-        this.dataModel = next.Item;
-        if (next.IsSuccess) {
-          this.formInfo.FormTitle = this.formInfo.FormTitle + ' ' + next.Item.Title;
-          this.formInfo.FormAlert = '';
-        } else {
-          this.formInfo.FormAlert = 'برروز خطا';
-          this.formInfo.FormError = next.ErrorMessage;
-        }
-        this.loading.display = false;
-      },
-      (error) => {
-        this.cmsToastrService.typeError(error);
-        this.loading.display = false;
-      }
-    );
-  }
 
-  DataEditContent(): void {
+  DataAddContent(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
@@ -147,7 +117,19 @@ export class CoreSiteModuleAddComponent implements OnInit {
       return;
     }
     this.formInfo.FormSubmitAllow = false;
-    this.DataEditContent();
+    this.DataAddContent();
+  }
+  onActionSiteSelect(model: CoreSiteModel): void {
+    this.dataModel.LinkSiteId = null;
+    if (model && model.Id > 0) {
+      this.dataModel.LinkSiteId = model.Id;
+    }
+  }
+  onActionCategoryModuleSelect(model: CoreModuleModel): void {
+    this.dataModel.LinkModuleId = null;
+    if (model && model.Id > 0) {
+      this.dataModel.LinkModuleId = model.Id;
+    }
   }
   onFormCancel(): void {
     this.dialogRef.close({ dialogChangedDate: false });
