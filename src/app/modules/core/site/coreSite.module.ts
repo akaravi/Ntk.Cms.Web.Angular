@@ -22,6 +22,9 @@ import { CoreSiteCategoryCmsModuleModule } from '../siteCategoryModule/coreSiteC
 import { CmsFileManagerModule } from 'ntk-cms-filemanager';
 import { CoreSiteModuleListComponent } from './moduleList/moduleList.component';
 import { CoreSiteDomainAliasModule } from '../siteDomainAlias/coreSiteDomainAlias.module';
+import { CoreSiteModuleEditComponent } from './moduleEdit/moduleEdit.component';
+import { CoreSiteModuleAddComponent } from './moduleAdd/moduleAdd.component';
+import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 
 
 
@@ -37,8 +40,10 @@ import { CoreSiteDomainAliasModule } from '../siteDomainAlias/coreSiteDomainAlia
     CoreSiteSelectorComponent,
     CoreSiteTreeComponent,
     CoreSiteModuleListComponent,
+    CoreSiteModuleAddComponent,
+    CoreSiteModuleEditComponent,
   ],
-  exports:[
+  exports: [
     CoreSiteComponent,
     CoreSiteAddFirstComponent,
     SelectionComponent,
@@ -49,6 +54,8 @@ import { CoreSiteDomainAliasModule } from '../siteDomainAlias/coreSiteDomainAlia
     CoreSiteSelectorComponent,
     CoreSiteTreeComponent,
     CoreSiteModuleListComponent,
+    CoreSiteModuleAddComponent,
+    CoreSiteModuleEditComponent,
   ],
   imports: [
     CommonModule,
@@ -70,7 +77,8 @@ import { CoreSiteDomainAliasModule } from '../siteDomainAlias/coreSiteDomainAlia
     CoreSiteCategoryService,
     CoreSiteResolver,
     CoreModuleSiteService,
-    CoreSiteDomainAliasService
+    CoreSiteDomainAliasService,
+    CmsConfirmationDialogService
   ]
 })
 export class CoreSiteModule {

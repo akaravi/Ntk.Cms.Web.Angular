@@ -5,6 +5,8 @@ import { SelectionComponent } from './selection/selection.component';
 import { CoreSiteResolver } from './coreSite.resolver';
 import { CoreSiteListComponent } from './list/list.component';
 import { CoreSiteModuleListComponent } from './moduleList/moduleList.component';
+import { CoreSiteModuleEditComponent } from './moduleEdit/moduleEdit.component';
+import { CoreSiteModuleAddComponent } from './moduleAdd/moduleAdd.component';
 
 const routes: Routes = [
   {
@@ -30,6 +32,18 @@ const routes: Routes = [
       {
         path: 'modulelist/:Id',
         component: CoreSiteModuleListComponent
+      },
+      {
+        path: 'moduleadd/:LinkSiteId',
+        component: CoreSiteModuleAddComponent
+      },
+      {
+        path: 'moduleadd/:LinkSiteId/:LinkModuleId',
+        component: CoreSiteModuleAddComponent
+      },
+      {
+        path: 'moduleedit/:LinkSiteId/:LinkModuleId',
+        component: CoreSiteModuleEditComponent
       }
     ]
   },
