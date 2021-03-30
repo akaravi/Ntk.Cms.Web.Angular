@@ -22,6 +22,7 @@ import { HttpConfigInterceptor } from './core/interceptor/httpConfigInterceptor'
 import { AppRouting } from './app.routing';
 import { CmsStoreModule } from './core/reducers/cmsStore.module';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { SharedModule } from './shared/shared.module';
 
 export function getHighlightLanguages(): any {
   return [
@@ -37,6 +38,9 @@ export function CreateTranslateLoader(http: HttpClient): any {
 @NgModule({
   declarations: [
     AppComponent,
+
+  ], exports: [
+
   ],
   imports: [
     BrowserModule,
@@ -44,6 +48,7 @@ export function CreateTranslateLoader(http: HttpClient): any {
     AppRouting,
     HttpClientModule,
     TranslateModule.forRoot(),
+    SharedModule.forRoot(),
     NtkSmartModalModule.forRoot(),
     ToastrModule.forRoot({
       timeOut: 0,
@@ -79,7 +84,9 @@ export function CreateTranslateLoader(http: HttpClient): any {
       },
     },
     { provide: LocationStrategy, useClass: HashLocationStrategy },
-    { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true },
+    // ErrorDialogService,
+    // { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true },
+
   ],
   bootstrap: [AppComponent]
 })

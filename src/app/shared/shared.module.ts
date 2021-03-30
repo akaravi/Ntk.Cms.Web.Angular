@@ -1,5 +1,5 @@
 ﻿import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from './material/material.module';
@@ -22,6 +22,7 @@ import { PersianDateFull } from '../core/pipe/PersianDatePipe/persian-date-full.
 import { ProgressSpinnerComponent } from './progress-spinner/progress-spinner.component';
 import { OverlayService } from './overlay/overlay.service';
 import { TranslationModule } from '../core/i18n/translation.module';
+import { HttpConfigInterceptor } from '../core/interceptor/httpConfigInterceptor';
 
 
 
@@ -53,7 +54,7 @@ import { TranslationModule } from '../core/i18n/translation.module';
     PersianDateFull,
     CmsMapComponent,
     TagAutocompleteComponent,
-    ProgressSpinnerComponent
+    ProgressSpinnerComponent,
   ],
   exports: [
     // common and shared components/directives/pipes between more than one module and components will be listed here.
@@ -73,9 +74,12 @@ import { TranslationModule } from '../core/i18n/translation.module';
     CmsExportListComponent,
     CmsMapComponent,
     TagAutocompleteComponent,
-    ProgressSpinnerComponent
+    ProgressSpinnerComponent,
   ],
-  providers: [OverlayService]
+  providers: [
+    OverlayService,
+    { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true },
+  ]
   /* No providers here! Since they’ll be already provided in AppModule. */
 })
 export class SharedModule {
