@@ -69,6 +69,7 @@ export class CoreCpMainMenuEditComponent implements OnInit {
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
+  dataModelEnumMenuPlaceTypeResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   dataAccessModel: AccessModel;
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
@@ -90,6 +91,12 @@ export class CoreCpMainMenuEditComponent implements OnInit {
 
     this.getEnumRecordStatus();
     this.DataGetAccess();
+    this.getEnumMenuPlaceType();
+  }
+  getEnumMenuPlaceType(): void {
+    this.coreEnumService.ServiceEnumMenuPlaceType().subscribe((next) => {
+      this.dataModelEnumMenuPlaceTypeResult = next;
+    });
   }
   getEnumRecordStatus(): void {
     if (this.storeSnapshot

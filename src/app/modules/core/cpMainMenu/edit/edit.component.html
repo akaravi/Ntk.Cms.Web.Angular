@@ -82,6 +82,16 @@
               TitleResourceLanguage is <strong>required</strong>
             </mat-error>
           </mat-form-field>
+           <!-- MenuPlaceType Field -->
+           <mat-form-field class="example-full-width">
+            <mat-select placeholder="نوع منطقه" [(ngModel)]="dataModel.MenuPlaceType" name="dataModel.MenuPlaceType"
+              #MenuPlaceType="ngModel" panelClass="MenuPlaceType-{{ dataModel.MenuPlaceType }}">
+              <mat-option *ngFor="
+                let item of dataModelEnumMenuPlaceTypeResult.ListItems;
+                index as i
+              " [value]="item.Value">{{ item.Description }}</mat-option>
+            </mat-select>
+          </mat-form-field>
           <!-- AddressLink Field -->
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['AddressLink']?.AccessWatchField">
             <mat-label> {{fieldsInfo['AddressLink']?.FieldTitle}}</mat-label>

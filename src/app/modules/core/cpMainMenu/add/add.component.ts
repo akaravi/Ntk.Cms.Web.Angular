@@ -55,6 +55,7 @@ export class CoreCpMainMenuAddComponent implements OnInit {
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
+  dataModelEnumMenuPlaceTypeResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
 
   fileManagerOpenForm = false;
 
@@ -65,6 +66,12 @@ export class CoreCpMainMenuAddComponent implements OnInit {
 
     this.formInfo.FormTitle = 'اضافه کردن  ';
     this.getEnumRecordStatus();
+    this.getEnumMenuPlaceType();
+  }
+  getEnumMenuPlaceType(): void {
+    this.coreEnumService.ServiceEnumMenuPlaceType().subscribe((next) => {
+      this.dataModelEnumMenuPlaceTypeResult = next;
+    });
   }
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&

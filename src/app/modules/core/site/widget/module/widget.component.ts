@@ -68,15 +68,15 @@ export class CoreSiteWidgetModuleComponent implements OnInit, OnDestroy {
     fastFilter2.Value = new Date();
     fastFilter2.SearchType = EnumFilterDataModelSearchTypes.GreaterThan;
     filterStatist2.Filters.push(fastFilter2);
-    this.service.ServiceGetCount(filterStatist2).subscribe(
-      (next) => {
-        if (next.IsSuccess) {
-          this.modelData.set('Expired Date', next.TotalRowCount);
-        }
-      }
-      ,
-      (error) => {
-      }
-    );
+    // this.service.ServiceGetCount(filterStatist2).subscribe(
+    //   (next) => {
+    //     if (next.IsSuccess) {
+    //       this.modelData.set('Expired Date', next.TotalRowCount);
+    //     }
+    //   }
+    //   ,
+    //   (error) => {
+    //   }
+    // );
   }
 }

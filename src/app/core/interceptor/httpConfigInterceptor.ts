@@ -32,8 +32,9 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         return event;
       }),
       catchError((error: HttpErrorResponse) => {
+
         if (error.status === 0) {
-          this.cmsToastrService.typeErrorInternetConnection();
+          this.cmsToastrService.typeError(error.status, error.message);
           return;
         }
         if (error.status === 401) {

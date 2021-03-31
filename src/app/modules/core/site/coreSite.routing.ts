@@ -7,6 +7,8 @@ import { CoreSiteListComponent } from './list/list.component';
 import { CoreSiteModuleListComponent } from './moduleList/moduleList.component';
 import { CoreSiteModuleEditComponent } from './moduleEdit/moduleEdit.component';
 import { CoreSiteModuleAddComponent } from './moduleAdd/moduleAdd.component';
+import { CoreSiteAddComponent } from './add/add.component';
+import { CoreSiteEditComponent } from './edit/edit.component';
 
 const routes: Routes = [
   {
@@ -24,6 +26,14 @@ const routes: Routes = [
       {
         path: 'addFirst',
         component: CoreSiteAddFirstComponent
+      },
+      {
+        path: 'add',
+        component: CoreSiteAddComponent
+      },
+      {
+        path: 'edit/:Id',
+        component: CoreSiteEditComponent
       },
       {
         path: 'modulelist',

@@ -166,7 +166,6 @@ export class CoreSiteListComponent implements OnInit, OnDestroy {
 
 
   onActionbuttonNewRow(): void {
-
     if (
       this.dataModelResult == null ||
       this.dataModelResult.Access == null ||
@@ -175,14 +174,7 @@ export class CoreSiteListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessAdd();
       return;
     }
-    const dialogRef = this.dialog.open(CoreSiteAddComponent, {
-      data: {}
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result && result.dialogChangedDate) {
-        this.DataGetAll();
-      }
-    });
+    this.router.navigate(['/core/site/add']);
   }
 
   onActionbuttonEditRow(model: CoreSiteModel = this.tableRowSelected): void {
@@ -202,14 +194,7 @@ export class CoreSiteListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessEdit();
       return;
     }
-    const dialogRef = this.dialog.open(CoreSiteEditComponent, {
-      data: { id: this.tableRowSelected.Id }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result && result.dialogChangedDate) {
-        this.DataGetAll();
-      }
-    });
+    this.router.navigate(['/core/site/edit', model.Id]);
   }
   onActionbuttonDeleteRow(model: CoreSiteModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
