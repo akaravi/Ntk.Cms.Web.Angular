@@ -167,9 +167,8 @@ export class BlogContentListComponent implements OnInit, OnDestroy {
       this.categoryModelSelected == null ||
       this.categoryModelSelected.Id === 0
     ) {
-      const title = 'برروز خطا ';
       const message = 'دسته بندی انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected(message);
       return;
     }
     if (
@@ -185,9 +184,7 @@ export class BlogContentListComponent implements OnInit, OnDestroy {
 
   onActionbuttonEditRow(model: BlogContentModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
       return;
     }
     this.tableRowSelected = model;
@@ -203,9 +200,8 @@ export class BlogContentListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonDeleteRow(model: BlogContentModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      const emessage = 'ردیفی برای حذف انتخاب نشده است';
+      this.cmsToastrService.typeErrorSelected(emessage);
       return;
     }
     this.tableRowSelected = model;
@@ -226,7 +222,7 @@ export class BlogContentListComponent implements OnInit, OnDestroy {
       }
     });
   }
-   onActionbuttonStatist(): void {
+  onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;
     if (!this.optionsStatist.data.show) {
       return;
@@ -282,9 +278,7 @@ export class BlogContentListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonComment(model: BlogContentModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
       return;
     }
     this.router.navigate(['/blog/comment/', model.Id]);

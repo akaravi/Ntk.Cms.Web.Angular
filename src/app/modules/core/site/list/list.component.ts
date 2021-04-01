@@ -35,7 +35,8 @@ import { CoreSiteAddComponent } from '../add/add.component';
   styleUrls: ['./list.component.scss']
 })
 export class CoreSiteListComponent implements OnInit, OnDestroy {
-  constructor(private coreSiteService: CoreSiteService,
+  constructor(
+    private coreSiteService: CoreSiteService,
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
@@ -180,9 +181,7 @@ export class CoreSiteListComponent implements OnInit, OnDestroy {
   onActionbuttonEditRow(model: CoreSiteModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
       return;
     }
     this.tableRowSelected = model;
@@ -198,9 +197,8 @@ export class CoreSiteListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonDeleteRow(model: CoreSiteModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      const emessage = 'ردیفی برای حذف انتخاب نشده است';
+      this.cmsToastrService.typeErrorSelected(emessage);
       return;
     }
     this.tableRowSelected = model;
@@ -225,9 +223,9 @@ export class CoreSiteListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonModuleListRow(model: CoreSiteModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
-      const title = 'برروز خطا ';
+
       const message = 'ردیفیانتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected(message);
       return;
     }
     this.tableRowSelected = model;
@@ -246,9 +244,8 @@ export class CoreSiteListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonDomainAliasListRow(model: CoreSiteModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
-      const title = 'برروز خطا ';
       const message = 'ردیفی انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected(message);
       return;
     }
     this.tableRowSelected = model;

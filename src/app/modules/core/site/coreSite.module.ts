@@ -2,7 +2,14 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CoreSiteRouting } from './coreSite.routing';
 import { CoreSiteComponent } from './coreSite.component';
-import { CoreModuleService, CoreModuleSiteService, CoreSiteCategoryCmsModuleService, CoreSiteCategoryService, CoreSiteDomainAliasService, CoreSiteService } from 'ntk-cms-api';
+import {
+  CoreModuleService,
+  CoreModuleSiteService,
+  CoreSiteCategoryCmsModuleService,
+  CoreSiteCategoryService,
+  CoreSiteDomainAliasService,
+  CoreSiteService
+} from 'ntk-cms-api';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SelectionComponent } from './selection/selection.component';
 import { CoreSiteAddFirstComponent } from './addFirst/addFirst.component';

@@ -205,9 +205,8 @@ export class ApplicationAppListComponent implements OnInit, OnDestroy {
       sourceId = this.categoryModelSelected.Id;
     }
     if (sourceId === 0) {
-      const title = 'برروز خطا ';
       const message = 'نوع سورس اپلیکیشن انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected(message);
       return;
     }
     if (
@@ -229,9 +228,7 @@ export class ApplicationAppListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonEditRow(mode: ApplicationAppModel = this.tableRowSelected): void {
     if (!mode || !mode.Id || mode.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
       return;
     }
     this.tableRowSelected = mode;
@@ -258,9 +255,8 @@ export class ApplicationAppListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonDeleteRow(mode: ApplicationAppModel = this.tableRowSelected): void {
     if (mode == null || !mode.Id || mode.Id === 0) {
-      const etitle = 'برروز خطا ';
       const emessage = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(emessage, etitle);
+      this.cmsToastrService.typeErrorSelected(emessage);
       return;
     }
     this.tableRowSelected = mode;
@@ -361,9 +357,8 @@ export class ApplicationAppListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonUploadApp(mode: ApplicationAppModel = this.tableRowSelected): void {
     if (mode == null || !mode.Id || mode.Id === 0) {
-      const title = 'برروز خطا ';
       const message = 'ردیفی  انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected(message);
       return;
     }
     this.tableRowSelected = mode;
@@ -378,9 +373,8 @@ export class ApplicationAppListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonUploadUpdate(mode: ApplicationAppModel = this.tableRowSelected): void {
     if (mode == null || !mode.Id || mode.Id === 0) {
-      const title = 'برروز خطا ';
       const message = 'ردیفی  انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected(message);
       return;
     }
     this.tableRowSelected = mode;
@@ -398,9 +392,8 @@ export class ApplicationAppListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonBuildApp(mode: ApplicationAppModel = this.tableRowSelected): void {
     if (mode == null || !mode.Id || mode.Id === 0) {
-      const title = 'برروز خطا ';
       const message = 'ردیفی  انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected(message);
       return;
     }
     this.tableRowSelected = mode;
@@ -426,9 +419,9 @@ export class ApplicationAppListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonDownloadApp(mode: ApplicationAppModel = this.tableRowSelected): void {
     if (mode == null || !mode.Id || mode.Id === 0) {
-      const title = 'برروز خطا ';
+
       const message = 'ردیفی  انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected(message);
       return;
     }
     this.tableRowSelected = mode;

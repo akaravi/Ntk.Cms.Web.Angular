@@ -23,6 +23,27 @@
               {{ fieldsInfo['RecordStatus']?.FieldTitle }} is <strong>required</strong>
             </mat-error>
           </mat-form-field>
+          <!-- OwnerSiteSetStatus Field -->
+          <mat-form-field class="example-full-width">
+            <mat-select placeholder="وضعیت سایت" [(ngModel)]="dataModel.OwnerSiteSetStatus"
+              name="dataModel.OwnerSiteSetStatus" #OwnerSiteSetStatus="ngModel"
+              panelClass="OwnerSiteSetStatus-{{ dataModel.OwnerSiteSetStatus }}">
+              <mat-option *ngFor="
+                          let item of dataModelEnumSiteStatusResult.ListItems;
+                          index as i
+                        " [value]="item.Value">{{ item.Description }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <!-- UserLanguage Field -->
+          <mat-form-field class="example-full-width">
+            <mat-select placeholder="زبان سایت" [(ngModel)]="dataModel.UserLanguage" name="dataModel.UserLanguage"
+              #UserLanguage="ngModel" panelClass="UserLanguage-{{ dataModel.UserLanguage }}">
+              <mat-option *ngFor="
+                                  let item of dataModelEnumLanguageResult.ListItems;
+                                  index as i
+                                " [value]="item.Value">{{ item.Description }}</mat-option>
+            </mat-select>
+          </mat-form-field>
           <!-- LinkSiteCategoryId Field -->
           <app-core-sitecategory-selector (optionSelect)="onActionSelectCategory($event)"
             [optionSelectForce]="this.dataModel.LinkSiteCategoryId" [optionPlaceholder]="'نوع وب سایت'"
@@ -45,6 +66,44 @@
               {{ fieldsInfo['Title']?.FieldTitle }} is <strong>required</strong>
             </mat-error>
           </mat-form-field>
+          <!-- Description Field -->
+
+          <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Description']?.AccessWatchField">
+            <mat-label>{{ fieldsInfo['Description']?.FieldDescription }}</mat-label>
+            <textarea matInput [(ngModel)]="dataModel.Description"
+              [disabled]="!fieldsInfo['Description']?.AccessEditField" name="dataModel.Description" #Description
+              type="text" placeholder="توضیحات" row="6" minlength="0" maxlength="1000"></textarea>
+            <mat-icon matSuffix *ngIf="dataModel.Description && fieldsInfo['Description']?.AccessEditField" matSuffix
+              mat-icon-button aria-label="Clear" (click)="dataModel.Description = ''">close</mat-icon>
+            <mat-icon *ngIf="fieldsInfo['Description']?.AccessEditField" matSuffix>mode_edit</mat-icon>
+            <mat-hint align="end">{{ 'Application.Source.Description_hint' | translate }}</mat-hint>
+            <mat-hint align="start">{{ Description.value.length }} / 1000</mat-hint>
+
+          </mat-form-field>
+
+          <!-- SubDomain Field -->
+          <mat-form-field class="example-full-width" *ngIf="fieldsInfo['SubDomain']?.AccessWatchField">
+            <mat-label>{{ fieldsInfo['SubDomain']?.FieldTitle }}</mat-label>
+            <input matInput [(ngModel)]="dataModel.SubDomain" [disabled]="!fieldsInfo['SubDomain']?.AccessEditField"
+              name="dataModel.SubDomain" #SubDomain type="text" placeholder="test" minlength="0" maxlength="20" />
+            <mat-icon matSuffix *ngIf="dataModel.SubDomain && fieldsInfo['SubDomain']?.AccessEditField" matSuffix
+              mat-icon-button aria-label="Clear" (click)="dataModel.SubDomain = ''">close</mat-icon>
+            <mat-icon *ngIf="fieldsInfo['SubDomain']?.AccessEditField" matSuffix>mode_edit</mat-icon>
+            <mat-hint align="end">{{ 'Application.Source.Title_hint' | translate }}</mat-hint>
+            <mat-hint align="start">{{ SubDomain.value.length }} / 20</mat-hint>
+          </mat-form-field>
+          <!-- Domain Field -->
+          <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Domain']?.AccessWatchField">
+            <mat-label>{{ fieldsInfo['Domain']?.FieldTitle }}</mat-label>
+            <input matInput [(ngModel)]="dataModel.Domain" [disabled]="!fieldsInfo['Domain']?.AccessEditField"
+              name="dataModel.Domain" #Domain type="text" placeholder="domain.com" minlength="3" maxlength="100" />
+            <mat-icon matSuffix *ngIf="dataModel.Domain && fieldsInfo['Domain']?.AccessEditField" matSuffix
+              mat-icon-button aria-label="Clear" (click)="dataModel.Domain = ''">close</mat-icon>
+            <mat-icon *ngIf="fieldsInfo['Domain']?.AccessEditField" matSuffix>mode_edit</mat-icon>
+            <mat-hint align="end">{{ 'Application.Source.Title_hint' | translate }}</mat-hint>
+            <mat-hint align="start">{{ Domain.value.length }} / 20</mat-hint>
+          </mat-form-field>
+
           <!-- ExpireDate Field -->
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['ExpireDate']?.AccessWatchField">
             <mat-label>{{fieldsInfo['ExpireDate']?.FieldTitle}}</mat-label>
@@ -82,12 +141,10 @@
                 {{fieldsInfo['LinkFavIconId']?.FieldTitle}}
               </mat-label>
               <input matInput [(ngModel)]="dataModel.LinkFavIconId"
-                [disabled]="!fieldsInfo['LinkFavIconId']?.AccessEditField" name="dataModel.LinkFavIconId"
-                #LinkFavIconId type="text" placeholder="شناسه فایل اصلی"
-                (click)="fileManagerOpenFormLinkFavIconId = true" />
-              <mat-icon matSuffix
-                *ngIf="dataModel.LinkFavIconId && fieldsInfo['LinkFavIconId']?.AccessEditField" matSuffix
-                mat-icon-button aria-label="Clear" (click)="dataModel.LinkFavIconId = null">close</mat-icon>
+                [disabled]="!fieldsInfo['LinkFavIconId']?.AccessEditField" name="dataModel.LinkFavIconId" #LinkFavIconId
+                type="text" placeholder="شناسه فایل اصلی" (click)="fileManagerOpenFormLinkFavIconId = true" />
+              <mat-icon matSuffix *ngIf="dataModel.LinkFavIconId && fieldsInfo['LinkFavIconId']?.AccessEditField"
+                matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.LinkFavIconId = null">close</mat-icon>
               <mat-icon *ngIf="fieldsInfo['LinkFavIconId']?.AccessEditField" matSuffix
                 (click)="fileManagerOpenFormLinkFavIconId = true">mode_edit</mat-icon>
             </mat-form-field>
@@ -99,63 +156,47 @@
           </div>
 
 
-          <!-- Title Field -->
+          <!-- KeywordModel Field -->
           <tag-input [(ngModel)]="keywordDataModel" name="KeywordModel" [placeholder]="'+ کلمه کلیدی'"
             [secondaryPlaceholder]="'انتخاب کلمات کلیدی نسبت به مطلب'" [identifyBy]="'display'">
           </tag-input>
           <!-- CurrentSiteDomainUrl Field -->
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['CurrentSiteDomainUrl']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['CurrentSiteDomainUrl']?.FieldTitle }}</mat-label>
-            <input matInput [(ngModel)]="dataModel.CurrentSiteDomainUrl" [disabled]="!fieldsInfo['CurrentSiteDomainUrl']?.AccessEditField"
-              name="dataModel.CurrentSiteDomainUrl" #CurrentSiteDomainUrl type="text" placeholder="https://...." minlength="3" maxlength="100"  />
-            <mat-icon matSuffix *ngIf="dataModel.CurrentSiteDomainUrl && fieldsInfo['CurrentSiteDomainUrl']?.AccessEditField" matSuffix
+            <input matInput [(ngModel)]="dataModel.CurrentSiteDomainUrl"
+              [disabled]="!fieldsInfo['CurrentSiteDomainUrl']?.AccessEditField" name="dataModel.CurrentSiteDomainUrl"
+              #CurrentSiteDomainUrl type="text" placeholder="https://...." minlength="3" maxlength="100" />
+            <mat-icon matSuffix
+              *ngIf="dataModel.CurrentSiteDomainUrl && fieldsInfo['CurrentSiteDomainUrl']?.AccessEditField" matSuffix
               mat-icon-button aria-label="Clear" (click)="dataModel.CurrentSiteDomainUrl = ''">close</mat-icon>
             <mat-icon *ngIf="fieldsInfo['CurrentSiteDomainUrl']?.AccessEditField" matSuffix>mode_edit</mat-icon>
             <mat-hint align="end">{{ 'Application.Source.Title_hint' | translate }}</mat-hint>
             <mat-hint align="start">{{ CurrentSiteDomainUrl.value.length }} / 100</mat-hint>
           </mat-form-field>
-   <!-- Redirect Field -->
-   <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Redirect']?.AccessWatchField">
-    <mat-label>{{ fieldsInfo['Redirect']?.FieldTitle }}</mat-label>
-    <input matInput [(ngModel)]="dataModel.Redirect" [disabled]="!fieldsInfo['Redirect']?.AccessEditField"
-      name="dataModel.Redirect" #Redirect type="text" placeholder="https://...." minlength="3" maxlength="100"  />
-    <mat-icon matSuffix *ngIf="dataModel.Redirect && fieldsInfo['Redirect']?.AccessEditField" matSuffix
-      mat-icon-button aria-label="Clear" (click)="dataModel.Redirect = ''">close</mat-icon>
-    <mat-icon *ngIf="fieldsInfo['Redirect']?.AccessEditField" matSuffix>mode_edit</mat-icon>
-    <mat-hint align="end">{{ 'Application.Source.Title_hint' | translate }}</mat-hint>
-    <mat-hint align="start">{{ Redirect.value.length }} / 100</mat-hint>
-  </mat-form-field>
-    <!-- UserLanguage Field -->
-    <mat-form-field class="example-full-width" *ngIf="fieldsInfo['UserLanguage']?.AccessWatchField">
-      <mat-label>{{ fieldsInfo['UserLanguage']?.FieldTitle }}</mat-label>
-      <input matInput [(ngModel)]="dataModel.UserLanguage" [disabled]="!fieldsInfo['UserLanguage']?.AccessEditField"
-        name="dataModel.UserLanguage" #UserLanguage type="text" placeholder="1"   />
-      <mat-icon matSuffix *ngIf="dataModel.UserLanguage && fieldsInfo['UserLanguage']?.AccessEditField" matSuffix
-        mat-icon-button aria-label="Clear" (click)="dataModel.UserLanguage = null">close</mat-icon>
-      <mat-icon *ngIf="fieldsInfo['UserLanguage']?.AccessEditField" matSuffix>mode_edit</mat-icon>
-    </mat-form-field>
-    <!-- SubDomain Field -->
-    <mat-form-field class="example-full-width" *ngIf="fieldsInfo['SubDomain']?.AccessWatchField">
-      <mat-label>{{ fieldsInfo['SubDomain']?.FieldTitle }}</mat-label>
-      <input matInput [(ngModel)]="dataModel.SubDomain" [disabled]="!fieldsInfo['SubDomain']?.AccessEditField"
-        name="dataModel.SubDomain" #SubDomain type="text" placeholder="https://...." minlength="3" maxlength="100"  />
-      <mat-icon matSuffix *ngIf="dataModel.SubDomain && fieldsInfo['SubDomain']?.AccessEditField" matSuffix
-        mat-icon-button aria-label="Clear" (click)="dataModel.SubDomain = ''">close</mat-icon>
-      <mat-icon *ngIf="fieldsInfo['SubDomain']?.AccessEditField" matSuffix>mode_edit</mat-icon>
-      <mat-hint align="end">{{ 'Application.Source.Title_hint' | translate }}</mat-hint>
-      <mat-hint align="start">{{ SubDomain.value.length }} / 100</mat-hint>
-    </mat-form-field>
-        <!-- Domain Field -->
-        <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Domain']?.AccessWatchField">
-          <mat-label>{{ fieldsInfo['Domain']?.FieldTitle }}</mat-label>
-          <input matInput [(ngModel)]="dataModel.Domain" [disabled]="!fieldsInfo['Domain']?.AccessEditField"
-            name="dataModel.Domain" #Domain type="text" placeholder="https://...." minlength="3" maxlength="100"  />
-          <mat-icon matSuffix *ngIf="dataModel.Domain && fieldsInfo['Domain']?.AccessEditField" matSuffix
-            mat-icon-button aria-label="Clear" (click)="dataModel.Domain = ''">close</mat-icon>
-          <mat-icon *ngIf="fieldsInfo['Domain']?.AccessEditField" matSuffix>mode_edit</mat-icon>
-          <mat-hint align="end">{{ 'Application.Source.Title_hint' | translate }}</mat-hint>
-          <mat-hint align="start">{{ Domain.value.length }} / 100</mat-hint>
-        </mat-form-field>
+          <!-- Redirect Field -->
+          <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Redirect']?.AccessWatchField">
+            <mat-label>{{ fieldsInfo['Redirect']?.FieldTitle }}</mat-label>
+            <input matInput [(ngModel)]="dataModel.Redirect" [disabled]="!fieldsInfo['Redirect']?.AccessEditField"
+              name="dataModel.Redirect" #Redirect type="text" placeholder="https://...." minlength="3"
+              maxlength="100" />
+            <mat-icon matSuffix *ngIf="dataModel.Redirect && fieldsInfo['Redirect']?.AccessEditField" matSuffix
+              mat-icon-button aria-label="Clear" (click)="dataModel.Redirect = ''">close</mat-icon>
+            <mat-icon *ngIf="fieldsInfo['Redirect']?.AccessEditField" matSuffix>mode_edit</mat-icon>
+            <mat-hint align="end">{{ 'Application.Source.Title_hint' | translate }}</mat-hint>
+            <mat-hint align="start">{{ Redirect.value.length }} / 100</mat-hint>
+          </mat-form-field>
+          <!-- Copyright Field -->
+          <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Copyright']?.AccessWatchField">
+            <mat-label>{{ fieldsInfo['Copyright']?.FieldTitle }}</mat-label>
+            <input matInput [(ngModel)]="dataModel.Copyright" [disabled]="!fieldsInfo['Copyright']?.AccessEditField"
+              name="dataModel.Copyright" #Copyright type="text" placeholder="https://...." minlength="3"
+              maxlength="100" />
+            <mat-icon matSuffix *ngIf="dataModel.Copyright && fieldsInfo['Copyright']?.AccessEditField" matSuffix
+              mat-icon-button aria-label="Clear" (click)="dataModel.Copyright = ''">close</mat-icon>
+            <mat-icon *ngIf="fieldsInfo['Copyright']?.AccessEditField" matSuffix>mode_edit</mat-icon>
+            <mat-hint align="end">{{ 'Application.Source.Title_hint' | translate }}</mat-hint>
+            <mat-hint align="start">{{ Copyright.value.length }} / 100</mat-hint>
+          </mat-form-field>
 
           <div *ngIf="formInfo.FormSubmitAllow">
             <a class="btn btn-secondary btn-sm BTN">
@@ -173,7 +214,7 @@
           <p>محتوای بخش درباره ما </p>
 
 
-
+          <!-- AboutUsTitle Field -->
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['AboutUsTitle']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['AboutUsTitle']?.FieldAboutUsTitle }}</mat-label>
             <input matInput [(ngModel)]="dataModel.AboutUsTitle"
@@ -184,8 +225,8 @@
             <mat-icon *ngIf="fieldsInfo['AboutUsTitle']?.AccessEditField" matSuffix>mode_edit</mat-icon>
             <mat-hint align="end">{{ 'Application.Source.AboutUsTitle_hint' | translate }}</mat-hint>
             <mat-hint align="start">{{ AboutUsTitle.value.length }} / 100</mat-hint>
-
           </mat-form-field>
+          <!-- AboutUsDescription Field -->
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['AboutUsDescription']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['AboutUsDescription']?.FieldAboutUsDescription }}</mat-label>
             <textarea matInput [(ngModel)]="dataModel.AboutUsDescription"
@@ -197,8 +238,8 @@
             <mat-icon *ngIf="fieldsInfo['AboutUsDescription']?.AccessEditField" matSuffix>mode_edit</mat-icon>
             <mat-hint align="end">{{ 'Application.Source.AboutUsDescription_hint' | translate }}</mat-hint>
             <mat-hint align="start">{{ AboutUsDescription.value.length }} / 1000</mat-hint>
-
           </mat-form-field>
+          <!-- AboutUsTel Field -->
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['AboutUsTel']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['AboutUsTel']?.FieldAboutUsTel }}</mat-label>
             <input matInput [(ngModel)]="dataModel.AboutUsTel" [disabled]="!fieldsInfo['AboutUsTel']?.AccessEditField"
@@ -209,8 +250,8 @@
             <mat-icon *ngIf="fieldsInfo['AboutUsTel']?.AccessEditField" matSuffix>mode_edit</mat-icon>
             <mat-hint align="end">{{ 'Application.Source.AboutUsTel_hint' | translate }}</mat-hint>
             <mat-hint align="start">{{ AboutUsTel.value.length }} / 100</mat-hint>
-
           </mat-form-field>
+          <!-- AboutUsFax Field -->
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['AboutUsFax']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['AboutUsFax']?.FieldAboutUsFax }}</mat-label>
             <input matInput [(ngModel)]="dataModel.AboutUsFax" [disabled]="!fieldsInfo['AboutUsFax']?.AccessEditField"
@@ -221,8 +262,8 @@
             <mat-icon *ngIf="fieldsInfo['AboutUsFax']?.AccessEditField" matSuffix>mode_edit</mat-icon>
             <mat-hint align="end">{{ 'Application.Source.AboutUsFax_hint' | translate }}</mat-hint>
             <mat-hint align="start">{{ AboutUsFax.value.length }} / 100</mat-hint>
-
           </mat-form-field>
+          <!-- AboutUsEmail Field -->
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['AboutUsEmail']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['AboutUsEmail']?.FieldAboutUsEmail }}</mat-label>
             <input matInput [(ngModel)]="dataModel.AboutUsEmail"
@@ -233,8 +274,8 @@
             <mat-icon *ngIf="fieldsInfo['AboutUsEmail']?.AccessEditField" matSuffix>mode_edit</mat-icon>
             <mat-hint align="end">{{ 'Application.Source.AboutUsEmail_hint' | translate }}</mat-hint>
             <mat-hint align="start">{{ AboutUsEmail.value.length }} / 100</mat-hint>
-
           </mat-form-field>
+          <!-- AboutUsAddress Field -->
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['AboutUsAddress']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['AboutUsAddress']?.FieldAboutUsAddress }}</mat-label>
             <textarea matInput [(ngModel)]="dataModel.AboutUsAddress"
@@ -246,9 +287,7 @@
             <mat-icon *ngIf="fieldsInfo['AboutUsAddress']?.AccessEditField" matSuffix>mode_edit</mat-icon>
             <mat-hint align="end">{{ 'Application.Source.AboutUsAddress_hint' | translate }}</mat-hint>
             <mat-hint align="start">{{ AboutUsAddress.value.length }} / 100</mat-hint>
-
           </mat-form-field>
-
 
           <div class="mb-3">
             <img *ngIf="dataModel?.AboutUsLinkImageIdSrc?.length>0" style="vertical-align:middle;" aria-hidden
@@ -256,7 +295,6 @@
           </div>
           <div class="mb-9">
             <mat-form-field class="example-full-width" *ngIf="fieldsInfo['AboutUsLinkImageId']?.AccessWatchField">
-
               <mat-label (click)="fileManagerOpenFormAboutUsLinkImageId = true">
                 {{fieldsInfo['AboutUsLinkImageId']?.FieldTitle}}
               </mat-label>
@@ -270,16 +308,11 @@
               <mat-icon *ngIf="fieldsInfo['AboutUsLinkImageId']?.AccessEditField" matSuffix
                 (click)="fileManagerOpenFormAboutUsLinkImageId = true">mode_edit</mat-icon>
             </mat-form-field>
-
             <cms-file-manager (itemSelected)="onActionFileSelectedAboutUsLinkImageId($event)" [language]="appLanguage"
               [isPopup]="true" [(openForm)]="fileManagerOpenFormAboutUsLinkImageId" [tree]="fileManagerTree"
               [openFilemanagerButtonLabelKey]="'select'" [selectFileType]="selectFileTypeMainImage"
               [openFilemanagerButtonView]="false"></cms-file-manager>
           </div>
-
-
-
-
 
           <p>روی نقشه کلیک کنید تا موقیت مکانی مشخص گردد</p>
           <app-cms-map (map$)="receiveMap($event)" [optonCenter]="mapOptonCenter" id='main-map'></app-cms-map>
@@ -291,17 +324,58 @@
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
               قبلی
             </button>
-            <button type="submit" mat-button [disabled]="!vform.form.valid"
-              class="btn btn-success font-weight-bold text-uppercase px-9 py-4">
-              ذخیره
+            <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
+              class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
+              بعدی
             </button>
           </div>
         </mat-step>
 
 
 
+        <mat-step label="حسابداری" state="seo">
+          <p>وضعیت مالی و تراکنش حسابداری</p>
 
+          <!-- AccountingFormNo Field -->
+          <mat-form-field class="example-full-width" *ngIf="fieldsInfo['AccountingFormNo']?.AccessWatchField">
+            <mat-label>{{ fieldsInfo['AccountingFormNo']?.FieldAccountingFormNo }}</mat-label>
+            <input matInput [(ngModel)]="dataModel.AccountingFormNo"
+              [disabled]="!fieldsInfo['AccountingFormNo']?.AccessEditField" name="dataModel.AccountingFormNo"
+              #AccountingFormNo type="number" placeholder="123" />
+            <mat-icon matSuffix *ngIf="dataModel.AccountingFormNo && fieldsInfo['AccountingFormNo']?.AccessEditField"
+              matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.AccountingFormNo = 0">close</mat-icon>
+            <mat-icon *ngIf="fieldsInfo['AccountingFormNo']?.AccessEditField" matSuffix>mode_edit</mat-icon>
+            <mat-hint align="end">{{ 'Application.Source.AccountingFormNo_hint' | translate }}</mat-hint>
+            <mat-hint align="start">{{ AccountingFormNo.value.length }} / 100</mat-hint>
+          </mat-form-field>
 
+          <!-- AccountingFormCreatedDate Field -->
+          <mat-form-field class="example-full-width" *ngIf="fieldsInfo['AccountingFormCreatedDate']?.AccessWatchField">
+            <mat-label>{{fieldsInfo['AccountingFormCreatedDate']?.FieldTitle}}</mat-label>
+            <input matInput [matDatepicker]="AccountingFormCreatedDate"
+              [(ngModel)]="dataModel.AccountingFormCreatedDate" name="dataModel.AccountingFormCreatedDate" />
+            <mat-datepicker-toggle matSuffix [for]="AccountingFormCreatedDate"></mat-datepicker-toggle>
+            <mat-datepicker touchUi #AccountingFormCreatedDate></mat-datepicker>
+          </mat-form-field>
+          <!-- AccountingFormUpdatedDate Field -->
+          <mat-form-field class="example-full-width" *ngIf="fieldsInfo['AccountingFormUpdatedDate']?.AccessWatchField">
+            <mat-label>{{fieldsInfo['AccountingFormUpdatedDate']?.FieldTitle}}</mat-label>
+            <input matInput [matDatepicker]="AccountingFormUpdatedDate"
+              [(ngModel)]="dataModel.AccountingFormUpdatedDate" name="dataModel.AccountingFormUpdatedDate" />
+            <mat-datepicker-toggle matSuffix [for]="AccountingFormUpdatedDate"></mat-datepicker-toggle>
+            <mat-datepicker touchUi #AccountingFormUpdatedDate></mat-datepicker>
+          </mat-form-field>
+          <div *ngIf="formInfo.FormSubmitAllow">
+            <button type="button" mat-button matStepperPrevious
+              class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
+              قبلی
+            </button>
+            <button type="submit" mat-button [disabled]="!vform.form.valid"
+              class="btn btn-success font-weight-bold text-uppercase px-9 py-4">
+              ذخیره
+            </button>
+          </div>
+        </mat-step>
 
       </mat-horizontal-stepper>
 

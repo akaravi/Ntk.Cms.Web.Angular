@@ -30,7 +30,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ApplicationMemberInfoListComponent implements OnInit , OnDestroy{
+export class ApplicationMemberInfoListComponent implements OnInit, OnDestroy {
 
   constructor(
     private applicationMemberInfoService: ApplicationMemberInfoService,
@@ -182,9 +182,8 @@ export class ApplicationMemberInfoListComponent implements OnInit , OnDestroy{
 
   onActionbuttonEditRow(model: ApplicationMemberInfoModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+
+      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
       return;
     }
     this.tableRowSelected = model;
@@ -209,9 +208,8 @@ export class ApplicationMemberInfoListComponent implements OnInit , OnDestroy{
   }
   onActionbuttonDeleteRow(model: ApplicationMemberInfoModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      const emessage = 'ردیفی برای حذف انتخاب نشده است';
+      this.cmsToastrService.typeErrorSelected(emessage);
       return;
     }
     this.tableRowSelected = model;

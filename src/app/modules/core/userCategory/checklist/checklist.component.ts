@@ -72,8 +72,9 @@ export class CoreUserGroupChecklistComponent implements OnInit {
     );
   }
   onActionSelect(value: CoreUserGroupModel): void {
-    
-    var item = this.dataModelSelect.filter(function (obj) { return obj.Id == value.Id; }).shift();
+    const item = this.dataModelSelect.filter((obj) => {
+      return obj.Id === value.Id;
+    }).shift();
     if (item) {
       this.fieldsStatus.set(value.Id, false);
       this.optionSelectRemoved.emit(value);

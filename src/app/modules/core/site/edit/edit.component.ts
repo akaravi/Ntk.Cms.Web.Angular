@@ -13,7 +13,7 @@ import {
   EnumModel,
   ErrorExceptionResult,
   FormInfoModel,
-  ApplicationSourceModel,
+  CoreSiteCategoryModel,
 } from 'ntk-cms-api';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
@@ -23,6 +23,7 @@ import { PoinModel } from 'src/app/core/models/pointModel';
 import { Map as leafletMap } from 'leaflet';
 import * as Leaflet from 'leaflet';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
+import { CoreSiteCategoryCmsModule } from '../../siteCategory/coreSiteCategory.module';
 
 
 @Component({
@@ -52,7 +53,8 @@ export class CoreSiteEditComponent implements OnInit {
   dataModel = new CoreSiteModel();
   dataModelResult: ErrorExceptionResult<CoreSiteModel> = new ErrorExceptionResult<CoreSiteModel>();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
-  dataModelEnumOsTypeResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
+  dataModelEnumSiteStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
+  dataModelEnumLanguageResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
   fileManagerOpenFormAboutUsLinkImageId = false;
   fileManagerOpenFormLinkFavIconId = false;
@@ -76,6 +78,18 @@ export class CoreSiteEditComponent implements OnInit {
     this.DataGetAccess();
     this.DataGetOne(this.requestId);
     this.getEnumRecordStatus();
+    this.getEnumSiteStatus();
+    this.getEnumLanguage();
+  }
+  getEnumSiteStatus(): void {
+    this.coreEnumService.ServiceEnumMenuPlaceType().subscribe((next) => {
+      this.dataModelEnumSiteStatusResult = next;
+    });
+  }
+  getEnumLanguage(): void {
+    this.coreEnumService.ServiceEnumLanguage().subscribe((next) => {
+      this.dataModelEnumLanguageResult = next;
+    });
   }
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
@@ -145,6 +159,8 @@ export class CoreSiteEditComponent implements OnInit {
             if (lat > 0 && lon > 0) {
               this.mapMarkerPoints.push({ lat, lon });
             }
+            this.keywordDataModel = this.dataModel.Keyword.split(',');
+
           } else {
             this.cmsToastrService.typeErrorGetOne(next.ErrorMessage);
           }
@@ -172,8 +188,7 @@ export class CoreSiteEditComponent implements OnInit {
           if (next.IsSuccess) {
             this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
             this.cmsToastrService.typeSuccessEdit();
-            setTimeout(() => this.router.navigate(['/application/app/']), 100);
-
+            // setTimeout(() => this.router.navigate(['/core/site/']), 100);
           } else {
             this.cmsToastrService.typeErrorEdit(next.ErrorMessage);
           }
@@ -232,21 +247,17 @@ export class CoreSiteEditComponent implements OnInit {
   }
 
   onActionFileSelectedAboutUsLinkImageId(model: NodeInterface): void {
-    // todo: بعدا اصلاح شود
-    this.dataModel.AboutUsLinkImageId = model.id+'';
+    this.dataModel.AboutUsLinkImageId = model.id;
     this.dataModel.AboutUsLinkImageIdSrc = model.downloadLinksrc;
   }
   onActionFileSelectedLinkFavIconId(model: NodeInterface): void {
-    // todo: بعدا اصلاح شود
     this.dataModel.LinkFavIconId = model.id;
-    //this.dataModel.LinkFavIconIdSrc = model.downloadLinksrc;
+    this.dataModel.LinkFavIconIdSrc = model.downloadLinksrc;
   }
-  onActionSelectCategory(model: ApplicationSourceModel | null): void {
+  onActionSelectCategory(model: CoreSiteCategoryModel | null): void {
     if (!model || model.Id <= 0) {
-      this.cmsToastrService.toastr.error(
-        'دسته بندی  را مشخص کنید',
-        'دسته بندی سایت مشخص نیست'
-      );
+      const message = 'دسته بندی سایت مشخص نیست';
+      this.cmsToastrService.typeErrorSelected(message);
       return;
     }
     if (this.dataModel.LinkSiteCategoryId !== model.Id) {

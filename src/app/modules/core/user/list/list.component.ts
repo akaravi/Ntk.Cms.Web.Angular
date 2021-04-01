@@ -33,7 +33,7 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class CoreUserListComponent implements OnInit , OnDestroy {
+export class CoreUserListComponent implements OnInit, OnDestroy {
   constructor(
     private coreUserService: CoreUserService,
     private cmsConfirmationDialogService: CmsConfirmationDialogService,
@@ -185,9 +185,7 @@ export class CoreUserListComponent implements OnInit , OnDestroy {
   onActionbuttonEditRow(model: CoreUserModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
       return;
     }
     this.tableRowSelected = model;

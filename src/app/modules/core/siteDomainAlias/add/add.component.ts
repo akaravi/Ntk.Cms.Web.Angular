@@ -45,9 +45,8 @@ export class CoreSiteDomainAliasAddComponent implements OnInit {
     if (data) {
       this.requestId = +data.id || 0;
     }
-    if(this.requestId>0)
-    {
-      this.dataModel .LinkCmsSiteId=this.requestId;
+    if (this.requestId > 0) {
+      this.dataModel.LinkCmsSiteId = this.requestId;
     }
   }
 
@@ -113,7 +112,7 @@ export class CoreSiteDomainAliasAddComponent implements OnInit {
     if (!this.formGroup.valid) {
       return;
     }
-    if(!this.dataModel.LinkCmsSiteId||this.dataModel.LinkCmsSiteId<=0){
+    if (!this.dataModel.LinkCmsSiteId || this.dataModel.LinkCmsSiteId <= 0) {
       this.cmsToastrService.typeErrorAdd('شناسه وب سایت مشخص نشده است');
       return;
     }

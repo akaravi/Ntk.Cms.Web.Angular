@@ -32,7 +32,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
-export class ArticleContentListComponent implements OnInit , OnDestroy {
+export class ArticleContentListComponent implements OnInit, OnDestroy {
 
   constructor(
     private cmsApiStore: NtkCmsApiStoreService,
@@ -166,9 +166,8 @@ export class ArticleContentListComponent implements OnInit , OnDestroy {
       this.categoryModelSelected == null ||
       this.categoryModelSelected.Id === 0
     ) {
-      const title = 'برروز خطا ';
       const message = 'دسته بندی انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected(message);
       return;
     }
     if (
@@ -184,9 +183,7 @@ export class ArticleContentListComponent implements OnInit , OnDestroy {
 
   onActionbuttonEditRow(model: ArticleContentModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
       return;
     }
     this.tableRowSelected = model;
@@ -202,9 +199,8 @@ export class ArticleContentListComponent implements OnInit , OnDestroy {
   }
   onActionbuttonDeleteRow(model: ArticleContentModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      const emessage = 'ردیفی برای حذف انتخاب نشده است';
+      this.cmsToastrService.typeErrorSelected(emessage);
       return;
     }
     this.tableRowSelected = model;
@@ -225,7 +221,7 @@ export class ArticleContentListComponent implements OnInit , OnDestroy {
       }
     });
   }
-   onActionbuttonStatist(): void {
+  onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;
     if (!this.optionsStatist.data.show) {
       return;
@@ -282,9 +278,7 @@ export class ArticleContentListComponent implements OnInit , OnDestroy {
 
   onActionbuttonComment(model: ArticleContentModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
       return;
     }
     this.router.navigate(['/article/comment/', model.Id]);

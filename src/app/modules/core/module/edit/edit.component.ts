@@ -24,7 +24,7 @@ import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateM
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 
 @Component({
-  selector: 'app-core-Module-edit',
+  selector: 'app-core-module-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.scss'],
 })

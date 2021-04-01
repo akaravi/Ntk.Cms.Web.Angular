@@ -32,7 +32,7 @@ import { TicketingTemplateAddComponent } from '../add/add.component';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class TicketingTemplateListComponent implements OnInit , OnDestroy {
+export class TicketingTemplateListComponent implements OnInit, OnDestroy {
   constructor(
     private ticketingTemplateService: TicketingTemplateService,
     private activatedRoute: ActivatedRoute,
@@ -173,9 +173,9 @@ export class TicketingTemplateListComponent implements OnInit , OnDestroy {
       (this.categoryModelSelected && this.categoryModelSelected.Id === 0) &&
       (this.requestDepartemenId == null || this.requestDepartemenId === 0)
     ) {
-      const title = 'برروز خطا ';
       const message = 'محتوا انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected(message);
+
       return;
     }
     if (
@@ -209,9 +209,7 @@ export class TicketingTemplateListComponent implements OnInit , OnDestroy {
   }
   onActionbuttonEditRow(mode: TicketingTemplateModel = this.tableRowSelected): void {
     if (!mode || !mode.Id || mode.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
       return;
     }
     this.tableRowSelected = mode;
@@ -238,9 +236,8 @@ export class TicketingTemplateListComponent implements OnInit , OnDestroy {
   }
   onActionbuttonDeleteRow(mode: TicketingTemplateModel = this.tableRowSelected): void {
     if (mode == null || !mode.Id || mode.Id === 0) {
-      const etitle = 'برروز خطا ';
       const emessage = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(emessage, etitle);
+      this.cmsToastrService.typeErrorSelected(emessage);
       return;
     }
     this.tableRowSelected = mode;

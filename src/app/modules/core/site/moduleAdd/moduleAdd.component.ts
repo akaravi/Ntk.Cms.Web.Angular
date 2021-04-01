@@ -40,7 +40,6 @@ export class CoreSiteModuleAddComponent implements OnInit {
     public coreSiteService: CoreModuleSiteService,
     private cmsToastrService: CmsToastrService
   ) {
-    
     if (data) {
       this.requestLinkModuleId = +data.LinkModuleId || 0;
       this.requestLinkSiteId = +data.LinkSiteId || 0;

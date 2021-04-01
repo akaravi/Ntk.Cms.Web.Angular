@@ -30,7 +30,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.scss'],
 })
-export class ApplicationSourceTreeComponent implements OnInit , OnDestroy {
+export class ApplicationSourceTreeComponent implements OnInit, OnDestroy {
   constructor(
     private cmsApiStore: NtkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
@@ -116,9 +116,8 @@ export class ApplicationSourceTreeComponent implements OnInit , OnDestroy {
       id = this.dataModelSelect.Id;
     }
     if (id === 0) {
-      const title = 'برروز خطا ';
       const message = 'دسته بندی انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected(message);
       return;
     }
     this.router.navigate(['/application/source/edit/', id]);
@@ -131,9 +130,8 @@ export class ApplicationSourceTreeComponent implements OnInit , OnDestroy {
       id = this.dataModelSelect.Id;
     }
     if (id === 0) {
-      const title = 'برروز خطا ';
       const message = 'دسته بندی انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected(message);
       return;
     }
     this.router.navigate(['/application/source/delete/', id]);

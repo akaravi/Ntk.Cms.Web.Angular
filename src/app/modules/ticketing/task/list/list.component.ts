@@ -33,7 +33,7 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class TicketingTaskListComponent implements OnInit , OnDestroy{
+export class TicketingTaskListComponent implements OnInit, OnDestroy {
   constructor(
     private ticketingTaskService: TicketingTaskService,
     private activatedRoute: ActivatedRoute,
@@ -180,9 +180,9 @@ export class TicketingTaskListComponent implements OnInit , OnDestroy{
         this.requestDepartemenId == null ||
         this.requestDepartemenId === 0)
     ) {
-      const title = 'برروز خطا ';
       const message = 'محتوا انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected(message);
+
       return;
     }
     if (
@@ -216,9 +216,7 @@ export class TicketingTaskListComponent implements OnInit , OnDestroy{
   }
   onActionbuttonEditRow(mode: TicketingTaskModel = this.tableRowSelected): void {
     if (!mode || !mode.Id || mode.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
       return;
     }
     this.tableRowSelected = mode;
@@ -245,9 +243,7 @@ export class TicketingTaskListComponent implements OnInit , OnDestroy{
   }
   onActionbuttonDeleteRow(mode: TicketingTaskModel = this.tableRowSelected): void {
     if (mode == null || !mode.Id || mode.Id === 0) {
-      const etitle = 'برروز خطا ';
-      const emessage = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(emessage, etitle);
+      this.cmsToastrService.typeErrorSelected(emessage);
       return;
     }
     this.tableRowSelected = mode;

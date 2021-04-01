@@ -33,7 +33,7 @@ import { ArticleCategoryAddComponent } from '../add/add.component';
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.scss'],
 })
-export class ArticleCategoryTreeComponent implements OnInit , OnDestroy {
+export class ArticleCategoryTreeComponent implements OnInit, OnDestroy {
   constructor(
     private cmsApiStore: NtkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
@@ -141,9 +141,8 @@ export class ArticleCategoryTreeComponent implements OnInit , OnDestroy {
       id = this.dataModelSelect.Id;
     }
     if (id === 0) {
-      const title = 'برروز خطا ';
       const message = 'دسته بندی انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected(message);
       return;
     }
     const dialogRef = this.dialog.open(ArticleCategoryEditComponent, {
@@ -167,9 +166,8 @@ export class ArticleCategoryTreeComponent implements OnInit , OnDestroy {
       id = this.dataModelSelect.Id;
     }
     if (id === 0) {
-      const title = 'برروز خطا ';
       const message = 'دسته بندی انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected(message);
       return;
     }
     const dialogRef = this.dialog.open(ArticleCategoryDeleteComponent, {

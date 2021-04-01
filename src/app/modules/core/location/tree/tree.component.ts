@@ -140,9 +140,8 @@ export class CoreLocationTreeComponent implements OnInit, OnDestroy {
       id = this.dataModelSelect.Id;
     }
     if (id === 0) {
-      const title = 'برروز خطا ';
       const message = 'دسته بندی انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected(message);
       return;
     }
     const dialogRef = this.dialog.open(CoreLocationEditComponent, {
@@ -166,9 +165,8 @@ export class CoreLocationTreeComponent implements OnInit, OnDestroy {
       id = this.dataModelSelect.Id;
     }
     if (id === 0) {
-      const title = 'برروز خطا ';
       const message = 'دسته بندی انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected(message);
       return;
     }
     // const dialogRef = this.dialog.open(CoreLocationDeleteComponent, {

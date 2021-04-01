@@ -29,11 +29,11 @@ import { CoreModuleAddComponent } from '../add/add.component';
 
 
 @Component({
-  selector: 'app-core-Module-tree',
+  selector: 'app-core-module-tree',
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.scss'],
 })
-export class CoreModuleTreeComponent implements OnInit , OnDestroy{
+export class CoreModuleTreeComponent implements OnInit, OnDestroy {
   constructor(
     private cmsApiStore: NtkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
@@ -125,9 +125,8 @@ export class CoreModuleTreeComponent implements OnInit , OnDestroy{
       id = this.dataModelSelect.Id;
     }
     if (id === 0) {
-      const title = 'برروز خطا ';
       const message = 'دسته بندی انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected(message);
       return;
     }
     const dialogRef = this.dialog.open(CoreModuleEditComponent, {
@@ -147,9 +146,8 @@ export class CoreModuleTreeComponent implements OnInit , OnDestroy{
       id = this.dataModelSelect.Id;
     }
     if (id === 0) {
-      const title = 'برروز خطا ';
       const message = 'دسته بندی انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected(message);
       return;
     }
     // const dialogRef = this.dialog.open(CoreModuleDeleteComponent, {

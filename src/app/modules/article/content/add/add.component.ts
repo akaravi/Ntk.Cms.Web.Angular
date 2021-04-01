@@ -282,10 +282,8 @@ export class ArticleContentAddComponent implements OnInit, AfterViewInit {
   }
   onActionCategorySelect(model: ArticleCategoryModel | null): void {
     if (!model || model.Id <= 0) {
-      this.cmsToastrService.toastr.error(
-        'دسته بندی را مشخص کنید',
-        'دسته بندی اطلاعات مشخص نیست'
-      );
+      const message = 'دسته بندی اطلاعات مشخص نیست';
+      this.cmsToastrService.typeErrorSelected(message);
       return;
     }
     this.dataModel.LinkCategoryId = model.Id;

@@ -179,9 +179,9 @@ export class TicketingFaqListComponent implements OnInit, OnDestroy {
         this.requestDepartemenId == null ||
         this.requestDepartemenId === 0)
     ) {
-      const title = 'برروز خطا ';
       const message = 'محتوا انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected(message);
+
       return;
     }
     if (
@@ -215,9 +215,7 @@ export class TicketingFaqListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonEditRow(mode: TicketingFaqModel = this.tableRowSelected): void {
     if (!mode || !mode.Id || mode.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
       return;
     }
     this.tableRowSelected = mode;

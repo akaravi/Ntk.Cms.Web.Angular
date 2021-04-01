@@ -262,7 +262,7 @@ export class CoreCpMainMenuEditComponent implements OnInit {
         if (next.IsSuccess) {
           this.formInfo.FormAlert = 'ثبت در این گروه با موفقیت انجام شد';
           this.cmsToastrService.typeSuccessEdit();
-          //this.dialogRef.close({ dialogChangedDate: true });
+          // this.dialogRef.close({ dialogChangedDate: true });
         } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
@@ -286,7 +286,7 @@ export class CoreCpMainMenuEditComponent implements OnInit {
         if (next.IsSuccess) {
           this.formInfo.FormAlert = 'حذف از این گروه با موفقیت انجام شد';
           this.cmsToastrService.typeSuccessEdit();
-          //this.dialogRef.close({ dialogChangedDate: true });
+          // this.dialogRef.close({ dialogChangedDate: true });
         } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;

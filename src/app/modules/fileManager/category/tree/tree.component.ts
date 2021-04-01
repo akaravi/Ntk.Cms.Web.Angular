@@ -32,7 +32,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.scss'],
 })
-export class FileCategoryTreeComponent implements OnInit , OnDestroy{
+export class FileCategoryTreeComponent implements OnInit, OnDestroy {
   constructor(
     private cmsApiStore: NtkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
@@ -140,9 +140,8 @@ export class FileCategoryTreeComponent implements OnInit , OnDestroy{
       id = this.dataModelSelect.Id;
     }
     if (id === 0) {
-      const title = 'برروز خطا ';
       const message = 'دسته بندی انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected(message);
       return;
     }
     const dialogRef = this.dialog.open(FileCategoryEditComponent, {
@@ -166,9 +165,8 @@ export class FileCategoryTreeComponent implements OnInit , OnDestroy{
       id = this.dataModelSelect.Id;
     }
     if (id === 0) {
-      const title = 'برروز خطا ';
       const message = 'دسته بندی انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected(message);
       return;
     }
     const dialogRef = this.dialog.open(FileCategoryDeleteComponent, {

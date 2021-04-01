@@ -31,7 +31,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ApplicationThemeConfigListComponent implements OnInit , OnDestroy {
+export class ApplicationThemeConfigListComponent implements OnInit, OnDestroy {
   constructor(
     private applicationThemeConfigService: ApplicationThemeConfigService,
     private activatedRoute: ActivatedRoute,
@@ -181,9 +181,8 @@ export class ApplicationThemeConfigListComponent implements OnInit , OnDestroy {
       this.requestSourceId == null ||
       this.requestSourceId === 0
     ) {
-      const title = 'برروز خطا ';
       const message = 'محتوا انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected(message);
       return;
     }
     if (
@@ -213,9 +212,7 @@ export class ApplicationThemeConfigListComponent implements OnInit , OnDestroy {
   }
   onActionbuttonEditRow(model: ApplicationThemeConfigModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
       return;
     }
     this.tableRowSelected = model;
@@ -240,9 +237,8 @@ export class ApplicationThemeConfigListComponent implements OnInit , OnDestroy {
   }
   onActionbuttonDeleteRow(model: ApplicationThemeConfigModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      const emessage = 'ردیفی برای حذف انتخاب نشده است';
+      this.cmsToastrService.typeErrorSelected(emessage);
       return;
     }
     this.tableRowSelected = model;

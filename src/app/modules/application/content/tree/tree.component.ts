@@ -116,9 +116,9 @@ export class ApplicationAppTreeComponent implements OnInit , OnDestroy {
       id = this.dataModelSelect.Id;
     }
     if (id === 0) {
-      const title = 'برروز خطا ';
+
       const message = 'دسته بندی انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected(message);
       return;
     }
     this.router.navigate(['/application/app/edit/', id]);
@@ -131,9 +131,9 @@ export class ApplicationAppTreeComponent implements OnInit , OnDestroy {
       id = this.dataModelSelect.Id;
     }
     if (id === 0) {
-      const title = 'برروز خطا ';
+
       const message = 'دسته بندی انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected(message);
       return;
     }
     this.router.navigate(['/application/app/delete/', id]);

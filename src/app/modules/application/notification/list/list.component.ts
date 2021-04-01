@@ -30,7 +30,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ApplicationNotificationListComponent implements OnInit , OnDestroy {
+export class ApplicationNotificationListComponent implements OnInit, OnDestroy {
 
   constructor(
     private applicationLogNotificationService: ApplicationLogNotificationService,
@@ -179,9 +179,9 @@ export class ApplicationNotificationListComponent implements OnInit , OnDestroy 
       this.requestApplicationId == null ||
       this.requestApplicationId === 0
     ) {
-      const title = 'برروز خطا ';
+
       const message = 'محتوا انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected(message);
       return;
     }
     if (
@@ -206,9 +206,7 @@ export class ApplicationNotificationListComponent implements OnInit , OnDestroy 
 
   onActionbuttonEditRow(model: ApplicationLogNotificationModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
       return;
     }
     this.tableRowSelected = model;
@@ -233,9 +231,8 @@ export class ApplicationNotificationListComponent implements OnInit , OnDestroy 
   }
   onActionbuttonDeleteRow(model: ApplicationLogNotificationModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      const emessage = 'ردیفی برای حذف انتخاب نشده است';
+      this.cmsToastrService.typeErrorSelected(emessage);
       return;
     }
     this.tableRowSelected = model;

@@ -92,9 +92,9 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
     if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
-      const filter =new FilterDataModel() ;
-      filter.PropertyName= 'LinkCategoryId';
-      filter.Value= this.categoryModelSelected.Id;
+      const filter = new FilterDataModel();
+      filter.PropertyName = 'LinkCategoryId';
+      filter.Value = this.categoryModelSelected.Id;
 
       this.filteModelContent.Filters.push(filter);
     }
@@ -167,9 +167,8 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
       this.categoryModelSelected == null ||
       this.categoryModelSelected.Id === 0
     ) {
-      const title = 'برروز خطا ';
       const message = 'دسته بندی انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected(message);
       return;
     }
     if (
@@ -185,9 +184,7 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
 
   onActionbuttonEditRow(model: NewsContentModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
       return;
     }
     this.tableRowSelected = model;
@@ -203,10 +200,8 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonDeleteRow(model: NewsContentModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
-      return;
+      const emessage = 'ردیفی برای حذف انتخاب نشده است';
+      this.cmsToastrService.typeErrorSelected(emessage);      return;
     }
     this.tableRowSelected = model;
 
@@ -226,7 +221,7 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
       }
     });
   }
-   onActionbuttonStatist(): void {
+  onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;
     if (!this.optionsStatist.data.show) {
       return;
@@ -282,9 +277,7 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonComment(model: NewsContentModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
       return;
     }
     this.router.navigate(['/news/comment/', model.Id]);

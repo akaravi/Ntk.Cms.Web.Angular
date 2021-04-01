@@ -44,7 +44,6 @@ export class CoreModuleAddComponent implements OnInit {
     this.fileManagerTree = new TreeModel();
   }
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
-
   fileManagerTree: TreeModel;
   appLanguage = 'fa';
   formMatcher = new CmsFormsErrorStateMatcher();
@@ -54,22 +53,17 @@ export class CoreModuleAddComponent implements OnInit {
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<CoreModuleModel> = new ErrorExceptionResult<CoreModuleModel>();
   dataModel: CoreModuleModel = new CoreModuleModel();
-
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
-
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
-
   fileManagerOpenForm = false;
-
+  storeSnapshot = this.cmsStoreService.getStateSnapshot();
 
   ngOnInit(): void {
 
     this.formInfo.FormTitle = 'اضافه کردن  ';
     this.getEnumRecordStatus();
   }
-
-  storeSnapshot = this.cmsStoreService.getStateSnapshot();
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
       this.storeSnapshot.EnumRecordStatus &&

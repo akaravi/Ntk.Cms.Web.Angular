@@ -64,7 +64,7 @@ export class CoreSiteAddComponent implements OnInit {
 
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
   onActionFileSelected(model: NodeInterface): void {
-    this.dataModel.AboutUsLinkImageId = model.id + '';
+    this.dataModel.AboutUsLinkImageId = model.id ;
     this.dataModel.AboutUsLinkImageIdSrc = model.downloadLinksrc;
 
   }

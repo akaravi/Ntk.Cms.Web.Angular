@@ -1,5 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { CoreModuleSiteService, CoreSiteService, EnumClauseType, EnumFilterDataModelSearchTypes, EnumRecordStatus, FilterDataModel, FilterModel, NtkCmsApiStoreService } from 'ntk-cms-api';
+import {
+  CoreModuleSiteService,
+  EnumFilterDataModelSearchTypes,
+  EnumRecordStatus,
+  FilterDataModel,
+  FilterModel,
+  NtkCmsApiStoreService
+} from 'ntk-cms-api';
 import { Subscription } from 'rxjs';
 import { WidgetInfoModel } from 'src/app/core/models/widget-info-model';
 
@@ -34,7 +41,6 @@ export class CoreSiteWidgetModuleComponent implements OnInit, OnDestroy {
   }
 
   onActionStatist(): void {
-
     this.service.ServiceGetCount(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {

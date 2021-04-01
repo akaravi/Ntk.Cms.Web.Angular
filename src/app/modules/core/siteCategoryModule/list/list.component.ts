@@ -33,13 +33,14 @@ import { CoreSiteCategoryCmsModuleDeleteComponent } from '../delete/delete.compo
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class CoreSiteCategoryCmsModuleListComponent implements OnInit , OnDestroy {
-  constructor(private coreSiteCategoryCmsModuleService: CoreSiteCategoryCmsModuleService,
-              private cmsApiStore: NtkCmsApiStoreService,
-              public publicHelper: PublicHelper,
-              private cmsToastrService: CmsToastrService,
-              private router: Router,
-              public dialog: MatDialog) {
+export class CoreSiteCategoryCmsModuleListComponent implements OnInit, OnDestroy {
+  constructor(
+    private coreSiteCategoryCmsModuleService: CoreSiteCategoryCmsModuleService,
+    private cmsApiStore: NtkCmsApiStoreService,
+    public publicHelper: PublicHelper,
+    private cmsToastrService: CmsToastrService,
+    private router: Router,
+    public dialog: MatDialog) {
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
@@ -186,9 +187,7 @@ export class CoreSiteCategoryCmsModuleListComponent implements OnInit , OnDestro
   onActionbuttonEditRow(model: CoreSiteCategoryCmsModuleModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
       return;
     }
     this.tableRowSelected = model;
@@ -200,21 +199,19 @@ export class CoreSiteCategoryCmsModuleListComponent implements OnInit , OnDestro
       this.cmsToastrService.typeErrorAccessEdit();
       return;
     }
-  //   const dialogRef = this.dialog.open(CoreSiteCategoryCmsModuleEditComponent, {
-  //     data: { id: this.tableRowSelected.Id }
-  //   });
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     if (result && result.dialogChangedDate) {
-  //       this.DataGetAll();
-  //     }
-  //   });
-   }
+    //   const dialogRef = this.dialog.open(CoreSiteCategoryCmsModuleEditComponent, {
+    //     data: { id: this.tableRowSelected.Id }
+    //   });
+    //   dialogRef.afterClosed().subscribe(result => {
+    //     if (result && result.dialogChangedDate) {
+    //       this.DataGetAll();
+    //     }
+    //   });
+  }
   onActionbuttonDeleteRow(model: CoreSiteCategoryCmsModuleModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
-      const title = 'برروز خطا ';
-      const message = 'ردیفی برای ویرایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
-      return;
+      const emessage = 'ردیفی برای حذف انتخاب نشده است';
+      this.cmsToastrService.typeErrorSelected(emessage);      return;
     }
     this.tableRowSelected = model;
 
@@ -239,16 +236,15 @@ export class CoreSiteCategoryCmsModuleListComponent implements OnInit , OnDestro
 
   onActionbuttonGoToSiteCategoryCmsModuleList(model: CoreSiteCategoryCmsModuleModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
-      const title = 'برروز خطا ';
       const message = 'ردیفی برای نمایش انتخاب نشده است';
-      this.cmsToastrService.toastr.error(message, title);
+      this.cmsToastrService.typeErrorSelected(message);
       return;
     }
     this.tableRowSelected = model;
 
     this.router.navigate(['/core/siteSiteCategoryCmsModule/', this.tableRowSelected.Id]);
   }
-   onActionbuttonStatist(): void {
+  onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;
     if (!this.optionsStatist.data.show) {
       return;
