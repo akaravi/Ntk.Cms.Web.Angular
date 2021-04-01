@@ -80,7 +80,7 @@ export class CoreSiteAddComponent implements OnInit {
     this.getEnumLanguage();
   }
   getEnumSiteStatus(): void {
-    this.coreEnumService.ServiceEnumMenuPlaceType().subscribe((next) => {
+    this.coreEnumService.ServiceEnumSiteStatus().subscribe((next) => {
       this.dataModelEnumSiteStatusResult = next;
     });
   }
@@ -153,7 +153,7 @@ export class CoreSiteAddComponent implements OnInit {
           if (next.IsSuccess) {
             this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
             this.cmsToastrService.typeSuccessAdd();
-            // setTimeout(() => this.router.navigate(['/core/site/']), 100);
+            setTimeout(() => this.router.navigate(['/core/site/']), 100);
           } else {
             this.cmsToastrService.typeErrorAdd(next.ErrorMessage);
           }
@@ -225,13 +225,7 @@ export class CoreSiteAddComponent implements OnInit {
       this.cmsToastrService.typeErrorSelected(message);
       return;
     }
-    if (this.dataModel.LinkSiteCategoryId !== model.Id) {
-      this.cmsToastrService.toastr.error(
-        'دسته بندی قابل تغییر نمی باشد',
-        'دسته بندی  در حالت ویرایش قابل تغییر نمی باشد'
-      );
-    }
-
+    this.dataModel.LinkSiteCategoryId = model.Id;
   }
 
 }
