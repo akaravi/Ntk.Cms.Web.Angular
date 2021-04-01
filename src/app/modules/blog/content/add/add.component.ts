@@ -14,7 +14,9 @@ import {
   BlogContentSimilarService,
   BlogContentSimilarModel,
   BlogContentOtherInfoService,
-  BlogContentOtherInfoModel
+  BlogContentOtherInfoModel,
+  AccessModel,
+  DataFieldInfoModel
 } from 'ntk-cms-api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
@@ -66,6 +68,8 @@ export class BlogContentAddComponent implements OnInit, AfterViewInit {
   fileManagerOpenForm = false;
   fileManagerOpenFormPodcast = false;
   fileManagerOpenFormMovie = false;
+  dataAccessModel: AccessModel;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
 
   fileManagerTree: TreeModel;
@@ -95,6 +99,7 @@ export class BlogContentAddComponent implements OnInit, AfterViewInit {
     }
     this.dataModel.LinkCategoryId = this.requestCategoryId;
     this.getEnumRecordStatus();
+    this.DataGetAccess();
   }
   ngAfterViewInit(): void {
     // this.optionsCategorySelector.childMethods.ActionSelectForce(this.requestCategoryId);
@@ -105,7 +110,23 @@ export class BlogContentAddComponent implements OnInit, AfterViewInit {
     //   onActionSelect: (x) => this.onActionContentSimilarSelect(x),
     // };
   }
-
+  DataGetAccess(): void {
+    this.blogContentService
+      .ServiceViewModel()
+      .subscribe(
+        async (next) => {
+          if (next.IsSuccess) {
+            this.dataAccessModel = next.Access;
+            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+          } else {
+            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
+          }
+        },
+        (error) => {
+          this.cmsToastrService.typeErrorGetAccess(error);
+        }
+      );
+  }
   onActionTagChange(model: any): void {
     this.tagDataModel = model;
   }

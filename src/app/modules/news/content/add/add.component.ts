@@ -14,7 +14,9 @@ import {
   NewsContentSimilarService,
   NewsContentSimilarModel,
   NewsContentOtherInfoService,
-  NewsContentOtherInfoModel
+  NewsContentOtherInfoModel,
+  AccessModel,
+  DataFieldInfoModel
 } from 'ntk-cms-api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
@@ -66,6 +68,8 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
   fileManagerOpenForm = false;
   fileManagerOpenFormPodcast = false;
   fileManagerOpenFormMovie = false;
+  dataAccessModel: AccessModel;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
 
   fileManagerTree: TreeModel;
@@ -94,6 +98,7 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
       return;
     }
     this.dataModel.LinkCategoryId = this.requestCategoryId;
+    this.DataGetAccess();
     this.getEnumRecordStatus();
   }
   ngAfterViewInit(): void {
@@ -106,6 +111,23 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
     // };
   }
 
+  DataGetAccess(): void {
+    this.newsContentService
+      .ServiceViewModel()
+      .subscribe(
+        async (next) => {
+          if (next.IsSuccess) {
+            this.dataAccessModel = next.Access;
+            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+          } else {
+            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
+          }
+        },
+        (error) => {
+          this.cmsToastrService.typeErrorGetAccess(error);
+        }
+      );
+  }
   onActionTagChange(model: any): void {
     this.tagDataModel = model;
   }

@@ -27,7 +27,7 @@ import { CoreSiteCategoryCmsModule } from '../../siteCategory/coreSiteCategory.m
 
 
 @Component({
-  selector: 'app-aplication-app-edit',
+  selector: 'app-core-site-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.scss']
 })
@@ -159,7 +159,9 @@ export class CoreSiteEditComponent implements OnInit {
             if (lat > 0 && lon > 0) {
               this.mapMarkerPoints.push({ lat, lon });
             }
-            this.keywordDataModel = this.dataModel.Keyword.split(',');
+            if (this.dataModel.Keyword && this.dataModel.Keyword.length > 0) {
+              this.keywordDataModel = this.dataModel.Keyword.split(',');
+            }
 
           } else {
             this.cmsToastrService.typeErrorGetOne(next.ErrorMessage);

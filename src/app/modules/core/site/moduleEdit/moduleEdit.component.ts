@@ -9,6 +9,8 @@ import {
   CoreModuleSiteService,
   CoreModuleSiteModel,
   CoreModuleModel,
+  AccessModel,
+  DataFieldInfoModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -26,6 +28,7 @@ import {
 } from 'ntk-cms-filemanager';
 import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
+import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 @Component({
   selector: 'app-core-site-module-edit',
@@ -39,7 +42,8 @@ export class CoreSiteModuleEditComponent implements OnInit {
     private dialogRef: MatDialogRef<CoreSiteModuleEditComponent>,
     public coreEnumService: CoreEnumService,
     public coreModuleSiteService: CoreModuleSiteService,
-    private cmsToastrService: CmsToastrService
+    private cmsToastrService: CmsToastrService,
+    private publicHelper: PublicHelper,
   ) {
     if (data) {
       this.requestLinkModuleId = +data.LinkModuleId || 0;
@@ -64,6 +68,8 @@ export class CoreSiteModuleEditComponent implements OnInit {
 
   fileManagerOpenForm = false;
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
+  dataAccessModel: AccessModel;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
   ngOnInit(): void {
     if (this.requestLinkModuleId <= 0 || this.requestLinkSiteId <= 0) {
@@ -71,7 +77,7 @@ export class CoreSiteModuleEditComponent implements OnInit {
       this.dialogRef.close({ dialogChangedDate: false });
       return;
     }
-
+    this.DataGetAccess();
     this.getEnumRecordStatus();
     this.DataGetOneContent();
   }
@@ -84,6 +90,23 @@ export class CoreSiteModuleEditComponent implements OnInit {
       this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
       this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
     }
+  }
+  DataGetAccess(): void {
+    this.coreModuleSiteService
+      .ServiceViewModel()
+      .subscribe(
+        async (next) => {
+          if (next.IsSuccess) {
+            this.dataAccessModel = next.Access;
+            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+          } else {
+            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
+          }
+        },
+        (error) => {
+          this.cmsToastrService.typeErrorGetAccess(error);
+        }
+      );
   }
   DataGetOneContent(): void {
 

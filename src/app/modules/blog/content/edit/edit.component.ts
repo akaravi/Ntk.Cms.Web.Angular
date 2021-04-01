@@ -16,7 +16,9 @@ import {
   BlogContentSimilarService,
   BlogContentOtherInfoService,
   BlogContentOtherInfoModel,
-  BlogContentSimilarModel
+  BlogContentSimilarModel,
+  AccessModel,
+  DataFieldInfoModel
 } from 'ntk-cms-api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
@@ -68,6 +70,8 @@ export class BlogContentEditComponent implements OnInit, AfterViewInit {
   similarTabledisplayedColumns = ['LinkMainImageIdSrc', 'Id', 'RecordStatus', 'Title', 'Action'];
   similarTabledataSource = new MatTableDataSource<BlogContentModel>();
   otherInfoTabledataSource = new MatTableDataSource<BlogContentOtherInfoModel>();
+  dataAccessModel: AccessModel;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
   loading = new ProgressSpinnerModel();
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
@@ -102,6 +106,23 @@ export class BlogContentEditComponent implements OnInit, AfterViewInit {
   }
   ngAfterViewInit(): void {
 
+  }
+  DataGetAccess(): void {
+    this.blogContentService
+      .ServiceViewModel()
+      .subscribe(
+        async (next) => {
+          if (next.IsSuccess) {
+            this.dataAccessModel = next.Access;
+            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+          } else {
+            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
+          }
+        },
+        (error) => {
+          this.cmsToastrService.typeErrorGetAccess(error);
+        }
+      );
   }
   onActionFileSelectedLinkMainImageId(model: NodeInterface): void {
     this.dataModel.LinkMainImageId = model.id;

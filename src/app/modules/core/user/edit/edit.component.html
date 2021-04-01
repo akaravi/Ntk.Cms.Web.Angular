@@ -102,6 +102,8 @@
             <mat-label>{{fieldsInfo['ExpireDate']?.FieldTitle}}</mat-label>
             <input matInput [matDatepicker]="ExpireDate" [(ngModel)]="dataModel.ExpireDate"
               name="dataModel.ExpireDate" />
+            <mat-icon matSuffix *ngIf="dataModel.ExpireDate && fieldsInfo['ExpireDate']?.AccessEditField" matSuffix
+              mat-icon-button aria-label="Clear" (click)="dataModel.ExpireDate = null">close</mat-icon>
             <mat-datepicker-toggle matSuffix [for]="ExpireDate"></mat-datepicker-toggle>
             <mat-datepicker touchUi #ExpireDate></mat-datepicker>
           </mat-form-field>
@@ -113,6 +115,8 @@
             <mat-label>{{fieldsInfo['ExpireLockAccount']?.FieldTitle}}</mat-label>
             <input matInput [matDatepicker]="ExpireLockAccount" [(ngModel)]="dataModel.ExpireLockAccount"
               name="dataModel.ExpireLockAccount" />
+            <mat-icon matSuffix *ngIf="dataModel.ExpireLockAccount && fieldsInfo['ExpireLockAccount']?.AccessEditField"
+              matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.ExpireLockAccount = null">close</mat-icon>
             <mat-datepicker-toggle matSuffix [for]="ExpireLockAccount"></mat-datepicker-toggle>
             <mat-datepicker touchUi #ExpireLockAccount></mat-datepicker>
           </mat-form-field>
@@ -170,6 +174,8 @@
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['BirthDay']?.AccessWatchField">
             <mat-label>{{fieldsInfo['BirthDay']?.FieldTitle}}</mat-label>
             <input matInput [matDatepicker]="BirthDay" [(ngModel)]="dataModel.BirthDay" name="dataModel.BirthDay" />
+            <mat-icon matSuffix *ngIf="dataModel.BirthDay && fieldsInfo['BirthDay']?.AccessEditField" matSuffix
+              mat-icon-button aria-label="Clear" (click)="dataModel.BirthDay = null">close</mat-icon>
             <mat-datepicker-toggle matSuffix [for]="BirthDay"></mat-datepicker-toggle>
             <mat-datepicker touchUi #BirthDay></mat-datepicker>
           </mat-form-field>
@@ -294,13 +300,13 @@
               قبلی
             </button>
             <button type="submit" mat-button [disabled]="!vform.form.valid"
-            class="btn btn-success font-weight-bold text-uppercase px-9 py-4">
-            ذخیره
-          </button>
+              class="btn btn-success font-weight-bold text-uppercase px-9 py-4">
+              ذخیره
+            </button>
           </div>
         </mat-step>
 
-      
+
 
         <!-- Icon overrides. -->
         <ng-template matStepperIcon="main">

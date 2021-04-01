@@ -8,6 +8,8 @@ import {
   CoreModuleSiteModel,
   CoreModuleSiteService,
   CoreModuleModel,
+  AccessModel,
+  DataFieldInfoModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -25,6 +27,7 @@ import {
 } from 'ntk-cms-filemanager';
 import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
+import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 @Component({
   selector: 'app-core-site-module-add',
@@ -38,7 +41,8 @@ export class CoreSiteModuleAddComponent implements OnInit {
     private dialogRef: MatDialogRef<CoreSiteModuleAddComponent>,
     public coreEnumService: CoreEnumService,
     public coreSiteService: CoreModuleSiteService,
-    private cmsToastrService: CmsToastrService
+    private cmsToastrService: CmsToastrService,
+    private publicHelper: PublicHelper,
   ) {
     if (data) {
       this.requestLinkModuleId = +data.LinkModuleId || 0;
@@ -54,6 +58,8 @@ export class CoreSiteModuleAddComponent implements OnInit {
   requestLinkSiteId = 0;
   requestLinkModuleId = 0;
 
+  dataAccessModel: AccessModel;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
   formMatcher = new CmsFormsErrorStateMatcher();
   formControlRequired = new FormControl('', [
@@ -84,6 +90,23 @@ export class CoreSiteModuleAddComponent implements OnInit {
     }
   }
 
+  DataGetAccess(): void {
+    this.coreSiteService
+      .ServiceViewModel()
+      .subscribe(
+        async (next) => {
+          if (next.IsSuccess) {
+            this.dataAccessModel = next.Access;
+            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+          } else {
+            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
+          }
+        },
+        (error) => {
+          this.cmsToastrService.typeErrorGetAccess(error);
+        }
+      );
+  }
 
   DataAddContent(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';

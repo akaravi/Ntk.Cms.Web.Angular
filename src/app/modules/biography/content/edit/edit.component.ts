@@ -16,7 +16,9 @@ import {
   BiographyContentSimilarService,
   BiographyContentOtherInfoService,
   BiographyContentOtherInfoModel,
-  BiographyContentSimilarModel
+  BiographyContentSimilarModel,
+  AccessModel,
+  DataFieldInfoModel
 } from 'ntk-cms-api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
@@ -70,6 +72,8 @@ export class BiographyContentEditComponent implements OnInit, AfterViewInit {
   similarTabledisplayedColumns = ['LinkMainImageIdSrc', 'Id', 'RecordStatus', 'Title', 'Action'];
   similarTabledataSource = new MatTableDataSource<BiographyContentModel>();
   otherInfoTabledataSource = new MatTableDataSource<BiographyContentOtherInfoModel>();
+  dataAccessModel: AccessModel;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
   loading = new ProgressSpinnerModel();
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
@@ -100,10 +104,28 @@ export class BiographyContentEditComponent implements OnInit, AfterViewInit {
       return;
     }
     this.DataGetOne();
+    this.DataGetAccess();
     this.getEnumRecordStatus();
   }
   ngAfterViewInit(): void {
 
+  }
+  DataGetAccess(): void {
+    this.biographyContentService
+      .ServiceViewModel()
+      .subscribe(
+        async (next) => {
+          if (next.IsSuccess) {
+            this.dataAccessModel = next.Access;
+            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+          } else {
+            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
+          }
+        },
+        (error) => {
+          this.cmsToastrService.typeErrorGetAccess(error);
+        }
+      );
   }
   onActionFileSelectedLinkMainImageId(model: NodeInterface): void {
     this.dataModel.LinkMainImageId = model.id;
@@ -475,9 +497,6 @@ export class BiographyContentEditComponent implements OnInit, AfterViewInit {
     }
     if (dataListDelete && dataListDelete.length > 0) {
     }
-
-
-
   }
   onActionCategorySelect(model: BiographyCategoryModel | null): void {
     if (!model || model.Id <= 0) {

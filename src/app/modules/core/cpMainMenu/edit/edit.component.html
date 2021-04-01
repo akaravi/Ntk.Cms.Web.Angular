@@ -102,7 +102,6 @@
               (click)="dataModel.AddressLink = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
             <mat-hint align="end">{{ AddressLink.value.length }} / 100</mat-hint>
-
           </mat-form-field>
           <!-- RouteAddressLink Field -->
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['RouteAddressLink']?.AccessWatchField">
@@ -114,7 +113,6 @@
               (click)="dataModel.RouteAddressLink = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
             <mat-hint align="end">{{ RouteAddressLink.value.length }} / 100</mat-hint>
-
           </mat-form-field>
 
           <!-- Color Field -->
@@ -126,12 +124,7 @@
             <mat-icon matSuffix *ngIf="dataModel.Color" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.Color = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
-
           </mat-form-field>
-
-
-
-
 
           <!-- Icon Field -->
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Icon']?.AccessWatchField">

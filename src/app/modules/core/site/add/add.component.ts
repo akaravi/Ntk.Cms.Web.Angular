@@ -1,78 +1,93 @@
+
+import { StepperSelectionEvent } from '@angular/cdk/stepper';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { MatStepper } from '@angular/material/stepper';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
+  AccessModel,
+  CoreSiteModel,
+  CoreSiteService,
   CoreEnumService,
+  DataFieldInfoModel,
   EnumModel,
   ErrorExceptionResult,
   FormInfoModel,
-  CoreSiteService,
-  CoreSiteModel,
+  CoreSiteCategoryModel,
 } from 'ntk-cms-api';
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  ChangeDetectorRef,
-  Inject,
-} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
+import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
-import {
-  TreeModel,
-  NodeInterface,
-} from 'ntk-cms-filemanager';
-import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
+import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
+import { NodeInterface, TreeModel } from 'ntk-cms-filemanager';
+import { PoinModel } from 'src/app/core/models/pointModel';
+import { Map as leafletMap } from 'leaflet';
+import * as Leaflet from 'leaflet';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
+import { CoreSiteCategoryCmsModule } from '../../siteCategory/coreSiteCategory.module';
+
 
 @Component({
   selector: 'app-core-site-add',
   templateUrl: './add.component.html',
-  styleUrls: ['./add.component.scss'],
+  styleUrls: ['./add.component.scss']
 })
 export class CoreSiteAddComponent implements OnInit {
+
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    private activatedRoute: ActivatedRoute,
     private cmsStoreService: CmsStoreService,
-    private dialogRef: MatDialogRef<CoreSiteAddComponent>,
+    public publicHelper: PublicHelper,
     public coreEnumService: CoreEnumService,
-    public coreSiteService: CoreSiteService,
-    private cmsToastrService: CmsToastrService
-  ) {
-
-
+    private coreSiteService: CoreSiteService,
+    private cmsToastrService: CmsToastrService,
+    private router: Router) {
     this.fileManagerTree = new TreeModel();
   }
-  selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
-
-  fileManagerTree: TreeModel;
-  appLanguage = 'fa';
-  formMatcher = new CmsFormsErrorStateMatcher();
-  formControlRequired = new FormControl('', [
-    Validators.required,
-  ]);
-  loading = new ProgressSpinnerModel();
-  dataModelResult: ErrorExceptionResult<CoreSiteModel> = new ErrorExceptionResult<CoreSiteModel>();
-  dataModel: CoreSiteModel = new CoreSiteModel();
+  requestId = 0;
 
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
-
+  loading = new ProgressSpinnerModel();
   formInfo: FormInfoModel = new FormInfoModel();
+  dataAccessModel: AccessModel;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+  dataModel = new CoreSiteModel();
+  dataModelResult: ErrorExceptionResult<CoreSiteModel> = new ErrorExceptionResult<CoreSiteModel>();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
+  dataModelEnumSiteStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
+  dataModelEnumLanguageResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
+  selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
+  fileManagerOpenFormAboutUsLinkImageId = false;
+  fileManagerOpenFormLinkFavIconId = false;
+  fileManagerOpenFormLinkFileIdLogo = false;
+  appLanguage = 'fa';
 
-  fileManagerOpenForm = false;
+  fileManagerTree: TreeModel;
+  mapMarker: any;
+  private mapModel: leafletMap;
+  private mapMarkerPoints: Array<PoinModel> = [];
+  mapOptonCenter = {};
+  keywordDataModel = [];
 
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
-  onActionFileSelected(model: NodeInterface): void {
-    this.dataModel.AboutUsLinkImageId = model.id ;
-    this.dataModel.AboutUsLinkImageIdSrc = model.downloadLinksrc;
-
-  }
-
   ngOnInit(): void {
-
-    this.formInfo.FormTitle = 'اضافه کردن  ';
+    this.requestId = Number(this.activatedRoute.snapshot.paramMap.get('Id'));
+    if (this.requestId > 0) {
+      this.dataModel.linkCreatedBySiteId = this.requestId;
+    }
+    this.DataGetAccess();
     this.getEnumRecordStatus();
+    this.getEnumSiteStatus();
+    this.getEnumLanguage();
+  }
+  getEnumSiteStatus(): void {
+    this.coreEnumService.ServiceEnumMenuPlaceType().subscribe((next) => {
+      this.dataModelEnumSiteStatusResult = next;
+    });
+  }
+  getEnumLanguage(): void {
+    this.coreEnumService.ServiceEnumLanguage().subscribe((next) => {
+      this.dataModelEnumLanguageResult = next;
+    });
   }
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
@@ -85,44 +100,138 @@ export class CoreSiteAddComponent implements OnInit {
     }
   }
 
+  onFormSubmit(): void {
+    if (!this.formGroup.valid) {
+      this.cmsToastrService.typeErrorFormInvalid();
+      return;
+    }
+    if (this.dataModel.linkCreatedBySiteId <= 0) {
+      this.cmsToastrService.typeErrorAdd('سورس کد برنامه مشخص  کنید');
 
-  DataEditContent(): void {
+      return;
+    }
+    if (this.keywordDataModel && this.keywordDataModel.length > 0) {
+      const listKeyword = this.keywordDataModel.map(x => x.display);
+      if (listKeyword && listKeyword.length > 0) {
+        this.dataModel.Keyword = listKeyword.join(',');
+      }
+    }
+    this.DataAddContent();
+  }
+
+  DataGetAccess(): void {
+    this.coreSiteService
+      .ServiceViewModel()
+      .subscribe(
+        async (next) => {
+          if (next.IsSuccess) {
+            this.dataAccessModel = next.Access;
+            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+          } else {
+            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
+          }
+        },
+        (error) => {
+          this.cmsToastrService.typeErrorGetAccess(error);
+        }
+      );
+  }
+
+  DataAddContent(): void {
+    this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.coreSiteService.ServiceEdit(this.dataModel).subscribe(
-      (next) => {
-        this.formInfo.FormSubmitAllow = true;
-        this.dataModelResult = next;
-        if (next.IsSuccess) {
-          this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
-          this.cmsToastrService.typeSuccessEdit();
-          this.dialogRef.close({ dialogChangedDate: true });
 
-        } else {
-          this.formInfo.FormAlert = 'برروز خطا';
-          this.formInfo.FormError = next.ErrorMessage;
+    this.coreSiteService
+      .ServiceAdd(this.dataModel)
+      .subscribe(
+        async (next) => {
+          this.loading.display = false;
+          this.formInfo.FormSubmitAllow = !next.IsSuccess;
+          this.dataModelResult = next;
+          if (next.IsSuccess) {
+            this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
+            this.cmsToastrService.typeSuccessAdd();
+            // setTimeout(() => this.router.navigate(['/core/site/']), 100);
+          } else {
+            this.cmsToastrService.typeErrorAdd(next.ErrorMessage);
+          }
+        },
+        (error) => {
+          this.loading.display = false;
+          this.formInfo.FormSubmitAllow = true;
+          this.cmsToastrService.typeErrorAdd(error);
         }
-        this.loading.display = false;
-      },
-      (error) => {
-        this.formInfo.FormSubmitAllow = true;
-        this.cmsToastrService.typeError(error);
-        this.loading.display = false;
-      }
-    );
+      );
   }
-  onFormSubmit(): void {
-    if (!this.formGroup.valid) {
+
+  onStepClick(event: StepperSelectionEvent, stepper: MatStepper): void {
+    if (event.previouslySelectedIndex < event.selectedIndex) {
+      // if (!this.formGroup.valid) {
+      //   this.cmsToastrService.typeErrorFormInvalid();
+      //   setTimeout(() => {
+      //     stepper.selectedIndex = event.previouslySelectedIndex;
+      //     // stepper.previous();
+      //   }, 10);
+      // }
+    }
+  }
+  receiveMap(model: leafletMap): void {
+    this.mapModel = model;
+
+    if (this.mapMarkerPoints && this.mapMarkerPoints.length > 0) {
+      this.mapMarkerPoints.forEach(item => {
+        this.mapMarker = Leaflet.marker([item.lat, item.lon]).addTo(this.mapModel);
+      });
+      this.mapOptonCenter = this.mapMarkerPoints[0];
+      this.mapMarkerPoints = [];
+    }
+
+    this.mapModel.on('click', (e) => {
+      // @ts-ignore
+      const lat = e.latlng.lat;
+      // @ts-ignore
+      const lon = e.latlng.lng;
+      if (this.mapMarker !== undefined) {
+        this.mapModel.removeLayer(this.mapMarker);
+      }
+      if (lat === this.dataModel.AboutUsGeolocationlatitude && lon === this.dataModel.AboutUsGeolocationlongitude) {
+        this.dataModel.AboutUsGeolocationlatitude = null;
+        this.dataModel.AboutUsGeolocationlongitude = null;
+        return;
+      }
+      this.mapMarker = Leaflet.marker([lat, lon]).addTo(this.mapModel);
+      this.dataModel.AboutUsGeolocationlatitude = lat;
+      this.dataModel.AboutUsGeolocationlongitude = lon;
+    });
+
+  }
+  onActionBackToParent(): void {
+    this.router.navigate(['/core/site/']);
+  }
+
+  onActionFileSelectedAboutUsLinkImageId(model: NodeInterface): void {
+    this.dataModel.AboutUsLinkImageId = model.id;
+    this.dataModel.AboutUsLinkImageIdSrc = model.downloadLinksrc;
+  }
+  onActionFileSelectedLinkFavIconId(model: NodeInterface): void {
+    this.dataModel.LinkFavIconId = model.id;
+    this.dataModel.LinkFavIconIdSrc = model.downloadLinksrc;
+  }
+  onActionSelectCategory(model: CoreSiteCategoryModel | null): void {
+    if (!model || model.Id <= 0) {
+      const message = 'دسته بندی سایت مشخص نیست';
+      this.cmsToastrService.typeErrorSelected(message);
       return;
     }
-    this.formInfo.FormSubmitAllow = false;
-
-    this.DataEditContent();
-
+    if (this.dataModel.LinkSiteCategoryId !== model.Id) {
+      this.cmsToastrService.toastr.error(
+        'دسته بندی قابل تغییر نمی باشد',
+        'دسته بندی  در حالت ویرایش قابل تغییر نمی باشد'
+      );
+    }
 
   }
-  onFormCancel(): void {
-    this.dialogRef.close({ dialogChangedDate: false });
-  }
+
 }
