@@ -13,6 +13,9 @@ const routes: Routes = [
       {
         path: '',
         component: CoreUserListComponent
+      },      {
+        path: 'siteuser/:LinkSiteId',
+        component: CoreUserListComponent
       },
       {
         path: 'edit/:Id',

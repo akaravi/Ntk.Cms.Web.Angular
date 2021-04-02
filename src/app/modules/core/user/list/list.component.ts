@@ -1,5 +1,5 @@
 
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
@@ -34,6 +34,7 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
   styleUrls: ['./list.component.scss']
 })
 export class CoreUserListComponent implements OnInit, OnDestroy {
+  requestLinkSiteId = 0;
   constructor(
     private coreUserService: CoreUserService,
     private cmsConfirmationDialogService: CmsConfirmationDialogService,
@@ -41,10 +42,19 @@ export class CoreUserListComponent implements OnInit, OnDestroy {
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     public dialog: MatDialog) {
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
+    this.requestLinkSiteId = Number(this.activatedRoute.snapshot.paramMap.get('LinkSiteId'));
+    if (this.requestLinkSiteId > 0) {
+      const filter = new FilterDataModel();
+      filter.PropertyAnyName = 'LinkSiteId';
+      filter.PropertyName = 'SiteUsers';
+      filter.Value = this.requestLinkSiteId;
+      this.filteModelContent.Filters.push(filter);
+    }
   }
   comment: string;
   author: string;
@@ -307,5 +317,15 @@ export class CoreUserListComponent implements OnInit, OnDestroy {
   onActionTableRowSelect(row: CoreUserModel): void {
     this.tableRowSelected = row;
   }
-
+  onActionbuttonSiteList(model: CoreUserModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id === 0) {
+      this.cmsToastrService.typeErrorSelected('ردیفی انتخاب نشده است');
+      return;
+    }
+    this.tableRowSelected = model;
+    this.router.navigate(['/core/site/', model.Id]);
+  }
+  onActionBackToParentSiteList(): void {
+    this.router.navigate(['/core/site/']);
+  }
 }

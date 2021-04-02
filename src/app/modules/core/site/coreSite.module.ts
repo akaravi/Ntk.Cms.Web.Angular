@@ -8,7 +8,9 @@ import {
   CoreSiteCategoryCmsModuleService,
   CoreSiteCategoryService,
   CoreSiteDomainAliasService,
-  CoreSiteService
+  CoreSiteService,
+  CoreSiteUserService,
+  CoreUserService
 } from 'ntk-cms-api';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SelectionComponent } from './selection/selection.component';
@@ -33,6 +35,7 @@ import { CoreSiteModuleEditComponent } from './moduleEdit/moduleEdit.component';
 import { CoreSiteModuleAddComponent } from './moduleAdd/moduleAdd.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 import { CoreModuleModule } from '../module/coreModule.module';
+import { CoreSiteUserListComponent } from './userList/userList.component';
 
 
 
@@ -50,6 +53,7 @@ import { CoreModuleModule } from '../module/coreModule.module';
     CoreSiteModuleListComponent,
     CoreSiteModuleAddComponent,
     CoreSiteModuleEditComponent,
+    CoreSiteUserListComponent,
   ],
   exports: [
     CoreSiteComponent,
@@ -64,6 +68,7 @@ import { CoreModuleModule } from '../module/coreModule.module';
     CoreSiteModuleListComponent,
     CoreSiteModuleAddComponent,
     CoreSiteModuleEditComponent,
+    CoreSiteUserListComponent,
   ],
   imports: [
     CommonModule,
@@ -87,7 +92,9 @@ import { CoreModuleModule } from '../module/coreModule.module';
     CoreSiteResolver,
     CoreModuleSiteService,
     CoreSiteDomainAliasService,
-    CmsConfirmationDialogService
+    CmsConfirmationDialogService,
+    CoreUserService,
+    CoreSiteUserService,
   ]
 })
 export class CoreSiteModule {

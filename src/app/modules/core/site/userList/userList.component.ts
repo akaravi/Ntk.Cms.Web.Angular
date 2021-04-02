@@ -3,8 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
-  CoreSiteModel,
-  CoreSiteService,
+  CoreUserModel,
   CoreAuthService,
   EnumSortType,
   ErrorExceptionResult,
@@ -13,6 +12,8 @@ import {
   TokenInfoModel,
   FilterDataModel,
   EnumRecordStatus,
+  CoreSiteUserService,
+  CoreSiteUserModel,
   DataFieldInfoModel
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
@@ -25,19 +26,22 @@ import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/bas
 import { MatSort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
-import { CoreSiteDeleteComponent } from '../delete/delete.component';
-import { CoreSiteEditComponent } from '../edit/edit.component';
-import { CoreSiteAddComponent } from '../add/add.component';
+import { CoreUserEditComponent } from '../../user/edit/edit.component';
+import { CoreUserAddComponent } from '../../user/add/add.component';
+import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 
 @Component({
-  selector: 'app-core-site-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss']
+  selector: 'app-core-site-user-list',
+  templateUrl: './userList.component.html',
+  styleUrls: ['./userList.component.scss']
 })
-export class CoreSiteListComponent implements OnInit, OnDestroy {
+export class CoreSiteUserListComponent implements OnInit, OnDestroy {
+  requestLinkSiteId = 0;
   requestLinkUserId = 0;
+  requestLinkUserGroupId = 0;
   constructor(
-    private coreSiteService: CoreSiteService,
+    private coreSiteUserService: CoreSiteUserService,
+    private cmsConfirmationDialogService: CmsConfirmationDialogService,
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
@@ -47,12 +51,25 @@ export class CoreSiteListComponent implements OnInit, OnDestroy {
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
+    this.requestLinkSiteId = Number(this.activatedRoute.snapshot.paramMap.get('LinkSiteId'));
     this.requestLinkUserId = Number(this.activatedRoute.snapshot.paramMap.get('LinkUserId'));
+    this.requestLinkUserGroupId = Number(this.activatedRoute.snapshot.paramMap.get('LinkUserGroupId'));
+    if (this.requestLinkSiteId > 0) {
+      const filter = new FilterDataModel();
+      filter.PropertyName = 'LinkSiteId';
+      filter.Value = this.requestLinkSiteId;
+      this.filteModelContent.Filters.push(filter);
+    }
     if (this.requestLinkUserId > 0) {
       const filter = new FilterDataModel();
-      filter.PropertyAnyName = 'LinkUserId';
-      filter.PropertyName = 'SiteUsers';
+      filter.PropertyName = 'LinkUserId';
       filter.Value = this.requestLinkUserId;
+      this.filteModelContent.Filters.push(filter);
+    }
+    if (this.requestLinkUserGroupId > 0) {
+      const filter = new FilterDataModel();
+      filter.PropertyName = 'LinkUserGroupId';
+      filter.Value = this.requestLinkUserGroupId;
       this.filteModelContent.Filters.push(filter);
     }
   }
@@ -63,35 +80,39 @@ export class CoreSiteListComponent implements OnInit, OnDestroy {
   tableContentSelected = [];
 
   filteModelContent = new FilterModel();
-  dataModelResult: ErrorExceptionResult<CoreSiteModel> = new ErrorExceptionResult<CoreSiteModel>();
+  dataModelResult: ErrorExceptionResult<CoreSiteUserModel> = new ErrorExceptionResult<CoreSiteUserModel>();
   optionsSearch: ComponentOptionSearchModel = new ComponentOptionSearchModel();
   optionsStatist: ComponentOptionStatistModel = new ComponentOptionStatistModel();
   optionsExport: ComponentOptionExportModel = new ComponentOptionExportModel();
   tokenInfo = new TokenInfoModel();
   loading = new ProgressSpinnerModel();
-  tableRowsSelected: Array<CoreSiteModel> = [];
-  tableRowSelected: CoreSiteModel = new CoreSiteModel();
-  tableSource: MatTableDataSource<CoreSiteModel> = new MatTableDataSource<CoreSiteModel>();
+  tableRowsSelected: Array<CoreSiteUserModel> = [];
+  tableRowSelected: CoreSiteUserModel = new CoreSiteUserModel();
+  tableSource: MatTableDataSource<CoreSiteUserModel> = new MatTableDataSource<CoreSiteUserModel>();
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
 
   tabledisplayedColumns: string[] = [
-    'MainImageSrc',
-    'Id',
-    'linkCreatedBySiteId',
+    'LinkSiteId',
+    'LinkUserId',
+    'LinkUserGroupId',
     'RecordStatus',
-    'Title',
-    'SubDomain',
-    'Domain',
-    'CreatedDate',
-    'UpdatedDate',
-    'ExpireDate',
+    'virtual_CmsUser.Username',
+    'virtual_CmsUser.Mobile',
+    'virtual_CmsUser.Email',
+    'virtual_CmsUser.Name',
+    'virtual_CmsUser.LastName',
+    'virtual_CmsUser.CompanyName',
+    'virtual_CmsUserGroup.Title',
+    'virtual_CmsSite.Title',
+    'virtual_CmsSite.Domain',
+    'virtual_CmsSite.SubDomain',
     'Action'
   ];
 
 
 
-  expandedElement: CoreSiteModel | null;
+  expandedElement: CoreUserModel | null;
   cmsApiStoreSubscribe: Subscription;
 
   ngOnInit(): void {
@@ -108,29 +129,28 @@ export class CoreSiteListComponent implements OnInit, OnDestroy {
   }
   DataGetAll(): void {
     this.tableRowsSelected = [];
-    this.tableRowSelected = new CoreSiteModel();
+    this.tableRowSelected = new CoreSiteUserModel();
 
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
 
-    this.coreSiteService.ServiceGetAll(this.filteModelContent).subscribe(
+    this.coreSiteUserService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
           this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
-
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;
           if (this.tokenInfo.UserAccessAdminAllowToAllData) {
             this.tabledisplayedColumns = this.publicHelper.listAddIfNotExist(
               this.tabledisplayedColumns,
-              'linkCreatedBySiteId',
+              'LinkSiteId',
               0
             );
           } else {
             this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
               this.tabledisplayedColumns,
-              'linkCreatedBySiteId'
+              'LinkSiteId'
             );
           }
 
@@ -177,6 +197,7 @@ export class CoreSiteListComponent implements OnInit, OnDestroy {
 
 
   onActionbuttonNewRow(): void {
+
     if (
       this.dataModelResult == null ||
       this.dataModelResult.Access == null ||
@@ -185,10 +206,17 @@ export class CoreSiteListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessAdd();
       return;
     }
-    this.router.navigate(['/core/site/add']);
+    const dialogRef = this.dialog.open(CoreUserAddComponent, {
+      data: {}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.dialogChangedDate) {
+        this.DataGetAll();
+      }
+    });
   }
 
-  onActionbuttonEditRow(model: CoreSiteModel = this.tableRowSelected): void {
+  onActionbuttonEditRow(model: CoreSiteUserModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id === 0) {
       this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
@@ -203,16 +231,22 @@ export class CoreSiteListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessEdit();
       return;
     }
-    this.router.navigate(['/core/site/edit', model.Id]);
+    const dialogRef = this.dialog.open(CoreUserEditComponent, {
+      data: { id: this.tableRowSelected.Id }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.dialogChangedDate) {
+        this.DataGetAll();
+      }
+    });
   }
-  onActionbuttonDeleteRow(model: CoreSiteModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0) {
-      const emessage = 'ردیفی برای حذف انتخاب نشده است';
-      this.cmsToastrService.typeErrorSelected(emessage);
+
+  onActionbuttonDeleteRow(mode: CoreSiteUserModel = this.tableRowSelected): void {
+    if (mode == null || !mode.Id || mode.Id === 0) {
+      this.cmsToastrService.typeErrorDeleteRowIsNull();
       return;
     }
-    this.tableRowSelected = model;
-
+    this.tableRowSelected = mode;
     if (
       this.dataModelResult == null ||
       this.dataModelResult.Access == null ||
@@ -221,76 +255,35 @@ export class CoreSiteListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessDelete();
       return;
     }
-    const dialogRef = this.dialog.open(CoreSiteDeleteComponent, {
-      data: { id: this.tableRowSelected.Id }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result && result.dialogChangedDate) {
-        this.DataGetAll();
+    const title = 'لطفا تایید کنید...';
+    const message = 'آیا مایل به حدف این محتوا می باشید ' + '?' + '<br> ( '
+      + this.tableRowSelected.CmsSite.Title + '<-->' + this.tableRowSelected.CmsUser.Username + ' ) ';
+    this.cmsConfirmationDialogService.confirm(title, message)
+      .then((confirmed) => {
+        if (confirmed) {
+          this.loading.display = true;
+          this.coreSiteUserService.ServiceDelete(this.tableRowSelected.Id).subscribe(
+            (next) => {
+              if (next.IsSuccess) {
+                this.cmsToastrService.typeSuccessRemove();
+                this.DataGetAll();
+              } else {
+                this.cmsToastrService.typeErrorRemove();
+              }
+              this.loading.display = false;
+            },
+            (error) => {
+              this.cmsToastrService.typeError(error);
+              this.loading.display = false;
+            }
+          );
+        }
       }
-    });
-
-  }
-  onActionbuttonModuleListRow(model: CoreSiteModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0) {
-
-      const message = 'ردیفیانتخاب نشده است';
-      this.cmsToastrService.typeErrorSelected(message);
-      return;
-    }
-    this.tableRowSelected = model;
-
-    if (
-      this.dataModelResult == null ||
-      this.dataModelResult.Access == null ||
-      !this.dataModelResult.Access.AccessDeleteRow
-    ) {
-      this.cmsToastrService.typeErrorSelected();
-      return;
-    }
-    this.router.navigate(['/core/site/modulelist/', this.tableRowSelected.Id]);
-
-
-  }
-  onActionbuttonDomainAliasListRow(model: CoreSiteModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0) {
-      const message = 'ردیفی انتخاب نشده است';
-      this.cmsToastrService.typeErrorSelected(message);
-      return;
-    }
-    this.tableRowSelected = model;
-
-    if (
-      this.dataModelResult == null ||
-      this.dataModelResult.Access == null ||
-      !this.dataModelResult.Access.AccessDeleteRow
-    ) {
-      this.cmsToastrService.typeErrorSelected();
-      return;
-    }
-    this.router.navigate(['/core/sitedomainalias/', this.tableRowSelected.Id]);
-
-
-  }
-  onActionbuttonUserListRow(model: CoreSiteModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0) {
-      const message = 'ردیفی انتخاب نشده است';
-      this.cmsToastrService.typeErrorSelected(message);
-      return;
-    }
-    this.tableRowSelected = model;
-
-    if (
-      this.dataModelResult == null ||
-      this.dataModelResult.Access == null ||
-      !this.dataModelResult.Access.AccessDeleteRow
-    ) {
-      this.cmsToastrService.typeErrorSelected();
-      return;
-    }
-    this.router.navigate(['/core/site/userlist', this.tableRowSelected.Id]);
-
-
+      )
+      .catch(() => {
+        // console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)')
+      }
+      );
   }
 
 
@@ -303,7 +296,7 @@ export class CoreSiteListComponent implements OnInit, OnDestroy {
     const statist = new Map<string, number>();
     statist.set('Active', 0);
     statist.set('All', 0);
-    this.coreSiteService.ServiceGetCount(this.filteModelContent).subscribe(
+    this.coreSiteUserService.ServiceGetCount(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('All', next.TotalRowCount);
@@ -320,7 +313,7 @@ export class CoreSiteListComponent implements OnInit, OnDestroy {
     fastFilter.PropertyName = 'RecordStatus';
     fastFilter.Value = EnumRecordStatus.Available;
     filterStatist1.Filters.push(fastFilter);
-    this.coreSiteService.ServiceGetCount(filterStatist1).subscribe(
+    this.coreSiteUserService.ServiceGetCount(filterStatist1).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('Active', next.TotalRowCount);
@@ -346,8 +339,18 @@ export class CoreSiteListComponent implements OnInit, OnDestroy {
     this.filteModelContent.Filters = model;
     this.DataGetAll();
   }
-  onActionTableRowSelect(row: CoreSiteModel): void {
+  onActionTableRowSelect(row: CoreSiteUserModel): void {
     this.tableRowSelected = row;
   }
-
+  onActionbuttonSiteList(model: CoreSiteUserModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id === 0) {
+      this.cmsToastrService.typeErrorSelected('ردیفی انتخاب نشده است');
+      return;
+    }
+    this.tableRowSelected = model;
+    this.router.navigate(['/core/site/', model.Id]);
+  }
+  onActionBackToParentSiteList(): void {
+    this.router.navigate(['/core/site/']);
+  }
 }

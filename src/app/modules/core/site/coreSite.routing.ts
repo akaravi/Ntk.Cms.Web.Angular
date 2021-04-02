@@ -9,6 +9,7 @@ import { CoreSiteModuleEditComponent } from './moduleEdit/moduleEdit.component';
 import { CoreSiteModuleAddComponent } from './moduleAdd/moduleAdd.component';
 import { CoreSiteAddComponent } from './add/add.component';
 import { CoreSiteEditComponent } from './edit/edit.component';
+import { CoreSiteUserListComponent } from './userList/userList.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,10 @@ const routes: Routes = [
     children: [
       {
         path: '',
+        component: CoreSiteListComponent
+      },
+      {
+        path: ':LinkUserId',
         component: CoreSiteListComponent
       },
       {
@@ -54,6 +59,10 @@ const routes: Routes = [
       {
         path: 'moduleedit/:LinkSiteId/:LinkModuleId',
         component: CoreSiteModuleEditComponent
+      },
+      {
+        path: 'userlist/:LinkSiteId',
+        component: CoreSiteUserListComponent
       }
     ]
   },

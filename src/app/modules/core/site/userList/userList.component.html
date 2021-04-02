@@ -18,7 +18,8 @@
       </a>
       <button (click)="onActionbuttonExport()" type="button" class="btn btn-bg-info BTN">خروجی فایل</button>
       <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">برسی مجدد</button>
-      <button (click)="onActionBackToParentSiteList()" *ngIf="this.requestLinkSiteId>0" type="button"  class="btn btn-warning BTN">بازگشت</button>
+      <button (click)="onActionBackToParentSiteList()" *ngIf="this.requestLinkSiteId>0" type="button"
+        class="btn btn-warning BTN">بازگشت</button>
       <app-cms-search-list [(options)]="optionsSearch"></app-cms-search-list>
       <app-cms-export-list [(options)]="optionsExport"></app-cms-export-list>
       <app-cms-statist-list [(options)]="optionsStatist"></app-cms-statist-list>
@@ -29,59 +30,79 @@
 
     <div class="example-container mat-elevation-z8">
       <mat-table [dataSource]="tableSource" matSort #tableSort="matSort" (matSortChange)="onTableSortData(tableSort)">
-        <!-- LinkMainImageIdSrc Column -->
-        <ng-container matColumnDef="LinkMainImageIdSrc">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> عکس </mat-header-cell>
-          <mat-cell *matCellDef="let row">
-            <img *ngIf="row?.LinkMainImageIdSrc?.length>0" style="vertical-align:middle;" aria-hidden
-              src="{{row.LinkMainImageIdSrc}}" height="40" width="40" />
-
-          </mat-cell>
-        </ng-container>
-        <!-- ID Column -->
-        <ng-container matColumnDef="Id">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> شناسه </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.Id}} </mat-cell>
-        </ng-container>
         <!-- LinkSiteId Column -->
         <ng-container matColumnDef="LinkSiteId">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> شناسه سایت </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkSiteId']?.FieldTitle}}
+          </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.LinkSiteId}} </mat-cell>
         </ng-container>
+        <!-- LinkUserId Column -->
+        <ng-container matColumnDef="LinkUserId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkUserId']?.FieldTitle}}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.LinkUserId}} </mat-cell>
+        </ng-container>
+        <!-- LinkUserGroupId Column -->
+        <ng-container matColumnDef="LinkUserGroupId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkUserGroupId']?.FieldTitle}}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.LinkUserGroupId}} </mat-cell>
+        </ng-container>
+
         <!-- RecordStatus Column -->
         <ng-container matColumnDef="RecordStatus">
           <mat-header-cell *matHeaderCellDef mat-sort-header> وضعیت </mat-header-cell>
           <mat-cell *matCellDef="let row"> <i [ngClass]="row.RecordStatus|statusClass"></i> </mat-cell>
         </ng-container>
         <!-- Username Column -->
-        <ng-container matColumnDef="Username">
+        <ng-container matColumnDef="virtual_CmsUser.Username">
           <mat-header-cell *matHeaderCellDef mat-sort-header> نام کاربری </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.Username}} </mat-cell>
+          <mat-cell *matCellDef="let row"> {{row.virtual_CmsUser.Username}} </mat-cell>
         </ng-container>
         <!-- Mobile Column -->
-        <ng-container matColumnDef="Mobile">
+        <ng-container matColumnDef="virtual_CmsUser.Mobile">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Mobile </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.Mobile}} </mat-cell>
+          <mat-cell *matCellDef="let row"> {{row.virtual_CmsUser.Mobile}} </mat-cell>
         </ng-container>
         <!-- Email Column -->
-        <ng-container matColumnDef="Email">
+        <ng-container matColumnDef="virtual_CmsUser.Email">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.Email}} </mat-cell>
+          <mat-cell *matCellDef="let row"> {{row.virtual_CmsUser.Email}} </mat-cell>
         </ng-container>
         <!-- Name Column -->
-        <ng-container matColumnDef="Name">
+        <ng-container matColumnDef="virtual_CmsUser.Name">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.Name}} </mat-cell>
+          <mat-cell *matCellDef="let row"> {{row.virtual_CmsUser.Name}} </mat-cell>
         </ng-container>
         <!-- LastName Column -->
-        <ng-container matColumnDef="LastName">
+        <ng-container matColumnDef="virtual_CmsUser.LastName">
           <mat-header-cell *matHeaderCellDef mat-sort-header> LastName </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.LastName}} </mat-cell>
+          <mat-cell *matCellDef="let row"> {{row.virtual_CmsUser.LastName}} </mat-cell>
         </ng-container>
         <!-- CompanyName Column -->
-        <ng-container matColumnDef="CompanyName">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> CompanyName </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.CompanyName}} </mat-cell>
+        <ng-container matColumnDef="virtual_CmsUser.CompanyName">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Company Name </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.virtual_CmsUser.CompanyName}} </mat-cell>
+        </ng-container>
+        <!-- CompanyName Column -->
+        <ng-container matColumnDef="virtual_CmsUserGroup.Title">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Group Title </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.virtual_CmsUserGroup.Title}} </mat-cell>
+        </ng-container>
+        <!-- CompanyName Column -->
+        <ng-container matColumnDef="virtual_CmsSite.Title">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Site Title </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.virtual_CmsSite.Title}} </mat-cell>
+        </ng-container>
+        <!-- CompanyName Column -->
+        <ng-container matColumnDef="virtual_CmsSite.Domain">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Site Domain </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.virtual_CmsSite.Domain}} </mat-cell>
+        </ng-container>
+              <!-- CompanyName Column -->
+        <ng-container matColumnDef="virtual_CmsSite.SubDomain">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Site SubDomain </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.virtual_CmsSite.SubDomain}} </mat-cell>
         </ng-container>
         <!-- CreatedDate Column -->
         <ng-container matColumnDef="CreatedDate">
