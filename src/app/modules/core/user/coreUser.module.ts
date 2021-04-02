@@ -25,6 +25,13 @@ import { CoreUserSelectorComponent } from './selector/selector.component';
     CoreUserEditComponent,
     CoreUserSelectorComponent,
   ],
+  exports: [
+    CoreUserComponent,
+    CoreUserListComponent,
+    CoreUserAddComponent,
+    CoreUserEditComponent,
+    CoreUserSelectorComponent,
+  ],
   imports: [
     CommonModule,
     CoreUserRouting,

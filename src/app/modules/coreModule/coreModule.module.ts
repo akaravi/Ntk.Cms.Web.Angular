@@ -15,6 +15,7 @@ import { CoreModuleTagCategoryDeleteComponent } from './tagCategory/delete/delet
 import { CoreModuleTagCategoryEditComponent } from './tagCategory/edit/edit.component';
 import { CoreModuleTagCategoryTreeComponent } from './tagCategory/tree/tree.component';
 import { CoreModuleTagCategorySelectorComponent } from './tagCategory/selector/selector.component';
+import { CoreModuleTagSelectorComponent } from './tag/selector/selector.component';
 
 
 @NgModule({
@@ -37,8 +38,19 @@ import { CoreModuleTagCategorySelectorComponent } from './tagCategory/selector/s
     CoreModuleTagCategoryEditComponent,
     CoreModuleTagCategoryDeleteComponent,
     CoreModuleTagCategoryTreeComponent,
-    CoreModuleTagCategorySelectorComponent
-
+    CoreModuleTagCategorySelectorComponent,
+    CoreModuleTagSelectorComponent,
+  ],
+  exports: [
+    CoreModuleComponent,
+    CoreModuleTagAddComponent,
+    CoreModuleTagEditComponent,
+    CoreModuleTagListComponent,
+    CoreModuleTagCategoryEditComponent,
+    CoreModuleTagCategoryDeleteComponent,
+    CoreModuleTagCategoryTreeComponent,
+    CoreModuleTagCategorySelectorComponent,
+    CoreModuleTagSelectorComponent,
   ]
 })
 export class CoreModuleModule { }

@@ -118,10 +118,10 @@ export class CmsSearchListComponent implements OnInit {
         ruleSet.rules &&
         ruleSet.rules.length > 0
       ) {
-        const Filter = new FilterDataModel();
-        Filter.Filters = this.getRulesSetChild(ruleSet);
-        Filter.ClauseType = clauseType;
-        this.Filters.push(Filter);
+        const filter = new FilterDataModel();
+        filter.Filters = this.getRulesSetChild(ruleSet);
+        filter.ClauseType = clauseType;
+        this.Filters.push(filter);
       } else if (rule) {
         const Filter = this.getRulesChild(rule);
         Filter.ClauseType = clauseType;
@@ -131,11 +131,11 @@ export class CmsSearchListComponent implements OnInit {
   }
   getRulesChild(rule: Rule): FilterDataModel {
     const searchType = this.getSearchType(rule.operator);
-    const Filter = new FilterDataModel();
-    Filter.PropertyName = rule.field;
-    Filter.Value = rule.value;
-    Filter.SearchType = searchType;
-    return Filter;
+    const filter = new FilterDataModel();
+    filter.PropertyName = rule.field;
+    filter.Value = rule.value;
+    filter.SearchType = searchType;
+    return filter;
   }
   getRulesSetChild(ruleSetInput: RuleSet): Array<FilterDataModel> {
     const Filters = new Array<FilterDataModel>();
@@ -150,14 +150,14 @@ export class CmsSearchListComponent implements OnInit {
         ruleSet.rules &&
         ruleSet.rules.length > 0
       ) {
-        const Filter = new FilterDataModel();
-        Filter.Filters = this.getRulesSetChild(ruleSet);
-        Filter.ClauseType = clauseType;
-        Filters.push(Filter);
+        const filter = new FilterDataModel();
+        filter.Filters = this.getRulesSetChild(ruleSet);
+        filter.ClauseType = clauseType;
+        Filters.push(filter);
       } else if (rule) {
-        const Filter = this.getRulesChild(rule);
-        Filter.ClauseType = clauseType;
-        Filters.push(Filter);
+        const filter = this.getRulesChild(rule);
+        filter.ClauseType = clauseType;
+        Filters.push(filter);
       }
     });
     return Filters;

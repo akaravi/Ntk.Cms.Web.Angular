@@ -296,10 +296,10 @@ export class CoreSiteDomainAliasListComponent implements OnInit, OnDestroy {
     );
 
     const filterStatist1 = JSON.parse(JSON.stringify(this.filteModelContent));
-    const fastFilter = new FilterDataModel();
-    fastFilter.PropertyName = 'RecordStatus';
-    fastFilter.Value = EnumRecordStatus.Available;
-    filterStatist1.Filters.push(fastFilter);
+    const fastfilter = new FilterDataModel();
+    fastfilter.PropertyName = 'RecordStatus';
+    fastfilter.Value = EnumRecordStatus.Available;
+    filterStatist1.Filters.push(fastfilter);
     this.coreSiteService.ServiceGetCount(filterStatist1).subscribe(
       (next) => {
         if (next.IsSuccess) {

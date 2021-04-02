@@ -22,7 +22,7 @@
               RecordStatus is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-          <app-blog-category-selector (optionSelect)="onActionCategorySelect($event)"  [optionSelectForce]="dataModel.LinkCategoryId"  [optionPlaceholder]="'دسته بندی'" ></app-blog-category-selector>
+          <app-blog-category-selector (optionSelect)="onActionSelectorSelect($event)"  [optionSelectForce]="dataModel.LinkCategoryId"  [optionPlaceholder]="'دسته بندی'" ></app-blog-category-selector>
           <mat-form-field class="example-full-width">
             <mat-label>عنوان</mat-label>
             <input matInput [(ngModel)]="dataModel.Title" name="dataModel.Title" #Title type="text" placeholder="عنوان"

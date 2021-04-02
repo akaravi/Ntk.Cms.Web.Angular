@@ -105,7 +105,7 @@ export class ArticleContentAddComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     // this.optionsCategorySelector.childMethods.ActionSelectForce(this.requestCategoryId);
     // this.optionsCategorySelector.parentMethods = {
-    //   onActionSelect: (x) => this.onActionCategorySelect(x),
+    //   onActionSelect: (x) => this.onActionSelectorSelect(x),
     // };
     // this.optionsContentSelector.parentMethods = {
     //   onActionSelect: (x) => this.onActionContentSimilarSelect(x),
@@ -301,7 +301,7 @@ export class ArticleContentAddComponent implements OnInit, AfterViewInit {
         }
       )).toPromise();
   }
-  onActionCategorySelect(model: ArticleCategoryModel | null): void {
+  onActionSelectorSelect(model: ArticleCategoryModel | null): void {
     if (!model || model.Id <= 0) {
       const message = 'دسته بندی اطلاعات مشخص نیست';
       this.cmsToastrService.typeErrorSelected(message);

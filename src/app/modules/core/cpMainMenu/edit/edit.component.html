@@ -22,7 +22,7 @@
             </mat-error>
           </mat-form-field>
           <!-- Title Field -->
-          <app-core-cpmainmenu-selector (optionSelect)="onActionCategorySelect($event)" [disabled]="false"
+          <app-core-cpmainmenu-selector (optionSelect)="onActionSelectorSelect($event)" [disabled]="false"
             [optionSelectForce]="dataModel.LinkParentId" [optionPlaceholder]="'منوی والد'">
           </app-core-cpmainmenu-selector>
           <!-- Title Field -->
@@ -195,14 +195,14 @@
             </mat-slide-toggle>
           </div>
           <!-- LinkModuleId Field -->
-          <app-core-module-selector (optionSelect)="onActionCategoryModuleSelect($event)" [disabled]="false"
+          <app-core-module-selector (optionSelect)="onActionSelectorModuleSelect($event)" [disabled]="false"
             [optionSelectForce]="dataModel.LinkModuleId" [optionPlaceholder]="'ماژول'">
           </app-core-module-selector>
 
           <app-core-usercategory-checklist [optionSelectForce]="dataCoreCpMainMenuIds" [disabled]="false"
-            (optionSelect)="onActionCategoryUserCategorySelect($event)"
-            (optionSelectAdded)="onActionCategoryUserCategorySelectAdded($event)"
-            (optionSelectRemoved)="onActionCategoryUserCategorySelectRemoved($event)"></app-core-usercategory-checklist>
+            (optionSelect)="onActionSelectorUserCategorySelect($event)"
+            (optionSelectAdded)="onActionSelectorUserCategorySelectAdded($event)"
+            (optionSelectRemoved)="onActionSelectorUserCategorySelectRemoved($event)"></app-core-usercategory-checklist>
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">

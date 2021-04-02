@@ -11,6 +11,8 @@ import {
   CoreModuleTagService,
   FilterDataModel,
   CoreModuleTagCategoryModel,
+  EnumFilterDataModelSearchTypes,
+  EnumClauseType,
 } from 'ntk-cms-api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
@@ -80,7 +82,7 @@ export class CoreModuleTagAddComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     // this.optionsCategorySelector.childMethods.ActionSelectForce(this.requestCategoryId);
     // this.optionsCategorySelector.parentMethods = {
-    //   onActionSelect: (x) => this.onActionCategorySelect(x),
+    //   onActionSelect: (x) => this.onActionSelectorSelect(x),
     // };
     // this.optionsContentSelector.parentMethods = {
     //   onActionSelect: (x) => this.onActionContentSimilarSelect(x),
@@ -91,27 +93,24 @@ export class CoreModuleTagAddComponent implements OnInit, AfterViewInit {
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
     if (text && typeof text === 'string' && text.length > 0) {
-      const aaa = {
-        PropertyName: 'Title',
-        Value: text,
-        SearchType: 5
-      };
-      filteModel.Filters.push(aaa as FilterDataModel);
+      let filter = new FilterDataModel();
+      filter.PropertyName = 'Title';
+      filter.Value = text;
+      filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
+      filteModel.Filters.push(filter);
     } else if (text && typeof text === 'number' && text > 0) {
-      const aaa2 = {
-        PropertyName: 'Title',
-        Value: text + '',
-        SearchType: 5,
-        ClauseType: 1
-      };
-      filteModel.Filters.push(aaa2 as FilterDataModel);
-      const aaa3 = {
-        PropertyName: 'Id',
-        Value: text + '',
-        SearchType: 1,
-        ClauseType: 1
-      };
-      filteModel.Filters.push(aaa3 as FilterDataModel);
+      let filter = new FilterDataModel();
+      filter.PropertyName = 'Title';
+      filter.Value = text;
+      filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
+      filter.ClauseType = EnumClauseType.Or;
+      filteModel.Filters.push(filter);
+      filter = new FilterDataModel();
+      filter.PropertyName = 'Id';
+      filter.Value = text;
+      filter.SearchType = EnumFilterDataModelSearchTypes.Equal;
+      filter.ClauseType = EnumClauseType.Or;
+      filteModel.Filters.push(filter);
     }
     return this.coreModuleTagService.ServiceGetAll(filteModel).pipe(
       map((data) => data.ListItems.map(val => ({
@@ -176,7 +175,7 @@ export class CoreModuleTagAddComponent implements OnInit, AfterViewInit {
       );
   }
 
-  onActionCategorySelect(model: CoreModuleTagCategoryModel | null): void {
+  onActionSelectorSelect(model: CoreModuleTagCategoryModel | null): void {
     if (!model || model.Id <= 0) {
       const message = 'دسته بندی اطلاعات مشخص نیست';
       this.cmsToastrService.typeErrorSelected(message);

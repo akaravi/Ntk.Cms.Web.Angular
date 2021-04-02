@@ -2,10 +2,11 @@
     <input type="text" placeholder="{{optionPlaceholder}}" aria-label="Assignee" matInput [formControl]="formControl" [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="onActionSelect($event.option.value)">
         <mat-option *ngFor="let state of filteredOptions | async" [value]="state">
-            <img style="vertical-align:middle;" aria-hidden src="{{state.LinkMainImageIdSrc}}" height="25" width="25" />
-            <span>{{ state.Title }}</span> |
-            <small>ID: {{state.Id}}</small>
+            <img *ngIf="state.LinkMainImageIdSrc" style="vertical-align:middle;" aria-hidden src="{{state.LinkMainImageIdSrc}}" height="25" width="25" />
+            <span>{{ displayOption(state) }}</span>
         </mat-option>
     </mat-autocomplete>
+    <mat-icon matSuffix *ngIf="dataModelSelect.Id" matSuffix
+    mat-icon-button aria-label="Clear" (click)="onActionSelectForce(null)">close</mat-icon>
     <ng-content></ng-content>
 </mat-form-field>

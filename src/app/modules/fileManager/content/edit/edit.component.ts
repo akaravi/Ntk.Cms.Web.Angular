@@ -201,7 +201,7 @@ export class FileContentEditComponent implements OnInit, AfterViewInit {
         }
       );
   }
-  onActionCategorySelect(model: FileCategoryModel | null): void {
+  onActionSelectorSelect(model: FileCategoryModel | null): void {
     if (!model || model.Id <= 0) {
       const message = 'دسته بندی اطلاعات مشخص نیست';
       this.cmsToastrService.typeErrorSelected(message);

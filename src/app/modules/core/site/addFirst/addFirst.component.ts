@@ -142,7 +142,7 @@ export class CoreSiteAddFirstComponent implements OnInit {
       }
     );
   }
-  onActionCategorySelect(model: CoreSiteCategoryModel | null): void {
+  onActionSelectorSelect(model: CoreSiteCategoryModel | null): void {
     if (!model || model.Id <= 0) {
       this.cmsToastrService.toastr.error(
         'نوع سامانه را مشخص کنید',

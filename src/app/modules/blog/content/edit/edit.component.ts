@@ -498,7 +498,7 @@ export class BlogContentEditComponent implements OnInit, AfterViewInit {
 
 
   }
-  onActionCategorySelect(model: BlogCategoryModel | null): void {
+  onActionSelectorSelect(model: BlogCategoryModel | null): void {
     if (!model || model.Id <= 0) {
       const message = 'دسته بندی اطلاعات مشخص نیست';
       this.cmsToastrService.typeErrorSelected(message);

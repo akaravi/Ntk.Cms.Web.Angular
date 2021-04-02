@@ -1,6 +1,6 @@
 <div class="row">
   <div *ngIf="requestApplicationId===0" class="col-xl-3">
-    <app-application-app-tree (optionSelect)="onActionCategorySelect($event)"></app-application-app-tree>
+    <app-application-app-tree (optionSelect)="onActionSelectorSelect($event)"></app-application-app-tree>
   </div>
   <div [ngClass]="(requestApplicationId===0)?'col-xl-9':'col-xl-12'">
     <div class="button-row">

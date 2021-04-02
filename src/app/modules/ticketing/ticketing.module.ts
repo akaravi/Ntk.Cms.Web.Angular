@@ -41,6 +41,7 @@ import { TicketingDepartemenOperatorAddComponent } from './departemenOperator/ad
 import { TicketingDepartemenOperatorEditComponent } from './departemenOperator/edit/edit.component';
 import { TicketingTaskAddComponent } from './task/add/add.component';
 import { TicketingDepartemenLogListComponent } from './departemenLog/list/list.component';
+import { TicketingDepartemenOperatorSelectorComponent } from './departemenOperator/selector/selector.component';
 
 
 
@@ -65,7 +66,8 @@ import { TicketingDepartemenLogListComponent } from './departemenLog/list/list.c
     TicketingDepartemenLogEditComponent,
     TicketingDepartemenOperatorAddComponent,
     TicketingDepartemenOperatorEditComponent,
-    TicketingDepartemenLogListComponent
+    TicketingDepartemenLogListComponent,
+    TicketingDepartemenOperatorSelectorComponent,
   ],
   imports: [
     CommonModule,

@@ -104,7 +104,7 @@ export class BiographyContentAddComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     // this.optionsCategorySelector.childMethods.ActionSelectForce(this.requestCategoryId);
     // this.optionsCategorySelector.parentMethods = {
-    //   onActionSelect: (x) => this.onActionCategorySelect(x),
+    //   onActionSelect: (x) => this.onActionSelectorSelect(x),
     // };
     // this.optionsContentSelector.parentMethods = {
     //   onActionSelect: (x) => this.onActionContentSimilarSelect(x),
@@ -301,7 +301,7 @@ export class BiographyContentAddComponent implements OnInit, AfterViewInit {
         }
       )).toPromise();
   }
-  onActionCategorySelect(model: BiographyCategoryModel | null): void {
+  onActionSelectorSelect(model: BiographyCategoryModel | null): void {
     if (!model || model.Id <= 0) {
       const message = 'دسته بندی اطلاعات مشخص نیست';
       this.cmsToastrService.typeErrorSelected(message);

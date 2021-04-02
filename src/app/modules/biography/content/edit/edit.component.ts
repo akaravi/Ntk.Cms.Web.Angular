@@ -498,7 +498,7 @@ export class BiographyContentEditComponent implements OnInit, AfterViewInit {
     if (dataListDelete && dataListDelete.length > 0) {
     }
   }
-  onActionCategorySelect(model: BiographyCategoryModel | null): void {
+  onActionSelectorSelect(model: BiographyCategoryModel | null): void {
     if (!model || model.Id <= 0) {
       const message = 'دسته بندی اطلاعات مشخص نیست';
       this.cmsToastrService.typeErrorSelected(message);

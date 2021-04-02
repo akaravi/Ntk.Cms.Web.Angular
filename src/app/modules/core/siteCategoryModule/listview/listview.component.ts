@@ -81,10 +81,10 @@ export class CoreSiteCategoryCmsModuleListViewComponent implements OnInit, OnDes
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
     if (this.linkSiteCategoryId && this.linkSiteCategoryId > 0) {
-      const fastFilter = new FilterDataModel();
-      fastFilter.PropertyName = 'LinkCmsSiteCategoryId';
-      fastFilter.Value = this.linkSiteCategoryId;
-      this.filteModelContent.Filters.push(fastFilter);
+      const fastfilter = new FilterDataModel();
+      fastfilter.PropertyName = 'LinkCmsSiteCategoryId';
+      fastfilter.Value = this.linkSiteCategoryId;
+      this.filteModelContent.Filters.push(fastfilter);
     }
     this.coreSiteCategoryCmsModuleService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {

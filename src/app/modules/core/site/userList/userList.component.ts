@@ -29,6 +29,8 @@ import { Subscription } from 'rxjs';
 import { CoreUserEditComponent } from '../../user/edit/edit.component';
 import { CoreUserAddComponent } from '../../user/add/add.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { CoreSiteUserAddComponent } from '../userAdd/userAdd.component';
+import { CoreSiteUserEditComponent } from '../userEdit/userEdit.component';
 
 @Component({
   selector: 'app-core-site-user-list',
@@ -206,8 +208,12 @@ export class CoreSiteUserListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessAdd();
       return;
     }
-    const dialogRef = this.dialog.open(CoreUserAddComponent, {
-      data: {}
+    const dialogRef = this.dialog.open(CoreSiteUserAddComponent, {
+      data: {
+        LinkSiteId: this.requestLinkSiteId,
+        LinkModuleId: this.requestLinkSiteId,
+        LinkUserGroupId: this.requestLinkUserGroupId,
+      }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.dialogChangedDate) {
@@ -231,8 +237,12 @@ export class CoreSiteUserListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessEdit();
       return;
     }
-    const dialogRef = this.dialog.open(CoreUserEditComponent, {
-      data: { id: this.tableRowSelected.Id }
+    const dialogRef = this.dialog.open(CoreSiteUserEditComponent, {
+      data: {
+        LinkSiteId: model.LinkSiteId,
+        LinkModuleId: model.LinkSiteId,
+        LinkUserGroupId: model.LinkUserGroupId,
+      }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.dialogChangedDate) {
@@ -309,10 +319,10 @@ export class CoreSiteUserListComponent implements OnInit, OnDestroy {
     );
 
     const filterStatist1 = JSON.parse(JSON.stringify(this.filteModelContent));
-    const fastFilter = new FilterDataModel();
-    fastFilter.PropertyName = 'RecordStatus';
-    fastFilter.Value = EnumRecordStatus.Available;
-    filterStatist1.Filters.push(fastFilter);
+    const fastfilter = new FilterDataModel();
+    fastfilter.PropertyName = 'RecordStatus';
+    fastfilter.Value = EnumRecordStatus.Available;
+    filterStatist1.Filters.push(fastfilter);
     this.coreSiteUserService.ServiceGetCount(filterStatist1).subscribe(
       (next) => {
         if (next.IsSuccess) {

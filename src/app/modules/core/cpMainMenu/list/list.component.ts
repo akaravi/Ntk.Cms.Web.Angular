@@ -186,7 +186,7 @@ export class CoreCpMainMenuListComponent implements OnInit, OnDestroy {
       }
     );
   }
-  onActionCategorySelect(model: CoreCpMainMenuModel | null): void {
+  onActionSelectorSelect(model: CoreCpMainMenuModel | null): void {
     this.filteModelContent = new FilterModel();
     this.categoryModelSelected = model;
     this.DataGetAll();
@@ -302,10 +302,10 @@ export class CoreCpMainMenuListComponent implements OnInit, OnDestroy {
     );
 
     const filterStatist1 = JSON.parse(JSON.stringify(this.filteModelContent));
-    const fastFilter = new FilterDataModel();
-    fastFilter.PropertyName = 'RecordStatus';
-    fastFilter.Value = EnumRecordStatus.Available;
-    filterStatist1.Filters.push(fastFilter);
+    const fastfilter = new FilterDataModel();
+    fastfilter.PropertyName = 'RecordStatus';
+    fastfilter.Value = EnumRecordStatus.Available;
+    filterStatist1.Filters.push(fastfilter);
     this.coreCpMainMenuService.ServiceGetCount(filterStatist1).subscribe(
       (next) => {
         if (next.IsSuccess) {

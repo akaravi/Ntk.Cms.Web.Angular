@@ -237,22 +237,22 @@ export class CoreCpMainMenuEditComponent implements OnInit {
       }
     }
   }
-  onActionCategoryModuleSelect(model: CoreModuleModel): void {
+  onActionSelectorModuleSelect(model: CoreModuleModel): void {
     this.dataModel.LinkModuleId = null;
     if (model && model.Id > 0) {
       this.dataModel.LinkModuleId = model.Id;
     }
   }
-  onActionCategorySelect(model: CoreCpMainMenuModel): void {
+  onActionSelectorSelect(model: CoreCpMainMenuModel): void {
     this.dataModel.LinkParentId = null;
     if (model && model.Id > 0) {
       this.dataModel.LinkParentId = model.Id;
     }
   }
-  onActionCategoryUserCategorySelect(model: CoreUserGroupModel[]): void {
+  onActionSelectorUserCategorySelect(model: CoreUserGroupModel[]): void {
     this.dataCoreCpMainMenuModel = model;
   }
-  onActionCategoryUserCategorySelectAdded(model: CoreUserGroupModel): void {
+  onActionSelectorUserCategorySelectAdded(model: CoreUserGroupModel): void {
     const entity = new CoreCpMainMenuCmsUserGroupModel();
     entity.CmsUserGroup_Id = model.Id;
     entity.CmsCpMainMenu_Id = this.dataModel.Id;
@@ -276,7 +276,7 @@ export class CoreCpMainMenuEditComponent implements OnInit {
       }
     );
   }
-  onActionCategoryUserCategorySelectRemoved(model: CoreUserGroupModel): void {
+  onActionSelectorUserCategorySelectRemoved(model: CoreUserGroupModel): void {
     const entity = new CoreCpMainMenuCmsUserGroupModel();
     entity.CmsUserGroup_Id = model.Id;
     entity.CmsCpMainMenu_Id = this.dataModel.Id;

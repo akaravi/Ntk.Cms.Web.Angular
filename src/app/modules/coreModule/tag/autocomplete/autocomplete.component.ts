@@ -1,6 +1,6 @@
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { Component, OnInit, Input, EventEmitter } from '@angular/core';
-import { CoreModuleTagModel, CoreModuleTagService, ErrorExceptionResult, FilterDataModel, FilterModel } from 'ntk-cms-api';
+import { CoreModuleTagModel, CoreModuleTagService, EnumClauseType, EnumFilterDataModelSearchTypes, ErrorExceptionResult, FilterDataModel, FilterModel } from 'ntk-cms-api';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Output } from '@angular/core';
@@ -37,27 +37,24 @@ export class TagAutocompleteComponent implements OnInit {
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
     if (text && typeof text === 'string' && text.length > 0) {
-      const aaa = {
-        PropertyName: 'Title',
-        Value: text,
-        SearchType: 5
-      };
-      filteModel.Filters.push(aaa as FilterDataModel);
+      const filter = new FilterDataModel();
+      filter.PropertyName = 'Title';
+      filter.Value = text;
+      filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
+      filteModel.Filters.push(filter);
     } else if (text && typeof text === 'number' && text > 0) {
-      const aaa2 = {
-        PropertyName: 'Title',
-        Value: text + '',
-        SearchType: 5,
-        ClauseType: 1
-      };
-      filteModel.Filters.push(aaa2 as FilterDataModel);
-      const aaa3 = {
-        PropertyName: 'Id',
-        Value: text + '',
-        SearchType: 1,
-        ClauseType: 1
-      };
-      filteModel.Filters.push(aaa3 as FilterDataModel);
+      let filter = new FilterDataModel();
+      filter.PropertyName = 'Title';
+      filter.Value = text;
+      filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
+      filter.ClauseType = EnumClauseType.Or;
+      filteModel.Filters.push(filter);
+      filter = new FilterDataModel();
+      filter.PropertyName = 'Id';
+      filter.Value = text;
+      filter.SearchType = EnumFilterDataModelSearchTypes.Equal;
+      filter.ClauseType = EnumClauseType.Or;
+      filteModel.Filters.push(filter);
     }
     return this.coreModuleTagService.ServiceGetAll(filteModel).pipe(
       map((data) => data.ListItems.map(val => ({
@@ -88,15 +85,13 @@ export class TagAutocompleteComponent implements OnInit {
     }
 
     const filteModel = new FilterModel();
-    ids.forEach(element => {
-      if (element > 0) {
-        const aaa3 = {
-          PropertyName: 'Id',
-          Value: element + '',
-          SearchType: 0,
-          ClauseType: 1
-        };
-        filteModel.Filters.push(aaa3 as FilterDataModel);
+    ids.forEach(item => {
+      if (item > 0) {
+        let filter = new FilterDataModel();
+        filter.PropertyName = 'Id';
+        filter.Value = item;
+        filter.ClauseType = EnumClauseType.Or;
+        filteModel.Filters.push(filter);
       }
     });
 

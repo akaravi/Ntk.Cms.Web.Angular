@@ -186,7 +186,7 @@ export class CoreSiteModuleEditComponent implements OnInit {
       this.dataModel.LinkSiteId = model.Id;
     }
   }
-  onActionCategoryModuleSelect(model: CoreModuleModel): void {
+  onActionSelectorModuleSelect(model: CoreModuleModel): void {
     this.dataModel.LinkModuleId = null;
     if (model && model.Id > 0) {
       this.dataModel.LinkModuleId = model.Id;

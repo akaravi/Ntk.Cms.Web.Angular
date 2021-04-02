@@ -43,7 +43,7 @@ export class ArticleContentListComponent implements OnInit, OnDestroy {
     public dialog: MatDialog
   ) {
     // this.optionsCategoryTree.parentMethods = {
-    //   onActionSelect: (x) => this.onActionCategorySelect(x),
+    //   onActionSelect: (x) => this.onActionSelectorSelect(x),
     // };
 
     this.optionsSearch.parentMethods = {
@@ -92,10 +92,10 @@ export class ArticleContentListComponent implements OnInit, OnDestroy {
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
     if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
-      const fastFilter = new FilterDataModel();
-      fastFilter.PropertyName = 'LinkCategoryId';
-      fastFilter.Value = this.categoryModelSelected.Id;
-      this.filteModelContent.Filters.push(fastFilter);
+      const fastfilter = new FilterDataModel();
+      fastfilter.PropertyName = 'LinkCategoryId';
+      fastfilter.Value = this.categoryModelSelected.Id;
+      this.filteModelContent.Filters.push(fastfilter);
     }
     this.articleContentService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
@@ -154,7 +154,7 @@ export class ArticleContentListComponent implements OnInit, OnDestroy {
     this.DataGetAll();
   }
 
-  onActionCategorySelect(model: ArticleCategoryModel | null): void {
+  onActionSelectorSelect(model: ArticleCategoryModel | null): void {
     this.filteModelContent = new FilterModel();
     this.categoryModelSelected = model;
 
@@ -242,10 +242,10 @@ export class ArticleContentListComponent implements OnInit, OnDestroy {
     );
 
     const filterStatist1 = JSON.parse(JSON.stringify(this.filteModelContent));
-    const fastFilter = new FilterDataModel();
-    fastFilter.PropertyName = 'RecordStatus';
-    fastFilter.Value = EnumRecordStatus.Available;
-    filterStatist1.Filters.push(fastFilter);
+    const fastfilter = new FilterDataModel();
+    fastfilter.PropertyName = 'RecordStatus';
+    fastfilter.Value = EnumRecordStatus.Available;
+    filterStatist1.Filters.push(fastfilter);
     this.articleContentService.ServiceGetCount(filterStatist1).subscribe(
       (next) => {
         if (next.IsSuccess) {

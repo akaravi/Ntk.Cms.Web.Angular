@@ -46,7 +46,7 @@ export class CoreModuleTagListComponent implements OnInit, OnDestroy {
     public dialog: MatDialog
   ) {
     // this.optionsCategoryTree.parentMethods = {
-    //   onActionSelect: (x) => this.onActionCategorySelect(x),
+    //   onActionSelect: (x) => this.onActionSelectorSelect(x),
     // };
 
     this.optionsSearch.parentMethods = {
@@ -95,10 +95,10 @@ export class CoreModuleTagListComponent implements OnInit, OnDestroy {
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
     if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
-      const aaa = new FilterDataModel();
-      aaa.PropertyName = 'LinkCategoryId';
-      aaa.Value = this.categoryModelSelected.Id;
-      this.filteModelContent.Filters.push(aaa);
+      let filter = new FilterDataModel();
+      filter.PropertyName = 'LinkCategoryId';
+      filter.Value = this.categoryModelSelected.Id;
+      this.filteModelContent.Filters.push(filter);
     }
     this.tagContentService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
@@ -157,7 +157,7 @@ export class CoreModuleTagListComponent implements OnInit, OnDestroy {
     this.DataGetAll();
   }
 
-  onActionCategorySelect(model: CoreModuleTagCategoryModel | null): void {
+  onActionSelectorSelect(model: CoreModuleTagCategoryModel | null): void {
     this.filteModelContent = new FilterModel();
     this.categoryModelSelected = model;
 
@@ -267,10 +267,10 @@ export class CoreModuleTagListComponent implements OnInit, OnDestroy {
     );
 
     const filterStatist1 = JSON.parse(JSON.stringify(this.filteModelContent));
-    const fastFilter = new FilterDataModel();
-    fastFilter.PropertyName = 'RecordStatus';
-    fastFilter.Value = EnumRecordStatus.Available;
-    filterStatist1.Filters.push(fastFilter);
+    const fastfilter = new FilterDataModel();
+    fastfilter.PropertyName = 'RecordStatus';
+    fastfilter.Value = EnumRecordStatus.Available;
+    filterStatist1.Filters.push(fastfilter);
     this.tagContentService.ServiceGetCount(filterStatist1).subscribe(
       (next) => {
         if (next.IsSuccess) {

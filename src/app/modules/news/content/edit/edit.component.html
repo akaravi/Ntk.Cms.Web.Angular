@@ -22,7 +22,7 @@
               RecordStatus is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-          <app-news-category-selector (optionSelect)="onActionCategorySelect($event)"
+          <app-news-category-selector (optionSelect)="onActionSelectorSelect($event)"
             [optionSelectForce]="dataModel.LinkCategoryId" [optionPlaceholder]="'دسته بندی'">
           </app-news-category-selector>
           <mat-form-field class="example-full-width">

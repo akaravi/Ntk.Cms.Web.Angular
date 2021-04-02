@@ -42,7 +42,7 @@ export class PollingContentListComponent implements OnInit, OnDestroy {
     public dialog: MatDialog
   ) {
     // this.optionsCategoryTree.parentMethods = {
-    //   onActionSelect: (x) => this.onActionCategorySelect(x),
+    //   onActionSelect: (x) => this.onActionSelectorSelect(x),
     // };
 
     this.optionsSearch.parentMethods = {
@@ -92,11 +92,10 @@ export class PollingContentListComponent implements OnInit, OnDestroy {
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
     if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
-      const aaa = {
-        PropertyName: 'LinkCategoryId',
-        Value: this.categoryModelSelected.Id,
-      };
-      this.filteModelContent.Filters.push(aaa as FilterDataModel);
+      let filter = new FilterDataModel();
+      filter.PropertyName = 'LinkCategoryId';
+      filter.Value = this.categoryModelSelected.Id;
+      this.filteModelContent.Filters.push(filter);
     }
     this.pollingContentService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
@@ -155,7 +154,7 @@ export class PollingContentListComponent implements OnInit, OnDestroy {
     this.DataGetAll();
   }
 
-  onActionCategorySelect(model: PollingCategoryModel | null): void {
+  onActionSelectorSelect(model: PollingCategoryModel | null): void {
     this.filteModelContent = new FilterModel();
     this.categoryModelSelected = model;
 
@@ -242,10 +241,10 @@ export class PollingContentListComponent implements OnInit, OnDestroy {
     );
 
     const filterStatist1 = JSON.parse(JSON.stringify(this.filteModelContent));
-    const fastFilter = new FilterDataModel();
-    fastFilter.PropertyName = 'RecordStatus';
-    fastFilter.Value = EnumRecordStatus.Available;
-    filterStatist1.Filters.push(fastFilter);
+    const fastfilter = new FilterDataModel();
+    fastfilter.PropertyName = 'RecordStatus';
+    fastfilter.Value = EnumRecordStatus.Available;
+    filterStatist1.Filters.push(fastfilter);
     this.pollingContentService.ServiceGetCount(filterStatist1).subscribe(
       (next) => {
         if (next.IsSuccess) {

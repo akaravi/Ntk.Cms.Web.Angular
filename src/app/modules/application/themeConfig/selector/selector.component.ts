@@ -6,7 +6,9 @@ import {
   FilterModel,
   ApplicationThemeConfigModel,
   ApplicationThemeConfigService,
-  ApplicationSourceModel
+  ApplicationSourceModel,
+  EnumFilterDataModelSearchTypes,
+  EnumClauseType
 } from 'ntk-cms-api';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -60,8 +62,11 @@ export class ApplicationThemeConfigSelectorComponent implements OnInit {
       );
   }
 
-  displayFn(user?: ApplicationThemeConfigModel): string | undefined {
-    return user ? user.Title : undefined;
+  displayFn(model?: ApplicationThemeConfigModel): string | undefined {
+    return model ? model.Title : undefined;
+  }
+  displayOption(model?: ApplicationThemeConfigModel): string | undefined {
+    return model ? model.Title : undefined;
   }
   DataGetAll(text: string | number | any): Observable<ApplicationThemeConfigModel[]> {
     const filteModel = new FilterModel();
@@ -69,27 +74,24 @@ export class ApplicationThemeConfigSelectorComponent implements OnInit {
     filteModel.AccessLoad = true;
     const filters = new Array<FilterDataModel>();
     if (text && typeof text === 'string' && text.length > 0) {
-      const aaa = {
-        PropertyName: 'Title',
-        Value: text,
-        SearchType: 5
-      };
-      filters.push(aaa as FilterDataModel);
+      const filter = new FilterDataModel();
+      filter.PropertyName = 'Title';
+      filter.Value = text;
+      filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
+      filteModel.Filters.push(filter);
     } else if (text && typeof text === 'number' && text > 0) {
-      const aaa = {
-        PropertyName: 'Title',
-        Value: text,
-        SearchType: 5,
-        ClauseType: 1
-      };
-      filters.push(aaa as FilterDataModel);
-      const nnn = {
-        PropertyName: 'Id',
-        Value: text,
-        SearchType: 1,
-        ClauseType: 1
-      };
-      filters.push(nnn as FilterDataModel);
+      let filter = new FilterDataModel();
+      filter.PropertyName = 'Title';
+      filter.Value = text;
+      filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
+      filter.ClauseType = EnumClauseType.Or;
+      filteModel.Filters.push(filter);
+      filter = new FilterDataModel();
+      filter.PropertyName = 'Id';
+      filter.Value = text;
+      filter.SearchType = EnumFilterDataModelSearchTypes.Equal;
+      filter.ClauseType = EnumClauseType.Or;
+      filteModel.Filters.push(filter);
     }
     if (this.parentId > 0) {
       const parent = {
@@ -142,12 +144,15 @@ export class ApplicationThemeConfigSelectorComponent implements OnInit {
           this.formControl.setValue(next.Item);
         }
       });
+      return;
     }
     if (typeof id === typeof ApplicationThemeConfigModel) {
       this.filteredOptions = this.push((id as ApplicationThemeConfigModel));
       this.dataModelSelect = (id as ApplicationThemeConfigModel);
       this.formControl.setValue(id);
+      return;
     }
+    this.formControl.setValue(null);
   }
   onActionSelectParentForce(id: number): void {
     const befor = this.parentId;

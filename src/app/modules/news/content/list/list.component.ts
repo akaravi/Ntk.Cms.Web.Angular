@@ -42,7 +42,7 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
     public dialog: MatDialog
   ) {
     // this.optionsCategoryTree.parentMethods = {
-    //   onActionSelect: (x) => this.onActionCategorySelect(x),
+    //   onActionSelect: (x) => this.onActionSelectorSelect(x),
     // };
 
     this.optionsSearch.parentMethods = {
@@ -155,7 +155,7 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
     this.DataGetAll();
   }
 
-  onActionCategorySelect(model: NewsCategoryModel | null): void {
+  onActionSelectorSelect(model: NewsCategoryModel | null): void {
     this.filteModelContent = new FilterModel();
     this.categoryModelSelected = model;
 
@@ -242,10 +242,10 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
     );
 
     const filterStatist1 = JSON.parse(JSON.stringify(this.filteModelContent));
-    const fastFilter = new FilterDataModel();
-    fastFilter.PropertyName = 'RecordStatus';
-    fastFilter.Value = EnumRecordStatus.Available;
-    filterStatist1.Filters.push(fastFilter);
+    const fastfilter = new FilterDataModel();
+    fastfilter.PropertyName = 'RecordStatus';
+    fastfilter.Value = EnumRecordStatus.Available;
+    filterStatist1.Filters.push(fastfilter);
     this.newsContentService.ServiceGetCount(filterStatist1).subscribe(
       (next) => {
         if (next.IsSuccess) {

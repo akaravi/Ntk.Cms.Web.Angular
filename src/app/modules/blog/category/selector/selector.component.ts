@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter } from '@angular/core';
-import { CoreEnumService, ErrorExceptionResult, FilterDataModel, FilterModel, BlogCategoryModel, BlogCategoryService } from 'ntk-cms-api';
+import { CoreEnumService, ErrorExceptionResult, FilterDataModel, FilterModel, BlogCategoryModel, BlogCategoryService, EnumFilterDataModelSearchTypes, EnumClauseType } from 'ntk-cms-api';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
@@ -72,8 +72,11 @@ export class BlogCategorySelectorComponent implements OnInit {
       );
   }
 
-  displayFn(user?: BlogCategoryModel): string | undefined {
-    return user ? user.Title : undefined;
+  displayFn(model?: BlogCategoryModel): string | undefined {
+    return model ? model.Title : undefined;
+  }
+  displayOption(model?: BlogCategoryModel): string | undefined {
+    return model ? model.Title : undefined;
   }
   DataGetAll(text: string | number | any): Observable<BlogCategoryModel[]> {
     const filteModel = new FilterModel();
@@ -81,27 +84,24 @@ export class BlogCategorySelectorComponent implements OnInit {
     filteModel.AccessLoad = true;
     // this.loading.backdropEnabled = false;
     if (text && typeof text === 'string' && text.length > 0) {
-      const aaa = {
-        PropertyName: 'Title',
-        Value: text,
-        SearchType: 5
-      };
-      filteModel.Filters.push(aaa as FilterDataModel);
+      const filter = new FilterDataModel();
+      filter.PropertyName = 'Title';
+      filter.Value = text;
+      filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
+      filteModel.Filters.push(filter);
     } else if (text && typeof text === 'number' && text > 0) {
-      const aaa = {
-        PropertyName: 'Title',
-        Value: text,
-        SearchType: 5,
-        ClauseType: 1
-      };
-      filteModel.Filters.push(aaa as FilterDataModel);
-      const nnn = {
-        PropertyName: 'Id',
-        Value: text,
-        SearchType: 1,
-        ClauseType: 1
-      };
-      filteModel.Filters.push(nnn as FilterDataModel);
+      let filter = new FilterDataModel();
+      filter.PropertyName = 'Title';
+      filter.Value = text;
+      filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
+      filter.ClauseType = EnumClauseType.Or;
+      filteModel.Filters.push(filter);
+      filter = new FilterDataModel();
+      filter.PropertyName = 'Id';
+      filter.Value = text;
+      filter.SearchType = EnumFilterDataModelSearchTypes.Equal;
+      filter.ClauseType = EnumClauseType.Or;
+      filteModel.Filters.push(filter);
     }
     this.loading.Globally = false;
     this.loading.display = true;
@@ -143,12 +143,15 @@ export class BlogCategorySelectorComponent implements OnInit {
           this.formControl.setValue(next.Item);
         }
       });
+      return;
     }
     if (typeof id === typeof BlogCategoryModel) {
       this.filteredOptions = this.push((id as BlogCategoryModel));
       this.dataModelSelect = (id as BlogCategoryModel);
       this.formControl.setValue(id);
+      return;
     }
+    this.formControl.setValue(null);
   }
 
   onActionReload(): void {

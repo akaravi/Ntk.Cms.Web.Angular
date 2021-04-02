@@ -312,7 +312,7 @@ export class PollingContentAddComponent implements OnInit, AfterViewInit {
   //   if (dataListDelete && dataListDelete.length > 0) {
   //   }
   // }
-  onActionCategorySelect(model: PollingCategoryModel | null): void {
+  onActionSelectorSelect(model: PollingCategoryModel | null): void {
     if (!model || model.Id <= 0) {
       const message = 'دسته بندی اطلاعات مشخص نیست';
       this.cmsToastrService.typeErrorSelected(message);

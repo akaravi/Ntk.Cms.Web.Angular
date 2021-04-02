@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter } from '@angular/core';
-import { CoreEnumService, ErrorExceptionResult, FilterDataModel, FilterModel, CoreCpMainMenuModel, CoreCpMainMenuService } from 'ntk-cms-api';
+import { CoreEnumService, ErrorExceptionResult, FilterDataModel, FilterModel, CoreCpMainMenuModel, CoreCpMainMenuService, EnumFilterDataModelSearchTypes, EnumClauseType } from 'ntk-cms-api';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
@@ -46,8 +46,11 @@ export class CoreCpMainMenuSelectorComponent implements OnInit {
       );
   }
 
-  displayFn(user?: CoreCpMainMenuModel): string | undefined {
-    return user ? (user.Title) : undefined;
+  displayFn(model?: CoreCpMainMenuModel): string | undefined {
+    return model ? (model.Title + ' # ' + model.Id) : undefined;
+  }
+  displayOption(model?: CoreCpMainMenuModel): string | undefined {
+    return model ? (model.Title + ' # ' + model.Id) : undefined;
   }
   DataGetAll(text: string | number | any): Observable<CoreCpMainMenuModel[]> {
     const filteModel = new FilterModel();
@@ -55,27 +58,24 @@ export class CoreCpMainMenuSelectorComponent implements OnInit {
     filteModel.AccessLoad = true;
     // this.loading.backdropEnabled = false;
     if (text && typeof text === 'string' && text.length > 0) {
-      const aaa = {
-        PropertyName: 'Title',
-        Value: text,
-        SearchType: 5
-      };
-      filteModel.Filters.push(aaa as FilterDataModel);
+      const filter = new FilterDataModel();
+      filter.PropertyName = 'Title';
+      filter.Value = text;
+      filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
+      filteModel.Filters.push(filter);
     } else if (text && typeof text === 'number' && text > 0) {
-      const aaa = {
-        PropertyName: 'Title',
-        Value: text,
-        SearchType: 5,
-        ClauseType: 1
-      };
-      filteModel.Filters.push(aaa as FilterDataModel);
-      const nnn = {
-        PropertyName: 'Id',
-        Value: text,
-        SearchType: 1,
-        ClauseType: 1
-      };
-      filteModel.Filters.push(nnn as FilterDataModel);
+      let filter = new FilterDataModel();
+      filter.PropertyName = 'Title';
+      filter.Value = text;
+      filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
+      filter.ClauseType = EnumClauseType.Or;
+      filteModel.Filters.push(filter);
+      filter = new FilterDataModel();
+      filter.PropertyName = 'Id';
+      filter.Value = text;
+      filter.SearchType = EnumFilterDataModelSearchTypes.Equal;
+      filter.ClauseType = EnumClauseType.Or;
+      filteModel.Filters.push(filter);
     }
     this.loading.Globally = false;
     this.loading.display = true;
@@ -110,12 +110,15 @@ export class CoreCpMainMenuSelectorComponent implements OnInit {
           this.formControl.setValue(next.Item);
         }
       });
+      return;
     }
     if (typeof id === typeof CoreCpMainMenuModel) {
       this.filteredOptions = this.push((id as CoreCpMainMenuModel));
       this.dataModelSelect = (id as CoreCpMainMenuModel);
       this.formControl.setValue(id);
+      return;
     }
+    this.formControl.setValue(null);
   }
 
   onActionReload(): void {

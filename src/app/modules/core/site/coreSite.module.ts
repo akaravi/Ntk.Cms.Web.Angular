@@ -30,12 +30,15 @@ import { CoreSiteCategoryCmsModule } from '../siteCategory/coreSiteCategory.modu
 import { CoreSiteCategoryCmsModuleModule } from '../siteCategoryModule/coreSiteCategoryCmsModule.module';
 import { CmsFileManagerModule } from 'ntk-cms-filemanager';
 import { CoreSiteModuleListComponent } from './moduleList/moduleList.component';
-import { CoreSiteDomainAliasModule } from '../siteDomainAlias/coreSiteDomainAlias.module';
 import { CoreSiteModuleEditComponent } from './moduleEdit/moduleEdit.component';
 import { CoreSiteModuleAddComponent } from './moduleAdd/moduleAdd.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 import { CoreModuleModule } from '../module/coreModule.module';
 import { CoreSiteUserListComponent } from './userList/userList.component';
+import { CoreSiteUserAddComponent } from './userAdd/userAdd.component';
+import { CoreSiteUserEditComponent } from './userEdit/userEdit.component';
+import { CoreUserModule } from '../user/coreUser.module';
+import { CoreUserGroupCmsModule } from '../userCategory/coreUserGroup.module';
 
 
 
@@ -54,6 +57,8 @@ import { CoreSiteUserListComponent } from './userList/userList.component';
     CoreSiteModuleAddComponent,
     CoreSiteModuleEditComponent,
     CoreSiteUserListComponent,
+    CoreSiteUserAddComponent,
+    CoreSiteUserEditComponent,
   ],
   exports: [
     CoreSiteComponent,
@@ -69,6 +74,8 @@ import { CoreSiteUserListComponent } from './userList/userList.component';
     CoreSiteModuleAddComponent,
     CoreSiteModuleEditComponent,
     CoreSiteUserListComponent,
+    CoreSiteUserAddComponent,
+    CoreSiteUserEditComponent,
   ],
   imports: [
     CommonModule,
@@ -83,6 +90,8 @@ import { CoreSiteUserListComponent } from './userList/userList.component';
     CoreSiteCategoryCmsModuleModule,
     CmsFileManagerModule,
     CoreModuleModule,
+    CoreUserModule,
+    CoreUserGroupCmsModule,
   ],
   providers: [
     CoreSiteService,

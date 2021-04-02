@@ -18,7 +18,8 @@ import {
   ArticleContentOtherInfoModel,
   ArticleContentSimilarModel,
   AccessModel,
-  DataFieldInfoModel
+  DataFieldInfoModel,
+  EnumClauseType
 } from 'ntk-cms-api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
@@ -215,12 +216,12 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
 
 
     const filteModel = new FilterModel();
+    let filter = new FilterDataModel();
+    filter.PropertyName = 'LinkContentId';
+    filter.Value =  this.dataModelResult.Item.Id ;
+    filter.ClauseType = EnumClauseType.And;
+    filteModel.Filters.push(filter);
 
-    const aaa3 = {
-      PropertyName: 'LinkContentId',
-      Value: this.dataModelResult.Item.Id + '',
-    };
-    filteModel.Filters.push(aaa3 as FilterDataModel);
     this.tagIdsData = [];
     this.articleContentTagService
       .ServiceGetAll(filteModel)
@@ -258,12 +259,12 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
 
 
     const filteModel = new FilterModel();
+    let filter = new FilterDataModel();
+    filter.PropertyName = 'LinkContentId';
+    filter.Value =  this.dataModelResult.Item.Id ;
+    filter.ClauseType = EnumClauseType.And;
+    filteModel.Filters.push(filter);
 
-    const aaa3 = {
-      PropertyName: 'LinkContentId',
-      Value: this.dataModelResult.Item.Id + '',
-    };
-    filteModel.Filters.push(aaa3 as FilterDataModel);
     this.articleContentOtherInfoService
       .ServiceGetAll(filteModel)
       .subscribe(
@@ -293,19 +294,16 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
 
 
     const filteModel = new FilterModel();
+    let filter = new FilterDataModel();
+    filter.PropertyName = 'LinkSourceId';
+    filter.Value =  this.dataModelResult.Item.Id ;
+    filter.ClauseType = EnumClauseType.Or;
+    filteModel.Filters.push(filter);
 
-    const aaa1 = {
-      PropertyName: 'LinkSourceId',
-      Value: this.dataModelResult.Item.Id + '',
-      ClauseType: 1
-    };
-    const aaa2 = {
-      PropertyName: 'LinkDestinationId',
-      Value: this.dataModelResult.Item.Id + '',
-      ClauseType: 1
-    };
-    filteModel.Filters.push(aaa1 as FilterDataModel);
-    filteModel.Filters.push(aaa2 as FilterDataModel);
+    filter.PropertyName = 'LinkDestinationId';
+    filter.Value =  this.dataModelResult.Item.Id ;
+    filter.ClauseType = EnumClauseType.Or;
+    filteModel.Filters.push(filter);
 
     this.articleContentSimilarService
       .ServiceGetAll(filteModel)
@@ -347,14 +345,16 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
     this.loading.display = true;
 
 
+
     const filteModel = new FilterModel();
     ids.forEach(item => {
-      const aaa3 = {
-        PropertyName: 'Id',
-        Value: item + '',
-        ClauseType: 1
-      };
-      filteModel.Filters.push(aaa3 as FilterDataModel);
+      if (item > 0) {
+        let filter = new FilterDataModel();
+        filter.PropertyName = 'Id';
+        filter.Value = item;
+        filter.ClauseType = EnumClauseType.Or;
+        filteModel.Filters.push(filter);
+      }
     });
     this.articleContentService
       .ServiceGetAll(filteModel)
@@ -501,7 +501,7 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
 
 
   }
-  onActionCategorySelect(model: ArticleCategoryModel | null): void {
+  onActionSelectorSelect(model: ArticleCategoryModel | null): void {
     if (!model || model.Id <= 0) {
       const message = 'دسته بندی اطلاعات مشخص نیست';
       this.cmsToastrService.typeErrorSelected(message);
