@@ -26,22 +26,39 @@ export class SelectionComponent implements OnInit {
 
   subManager = new Subscription();
   filterModel = new FilterModel();
-  dataModel: ErrorExceptionResult<CoreSiteModel>;
+  dataModelResult: ErrorExceptionResult<CoreSiteModel>;
 
   constructor(
     private coreAuthService: CoreAuthService,
     private coreSiteService: CoreSiteService,
     private cmsToastrService: CmsToastrService,
-    private publicHelper: PublicHelper,
     private router: Router,
-    private activatedRoute: ActivatedRoute
   ) {
-
+debugger
   }
   formInfo: FormInfoModel = new FormInfoModel();
 
   ngOnInit(): void {
-    this.dataModel = this.activatedRoute.snapshot.data.list;
+    // this.dataModel = this.activatedRoute.snapshot.data.list;
+    this.DataGetAll();
+
+  }
+  DataGetAll(): void {
+
+    this.coreSiteService.ServiceGetAll(null).subscribe(
+      (next) => {
+        if (next.IsSuccess) {
+          this.dataModelResult = next;
+        }
+        else
+        {
+          this.cmsToastrService.typeError(next.ErrorMessage);
+        }
+      },
+      (error) => {
+        this.cmsToastrService.typeError(error);
+      }
+    );
   }
 
   onActionClickSelectSite(id: number): void {
@@ -89,7 +106,6 @@ export class SelectionComponent implements OnInit {
           },
           (error) => {
             this.cmsToastrService.typeError(error);
-
           }
         )
       );

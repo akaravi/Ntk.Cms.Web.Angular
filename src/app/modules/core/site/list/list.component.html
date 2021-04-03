@@ -102,6 +102,10 @@
                 <mat-icon>delete_forever</mat-icon>
                 <span>حذف</span>
               </button>
+              <button mat-menu-item (click)="onActionbuttonLoginToRow(row)">
+                <mat-icon>login</mat-icon>
+                <span>ورود به این سایت</span>
+              </button>
               <button mat-menu-item (click)="onActionbuttonModuleListRow(row)">
                 <mat-icon>view_module</mat-icon>
                 <span>ماژول ها</span>
@@ -113,6 +117,10 @@
               <button mat-menu-item (click)="onActionbuttonUserListRow(row)">
                 <mat-icon>domain</mat-icon>
                 <span>کاربران ها</span>
+              </button>
+              <button mat-menu-item (click)="onActionbuttonDeviceListRow(row)">
+                <mat-icon>devices</mat-icon>
+                <span>دستگاه ها</span>
               </button>
             </mat-menu>
 

@@ -14,7 +14,6 @@ import { CoreSiteUserListComponent } from './userList/userList.component';
 const routes: Routes = [
   {
     path: '',
-    resolve: { list: CoreSiteResolver },
     children: [
       {
         path: '',

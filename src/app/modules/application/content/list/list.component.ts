@@ -102,7 +102,6 @@ export class ApplicationAppListComponent implements OnInit, OnDestroy {
   DataGetAll(): void {
     this.tableRowsSelected = [];
     this.tableRowSelected = new ApplicationAppModel();
-
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;

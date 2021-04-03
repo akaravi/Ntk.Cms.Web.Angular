@@ -39,6 +39,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('./location/coreLocation.module').then((m) => m.CoreLocationCmsModule),
       },
+      {
+        path: 'device',
+        loadChildren: () =>
+          import('./device/coreDevice.module').then((m) => m.CoreDeviceModule),
+      },
     ]
   },
 ];

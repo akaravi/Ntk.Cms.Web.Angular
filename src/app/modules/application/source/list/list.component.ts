@@ -6,6 +6,7 @@ import {
   ApplicationSourceModel,
   ApplicationSourceService,
   CoreAuthService,
+  DataFieldInfoModel,
   EnumRecordStatus,
   EnumSortType,
   ErrorExceptionResult,
@@ -75,6 +76,7 @@ export class ApplicationSourceListComponent implements OnInit, OnDestroy {
   ];
 
 
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
   expandedElement: ApplicationSourceModel | null;
   cmsApiStoreSubscribe: Subscription;
@@ -101,6 +103,8 @@ export class ApplicationSourceListComponent implements OnInit, OnDestroy {
 
     this.applicationSourceService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
+        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
         if (next.IsSuccess) {
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;

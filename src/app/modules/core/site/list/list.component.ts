@@ -13,7 +13,8 @@ import {
   TokenInfoModel,
   FilterDataModel,
   EnumRecordStatus,
-  DataFieldInfoModel
+  DataFieldInfoModel,
+  AuthRenewTokenModel
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -38,6 +39,7 @@ export class CoreSiteListComponent implements OnInit, OnDestroy {
   requestLinkUserId = 0;
   constructor(
     private coreSiteService: CoreSiteService,
+    private coreAuthService: CoreAuthService,
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
@@ -252,6 +254,34 @@ export class CoreSiteListComponent implements OnInit, OnDestroy {
 
 
   }
+  onActionbuttonLoginToRow(model: CoreSiteModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id === 0) {
+
+      const message = 'ردیفیانتخاب نشده است';
+      this.cmsToastrService.typeErrorSelected(message);
+      return;
+    }
+    this.tableRowSelected = model;
+
+
+    let authModel: AuthRenewTokenModel;
+    authModel = new AuthRenewTokenModel();
+    authModel.SiteId = this.tableRowSelected.Id;
+    this.coreAuthService.ServiceRenewToken(authModel).subscribe(
+      (res) => {
+        if (res.IsSuccess) {
+          this.cmsToastrService.typeSuccessSelected();
+          this.router.navigate(['/']);
+        }
+        else {
+          this.cmsToastrService.typeErrorSelected();
+        }
+      },
+      (error) => {
+        this.cmsToastrService.typeError(error);
+      }
+    );
+  }
   onActionbuttonDomainAliasListRow(model: CoreSiteModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
       const message = 'ردیفی انتخاب نشده است';
@@ -289,10 +319,25 @@ export class CoreSiteListComponent implements OnInit, OnDestroy {
       return;
     }
     this.router.navigate(['/core/site/userlist', this.tableRowSelected.Id]);
-
-
   }
+  onActionbuttonDeviceListRow(model: CoreSiteModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id === 0) {
+      const message = 'ردیفی انتخاب نشده است';
+      this.cmsToastrService.typeErrorSelected(message);
+      return;
+    }
+    this.tableRowSelected = model;
 
+    if (
+      this.dataModelResult == null ||
+      this.dataModelResult.Access == null ||
+      !this.dataModelResult.Access.AccessDeleteRow
+    ) {
+      this.cmsToastrService.typeErrorSelected();
+      return;
+    }
+    this.router.navigate(['/core/device', this.tableRowSelected.Id]);
+  }
 
 
   onActionbuttonStatist(): void {

@@ -113,15 +113,15 @@
 
           </mat-form-field>
 
-          <mat-form-field class="example-full-width" *ngIf="fieldsInfo['ExpireDate']?.AccessWatchField">
-            <mat-label>{{fieldsInfo['ExpireDate']?.FieldTitle}}</mat-label>
-            <input matInput [matDatepicker]="ExpireDate" [(ngModel)]="dataModel.ExpireDate"
-              name="dataModel.ExpireDate" />
-                <mat-icon matSuffix *ngIf="dataModel.ExpireDate && fieldsInfo['ExpireDate']?.AccessEditField" matSuffix
-            mat-icon-button aria-label="Clear" (click)="dataModel.ExpireDate = null">close</mat-icon>
-            <mat-datepicker-toggle matSuffix [for]="ExpireDate"></mat-datepicker-toggle>
-            <mat-datepicker touchUi #ExpireDate></mat-datepicker>
-          </mat-form-field>
+             <!-- ExpireDate Field -->
+             <mat-form-field class="example-full-width" *ngIf="fieldsInfo['ExpireDate']?.AccessWatchField">
+              <mat-label>{{fieldsInfo['ExpireDate']?.FieldTitle}}</mat-label>
+              <input matInput [matDatepicker]= "ExpireDate" [(ngModel)]="dataModel.ExpireDate" name="dataModel.ExpireDate" />
+                  <mat-icon matSuffix *ngIf="dataModel.ExpireDate && fieldsInfo['ExpireDate']?.AccessAddField" matSuffix
+              mat-icon-button aria-label="Clear" (click)="dataModel.ExpireDate = null">close</mat-icon>
+              <mat-datepicker-toggle matSuffix [for]="ExpireDate"></mat-datepicker-toggle>
+              <mat-datepicker touchUi #ExpireDate></mat-datepicker>
+            </mat-form-field>
 
 
 

@@ -14,6 +14,7 @@ import {
   CoreModuleTagCategoryModel,
   EnumSortType,
   EnumRecordStatus,
+  DataFieldInfoModel,
 } from 'ntk-cms-api';
 import { PublicHelper } from '../../../../core/helpers/publicHelper';
 import { CmsToastrService } from '../../../../core/services/cmsToastr.service';
@@ -75,6 +76,9 @@ export class CoreModuleTagListComponent implements OnInit, OnDestroy {
     'UpdatedDate',
     'Action'
   ];
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
+
   cmsApiStoreSubscribe: Subscription;
   ngOnInit(): void {
     this.DataGetAll();
@@ -102,6 +106,8 @@ export class CoreModuleTagListComponent implements OnInit, OnDestroy {
     }
     this.tagContentService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
+        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
         if (next.IsSuccess) {
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;

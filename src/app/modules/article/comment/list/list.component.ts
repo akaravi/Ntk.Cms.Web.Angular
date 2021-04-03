@@ -8,7 +8,8 @@ import {
   ArticleContentModel,
   TokenInfoModel,
   NtkCmsApiStoreService,
-  EnumRecordStatus
+  EnumRecordStatus,
+  DataFieldInfoModel
 } from 'ntk-cms-api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FilterModel, FilterDataModel } from 'ntk-cms-api';
@@ -83,6 +84,7 @@ export class ArticleCommentListComponent implements OnInit, OnDestroy {
 
 
 
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
   expandedElement: ArticleContentModel | null;
   cmsApiStoreSubscribe: Subscription;
@@ -114,6 +116,8 @@ export class ArticleCommentListComponent implements OnInit, OnDestroy {
     }
     this.articleCommentService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
+        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
         if (next.IsSuccess) {
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;

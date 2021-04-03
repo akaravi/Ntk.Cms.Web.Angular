@@ -12,7 +12,8 @@ import {
   NtkCmsApiStoreService,
   TokenInfoModel,
   FilterDataModel,
-  EnumRecordStatus
+  EnumRecordStatus,
+  DataFieldInfoModel
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -87,8 +88,7 @@ export class CoreUserListComponent implements OnInit, OnDestroy {
     'Action'
   ];
 
-
-
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
   expandedElement: CoreUserModel | null;
   cmsApiStoreSubscribe: Subscription;
 
@@ -114,6 +114,9 @@ export class CoreUserListComponent implements OnInit, OnDestroy {
 
     this.coreUserService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
+        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
+
         if (next.IsSuccess) {
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;

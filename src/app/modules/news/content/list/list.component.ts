@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   CoreAuthService,
+  DataFieldInfoModel,
   EnumRecordStatus,
   EnumSortType,
   ErrorExceptionResult,
@@ -71,6 +72,7 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
     'UpdatedDate',
     'Action'
   ];
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
   cmsApiStoreSubscribe: Subscription;
   ngOnInit(): void {
 
@@ -100,6 +102,9 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
     }
     this.newsContentService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
+        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
+
         if (next.IsSuccess) {
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;

@@ -8,7 +8,8 @@ import {
   NewsContentModel,
   NtkCmsApiStoreService,
   TokenInfoModel,
-  EnumRecordStatus
+  EnumRecordStatus,
+  DataFieldInfoModel
 } from 'ntk-cms-api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FilterModel, FilterDataModel } from 'ntk-cms-api';
@@ -78,12 +79,7 @@ export class PollingVoteListComponent implements OnInit, OnDestroy {
     'UpdatedDate',
     'Action'
   ];
-
-
-
-
-
-
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
   expandedElement: NewsContentModel | null;
   cmsApiStoreSubscribe: Subscription;
 
@@ -115,6 +111,8 @@ export class PollingVoteListComponent implements OnInit, OnDestroy {
     }
     this.pollingVoteService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
+        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
         if (next.IsSuccess) {
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;

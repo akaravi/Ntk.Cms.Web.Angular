@@ -12,7 +12,8 @@ import {
   FilterModel,
   NtkCmsApiStoreService,
   TokenInfoModel,
-  EnumRecordStatus
+  EnumRecordStatus,
+  DataFieldInfoModel
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -71,7 +72,7 @@ export class TicketingDepartemenLogListComponent implements OnInit, OnDestroy {
     'UpdatedDate',
     'Action'
   ];
-
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
 
   expandedElement: TicketingDepartemenLogModel | null;
@@ -111,6 +112,9 @@ export class TicketingDepartemenLogListComponent implements OnInit, OnDestroy {
     }
     this.ticketingDepartemenLogService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
+        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
+
         if (next.IsSuccess) {
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;

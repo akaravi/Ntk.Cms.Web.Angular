@@ -12,6 +12,7 @@ import {
   BlogContentService,
   NtkCmsApiStoreService,
   TokenInfoModel,
+  DataFieldInfoModel,
 } from 'ntk-cms-api';
 import { PublicHelper } from '../../../../core/helpers/publicHelper';
 import { CmsToastrService } from '../../../../core/services/cmsToastr.service';
@@ -71,6 +72,9 @@ export class BlogContentListComponent implements OnInit, OnDestroy {
     'UpdatedDate',
     'Action'
   ];
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
+
   cmsApiStoreSubscribe: Subscription;
   ngOnInit(): void {
 
@@ -99,6 +103,8 @@ export class BlogContentListComponent implements OnInit, OnDestroy {
     }
     this.blogContentService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
+        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
         if (next.IsSuccess) {
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;

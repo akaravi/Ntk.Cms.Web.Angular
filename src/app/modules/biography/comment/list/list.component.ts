@@ -8,7 +8,8 @@ import {
   BiographyCommentService,
   BiographyContentModel,
   NtkCmsApiStoreService,
-  TokenInfoModel
+  TokenInfoModel,
+  DataFieldInfoModel
 } from 'ntk-cms-api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FilterModel, FilterDataModel } from 'ntk-cms-api';
@@ -84,6 +85,7 @@ export class BiographyCommentListComponent implements OnInit, OnDestroy {
 
 
 
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
   expandedElement: BiographyContentModel | null;
   cmsApiStoreSubscribe: Subscription;
@@ -116,6 +118,9 @@ export class BiographyCommentListComponent implements OnInit, OnDestroy {
     }
     this.biographyCommentService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
+        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
+
         if (next.IsSuccess) {
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;

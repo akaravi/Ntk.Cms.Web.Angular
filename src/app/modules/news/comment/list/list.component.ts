@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   CoreAuthService,
+  DataFieldInfoModel,
   EnumRecordStatus,
   EnumSortType,
   ErrorExceptionResult,
@@ -81,10 +82,7 @@ export class NewsCommentListComponent implements OnInit, OnDestroy {
   ];
 
 
-
-
-
-
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
   expandedElement: NewsContentModel | null;
   cmsApiStoreSubscribe: Subscription;
 
@@ -116,6 +114,9 @@ export class NewsCommentListComponent implements OnInit, OnDestroy {
     }
     this.newsCommentService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
+        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
+
         if (next.IsSuccess) {
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;

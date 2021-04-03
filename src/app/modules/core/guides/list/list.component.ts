@@ -12,7 +12,8 @@ import {
   NtkCmsApiStoreService,
   TokenInfoModel,
   FilterDataModel,
-  EnumRecordStatus
+  EnumRecordStatus,
+  DataFieldInfoModel
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -62,6 +63,7 @@ export class CoreGuideListComponent implements OnInit, OnDestroy {
   tableRowsSelected: Array<CoreGuideModel> = [];
   tableRowSelected: CoreGuideModel = new CoreGuideModel();
   tableSource: MatTableDataSource<CoreGuideModel> = new MatTableDataSource<CoreGuideModel>();
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
 
   tabledisplayedColumns: string[] = [
@@ -104,6 +106,7 @@ export class CoreGuideListComponent implements OnInit, OnDestroy {
 
     this.coreGuideService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
+        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
         if (next.IsSuccess) {
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;

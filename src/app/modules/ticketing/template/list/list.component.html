@@ -37,24 +37,24 @@
       <mat-table [dataSource]="tableSource" matSort #tableSort="matSort" (matSortChange)="onTableSortData(tableSort)">
         <!-- ID Column -->
         <ng-container matColumnDef="Id">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> شناسه </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Id']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Id}} </mat-cell>
         </ng-container>
         <!-- LinkSiteId Column -->
         <ng-container matColumnDef="LinkSiteId">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> شناسه سایت </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkSiteId']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.LinkSiteId}} </mat-cell>
         </ng-container>
 
 
         <!-- RecordStatus Column -->
         <ng-container matColumnDef="RecordStatus">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> وضعیت </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['RecordStatus']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> <i [ngClass]="row.RecordStatus|statusClass"></i> </mat-cell>
         </ng-container>
         <!-- Question Column -->
         <ng-container matColumnDef="Title">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> عنوان </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Title']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Title}} </mat-cell>
         </ng-container>
 

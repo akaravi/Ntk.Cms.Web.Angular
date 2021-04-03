@@ -8,7 +8,8 @@ import {
   BlogCommentService,
   BlogContentModel,
   NtkCmsApiStoreService,
-  TokenInfoModel
+  TokenInfoModel,
+  DataFieldInfoModel
 } from 'ntk-cms-api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FilterModel, FilterDataModel } from 'ntk-cms-api';
@@ -82,6 +83,8 @@ export class BlogCommentListComponent implements OnInit, OnDestroy {
 
 
 
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
 
 
   expandedElement: BlogContentModel | null;
@@ -115,6 +118,9 @@ export class BlogCommentListComponent implements OnInit, OnDestroy {
     }
     this.blogCommentService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
+        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
+
         if (next.IsSuccess) {
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;

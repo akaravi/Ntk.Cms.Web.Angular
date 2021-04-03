@@ -5,10 +5,10 @@
 
 
 
-<div *ngIf="dataModel && dataModel.ListItems && dataModel.ListItems.length > 0; else firstSite">
-  <div *ngIf="dataModel" class=" container ">
+<div *ngIf="dataModelResult && dataModelResult.ListItems && dataModelResult.ListItems.length > 0; else firstSite">
+  <div *ngIf="dataModelResult" class=" container ">
     <div class="row">
-      <div *ngFor="let item of dataModel.ListItems" style="margin-left: 10px;">
+      <div *ngFor="let item of dataModelResult.ListItems" style="margin-left: 10px;">
         <div (click)="onActionClickSelectSite(item.Id)" class="card card-custom card-stretch gutter-b cursor-pointer"
           style="top: 15px;width: fit-content;">
           <div class="card-body d-flex flex-column">

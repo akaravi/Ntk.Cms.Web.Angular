@@ -113,9 +113,9 @@ export class ApplicationAppEditComponent implements OnInit {
       .ServiceViewModel()
       .subscribe(
         async (next) => {
+          this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
           if (next.IsSuccess) {
             this.dataAccessModel = next.Access;
-            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
           } else {
             this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
           }
@@ -162,7 +162,6 @@ export class ApplicationAppEditComponent implements OnInit {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-
     this.applicationAppService
       .ServiceEdit(this.dataModel)
       .subscribe(

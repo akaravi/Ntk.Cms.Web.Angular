@@ -6,6 +6,7 @@ import {
   ApplicationLogNotificationModel,
   ApplicationLogNotificationService,
   CoreAuthService,
+  DataFieldInfoModel,
   EnumRecordStatus,
   EnumSortType,
   ErrorExceptionResult,
@@ -74,6 +75,8 @@ export class ApplicationNotificationListComponent implements OnInit, OnDestroy {
   ];
 
 
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
 
   expandedElement: ApplicationLogNotificationModel | null;
   cmsApiStoreSubscribe: Subscription;
@@ -111,6 +114,8 @@ export class ApplicationNotificationListComponent implements OnInit, OnDestroy {
     }
     this.applicationLogNotificationService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
+        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
         if (next.IsSuccess) {
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;

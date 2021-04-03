@@ -12,7 +12,8 @@ import {
   FilterModel,
   NtkCmsApiStoreService,
   TokenInfoModel,
-  EnumRecordStatus
+  EnumRecordStatus,
+  DataFieldInfoModel
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -26,7 +27,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-application-app-list',
+  selector: 'app-ticketing-departemenoperator-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
@@ -72,6 +73,8 @@ export class TicketingDepartemenOperatorListComponent implements OnInit {
   ];
 
 
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
 
   expandedElement: TicketingDepartemenOperatorModel | null;
 
@@ -109,6 +112,7 @@ export class TicketingDepartemenOperatorListComponent implements OnInit {
     }
     this.ticketingDepartemenOperatorService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
+        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
         if (next.IsSuccess) {
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;

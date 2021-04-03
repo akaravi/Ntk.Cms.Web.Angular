@@ -13,7 +13,8 @@ import {
   FilterModel,
   TokenInfoModel,
   NtkCmsApiStoreService,
-  EnumRecordStatus
+  EnumRecordStatus,
+  DataFieldInfoModel
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -75,8 +76,7 @@ export class ApplicationThemeConfigListComponent implements OnInit, OnDestroy {
     'Action'
   ];
 
-
-
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
   expandedElement: ApplicationThemeConfigModel | null;
   cmsApiStoreSubscribe: Subscription;
 
@@ -113,6 +113,9 @@ export class ApplicationThemeConfigListComponent implements OnInit, OnDestroy {
     }
     this.applicationThemeConfigService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
+        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
+
         if (next.IsSuccess) {
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;
