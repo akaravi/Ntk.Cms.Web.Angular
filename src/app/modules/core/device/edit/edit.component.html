@@ -6,7 +6,6 @@
         <h4 class="form-section mb-8">
           <i class="ft-user"></i> {{ formInfo.FormTitle }}
         </h4>
-
         <div>
           <mat-form-field class="example-full-width">
             <mat-select placeholder="وضعیت" [(ngModel)]="dataModel.RecordStatus" name="dataModel.RecordStatus"
@@ -34,12 +33,11 @@
               SecurityKey is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-
           <!-- PackageName Field -->
           <mat-form-field class="example-full-width">
             <mat-label>{{fieldsInfo['PackageName']?.FieldTitle}}</mat-label>
-            <input matInput [(ngModel)]="dataModel.PackageName" name="dataModel.PackageName" #PackageName
-              type="text" placeholder="8.8.8.8" minlength="0" maxlength="500" />
+            <input matInput [(ngModel)]="dataModel.PackageName" name="dataModel.PackageName" #PackageName type="text"
+              placeholder="8.8.8.8" minlength="0" maxlength="500" />
             <mat-icon matSuffix *ngIf="dataModel.PackageName" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.PackageName = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
@@ -59,8 +57,8 @@
           <!-- LinkApplicationId Field -->
           <mat-form-field class="example-full-width">
             <mat-label>{{fieldsInfo['LinkApplicationId']?.FieldTitle}}</mat-label>
-            <input matInput [(ngModel)]="dataModel.LinkApplicationId" name="dataModel.LinkApplicationId" #LinkApplicationId
-              type="number" placeholder="number "  />
+            <input matInput [(ngModel)]="dataModel.LinkApplicationId" name="dataModel.LinkApplicationId"
+              #LinkApplicationId type="number" placeholder="number " />
             <mat-icon matSuffix *ngIf="dataModel.LinkApplicationId" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.LinkApplicationId = null">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
@@ -105,9 +103,10 @@
           <!-- ExpireDate Field -->
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['ExpireDate']?.AccessWatchField">
             <mat-label>{{fieldsInfo['ExpireDate']?.FieldTitle}}</mat-label>
-            <input matInput [matDatepicker] ="ExpireDate" [(ngModel)]="dataModel.ExpireDate" name="dataModel.ExpireDate" />
-                <mat-icon matSuffix *ngIf="dataModel.ExpireDate && fieldsInfo['ExpireDate']?.AccessEditField" matSuffix
-            mat-icon-button aria-label="Clear" (click)="dataModel.ExpireDate = null">close</mat-icon>
+            <input matInput [matDatepicker]="ExpireDate" [(ngModel)]="dataModel.ExpireDate"
+              name="dataModel.ExpireDate" />
+            <mat-icon matSuffix *ngIf="dataModel.ExpireDate && fieldsInfo['ExpireDate']?.AccessEditField" matSuffix
+              mat-icon-button aria-label="Clear" (click)="dataModel.ExpireDate = null">close</mat-icon>
             <mat-datepicker-toggle matSuffix [for]="ExpireDate"></mat-datepicker-toggle>
             <mat-datepicker touchUi #ExpireDate></mat-datepicker>
           </mat-form-field>
