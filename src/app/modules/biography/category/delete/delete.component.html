@@ -1,5 +1,6 @@
-<div class="card-content" style="direction: rtl">
-  <div class="px-3">
+<h2 mat-dialog-title>...</h2>
+<mat-dialog-content>
+
     <form #vform="ngForm" class="form form-horizontal">
       <app-progress-spinner [options]="loading"> </app-progress-spinner>
       <div *ngIf="!loading.display" class="form-body">
@@ -45,5 +46,8 @@
         </button>
       </div>
     </form>
-  </div>
-</div>
+
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+
+  </mat-dialog-actions>

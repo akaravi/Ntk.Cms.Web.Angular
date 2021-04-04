@@ -28,7 +28,6 @@ import { SingupRuleComponent } from './singupRule/singupRule.Component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-
   ]
 })
 export class AuthModule { }

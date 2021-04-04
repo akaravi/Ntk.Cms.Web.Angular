@@ -1,77 +1,77 @@
-<div class="card-content" style="direction: rtl">
-    <div class="px-3">
-        <form (ngSubmit)="onFormSubmit()" #vform="ngForm" class="form form-horizontal">
-            <app-progress-spinner [options]="loading"> </app-progress-spinner>
-            <div *ngIf="!loading.display" class="form-body">
-                <h4 class="form-section mb-8">
-                    <i class="ft-user"></i>
-                </h4>
+<h2 mat-dialog-title>{{ formInfo.FormTitle }}</h2>
+<mat-dialog-content>
+  <form (ngSubmit)="onFormSubmit()" #vform="ngForm" class="form form-horizontal">
+    <app-progress-spinner [options]="loading"> </app-progress-spinner>
+    <div *ngIf="!loading.display" class="form-body">
 
-                <div>
-                    <mat-form-field class="example-full-width">
-                        <mat-select placeholder="وضعیت" [(ngModel)]="dataModel.RecordStatus"
-                            name="dataModel.RecordStatus" #RecordStatus="ngModel"
-                            panelClass="recordStatus-{{ dataModel.RecordStatus }}" required>
-                            <mat-option *ngFor="
+      <div>
+        <mat-form-field class="example-full-width">
+          <mat-select placeholder="وضعیت" [(ngModel)]="dataModel.RecordStatus" name="dataModel.RecordStatus"
+            #RecordStatus="ngModel" panelClass="recordStatus-{{ dataModel.RecordStatus }}" required>
+            <mat-option *ngFor="
                 let item of dataModelEnumRecordStatusResult.ListItems;
                 index as i
               " [value]="item.Value">{{ item.Answer }}</mat-option>
-                        </mat-select>
-                        <mat-hint align="end">انتخاب وضعیت این محتوا</mat-hint>
-                        <mat-error *ngIf="RecordStatus.errors?.required">
-                            RecordStatus is <strong>required</strong>
-                        </mat-error>
-                    </mat-form-field>
-                    <mat-form-field class="example-full-width">
-                        <mat-label>عنوان</mat-label>
-                        <input matInput [(ngModel)]="dataModel.Question" name="dataModel.Question" #Question type="text"
-                            placeholder="عنوان" minlength="3" maxlength="1000" required />
-                        <mat-icon matSuffix *ngIf="dataModel.Question" matSuffix mat-icon-button aria-label="Clear"
-                            (click)="dataModel.Question = ''">close</mat-icon>
-                        <mat-icon matSuffix>mode_edit</mat-icon>
-                        <mat-hint align="end">{{ Question.value.length }} / 1000</mat-hint>
-                        <mat-error *ngIf="Question.errors?.required">
-                            Question is <strong>required</strong>
-                        </mat-error>
-                    </mat-form-field>
+          </mat-select>
+          <mat-hint align="end">انتخاب وضعیت این محتوا</mat-hint>
+          <mat-error *ngIf="RecordStatus.errors?.required">
+            RecordStatus is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <mat-label>عنوان</mat-label>
+          <input matInput [(ngModel)]="dataModel.Question" name="dataModel.Question" #Question type="text"
+            placeholder="عنوان" minlength="3" maxlength="1000" required />
+          <mat-icon matSuffix *ngIf="dataModel.Question" matSuffix mat-icon-button aria-label="Clear"
+            (click)="dataModel.Question = ''">close</mat-icon>
+          <mat-icon matSuffix>mode_edit</mat-icon>
+          <mat-hint align="end">{{ Question.value.length }} / 1000</mat-hint>
+          <mat-error *ngIf="Question.errors?.required">
+            Question is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
 
 
 
-                    <cms-file-manager (itemSelected)="onActionFileSelected($event)" [language]="appLanguage"
-                        [selectFileType]="selectFileTypeMainImage" [isPopup]="true" [(openForm)]="fileManagerOpenForm"
-                        [tree]="fileManagerTree" [openFilemanagerButtonLabelKey]="'select'"
-                        [openFilemanagerButtonView]="false"></cms-file-manager>
-                    <!-- TABLE  -->
-                    <p>لیست فایل های پیوست</p>
-                    <table>
-                        <tr>
-                            <td>شناسه فایل</td>
-                            <td> لینک دانلود</td>
-                            <td>حذف</td>
-                        </tr>
-                         <tr *ngFor="let item of dataFileModel | keyvalue">
-                            <td>{{item.key}}</td>
-                            <td>{{item.value}}</td>
-                            <td><button (click)="onActionFileSelectedRemove(item.key)" type="button" class="btn btn-danger  ml-2">حذف</button></td>
-                        </tr>
+        <cms-file-manager (itemSelected)="onActionFileSelected($event)" [language]="appLanguage"
+          [selectFileType]="selectFileTypeMainImage" [isPopup]="true" [(openForm)]="fileManagerOpenForm"
+          [tree]="fileManagerTree" [openFilemanagerButtonLabelKey]="'select'" [openFilemanagerButtonView]="false">
+        </cms-file-manager>
+        <!-- TABLE  -->
+        <p>لیست فایل های پیوست</p>
+        <table>
+          <tr>
+            <td>شناسه فایل</td>
+            <td> لینک دانلود</td>
+            <td>حذف</td>
+          </tr>
+          <tr *ngFor="let item of dataFileModel | keyvalue">
+            <td>{{item.key}}</td>
+            <td>{{item.value}}</td>
+            <td><button (click)="onActionFileSelectedRemove(item.key)" type="button"
+                class="btn btn-danger  ml-2">حذف</button></td>
+          </tr>
 
-                    </table>
-                    <!-- TABLE  -->
-                </div>
-            </div>
-            <div class="form-actions">
-                <small class="form-text text-muted">{{ formInfo.FormAlert }} </small>
-                <small class="form-text text-muted danger">{{ formInfo.FormError }}
-                </small>
-            </div>
-            <div class="form-actions" *ngIf="formInfo.FormSubmitAllow">
-                <button type="button" (click)="onFormCancel()" class="btn btn-raised btn-warning mr-1">
-                    <i class="ft-x"></i> انصراف
-                </button>
-                <button type="submit" class="btn btn-raised btn-primary" [disabled]="!vform.form.valid">
-                    <i class="fa fa-check-square-o"></i> ذخیره
-                </button>
-            </div>
-        </form>
+        </table>
+        <!-- TABLE  -->
+      </div>
     </div>
-</div>
+
+
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <div class="form-actions">
+    <small class="form-text text-muted">{{ formInfo.FormAlert }} </small>
+    <small class="form-text text-muted danger">{{ formInfo.FormError }}
+    </small>
+  </div>
+  <div class="form-actions" *ngIf="formInfo.FormSubmitAllow">
+    <button type="button" (click)="onFormCancel()" class="btn btn-raised btn-warning mr-1">
+      <i class="ft-x"></i> انصراف
+    </button>
+        <button type="submit" (click)="onFormSubmit()" class="btn btn-raised btn-primary" [disabled]="!vform.form.valid">
+      <i class="fa fa-check-square-o"></i> ذخیره
+    </button>
+  </div>
+</mat-dialog-actions>

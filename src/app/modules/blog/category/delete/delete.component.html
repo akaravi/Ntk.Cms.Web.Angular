@@ -1,49 +1,53 @@
-<div class="card-content" style="direction: rtl">
-  <div class="px-3">
-    <form #vform="ngForm" class="form form-horizontal">
-      <app-progress-spinner [options]="loading"> </app-progress-spinner>
-      <div *ngIf="!loading.display" class="form-body">
-        <h4 class="form-section mb-8">
-          <i class="ft-user"></i> حذف ردیف اطلاعات
-        </h4>
+<h2 mat-dialog-title>...</h2>
+<mat-dialog-content>
 
-        <div class="form-group row">
+  <form #vform="ngForm" class="form form-horizontal">
+    <app-progress-spinner [options]="loading"> </app-progress-spinner>
+    <div *ngIf="!loading.display" class="form-body">
+      <h4 class="form-section mb-8">
+        <i class="ft-user"></i> حذف ردیف اطلاعات
+      </h4>
 
-          <mat-form-field class="example-full-width">
-            <mat-label>عنوان</mat-label>
-            <input matInput [(ngModel)]="dataModelResultCategory.Item.Title" name="dataModelResultCategory.Item.Title"
-              #Title type="text" placeholder="عنوان" minlength="3" maxlength="50" required readonly />
-          </mat-form-field>
+      <div class="form-group row">
 
-          <mat-form-field class="example-full-width">
-            <mat-label>توضیحات</mat-label>
-            <textarea matInput [(ngModel)]="dataModelResultCategory.Item.Description"
-              name="dataModelResultCategory.Item.Description" #Description type="text" placeholder="توضیحات"
-              minlength="1" maxlength="100" readonly required rows=5></textarea>
+        <mat-form-field class="example-full-width">
+          <mat-label>عنوان</mat-label>
+          <input matInput [(ngModel)]="dataModelResultCategory.Item.Title" name="dataModelResultCategory.Item.Title"
+            #Title type="text" placeholder="عنوان" minlength="3" maxlength="50" required readonly />
+        </mat-form-field>
 
-          </mat-form-field>
-          <app-blog-category-selector [optionPlaceholder]="'دسته بندی جایگزین جهت جابجایی اطلاعات به این  شاخه'">
-          </app-blog-category-selector>
-        </div>
+        <mat-form-field class="example-full-width">
+          <mat-label>توضیحات</mat-label>
+          <textarea matInput [(ngModel)]="dataModelResultCategory.Item.Description"
+            name="dataModelResultCategory.Item.Description" #Description type="text" placeholder="توضیحات" minlength="1"
+            maxlength="100" readonly required rows=5></textarea>
+
+        </mat-form-field>
+        <app-blog-category-selector [optionPlaceholder]="'دسته بندی جایگزین جهت جابجایی اطلاعات به این  شاخه'">
+        </app-blog-category-selector>
       </div>
-      <div class="form-actions">
-        <small class="form-text text-muted">{{ formInfo.FormAlert }} </small>
-        <small class="form-text text-muted danger">{{ formInfo.FormError }}
-        </small>
-      </div>
-      <div class="form-actions" *ngIf="formInfo.FormSubmitAllow">
-        <button type="button" (click)="onFormMove()" [disabled]="!vform.form.valid || !formInfo.ButtonSubmittedEnabled"
-          class="btn btn-raised btn-primary">
-          <i class="ft-x"></i> جابجای اطلاعات
-        </button>
-        <button type="button" (click)="onFormDelete()"
-          [disabled]="!vform.form.valid || !formInfo.ButtonSubmittedEnabled" class="btn btn-raised btn-warning mr-1">
-          <i class="fa fa-check-square-o"></i> حذف
-        </button>
-        <button type="button" (click)="onFormCancel()" class="btn btn-raised btn-warning mr-1">
-          <i class="ft-x"></i> انصراف
-        </button>
-      </div>
-    </form>
-  </div>
-</div>
+    </div>
+    <div class="form-actions">
+      <small class="form-text text-muted">{{ formInfo.FormAlert }} </small>
+      <small class="form-text text-muted danger">{{ formInfo.FormError }}
+      </small>
+    </div>
+    <div class="form-actions" *ngIf="formInfo.FormSubmitAllow">
+      <button type="button" (click)="onFormMove()" [disabled]="!vform.form.valid || !formInfo.ButtonSubmittedEnabled"
+        class="btn btn-raised btn-primary">
+        <i class="ft-x"></i> جابجای اطلاعات
+      </button>
+      <button type="button" (click)="onFormDelete()" [disabled]="!vform.form.valid || !formInfo.ButtonSubmittedEnabled"
+        class="btn btn-raised btn-warning mr-1">
+        <i class="fa fa-check-square-o"></i> حذف
+      </button>
+      <button type="button" (click)="onFormCancel()" class="btn btn-raised btn-warning mr-1">
+        <i class="ft-x"></i> انصراف
+      </button>
+    </div>
+  </form>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+
+</mat-dialog-actions>
