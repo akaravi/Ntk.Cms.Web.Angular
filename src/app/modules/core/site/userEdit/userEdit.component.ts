@@ -51,7 +51,7 @@ requestLinkUserGroupId = 0;
     private publicHelper: PublicHelper,
   ) {
     if (data) {
-      this.requestLinkUserId = +data.LinkModuleId || 0;
+      this.requestLinkUserId = +data.LinkUsereId || 0;
       this.requestLinkSiteId = +data.LinkSiteId || 0;
       this.requestLinkUserGroupId = +data.LinkUserGroupId || 0;
     }
