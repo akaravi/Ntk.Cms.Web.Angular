@@ -1,11 +1,10 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {AuthComponent} from './auth.component';
-import {AuthLoginComponent} from './login/login.component';
 import {AuthSingUpComponent} from './singup/singup.component';
 import {AuthForgotPasswordComponent} from './forgot-password/forgot-password.component';
-import { AuthLogoutComponent } from './logout/logout.component';
-
+import { AuthSingoutComponent } from './singout/singout.component';
+import { AuthSingInComponent } from './singin/singin.component';
 
 const routes: Routes = [
   {
@@ -13,22 +12,22 @@ const routes: Routes = [
     component: AuthComponent,
     children: [
       {
-        path: 'login',
-        component: AuthLoginComponent,
+        path: 'singin',
+        component: AuthSingInComponent,
       },
       {
-        path: 'logout',
-        component: AuthLogoutComponent,
+        path: 'singout',
+        component: AuthSingoutComponent,
       },
       {
-        path: 'registration',
+        path: 'singup',
         component: AuthSingUpComponent
       },
       {
         path: 'forgot-password',
         component: AuthForgotPasswordComponent
       },
-      {path: '', redirectTo: 'login', pathMatch: 'full'},
+      {path: '', redirectTo: 'singin', pathMatch: 'full'},
     ]
   }
 ];

@@ -3,20 +3,23 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthRoutingModule } from './auth.routing';
-import { AuthLoginComponent } from './login/login.component';
-import { AuthSingUpComponent } from './singup/singup.component';
+import { AuthSingInComponent } from './singin/singin.component';
+
 import { AuthForgotPasswordComponent } from './forgot-password/forgot-password.component';
-import { AuthLogoutComponent } from './logout/logout.component';
+import { AuthSingoutComponent } from './singout/singout.component';
 import { AuthComponent } from './auth.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { AuthSingUpComponent } from './singup/singup.component';
+import { SingupRuleComponent } from './singupRule/singupRule.Component';
 
 @NgModule({
   declarations: [
-    AuthLoginComponent,
+    AuthSingInComponent,
     AuthSingUpComponent,
     AuthForgotPasswordComponent,
-    AuthLogoutComponent,
+    AuthSingoutComponent,
     AuthComponent,
+    SingupRuleComponent,
   ],
   imports: [
     CommonModule,

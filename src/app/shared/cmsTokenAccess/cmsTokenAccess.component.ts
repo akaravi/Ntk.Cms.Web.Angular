@@ -32,14 +32,14 @@ export class CmsTokenAccessComponent implements OnInit, OnDestroy {
       this.tokenInfo = value;
 
       if (!this.tokenInfo || !this.tokenInfo.Token || this.tokenInfo.Token.length === 0) {
-        this.router.navigate(['/auth/login']);
+        this.router.navigate(['/auth/singin']);
       } else if (this.tokenInfo.UserId <= 0) {
-        this.router.navigate(['/auth/login']);
+        this.router.navigate(['/auth/singin']);
       } else if (this.tokenInfo.UserId > 0 && this.tokenInfo.SiteId <= 0) {
         this.router.navigate(['/core/site/selection']);
       }
       if (this.tokenInfo && this.tokenInfo.UserId <= 0) {
-        this.router.navigate(['/auth/login']);
+        this.router.navigate(['/auth/singin']);
       }
 
       if (this.tokenInfo && this.tokenInfo.UserId > 0 && this.tokenInfo.SiteId <= 0) {

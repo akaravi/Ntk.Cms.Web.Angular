@@ -1,6 +1,6 @@
 <div class="card-content" style="direction: rtl">
   <div class="px-3">
-    <form (ngSubmit)="onFormSubmit()" #vform="ngForm" class="form form-horizontal">
+    <form (ngSubmit)="onActionSubmit()" #vform="ngForm" class="form form-horizontal">
       <app-progress-spinner [options]="loading"> </app-progress-spinner>
       <div *ngIf="!loading.display" class="form-body">
         <h4 class="form-section mb-8">
@@ -113,7 +113,7 @@
           <div class="form-group">
             <label class="checkbox mb-0">
               <input [(ngModel)]="Roulaccespt" name="Roulaccespt" type="checkbox"   />
-              <a href="#" (click)="onRoulaccespt()">
+              <a (click)="onRoulaccespt()">
                 {{'AUTH.REGISTER.AGREE_TERMS' | translate}}
               </a>
               <span class="mr-2"></span>
@@ -128,7 +128,7 @@
               class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-2">
               {{'AUTH.REGISTER.CREATE_AN_ACCOUNT' | translate}}
             </button>
-            <a routerLink="/auth/login" type="button" id="kt_login_signup_cancel"
+            <a routerLink="/auth/singin" type="button" id="kt_login_signup_cancel"
               class="btn btn-light-primary font-weight-bolder font-size-h6 px-8 py-4 my-3">
               {{'AUTH.REGISTER.RETURN_TO_LOGIN' | translate}}
             </a>

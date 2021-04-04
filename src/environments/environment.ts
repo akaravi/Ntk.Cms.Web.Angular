@@ -23,9 +23,9 @@ export const environment = {
     // configRouteUploadFileContent: 'http://localhost:2392/api/v1/upload/'
   },
   cmsUiConfig: {
-    Pathlogin: '/auth/login',
-    Pathlogout: '/auth/logout',
-    PathRegistery: '/auth/registery',
+    Pathlogin: '/auth/singin',
+    Pathlogout: '/auth/singout',
+    PathRegistery: '/auth/singup',
     PathSelectSite: '/core/site/select',
     Pathdashboard: '/dashboard/',
   },

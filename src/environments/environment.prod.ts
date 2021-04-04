@@ -22,8 +22,8 @@ export const environment = {
     configRouteUploadFileContent: 'https://apifile.ir/api/v1/upload/',
   },
   cmsUiConfig: {
-    Pathlogin: '/auth/login',
-    Pathlogout: '/auth/logout',
+    Pathlogin: '/auth/singin',
+    Pathlogout: '/auth/singout',
     PathRegistery: '/auth/registery',
     PathSelectSite: '/core/site/select',
     Pathdashboard: '/dashboard/',

@@ -2,11 +2,11 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { ConfirmPasswordValidator } from './confirm-password.validator';
-import { first } from 'rxjs/operators';
 import { AuthUserSignUpModel, CaptchaModel, CoreAuthService } from 'ntk-cms-api';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
+import { MatDialog } from '@angular/material/dialog';
+import { SingupRuleComponent } from '../singupRule/singupRule.Component';
 
 @Component({
   selector: 'app-auth-singup',
@@ -17,55 +17,47 @@ export class AuthSingUpComponent implements OnInit, OnDestroy {
   hasError: boolean;
   Roulaccespt = false;
   isLoading$: Observable<boolean>;
-
   captchaModel: CaptchaModel = new CaptchaModel();
   dataModel: AuthUserSignUpModel = new AuthUserSignUpModel();
   loading = new ProgressSpinnerModel();
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
-
-  private unsubscribe: Subscription[] = [];
-
   constructor(
     private cmsToastrService: CmsToastrService,
-    private fb: FormBuilder,
     private router: Router,
-    private coreAuthService: CoreAuthService
+    private coreAuthService: CoreAuthService,
+    public dialog: MatDialog
   ) {
-    if (this.coreAuthService.CurrentTokenInfoRenew()) {
 
-      this.router.navigate(['/']);
-    }
   }
 
   ngOnInit(): void {
     this.onCaptchaOrder();
   }
-
-  onFormSubmit(): void {
+  ngOnDestroy(): void {
+  }
+  onActionSubmit(): void {
     this.hasError = false;
     this.dataModel.CaptchaKey = this.captchaModel.Key;
-    const registrationSubscr = this.coreAuthService
-      .ServiceSignupUser(this.dataModel)
-      .pipe(first())
-      .subscribe((res) => {
-        if (res.IsSuccess) {
+     this.coreAuthService.ServiceSignupUser(this.dataModel).subscribe((next) => {
+        if (next.IsSuccess) {
           this.cmsToastrService.typeSuccessRegistery();
           this.router.navigate(['/']);
         } else {
-          this.cmsToastrService.typeErrorRegistery(res.ErrorMessage);
+          this.cmsToastrService.typeErrorRegistery(next.ErrorMessage);
           this.hasError = true;
           this.onCaptchaOrder();
         }
       }, (error) => {
         this.cmsToastrService.typeError(error);
       });
-    this.unsubscribe.push(registrationSubscr);
   }
   onRoulaccespt(): void {
+    const dialogRef = this.dialog.open(SingupRuleComponent);
 
-  }
-  onActionSubmit(): void {
-
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log(`Dialog result: ${result}`);
+      this.Roulaccespt=result;
+    });
   }
 
   onCaptchaOrder(): void {
@@ -80,7 +72,4 @@ export class AuthSingUpComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnDestroy(): void {
-    this.unsubscribe.forEach((sb) => sb.unsubscribe());
-  }
 }

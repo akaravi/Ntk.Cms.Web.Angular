@@ -39,7 +39,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         }
         if (error.status === 401) {
           this.cmsToastrService.typeErrorUserToken();
-          this.router.navigate(['auth/login']);
+          this.router.navigate(['auth/singin']);
           return;
         }
         if (error && error.error && error.error.reason) {
@@ -63,7 +63,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
     //   }
     //   if (error.status === 401) {
     //     this.cmsToastrService.typeErrorUserToken();
-    //     this.router.navigate(['auth/login']);
+    //     this.router.navigate(['auth/singin']);
     //   }
     //   return throwError(error);
     // }));

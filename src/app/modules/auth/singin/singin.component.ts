@@ -6,11 +6,11 @@ import { AuthUserSignInModel, CaptchaModel, CoreAuthService, FormInfoModel } fro
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 
 @Component({
-  selector: 'app-auth-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  selector: 'app-auth-singin',
+  templateUrl: './singin.component.html',
+  styleUrls: ['./singin.component.scss'],
 })
-export class AuthLoginComponent implements OnInit, OnDestroy {
+export class AuthSingInComponent implements OnInit, OnDestroy {
   formInfo: FormInfoModel = new FormInfoModel();
 
   modelData: AuthUserSignInModel = new AuthUserSignInModel();
