@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CoreSiteAddFirstComponent } from './addFirst/addFirst.component';
-import { SelectionComponent } from './selection/selection.component';
-import { CoreSiteResolver } from './coreSite.resolver';
+import { CoreSiteSelectionComponent } from './selection/selection.component';
 import { CoreSiteListComponent } from './list/list.component';
 import { CoreSiteModuleListComponent } from './moduleList/moduleList.component';
 import { CoreSiteModuleEditComponent } from './moduleEdit/moduleEdit.component';
@@ -20,12 +19,12 @@ const routes: Routes = [
         component: CoreSiteListComponent
       },
       {
-        path: ':LinkUserId',
+        path: 'list/:LinkUserId',
         component: CoreSiteListComponent
       },
       {
         path: 'selection',
-        component: SelectionComponent
+        component: CoreSiteSelectionComponent
       },
       {
         path: 'addFirst',

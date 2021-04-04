@@ -13,7 +13,7 @@ import {
   CoreUserService
 } from 'ntk-cms-api';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SelectionComponent } from './selection/selection.component';
+import { CoreSiteSelectionComponent } from './selection/selection.component';
 import { CoreSiteAddFirstComponent } from './addFirst/addFirst.component';
 import { CoreSiteResolver } from './coreSite.resolver';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -46,7 +46,7 @@ import { CoreUserGroupCmsModule } from '../userCategory/coreUserGroup.module';
   declarations: [
     CoreSiteComponent,
     CoreSiteAddFirstComponent,
-    SelectionComponent,
+    CoreSiteSelectionComponent,
     CoreSiteListComponent,
     CoreSiteAddComponent,
     CoreSiteEditComponent,
@@ -63,7 +63,7 @@ import { CoreUserGroupCmsModule } from '../userCategory/coreUserGroup.module';
   exports: [
     CoreSiteComponent,
     CoreSiteAddFirstComponent,
-    SelectionComponent,
+    CoreSiteSelectionComponent,
     CoreSiteListComponent,
     CoreSiteAddComponent,
     CoreSiteEditComponent,

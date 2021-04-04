@@ -22,7 +22,7 @@ import {CmsToastrService} from '../../../../core/services/cmsToastr.service';
   templateUrl: './selection.component.html',
   styleUrls: ['./selection.component.scss']
 })
-export class SelectionComponent implements OnInit {
+export class CoreSiteSelectionComponent implements OnInit {
 
   subManager = new Subscription();
   filterModel = new FilterModel();
@@ -34,7 +34,6 @@ export class SelectionComponent implements OnInit {
     private cmsToastrService: CmsToastrService,
     private router: Router,
   ) {
-debugger
   }
   formInfo: FormInfoModel = new FormInfoModel();
 

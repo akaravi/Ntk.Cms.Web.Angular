@@ -23,6 +23,8 @@ import { ProgressSpinnerComponent } from './progress-spinner/progress-spinner.co
 import { OverlayService } from './overlay/overlay.service';
 import { TranslationModule } from '../core/i18n/translation.module';
 import { HttpConfigInterceptor } from '../core/interceptor/httpConfigInterceptor';
+import { KeysPipe } from '../core/pipe/keys.pipe';
+import { EnumsPipe } from '../core/pipe/enums.pipe';
 
 
 
@@ -45,6 +47,8 @@ import { HttpConfigInterceptor } from '../core/interceptor/httpConfigInterceptor
   declarations: [
     // common and shared components/directives/pipes between more than one module and components will be listed here.
     TruncatePipe,
+    KeysPipe,
+    EnumsPipe,
     RecordStatusClassPipe,
     BoolStatusClassPipe,
     CmsSearchListComponent,
@@ -65,6 +69,8 @@ import { HttpConfigInterceptor } from '../core/interceptor/httpConfigInterceptor
     MaterialModule,
     TreeModule,
     TruncatePipe,
+    KeysPipe,
+    EnumsPipe,
     RecordStatusClassPipe,
     BoolStatusClassPipe,
     PersianDate,

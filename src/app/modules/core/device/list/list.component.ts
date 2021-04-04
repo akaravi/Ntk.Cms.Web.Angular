@@ -13,7 +13,9 @@ import {
   TokenInfoModel,
   FilterDataModel,
   EnumRecordStatus,
-  DataFieldInfoModel
+  DataFieldInfoModel,
+  CoreEnumService,
+  EnumModel
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -43,6 +45,7 @@ export class CoreDeviceListComponent implements OnInit, OnDestroy {
     private cmsToastrService: CmsToastrService,
     private cmsConfirmationDialogService: CmsConfirmationDialogService,
     private router: Router,
+    private coreEnumService: CoreEnumService,
     private activatedRoute: ActivatedRoute,
     public dialog: MatDialog) {
     this.optionsSearch.parentMethods = {
@@ -73,7 +76,8 @@ export class CoreDeviceListComponent implements OnInit, OnDestroy {
   tableRowSelected: CoreDeviceModel = new CoreDeviceModel();
   tableSource: MatTableDataSource<CoreDeviceModel> = new MatTableDataSource<CoreDeviceModel>();
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
-
+  dataModelEnumDeviceTypeResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
+  dataModelEnumOperatingSystemTypeResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
 
   tabledisplayedColumns: string[] = [
     'Id',
@@ -101,6 +105,18 @@ export class CoreDeviceListComponent implements OnInit, OnDestroy {
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
+    });
+    this.getServiceEnumDeviceType();
+    this.getServiceEnumOperatingSystemType();
+  }
+  getServiceEnumDeviceType(): void {
+    this.coreEnumService.ServiceEnumDeviceType().subscribe((next) => {
+      this.dataModelEnumDeviceTypeResult = next;
+    });
+  }
+  getServiceEnumOperatingSystemType(): void {
+    this.coreEnumService.ServiceEnumOperatingSystemType().subscribe((next) => {
+      this.dataModelEnumOperatingSystemTypeResult = next;
     });
   }
   ngOnDestroy(): void {
@@ -332,5 +348,7 @@ export class CoreDeviceListComponent implements OnInit, OnDestroy {
   onActionTableRowSelect(row: CoreDeviceModel): void {
     this.tableRowSelected = row;
   }
-
+  onActionBackToParent(): void {
+    this.router.navigate(['/core/site/']);
+  }
 }

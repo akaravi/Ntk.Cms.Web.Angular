@@ -18,6 +18,8 @@
       </a>
       <button (click)="onActionbuttonExport()" type="button" class="btn btn-bg-info BTN">خروجی فایل</button>
       <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">برسی مجدد</button>
+      <button (click)="onActionBackToParent()" *ngIf="this.requestLinkSiteId>0" type="button"
+        class="btn btn-warning BTN">بازگشت</button>
       <app-cms-search-list [(options)]="optionsSearch"></app-cms-search-list>
       <app-cms-export-list [(options)]="optionsExport"></app-cms-export-list>
       <app-cms-statist-list [(options)]="optionsStatist"></app-cms-statist-list>
@@ -49,13 +51,15 @@
         <!-- OSType Column -->
         <ng-container matColumnDef="OSType">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['OSType']?.FieldTitle}} </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.OSType}} </mat-cell>
+          <mat-cell *matCellDef="let row"> {{row.OSType | enums :dataModelEnumOperatingSystemTypeResult.ListItems }}
+          </mat-cell>
         </ng-container>
         <!-- DeviceType Column -->
         <ng-container matColumnDef="DeviceType">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['DeviceType']?.FieldTitle}}
           </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.DeviceType}} </mat-cell>
+          <mat-cell *matCellDef="let row"> {{row.DeviceType| enums :dataModelEnumDeviceTypeResult.ListItems}}
+          </mat-cell>
         </ng-container>
         <!-- PackageName Column -->
         <ng-container matColumnDef="PackageName">
@@ -63,12 +67,12 @@
           </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.PackageName }} </mat-cell>
         </ng-container>
-              <!-- LinkApplicationId Column -->
-              <ng-container matColumnDef="LinkApplicationId">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkApplicationId']?.FieldTitle}}
-                </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.LinkApplicationId }} </mat-cell>
-              </ng-container>
+        <!-- LinkApplicationId Column -->
+        <ng-container matColumnDef="LinkApplicationId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkApplicationId']?.FieldTitle}}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.LinkApplicationId }} </mat-cell>
+        </ng-container>
         <!-- CreatedDate Column -->
         <ng-container matColumnDef="CreatedDate">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['CreatedDate']?.FieldTitle}}
