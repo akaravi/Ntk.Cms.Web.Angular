@@ -211,7 +211,7 @@ export class CoreSiteUserListComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(CoreSiteUserAddComponent, {
       data: {
         LinkSiteId: this.requestLinkSiteId,
-        LinkModuleId: this.requestLinkSiteId,
+        LinkUserId: this.requestLinkUserId,
         LinkUserGroupId: this.requestLinkUserGroupId,
       }
     });
@@ -224,7 +224,7 @@ export class CoreSiteUserListComponent implements OnInit, OnDestroy {
 
   onActionbuttonEditRow(model: CoreSiteUserModel = this.tableRowSelected): void {
 
-    if (!model || !model.Id || model.Id === 0) {
+    if (!model || !model.LinkUserId || model.LinkUserId === 0 || !model.LinkSiteId || model.LinkSiteId === 0) {
       this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
       return;
     }
@@ -240,7 +240,7 @@ export class CoreSiteUserListComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(CoreSiteUserEditComponent, {
       data: {
         LinkSiteId: model.LinkSiteId,
-        LinkModuleId: model.LinkSiteId,
+        LinkUserId: model.LinkUserId,
         LinkUserGroupId: model.LinkUserGroupId,
       }
     });
@@ -251,12 +251,12 @@ export class CoreSiteUserListComponent implements OnInit, OnDestroy {
     });
   }
 
-  onActionbuttonDeleteRow(mode: CoreSiteUserModel = this.tableRowSelected): void {
-    if (mode == null || !mode.Id || mode.Id === 0) {
+  onActionbuttonDeleteRow(model: CoreSiteUserModel = this.tableRowSelected): void {
+    if (!model || !model.LinkUserId || model.LinkUserId === 0 || !model.LinkSiteId || model.LinkSiteId === 0) {
       this.cmsToastrService.typeErrorDeleteRowIsNull();
       return;
     }
-    this.tableRowSelected = mode;
+    this.tableRowSelected = model;
     if (
       this.dataModelResult == null ||
       this.dataModelResult.Access == null ||
@@ -353,7 +353,7 @@ export class CoreSiteUserListComponent implements OnInit, OnDestroy {
     this.tableRowSelected = row;
   }
   onActionbuttonSiteList(model: CoreSiteUserModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0) {
+    if (!model || !model.LinkUserId || model.LinkUserId === 0 || !model.LinkSiteId || model.LinkSiteId === 0) {
       this.cmsToastrService.typeErrorSelected('ردیفی انتخاب نشده است');
       return;
     }

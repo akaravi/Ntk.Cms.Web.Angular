@@ -3,9 +3,9 @@
     <div class="button-row">
       <button *ngIf="dataModelResult.Access.AccessAddRow " (click)="onActionbuttonNewRow()" type="button"
         class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">اضافه</button>
-      <button *ngIf="dataModelResult.Access.AccessEditRow && tableRowSelected.Id>0" (click)="onActionbuttonEditRow()"
+      <button *ngIf="dataModelResult.Access.AccessEditRow && tableRowSelected.LinkSiteId>0" (click)="onActionbuttonEditRow()"
         type="button" class="btn btn-warning ml-2" data-toggle="modal" data-target="#categoryModal">ویرایش</button>
-      <button *ngIf="dataModelResult.Access.AccessDeleteRow && tableRowSelected.Id>0"
+      <button *ngIf="dataModelResult.Access.AccessDeleteRow && tableRowSelected.LinkSiteId>0"
         (click)="onActionbuttonDeleteRow()" type="button" class="btn btn-danger  ml-2">حذف</button>
 
       <a class="btn btn-secondary btn-sm BTN">
@@ -132,7 +132,7 @@
                 <span>حذف</span>
               </button>
               <button mat-menu-item (click)="onActionbuttonSiteList(row)">
-                <mat-icon>delete_forever</mat-icon>
+                <mat-icon>web</mat-icon>
                 <span>سایت های عضو</span>
               </button>
             </mat-menu>

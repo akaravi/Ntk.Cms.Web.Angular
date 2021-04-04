@@ -221,7 +221,7 @@ export class CoreSiteModuleListComponent implements OnInit, OnDestroy {
     });
   }
   onActionbuttonDeleteRow(model: CoreModuleSiteModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0) {
+    if (!model || !model.LinkModuleId || model.LinkModuleId === 0 || !model.LinkSiteId || model.LinkSiteId === 0) {
       const emessage = 'ردیفی برای حذف انتخاب نشده است';
       this.cmsToastrService.typeErrorSelected(emessage);
       return;
