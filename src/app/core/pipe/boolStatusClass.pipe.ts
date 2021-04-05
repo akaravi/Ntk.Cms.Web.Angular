@@ -3,7 +3,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { EnumRecordStatus } from 'ntk-cms-api';
 
 @Pipe({
-  name: 'boolClass'
+  name: 'boolclass'
 })
 export class BoolStatusClassPipe implements PipeTransform {
   constructor(private sanitizer: DomSanitizer) { }

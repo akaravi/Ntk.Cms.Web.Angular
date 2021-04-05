@@ -3,9 +3,9 @@
     <div class="button-row">
       <button *ngIf="dataModelResult.Access.AccessAddRow " (click)="onActionbuttonNewRow()" type="button"
         class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">اضافه</button>
-      <button *ngIf="dataModelResult.Access.AccessEditRow && tableRowSelected.Id>0" (click)="onActionbuttonEditRow()"
+      <button *ngIf="dataModelResult.Access.AccessEditRow && tableRowSelected.LinkSiteId" (click)="onActionbuttonEditRow()"
         type="button" class="btn btn-warning ml-2" data-toggle="modal" data-target="#categoryModal">ویرایش</button>
-      <button *ngIf="dataModelResult.Access.AccessDeleteRow && tableRowSelected.Id>0"
+      <button *ngIf="dataModelResult.Access.AccessDeleteRow && tableRowSelected.LinkSiteId>0"
         (click)="onActionbuttonDeleteRow()" type="button" class="btn btn-danger  ml-2">حذف</button>
       <a class="btn btn-secondary btn-sm BTN">
         <mat-slide-toggle [(ngModel)]="optionsSearch.data.show">پرس و جو ساز</mat-slide-toggle>
@@ -63,7 +63,7 @@
         <ng-container matColumnDef="HasBuyed">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['HasBuyed']?.FieldTitle}}
           </mat-header-cell>
-          <mat-cell *matCellDef="let row"><i [ngClass]="row.HasBuyed|boolClass"></i> </mat-cell>
+          <mat-cell *matCellDef="let row"><i [ngClass]="row.HasBuyed|boolclass"></i> </mat-cell>
         </ng-container>
         <!-- CreatedDate Column -->
         <ng-container matColumnDef="CreatedDate">

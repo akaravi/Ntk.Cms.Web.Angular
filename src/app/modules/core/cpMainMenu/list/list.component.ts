@@ -13,7 +13,9 @@ import {
   EnumRecordStatus,
   DataFieldInfoModel,
   EnumActionGoStep,
-  EditStepDtoModel
+  EditStepDtoModel,
+  CoreEnumService,
+  EnumModel
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -42,6 +44,7 @@ export class CoreCpMainMenuListComponent implements OnInit, OnDestroy {
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
     private router: Router,
+    public coreEnumService: CoreEnumService,
     public dialog: MatDialog) {
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
@@ -80,6 +83,7 @@ export class CoreCpMainMenuListComponent implements OnInit, OnDestroy {
   ];
 
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+  dataModelEnumMenuPlaceTypeResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
 
 
   expandedElement: CoreCpMainMenuModel | null;
@@ -92,6 +96,12 @@ export class CoreCpMainMenuListComponent implements OnInit, OnDestroy {
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
+    });
+    this.getEnumMenuPlaceType();
+  }
+  getEnumMenuPlaceType(): void {
+    this.coreEnumService.ServiceEnumMenuPlaceType().subscribe((next) => {
+      this.dataModelEnumMenuPlaceTypeResult = next;
     });
   }
   ngOnDestroy(): void {

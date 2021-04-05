@@ -17,6 +17,7 @@ import {
   OnInit,
   ViewChild,
   Inject,
+  ViewContainerRef,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -29,6 +30,8 @@ import {
 import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
+import { StepperSelectionEvent } from '@angular/cdk/stepper';
+import { MatStepper } from '@angular/material/stepper';
 
 @Component({
   selector: 'app-core-site-module-edit',
@@ -44,6 +47,7 @@ export class CoreSiteModuleEditComponent implements OnInit {
     public coreModuleSiteService: CoreModuleSiteService,
     private cmsToastrService: CmsToastrService,
     private publicHelper: PublicHelper,
+
   ) {
     if (data) {
       this.requestLinkModuleId = +data.LinkModuleId || 0;
@@ -62,6 +66,7 @@ export class CoreSiteModuleEditComponent implements OnInit {
   dataModelResult: ErrorExceptionResult<CoreModuleSiteModel> = new ErrorExceptionResult<CoreModuleSiteModel>();
   dataModel: CoreModuleSiteModel = new CoreModuleSiteModel();
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  @ViewChild('viewContainer', {read: ViewContainerRef}) viewContainer: ViewContainerRef;
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
@@ -91,6 +96,13 @@ export class CoreSiteModuleEditComponent implements OnInit {
       this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
     }
   }
+  // onActionTest(): void{
+  //   this.viewContainer.clear(); // clear all views
+  //   const componentFactory = this.resolver.resolveComponentFactory(
+  //     FirstComponent
+  //   );
+  //   this.viewContainer.createComponent(componentFactory);
+  // }
   DataGetAccess(): void {
     this.coreModuleSiteService
       .ServiceViewModel()
@@ -201,5 +213,16 @@ export class CoreSiteModuleEditComponent implements OnInit {
   }
   onFormCancel(): void {
     this.dialogRef.close({ dialogChangedDate: false });
+  }
+  onStepClick(event: StepperSelectionEvent, stepper: MatStepper): void {
+    if (event.previouslySelectedIndex < event.selectedIndex) {
+      if (!this.formGroup.valid) {
+        this.cmsToastrService.typeErrorFormInvalid();
+        setTimeout(() => {
+          stepper.selectedIndex = event.previouslySelectedIndex;
+          // stepper.previous();
+        }, 10);
+      }
+    }
   }
 }

@@ -1,0 +1,67 @@
+<div class="d-flex flex-column-fluid">
+  <!--begin::Container-->
+  <div class="container">
+    <form (ngSubmit)="onFormSubmit()" #vform="ngForm"
+      class="form mt-0 mt-lg-10 fv-plugins-bootstrap fv-plugins-framework">
+      <app-progress-spinner [options]="loading">
+      </app-progress-spinner>
+      <mat-horizontal-stepper *ngIf="!loading.display" (selectionChange)="onStepClick($event,stepper)" #stepper>
+        <mat-step label="تنظیمات ماژول" state="main">
+          <p>تنظیمات که ماژول به سایت به کارگیری می شود </p>
+
+      {{dataConfigSiteValuesDefaultModel|json}}
+
+
+      {{dataSiteStorageModel|json}}
+
+      {{dataConfigSiteValuesModel|json}}
+
+      {{dataConfigSiteAccessValuesModel|json}}
+
+      {{dataConfigSiteAccessValuesDefaultModel|json}}
+
+      {{dataConfigAdminMainModel|json}}
+
+
+
+          <div *ngIf="formInfo.FormSubmitAllow">
+            <a class="btn btn-secondary btn-sm BTN">
+              <button (click)="onActionBackToParent()" type="button" class="btn btn-warning BTN">بازگشت</button>
+            </a>
+            <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
+              class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
+              بعدی
+            </button>
+            <button type="submit" mat-button [disabled]="!vform.form.valid"
+              class="btn btn-success font-weight-bold text-uppercase px-9 py-4">
+              ذخیره
+            </button>
+          </div>
+        </mat-step>
+
+        <mat-step label="تنظیمات پیش فرض ماژول" state="main">
+          <p>تنظیمات که در اولین واگذاری ماژول به سایت به کارگیری می شود </p>
+
+
+
+
+          <div *ngIf="formInfo.FormSubmitAllow">
+            <button type="button" mat-button matStepperPrevious
+              class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
+              قبلی
+            </button>
+            <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
+              class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
+              بعدی
+            </button>
+            <button type="submit" mat-button [disabled]="!vform.form.valid"
+              class="btn btn-success font-weight-bold text-uppercase px-9 py-4">
+              ذخیره
+            </button>
+          </div>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </form>
+  </div>
+  <!--end::Container-->
+</div>

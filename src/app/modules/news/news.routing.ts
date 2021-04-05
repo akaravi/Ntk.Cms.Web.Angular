@@ -5,6 +5,7 @@ import { NewsContentListComponent } from './content/list/list.component';
 import { NewsCommentListComponent } from './comment/list/list.component';
 import { NewsContentEditComponent } from './content/edit/edit.component';
 import { NewsContentAddComponent } from './content/add/add.component';
+import { NewsConfigComponent } from './config/config.component';
 
 
 const routes: Routes = [
@@ -12,6 +13,10 @@ const routes: Routes = [
     path: '',
     component: NewsComponent,
     children: [
+      {
+        path: 'config',
+        component: NewsConfigComponent
+      },
       {
         path: 'content',
         // resolve: {categoryList: CategoryResolver},

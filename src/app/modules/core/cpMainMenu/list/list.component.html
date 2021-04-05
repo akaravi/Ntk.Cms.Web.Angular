@@ -45,7 +45,8 @@
         </ng-container>
         <!-- RecordStatus Column -->
         <ng-container matColumnDef="RecordStatus">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>  {{fieldsInfo['RecordStatus']?.FieldTitle}} </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['RecordStatus']?.FieldTitle}}
+          </mat-header-cell>
           <mat-cell *matCellDef="let row">
             <i [ngClass]="row.RecordStatus|statusClass"></i>
           </mat-cell>
@@ -64,13 +65,15 @@
         <ng-container matColumnDef="ShowInAccessAdminAllowToProfessionalData">
           <mat-header-cell *matHeaderCellDef mat-sort-header>
             {{fieldsInfo['ShowInAccessAdminAllowToProfessionalData']?.FieldTitle}}</mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.ShowInAccessAdminAllowToProfessionalData}} </mat-cell>
+          <mat-cell *matCellDef="let row">
+            <i [ngClass]="row.ShowInAccessAdminAllowToProfessionalData | boolclass"></i>
+          </mat-cell>
         </ng-container>
         <!-- MenuPlaceType Column -->
         <ng-container matColumnDef="MenuPlaceType">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['MenuPlaceType']?.FieldTitle}}
           </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.MenuPlaceType}} </mat-cell>
+          <mat-cell *matCellDef="let row"> {{row.MenuPlaceType | enums : dataModelEnumMenuPlaceTypeResult.ListItems}} </mat-cell>
         </ng-container>
         <!-- ShowInMenuOrder Column -->
         <ng-container matColumnDef="ShowInMenuOrder">
