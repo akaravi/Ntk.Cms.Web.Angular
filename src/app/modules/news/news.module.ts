@@ -47,8 +47,10 @@ import { NewsConfigSiteComponent } from './config/site/configSite.component';
 @NgModule({
   declarations: [
     NewsComponent,
+    /*Config*/
     NewsConfigMainAdminComponent,
     NewsConfigSiteComponent,
+    /*Config*/
     NewsContentAddComponent,
     NewsContentEditComponent,
     NewsContentDeleteComponent,

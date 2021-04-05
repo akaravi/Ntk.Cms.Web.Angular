@@ -45,10 +45,16 @@ import { ApplicationAppUploadAppComponent } from './content/uploadApp/uploadApp.
 import { ApplicationAppUploadUpdateComponent } from './content/uploadUpdate/uploadUpdate.component';
 import { CmsFileUploaderModule } from 'ntk-cms-fileuploader';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { ApplicationConfigSiteComponent } from './config/site/configSite.component';
+import { ApplicationConfigMainAdminComponent } from './config/mainAdmin/configMainAdmin.component';
 
 @NgModule({
   declarations: [
     ApplicationComponent,
+    /*Config*/
+    ApplicationConfigMainAdminComponent,
+    ApplicationConfigSiteComponent,
+    /*Config*/
     ApplicationSourceListComponent,
     ApplicationSourceTreeComponent,
     ApplicationSourceAddComponent,

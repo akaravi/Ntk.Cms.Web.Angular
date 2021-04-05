@@ -11,12 +11,28 @@ import { ApplicationSourceAddComponent } from './source/add/add.component';
 import { ApplicationSourceEditComponent } from './source/edit/edit.component';
 import { ApplicationAppEditComponent } from './content/edit/edit.component';
 import { ApplicationAppAddComponent } from './content/add/add.component';
+import { ApplicationConfigMainAdminComponent } from './config/mainAdmin/configMainAdmin.component';
+import { ApplicationConfigSiteComponent } from './config/site/configSite.component';
 
 const routes: Routes = [
   {
     path: '',
     component: ApplicationComponent,
     children: [
+         /*Config*/
+         {
+          path: 'config/mainadmin',
+          component: ApplicationConfigMainAdminComponent
+        },
+        {
+          path: 'config/site',
+          component: ApplicationConfigSiteComponent
+        },
+        {
+          path: 'config/site/:LinkSiteId',
+          component: ApplicationConfigSiteComponent
+        },
+        /*Config*/
       {
         path: 'source',
         component: ApplicationSourceListComponent

@@ -15,6 +15,7 @@ const routes: Routes = [
     path: '',
     component: NewsComponent,
     children: [
+      /*Config*/
       {
         path: 'config/mainadmin',
         component: NewsConfigMainAdminComponent
@@ -27,6 +28,7 @@ const routes: Routes = [
         path: 'config/site/:LinkSiteId',
         component: NewsConfigSiteComponent
       },
+      /*Config*/
       {
         path: 'content',
         // resolve: {categoryList: CategoryResolver},

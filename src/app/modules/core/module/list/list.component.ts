@@ -308,6 +308,15 @@ export class CoreModuleListComponent implements OnInit, OnDestroy {
     );
 
   }
+  onActionbuttonConfigMainAdminRow(model: CoreModuleModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id === 0 ) {
+      const emessage = 'ردیفی انتخاب نشده است';
+      this.cmsToastrService.typeErrorSelected(emessage);
+      return;
+    }
+    this.tableRowSelected = model;
+    this.router.navigate([model.ClassName + '/config/mainadmin/']);
+  }
   onActionbuttonExport(): void {
     this.optionsExport.data.show = !this.optionsExport.data.show;
     this.optionsExport.childMethods.runExport(this.filteModelContent.Filters);
