@@ -79,7 +79,7 @@ export class TicketingDepartemenLogListComponent implements OnInit, OnDestroy {
   cmsApiStoreSubscribe: Subscription;
 
   ngOnInit(): void {
-    this.requestSourceId = Number(this.activatedRoute.snapshot.paramMap.get('SourceId'));
+    this.requestSourceId = + Number(this.activatedRoute.snapshot.paramMap.get('SourceId'));
     this.DataGetAll();
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {

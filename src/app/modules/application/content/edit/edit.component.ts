@@ -18,7 +18,6 @@ import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { NodeInterface, TreeModel } from 'ntk-cms-filemanager';
-import { retry } from 'rxjs/operators';
 import { ApplicationThemeConfigModel } from 'ntk-cms-api';
 import { PoinModel } from 'src/app/core/models/pointModel';
 import { Map as leafletMap } from 'leaflet';
@@ -71,8 +70,8 @@ export class ApplicationAppEditComponent implements OnInit {
 
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
   ngOnInit(): void {
-    this.requestId = Number(this.activatedRoute.snapshot.paramMap.get('Id'));
-    if (this.requestId === 0) {
+    this.requestId = + Number(this.activatedRoute.snapshot.paramMap.get('Id'));
+    if (!this.requestId||this.requestId === 0) {
       this.cmsToastrService.typeErrorAddRowParentIsNull();
       return;
     }

@@ -48,7 +48,7 @@ export class CoreUserListComponent implements OnInit, OnDestroy {
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
-    this.requestLinkSiteId = Number(this.activatedRoute.snapshot.paramMap.get('LinkSiteId'));
+    this.requestLinkSiteId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkSiteId'));
     if (this.requestLinkSiteId > 0) {
       const filter = new FilterDataModel();
       filter.PropertyAnyName = 'LinkSiteId';

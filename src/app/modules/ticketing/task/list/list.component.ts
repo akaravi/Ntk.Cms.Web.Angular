@@ -83,7 +83,7 @@ export class TicketingTaskListComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.requestDepartemenId = Number(this.activatedRoute.snapshot.paramMap.get('DepartemenId'));
+    this.requestDepartemenId = + Number(this.activatedRoute.snapshot.paramMap.get('DepartemenId'));
     this.DataGetAll();
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {

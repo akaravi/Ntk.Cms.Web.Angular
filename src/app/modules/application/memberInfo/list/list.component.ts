@@ -88,7 +88,7 @@ export class ApplicationMemberInfoListComponent implements OnInit, OnDestroy {
   cmsApiStoreSubscribe: Subscription;
 
   ngOnInit(): void {
-    this.requestApplicationId = Number(this.activatedRoute.snapshot.paramMap.get('ApplicationId'));
+    this.requestApplicationId = + Number(this.activatedRoute.snapshot.paramMap.get('ApplicationId'));
     this.DataGetAll();
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {

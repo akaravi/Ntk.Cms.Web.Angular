@@ -96,7 +96,7 @@ export class BlogContentEditComponent implements OnInit, AfterViewInit {
 
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
   ngOnInit(): void {
-    this.requestId = Number(this.activatedRoute.snapshot.paramMap.get('Id'));
+    this.requestId = + Number(this.activatedRoute.snapshot.paramMap.get('Id'));
     if (this.requestId === 0) {
       this.cmsToastrService.typeErrorAddRowParentIsNull();
       return;

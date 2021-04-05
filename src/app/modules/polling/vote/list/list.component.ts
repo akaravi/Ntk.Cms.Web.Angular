@@ -84,7 +84,7 @@ export class PollingVoteListComponent implements OnInit, OnDestroy {
   cmsApiStoreSubscribe: Subscription;
 
   ngOnInit(): void {
-    this.requestContentId = Number(this.activatedRoute.snapshot.paramMap.get('ContentId'));
+    this.requestContentId = + Number(this.activatedRoute.snapshot.paramMap.get('ContentId'));
 
     this.DataGetAll();
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;

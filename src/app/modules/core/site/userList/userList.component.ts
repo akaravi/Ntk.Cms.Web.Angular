@@ -53,9 +53,9 @@ export class CoreSiteUserListComponent implements OnInit, OnDestroy {
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
-    this.requestLinkSiteId = Number(this.activatedRoute.snapshot.paramMap.get('LinkSiteId'));
-    this.requestLinkUserId = Number(this.activatedRoute.snapshot.paramMap.get('LinkUserId'));
-    this.requestLinkUserGroupId = Number(this.activatedRoute.snapshot.paramMap.get('LinkUserGroupId'));
+    this.requestLinkSiteId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkSiteId'));
+    this.requestLinkUserId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkUserId'));
+    this.requestLinkUserGroupId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkUserGroupId'));
     if (this.requestLinkSiteId > 0) {
       const filter = new FilterDataModel();
       filter.PropertyName = 'LinkSiteId';

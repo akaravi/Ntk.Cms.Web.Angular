@@ -118,9 +118,10 @@
 
 
           <div *ngIf="formInfo.FormSubmitAllow">
-            <a class="btn btn-secondary btn-sm BTN">
-              <button (click)="onActionBackToParent()" type="button" class="btn btn-warning BTN">بازگشت</button>
-            </a>
+           <button type="button" mat-button  (click)="onActionBackToParent()"
+              class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
+              بازگشت
+            </button>
             <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
               بعدی
@@ -199,9 +200,10 @@
           </mat-form-field>
 
           <div *ngIf="formInfo.FormSubmitAllow">
-            <a class="btn btn-secondary btn-sm BTN">
-              <button (click)="onActionBackToParent()" type="button" class="btn btn-warning BTN">بازگشت</button>
-            </a>
+           <button type="button" mat-button  (click)="onActionBackToParent()"
+              class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
+              بازگشت
+            </button>
             <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
               بعدی

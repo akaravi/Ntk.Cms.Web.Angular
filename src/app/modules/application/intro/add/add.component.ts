@@ -61,7 +61,7 @@ export class ApplicationIntroAddComponent implements OnInit {
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
 
   ngOnInit(): void {
-    this.requestApplicationId = Number(this.activatedRoute.snapshot.paramMap.get('ApplicationId'));
+    this.requestApplicationId = + Number(this.activatedRoute.snapshot.paramMap.get('ApplicationId'));
     if (this.requestApplicationId === 0) {
       this.cmsToastrService.typeErrorAddRowParentIsNull();
       return;

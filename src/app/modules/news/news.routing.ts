@@ -5,7 +5,9 @@ import { NewsContentListComponent } from './content/list/list.component';
 import { NewsCommentListComponent } from './comment/list/list.component';
 import { NewsContentEditComponent } from './content/edit/edit.component';
 import { NewsContentAddComponent } from './content/add/add.component';
-import { NewsConfigComponent } from './config/config.component';
+import { NewsConfigSiteComponent } from './config/site/configSite.component';
+import { NewsConfigMainAdminComponent } from './config/mainAdmin/configMainAdmin.component';
+
 
 
 const routes: Routes = [
@@ -14,8 +16,16 @@ const routes: Routes = [
     component: NewsComponent,
     children: [
       {
-        path: 'config',
-        component: NewsConfigComponent
+        path: 'config/mainadmin',
+        component: NewsConfigMainAdminComponent
+      },
+      {
+        path: 'config/site',
+        component: NewsConfigSiteComponent
+      },
+      {
+        path: 'config/site/:LinkSiteId',
+        component: NewsConfigSiteComponent
       },
       {
         path: 'content',

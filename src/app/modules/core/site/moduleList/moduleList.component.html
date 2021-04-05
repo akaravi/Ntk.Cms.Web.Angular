@@ -109,6 +109,14 @@
                 <mat-icon>delete_forever</mat-icon>
                 <span>حذف</span>
               </button>
+              <button mat-menu-item (click)="onActionbuttonConfigSiteRow(row)" >
+                <mat-icon>config</mat-icon>
+                <span>تظیمات ماژول</span>
+              </button>
+              <button mat-menu-item (click)="onActionbuttonConfigMainAdminRow(row)"  *ngIf="tokenInfo.UserAccessAdminAllowToProfessionalData">
+                <mat-icon>config</mat-icon>
+                <span>تنظیمات مدیریتی</span>
+              </button>
 
             </mat-menu>
 

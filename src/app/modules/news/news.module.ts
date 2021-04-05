@@ -5,11 +5,8 @@ import { NewsComponent } from './news.component';
 import { TagInputModule } from 'ngx-chips';
 
 import {
-  CmsStore,
   CoreEnumService,
   CoreModuleTagService,
-  EnumModel,
-  ErrorExceptionResult,
   NewsCategoryService,
   NewsCommentService,
   NewsConfigurationService,
@@ -43,12 +40,15 @@ import { NewsContentSelectorComponent } from './content/selector/selector.compon
 import { NewsContentDeleteComponent } from './content/delete/delete.component';
 import { NewsCategoryAddComponent } from './category/add/add.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
-import { NewsConfigComponent } from './config/config.component';
+import { NewsConfigMainAdminComponent } from './config/mainAdmin/configMainAdmin.component';
+import { NewsConfigSiteComponent } from './config/site/configSite.component';
+
 
 @NgModule({
   declarations: [
     NewsComponent,
-    NewsConfigComponent,
+    NewsConfigMainAdminComponent,
+    NewsConfigSiteComponent,
     NewsContentAddComponent,
     NewsContentEditComponent,
     NewsContentDeleteComponent,

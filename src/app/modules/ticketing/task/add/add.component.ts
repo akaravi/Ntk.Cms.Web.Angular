@@ -60,7 +60,7 @@ export class TicketingTaskAddComponent implements OnInit {
   mapOptonCenter = {};
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
   ngOnInit(): void {
-    this.requestDepartemenId = Number(this.activatedRoute.snapshot.paramMap.get('SourceId'));
+    this.requestDepartemenId = + Number(this.activatedRoute.snapshot.paramMap.get('SourceId'));
     if (this.requestDepartemenId === 0) {
       this.cmsToastrService.typeErrorAddRowParentIsNull();
       return;

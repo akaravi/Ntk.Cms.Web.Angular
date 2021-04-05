@@ -26,11 +26,11 @@ import { Subscription } from 'rxjs';
 
 
 @Component({
-  selector: 'app-news-config-edit',
-  templateUrl: './config.component.html',
-  styleUrls: ['./config.component.scss']
+  selector: 'app-news-config-site',
+  templateUrl: './configSite.component.html',
+  styleUrls: ['./configSite.component.scss']
 })
-export class NewsConfigComponent implements OnInit {
+export class NewsConfigSiteComponent implements OnInit {
   requestLinkSiteId = 0;
   constructor(
     private configService: NewsConfigurationService,
@@ -63,7 +63,7 @@ export class NewsConfigComponent implements OnInit {
   cmsApiStoreSubscribe: Subscription;
 
   ngOnInit(): void {
-    this.requestLinkSiteId = Number(this.activatedRoute.snapshot.paramMap.get('LinkSiteId'));
+    this.requestLinkSiteId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkSiteId'));
 
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
@@ -74,7 +74,7 @@ export class NewsConfigComponent implements OnInit {
     this.onLoadDate();
   }
   onLoadDate(): void {
-    if (this.requestLinkSiteId === 0) {
+    if (!this.requestLinkSiteId || this.requestLinkSiteId === 0) {
       this.requestLinkSiteId = this.tokenInfo.SiteId;
     }
     if (this.tokenInfo.UserAccessAdminAllowToProfessionalData) {
@@ -120,8 +120,8 @@ export class NewsConfigComponent implements OnInit {
   }
 
   onActionBackToParent(): void {
-    this.router.navigate(['/application/app/']);
-  }
+    this.router.navigate(['/core/site/modulelist']);
+    }
 
   dataConfigSiteValuesDefaultModel = new NewsModuleConfigSiteValuesModel();
   GetServiceSiteConfigDefault(): void {

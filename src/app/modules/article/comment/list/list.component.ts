@@ -90,7 +90,7 @@ export class ArticleCommentListComponent implements OnInit, OnDestroy {
   cmsApiStoreSubscribe: Subscription;
 
   ngOnInit(): void {
-    this.requestContentId = Number(this.activatedRoute.snapshot.paramMap.get('ContentId'));
+    this.requestContentId = + Number(this.activatedRoute.snapshot.paramMap.get('ContentId'));
     this.DataGetAll();
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((x) => x.ntkCmsAPiState.tokenInfo).subscribe((next) => {

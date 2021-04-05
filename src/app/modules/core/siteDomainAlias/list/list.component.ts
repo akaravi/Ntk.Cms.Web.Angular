@@ -48,7 +48,7 @@ export class CoreSiteDomainAliasListComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private router: Router,
   ) {
-    this.requestId = Number(this.activatedRoute.snapshot.paramMap.get('Id'));
+    this.requestId = + Number(this.activatedRoute.snapshot.paramMap.get('Id'));
 
     if (this.requestId > 0) {
       const filter = new FilterDataModel();

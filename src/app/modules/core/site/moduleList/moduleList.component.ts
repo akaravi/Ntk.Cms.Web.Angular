@@ -49,7 +49,7 @@ export class CoreSiteModuleListComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private router: Router,
   ) {
-    this.requestId = Number(this.activatedRoute.snapshot.paramMap.get('Id'));
+    this.requestId = + Number(this.activatedRoute.snapshot.paramMap.get('Id'));
     if (this.requestId > 0) {
       const filter = new FilterDataModel();
       filter.PropertyName = 'LinkSiteId';
@@ -220,6 +220,7 @@ export class CoreSiteModuleListComponent implements OnInit, OnDestroy {
       }
     });
   }
+
   onActionbuttonDeleteRow(model: CoreModuleSiteModel = this.tableRowSelected): void {
     if (!model || !model.LinkModuleId || model.LinkModuleId === 0 || !model.LinkSiteId || model.LinkSiteId === 0) {
       const emessage = 'ردیفی برای حذف انتخاب نشده است';
@@ -326,6 +327,24 @@ export class CoreSiteModuleListComponent implements OnInit, OnDestroy {
       (error) => {
       }
     );
+  }
+  onActionbuttonConfigSiteRow(model: CoreModuleSiteModel = this.tableRowSelected): void {
+    if (!model || !model.LinkModuleId || model.LinkModuleId === 0 || !model.LinkSiteId || model.LinkSiteId === 0) {
+      const emessage = 'ردیفی انتخاب نشده است';
+      this.cmsToastrService.typeErrorSelected(emessage);
+      return;
+    }
+    this.tableRowSelected = model;
+    this.router.navigate([model.virtual_CmsModule.ClassName + '/config/site/', model.LinkSiteId]);
+  }
+  onActionbuttonConfigMainAdminRow(model: CoreModuleSiteModel = this.tableRowSelected): void {
+    if (!model || !model.LinkModuleId || model.LinkModuleId === 0 || !model.LinkSiteId || model.LinkSiteId === 0) {
+      const emessage = 'ردیفی انتخاب نشده است';
+      this.cmsToastrService.typeErrorSelected(emessage);
+      return;
+    }
+    this.tableRowSelected = model;
+    this.router.navigate([model.virtual_CmsModule.ClassName + '/config/mainadmin/']);
   }
   onActionbuttonExport(): void {
     this.optionsExport.data.show = !this.optionsExport.data.show;

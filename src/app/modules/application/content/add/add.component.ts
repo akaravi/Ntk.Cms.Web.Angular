@@ -70,7 +70,7 @@ export class ApplicationAppAddComponent implements OnInit {
   mapOptonCenter = {};
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
   ngOnInit(): void {
-    this.requestSourceId = Number(this.activatedRoute.snapshot.paramMap.get('SourceId'));
+    this.requestSourceId = + Number(this.activatedRoute.snapshot.paramMap.get('SourceId'));
     if (this.requestSourceId === 0) {
       this.cmsToastrService.typeErrorAddRowParentIsNull();
       return;
