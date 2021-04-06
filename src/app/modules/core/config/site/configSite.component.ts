@@ -6,34 +6,34 @@ import {
   AccessModel,
   CoreEnumService,
   DataFieldInfoModel,
-  EnumModel,
-  ErrorExceptionResult,
   FormInfoModel,
-  ApplicationConfigurationService,
-  ApplicationModuleConfigAdminMainValuesModel,
-  ApplicationModuleConfigSiteAccessValuesModel,
-  ApplicationModuleConfigSiteValuesModel,
-  ApplicationModuleSiteStorageValuesModel,
+  CoreConfigurationService,
+  CoreModuleConfigAdminMainValuesModel,
+  CoreModuleConfigSiteAccessValuesModel,
+  CoreModuleConfigSiteValuesModel,
+  CoreModuleSiteStorageValuesModel,
   NtkCmsApiStoreService,
   TokenInfoModel,
+  EnumModel,
+  ErrorExceptionResult,
 } from 'ntk-cms-api';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
-import { NodeInterface, TreeModel } from 'ntk-cms-filemanager';
+import { TreeModel } from 'ntk-cms-filemanager';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 import { Subscription } from 'rxjs';
 
 
 @Component({
-  selector: 'app-application-config-site',
+  selector: 'app-core-config-site',
   templateUrl: './configSite.component.html',
   styleUrls: ['./configSite.component.scss']
 })
-export class ApplicationConfigSiteComponent implements OnInit {
+export class CoreConfigSiteComponent implements OnInit {
   requestLinkSiteId = 0;
   constructor(
-    private configService: ApplicationConfigurationService,
+    private configService: CoreConfigurationService,
     private cmsApiStore: NtkCmsApiStoreService,
     private activatedRoute: ActivatedRoute,
     private cmsStoreService: CmsStoreService,
@@ -51,6 +51,7 @@ export class ApplicationConfigSiteComponent implements OnInit {
   formInfo: FormInfoModel = new FormInfoModel();
   dataAccessModel: AccessModel;
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+  dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
 
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
   fileManagerOpenForm = false;
@@ -72,6 +73,17 @@ export class ApplicationConfigSiteComponent implements OnInit {
     });
 
     this.onLoadDate();
+    this.getEnumRecordStatus();
+  }
+  getEnumRecordStatus(): void {
+    if (this.storeSnapshot
+      && this.storeSnapshot.EnumRecordStatus
+      && this.storeSnapshot.EnumRecordStatus
+      && this.storeSnapshot.EnumRecordStatus.IsSuccess
+      && this.storeSnapshot.EnumRecordStatus.ListItems
+      && this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
+      this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
+    }
   }
   onLoadDate(): void {
     if (!this.requestLinkSiteId || this.requestLinkSiteId === 0) {
@@ -89,7 +101,7 @@ export class ApplicationConfigSiteComponent implements OnInit {
       this.cmsToastrService.typeErrorFormInvalid();
       return;
     }
-   
+
     if (this.requestLinkSiteId > 0) {
       this.SetServiceSiteStorageSave(this.requestLinkSiteId);
       this.SetServiceSiteConfigSave(this.requestLinkSiteId);
@@ -116,7 +128,7 @@ export class ApplicationConfigSiteComponent implements OnInit {
     }
 
 
-  dataSiteStorageModel = new ApplicationModuleSiteStorageValuesModel();
+  dataSiteStorageModel = new CoreModuleSiteStorageValuesModel();
   GetServiceSiteStorage(SiteId: number): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
@@ -165,7 +177,7 @@ export class ApplicationConfigSiteComponent implements OnInit {
         }
       );
   }
-  dataConfigSiteValuesModel = new ApplicationModuleConfigSiteValuesModel();
+  dataConfigSiteValuesModel = new CoreModuleConfigSiteValuesModel();
   GetServiceSiteConfig(SiteId: number): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
@@ -214,7 +226,7 @@ export class ApplicationConfigSiteComponent implements OnInit {
         }
       );
   }
-  dataConfigSiteAccessValuesModel = new ApplicationModuleConfigSiteAccessValuesModel();
+  dataConfigSiteAccessValuesModel = new CoreModuleConfigSiteAccessValuesModel();
   GetServiceSiteAccess(SiteId: number): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';

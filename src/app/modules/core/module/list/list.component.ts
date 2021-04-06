@@ -68,13 +68,10 @@ export class CoreModuleListComponent implements OnInit, OnDestroy {
 
 
   tabledisplayedColumns: string[] = [
-    'MainImageSrc',
     'Id',
-    'linkCreatedByModuleId',
     'RecordStatus',
     'Title',
-    'SubDomain',
-    'Domain',
+    'ClassName',
     'CreatedDate',
     'UpdatedDate',
     'Action'
@@ -112,18 +109,6 @@ export class CoreModuleListComponent implements OnInit, OnDestroy {
 
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;
-          if (this.tokenInfo.UserAccessAdminAllowToAllData) {
-            this.tabledisplayedColumns = this.publicHelper.listAddIfNotExist(
-              this.tabledisplayedColumns,
-              'linkCreatedByModuleId',
-              0
-            );
-          } else {
-            this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
-              this.tabledisplayedColumns,
-              'linkCreatedByModuleId'
-            );
-          }
 
           if (this.optionsSearch.childMethods) {
             this.optionsSearch.childMethods.setAccess(next.Access);

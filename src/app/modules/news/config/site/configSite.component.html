@@ -8,7 +8,7 @@
       <mat-horizontal-stepper *ngIf="!loading.display" (selectionChange)="onStepClick($event,stepper)" #stepper>
         <mat-step label="تنظیمات ماژول" state="main">
           <p>تنظیمات که ماژول به سایت به کارگیری می شود </p>
-
+          <!-- StatusRenderUser Field -->
           <div class="example-full-width">
             <mat-slide-toggle [(ngModel)]="dataConfigSiteValuesModel.StatusRenderUser"
               name="dataConfigSiteValuesModel.StatusRenderUser">
@@ -16,11 +16,12 @@
             </mat-slide-toggle>
           </div>
           <div *ngIf="tokenInfo.UserAccessAdminAllowToProfessionalData">
-            {{dataConfigSiteValuesModel|json}}
+            <div [innerHTML]="dataConfigSiteValuesModel | prettyjson"></div>
+
           </div>
 
           <div *ngIf="formInfo.FormSubmitAllow">
-           <button type="button" mat-button  (click)="onActionBackToParent()"
+            <button type="button" mat-button (click)="onActionBackToParent()"
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
               بازگشت
             </button>
@@ -48,13 +49,11 @@
             <mat-label>MainDataContentRowCount</mat-label>
             <input matInput [(ngModel)]="dataSiteStorageModel.MainDataContentRowCount"
               name="dataSiteStorageModel.MainDataContentRowCount" #dataSiteStorageModel_MainDataContentRowCount
-              type="text" placeholder="0" required />
+              type="number" placeholder="0"  />
             <mat-icon matSuffix *ngIf="dataSiteStorageModel.MainDataContentRowCount" matSuffix mat-icon-button
               aria-label="Clear" (click)="dataSiteStorageModel.MainDataContentRowCount = null">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
-            <mat-error *ngIf="dataSiteStorageModel_MainDataContentRowCount.errors?.required">
-              MainDataContentRowCount is <strong>required</strong>
-            </mat-error>
+
           </mat-form-field>
           <!-- UpdatedContent Field -->
           <mat-form-field class="example-full-width">
@@ -90,7 +89,7 @@
           </mat-form-field>
 
           <div *ngIf="tokenInfo.UserAccessAdminAllowToProfessionalData">
-            {{dataSiteStorageModel|json}}
+            <div [innerHTML]="dataSiteStorageModel | prettyjson"></div>
           </div>
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
@@ -107,7 +106,7 @@
             </button>
           </div>
         </mat-step>
-        <mat-step label="دسترسی" state="main" *ngIf="tokenInfo.UserAccessAdminAllowToProfessionalData">
+        <mat-step label="دسترسی" state="main">
           <p>دسترسی ها این وب سایت به این ماژول</p>
           <!-- MainDataContentRowCount Field -->
           <mat-form-field class="example-full-width">
@@ -125,7 +124,7 @@
           </mat-form-field>
 
           <div *ngIf="tokenInfo.UserAccessAdminAllowToProfessionalData">
-            {{dataConfigSiteAccessValuesModel|json}}
+            <div [innerHTML]="dataConfigSiteAccessValuesModel | prettyjson"></div>
           </div>
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious

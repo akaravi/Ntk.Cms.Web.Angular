@@ -6,34 +6,33 @@ import {
   AccessModel,
   CoreEnumService,
   DataFieldInfoModel,
-  EnumModel,
-  ErrorExceptionResult,
   FormInfoModel,
-  ApplicationConfigurationService,
-  ApplicationModuleConfigAdminMainValuesModel,
-  ApplicationModuleConfigSiteAccessValuesModel,
-  ApplicationModuleConfigSiteValuesModel,
-  ApplicationModuleSiteStorageValuesModel,
+  CoreConfigurationService,
+  CoreModuleConfigAdminMainValuesModel,
+  CoreModuleConfigSiteAccessValuesModel,
+  CoreModuleConfigSiteValuesModel,
   NtkCmsApiStoreService,
   TokenInfoModel,
+  ErrorExceptionResult,
+  EnumModel,
 } from 'ntk-cms-api';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
-import { NodeInterface, TreeModel } from 'ntk-cms-filemanager';
+import { TreeModel } from 'ntk-cms-filemanager';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 import { Subscription } from 'rxjs';
 
 
 @Component({
-  selector: 'app-application-config-site',
-  templateUrl: './configSite.component.html',
-  styleUrls: ['./configSite.component.scss']
+  selector: 'app-core-config-mainadmin',
+  templateUrl: './configMainAdmin.component.html',
+  styleUrls: ['./configMainAdmin.component.scss']
 })
-export class ApplicationConfigSiteComponent implements OnInit {
+export class CoreConfigMainAdminComponent implements OnInit {
   requestLinkSiteId = 0;
   constructor(
-    private configService: ApplicationConfigurationService,
+    private configService: CoreConfigurationService,
     private cmsApiStore: NtkCmsApiStoreService,
     private activatedRoute: ActivatedRoute,
     private cmsStoreService: CmsStoreService,
@@ -51,6 +50,7 @@ export class ApplicationConfigSiteComponent implements OnInit {
   formInfo: FormInfoModel = new FormInfoModel();
   dataAccessModel: AccessModel;
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+  dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
 
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
   fileManagerOpenForm = false;
@@ -72,29 +72,40 @@ export class ApplicationConfigSiteComponent implements OnInit {
     });
 
     this.onLoadDate();
+    this.getEnumRecordStatus();
+  }
+  getEnumRecordStatus(): void {
+    if (this.storeSnapshot
+      && this.storeSnapshot.EnumRecordStatus
+      && this.storeSnapshot.EnumRecordStatus
+      && this.storeSnapshot.EnumRecordStatus.IsSuccess
+      && this.storeSnapshot.EnumRecordStatus.ListItems
+      && this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
+      this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
+    }
   }
   onLoadDate(): void {
     if (!this.requestLinkSiteId || this.requestLinkSiteId === 0) {
       this.requestLinkSiteId = this.tokenInfo.SiteId;
     }
-
-    if (this.requestLinkSiteId > 0) {
-      this.GetServiceSiteStorage(this.requestLinkSiteId);
-      this.GetServiceSiteConfig(this.requestLinkSiteId);
-      this.GetServiceSiteAccess(this.requestLinkSiteId);
+    if (this.tokenInfo.UserAccessAdminAllowToProfessionalData) {
+      this.GetServiceSiteConfigDefault();
+      this.GetServiceSiteAccessDefault();
+      this.GetServiceAdminMain();
     }
+
   }
   onFormSubmit(): void {
     if (!this.formGroup.valid) {
       this.cmsToastrService.typeErrorFormInvalid();
       return;
     }
-   
-    if (this.requestLinkSiteId > 0) {
-      this.SetServiceSiteStorageSave(this.requestLinkSiteId);
-      this.SetServiceSiteConfigSave(this.requestLinkSiteId);
-      this.SetServiceSiteAccessSave(this.requestLinkSiteId);
+    if (this.tokenInfo.UserAccessAdminAllowToProfessionalData) {
+      this.SetServiceSiteConfigDefaultSave();
+      this.SetServiceSiteAccessDefaultSave();
+      this.SetServiceAdminMainSave();
     }
+
   }
 
 
@@ -113,23 +124,22 @@ export class ApplicationConfigSiteComponent implements OnInit {
 
   onActionBackToParent(): void {
     this.router.navigate(['/core/site/modulelist']);
-    }
+  }
 
-
-  dataSiteStorageModel = new ApplicationModuleSiteStorageValuesModel();
-  GetServiceSiteStorage(SiteId: number): void {
+  dataConfigSiteValuesDefaultModel = new CoreModuleConfigSiteValuesModel();
+  GetServiceSiteConfigDefault(): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
     this.configService
-      .ServiceSiteStorage(SiteId)
+      .ServiceSiteConfigDefault()
       .subscribe(
         async (next) => {
           this.loading.display = false;
           this.formInfo.FormSubmitAllow = true;
           if (next.IsSuccess) {
-            this.dataSiteStorageModel = next.Item;
+            this.dataConfigSiteValuesDefaultModel = next.Item;
           } else {
             this.cmsToastrService.typeErrorGetOne(next.ErrorMessage);
           }
@@ -141,117 +151,19 @@ export class ApplicationConfigSiteComponent implements OnInit {
         }
       );
   }
-  SetServiceSiteStorageSave(SiteId: number): void {
+  SetServiceSiteConfigDefaultSave(): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال ذخیره اطلاعات در سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
     this.configService
-      .ServiceSiteStorageSave(SiteId, this.dataSiteStorageModel)
+      .ServiceSiteConfigDefaultSave(this.dataConfigSiteValuesDefaultModel)
       .subscribe(
         async (next) => {
           this.loading.display = false;
           this.formInfo.FormSubmitAllow = true;
           if (next.IsSuccess) {
-            this.dataSiteStorageModel = next.Item;
-          } else {
-            this.cmsToastrService.typeErrorGetOne(next.ErrorMessage);
-          }
-        },
-        (error) => {
-          this.loading.display = false;
-          this.formInfo.FormSubmitAllow = true;
-          this.cmsToastrService.typeErrorGetOne(error);
-        }
-      );
-  }
-  dataConfigSiteValuesModel = new ApplicationModuleConfigSiteValuesModel();
-  GetServiceSiteConfig(SiteId: number): void {
-    this.formInfo.FormSubmitAllow = false;
-    this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
-    this.formInfo.FormError = '';
-    this.loading.display = true;
-    this.configService
-      .ServiceSiteConfig(SiteId)
-      .subscribe(
-        async (next) => {
-          this.loading.display = false;
-          this.formInfo.FormSubmitAllow = true;
-          if (next.IsSuccess) {
-            this.dataConfigSiteValuesModel = next.Item;
-          } else {
-            this.cmsToastrService.typeErrorGetOne(next.ErrorMessage);
-          }
-        },
-        (error) => {
-          this.loading.display = false;
-          this.formInfo.FormSubmitAllow = true;
-          this.cmsToastrService.typeErrorGetOne(error);
-        }
-      );
-  }
-  SetServiceSiteConfigSave(SiteId: number): void {
-    this.formInfo.FormSubmitAllow = false;
-    this.formInfo.FormAlert = 'در حال ذخیره اطلاعات در سرور';
-    this.formInfo.FormError = '';
-    this.loading.display = true;
-    this.configService
-      .ServiceSiteConfigSave(SiteId, this.dataConfigSiteValuesModel)
-      .subscribe(
-        async (next) => {
-          this.loading.display = false;
-          this.formInfo.FormSubmitAllow = true;
-          if (next.IsSuccess) {
-            this.dataConfigSiteValuesModel = next.Item;
-          } else {
-            this.cmsToastrService.typeErrorGetOne(next.ErrorMessage);
-          }
-        },
-        (error) => {
-          this.loading.display = false;
-          this.formInfo.FormSubmitAllow = true;
-          this.cmsToastrService.typeErrorGetOne(error);
-        }
-      );
-  }
-  dataConfigSiteAccessValuesModel = new ApplicationModuleConfigSiteAccessValuesModel();
-  GetServiceSiteAccess(SiteId: number): void {
-    this.formInfo.FormSubmitAllow = false;
-    this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
-    this.formInfo.FormError = '';
-    this.loading.display = true;
-    this.configService
-      .ServiceSiteAccess(SiteId)
-      .subscribe(
-        async (next) => {
-          this.loading.display = false;
-          this.formInfo.FormSubmitAllow = true;
-          if (next.IsSuccess) {
-            this.dataConfigSiteAccessValuesModel = next.Item;
-          } else {
-            this.cmsToastrService.typeErrorGetOne(next.ErrorMessage);
-          }
-        },
-        (error) => {
-          this.loading.display = false;
-          this.formInfo.FormSubmitAllow = true;
-          this.cmsToastrService.typeErrorGetOne(error);
-        }
-      );
-  }
-  SetServiceSiteAccessSave(SiteId: number): void {
-    this.formInfo.FormSubmitAllow = false;
-    this.formInfo.FormAlert = 'در حال ذخیره اطلاعات در سرور';
-    this.formInfo.FormError = '';
-    this.loading.display = true;
-    this.configService
-      .ServiceSiteAccessSave(SiteId, this.dataConfigSiteAccessValuesModel)
-      .subscribe(
-        async (next) => {
-          this.loading.display = false;
-          this.formInfo.FormSubmitAllow = true;
-          if (next.IsSuccess) {
-            this.dataConfigSiteAccessValuesModel = next.Item;
+            this.dataConfigSiteValuesDefaultModel = next.Item;
           } else {
             this.cmsToastrService.typeErrorGetOne(next.ErrorMessage);
           }
@@ -264,5 +176,102 @@ export class ApplicationConfigSiteComponent implements OnInit {
       );
   }
 
-
+  dataConfigSiteAccessValuesDefaultModel = new CoreModuleConfigSiteAccessValuesModel();
+  GetServiceSiteAccessDefault(): void {
+    this.formInfo.FormSubmitAllow = false;
+    this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
+    this.formInfo.FormError = '';
+    this.loading.display = true;
+    this.configService
+      .ServiceSiteAccessDefault()
+      .subscribe(
+        async (next) => {
+          this.loading.display = false;
+          this.formInfo.FormSubmitAllow = true;
+          if (next.IsSuccess) {
+            this.dataConfigSiteAccessValuesDefaultModel = next.Item;
+          } else {
+            this.cmsToastrService.typeErrorGetOne(next.ErrorMessage);
+          }
+        },
+        (error) => {
+          this.loading.display = false;
+          this.formInfo.FormSubmitAllow = true;
+          this.cmsToastrService.typeErrorGetOne(error);
+        }
+      );
+  }
+  SetServiceSiteAccessDefaultSave(): void {
+    this.formInfo.FormSubmitAllow = false;
+    this.formInfo.FormAlert = 'در حال ذخیره اطلاعات در سرور';
+    this.formInfo.FormError = '';
+    this.loading.display = true;
+    this.configService
+      .ServiceSiteAccessDefaultSave(this.dataConfigSiteAccessValuesDefaultModel)
+      .subscribe(
+        async (next) => {
+          this.loading.display = false;
+          this.formInfo.FormSubmitAllow = true;
+          if (next.IsSuccess) {
+            this.dataConfigSiteAccessValuesDefaultModel = next.Item;
+          } else {
+            this.cmsToastrService.typeErrorGetOne(next.ErrorMessage);
+          }
+        },
+        (error) => {
+          this.loading.display = false;
+          this.formInfo.FormSubmitAllow = true;
+          this.cmsToastrService.typeErrorGetOne(error);
+        }
+      );
+  }
+  dataConfigAdminMainModel = new CoreModuleConfigAdminMainValuesModel();
+  GetServiceAdminMain(): void {
+    this.formInfo.FormSubmitAllow = false;
+    this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
+    this.formInfo.FormError = '';
+    this.loading.display = true;
+    this.configService
+      .ServiceAdminMain()
+      .subscribe(
+        async (next) => {
+          this.loading.display = false;
+          this.formInfo.FormSubmitAllow = true;
+          if (next.IsSuccess) {
+            this.dataConfigAdminMainModel = next.Item;
+          } else {
+            this.cmsToastrService.typeErrorGetOne(next.ErrorMessage);
+          }
+        },
+        (error) => {
+          this.loading.display = false;
+          this.formInfo.FormSubmitAllow = true;
+          this.cmsToastrService.typeErrorGetOne(error);
+        }
+      );
+  }
+  SetServiceAdminMainSave(): void {
+    this.formInfo.FormSubmitAllow = false;
+    this.formInfo.FormAlert = 'در حال ذخیره اطلاعات در سرور';
+    this.formInfo.FormError = '';
+    this.loading.display = true;
+    this.configService
+      .ServiceAdminMainSave(this.dataConfigAdminMainModel)
+      .subscribe(
+        async (next) => {
+          this.loading.display = false;
+          this.formInfo.FormSubmitAllow = true;
+          if (next.IsSuccess) {
+            this.dataConfigAdminMainModel = next.Item;
+          } else {
+            this.cmsToastrService.typeErrorGetOne(next.ErrorMessage);
+          }
+        },
+        (error) => {
+          this.loading.display = false;
+          this.formInfo.FormSubmitAllow = true;
+          this.cmsToastrService.typeErrorGetOne(error);
+        }
+      );
+  }
 }

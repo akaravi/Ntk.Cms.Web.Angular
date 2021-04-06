@@ -122,11 +122,8 @@ export class CoreSiteModuleListComponent implements OnInit, OnDestroy {
       (next) => {
         if (next.IsSuccess) {
           this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
-
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;
-
-
           if (this.optionsSearch.childMethods) {
             this.optionsSearch.childMethods.setAccess(next.Access);
           }

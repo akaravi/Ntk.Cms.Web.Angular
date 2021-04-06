@@ -59,25 +59,42 @@ export class CoreSiteSelectorComponent implements OnInit {
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
     // this.loading.backdropEnabled = false;
-    if (text && typeof text === 'string' && text.length > 0) {
-      const filter = new FilterDataModel();
-      filter.PropertyName = 'Title';
-      filter.Value = text;
-      filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
-      filteModel.Filters.push(filter);
-    } else if (text && typeof text === 'number' && text > 0) {
-      let filter = new FilterDataModel();
-      filter.PropertyName = 'Title';
-      filter.Value = text;
-      filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
-      filter.ClauseType = EnumClauseType.Or;
-      filteModel.Filters.push(filter);
+    if (!text || text.length === 0) {
+      return;
+    }
+    let filter = new FilterDataModel();
+    /*Filters */
+    filter = new FilterDataModel();
+    filter.PropertyName = 'SubDomain';
+    filter.Value = text;
+    filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
+    filter.ClauseType = EnumClauseType.Or;
+    filteModel.Filters.push(filter);
+    /*Filters */
+    /*Filters */
+    filter = new FilterDataModel();
+    filter.PropertyName = 'Domain';
+    filter.Value = text;
+    filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
+    filter.ClauseType = EnumClauseType.Or;
+    filteModel.Filters.push(filter);
+    /*Filters */
+    filter = new FilterDataModel();
+    filter.PropertyName = 'Title';
+    filter.Value = text;
+    filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
+    filter.ClauseType = EnumClauseType.Or;
+    filteModel.Filters.push(filter);
+
+    if (text && typeof +text === 'number' && +text > 0){
+      /*Filters */
       filter = new FilterDataModel();
       filter.PropertyName = 'Id';
       filter.Value = text;
       filter.SearchType = EnumFilterDataModelSearchTypes.Equal;
       filter.ClauseType = EnumClauseType.Or;
       filteModel.Filters.push(filter);
+
     }
     this.loading.Globally = false;
     this.loading.display = true;

@@ -5,6 +5,7 @@ import { CoreSiteCategoryComponent } from './coreSiteCategory.component';
 import {
   CoreModuleService,
   CoreSiteCategoryCmsModuleService,
+  CoreSiteCategoryModuleService,
   CoreSiteCategoryService,
 } from 'ntk-cms-api';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -55,6 +56,7 @@ import { CoreSiteCategoryModuleListComponent } from './moduleList/moduleList.com
     CoreSiteCategoryService,
     CoreSiteCategoryCmsModuleService,
     CoreModuleService,
+    CoreSiteCategoryModuleService,
   ]
 })
 export class CoreSiteCategoryCmsModule {

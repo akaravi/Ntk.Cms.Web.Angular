@@ -236,7 +236,7 @@ export class CoreSiteListComponent implements OnInit, OnDestroy {
   onActionbuttonModuleListRow(model: CoreSiteModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
 
-      const message = 'ردیفیانتخاب نشده است';
+      const message = 'ردیفی انتخاب نشده است';
       this.cmsToastrService.typeErrorSelected(message);
       return;
     }
@@ -251,13 +251,11 @@ export class CoreSiteListComponent implements OnInit, OnDestroy {
       return;
     }
     this.router.navigate(['/core/site/modulelist/', this.tableRowSelected.Id]);
-
-
   }
   onActionbuttonLoginToRow(model: CoreSiteModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
 
-      const message = 'ردیفیانتخاب نشده است';
+      const message = 'ردیفی انتخاب نشده است';
       this.cmsToastrService.typeErrorSelected(message);
       return;
     }

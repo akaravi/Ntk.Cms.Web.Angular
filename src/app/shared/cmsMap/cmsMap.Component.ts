@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import * as L from 'leaflet';
-import { Map, Control, DomUtil, ZoomAnimEvent, Layer, MapOptions, tileLayer, latLng } from 'leaflet';
+import { Map, ZoomAnimEvent, MapOptions, tileLayer } from 'leaflet';
 import { PoinModel } from 'src/app/core/models/pointModel';
 import { environment } from 'src/environments/environment';
 
@@ -55,7 +55,6 @@ export class CmsMapComponent implements OnInit, OnDestroy {
     // this.map.clearAllEventListeners();
 
     // this.map.remove();
-
   }
 
   onMapReady(map: Map): void {

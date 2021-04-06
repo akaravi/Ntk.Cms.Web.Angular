@@ -77,11 +77,7 @@ export class NewsConfigSiteComponent implements OnInit {
     if (!this.requestLinkSiteId || this.requestLinkSiteId === 0) {
       this.requestLinkSiteId = this.tokenInfo.SiteId;
     }
-    if (this.tokenInfo.UserAccessAdminAllowToProfessionalData) {
-      this.GetServiceSiteConfigDefault();
-      this.GetServiceSiteAccessDefault();
-      this.GetServiceAdminMain();
-    }
+
     if (this.requestLinkSiteId > 0) {
       this.GetServiceSiteStorage(this.requestLinkSiteId);
       this.GetServiceSiteConfig(this.requestLinkSiteId);
@@ -93,11 +89,7 @@ export class NewsConfigSiteComponent implements OnInit {
       this.cmsToastrService.typeErrorFormInvalid();
       return;
     }
-    if (this.tokenInfo.UserAccessAdminAllowToProfessionalData) {
-      this.SetServiceSiteConfigDefaultSave();
-      this.SetServiceSiteAccessDefaultSave();
-      this.SetServiceAdminMainSave();
-    }
+
     if (this.requestLinkSiteId > 0) {
       this.SetServiceSiteStorageSave(this.requestLinkSiteId);
       this.SetServiceSiteConfigSave(this.requestLinkSiteId);
@@ -123,55 +115,7 @@ export class NewsConfigSiteComponent implements OnInit {
     this.router.navigate(['/core/site/modulelist']);
     }
 
-  dataConfigSiteValuesDefaultModel = new NewsModuleConfigSiteValuesModel();
-  GetServiceSiteConfigDefault(): void {
-    this.formInfo.FormSubmitAllow = false;
-    this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
-    this.formInfo.FormError = '';
-    this.loading.display = true;
-    this.configService
-      .ServiceSiteConfigDefault()
-      .subscribe(
-        async (next) => {
-          this.loading.display = false;
-          this.formInfo.FormSubmitAllow = true;
-          if (next.IsSuccess) {
-            this.dataConfigSiteValuesDefaultModel = next.Item;
-          } else {
-            this.cmsToastrService.typeErrorGetOne(next.ErrorMessage);
-          }
-        },
-        (error) => {
-          this.loading.display = false;
-          this.formInfo.FormSubmitAllow = true;
-          this.cmsToastrService.typeErrorGetOne(error);
-        }
-      );
-  }
-  SetServiceSiteConfigDefaultSave(): void {
-    this.formInfo.FormSubmitAllow = false;
-    this.formInfo.FormAlert = 'در حال ذخیره اطلاعات در سرور';
-    this.formInfo.FormError = '';
-    this.loading.display = true;
-    this.configService
-      .ServiceSiteConfigDefaultSave(this.dataConfigSiteValuesDefaultModel)
-      .subscribe(
-        async (next) => {
-          this.loading.display = false;
-          this.formInfo.FormSubmitAllow = true;
-          if (next.IsSuccess) {
-            this.dataConfigSiteValuesDefaultModel = next.Item;
-          } else {
-            this.cmsToastrService.typeErrorGetOne(next.ErrorMessage);
-          }
-        },
-        (error) => {
-          this.loading.display = false;
-          this.formInfo.FormSubmitAllow = true;
-          this.cmsToastrService.typeErrorGetOne(error);
-        }
-      );
-  }
+
   dataSiteStorageModel = new NewsModuleSiteStorageValuesModel();
   GetServiceSiteStorage(SiteId: number): void {
     this.formInfo.FormSubmitAllow = false;
@@ -319,102 +263,5 @@ export class NewsConfigSiteComponent implements OnInit {
         }
       );
   }
-  dataConfigSiteAccessValuesDefaultModel = new NewsModuleConfigSiteAccessValuesModel();
-  GetServiceSiteAccessDefault(): void {
-    this.formInfo.FormSubmitAllow = false;
-    this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
-    this.formInfo.FormError = '';
-    this.loading.display = true;
-    this.configService
-      .ServiceSiteAccessDefault()
-      .subscribe(
-        async (next) => {
-          this.loading.display = false;
-          this.formInfo.FormSubmitAllow = true;
-          if (next.IsSuccess) {
-            this.dataConfigSiteAccessValuesDefaultModel = next.Item;
-          } else {
-            this.cmsToastrService.typeErrorGetOne(next.ErrorMessage);
-          }
-        },
-        (error) => {
-          this.loading.display = false;
-          this.formInfo.FormSubmitAllow = true;
-          this.cmsToastrService.typeErrorGetOne(error);
-        }
-      );
-  }
-  SetServiceSiteAccessDefaultSave(): void {
-    this.formInfo.FormSubmitAllow = false;
-    this.formInfo.FormAlert = 'در حال ذخیره اطلاعات در سرور';
-    this.formInfo.FormError = '';
-    this.loading.display = true;
-    this.configService
-      .ServiceSiteAccessDefaultSave(this.dataConfigSiteAccessValuesDefaultModel)
-      .subscribe(
-        async (next) => {
-          this.loading.display = false;
-          this.formInfo.FormSubmitAllow = true;
-          if (next.IsSuccess) {
-            this.dataConfigSiteAccessValuesDefaultModel = next.Item;
-          } else {
-            this.cmsToastrService.typeErrorGetOne(next.ErrorMessage);
-          }
-        },
-        (error) => {
-          this.loading.display = false;
-          this.formInfo.FormSubmitAllow = true;
-          this.cmsToastrService.typeErrorGetOne(error);
-        }
-      );
-  }
-  dataConfigAdminMainModel = new NewsModuleConfigAdminMainValuesModel();
-  GetServiceAdminMain(): void {
-    this.formInfo.FormSubmitAllow = false;
-    this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
-    this.formInfo.FormError = '';
-    this.loading.display = true;
-    this.configService
-      .ServiceAdminMain()
-      .subscribe(
-        async (next) => {
-          this.loading.display = false;
-          this.formInfo.FormSubmitAllow = true;
-          if (next.IsSuccess) {
-            this.dataConfigAdminMainModel = next.Item;
-          } else {
-            this.cmsToastrService.typeErrorGetOne(next.ErrorMessage);
-          }
-        },
-        (error) => {
-          this.loading.display = false;
-          this.formInfo.FormSubmitAllow = true;
-          this.cmsToastrService.typeErrorGetOne(error);
-        }
-      );
-  }
-  SetServiceAdminMainSave(): void {
-    this.formInfo.FormSubmitAllow = false;
-    this.formInfo.FormAlert = 'در حال ذخیره اطلاعات در سرور';
-    this.formInfo.FormError = '';
-    this.loading.display = true;
-    this.configService
-      .ServiceAdminMainSave(this.dataConfigAdminMainModel)
-      .subscribe(
-        async (next) => {
-          this.loading.display = false;
-          this.formInfo.FormSubmitAllow = true;
-          if (next.IsSuccess) {
-            this.dataConfigAdminMainModel = next.Item;
-          } else {
-            this.cmsToastrService.typeErrorGetOne(next.ErrorMessage);
-          }
-        },
-        (error) => {
-          this.loading.display = false;
-          this.formInfo.FormSubmitAllow = true;
-          this.cmsToastrService.typeErrorGetOne(error);
-        }
-      );
-  }
+
 }

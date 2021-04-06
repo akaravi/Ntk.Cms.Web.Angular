@@ -1,7 +1,7 @@
 ﻿import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material/material.module';
 
 import { NgxQueryBuilderModule } from 'ngx-query-builder';
@@ -25,6 +25,8 @@ import { TranslationModule } from '../core/i18n/translation.module';
 import { HttpConfigInterceptor } from '../core/interceptor/httpConfigInterceptor';
 import { KeysPipe } from '../core/pipe/keys.pipe';
 import { EnumsPipe } from '../core/pipe/enums.pipe';
+import { PrettyjsonPipe } from '../core/pipe/prettyjson.pipe';
+import { CmsSiteSelectorComponent } from './cmsSiteSelector/cmsSiteSelector.component';
 
 
 
@@ -34,6 +36,7 @@ import { EnumsPipe } from '../core/pipe/enums.pipe';
     CommonModule,
     TranslationModule,
     FormsModule,
+    ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
     HttpClientModule,
     MaterialModule,
     TreeModule,
@@ -49,11 +52,13 @@ import { EnumsPipe } from '../core/pipe/enums.pipe';
     TruncatePipe,
     KeysPipe,
     EnumsPipe,
+    PrettyjsonPipe,
     RecordStatusClassPipe,
     BoolStatusClassPipe,
     CmsSearchListComponent,
     CmsStatistListComponent,
     CmsExportListComponent,
+    CmsSiteSelectorComponent,
     PersianDate,
     PersianDateFull,
     CmsMapComponent,
@@ -71,6 +76,7 @@ import { EnumsPipe } from '../core/pipe/enums.pipe';
     TruncatePipe,
     KeysPipe,
     EnumsPipe,
+    PrettyjsonPipe,
     RecordStatusClassPipe,
     BoolStatusClassPipe,
     PersianDate,
@@ -78,6 +84,7 @@ import { EnumsPipe } from '../core/pipe/enums.pipe';
     CmsSearchListComponent,
     CmsStatistListComponent,
     CmsExportListComponent,
+    CmsSiteSelectorComponent,
     CmsMapComponent,
     TagAutocompleteComponent,
     ProgressSpinnerComponent,

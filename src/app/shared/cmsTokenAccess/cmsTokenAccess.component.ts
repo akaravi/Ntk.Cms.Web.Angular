@@ -4,7 +4,9 @@ import {
   AuthRenewTokenModel,
   CoreAuthService,
   TokenInfoModel,
-  NtkCmsApiStoreService
+  NtkCmsApiStoreService,
+  EnumManageUserAccessControllerTypes,
+  CoreSiteModel
 } from 'ntk-cms-api';
 import { Subscription } from 'rxjs';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
@@ -23,9 +25,7 @@ export class CmsTokenAccessComponent implements OnInit, OnDestroy {
     private cmsApiStore: NtkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
     private router: Router,
-
   ) {
-
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
 
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((value) => {
@@ -217,5 +217,12 @@ export class CmsTokenAccessComponent implements OnInit, OnDestroy {
         this.cmsToastrService.typeErrorAccessChange(error);
       }
     );
+  }
+  onActionSiteSelect(model: CoreSiteModel): void {
+
+    if (model && model.Id > 0) {
+      this.SiteId = model.Id;
+      this.onActionbuttonSelectSite();
+    }
   }
 }

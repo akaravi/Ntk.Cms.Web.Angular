@@ -69,7 +69,6 @@ export class CoreSiteCategoryListComponent implements OnInit, OnDestroy {
   tabledisplayedColumns: string[] = [
     'MainImageSrc',
     'Id',
-    'linkCreatedBySiteCategoryId',
     'RecordStatus',
     'Title',
     'SubDomain',
@@ -111,18 +110,7 @@ export class CoreSiteCategoryListComponent implements OnInit, OnDestroy {
 
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;
-          if (this.tokenInfo.UserAccessAdminAllowToAllData) {
-            this.tabledisplayedColumns = this.publicHelper.listAddIfNotExist(
-              this.tabledisplayedColumns,
-              'linkCreatedBySiteCategoryId',
-              0
-            );
-          } else {
-            this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
-              this.tabledisplayedColumns,
-              'linkCreatedBySiteCategoryId'
-            );
-          }
+         
 
           if (this.optionsSearch.childMethods) {
             this.optionsSearch.childMethods.setAccess(next.Access);
@@ -307,6 +295,27 @@ export class CoreSiteCategoryListComponent implements OnInit, OnDestroy {
         this.cmsToastrService.typeError(error);
       }
     );
+
+  }
+  onActionbuttonModuleListRow(model: CoreSiteCategoryModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id === 0) {
+
+      const message = 'ردیفی انتخاب نشده است';
+      this.cmsToastrService.typeErrorSelected(message);
+      return;
+    }
+    this.tableRowSelected = model;
+
+    if (
+      this.dataModelResult == null ||
+      this.dataModelResult.Access == null ||
+      !this.dataModelResult.Access.AccessDeleteRow
+    ) {
+      this.cmsToastrService.typeErrorSelected();
+      return;
+    }
+    this.router.navigate(['/core/sitecategory/modulelist/', this.tableRowSelected.Id]);
+
 
   }
   onActionbuttonExport(): void {

@@ -24,7 +24,8 @@ import {
   CoreAuthService,
   CoreEnumService,
   ApplicationEnumService,
-  CoreModuleTagService
+  CoreModuleTagService,
+  ApplicationConfigurationService
 } from 'ntk-cms-api';
 import { ApplicationSourceTreeComponent } from './source/tree/tree.component';
 import { ApplicationAppTreeComponent } from './content/tree/tree.component';
@@ -103,6 +104,7 @@ import { ApplicationConfigMainAdminComponent } from './config/mainAdmin/configMa
     ApplicationMemberInfoService,
     ApplicationLogNotificationService,
     ApplicationThemeConfigService,
+    ApplicationConfigurationService ,
   ]
 })
 export class ApplicationModule { }

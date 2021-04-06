@@ -9,7 +9,7 @@
 
         <mat-step label="تنظیمات پیش فرض ماژول" state="main" *ngIf="tokenInfo.UserAccessAdminAllowToProfessionalData">
           <p>تنظیمات که در اولین واگذاری ماژول به سایت به کارگیری می شود </p>
-
+          <!-- StatusRenderUser Field -->
           <div class="example-full-width">
             <mat-slide-toggle [(ngModel)]="dataConfigSiteValuesDefaultModel.StatusRenderUser"
               name="dataConfigSiteValuesDefaultModel.StatusRenderUser">
@@ -17,10 +17,10 @@
             </mat-slide-toggle>
           </div>
           <div *ngIf="tokenInfo.UserAccessAdminAllowToProfessionalData">
-            {{dataConfigSiteValuesDefaultModel|json}}
+            <div [innerHTML]="dataConfigSiteValuesDefaultModel | prettyjson"></div>
           </div>
           <div *ngIf="formInfo.FormSubmitAllow">
-            <button type="button" mat-button  (click)="onActionBackToParent()"
+            <button type="button" mat-button (click)="onActionBackToParent()"
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
               بازگشت
             </button>
@@ -42,7 +42,7 @@
             <mat-label>MainDataContentRowCount</mat-label>
             <input matInput [(ngModel)]="dataConfigSiteAccessValuesDefaultModel.MainDataContentRowCount"
               name="dataConfigSiteAccessValuesDefaultModel.MainDataContentRowCount"
-              #dataConfigSiteAccessValuesDefaultModel_MainDataContentRowCount type="text" placeholder="0" required />
+              #dataConfigSiteAccessValuesDefaultModel_MainDataContentRowCount type="number" placeholder="0" required />
             <mat-icon matSuffix *ngIf="dataConfigSiteAccessValuesDefaultModel.MainDataContentRowCount" matSuffix
               mat-icon-button aria-label="Clear"
               (click)="dataConfigSiteAccessValuesDefaultModel.MainDataContentRowCount = null">close</mat-icon>
@@ -53,7 +53,7 @@
           </mat-form-field>
 
           <div *ngIf="tokenInfo.UserAccessAdminAllowToProfessionalData">
-            {{dataConfigSiteAccessValuesDefaultModel|json}}
+            <div [innerHTML]="dataConfigSiteAccessValuesDefaultModel | prettyjson"></div>
           </div>
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
@@ -84,8 +84,8 @@
           <mat-form-field class="example-full-width">
             <mat-label>AccessBuyPrice</mat-label>
             <input matInput [(ngModel)]="dataConfigAdminMainModel.AccessBuyPrice"
-              name="dataConfigAdminMainModel.AccessBuyPrice" #dataConfigAdminMainModel_AccessBuyPrice
-              type="number" placeholder="0" required />
+              name="dataConfigAdminMainModel.AccessBuyPrice" #dataConfigAdminMainModel_AccessBuyPrice type="number"
+              placeholder="0" required />
             <mat-icon matSuffix *ngIf="dataConfigAdminMainModel.AccessBuyPrice" matSuffix mat-icon-button
               aria-label="Clear" (click)="dataConfigAdminMainModel.AccessBuyPrice = null">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
@@ -98,8 +98,8 @@
           <mat-form-field class="example-full-width">
             <mat-label>AccessBuyMonth</mat-label>
             <input matInput [(ngModel)]="dataConfigAdminMainModel.AccessBuyMonth"
-              name="dataConfigAdminMainModel.AccessBuyMonth" #dataConfigAdminMainModel_AccessBuyMonth
-              type="number" placeholder="0" required />
+              name="dataConfigAdminMainModel.AccessBuyMonth" #dataConfigAdminMainModel_AccessBuyMonth type="number"
+              placeholder="0" required />
             <mat-icon matSuffix *ngIf="dataConfigAdminMainModel.AccessBuyMonth" matSuffix mat-icon-button
               aria-label="Clear" (click)="dataConfigAdminMainModel.AccessBuyMonth = null">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
@@ -118,8 +118,8 @@
           <mat-form-field class="example-full-width">
             <mat-label>AccessFreeDay</mat-label>
             <input matInput [(ngModel)]="dataConfigAdminMainModel.AccessFreeDay"
-              name="dataConfigAdminMainModel.AccessFreeDay" #dataConfigAdminMainModel_AccessFreeDay
-              type="number" placeholder="0" required />
+              name="dataConfigAdminMainModel.AccessFreeDay" #dataConfigAdminMainModel_AccessFreeDay type="number"
+              placeholder="0" required />
             <mat-icon matSuffix *ngIf="dataConfigAdminMainModel.AccessFreeDay" matSuffix mat-icon-button
               aria-label="Clear" (click)="dataConfigAdminMainModel.AccessFreeDay = null">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
@@ -129,7 +129,7 @@
           </mat-form-field>
 
           <div *ngIf="tokenInfo.UserAccessAdminAllowToProfessionalData">
-            {{dataConfigAdminMainModel|json}}
+            <div [innerHTML]="dataConfigAdminMainModel | prettyjson"></div>
           </div>
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious

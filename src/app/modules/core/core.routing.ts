@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { CoreConfigMainAdminComponent } from './config/mainAdmin/configMainAdmin.component';
+import { CoreConfigSiteComponent } from './config/site/configSite.component';
 import { CoreComponent } from './core.component';
 
 
@@ -9,6 +11,20 @@ const routes: Routes = [
     path: '',
     component: CoreComponent,
     children: [
+      /*Config*/
+      {
+        path: 'config/mainadmin',
+        component: CoreConfigMainAdminComponent
+      },
+      {
+        path: 'config/site',
+        component: CoreConfigSiteComponent
+      },
+      {
+        path: 'config/site/:LinkSiteId',
+        component: CoreConfigSiteComponent
+      },
+      /*Config*/
       {
         path: 'user',
         loadChildren: () =>
@@ -33,6 +49,10 @@ const routes: Routes = [
         path: 'cpmainmenu',
         loadChildren: () =>
           import('./cpMainMenu/coreCpMainMenu.module').then((m) => m.CoreCpMainMenu),
+      }, {
+        path: 'module',
+        loadChildren: () =>
+          import('./module/coreModule.module').then((m) => m.CoreModuleModule),
       },
       {
         path: 'location',

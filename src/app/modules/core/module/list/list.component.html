@@ -28,15 +28,7 @@
 
     <div class="example-container mat-elevation-z8">
       <mat-table [dataSource]="tableSource" matSort #tableSort="matSort" (matSortChange)="onTableSortData(tableSort)">
-        <!-- MainImageSrc Column -->
-        <ng-container matColumnDef="MainImageSrc">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> عکس </mat-header-cell>
-          <mat-cell *matCellDef="let row">
-            <img *ngIf="row?.MainImageSrc?.length>0" style="vertical-align:middle;" aria-hidden
-              src="{{row.MainImageSrc}}" height="40" width="40" />
 
-          </mat-cell>
-        </ng-container>
         <!-- ID Column -->
         <ng-container matColumnDef="Id">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Id']?.FieldTitle}} </mat-header-cell>
@@ -57,16 +49,12 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Title']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Title}} </mat-cell>
         </ng-container>
-        <!-- SubDomain Column -->
-        <ng-container matColumnDef="SubDomain">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> SubDomain </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.SubDomain}} </mat-cell>
+        <!-- ClassName Column -->
+        <ng-container matColumnDef="ClassName">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> ClassName </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.ClassName}} </mat-cell>
         </ng-container>
-        <!-- Domain Column -->
-        <ng-container matColumnDef="Domain">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Domain </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.Domain}} </mat-cell>
-        </ng-container>
+
         <!-- CreatedDate Column -->
         <ng-container matColumnDef="CreatedDate">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['CreatedDate']?.FieldTitle}} </mat-header-cell>

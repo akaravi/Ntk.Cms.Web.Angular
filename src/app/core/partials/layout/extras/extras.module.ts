@@ -21,6 +21,7 @@ import { ScrollTopComponent } from './scroll-top/scroll-top.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { CmsTokenAccessComponent } from 'src/app/shared/cmsTokenAccess/cmsTokenAccess.component';
 import { FormsModule } from '@angular/forms';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -50,6 +51,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     InlineSVGModule,
     PerfectScrollbarModule,
     CoreModule,
+    SharedModule.forRoot(),
   ],
   providers: [
     {
