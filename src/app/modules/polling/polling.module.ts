@@ -8,6 +8,7 @@ import {
   CoreEnumService,
   CoreModuleTagService,
   PollingCategoryService,
+  PollingConfigurationService,
   PollingContentService,
   PollingOptionService,
   PollingVoteService,
@@ -31,11 +32,17 @@ import { PollingVoteEditComponent } from './vote/edit/edit.component';
 import { PollingVoteListComponent } from './vote/list/list.component';
 import { PollingCategoryAddComponent } from './category/add/add.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { PollingConfigMainAdminComponent } from './config/mainAdmin/configMainAdmin.component';
+import { PollingConfigSiteComponent } from './config/site/configSite.component';
 
 
 @NgModule({
   declarations: [
     PollingComponent,
+    /*Config*/
+    PollingConfigMainAdminComponent,
+    PollingConfigSiteComponent,
+    /*Config*/
     PollingCategorySelectorComponent,
     PollingCategoryAddComponent,
     PollingCategoryEditComponent,
@@ -61,6 +68,9 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
   ],
   providers: [
     CoreEnumService,
+    /*Config*/
+    PollingConfigurationService,
+    /*Config*/
     CoreModuleTagService,
     CmsConfirmationDialogService,
     PollingCategoryService,

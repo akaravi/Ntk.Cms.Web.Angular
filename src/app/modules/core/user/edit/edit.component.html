@@ -8,12 +8,7 @@
       <mat-horizontal-stepper *ngIf="!loading.display" (selectionChange)="onStepClick($event,stepper)" #stepper>
 
         <mat-step label="اطلاعات الزامی" state="main">
-
-
-
-
-
-
+          <!-- RecordStatus Field -->
           <mat-form-field class="example-full-width">
             <mat-select placeholder="وضعیت" [(ngModel)]="dataModel.RecordStatus" name="dataModel.RecordStatus"
               #RecordStatus="ngModel" panelClass="recordStatus-{{ dataModel.RecordStatus }}" required>
@@ -96,17 +91,6 @@
           </mat-form-field>
 
 
-
-
-          <mat-form-field class="example-full-width" *ngIf="fieldsInfo['ExpireLockAccount']?.AccessWatchField">
-            <mat-label>{{fieldsInfo['ExpireLockAccount']?.FieldTitle}}</mat-label>
-            <input matInput [matDatepicker]="ExpireLockAccount" [(ngModel)]="dataModel.ExpireLockAccount"
-              name="dataModel.ExpireLockAccount" />
-            <mat-icon matSuffix *ngIf="dataModel.ExpireLockAccount && fieldsInfo['ExpireLockAccount']?.AccessEditField"
-              matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.ExpireLockAccount = null">close</mat-icon>
-            <mat-datepicker-toggle matSuffix [for]="ExpireLockAccount"></mat-datepicker-toggle>
-            <mat-datepicker touchUi #ExpireLockAccount></mat-datepicker>
-          </mat-form-field>
 
 
 
@@ -236,6 +220,17 @@
         <mat-step label="تنظیمات امینتی" state="seo">
           <p>تنظیمات لازیم برای امنیت این حساب کاربری</p>
 
+
+
+          <mat-form-field class="example-full-width" *ngIf="fieldsInfo['ExpireLockAccount']?.AccessWatchField">
+            <mat-label>{{fieldsInfo['ExpireLockAccount']?.FieldTitle}}</mat-label>
+            <input matInput [matDatepicker]="ExpireLockAccount" [(ngModel)]="dataModel.ExpireLockAccount"
+              name="dataModel.ExpireLockAccount" />
+            <mat-icon matSuffix *ngIf="dataModel.ExpireLockAccount && fieldsInfo['ExpireLockAccount']?.AccessEditField"
+              matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.ExpireLockAccount = null">close</mat-icon>
+            <mat-datepicker-toggle matSuffix [for]="ExpireLockAccount"></mat-datepicker-toggle>
+            <mat-datepicker touchUi #ExpireLockAccount></mat-datepicker>
+          </mat-form-field>
 
 
 

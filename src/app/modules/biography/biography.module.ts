@@ -43,9 +43,15 @@ import { BiographyContentSelectorComponent } from './content/selector/selector.c
 import { BiographyContentDeleteComponent } from './content/delete/delete.component';
 import { BiographyCategoryAddComponent } from './category/add/add.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { BiographyConfigSiteComponent } from './config/site/configSite.component';
+import { BiographyConfigMainAdminComponent } from './config/mainAdmin/configMainAdmin.component';
 
 @NgModule({
   declarations: [
+    /*Config*/
+    BiographyConfigMainAdminComponent,
+    BiographyConfigSiteComponent,
+    /*Config*/
     BiographyComponent,
     BiographyContentAddComponent,
     BiographyContentEditComponent,
@@ -74,6 +80,9 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
   providers: [
     CoreEnumService,
     CoreModuleTagService,
+    /*Config*/
+    BiographyConfigurationService,
+    /*Config*/
     CmsConfirmationDialogService,
     BiographyCategoryService,
     BiographyCommentService,

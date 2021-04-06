@@ -97,9 +97,10 @@ export class CoreSiteDomainAliasEditComponent implements OnInit {
         if (next.IsSuccess) {
           this.formInfo.FormTitle = this.formInfo.FormTitle + ' ' + next.Item.Domain;
           this.formInfo.FormAlert = '';
-        } else {
+              } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
+          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
         }
         this.loading.display = false;
       },

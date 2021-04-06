@@ -27,6 +27,7 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { MatStepper } from '@angular/material/stepper';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-core-user-edit',
@@ -35,17 +36,15 @@ import { MatStepper } from '@angular/material/stepper';
 })
 export class CoreUserEditComponent implements OnInit {
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
-    private dialogRef: MatDialogRef<CoreUserEditComponent>,
+    private activatedRoute: ActivatedRoute,
     public coreEnumService: CoreEnumService,
     public coreUserService: CoreUserService,
     private cmsToastrService: CmsToastrService,
-    private publicHelper: PublicHelper
+    private publicHelper: PublicHelper,
+    private router: Router,
   ) {
-    if (data) {
-      this.requestId = +data.id || 0;
-    }
+    this.requestId = + Number(this.activatedRoute.snapshot.paramMap.get('Id'));
 
     this.fileManagerTree = new TreeModel();
   }
@@ -76,15 +75,13 @@ export class CoreUserEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.requestId > 0) {
-      this.formInfo.FormTitle = 'ویرایش  ';
-      this.DataGetOneContent();
-    } else {
-      this.cmsToastrService.typeErrorComponentAction();
-      this.dialogRef.close({ dialogChangedDate: false });
+    if (this.requestId === 0) {
+      this.cmsToastrService.typeErrorAddRowParentIsNull();
       return;
     }
 
+    this.formInfo.FormTitle = 'ویرایش  ';
+    this.DataGetOneContent();
     this.getEnumRecordStatus();
     this.DataGetAccess();
   }
@@ -99,10 +96,6 @@ export class CoreUserEditComponent implements OnInit {
     }
   }
   DataGetOneContent(): void {
-    if (this.requestId <= 0) {
-      this.cmsToastrService.typeErrorEditRowIsNull();
-      return;
-    }
 
     this.formInfo.FormAlert = 'در دریافت ارسال اطلاعات از سرور';
     this.formInfo.FormError = '';
@@ -113,9 +106,10 @@ export class CoreUserEditComponent implements OnInit {
         if (next.IsSuccess) {
           this.formInfo.FormTitle = this.formInfo.FormTitle + ' ' + next.Item.Username;
           this.formInfo.FormAlert = '';
-        } else {
+              } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
+          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
         }
         this.loading.display = false;
       },
@@ -153,11 +147,11 @@ export class CoreUserEditComponent implements OnInit {
         if (next.IsSuccess) {
           this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
           this.cmsToastrService.typeSuccessEdit();
-          this.dialogRef.close({ dialogChangedDate: true });
-
-        } else {
+          // setTimeout(() => this.router.navigate(['/core/user/']), 100);
+              } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
+          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
         }
         this.loading.display = false;
       },
@@ -176,7 +170,7 @@ export class CoreUserEditComponent implements OnInit {
     this.DataEditContent();
   }
   onActionBackToParent(): void {
-    this.dialogRef.close({ dialogChangedDate: false });
+    this.router.navigate(['/core/user/']);
   }
   onStepClick(event: StepperSelectionEvent, stepper: MatStepper): void {
     if (event.previouslySelectedIndex < event.selectedIndex) {

@@ -5,6 +5,7 @@ import {
   FormInfoModel,
   CoreUserService,
   CoreUserModel,
+  DataFieldInfoModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -26,6 +27,7 @@ import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateM
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { MatStepper } from '@angular/material/stepper';
+import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 @Component({
   selector: 'app-core-user-add',
@@ -39,7 +41,9 @@ export class CoreUserAddComponent implements OnInit {
     private dialogRef: MatDialogRef<CoreUserAddComponent>,
     public coreEnumService: CoreEnumService,
     public coreUserService: CoreUserService,
-    private cmsToastrService: CmsToastrService
+    private cmsToastrService: CmsToastrService,
+    private publicHelper: PublicHelper,
+
   ) {
 
 
@@ -56,6 +60,7 @@ export class CoreUserAddComponent implements OnInit {
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<CoreUserModel> = new ErrorExceptionResult<CoreUserModel>();
   dataModel: CoreUserModel = new CoreUserModel();
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
 
@@ -75,6 +80,7 @@ export class CoreUserAddComponent implements OnInit {
 
     this.formInfo.FormTitle = 'اضافه کردن  ';
     this.getEnumRecordStatus();
+    this.DataGetAccess();
   }
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
@@ -87,23 +93,39 @@ export class CoreUserAddComponent implements OnInit {
     }
   }
 
-
-  DataEditContent(): void {
+  DataGetAccess(): void {
+    this.coreUserService
+      .ServiceViewModel()
+      .subscribe(
+        async (next) => {
+          if (next.IsSuccess) {
+            // this.dataAccessModel = next.Access;
+            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+          } else {
+            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
+          }
+        },
+        (error) => {
+          this.cmsToastrService.typeErrorGetAccess(error);
+        }
+      );
+  }
+  DataAddContent(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.coreUserService.ServiceEdit(this.dataModel).subscribe(
+    this.coreUserService.ServiceAdd(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormSubmitAllow = true;
         this.dataModelResult = next;
         if (next.IsSuccess) {
           this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
-          this.cmsToastrService.typeSuccessEdit();
+          this.cmsToastrService.typeSuccessAdd();
           this.dialogRef.close({ dialogChangedDate: true });
-
         } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
+          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
         }
         this.loading.display = false;
       },
@@ -114,13 +136,14 @@ export class CoreUserAddComponent implements OnInit {
       }
     );
   }
+
   onFormSubmit(): void {
     if (!this.formGroup.valid) {
       return;
     }
     this.formInfo.FormSubmitAllow = false;
 
-    this.DataEditContent();
+    this.DataAddContent();
 
 
   }

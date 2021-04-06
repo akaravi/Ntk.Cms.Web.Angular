@@ -124,9 +124,10 @@ export class CoreCpMainMenuEditComponent implements OnInit {
           this.DataGetAllMenuCoreUserGroup();
           this.formInfo.FormTitle = this.formInfo.FormTitle + ' ' + next.Item.Title;
           this.formInfo.FormAlert = '';
-        } else {
+              } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
+          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
         }
         this.loading.display = false;
       },
@@ -162,9 +163,10 @@ export class CoreCpMainMenuEditComponent implements OnInit {
         this.dataCoreCpMainMenuIds = listG;
         if (next.IsSuccess) {
           this.formInfo.FormAlert = '';
-        } else {
+              } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
+          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
         }
         this.loading.display = false;
       },
@@ -203,9 +205,10 @@ export class CoreCpMainMenuEditComponent implements OnInit {
           this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
           this.cmsToastrService.typeSuccessEdit();
           this.dialogRef.close({ dialogChangedDate: true });
-        } else {
+              } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
+          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
         }
         this.loading.display = false;
       },
@@ -263,9 +266,10 @@ export class CoreCpMainMenuEditComponent implements OnInit {
           this.formInfo.FormAlert = 'ثبت در این گروه با موفقیت انجام شد';
           this.cmsToastrService.typeSuccessEdit();
           // this.dialogRef.close({ dialogChangedDate: true });
-        } else {
+              } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
+          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
         }
 
       },
@@ -287,9 +291,10 @@ export class CoreCpMainMenuEditComponent implements OnInit {
           this.formInfo.FormAlert = 'حذف از این گروه با موفقیت انجام شد';
           this.cmsToastrService.typeSuccessEdit();
           // this.dialogRef.close({ dialogChangedDate: true });
-        } else {
+              } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
+          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
         }
       },
       (error) => {

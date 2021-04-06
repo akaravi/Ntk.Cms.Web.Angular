@@ -79,7 +79,9 @@ import { NewsConfigSiteComponent } from './config/site/configSite.component';
     CoreEnumService,
     CoreModuleTagService,
     CmsConfirmationDialogService,
+    /*Config*/
     NewsConfigurationService,
+    /*Config*/
     NewsCategoryService,
     NewsCommentService,
     NewsContentService,

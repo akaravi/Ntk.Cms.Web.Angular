@@ -7,6 +7,8 @@ import { ArticleCommentListComponent } from './comment/list/list.component';
 import { ArticleCommentEditComponent } from './comment/edit/edit.component';
 import { ArticleContentEditComponent } from './content/edit/edit.component';
 import { ArticleContentAddComponent } from './content/add/add.component';
+import { ArticleConfigMainAdminComponent } from './config/mainAdmin/configMainAdmin.component';
+import { ArticleConfigSiteComponent } from './config/site/configSite.component';
 
 
 const routes: Routes = [
@@ -14,6 +16,20 @@ const routes: Routes = [
     path: '',
     component: ArticleComponent,
     children: [
+      /*Config*/
+      {
+        path: 'config/mainadmin',
+        component: ArticleConfigMainAdminComponent
+      },
+      {
+        path: 'config/site',
+        component: ArticleConfigSiteComponent
+      },
+      {
+        path: 'config/site/:LinkSiteId',
+        component: ArticleConfigSiteComponent
+      },
+      /*Config*/
       {
         path: 'content',
         // resolve: {categoryList: CategoryResolver},

@@ -43,10 +43,16 @@ import { BlogContentSelectorComponent } from './content/selector/selector.compon
 import { BlogContentDeleteComponent } from './content/delete/delete.component';
 import { BlogCategoryAddComponent } from './category/add/add.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { BlogConfigMainAdminComponent } from './config/mainAdmin/configMainAdmin.component';
+import { BlogConfigSiteComponent } from './config/site/configSite.component';
 
 @NgModule({
   declarations: [
     BlogComponent,
+    /*Config*/
+    BlogConfigMainAdminComponent,
+    BlogConfigSiteComponent,
+    /*Config*/
     BlogContentAddComponent,
     BlogContentEditComponent,
     BlogContentDeleteComponent,
@@ -73,6 +79,9 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
   ],
   providers: [
     CoreEnumService,
+    /*Config*/
+    BlogConfigurationService,
+    /*Config*/
     CoreModuleTagService,
     CmsConfirmationDialogService,
     BlogCategoryService,

@@ -267,12 +267,12 @@ export class CoreSiteUserListComponent implements OnInit, OnDestroy {
     }
     const title = 'لطفا تایید کنید...';
     const message = 'آیا مایل به حدف این محتوا می باشید ' + '?' + '<br> ( '
-      + this.tableRowSelected.CmsSite.Title + '<-->' + this.tableRowSelected.CmsUser.Username + ' ) ';
+      + this.tableRowSelected.virtual_CmsSite.Title + '<-->' + this.tableRowSelected.virtual_CmsUser.Username + ' ) ';
     this.cmsConfirmationDialogService.confirm(title, message)
       .then((confirmed) => {
         if (confirmed) {
           this.loading.display = true;
-          this.coreSiteUserService.ServiceDelete(this.tableRowSelected.Id).subscribe(
+          this.coreSiteUserService.ServiceDeleteEntity(this.tableRowSelected).subscribe(
             (next) => {
               if (next.IsSuccess) {
                 this.cmsToastrService.typeSuccessRemove();
@@ -296,7 +296,26 @@ export class CoreSiteUserListComponent implements OnInit, OnDestroy {
       );
   }
 
+  onActionbuttonEditSiteRow(model: CoreSiteUserModel = this.tableRowSelected): void {
 
+    if (!model || !model.LinkUserId || model.LinkUserId === 0 || !model.LinkSiteId || model.LinkSiteId === 0) {
+      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      return;
+    }
+    this.tableRowSelected = model;
+    this.router.navigate(['/core/site/edit', model.LinkSiteId]);
+
+  }
+  onActionbuttonEditUserRow(model: CoreSiteUserModel = this.tableRowSelected): void {
+
+    if (!model || !model.LinkUserId || model.LinkUserId === 0 || !model.LinkSiteId || model.LinkSiteId === 0) {
+      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      return;
+    }
+    this.tableRowSelected = model;
+    this.router.navigate(['/core/user/edit', model.LinkUserId]);
+
+  }
 
   onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;

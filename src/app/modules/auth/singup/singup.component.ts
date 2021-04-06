@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { AuthUserSignUpModel, CaptchaModel, CoreAuthService } from 'ntk-cms-api';
+import { AuthUserSignUpModel, CaptchaModel, CoreAuthService, FormInfoModel } from 'ntk-cms-api';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { MatDialog } from '@angular/material/dialog';
@@ -14,12 +14,6 @@ import { SingupRuleComponent } from '../singupRule/singupRule.Component';
   styleUrls: ['./singup.component.scss'],
 })
 export class AuthSingUpComponent implements OnInit, OnDestroy {
-  hasError: boolean;
-  Roulaccespt = false;
-  isLoading$: Observable<boolean>;
-  captchaModel: CaptchaModel = new CaptchaModel();
-  dataModel: AuthUserSignUpModel = new AuthUserSignUpModel();
-  loading = new ProgressSpinnerModel();
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
   constructor(
     private cmsToastrService: CmsToastrService,
@@ -29,7 +23,13 @@ export class AuthSingUpComponent implements OnInit, OnDestroy {
   ) {
 
   }
-
+  formInfo: FormInfoModel = new FormInfoModel();
+  hasError: boolean;
+  Roulaccespt = false;
+  isLoading$: Observable<boolean>;
+  captchaModel: CaptchaModel = new CaptchaModel();
+  dataModel: AuthUserSignUpModel = new AuthUserSignUpModel();
+  loading = new ProgressSpinnerModel();
   ngOnInit(): void {
     this.onCaptchaOrder();
   }

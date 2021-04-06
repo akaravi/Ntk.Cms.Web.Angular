@@ -7,6 +7,7 @@ import { TagInputModule } from 'ngx-chips';
 import {
   CoreEnumService,
   CoreModuleTagService,
+  TicketingConfigurationService,
   TicketingDepartemenLogService,
   TicketingDepartemenOperatorService,
   TicketingDepartemenService,
@@ -43,12 +44,18 @@ import { TicketingTaskAddComponent } from './task/add/add.component';
 import { TicketingDepartemenLogListComponent } from './departemenLog/list/list.component';
 import { TicketingDepartemenOperatorSelectorComponent } from './departemenOperator/selector/selector.component';
 import { TicketingDepartemenOperatorListComponent } from './departemenOperator/list/list.component';
+import { TicketingConfigSiteComponent } from './config/site/configSite.component';
+import { TicketingConfigMainAdminComponent } from './config/mainAdmin/configMainAdmin.component';
 
 
 
 @NgModule({
   declarations: [
     TicketingComponent,
+    /*Config*/
+    TicketingConfigMainAdminComponent,
+    TicketingConfigSiteComponent,
+    /*Config*/
     TicketingDepartemenListComponent,
     TicketingDepartemenAddComponent,
     TicketingDepartemenEditComponent,
@@ -84,6 +91,9 @@ import { TicketingDepartemenOperatorListComponent } from './departemenOperator/l
   ],
   providers: [
     CoreEnumService,
+    /*Config*/
+    TicketingConfigurationService,
+    /*Config*/
     CoreModuleTagService,
     TicketingDepartemenService,
     TicketingDepartemenLogService,

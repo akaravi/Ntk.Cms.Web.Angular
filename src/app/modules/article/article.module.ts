@@ -40,10 +40,16 @@ import { ArticleContentSelectorComponent } from './content/selector/selector.com
 import { ArticleContentDeleteComponent } from './content/delete/delete.component';
 import { ArticleCategoryAddComponent } from './category/add/add.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { ArticleConfigSiteComponent } from './config/site/configSite.component';
+import { ArticleConfigMainAdminComponent } from './config/mainAdmin/configMainAdmin.component';
 
 @NgModule({
   declarations: [
     ArticleComponent,
+    /*Config*/
+    ArticleConfigMainAdminComponent,
+    ArticleConfigSiteComponent,
+    /*Config*/
     ArticleContentAddComponent,
     ArticleContentEditComponent,
     ArticleContentDeleteComponent,
@@ -70,6 +76,9 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
   ],
   providers: [
     CoreEnumService,
+    /*Config*/
+    ArticleConfigurationService,
+    /*Config*/
     CoreModuleTagService,
     CmsConfirmationDialogService,
     ArticleCategoryService,

@@ -23,7 +23,7 @@
     <!--begin::Form group-->
     <div class="form-group">
       <label class="font-size-h6 font-weight-bolder text-dark">{{'AUTH.INPUT.EMAIL' | translate}}</label>
-      <input [(ngModel)]="modelData.Email" class="form-control form-control-solid h-auto py-7 px-6 rounded-lg"
+      <input [(ngModel)]="modelData.Email" [disabled]=" !formInfo.ButtonSubmittedEnabled" class="form-control form-control-solid h-auto py-7 px-6 rounded-lg"
         type="email" name="email" formControlName="email" autocomplete="off"
         [ngClass]="{ 'is-invalid': loginForm.controls['email'].invalid }" />
       <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
@@ -43,7 +43,7 @@
         }"></ng-container>
       <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
           validation: 'maxLength',
-          message: 'ایمیل باید حداکثر دارای 320 کاراکتر باشد',
+          message: 'ایمیل باید حداکثر دارای 100 کاراکتر باشد',
           control: loginForm.controls['email']
         }"></ng-container>
     </div>
@@ -56,7 +56,7 @@
 
       </div>
 
-      <input [(ngModel)]="modelData.Password" class="form-control form-control-solid h-auto py-7 px-6 rounded-lg"
+      <input [(ngModel)]="modelData.Password" [disabled]=" !formInfo.ButtonSubmittedEnabled" class="form-control form-control-solid h-auto py-7 px-6 rounded-lg"
         type="password" name="password" autocomplete="off" formControlName="password"
         [ngClass]="{ 'is-invalid': loginForm.controls['password'].invalid }" />
       <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
@@ -72,7 +72,7 @@
         }"></ng-container>
       <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
           validation: 'maxLength',
-          message: 'پسورد باید حداکثر دارای 320 کاراکتر باشد',
+          message: 'پسورد باید حداکثر دارای 50 کاراکتر باشد',
           control: loginForm.controls['password']
         }"></ng-container>
     </div>
@@ -81,7 +81,7 @@
     <!--begin::Form group-->
     <div class="form-group">
       <img src="{{captchaModel.Image}}" (click)="onCaptchaOrder()" class="mb-3" alt="">
-      <input [(ngModel)]="modelData.CaptchaText"
+      <input [(ngModel)]="modelData.CaptchaText" [disabled]=" !formInfo.ButtonSubmittedEnabled"
         class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6" type="text"
         placeholder="{{'AUTH.INPUT.CAPTCHACODE' | translate}}" name="captcha" autocomplete="off"
         formControlName="captcha" [ngClass]="{'is-invalid': loginForm.controls['captcha'].invalid}" />

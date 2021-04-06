@@ -51,7 +51,7 @@ requestLinkUserGroupId = 0;
     private publicHelper: PublicHelper,
   ) {
     if (data) {
-      this.requestLinkUserId = +data.LinkUsereId || 0;
+      this.requestLinkUserId = +data.LinkUserId || 0;
       this.requestLinkSiteId = +data.LinkSiteId || 0;
       this.requestLinkUserGroupId = +data.LinkUserGroupId || 0;
     }
@@ -145,9 +145,10 @@ requestLinkUserGroupId = 0;
             this.cmsToastrService.typeError('ماژول جهت ویرایش یافت نشد');
 
           }
-        } else {
+              } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
+          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
         }
         this.loading.display = false;
       },
@@ -171,9 +172,10 @@ requestLinkUserGroupId = 0;
           this.cmsToastrService.typeSuccessEdit();
           this.dialogRef.close({ dialogChangedDate: true });
 
-        } else {
+              } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
+          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
         }
         this.loading.display = false;
       },

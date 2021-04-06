@@ -210,14 +210,15 @@ export class CoreUserListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessEdit();
       return;
     }
-    const dialogRef = this.dialog.open(CoreUserEditComponent, {
-      data: { id: this.tableRowSelected.Id }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result && result.dialogChangedDate) {
-        this.DataGetAll();
-      }
-    });
+    this.router.navigate(['/core/user/edit',this.tableRowSelected.Id ])
+    // const dialogRef = this.dialog.open(CoreUserEditComponent, {
+    //   data: { id: this.tableRowSelected.Id }
+    // });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   if (result && result.dialogChangedDate) {
+    //     this.DataGetAll();
+    //   }
+    // });
   }
 
   onActionbuttonDeleteRow(mode: CoreUserModel = this.tableRowSelected): void {
@@ -326,7 +327,7 @@ export class CoreUserListComponent implements OnInit, OnDestroy {
       return;
     }
     this.tableRowSelected = model;
-    this.router.navigate(['/core/site/', model.Id]);
+    this.router.navigate(['/core/site/list', model.Id]);
   }
   onActionBackToParentSiteList(): void {
     this.router.navigate(['/core/site/']);
