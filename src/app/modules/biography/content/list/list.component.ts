@@ -94,7 +94,7 @@ export class BiographyContentListComponent implements OnInit, OnDestroy {
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
     if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
-      let filter = new FilterDataModel();
+      const filter = new FilterDataModel();
       filter.PropertyName = 'LinkCategoryId';
       filter.Value = this.categoryModelSelected.Id;
       this.filteModelContent.Filters.push(filter);

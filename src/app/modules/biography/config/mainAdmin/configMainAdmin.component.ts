@@ -24,7 +24,7 @@ import { Subscription } from 'rxjs';
 
 
 @Component({
-  selector: 'app-Biography-config-mainadmin',
+  selector: 'app-biography-config-mainadmin',
   templateUrl: './configMainAdmin.component.html',
   styleUrls: ['./configMainAdmin.component.scss']
 })
@@ -41,6 +41,9 @@ export class BiographyConfigMainAdminComponent implements OnInit {
     private router: Router) {
     this.fileManagerTree = new TreeModel();
   }
+  dataConfigSiteValuesDefaultModel = new BiographyModuleConfigSiteValuesModel();
+  dataConfigSiteAccessValuesDefaultModel = new BiographyModuleConfigSiteAccessValuesModel();
+  dataConfigAdminMainModel = new BiographyModuleConfigAdminMainValuesModel();
 
   tokenInfo = new TokenInfoModel();
 
@@ -113,7 +116,7 @@ export class BiographyConfigMainAdminComponent implements OnInit {
     this.router.navigate(['/core/site/modulelist']);
   }
 
-  dataConfigSiteValuesDefaultModel = new BiographyModuleConfigSiteValuesModel();
+
   GetServiceSiteConfigDefault(): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
@@ -163,7 +166,6 @@ export class BiographyConfigMainAdminComponent implements OnInit {
       );
   }
 
-  dataConfigSiteAccessValuesDefaultModel = new BiographyModuleConfigSiteAccessValuesModel();
   GetServiceSiteAccessDefault(): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
@@ -212,7 +214,6 @@ export class BiographyConfigMainAdminComponent implements OnInit {
         }
       );
   }
-  dataConfigAdminMainModel = new BiographyModuleConfigAdminMainValuesModel();
   GetServiceAdminMain(): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';

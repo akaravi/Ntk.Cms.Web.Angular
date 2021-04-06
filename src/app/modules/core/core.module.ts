@@ -18,13 +18,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   declarations: [
     CoreComponent,
-      /*Config*/
-      CoreConfigMainAdminComponent,
-      CoreConfigSiteComponent,
-      /*Config*/
-    ],
-    providers:[
-      CoreConfigurationService,
-    ]
+    /*Config*/
+    CoreConfigMainAdminComponent,
+    CoreConfigSiteComponent,
+    /*Config*/
+  ],
+  providers: [
+    CoreConfigurationService,
+  ]
 })
 export class CoreModule { }

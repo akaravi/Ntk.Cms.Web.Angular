@@ -1,12 +1,19 @@
 import { Component, OnInit, Input, EventEmitter } from '@angular/core';
-import { CoreEnumService, ErrorExceptionResult, FilterDataModel, FilterModel, FileContentModel, FileContentService, EnumFilterDataModelSearchTypes, EnumClauseType } from 'ntk-cms-api';
+import {
+  CoreEnumService,
+  ErrorExceptionResult,
+  FilterDataModel,
+  FilterModel,
+  FileContentModel,
+  FileContentService,
+  EnumFilterDataModelSearchTypes,
+  EnumClauseType
+} from 'ntk-cms-api';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { Output } from '@angular/core';
-
-
 
 
 @Component({
@@ -18,8 +25,6 @@ export class FileContentSelectorComponent implements OnInit {
   constructor(
     public coreEnumService: CoreEnumService,
     public contentService: FileContentService) {
-
-
   }
   dataModelResult: ErrorExceptionResult<FileContentModel> = new ErrorExceptionResult<FileContentModel>();
   dataModelSelect: FileContentModel = new FileContentModel();
@@ -64,7 +69,7 @@ export class FileContentSelectorComponent implements OnInit {
       filter.Value = text;
       filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
       filteModel.Filters.push(filter);
-    } else if (text && typeof +text === 'number' && +text > 0){
+    } else if (text && typeof +text === 'number' && +text > 0) {
       let filter = new FilterDataModel();
       filter.PropertyName = 'Title';
       filter.Value = text;

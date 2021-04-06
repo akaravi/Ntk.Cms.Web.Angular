@@ -38,7 +38,7 @@ export class AuthSingUpComponent implements OnInit, OnDestroy {
   onActionSubmit(): void {
     this.hasError = false;
     this.dataModel.CaptchaKey = this.captchaModel.Key;
-     this.coreAuthService.ServiceSignupUser(this.dataModel).subscribe((next) => {
+    this.coreAuthService.ServiceSignupUser(this.dataModel).subscribe((next) => {
         if (next.IsSuccess) {
           this.cmsToastrService.typeSuccessRegistery();
           this.router.navigate(['/']);
@@ -56,7 +56,7 @@ export class AuthSingUpComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe(result => {
       // console.log(`Dialog result: ${result}`);
-      this.Roulaccespt=result;
+      this.Roulaccespt = result;
     });
   }
 

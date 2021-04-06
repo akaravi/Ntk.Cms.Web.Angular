@@ -215,7 +215,7 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
 
 
     const filteModel = new FilterModel();
-    let filter = new FilterDataModel();
+    const filter = new FilterDataModel();
     filter.PropertyName = 'LinkContentId';
     filter.Value =  this.dataModelResult.Item.Id ;
     filter.ClauseType = EnumClauseType.And;
@@ -259,7 +259,7 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
 
 
     const filteModel = new FilterModel();
-    let filter = new FilterDataModel();
+    const filter = new FilterDataModel();
     filter.PropertyName = 'LinkContentId';
     filter.Value =  this.dataModelResult.Item.Id ;
     filter.ClauseType = EnumClauseType.And;
@@ -294,7 +294,7 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
 
 
     const filteModel = new FilterModel();
-    let filter = new FilterDataModel();
+    const filter = new FilterDataModel();
     filter.PropertyName = 'LinkSourceId';
     filter.Value =  this.dataModelResult.Item.Id ;
     filter.ClauseType = EnumClauseType.Or;
@@ -304,7 +304,7 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
     filter.Value =  this.dataModelResult.Item.Id ;
     filter.ClauseType = EnumClauseType.Or;
     filteModel.Filters.push(filter);
-;
+
 
     this.newsContentSimilarService
       .ServiceGetAll(filteModel)
@@ -349,7 +349,7 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
     const filteModel = new FilterModel();
     ids.forEach(item => {
       if (item > 0) {
-        let filter = new FilterDataModel();
+        const filter = new FilterDataModel();
         filter.PropertyName = 'Id';
         filter.Value = item;
         filter.ClauseType = EnumClauseType.Or;

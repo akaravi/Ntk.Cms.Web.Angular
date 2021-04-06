@@ -43,6 +43,9 @@ export class CoreConfigSiteComponent implements OnInit {
     private router: Router) {
     this.fileManagerTree = new TreeModel();
   }
+  dataSiteStorageModel = new CoreModuleSiteStorageValuesModel();
+  dataConfigSiteValuesModel = new CoreModuleConfigSiteValuesModel();
+  dataConfigSiteAccessValuesModel = new CoreModuleConfigSiteAccessValuesModel();
 
   tokenInfo = new TokenInfoModel();
 
@@ -127,8 +130,6 @@ export class CoreConfigSiteComponent implements OnInit {
     this.router.navigate(['/core/site/modulelist']);
     }
 
-
-  dataSiteStorageModel = new CoreModuleSiteStorageValuesModel();
   GetServiceSiteStorage(SiteId: number): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
@@ -177,7 +178,6 @@ export class CoreConfigSiteComponent implements OnInit {
         }
       );
   }
-  dataConfigSiteValuesModel = new CoreModuleConfigSiteValuesModel();
   GetServiceSiteConfig(SiteId: number): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
@@ -226,7 +226,6 @@ export class CoreConfigSiteComponent implements OnInit {
         }
       );
   }
-  dataConfigSiteAccessValuesModel = new CoreModuleConfigSiteAccessValuesModel();
   GetServiceSiteAccess(SiteId: number): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';

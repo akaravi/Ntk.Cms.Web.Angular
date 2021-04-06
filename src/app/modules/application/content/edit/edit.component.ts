@@ -71,7 +71,7 @@ export class ApplicationAppEditComponent implements OnInit {
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
   ngOnInit(): void {
     this.requestId = + Number(this.activatedRoute.snapshot.paramMap.get('Id'));
-    if (!this.requestId||this.requestId === 0) {
+    if (!this.requestId || this.requestId === 0) {
       this.cmsToastrService.typeErrorAddRowParentIsNull();
       return;
     }

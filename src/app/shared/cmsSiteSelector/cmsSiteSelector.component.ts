@@ -1,5 +1,14 @@
 import { Component, OnInit, Input, EventEmitter } from '@angular/core';
-import { CoreEnumService, ErrorExceptionResult, FilterDataModel, FilterModel, CoreSiteModel, CoreSiteService, EnumFilterDataModelSearchTypes, EnumClauseType } from 'ntk-cms-api';
+import {
+  CoreEnumService,
+  ErrorExceptionResult,
+  FilterDataModel,
+  FilterModel,
+  CoreSiteModel,
+  CoreSiteService,
+  EnumFilterDataModelSearchTypes,
+  EnumClauseType
+} from 'ntk-cms-api';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';

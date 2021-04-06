@@ -1,5 +1,14 @@
 import { Component, OnInit, Input, EventEmitter } from '@angular/core';
-import { CoreEnumService, ErrorExceptionResult, FilterDataModel, FilterModel, BlogCategoryModel, BlogCategoryService, EnumFilterDataModelSearchTypes, EnumClauseType } from 'ntk-cms-api';
+import {
+  CoreEnumService,
+  ErrorExceptionResult,
+  FilterDataModel,
+  FilterModel,
+  BlogCategoryModel,
+  BlogCategoryService,
+  EnumFilterDataModelSearchTypes,
+  EnumClauseType
+} from 'ntk-cms-api';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
@@ -89,7 +98,7 @@ export class BlogCategorySelectorComponent implements OnInit {
       filter.Value = text;
       filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
       filteModel.Filters.push(filter);
-    } else if (text && typeof +text === 'number' && +text > 0){
+    } else if (text && typeof +text === 'number' && +text > 0) {
       let filter = new FilterDataModel();
       filter.PropertyName = 'Title';
       filter.Value = text;

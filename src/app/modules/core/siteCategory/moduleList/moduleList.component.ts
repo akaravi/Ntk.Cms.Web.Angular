@@ -285,7 +285,8 @@ export class CoreSiteCategoryModuleListComponent implements OnInit, OnDestroy {
     this.tableRowSelected = row;
   }
   onActionbuttonConfigMainAdminRow(model: CoreSiteCategoryCmsModuleModel = this.tableRowSelected): void {
-    if (!model || !model.LinkCmsModuleId || model.LinkCmsModuleId === 0 || !model.LinkCmsSiteCategoryId || model.LinkCmsSiteCategoryId === 0) {
+    if (!model || !model.LinkCmsModuleId || model.LinkCmsModuleId === 0
+      || !model.LinkCmsSiteCategoryId || model.LinkCmsSiteCategoryId === 0) {
       const emessage = 'ردیفی انتخاب نشده است';
       this.cmsToastrService.typeErrorSelected(emessage);
       return;

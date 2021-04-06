@@ -110,7 +110,6 @@ export class CoreSiteCategoryListComponent implements OnInit, OnDestroy {
 
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;
-         
 
           if (this.optionsSearch.childMethods) {
             this.optionsSearch.childMethods.setAccess(next.Access);

@@ -26,7 +26,7 @@ import { Subscription } from 'rxjs';
 
 
 @Component({
-  selector: 'app-Biography-config-site',
+  selector: 'app-biography-config-site',
   templateUrl: './configSite.component.html',
   styleUrls: ['./configSite.component.scss']
 })
@@ -43,7 +43,9 @@ export class BiographyConfigSiteComponent implements OnInit {
     private router: Router) {
     this.fileManagerTree = new TreeModel();
   }
-
+  dataSiteStorageModel = new BiographyModuleSiteStorageValuesModel();
+  dataConfigSiteValuesModel = new BiographyModuleConfigSiteValuesModel();
+  dataConfigSiteAccessValuesModel = new BiographyModuleConfigSiteAccessValuesModel();
   tokenInfo = new TokenInfoModel();
 
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
@@ -115,8 +117,6 @@ export class BiographyConfigSiteComponent implements OnInit {
     this.router.navigate(['/core/site/modulelist']);
     }
 
-
-  dataSiteStorageModel = new BiographyModuleSiteStorageValuesModel();
   GetServiceSiteStorage(SiteId: number): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
@@ -165,7 +165,6 @@ export class BiographyConfigSiteComponent implements OnInit {
         }
       );
   }
-  dataConfigSiteValuesModel = new BiographyModuleConfigSiteValuesModel();
   GetServiceSiteConfig(SiteId: number): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
@@ -214,7 +213,6 @@ export class BiographyConfigSiteComponent implements OnInit {
         }
       );
   }
-  dataConfigSiteAccessValuesModel = new BiographyModuleConfigSiteAccessValuesModel();
   GetServiceSiteAccess(SiteId: number): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';

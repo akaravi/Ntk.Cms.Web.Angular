@@ -210,7 +210,7 @@ export class CoreUserListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessEdit();
       return;
     }
-    this.router.navigate(['/core/user/edit',this.tableRowSelected.Id ])
+    this.router.navigate(['/core/user/edit', this.tableRowSelected.Id]);
     // const dialogRef = this.dialog.open(CoreUserEditComponent, {
     //   data: { id: this.tableRowSelected.Id }
     // });

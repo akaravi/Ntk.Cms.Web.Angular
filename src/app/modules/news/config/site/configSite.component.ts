@@ -43,7 +43,9 @@ export class NewsConfigSiteComponent implements OnInit {
     private router: Router) {
     this.fileManagerTree = new TreeModel();
   }
-
+  dataSiteStorageModel = new NewsModuleSiteStorageValuesModel();
+  dataConfigSiteValuesModel = new NewsModuleConfigSiteValuesModel();
+  dataConfigSiteAccessValuesModel = new NewsModuleConfigSiteAccessValuesModel();
   tokenInfo = new TokenInfoModel();
 
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
@@ -116,7 +118,7 @@ export class NewsConfigSiteComponent implements OnInit {
     }
 
 
-  dataSiteStorageModel = new NewsModuleSiteStorageValuesModel();
+
   GetServiceSiteStorage(SiteId: number): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
@@ -165,7 +167,7 @@ export class NewsConfigSiteComponent implements OnInit {
         }
       );
   }
-  dataConfigSiteValuesModel = new NewsModuleConfigSiteValuesModel();
+
   GetServiceSiteConfig(SiteId: number): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
@@ -214,7 +216,7 @@ export class NewsConfigSiteComponent implements OnInit {
         }
       );
   }
-  dataConfigSiteAccessValuesModel = new NewsModuleConfigSiteAccessValuesModel();
+
   GetServiceSiteAccess(SiteId: number): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';

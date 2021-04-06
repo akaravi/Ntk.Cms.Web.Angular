@@ -216,7 +216,7 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
 
 
     const filteModel = new FilterModel();
-    let filter = new FilterDataModel();
+    const filter = new FilterDataModel();
     filter.PropertyName = 'LinkContentId';
     filter.Value =  this.dataModelResult.Item.Id ;
     filter.ClauseType = EnumClauseType.And;
@@ -259,7 +259,7 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
 
 
     const filteModel = new FilterModel();
-    let filter = new FilterDataModel();
+    const filter = new FilterDataModel();
     filter.PropertyName = 'LinkContentId';
     filter.Value =  this.dataModelResult.Item.Id ;
     filter.ClauseType = EnumClauseType.And;
@@ -294,7 +294,7 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
 
 
     const filteModel = new FilterModel();
-    let filter = new FilterDataModel();
+    const filter = new FilterDataModel();
     filter.PropertyName = 'LinkSourceId';
     filter.Value =  this.dataModelResult.Item.Id ;
     filter.ClauseType = EnumClauseType.Or;
@@ -349,7 +349,7 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
     const filteModel = new FilterModel();
     ids.forEach(item => {
       if (item > 0) {
-        let filter = new FilterDataModel();
+        const filter = new FilterDataModel();
         filter.PropertyName = 'Id';
         filter.Value = item;
         filter.ClauseType = EnumClauseType.Or;

@@ -41,7 +41,9 @@ export class ApplicationConfigMainAdminComponent implements OnInit {
     private router: Router) {
     this.fileManagerTree = new TreeModel();
   }
-
+  dataConfigSiteValuesDefaultModel = new ApplicationModuleConfigSiteValuesModel();
+  dataConfigSiteAccessValuesDefaultModel = new ApplicationModuleConfigSiteAccessValuesModel();
+  dataConfigAdminMainModel = new ApplicationModuleConfigAdminMainValuesModel();
   tokenInfo = new TokenInfoModel();
 
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
@@ -94,9 +96,6 @@ export class ApplicationConfigMainAdminComponent implements OnInit {
     }
 
   }
-
-
-
   onStepClick(event: StepperSelectionEvent, stepper: any): void {
     if (event.previouslySelectedIndex < event.selectedIndex) {
       // if (!this.formGroup.valid) {
@@ -113,7 +112,7 @@ export class ApplicationConfigMainAdminComponent implements OnInit {
     this.router.navigate(['/core/site/modulelist']);
   }
 
-  dataConfigSiteValuesDefaultModel = new ApplicationModuleConfigSiteValuesModel();
+
   GetServiceSiteConfigDefault(): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
@@ -163,7 +162,7 @@ export class ApplicationConfigMainAdminComponent implements OnInit {
       );
   }
 
-  dataConfigSiteAccessValuesDefaultModel = new ApplicationModuleConfigSiteAccessValuesModel();
+
   GetServiceSiteAccessDefault(): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
@@ -212,7 +211,7 @@ export class ApplicationConfigMainAdminComponent implements OnInit {
         }
       );
   }
-  dataConfigAdminMainModel = new ApplicationModuleConfigAdminMainValuesModel();
+
   GetServiceAdminMain(): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';

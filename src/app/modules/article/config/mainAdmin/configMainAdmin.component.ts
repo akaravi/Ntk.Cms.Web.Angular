@@ -41,7 +41,9 @@ export class ArticleConfigMainAdminComponent implements OnInit {
     private router: Router) {
     this.fileManagerTree = new TreeModel();
   }
-
+  dataConfigSiteValuesDefaultModel = new ArticleModuleConfigSiteValuesModel();
+  dataConfigSiteAccessValuesDefaultModel = new ArticleModuleConfigSiteAccessValuesModel();
+  dataConfigAdminMainModel = new ArticleModuleConfigAdminMainValuesModel();
   tokenInfo = new TokenInfoModel();
 
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
@@ -113,7 +115,7 @@ export class ArticleConfigMainAdminComponent implements OnInit {
     this.router.navigate(['/core/site/modulelist']);
   }
 
-  dataConfigSiteValuesDefaultModel = new ArticleModuleConfigSiteValuesModel();
+
   GetServiceSiteConfigDefault(): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
@@ -163,7 +165,6 @@ export class ArticleConfigMainAdminComponent implements OnInit {
       );
   }
 
-  dataConfigSiteAccessValuesDefaultModel = new ArticleModuleConfigSiteAccessValuesModel();
   GetServiceSiteAccessDefault(): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
@@ -212,7 +213,6 @@ export class ArticleConfigMainAdminComponent implements OnInit {
         }
       );
   }
-  dataConfigAdminMainModel = new ArticleModuleConfigAdminMainValuesModel();
   GetServiceAdminMain(): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';

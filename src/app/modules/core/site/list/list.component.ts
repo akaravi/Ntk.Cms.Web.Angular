@@ -290,7 +290,6 @@ export class CoreSiteListComponent implements OnInit, OnDestroy {
     this.router.navigate(['/core/site/userlist', this.tableRowSelected.Id]);
   }
   onActionbuttonDeviceListRow(model: CoreSiteModel = this.tableRowSelected): void {
-    debugger
     if (!model || !model.Id || model.Id === 0) {
       const message = 'ردیفی انتخاب نشده است';
       this.cmsToastrService.typeErrorSelected(message);

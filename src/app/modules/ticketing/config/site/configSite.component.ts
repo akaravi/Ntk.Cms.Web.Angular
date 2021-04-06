@@ -43,6 +43,9 @@ export class TicketingConfigSiteComponent implements OnInit {
     private router: Router) {
     this.fileManagerTree = new TreeModel();
   }
+  dataSiteStorageModel = new TicketingModuleSiteStorageValuesModel();
+  dataConfigSiteValuesModel = new TicketingModuleConfigSiteValuesModel();
+  dataConfigSiteAccessValuesModel = new TicketingModuleConfigSiteAccessValuesModel();
 
   tokenInfo = new TokenInfoModel();
 
@@ -116,7 +119,7 @@ export class TicketingConfigSiteComponent implements OnInit {
     }
 
 
-  dataSiteStorageModel = new TicketingModuleSiteStorageValuesModel();
+
   GetServiceSiteStorage(SiteId: number): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
@@ -165,7 +168,6 @@ export class TicketingConfigSiteComponent implements OnInit {
         }
       );
   }
-  dataConfigSiteValuesModel = new TicketingModuleConfigSiteValuesModel();
   GetServiceSiteConfig(SiteId: number): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
@@ -214,7 +216,6 @@ export class TicketingConfigSiteComponent implements OnInit {
         }
       );
   }
-  dataConfigSiteAccessValuesModel = new TicketingModuleConfigSiteAccessValuesModel();
   GetServiceSiteAccess(SiteId: number): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';

@@ -93,7 +93,7 @@ export class CoreModuleTagAddComponent implements OnInit, AfterViewInit {
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
     if (text && typeof text === 'string' && text.length > 0) {
-      let filter = new FilterDataModel();
+      const filter = new FilterDataModel();
       filter.PropertyName = 'Title';
       filter.Value = text;
       filter.SearchType = EnumFilterDataModelSearchTypes.Contains;

@@ -42,6 +42,9 @@ export class CoreConfigMainAdminComponent implements OnInit {
     private router: Router) {
     this.fileManagerTree = new TreeModel();
   }
+  dataConfigSiteValuesDefaultModel = new CoreModuleConfigSiteValuesModel();
+  dataConfigSiteAccessValuesDefaultModel = new CoreModuleConfigSiteAccessValuesModel();
+  dataConfigAdminMainModel = new CoreModuleConfigAdminMainValuesModel();
 
   tokenInfo = new TokenInfoModel();
 
@@ -126,7 +129,6 @@ export class CoreConfigMainAdminComponent implements OnInit {
     this.router.navigate(['/core/site/modulelist']);
   }
 
-  dataConfigSiteValuesDefaultModel = new CoreModuleConfigSiteValuesModel();
   GetServiceSiteConfigDefault(): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
@@ -176,7 +178,6 @@ export class CoreConfigMainAdminComponent implements OnInit {
       );
   }
 
-  dataConfigSiteAccessValuesDefaultModel = new CoreModuleConfigSiteAccessValuesModel();
   GetServiceSiteAccessDefault(): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
@@ -225,7 +226,6 @@ export class CoreConfigMainAdminComponent implements OnInit {
         }
       );
   }
-  dataConfigAdminMainModel = new CoreModuleConfigAdminMainValuesModel();
   GetServiceAdminMain(): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';

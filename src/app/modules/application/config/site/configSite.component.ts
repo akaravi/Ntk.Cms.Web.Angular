@@ -43,7 +43,9 @@ export class ApplicationConfigSiteComponent implements OnInit {
     private router: Router) {
     this.fileManagerTree = new TreeModel();
   }
-
+  dataSiteStorageModel = new ApplicationModuleSiteStorageValuesModel();
+  dataConfigSiteValuesModel = new ApplicationModuleConfigSiteValuesModel();
+  dataConfigSiteAccessValuesModel = new ApplicationModuleConfigSiteAccessValuesModel();
   tokenInfo = new TokenInfoModel();
 
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
@@ -89,7 +91,7 @@ export class ApplicationConfigSiteComponent implements OnInit {
       this.cmsToastrService.typeErrorFormInvalid();
       return;
     }
-   
+
     if (this.requestLinkSiteId > 0) {
       this.SetServiceSiteStorageSave(this.requestLinkSiteId);
       this.SetServiceSiteConfigSave(this.requestLinkSiteId);
@@ -113,10 +115,10 @@ export class ApplicationConfigSiteComponent implements OnInit {
 
   onActionBackToParent(): void {
     this.router.navigate(['/core/site/modulelist']);
-    }
+  }
 
 
-  dataSiteStorageModel = new ApplicationModuleSiteStorageValuesModel();
+
   GetServiceSiteStorage(SiteId: number): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
@@ -165,7 +167,7 @@ export class ApplicationConfigSiteComponent implements OnInit {
         }
       );
   }
-  dataConfigSiteValuesModel = new ApplicationModuleConfigSiteValuesModel();
+
   GetServiceSiteConfig(SiteId: number): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
@@ -214,7 +216,7 @@ export class ApplicationConfigSiteComponent implements OnInit {
         }
       );
   }
-  dataConfigSiteAccessValuesModel = new ApplicationModuleConfigSiteAccessValuesModel();
+
   GetServiceSiteAccess(SiteId: number): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';

@@ -41,7 +41,9 @@ export class PollingConfigMainAdminComponent implements OnInit {
     private router: Router) {
     this.fileManagerTree = new TreeModel();
   }
-
+  dataConfigSiteValuesDefaultModel = new PollingModuleConfigSiteValuesModel();
+  dataConfigSiteAccessValuesDefaultModel = new PollingModuleConfigSiteAccessValuesModel();
+  dataConfigAdminMainModel = new PollingModuleConfigAdminMainValuesModel();
   tokenInfo = new TokenInfoModel();
 
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
@@ -113,7 +115,6 @@ export class PollingConfigMainAdminComponent implements OnInit {
     this.router.navigate(['/core/site/modulelist']);
   }
 
-  dataConfigSiteValuesDefaultModel = new PollingModuleConfigSiteValuesModel();
   GetServiceSiteConfigDefault(): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
@@ -163,7 +164,6 @@ export class PollingConfigMainAdminComponent implements OnInit {
       );
   }
 
-  dataConfigSiteAccessValuesDefaultModel = new PollingModuleConfigSiteAccessValuesModel();
   GetServiceSiteAccessDefault(): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
@@ -212,7 +212,7 @@ export class PollingConfigMainAdminComponent implements OnInit {
         }
       );
   }
-  dataConfigAdminMainModel = new PollingModuleConfigAdminMainValuesModel();
+
   GetServiceAdminMain(): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';

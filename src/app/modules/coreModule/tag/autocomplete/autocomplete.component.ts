@@ -1,6 +1,14 @@
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { Component, OnInit, Input, EventEmitter } from '@angular/core';
-import { CoreModuleTagModel, CoreModuleTagService, EnumClauseType, EnumFilterDataModelSearchTypes, ErrorExceptionResult, FilterDataModel, FilterModel } from 'ntk-cms-api';
+import {
+  CoreModuleTagModel,
+  CoreModuleTagService,
+  EnumClauseType,
+  EnumFilterDataModelSearchTypes,
+  ErrorExceptionResult,
+  FilterDataModel,
+  FilterModel
+} from 'ntk-cms-api';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Output } from '@angular/core';
@@ -42,7 +50,7 @@ export class TagAutocompleteComponent implements OnInit {
       filter.Value = text;
       filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
       filteModel.Filters.push(filter);
-    } else if (text && typeof +text === 'number' && +text > 0){
+    } else if (text && typeof +text === 'number' && +text > 0) {
       let filter = new FilterDataModel();
       filter.PropertyName = 'Title';
       filter.Value = text;
@@ -87,7 +95,7 @@ export class TagAutocompleteComponent implements OnInit {
     const filteModel = new FilterModel();
     ids.forEach(item => {
       if (item > 0) {
-        let filter = new FilterDataModel();
+        const filter = new FilterDataModel();
         filter.PropertyName = 'Id';
         filter.Value = item;
         filter.ClauseType = EnumClauseType.Or;

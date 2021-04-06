@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
   TicketingDepartemenOperatorModel,
@@ -31,11 +31,11 @@ import { Subscription } from 'rxjs';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class TicketingDepartemenOperatorListComponent implements OnInit {
-  requestDepartemenId = 0;
-  constructor(private ticketingDepartemenOperatorService: TicketingDepartemenOperatorService,
+export class TicketingDepartemenOperatorListComponent implements OnInit , OnDestroy {
+  constructor(
+    private ticketingDepartemenOperatorService: TicketingDepartemenOperatorService,
     private activatedRoute: ActivatedRoute,
-    private cmsApiStore :NtkCmsApiStoreService,
+    private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
     private router: Router,
@@ -44,6 +44,7 @@ export class TicketingDepartemenOperatorListComponent implements OnInit {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
   }
+  requestDepartemenId = 0;
   comment: string;
   author: string;
   dataSource: any;
@@ -77,17 +78,17 @@ export class TicketingDepartemenOperatorListComponent implements OnInit {
 
 
   expandedElement: TicketingDepartemenOperatorModel | null;
+  cmsApiStoreSubscribe: Subscription;
 
   ngOnInit(): void {
     this.requestDepartemenId = + Number(this.activatedRoute.snapshot.paramMap.get('SourceId'));
     this.DataGetAll();
-    this.tokenInfo =  this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
-    this.cmsApiStoreSubscribe =  this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
+    this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
+    this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
     });
   }
-  cmsApiStoreSubscribe:Subscription;
   ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
@@ -107,7 +108,7 @@ export class TicketingDepartemenOperatorListComponent implements OnInit {
     }
     if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
       filter.PropertyName = 'LinkSourceId';
-      filter.Value = this.categoryModelSelected.Id ;
+      filter.Value = this.categoryModelSelected.Id;
       this.filteModelContent.Filters.push(filter);
     }
     this.ticketingDepartemenOperatorService.ServiceGetAll(this.filteModelContent).subscribe(
@@ -219,7 +220,7 @@ export class TicketingDepartemenOperatorListComponent implements OnInit {
   }
   onActionbuttonEditRow(mode: TicketingDepartemenOperatorModel = this.tableRowSelected): void {
     if (!mode || !mode.Id || mode.Id === 0) {
-this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
       return;
     }
     this.tableRowSelected = mode;
@@ -246,7 +247,7 @@ this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انت
   }
   onActionbuttonDeleteRow(mode: TicketingDepartemenOperatorModel = this.tableRowSelected): void {
     if (mode == null || !mode.Id || mode.Id === 0) {
-this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
       return;
     }
     this.tableRowSelected = mode;
@@ -270,7 +271,7 @@ this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انت
     this.router.navigate(['/application/app/delete/', this.tableRowSelected.Id]);
 
   }
-   onActionbuttonStatist(): void {
+  onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;
     if (!this.optionsStatist.data.show) {
       return;

@@ -41,6 +41,9 @@ export class BlogConfigMainAdminComponent implements OnInit {
     private router: Router) {
     this.fileManagerTree = new TreeModel();
   }
+  dataConfigSiteValuesDefaultModel = new BlogModuleConfigSiteValuesModel();
+  dataConfigSiteAccessValuesDefaultModel = new BlogModuleConfigSiteAccessValuesModel();
+  dataConfigAdminMainModel = new BlogModuleConfigAdminMainValuesModel();
 
   tokenInfo = new TokenInfoModel();
 
@@ -113,7 +116,6 @@ export class BlogConfigMainAdminComponent implements OnInit {
     this.router.navigate(['/core/site/modulelist']);
   }
 
-  dataConfigSiteValuesDefaultModel = new BlogModuleConfigSiteValuesModel();
   GetServiceSiteConfigDefault(): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
@@ -162,8 +164,6 @@ export class BlogConfigMainAdminComponent implements OnInit {
         }
       );
   }
-
-  dataConfigSiteAccessValuesDefaultModel = new BlogModuleConfigSiteAccessValuesModel();
   GetServiceSiteAccessDefault(): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
@@ -212,7 +212,6 @@ export class BlogConfigMainAdminComponent implements OnInit {
         }
       );
   }
-  dataConfigAdminMainModel = new BlogModuleConfigAdminMainValuesModel();
   GetServiceAdminMain(): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';

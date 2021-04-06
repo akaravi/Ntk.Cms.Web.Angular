@@ -43,7 +43,9 @@ export class BlogConfigSiteComponent implements OnInit {
     private router: Router) {
     this.fileManagerTree = new TreeModel();
   }
-
+  dataSiteStorageModel = new BlogModuleSiteStorageValuesModel();
+  dataConfigSiteValuesModel = new BlogModuleConfigSiteValuesModel();
+  dataConfigSiteAccessValuesModel = new BlogModuleConfigSiteAccessValuesModel();
   tokenInfo = new TokenInfoModel();
 
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
@@ -115,8 +117,6 @@ export class BlogConfigSiteComponent implements OnInit {
     this.router.navigate(['/core/site/modulelist']);
     }
 
-
-  dataSiteStorageModel = new BlogModuleSiteStorageValuesModel();
   GetServiceSiteStorage(SiteId: number): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
@@ -165,7 +165,6 @@ export class BlogConfigSiteComponent implements OnInit {
         }
       );
   }
-  dataConfigSiteValuesModel = new BlogModuleConfigSiteValuesModel();
   GetServiceSiteConfig(SiteId: number): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
@@ -214,7 +213,6 @@ export class BlogConfigSiteComponent implements OnInit {
         }
       );
   }
-  dataConfigSiteAccessValuesModel = new BlogModuleConfigSiteAccessValuesModel();
   GetServiceSiteAccess(SiteId: number): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';

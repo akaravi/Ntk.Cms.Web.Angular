@@ -24,7 +24,7 @@ import { Subscription } from 'rxjs';
 
 
 @Component({
-  selector: 'app-Ticketing-config-mainadmin',
+  selector: 'app-ticketing-config-mainadmin',
   templateUrl: './configMainAdmin.component.html',
   styleUrls: ['./configMainAdmin.component.scss']
 })
@@ -41,6 +41,9 @@ export class TicketingConfigMainAdminComponent implements OnInit {
     private router: Router) {
     this.fileManagerTree = new TreeModel();
   }
+  dataConfigSiteValuesDefaultModel = new TicketingModuleConfigSiteValuesModel();
+  dataConfigSiteAccessValuesDefaultModel = new TicketingModuleConfigSiteAccessValuesModel();
+  dataConfigAdminMainModel = new TicketingModuleConfigAdminMainValuesModel();
 
   tokenInfo = new TokenInfoModel();
 
@@ -113,7 +116,6 @@ export class TicketingConfigMainAdminComponent implements OnInit {
     this.router.navigate(['/core/site/modulelist']);
   }
 
-  dataConfigSiteValuesDefaultModel = new TicketingModuleConfigSiteValuesModel();
   GetServiceSiteConfigDefault(): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
@@ -162,8 +164,6 @@ export class TicketingConfigMainAdminComponent implements OnInit {
         }
       );
   }
-
-  dataConfigSiteAccessValuesDefaultModel = new TicketingModuleConfigSiteAccessValuesModel();
   GetServiceSiteAccessDefault(): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
@@ -212,7 +212,6 @@ export class TicketingConfigMainAdminComponent implements OnInit {
         }
       );
   }
-  dataConfigAdminMainModel = new TicketingModuleConfigAdminMainValuesModel();
   GetServiceAdminMain(): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';

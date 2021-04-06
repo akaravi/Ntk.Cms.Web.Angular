@@ -33,7 +33,7 @@ import { CoreDeviceAddComponent } from '../add/add.component';
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.scss'],
 })
-export class CoreDeviceTreeComponent implements OnInit , OnDestroy{
+export class CoreDeviceTreeComponent implements OnInit, OnDestroy {
   constructor(
     private cmsApiStore: NtkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
@@ -125,7 +125,7 @@ export class CoreDeviceTreeComponent implements OnInit , OnDestroy{
       id = this.dataModelSelect.Id;
     }
     if (id === 0) {
-const message = 'دسته بندی انتخاب نشده است';
+      const message = 'دسته بندی انتخاب نشده است';
       this.cmsToastrService.typeErrorSelected(message);
       return;
     }

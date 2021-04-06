@@ -1,5 +1,14 @@
 import { Component, OnInit, Input, EventEmitter } from '@angular/core';
-import { CoreEnumService, ErrorExceptionResult, FilterDataModel, FilterModel, CoreSiteModel, CoreSiteService, EnumFilterDataModelSearchTypes, EnumClauseType } from 'ntk-cms-api';
+import {
+  CoreEnumService,
+  ErrorExceptionResult,
+  FilterDataModel,
+  FilterModel,
+  CoreSiteModel,
+  CoreSiteService,
+  EnumFilterDataModelSearchTypes,
+  EnumClauseType
+} from 'ntk-cms-api';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
@@ -86,7 +95,7 @@ export class CoreSiteSelectorComponent implements OnInit {
     filter.ClauseType = EnumClauseType.Or;
     filteModel.Filters.push(filter);
 
-    if (text && typeof +text === 'number' && +text > 0){
+    if (text && typeof +text === 'number' && +text > 0) {
       /*Filters */
       filter = new FilterDataModel();
       filter.PropertyName = 'Id';
