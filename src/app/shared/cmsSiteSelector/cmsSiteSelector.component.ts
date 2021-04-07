@@ -11,7 +11,7 @@ import {
 } from 'ntk-cms-api';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { Output } from '@angular/core';
 
@@ -27,7 +27,7 @@ export class CmsSiteSelectorComponent implements OnInit {
     public coreEnumService: CoreEnumService,
     public categoryService: CoreSiteService) {
   }
-  dataModelResult: ErrorExceptionResult<CoreSiteModel> = new ErrorExceptionResult<CoreSiteModel>();
+  // dataModelResult: ErrorExceptionResult<CoreSiteModel> = new ErrorExceptionResult<CoreSiteModel>();
   dataModelSelect: CoreSiteModel = new CoreSiteModel();
   loading = new ProgressSpinnerModel();
   formControl = new FormControl();
@@ -47,9 +47,10 @@ export class CmsSiteSelectorComponent implements OnInit {
         debounceTime(1000),
         distinctUntilChanged(),
         switchMap(val => {
-          if (typeof val === 'string') {
-            return this.DataGetAll(val || '');
+          if (typeof val === 'string' || typeof val === 'number') {
+            return this.DataGetAll(val);
           }
+          return this.DataGetAll('');
         }),
         // tap(() => this.myControl.setValue(this.options[0]))
       );
@@ -61,62 +62,61 @@ export class CmsSiteSelectorComponent implements OnInit {
   displayOption(model?: CoreSiteModel): string | undefined {
     return model ? (model.Title + ' # ' + model.Id) : undefined;
   }
-  DataGetAll(text: string | number | any): Observable<CoreSiteModel[]> {
+  async DataGetAll(text: string | number | any): Promise<CoreSiteModel[]> {
     const filteModel = new FilterModel();
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
     // this.loading.backdropEnabled = false;
-    if (!text || text.length === 0) {
-      return;
-    }
-    let filter = new FilterDataModel();
-    /*Filters */
-    filter = new FilterDataModel();
-    filter.PropertyName = 'SubDomain';
-    filter.Value = text;
-    filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
-    filter.ClauseType = EnumClauseType.Or;
-    filteModel.Filters.push(filter);
-    /*Filters */
-    /*Filters */
-    filter = new FilterDataModel();
-    filter.PropertyName = 'Domain';
-    filter.Value = text;
-    filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
-    filter.ClauseType = EnumClauseType.Or;
-    filteModel.Filters.push(filter);
-    /*Filters */
-    filter = new FilterDataModel();
-    filter.PropertyName = 'Title';
-    filter.Value = text;
-    filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
-    filter.ClauseType = EnumClauseType.Or;
-    filteModel.Filters.push(filter);
-
-    if (text && typeof +text === 'number' && +text > 0) {
+    if (text && text.length > 0) {
+      let filter = new FilterDataModel();
       /*Filters */
       filter = new FilterDataModel();
-      filter.PropertyName = 'Id';
+      filter.PropertyName = 'SubDomain';
       filter.Value = text;
-      filter.SearchType = EnumFilterDataModelSearchTypes.Equal;
+      filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
+      filter.ClauseType = EnumClauseType.Or;
+      filteModel.Filters.push(filter);
+      /*Filters */
+      /*Filters */
+      filter = new FilterDataModel();
+      filter.PropertyName = 'Domain';
+      filter.Value = text;
+      filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
+      filter.ClauseType = EnumClauseType.Or;
+      filteModel.Filters.push(filter);
+      /*Filters */
+      filter = new FilterDataModel();
+      filter.PropertyName = 'Title';
+      filter.Value = text;
+      filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
       filter.ClauseType = EnumClauseType.Or;
       filteModel.Filters.push(filter);
 
+      if (text && typeof +text === 'number' && +text > 0) {
+        /*Filters */
+        filter = new FilterDataModel();
+        filter.PropertyName = 'Id';
+        filter.Value = text;
+        filter.SearchType = EnumFilterDataModelSearchTypes.Equal;
+        filter.ClauseType = EnumClauseType.Or;
+        filteModel.Filters.push(filter);
+
+      }
     }
     this.loading.Globally = false;
     this.loading.display = true;
-    return this.categoryService.ServiceGetAll(filteModel)
+    return await this.categoryService.ServiceGetAll(filteModel)
       .pipe(
         map(response => {
-          this.dataModelResult = response;
           return response.ListItems;
-        }));
+        })
+      ).toPromise();
   }
   onActionSelect(model: CoreSiteModel): void {
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
   }
-  onActionSelectClear(): void{
+  onActionSelectClear(): void {
     this.formControl.setValue(null);
     this.optionSelect.emit(null);
   }

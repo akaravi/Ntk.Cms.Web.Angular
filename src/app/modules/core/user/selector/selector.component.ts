@@ -49,9 +49,10 @@ export class CoreUserSelectorComponent implements OnInit {
         debounceTime(1000),
         distinctUntilChanged(),
         switchMap(val => {
-          if (typeof val === 'string') {
+          if (typeof val === 'string' || typeof val === 'number') {
             return this.DataGetAll(val || '');
           }
+          return [];
         }),
         // tap(() => this.myControl.setValue(this.options[0]))
       );
@@ -105,7 +106,7 @@ export class CoreUserSelectorComponent implements OnInit {
     this.formControl.setValue(null);
     this.optionSelect.emit(null);
   }
- 
+
   push(newvalue: CoreUserModel): Observable<CoreUserModel[]> {
     return this.filteredOptions.pipe(map(items => {
       if (items.find(x => x.Id === newvalue.Id)) {

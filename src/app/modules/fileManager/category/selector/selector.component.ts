@@ -48,9 +48,10 @@ export class FileCategorySelectorComponent implements OnInit {
         debounceTime(1000),
         distinctUntilChanged(),
         switchMap(val => {
-          if (typeof val === 'string') {
+          if (typeof val === 'string' || typeof val === 'number') {
             return this.DataGetAll(val || '');
           }
+          return [];
         }),
         // tap(() => this.myControl.setValue(this.options[0]))
       );
