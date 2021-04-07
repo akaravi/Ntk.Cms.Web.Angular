@@ -18,30 +18,31 @@ import {
   CoreGuideModel,
   CoreGuideService,
   NtkCmsApiStoreService,
+  EnumSortType,
 } from 'ntk-cms-api';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
-import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { CoreGuideEditComponent } from '../edit/edit.component';
+import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
+import { Subscription } from 'rxjs';
 import { CoreGuideAddComponent } from '../add/add.component';
 
 
 @Component({
-  selector: 'app-core-sitecategory-tree',
+  selector: 'app-core-guide-tree',
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.scss'],
 })
-export class CoreGuideTreeComponent implements OnInit , OnDestroy{
+export class CoreGuideTreeComponent implements OnInit, OnDestroy {
   constructor(
     private cmsApiStore: NtkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
     public coreEnumService: CoreEnumService,
     public categoryService: CoreGuideService,
-    private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
   ) {
+    this.filteModel.SortColumn = 'ShowInMenuOrder';
+    this.filteModel.SortType = EnumSortType.Ascending;
   }
   @Input() set optionSelectForce(x: number | CoreGuideModel) {
     this.onActionSelectForce(x);
@@ -50,13 +51,13 @@ export class CoreGuideTreeComponent implements OnInit , OnDestroy{
   dataModelResult: ErrorExceptionResult<CoreGuideModel> = new ErrorExceptionResult<CoreGuideModel>();
   filteModel = new FilterModel();
   loading = new ProgressSpinnerModel();
-  treeControl = new NestedTreeControl<CoreGuideModel>(node => null);
+  treeControl = new NestedTreeControl<CoreGuideModel>(node => node.Children);
   dataSource = new MatTreeNestedDataSource<CoreGuideModel>();
   @Output() optionSelect = new EventEmitter();
   cmsApiStoreSubscribe: Subscription;
   @Input() optionReload = () => this.onActionReload();
 
-  hasChild = (_: number, node: CoreGuideModel) => false;
+  hasChild = (_: number, node: CoreGuideModel) => !!node.Children && node.Children.length > 0;
 
 
   ngOnInit(): void {
@@ -73,7 +74,7 @@ export class CoreGuideTreeComponent implements OnInit , OnDestroy{
     this.filteModel.AccessLoad = true;
     this.loading.Globally = false;
     this.loading.display = true;
-    this.categoryService.ServiceGetAll(this.filteModel).subscribe(
+    this.categoryService.ServiceGetAllTree(this.filteModel).subscribe(
       (next) => {
         if (next.IsSuccess) {
           this.dataModelResult = next;
@@ -102,6 +103,7 @@ export class CoreGuideTreeComponent implements OnInit , OnDestroy{
       this.onActionSelect(null);
     }
     this.dataModelSelect = new CoreGuideModel();
+    // this.optionsData.data.Select = new CoreGuideModel();
     this.DataGetAll();
   }
   onActionSelectForce(id: number | CoreGuideModel): void {
@@ -109,10 +111,20 @@ export class CoreGuideTreeComponent implements OnInit , OnDestroy{
   }
 
   onActionAdd(): void {
-    const dialogRef = this.dialog.open(CoreGuideAddComponent, {
-      data: {}
-    });
+    let parentId = 0;
+    if (this.dataModelSelect && this.dataModelSelect.Id > 0) {
+      parentId = this.dataModelSelect.Id;
+    }
+
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = { parentId };
+
+
+    const dialogRef = this.dialog.open(CoreGuideAddComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(result => {
+      // console.log(`Dialog result: ${result}`);
       if (result && result.dialogChangedDate) {
         this.DataGetAll();
       }
@@ -125,7 +137,7 @@ export class CoreGuideTreeComponent implements OnInit , OnDestroy{
       id = this.dataModelSelect.Id;
     }
     if (id === 0) {
-const message = 'دسته بندی انتخاب نشده است';
+      const message = 'دسته بندی انتخاب نشده است';
       this.cmsToastrService.typeErrorSelected(message);
       return;
     }
@@ -133,9 +145,36 @@ const message = 'دسته بندی انتخاب نشده است';
       data: { id }
     });
     dialogRef.afterClosed().subscribe(result => {
+      // console.log(`Dialog result: ${result}`);
       if (result && result.dialogChangedDate) {
         this.DataGetAll();
       }
     });
   }
+
+  onActionDelete(): void {
+    // this.categoryService.ServiceDelete(this.getNodeOfId.id).subscribe((res) => {
+    //   if (res.IsSuccess) {
+    //   }
+    // });
+    let id = 0;
+    if (this.dataModelSelect && this.dataModelSelect.Id > 0) {
+      id = this.dataModelSelect.Id;
+    }
+    if (id === 0) {
+      const message = 'دسته بندی انتخاب نشده است';
+      this.cmsToastrService.typeErrorSelected(message);
+      return;
+    }
+    // const dialogRef = this.dialog.open(CoreGuideDeleteComponent, {
+    //   data: { id }
+    // });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   // console.log(`Dialog result: ${result}`);
+    //   if (result && result.dialogChangedDate) {
+    //     this.DataGetAll();
+    //   }
+    // });
+  }
+
 }

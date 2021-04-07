@@ -1,11 +1,9 @@
-
 import { Router } from '@angular/router';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import {
   CoreGuideModel,
   CoreGuideService,
-  CoreAuthService,
   EnumSortType,
   ErrorExceptionResult,
   FilterModel,
@@ -13,7 +11,11 @@ import {
   TokenInfoModel,
   FilterDataModel,
   EnumRecordStatus,
-  DataFieldInfoModel
+  DataFieldInfoModel,
+  EnumActionGoStep,
+  EditStepDtoModel,
+  CoreEnumService,
+  EnumModel
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -28,28 +30,30 @@ import { Subscription } from 'rxjs';
 import { CoreGuideEditComponent } from '../edit/edit.component';
 import { CoreGuideAddComponent } from '../add/add.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
-
+import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDragHandle } from '@angular/cdk/drag-drop';
 @Component({
-  selector: 'app-core-sitecategory-list',
+  selector: 'app-core-guide-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
 export class CoreGuideListComponent implements OnInit, OnDestroy {
   constructor(
     private coreGuideService: CoreGuideService,
+    private cmsConfirmationDialogService: CmsConfirmationDialogService,
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
-    private cmsConfirmationDialogService: CmsConfirmationDialogService,
     private router: Router,
+    public coreEnumService: CoreEnumService,
     public dialog: MatDialog) {
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
+    this.filteModelContent.SortColumn = 'ShowInMenuOrder';
+    this.filteModelContent.SortType = EnumSortType.Ascending;
   }
   comment: string;
   author: string;
-  dataSource: any;
   flag = false;
   tableContentSelected = [];
 
@@ -63,39 +67,44 @@ export class CoreGuideListComponent implements OnInit, OnDestroy {
   tableRowsSelected: Array<CoreGuideModel> = [];
   tableRowSelected: CoreGuideModel = new CoreGuideModel();
   tableSource: MatTableDataSource<CoreGuideModel> = new MatTableDataSource<CoreGuideModel>();
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
 
   tabledisplayedColumns: string[] = [
-    'MainImageSrc',
     'Id',
-    'linkCreatedBySiteCategoryId',
     'RecordStatus',
     'Title',
-    'SubDomain',
-    'Domain',
-    'CreatedDate',
-    'UpdatedDate',
-    'Action'
+    'ShowInMenuOrder',
+    'Action',
+    'position'
   ];
 
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+  dataModelEnumMenuPlaceTypeResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
 
 
   expandedElement: CoreGuideModel | null;
   cmsApiStoreSubscribe: Subscription;
-
+  categoryModelSelected: CoreGuideModel;
   ngOnInit(): void {
-    this.filteModelContent.SortColumn = 'Title';
+
     this.DataGetAll();
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
     });
+    this.getEnumMenuPlaceType();
+  }
+  getEnumMenuPlaceType(): void {
+    this.coreEnumService.ServiceEnumMenuPlaceType().subscribe((next) => {
+      this.dataModelEnumMenuPlaceTypeResult = next;
+    });
   }
   ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
+
+
   DataGetAll(): void {
     this.tableRowsSelected = [];
     this.tableRowSelected = new CoreGuideModel();
@@ -103,25 +112,20 @@ export class CoreGuideListComponent implements OnInit, OnDestroy {
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
-
+    if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
+      const filter = new FilterDataModel();
+      filter.PropertyName = 'LinkParentId';
+      filter.Value = this.categoryModelSelected.Id;
+      this.filteModelContent.Filters.push(filter);
+    }
     this.coreGuideService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
-        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
         if (next.IsSuccess) {
+          this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;
-          if (this.tokenInfo.UserAccessAdminAllowToAllData) {
-            this.tabledisplayedColumns = this.publicHelper.listAddIfNotExist(
-              this.tabledisplayedColumns,
-              'linkCreatedBySiteCategoryId',
-              0
-            );
-          } else {
-            this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
-              this.tabledisplayedColumns,
-              'linkCreatedBySiteCategoryId'
-            );
-          }
+
 
           if (this.optionsSearch.childMethods) {
             this.optionsSearch.childMethods.setAccess(next.Access);
@@ -164,7 +168,35 @@ export class CoreGuideListComponent implements OnInit, OnDestroy {
     this.DataGetAll();
   }
 
+  onTableDropRow(event: CdkDragDrop<CoreGuideModel[]>): void {
+    const previousIndex = this.tableSource.data.findIndex(row => row === event.item.data);
+    const model = new EditStepDtoModel<number>();
+    model.Id = this.tableSource.data[previousIndex].Id;
+    model.CenterId = this.tableSource.data[event.currentIndex].Id;
+    if (previousIndex > event.currentIndex) {
+      model.ActionGo = EnumActionGoStep.GoUp;
+    }
+    else {
+      model.ActionGo = EnumActionGoStep.GoDown;
+    }
+    this.coreGuideService.ServiceEditStep(model).subscribe(
+      (next) => {
+        if (next.IsSuccess) {
+          moveItemInArray(this.tableSource.data, previousIndex, event.currentIndex);
+          this.tableSource.data = this.tableSource.data.slice();
+        }
+      },
+      (error) => {
+        this.cmsToastrService.typeError(error);
 
+      }
+    );
+  }
+  onActionSelectorSelect(model: CoreGuideModel | null): void {
+    this.filteModelContent = new FilterModel();
+    this.categoryModelSelected = model;
+    this.DataGetAll();
+  }
   onActionbuttonNewRow(): void {
 
     if (
@@ -176,7 +208,7 @@ export class CoreGuideListComponent implements OnInit, OnDestroy {
       return;
     }
     const dialogRef = this.dialog.open(CoreGuideAddComponent, {
-      data: {}
+      data: { parentId: this.categoryModelSelected.Id }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.dialogChangedDate) {
@@ -188,7 +220,7 @@ export class CoreGuideListComponent implements OnInit, OnDestroy {
   onActionbuttonEditRow(model: CoreGuideModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id === 0) {
-this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
       return;
     }
     this.tableRowSelected = model;
@@ -209,14 +241,13 @@ this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انت
       }
     });
   }
-  onActionbuttonDeleteRow(model: CoreGuideModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0) {
-      const emessage = 'ردیفی برای حذف انتخاب نشده است';
-      this.cmsToastrService.typeErrorSelected(emessage);
+
+  onActionbuttonDeleteRow(mode: CoreGuideModel = this.tableRowSelected): void {
+    if (mode == null || !mode.Id || mode.Id === 0) {
+      this.cmsToastrService.typeErrorDeleteRowIsNull();
       return;
     }
-    this.tableRowSelected = model;
-
+    this.tableRowSelected = mode;
     if (
       this.dataModelResult == null ||
       this.dataModelResult.Access == null ||
@@ -225,8 +256,6 @@ this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انت
       this.cmsToastrService.typeErrorAccessDelete();
       return;
     }
-
-
     const title = 'لطفا تایید کنید...';
     const message = 'آیا مایل به حدف این محتوا می باشید ' + '?' + '<br> ( ' + this.tableRowSelected.Title + ' ) ';
     this.cmsConfirmationDialogService.confirm(title, message)
@@ -255,19 +284,9 @@ this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انت
         // console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)')
       }
       );
-
   }
 
-  onActionbuttonGoToSiteCategoryList(model: CoreGuideModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0) {
-      const message = 'ردیفی برای نمایش انتخاب نشده است';
-      this.cmsToastrService.typeErrorSelected(message);
-      return;
-    }
-    this.tableRowSelected = model;
 
-    this.router.navigate(['/core/siteSiteCategory/', this.tableRowSelected.Id]);
-  }
   onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;
     if (!this.optionsStatist.data.show) {
@@ -313,6 +332,8 @@ this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انت
   }
 
   onActionbuttonReload(): void {
+    this.filteModelContent.SortColumn = 'ShowInMenuOrder';
+    this.filteModelContent.SortType = EnumSortType.Ascending;
     this.DataGetAll();
   }
   onSubmitOptionsSearch(model: any): void {

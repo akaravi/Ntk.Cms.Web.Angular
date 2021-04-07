@@ -31,6 +31,7 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
   styleUrls: ['./add.component.scss'],
 })
 export class CoreCpMainMenuAddComponent implements OnInit {
+  requestParentId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
@@ -39,7 +40,12 @@ export class CoreCpMainMenuAddComponent implements OnInit {
     public coreCpMainMenuService: CoreCpMainMenuService,
     private cmsToastrService: CmsToastrService
   ) {
-
+    if (data) {
+      this.requestParentId = +data.parentId || 0;
+    }
+    if (this.requestParentId > 0) {
+      this.dataModel.LinkParentId = this.requestParentId;
+    }
 
   }
 
@@ -111,6 +117,12 @@ export class CoreCpMainMenuAddComponent implements OnInit {
         this.loading.display = false;
       }
     );
+  }
+  onActionSelectorSelect(model: CoreCpMainMenuModel): void {
+    this.dataModel.LinkParentId = null;
+    if (model && model.Id > 0) {
+      this.dataModel.LinkParentId = model.Id;
+    }
   }
   onFormSubmit(): void {
     if (!this.formGroup.valid) {

@@ -212,7 +212,7 @@ export class CoreCpMainMenuListComponent implements OnInit, OnDestroy {
       return;
     }
     const dialogRef = this.dialog.open(CoreCpMainMenuAddComponent, {
-      data: {}
+      data: { parentId: this.categoryModelSelected.Id }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.dialogChangedDate) {

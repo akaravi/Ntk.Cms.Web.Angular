@@ -12,10 +12,11 @@ import { CoreGuideTreeComponent } from './tree/tree.component';
 import { CoreGuideSelectorComponent } from './selector/selector.component';
 import { CoreGuideEditComponent } from './edit/edit.component';
 import { CoreGuideAddComponent } from './add/add.component';
-import { CoreGuideListComponent } from './list/list.component';
 import { TreeviewModule } from 'ngx-treeview';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { TagInputModule } from 'ngx-chips';
+import { CoreGuideListComponent } from './list/list.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 @NgModule({
@@ -45,7 +46,7 @@ import { TagInputModule } from 'ngx-chips';
     AngularEditorModule,
     TagInputModule,
     // CmsFileManagerModule
-
+    DragDropModule
   ],
   providers: [
     CoreGuideService,
