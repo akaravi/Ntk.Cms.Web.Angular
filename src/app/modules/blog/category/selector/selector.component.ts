@@ -132,7 +132,10 @@ export class BlogCategorySelectorComponent implements OnInit {
     //   }
     // }
   }
-
+  onActionSelectClear(): void{
+    this.formControl.setValue(null);
+    this.optionSelect.emit(null);
+  }
   push(newvalue: BlogCategoryModel): Observable<BlogCategoryModel[]> {
     return this.filteredOptions.pipe(map(items => {
       if (items.find(x => x.Id === newvalue.Id)) {

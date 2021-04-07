@@ -124,6 +124,10 @@ export class ApplicationThemeConfigSelectorComponent implements OnInit {
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
   }
+  onActionSelectClear(): void{
+    this.formControl.setValue(null);
+    this.optionSelect.emit(null);
+  }
 
   push(newvalue: ApplicationThemeConfigModel): Observable<ApplicationThemeConfigModel[]> {
     return this.filteredOptions.pipe(map(items => {

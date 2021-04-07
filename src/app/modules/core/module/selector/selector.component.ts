@@ -99,6 +99,10 @@ export class CoreModuleSelectorComponent implements OnInit {
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
   }
+  onActionSelectClear(): void{
+    this.formControl.setValue(null);
+    this.optionSelect.emit(null);
+  }
   onActionEmpty(): void {
     this.formControl.setValue(0);
     this.dataModelSelect = new CoreModuleModel();

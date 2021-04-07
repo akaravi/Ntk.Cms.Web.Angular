@@ -101,7 +101,11 @@ export class CoreUserSelectorComponent implements OnInit {
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
   }
-
+  onActionSelectClear(): void{
+    this.formControl.setValue(null);
+    this.optionSelect.emit(null);
+  }
+ 
   push(newvalue: CoreUserModel): Observable<CoreUserModel[]> {
     return this.filteredOptions.pipe(map(items => {
       if (items.find(x => x.Id === newvalue.Id)) {

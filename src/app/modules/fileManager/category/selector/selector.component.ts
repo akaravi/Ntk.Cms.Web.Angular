@@ -107,7 +107,10 @@ export class FileCategorySelectorComponent implements OnInit {
     //   }
     // }
   }
-
+  onActionSelectClear(): void{
+    this.formControl.setValue(null);
+    this.optionSelect.emit(null);
+  }
   push(newvalue: FileCategoryModel): Observable<FileCategoryModel[]> {
     return this.filteredOptions.pipe(map(items => {
       if (items.find(x => x.Id === newvalue.Id)) {

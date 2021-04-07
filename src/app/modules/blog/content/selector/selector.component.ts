@@ -107,7 +107,10 @@ export class BlogContentSelectorComponent implements OnInit {
     //   }
     // }
   }
-
+  onActionSelectClear(): void{
+    this.formControl.setValue(null);
+    this.optionSelect.emit(null);
+  }
   push(newvalue: BlogContentModel): Observable<BlogContentModel[]> {
     return this.filteredOptions.pipe(map(items => {
       if (items.find(x => x.Id === newvalue.Id)) {

@@ -118,6 +118,10 @@ export class CoreSiteSelectorComponent implements OnInit {
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
   }
+  onActionSelectClear(): void{
+    this.formControl.setValue(null);
+    this.optionSelect.emit(null);
+  }
 
   push(newvalue: CoreSiteModel): Observable<CoreSiteModel[]> {
     return this.filteredOptions.pipe(map(items => {

@@ -99,6 +99,10 @@ export class CoreSiteCategorySelectorComponent implements OnInit {
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
   }
+  onActionSelectClear(): void{
+    this.formControl.setValue(null);
+    this.optionSelect.emit(null);
+  }
 
   push(newvalue: CoreSiteCategoryModel): Observable<CoreSiteCategoryModel[]> {
     return this.filteredOptions.pipe(map(items => {

@@ -100,6 +100,10 @@ export class ApplicationAppSelectorComponent implements OnInit {
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
   }
+  onActionSelectClear(): void{
+    this.formControl.setValue(null);
+    this.optionSelect.emit(null);
+  }
 
   push(newvalue: ApplicationAppModel): Observable<ApplicationAppModel[]> {
     return this.filteredOptions.pipe(map(items => {
