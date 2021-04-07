@@ -82,7 +82,7 @@
           <div class="example-full-width">
             <mat-slide-toggle [(ngModel)]="dataModel.ViewStatisticsAfterVote"
               *ngIf="fieldsInfo['ViewStatisticsAfterVote']?.AccessWatchField"
-              [disabled]="!fieldsInfo['ViewStatisticsAfterVote']?.AccessEditField"
+              [attr.disabled]="!fieldsInfo['ViewStatisticsAfterVote']?.AccessEditField"
               name="dataModel.ViewStatisticsAfterVote">
               {{fieldsInfo['ViewStatisticsAfterVote']?.FieldTitle}}
             </mat-slide-toggle>
@@ -92,7 +92,7 @@
           <div class="example-full-width">
             <mat-slide-toggle [(ngModel)]="dataModel.ViewStatisticsBeforeVote"
               *ngIf="fieldsInfo['ViewStatisticsBeforeVote']?.AccessWatchField"
-              [disabled]="!fieldsInfo['ViewStatisticsBeforeVote']?.AccessEditField"
+              [attr.disabled]="!fieldsInfo['ViewStatisticsBeforeVote']?.AccessEditField"
               name="dataModel.ViewStatisticsBeforeVote">
               {{fieldsInfo['ViewStatisticsBeforeVote']?.FieldTitle}}
             </mat-slide-toggle>
@@ -124,7 +124,7 @@
            <button type="button" mat-button  (click)="onActionBackToParent()"
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
               بازگشت
-            </button> <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
+            </button> <button type="button" [attr.disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-primary font-weight-bold text-uppercase px-9 py-4">
               بعدی
             </button>
@@ -225,7 +225,7 @@
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
               قبلی
             </button>
-            <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
+            <button type="button" [attr.disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-primary font-weight-bold text-uppercase px-9 py-4">
               بعدی
             </button>
@@ -300,7 +300,7 @@
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
               قبلی
             </button>
-            <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
+            <button type="button" [attr.disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-primary font-weight-bold text-uppercase px-9 py-4">
               بعدی
             </button>
@@ -316,7 +316,7 @@
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
               قبلی
             </button>
-            <button type="submit" mat-button [disabled]="!vform.form.valid"
+            <button type="submit" mat-button [attr.disabled]="!vform.form.valid"
               class="btn btn-success font-weight-bold text-uppercase px-9 py-4">
               ذخیره
             </button>

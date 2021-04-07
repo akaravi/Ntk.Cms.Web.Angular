@@ -41,6 +41,7 @@
           "options": {
             "outputPath": "dist/ntk-cms-web",
             "allowedCommonJsDependencies": [
+              "lodash",
               "object-path",
               "apexcharts",
               "clipboard.js",

@@ -20,7 +20,7 @@
             RecordStatus is <strong>required</strong>
           </mat-error>
         </mat-form-field>
-        <app-core-site-selector (optionSelect)="onActionSiteSelect($event)" [disabled]="false"
+        <app-core-site-selector (optionSelect)="onActionSiteSelect($event)" [attr.disabled]="false"
           [optionSelectForce]="dataModel.LinkCmsSiteId" [optionPlaceholder]="'وب سایت'"></app-core-site-selector>
         <mat-form-field class="example-full-width">
           <mat-label>Domain</mat-label>
@@ -63,7 +63,7 @@
     <button type="button" (click)="onFormCancel()" class="btn btn-raised btn-warning mr-1">
       <i class="ft-x"></i> انصراف
     </button>
-        <button type="submit" (click)="onFormSubmit()" class="btn btn-raised btn-primary" [disabled]="!vform.form.valid">
+        <button type="submit" (click)="onFormSubmit()" class="btn btn-raised btn-primary" [attr.disabled]="!vform.form.valid">
       <i class="fa fa-check-square-o"></i> ذخیره
     </button>
   </div>

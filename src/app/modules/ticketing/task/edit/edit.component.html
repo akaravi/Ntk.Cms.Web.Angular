@@ -11,7 +11,7 @@
 
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['RecordStatus']?.AccessWatchField">
             <mat-select placeholder="{{fieldsInfo['RecordStatus']?.FieldTitle}}" [(ngModel)]="dataModel.RecordStatus"
-              [disabled]="!fieldsInfo['RecordStatus']?.AccessAddField" name="dataModel.RecordStatus"
+              [attr.disabled]="!fieldsInfo['RecordStatus']?.AccessAddField" name="dataModel.RecordStatus"
               #RecordStatus="ngModel" panelClass="recordStatus-{{ dataModel.RecordStatus }}" required>
               <mat-option *ngFor="
                 let item of dataModelEnumRecordStatusResult.ListItems;
@@ -26,12 +26,12 @@
 
           <app-ticketing-departemen-selector (optionSelect)="onActionSelectSource($event)"
             [optionSelectForce]="this.dataModel.LinkTicketingDepartemenId" [optionPlaceholder]="'دپارتمان'"
-            [disabled]="!fieldsInfo['LinkTicketingDepartemenId']?.AccessAddField"></app-ticketing-departemen-selector>
+            [attr.disabled]="!fieldsInfo['LinkTicketingDepartemenId']?.AccessAddField"></app-ticketing-departemen-selector>
 
 
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['FullName']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['FullName']?.FieldFullName }}</mat-label>
-            <input matInput [(ngModel)]="dataModel.FullName" [disabled]="!fieldsInfo['FullName']?.AccessAddField"
+            <input matInput [(ngModel)]="dataModel.FullName" [attr.disabled]="!fieldsInfo['FullName']?.AccessAddField"
               name="dataModel.FullName" #FullName type="text" placeholder="عنوان" minlength="3" maxlength="100"
               required />
             <mat-icon matSuffix *ngIf="dataModel.FullName && fieldsInfo['FullName']?.AccessAddField" matSuffix
@@ -46,7 +46,7 @@
 
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Title']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['Title']?.FieldTitle }}</mat-label>
-            <input matInput [(ngModel)]="dataModel.Title" [disabled]="!fieldsInfo['Title']?.AccessAddField"
+            <input matInput [(ngModel)]="dataModel.Title" [attr.disabled]="!fieldsInfo['Title']?.AccessAddField"
               name="dataModel.Title" #Title type="text" placeholder="عنوان" minlength="3" maxlength="100" required />
             <mat-icon matSuffix *ngIf="dataModel.Title && fieldsInfo['Title']?.AccessAddField" matSuffix mat-icon-button
               aria-label="Clear" (click)="dataModel.Title = ''">close</mat-icon>
@@ -60,7 +60,7 @@
 
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['PhoneNo']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['PhoneNo']?.FieldPhoneNo }}</mat-label>
-            <input matInput [(ngModel)]="dataModel.PhoneNo" [disabled]="!fieldsInfo['PhoneNo']?.AccessAddField"
+            <input matInput [(ngModel)]="dataModel.PhoneNo" [attr.disabled]="!fieldsInfo['PhoneNo']?.AccessAddField"
               name="dataModel.PhoneNo" #PhoneNo type="text" placeholder="عنوان" minlength="3" maxlength="100"
               required />
             <mat-icon matSuffix *ngIf="dataModel.PhoneNo && fieldsInfo['PhoneNo']?.AccessAddField" matSuffix
@@ -75,7 +75,7 @@
 
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Email']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['Email']?.FieldEmail }}</mat-label>
-            <input matInput [(ngModel)]="dataModel.Email" [disabled]="!fieldsInfo['Email']?.AccessAddField"
+            <input matInput [(ngModel)]="dataModel.Email" [attr.disabled]="!fieldsInfo['Email']?.AccessAddField"
               name="dataModel.Email" #Email type="text" placeholder="عنوان" minlength="3" maxlength="100" required />
             <mat-icon matSuffix *ngIf="dataModel.Email && fieldsInfo['Email']?.AccessAddField" matSuffix mat-icon-button
               aria-label="Clear" (click)="dataModel.Email = ''">close</mat-icon>
@@ -89,7 +89,7 @@
 
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Title']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['Title']?.FieldTitle }}</mat-label>
-            <input matInput [(ngModel)]="dataModel.Title" [disabled]="!fieldsInfo['Title']?.AccessAddField"
+            <input matInput [(ngModel)]="dataModel.Title" [attr.disabled]="!fieldsInfo['Title']?.AccessAddField"
               name="dataModel.Title" #Title type="text" placeholder="عنوان" minlength="3" maxlength="100" required />
             <mat-icon matSuffix *ngIf="dataModel.Title && fieldsInfo['Title']?.AccessAddField" matSuffix mat-icon-button
               aria-label="Clear" (click)="dataModel.Title = ''">close</mat-icon>
@@ -102,7 +102,7 @@
 
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['HtmlBody']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['HtmlBody']?.FieldHtmlBody }}</mat-label>
-            <textarea matInput [(ngModel)]="dataModel.HtmlBody" [disabled]="!fieldsInfo['HtmlBody']?.AccessAddField"
+            <textarea matInput [(ngModel)]="dataModel.HtmlBody" [attr.disabled]="!fieldsInfo['HtmlBody']?.AccessAddField"
               name="dataModel.HtmlBody" #HtmlBody type="text" placeholder="عنوان" row="5" minlength="0"
               maxlength="1000"></textarea>
             <mat-icon matSuffix *ngIf="dataModel.HtmlBody && fieldsInfo['HtmlBody']?.AccessAddField" matSuffix
@@ -132,7 +132,7 @@
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
               بازگشت
             </button>
-            <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
+            <button type="button" [attr.disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
               بعدی
             </button>
@@ -148,7 +148,7 @@
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['UserIpAddress']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['UserIpAddress']?.FieldUserIpAddress }}</mat-label>
             <input matInput [(ngModel)]="dataModel.UserIpAddress"
-              [disabled]="!fieldsInfo['UserIpAddress']?.AccessAddField" name="dataModel.UserIpAddress" #UserIpAddress
+              [attr.disabled]="!fieldsInfo['UserIpAddress']?.AccessAddField" name="dataModel.UserIpAddress" #UserIpAddress
               type="text" placeholder="عنوان" minlength="0" maxlength="100" />
             <mat-icon matSuffix *ngIf="dataModel.UserIpAddress && fieldsInfo['UserIpAddress']?.AccessAddField" matSuffix
               mat-icon-button aria-label="Clear" (click)="dataModel.UserIpAddress = ''">close</mat-icon>
@@ -161,7 +161,7 @@
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['DeviceInformation']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['DeviceInformation']?.FieldDeviceInformation }}</mat-label>
             <input matInput [(ngModel)]="dataModel.DeviceInformation"
-              [disabled]="!fieldsInfo['DeviceInformation']?.AccessAddField" name="dataModel.DeviceInformation"
+              [attr.disabled]="!fieldsInfo['DeviceInformation']?.AccessAddField" name="dataModel.DeviceInformation"
               #DeviceInformation type="text" placeholder="عنوان" minlength="0" maxlength="100" />
             <mat-icon matSuffix *ngIf="dataModel.DeviceInformation && fieldsInfo['DeviceInformation']?.AccessAddField"
               matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.DeviceInformation = ''">close</mat-icon>
@@ -177,7 +177,7 @@
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
               قبلی
             </button>
-            <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
+            <button type="button" [attr.disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
               بعدی
             </button>
@@ -202,7 +202,7 @@
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
               قبلی
             </button>
-            <button type="submit" mat-button [disabled]="!vform.form.valid"
+            <button type="submit" mat-button [attr.disabled]="!vform.form.valid"
               class="btn btn-success font-weight-bold text-uppercase px-9 py-4">
               ذخیره
             </button>

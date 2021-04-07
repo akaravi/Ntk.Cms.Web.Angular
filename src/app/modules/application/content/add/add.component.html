@@ -11,7 +11,7 @@
 
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['RecordStatus']?.AccessWatchField">
             <mat-select placeholder="{{fieldsInfo['RecordStatus']?.FieldTitle}}" [(ngModel)]="dataModel.RecordStatus"
-              [disabled]="!fieldsInfo['RecordStatus']?.AccessAddField" name="dataModel.RecordStatus"
+              [attr.disabled]="!fieldsInfo['RecordStatus']?.AccessAddField" name="dataModel.RecordStatus"
               #RecordStatus="ngModel" panelClass="recordStatus-{{ dataModel.RecordStatus }}" required>
               <mat-option *ngFor="
                 let item of dataModelEnumRecordStatusResult.ListItems;
@@ -26,18 +26,18 @@
 
           <app-application-source-selector (optionSelect)="onActionSelectSource($event)"
             [optionSelectForce]="this.dataModel.LinkSourceId" [optionPlaceholder]="'سورس اپلیکیشن'"
-            [disabled]="!fieldsInfo['LinkSourceId']?.AccessAddField"></app-application-source-selector>
+            [attr.disabled]="!fieldsInfo['LinkSourceId']?.AccessAddField"></app-application-source-selector>
 
 
           <app-application-themeconfig-selector (optionSelect)="onActionSelectTheme($event)"
             [optionSelectForce]="this.dataModel.LinkThemeConfigId"
             [optionSelectParentForce]="this.dataModel.LinkSourceId" [optionPlaceholder]="'قالب اپلیکیشن'"
-            [disabled]="!fieldsInfo['LinkThemeConfigId']?.AccessAddField"></app-application-themeconfig-selector>
+            [attr.disabled]="!fieldsInfo['LinkThemeConfigId']?.AccessAddField"></app-application-themeconfig-selector>
 
 
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Title']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['Title']?.FieldTitle }}</mat-label>
-            <input matInput [(ngModel)]="dataModel.Title" [disabled]="!fieldsInfo['Title']?.AccessAddField"
+            <input matInput [(ngModel)]="dataModel.Title" [attr.disabled]="!fieldsInfo['Title']?.AccessAddField"
               name="dataModel.Title" #Title type="text" placeholder="عنوان" minlength="3" maxlength="100" required />
             <mat-icon matSuffix *ngIf="dataModel.Title && fieldsInfo['Title']?.AccessAddField" matSuffix
               mat-icon-button aria-label="Clear" (click)="dataModel.Title = ''">close</mat-icon>
@@ -67,7 +67,7 @@
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
               بازگشت
             </button>
-            <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
+            <button type="button" [attr.disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
               بعدی
             </button>
@@ -84,7 +84,7 @@
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['AboutUsTitle']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['AboutUsTitle']?.FieldAboutUsTitle }}</mat-label>
             <input matInput [(ngModel)]="dataModel.AboutUsTitle"
-              [disabled]="!fieldsInfo['AboutUsTitle']?.AccessAddField" name="dataModel.AboutUsTitle" #AboutUsTitle
+              [attr.disabled]="!fieldsInfo['AboutUsTitle']?.AccessAddField" name="dataModel.AboutUsTitle" #AboutUsTitle
               type="text" placeholder="عنوان" minlength="0" maxlength="100" />
             <mat-icon matSuffix *ngIf="dataModel.AboutUsTitle && fieldsInfo['AboutUsTitle']?.AccessAddField" matSuffix
               mat-icon-button aria-label="Clear" (click)="dataModel.AboutUsTitle = ''">close</mat-icon>
@@ -96,7 +96,7 @@
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['AboutUsDescription']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['AboutUsDescription']?.FieldAboutUsDescription }}</mat-label>
             <textarea matInput [(ngModel)]="dataModel.AboutUsDescription"
-              [disabled]="!fieldsInfo['AboutUsDescription']?.AccessAddField" name="dataModel.AboutUsDescription"
+              [attr.disabled]="!fieldsInfo['AboutUsDescription']?.AccessAddField" name="dataModel.AboutUsDescription"
               #AboutUsDescription type="text" placeholder="توضیحات" row="5" minlength="0" maxlength="1000"></textarea>
             <mat-icon matSuffix
               *ngIf="dataModel.AboutUsDescription && fieldsInfo['AboutUsDescription']?.AccessAddField" matSuffix
@@ -108,7 +108,7 @@
           </mat-form-field>
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['AboutUsTel']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['AboutUsTel']?.FieldAboutUsTel }}</mat-label>
-            <input matInput [(ngModel)]="dataModel.AboutUsTel" [disabled]="!fieldsInfo['AboutUsTel']?.AccessAddField"
+            <input matInput [(ngModel)]="dataModel.AboutUsTel" [attr.disabled]="!fieldsInfo['AboutUsTel']?.AccessAddField"
               name="dataModel.AboutUsTel" #AboutUsTel type="text" placeholder="021444444444" minlength="0" maxlength="100" />
             <mat-icon matSuffix *ngIf="dataModel.AboutUsTel && fieldsInfo['AboutUsTel']?.AccessAddField" matSuffix
               mat-icon-button aria-label="Clear" (click)="dataModel.AboutUsTel = ''">close</mat-icon>
@@ -119,7 +119,7 @@
           </mat-form-field>
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['AboutUsFax']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['AboutUsFax']?.FieldAboutUsFax }}</mat-label>
-            <input matInput [(ngModel)]="dataModel.AboutUsFax" [disabled]="!fieldsInfo['AboutUsFax']?.AccessAddField"
+            <input matInput [(ngModel)]="dataModel.AboutUsFax" [attr.disabled]="!fieldsInfo['AboutUsFax']?.AccessAddField"
               name="dataModel.AboutUsFax" #AboutUsFax type="text" placeholder="02133333333" minlength="0" maxlength="100" />
             <mat-icon matSuffix *ngIf="dataModel.AboutUsFax && fieldsInfo['AboutUsFax']?.AccessAddField" matSuffix
               mat-icon-button aria-label="Clear" (click)="dataModel.AboutUsFax = ''">close</mat-icon>
@@ -131,7 +131,7 @@
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['AboutUsEmail']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['AboutUsEmail']?.FieldAboutUsEmail }}</mat-label>
             <input matInput [(ngModel)]="dataModel.AboutUsEmail"
-              [disabled]="!fieldsInfo['AboutUsEmail']?.AccessAddField" name="dataModel.AboutUsEmail" #AboutUsEmail
+              [attr.disabled]="!fieldsInfo['AboutUsEmail']?.AccessAddField" name="dataModel.AboutUsEmail" #AboutUsEmail
               type="text" placeholder="info@yourdomain.com" minlength="0" maxlength="100" />
             <mat-icon matSuffix *ngIf="dataModel.AboutUsEmail && fieldsInfo['AboutUsEmail']?.AccessAddField" matSuffix
               mat-icon-button aria-label="Clear" (click)="dataModel.AboutUsEmail = ''">close</mat-icon>
@@ -143,7 +143,7 @@
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['AboutUsAddress']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['AboutUsAddress']?.FieldAboutUsAddress }}</mat-label>
             <textarea matInput [(ngModel)]="dataModel.AboutUsAddress"
-              [disabled]="!fieldsInfo['AboutUsAddress']?.AccessAddField" name="dataModel.AboutUsAddress"
+              [attr.disabled]="!fieldsInfo['AboutUsAddress']?.AccessAddField" name="dataModel.AboutUsAddress"
               #AboutUsAddress type="text" placeholder="ایران - تهران - ..." row="5" minlength="0" maxlength="100"></textarea>
             <mat-icon matSuffix *ngIf="dataModel.AboutUsAddress && fieldsInfo['AboutUsAddress']?.AccessAddField"
               matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.AboutUsAddress = ''">close</mat-icon>
@@ -163,7 +163,7 @@
               <mat-label (click)="fileManagerOpenFormAboutUsLinkImageId = true">{{fieldsInfo['AboutUsLinkImageId']?.FieldTitle}}
               </mat-label>
               <input matInput [(ngModel)]="dataModel.AboutUsLinkImageId"
-                [disabled]="!fieldsInfo['AboutUsLinkImageId']?.AccessAddField" name="dataModel.AboutUsLinkImageId"
+                [attr.disabled]="!fieldsInfo['AboutUsLinkImageId']?.AccessAddField" name="dataModel.AboutUsLinkImageId"
                 #AboutUsLinkImageId type="text" placeholder="شناسه فایل اصلی" (click)="fileManagerOpenFormAboutUsLinkImageId = true" />
               <mat-icon matSuffix
                 *ngIf="dataModel.AboutUsLinkImageId && fieldsInfo['AboutUsLinkImageId']?.AccessAddField" matSuffix
@@ -192,7 +192,7 @@
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
               قبلی
             </button>
-            <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
+            <button type="button" [attr.disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
               بعدی
             </button>
@@ -205,19 +205,19 @@
 
           <div class="example-full-width">
             <mat-slide-toggle [(ngModel)]="dataModel.IsGlobalUser" *ngIf="fieldsInfo['IsGlobalUser']?.AccessWatchField"
-              [disabled]="!fieldsInfo['IsGlobalUser']?.AccessAddField" name="dataModel.IsGlobalUser">
+              [attr.disabled]="!fieldsInfo['IsGlobalUser']?.AccessAddField" name="dataModel.IsGlobalUser">
               {{fieldsInfo['IsGlobalUser']?.FieldTitle}}
             </mat-slide-toggle>
           </div>
           <div class="example-full-width">
             <mat-slide-toggle [(ngModel)]="dataModel.CheckUpdate" *ngIf="fieldsInfo['CheckUpdate']?.AccessWatchField"
-              [disabled]="!fieldsInfo['CheckUpdate']?.AccessAddField" name="dataModel.CheckUpdate">
+              [attr.disabled]="!fieldsInfo['CheckUpdate']?.AccessAddField" name="dataModel.CheckUpdate">
               {{fieldsInfo['CheckUpdate']?.FieldTitle}}
             </mat-slide-toggle>
           </div>
           <div class="example-full-width">
             <mat-slide-toggle [(ngModel)]="dataModel.ForceUpdate" *ngIf="fieldsInfo['ForceUpdate']?.AccessWatchField"
-              [disabled]="!fieldsInfo['ForceUpdate']?.AccessAddField" name="dataModel.ForceUpdate">
+              [attr.disabled]="!fieldsInfo['ForceUpdate']?.AccessAddField" name="dataModel.ForceUpdate">
               {{fieldsInfo['ForceUpdate']?.FieldTitle}}
             </mat-slide-toggle>
           </div>
@@ -227,7 +227,7 @@
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['DownloadLinkSrcCustomize']?.AccessWatchField">
             <mat-label>{{fieldsInfo['DownloadLinkSrcCustomize']?.FieldTitle}}</mat-label>
             <input matInput [(ngModel)]="dataModel.DownloadLinkSrcCustomize"
-              [disabled]="!fieldsInfo['DownloadLinkSrcCustomize']?.AccessAddField"
+              [attr.disabled]="!fieldsInfo['DownloadLinkSrcCustomize']?.AccessAddField"
               name="dataModel.DownloadLinkSrcCustomize" #DownloadLinkSrcCustomize type="text" placeholder="عنوان"
               minlength="0" maxlength="1000" />
             <mat-icon matSuffix
@@ -245,7 +245,7 @@
           <mat-form-field class="example-full-width">
             <mat-label>{{fieldsInfo['DownloadLinkSrc']?.FieldTitle}}</mat-label>
             <input matInput [(ngModel)]="dataModel.DownloadLinkSrc"
-              [disabled]="!fieldsInfo['DownloadLinkSrc']?.AccessAddField" name="dataModel.DownloadLinkSrc"
+              [attr.disabled]="!fieldsInfo['DownloadLinkSrc']?.AccessAddField" name="dataModel.DownloadLinkSrc"
               #DownloadLinkSrc type="text" placeholder="عنوان" minlength="0" maxlength="1000" />
             <mat-icon matSuffix *ngIf="dataModel.DownloadLinkSrc && fieldsInfo['DownloadLinkSrc']?.AccessAddField"
               matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.DownloadLinkSrc = ''">close</mat-icon>
@@ -255,7 +255,7 @@
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['DownloadLinkUpdateSrc']?.AccessWatchField">
             <mat-label>{{fieldsInfo['DownloadLinkUpdateSrc']?.FieldTitle}}</mat-label>
             <input matInput [(ngModel)]="dataModel.DownloadLinkUpdateSrc"
-              [disabled]="!fieldsInfo['DownloadLinkUpdateSrc']?.AccessAddField" name="dataModel.DownloadLinkUpdateSrc"
+              [attr.disabled]="!fieldsInfo['DownloadLinkUpdateSrc']?.AccessAddField" name="dataModel.DownloadLinkUpdateSrc"
               #DownloadLinkUpdateSrc type="text" placeholder="عنوان" minlength="0" maxlength="1000" />
             <mat-icon matSuffix
               *ngIf="dataModel.DownloadLinkUpdateSrc && fieldsInfo['DownloadLinkUpdateSrc']?.AccessAddField" matSuffix
@@ -270,7 +270,7 @@
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
               قبلی
             </button>
-            <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
+            <button type="button" [attr.disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
               بعدی
             </button>
@@ -287,7 +287,7 @@
 
               <mat-label (click)="fileManagerOpenFormLinkFileIdIcon = true">{{fieldsInfo['LinkFileIdIcon']?.FieldTitle}}</mat-label>
               <input matInput [(ngModel)]="dataModel.LinkFileIdIcon"
-                [disabled]="!fieldsInfo['LinkFileIdIcon']?.AccessAddField" name="dataModel.LinkFileIdIcon"
+                [attr.disabled]="!fieldsInfo['LinkFileIdIcon']?.AccessAddField" name="dataModel.LinkFileIdIcon"
                 #LinkFileIdIcon type="text" placeholder="شناسه فایل اصلی" (click)="fileManagerOpenFormLinkFileIdIcon = true" />
               <mat-icon matSuffix *ngIf="dataModel.LinkFileIdIcon && fieldsInfo['LinkFileIdIcon']?.AccessAddField"
                 matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.LinkFileIdIcon = null">close</mat-icon>
@@ -313,7 +313,7 @@
 
               <mat-label (click)="fileManagerOpenFormLinkFileIdLogo = true">{{fieldsInfo['LinkFileIdLogo']?.FieldTitle}}</mat-label>
               <input matInput [(ngModel)]="dataModel.LinkFileIdLogo"
-                [disabled]="!fieldsInfo['LinkFileIdLogo']?.AccessAddField" name="dataModel.LinkFileIdLogo"
+                [attr.disabled]="!fieldsInfo['LinkFileIdLogo']?.AccessAddField" name="dataModel.LinkFileIdLogo"
                 #LinkFileIdLogo type="text" placeholder="شناسه فایل اصلی" (click)="fileManagerOpenFormLinkFileIdLogo = true" />
               <mat-icon matSuffix *ngIf="dataModel.LinkFileIdLogo && fieldsInfo['LinkFileIdLogo']?.AccessAddField"
                 matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.LinkFileIdLogo = null">close</mat-icon>
@@ -340,7 +340,7 @@
               <mat-label (click)="fileManagerOpenFormLinkFileIdSplashScreen = true">{{fieldsInfo['LinkFileIdSplashScreen']?.FieldTitle}}
               </mat-label>
               <input matInput [(ngModel)]="dataModel.LinkFileIdSplashScreen"
-                [disabled]="!fieldsInfo['LinkFileIdSplashScreen']?.AccessAddField"
+                [attr.disabled]="!fieldsInfo['LinkFileIdSplashScreen']?.AccessAddField"
                 name="dataModel.LinkFileIdSplashScreen" #LinkFileIdSplashScreen type="text"
                 placeholder="شناسه فایل اصلی" (click)="fileManagerOpenFormLinkFileIdSplashScreen = true" />
               <mat-icon matSuffix
@@ -368,7 +368,7 @@
 
               <mat-label (click)="fileManagerOpenFormLinkMainImageId = true">{{fieldsInfo['LinkMainImageId']?.FieldTitle}}</mat-label>
               <input matInput [(ngModel)]="dataModel.LinkMainImageId"
-                [disabled]="!fieldsInfo['LinkMainImageId']?.AccessAddField" name="dataModel.LinkMainImageId"
+                [attr.disabled]="!fieldsInfo['LinkMainImageId']?.AccessAddField" name="dataModel.LinkMainImageId"
                 #LinkMainImageId type="text" placeholder="شناسه فایل اصلی" (click)="fileManagerOpenFormLinkMainImageId = true" />
               <mat-icon matSuffix *ngIf="dataModel.LinkMainImageId && fieldsInfo['LinkMainImageId']?.AccessAddField"
                 matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.LinkMainImageId = null">close</mat-icon>
@@ -396,7 +396,7 @@
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
               قبلی
             </button>
-            <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
+            <button type="button" [attr.disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
               بعدی
             </button>
@@ -410,7 +410,7 @@
             *ngIf="fieldsInfo['ConfigBuilderAdminJsonValues']?.AccessWatchField">
             <mat-label>{{fieldsInfo['ConfigBuilderAdminJsonValues']?.FieldTitle}}</mat-label>
             <textarea matInput [(ngModel)]="dataModel.ConfigBuilderAdminJsonValues"
-              [disabled]="!fieldsInfo['ConfigBuilderAdminJsonValues']?.AccessAddField"
+              [attr.disabled]="!fieldsInfo['ConfigBuilderAdminJsonValues']?.AccessAddField"
               name="dataModel.ConfigBuilderAdminJsonValues" #ConfigBuilderAdminJsonValues type="text"
               placeholder="عنوان" rows="5"></textarea>
             <mat-icon matSuffix *ngIf="dataModel.ConfigBuilderAdminJsonValues" matSuffix mat-icon-button
@@ -421,7 +421,7 @@
             *ngIf="fieldsInfo['ConfigRuntimeAdminJsonValues']?.AccessWatchField">
             <mat-label>{{fieldsInfo['ConfigRuntimeAdminJsonValues']?.FieldTitle}}</mat-label>
             <textarea matInput [(ngModel)]="dataModel.ConfigRuntimeAdminJsonValues"
-              [disabled]="!fieldsInfo['ConfigRuntimeAdminJsonValues']?.AccessAddField"
+              [attr.disabled]="!fieldsInfo['ConfigRuntimeAdminJsonValues']?.AccessAddField"
               name="dataModel.ConfigRuntimeAdminJsonValues" #ConfigRuntimeAdminJsonValues type="text"
               placeholder="عنوان" rows="5"></textarea>
             <mat-icon matSuffix *ngIf="dataModel.ConfigRuntimeAdminJsonValues" matSuffix mat-icon-button
@@ -432,7 +432,7 @@
             *ngIf="fieldsInfo['ConfigBuilderSiteJsonValues']?.AccessWatchField">
             <mat-label>{{fieldsInfo['ConfigBuilderSiteJsonValues']?.FieldTitle}}</mat-label>
             <textarea matInput [(ngModel)]="dataModel.ConfigBuilderSiteJsonValues"
-              [disabled]="!fieldsInfo['ConfigBuilderSiteJsonValues']?.AccessAddField"
+              [attr.disabled]="!fieldsInfo['ConfigBuilderSiteJsonValues']?.AccessAddField"
               name="dataModel.ConfigBuilderSiteJsonValues" #ConfigBuilderSiteJsonValues type="text" placeholder="عنوان"
               rows="5"></textarea>
             <mat-icon matSuffix *ngIf="dataModel.ConfigBuilderSiteJsonValues" matSuffix mat-icon-button
@@ -443,7 +443,7 @@
             *ngIf="fieldsInfo['ConfigRuntimeSiteJsonValues']?.AccessWatchField">
             <mat-label>{{fieldsInfo['ConfigRuntimeSiteJsonValues']?.FieldTitle}}</mat-label>
             <textarea matInput [(ngModel)]="dataModel.ConfigRuntimeSiteJsonValues"
-              [disabled]="!fieldsInfo['ConfigRuntimeSiteJsonValues']?.AccessAddField"
+              [attr.disabled]="!fieldsInfo['ConfigRuntimeSiteJsonValues']?.AccessAddField"
               name="dataModel.ConfigRuntimeSiteJsonValues" #ConfigRuntimeSiteJsonValues type="text" placeholder="عنوان"
               rows="5"></textarea>
             <mat-icon matSuffix *ngIf="dataModel.ConfigRuntimeSiteJsonValues" matSuffix mat-icon-button
@@ -460,7 +460,7 @@
                 <mat-form-field class="example-full-width" *ngIf="fieldsInfo['BuildKey1String']?.AccessWatchField">
                   <mat-label>{{fieldsInfo['BuildKey1String']?.FieldTitle}}</mat-label>
                   <input matInput [(ngModel)]="dataModel.BuildKey1String"
-                    [disabled]="!fieldsInfo['BuildKey1String']?.AccessAddField" name="dataModel.BuildKey1String"
+                    [attr.disabled]="!fieldsInfo['BuildKey1String']?.AccessAddField" name="dataModel.BuildKey1String"
                     #BuildKey1String type="text" placeholder="KEY" minlength="0" maxlength="1000" />
                   <mat-hint align="end">{{ BuildKey1String.value.length }} / 1000</mat-hint>
                 </mat-form-field>
@@ -469,7 +469,7 @@
                 <mat-form-field class="example-full-width" *ngIf="fieldsInfo['BuildKey1Value']?.AccessWatchField">
                   <mat-label>{{fieldsInfo['BuildKey1Value']?.FieldTitle}}</mat-label>
                   <input matInput [(ngModel)]="dataModel.BuildKey1Value"
-                    [disabled]="!fieldsInfo['BuildKey1Value']?.AccessAddField" name="dataModel.BuildKey1Value"
+                    [attr.disabled]="!fieldsInfo['BuildKey1Value']?.AccessAddField" name="dataModel.BuildKey1Value"
                     #BuildKey1Value type="text" placeholder="Value" minlength="0" maxlength="1000" />
                   <mat-hint align="end">{{ BuildKey1Value.value.length }} / 1000</mat-hint>
                 </mat-form-field>
@@ -482,7 +482,7 @@
                 <mat-form-field class="example-full-width" *ngIf="fieldsInfo['BuildKey2String']?.AccessWatchField">
                   <mat-label>{{fieldsInfo['BuildKey2String']?.FieldTitle}}</mat-label>
                   <input matInput [(ngModel)]="dataModel.BuildKey2String"
-                    [disabled]="!fieldsInfo['BuildKey2String']?.AccessAddField" name="dataModel.BuildKey2String"
+                    [attr.disabled]="!fieldsInfo['BuildKey2String']?.AccessAddField" name="dataModel.BuildKey2String"
                     #BuildKey2String type="text" placeholder="KEY" minlength="0" maxlength="1000" />
                   <mat-hint align="end">{{ BuildKey2String.value.length }} / 1000</mat-hint>
                 </mat-form-field>
@@ -491,7 +491,7 @@
                 <mat-form-field class="example-full-width" *ngIf="fieldsInfo['BuildKey2Value']?.AccessWatchField">
                   <mat-label>{{fieldsInfo['BuildKey2Value']?.FieldTitle}}</mat-label>
                   <input matInput [(ngModel)]="dataModel.BuildKey2Value"
-                    [disabled]="!fieldsInfo['BuildKey2Value']?.AccessAddField" name="dataModel.BuildKey2Value"
+                    [attr.disabled]="!fieldsInfo['BuildKey2Value']?.AccessAddField" name="dataModel.BuildKey2Value"
                     #BuildKey2Value type="text" placeholder="Value" minlength="0" maxlength="1000" />
                   <mat-hint align="end">{{ BuildKey2Value.value.length }} / 1000</mat-hint>
                 </mat-form-field>
@@ -505,7 +505,7 @@
                 <mat-form-field class="example-full-width" *ngIf="fieldsInfo['BuildKey3String']?.AccessWatchField">
                   <mat-label>{{fieldsInfo['BuildKey3String']?.FieldTitle}}</mat-label>
                   <input matInput [(ngModel)]="dataModel.BuildKey3String"
-                    [disabled]="!fieldsInfo['BuildKey3String']?.AccessAddField" name="dataModel.BuildKey3String"
+                    [attr.disabled]="!fieldsInfo['BuildKey3String']?.AccessAddField" name="dataModel.BuildKey3String"
                     #BuildKey3String type="text" placeholder="KEY" minlength="0" maxlength="1000" />
                   <mat-hint align="end">{{ BuildKey3String.value.length }} / 1000</mat-hint>
                 </mat-form-field>
@@ -514,7 +514,7 @@
                 <mat-form-field class="example-full-width" *ngIf="fieldsInfo['BuildKey3Value']?.AccessWatchField">
                   <mat-label>{{fieldsInfo['BuildKey3Value']?.FieldTitle}}</mat-label>
                   <input matInput [(ngModel)]="dataModel.BuildKey3Value"
-                    [disabled]="!fieldsInfo['BuildKey3Value']?.AccessAddField" name="dataModel.BuildKey3Value"
+                    [attr.disabled]="!fieldsInfo['BuildKey3Value']?.AccessAddField" name="dataModel.BuildKey3Value"
                     #BuildKey3Value type="text" placeholder="Value" minlength="0" maxlength="1000" />
                   <mat-hint align="end">{{ BuildKey3Value.value.length }} / 1000</mat-hint>
                 </mat-form-field>
@@ -527,7 +527,7 @@
                 <mat-form-field class="example-full-width" *ngIf="fieldsInfo['BuildKey4String']?.AccessWatchField">
                   <mat-label>{{fieldsInfo['BuildKey4String']?.FieldTitle}}</mat-label>
                   <input matInput [(ngModel)]="dataModel.BuildKey4String"
-                    [disabled]="!fieldsInfo['BuildKey4String']?.AccessAddField" name="dataModel.BuildKey4String"
+                    [attr.disabled]="!fieldsInfo['BuildKey4String']?.AccessAddField" name="dataModel.BuildKey4String"
                     #BuildKey4String type="text" placeholder="KEY" minlength="0" maxlength="1000" />
                   <mat-hint align="end">{{ BuildKey4String.value.length }} / 1000</mat-hint>
                 </mat-form-field>
@@ -536,7 +536,7 @@
                 <mat-form-field class="example-full-width" *ngIf="fieldsInfo['BuildKey4Value']?.AccessWatchField">
                   <mat-label>{{fieldsInfo['BuildKey4Value']?.FieldTitle}}</mat-label>
                   <input matInput [(ngModel)]="dataModel.BuildKey4Value"
-                    [disabled]="!fieldsInfo['BuildKey4Value']?.AccessAddField" name="dataModel.BuildKey4Value"
+                    [attr.disabled]="!fieldsInfo['BuildKey4Value']?.AccessAddField" name="dataModel.BuildKey4Value"
                     #BuildKey4Value type="text" placeholder="Value" minlength="0" maxlength="1000" />
                   <mat-hint align="end">{{ BuildKey4Value.value.length }} / 1000</mat-hint>
                 </mat-form-field>
@@ -550,7 +550,7 @@
                 <mat-form-field class="example-full-width" *ngIf="fieldsInfo['BuildKey5String']?.AccessWatchField">
                   <mat-label>{{fieldsInfo['BuildKey5String']?.FieldTitle}}</mat-label>
                   <input matInput [(ngModel)]="dataModel.BuildKey5String"
-                    [disabled]="!fieldsInfo['BuildKey5String']?.AccessAddField" name="dataModel.BuildKey5String"
+                    [attr.disabled]="!fieldsInfo['BuildKey5String']?.AccessAddField" name="dataModel.BuildKey5String"
                     #BuildKey5String type="text" placeholder="KEY" minlength="0" maxlength="1000" />
                   <mat-hint align="end">{{ BuildKey5String.value.length }} / 1000</mat-hint>
                 </mat-form-field>
@@ -559,7 +559,7 @@
                 <mat-form-field class="example-full-width" *ngIf="fieldsInfo['BuildKey5Value']?.AccessWatchField">
                   <mat-label>{{fieldsInfo['BuildKey5Value']?.FieldTitle}}</mat-label>
                   <input matInput [(ngModel)]="dataModel.BuildKey5Value"
-                    [disabled]="!fieldsInfo['BuildKey5Value']?.AccessAddField" name="dataModel.BuildKey5Value"
+                    [attr.disabled]="!fieldsInfo['BuildKey5Value']?.AccessAddField" name="dataModel.BuildKey5Value"
                     #BuildKey5Value type="text" placeholder="Value" minlength="0" maxlength="1000" />
                   <mat-hint align="end">{{ BuildKey5Value.value.length }} / 1000</mat-hint>
                 </mat-form-field>
@@ -588,7 +588,7 @@
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
               قبلی
             </button>
-            <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
+            <button type="button" [attr.disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
               بعدی
             </button>
@@ -602,7 +602,7 @@
 
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['AppKey']?.AccessWatchField">
             <mat-label>{{fieldsInfo['AppKey']?.FieldTitle}}</mat-label>
-            <textarea matInput [(ngModel)]="dataModel.AppKey" [disabled]="!fieldsInfo['AppKey']?.AccessAddField"
+            <textarea matInput [(ngModel)]="dataModel.AppKey" [attr.disabled]="!fieldsInfo['AppKey']?.AccessAddField"
               name="dataModel.AppKey" #AppKey type="text" placeholder="عنوان" rows="5"></textarea>
             <mat-icon matSuffix *ngIf="dataModel.AppKey" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.AppKey = ''">close</mat-icon>
@@ -612,7 +612,7 @@
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['LastBuildAppKey']?.AccessWatchField">
             <mat-label>{{fieldsInfo['LastBuildAppKey']?.FieldTitle}}</mat-label>
             <textarea matInput [(ngModel)]="dataModel.LastBuildAppKey"
-              [disabled]="!fieldsInfo['LastBuildAppKey']?.AccessAddField" name="dataModel.LastBuildAppKey"
+              [attr.disabled]="!fieldsInfo['LastBuildAppKey']?.AccessAddField" name="dataModel.LastBuildAppKey"
               #LastBuildAppKey type="text" placeholder="عنوان" rows="5"></textarea>
             <mat-icon matSuffix *ngIf="dataModel.LastBuildAppKey" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.LastBuildAppKey = ''">close</mat-icon>
@@ -624,7 +624,7 @@
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['DownloadCount']?.AccessWatchField">
             <mat-label>{{fieldsInfo['DownloadCount']?.FieldTitle}}</mat-label>
             <input matInput [(ngModel)]="dataModel.DownloadCount"
-              [disabled]="!fieldsInfo['DownloadCount']?.AccessAddField" name="dataModel.DownloadCount" #DownloadCount
+              [attr.disabled]="!fieldsInfo['DownloadCount']?.AccessAddField" name="dataModel.DownloadCount" #DownloadCount
               type="number" placeholder="0" rows="5"/>
 
             <mat-icon matSuffix>mode_edit</mat-icon>
@@ -634,7 +634,7 @@
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['AppVersion']?.AccessWatchField">
             <mat-label>{{fieldsInfo['AppVersion']?.FieldTitle}}</mat-label>
             <input matInput [(ngModel)]="dataModel.AppVersion"
-              [disabled]="!fieldsInfo['AppVersion']?.AccessAddField" name="dataModel.AppVersion" #AppVersion
+              [attr.disabled]="!fieldsInfo['AppVersion']?.AccessAddField" name="dataModel.AppVersion" #AppVersion
               type="number" placeholder="0" rows="5"/>
 
             <mat-icon matSuffix>mode_edit</mat-icon>
@@ -644,7 +644,7 @@
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['BuildCount']?.AccessWatchField">
             <mat-label>{{fieldsInfo['BuildCount']?.FieldTitle}}</mat-label>
             <input matInput [(ngModel)]="dataModel.BuildCount"
-              [disabled]="!fieldsInfo['BuildCount']?.AccessAddField" name="dataModel.BuildCount" #BuildCount
+              [attr.disabled]="!fieldsInfo['BuildCount']?.AccessAddField" name="dataModel.BuildCount" #BuildCount
               type="number" placeholder="0" rows="5"/>
             <mat-icon matSuffix>mode_edit</mat-icon>
           </mat-form-field>
@@ -654,7 +654,7 @@
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['ScoreClick']?.AccessWatchField">
             <mat-label>{{fieldsInfo['ScoreClick']?.FieldTitle}}</mat-label>
             <input matInput [(ngModel)]="dataModel.ScoreClick"
-              [disabled]="!fieldsInfo['ScoreClick']?.AccessAddField" name="dataModel.ScoreClick" #ScoreClick
+              [attr.disabled]="!fieldsInfo['ScoreClick']?.AccessAddField" name="dataModel.ScoreClick" #ScoreClick
               type="text" placeholder="0" />
 
             <mat-icon matSuffix>mode_edit</mat-icon>
@@ -665,7 +665,7 @@
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['ScoreSumPercent']?.AccessWatchField">
             <mat-label>{{fieldsInfo['ScoreSumPercent']?.FieldTitle}}</mat-label>
             <input matInput [(ngModel)]="dataModel.ScoreSumPercent"
-              [disabled]="!fieldsInfo['ScoreSumPercent']?.AccessAddField" name="dataModel.ScoreSumPercent"
+              [attr.disabled]="!fieldsInfo['ScoreSumPercent']?.AccessAddField" name="dataModel.ScoreSumPercent"
               #ScoreSumPercent type="text" placeholder="0" />
 
             <mat-icon matSuffix>mode_edit</mat-icon>
@@ -735,7 +735,7 @@
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['LastBuildErrorMessage']?.AccessWatchField">
             <mat-label>{{fieldsInfo['LastBuildErrorMessage']?.FieldTitle}}</mat-label>
             <textarea matInput [(ngModel)]="dataModel.LastBuildErrorMessage"
-              [disabled]="!fieldsInfo['LastBuildErrorMessage']?.AccessAddField" name="dataModel.LastBuildErrorMessage"
+              [attr.disabled]="!fieldsInfo['LastBuildErrorMessage']?.AccessAddField" name="dataModel.LastBuildErrorMessage"
               #LastBuildErrorMessage type="text" placeholder="عنوان" rows="5"></textarea>
             <mat-icon matSuffix *ngIf="dataModel.LastBuildErrorMessage" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.LastBuildErrorMessage = ''">close</mat-icon>
@@ -747,7 +747,7 @@
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
               قبلی
             </button>
-            <button type="submit" mat-button [disabled]="!vform.form.valid"
+            <button type="submit" mat-button [attr.disabled]="!vform.form.valid"
               class="btn btn-success font-weight-bold text-uppercase px-9 py-4">
               ذخیره
             </button>
