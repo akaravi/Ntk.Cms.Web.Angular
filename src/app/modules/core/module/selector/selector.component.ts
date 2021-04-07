@@ -62,7 +62,7 @@ export class CoreModuleSelectorComponent implements OnInit {
   displayOption(model?: CoreModuleModel): string | undefined {
     return model ? (model.Title + ' # ' + model.Id) : undefined;
   }
-  DataGetAll(text: string | number | any): Observable<CoreModuleModel[]> {
+  async DataGetAll(text: string | number | any): Promise<CoreModuleModel[]> {
     const filteModel = new FilterModel();
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
@@ -89,12 +89,12 @@ export class CoreModuleSelectorComponent implements OnInit {
     }
     this.loading.Globally = false;
     this.loading.display = true;
-    return this.categoryService.ServiceGetAll(filteModel)
+    return await this.categoryService.ServiceGetAll(filteModel)
       .pipe(
         map(response => {
-          this.dataModelResult = response;
           return response.ListItems;
-        }));
+        })
+      ).toPromise();
   }
   onActionSelect(model: CoreModuleModel): void {
     this.dataModelSelect = model;

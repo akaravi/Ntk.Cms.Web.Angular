@@ -59,7 +59,7 @@ export class FileContentSelectorComponent implements OnInit {
   displayOption(model?: FileContentModel): string | undefined {
     return model ? model.FileName : undefined;
   }
-  DataGetAll(text: string | number | any): Observable<FileContentModel[]> {
+  async DataGetAll(text: string | number | any): Promise<FileContentModel[]> {
     const filteModel = new FilterModel();
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
@@ -91,7 +91,7 @@ export class FileContentSelectorComponent implements OnInit {
         map(response => {
           this.dataModelResult = response;
           return response.ListItems;
-        }));
+        })).toPromise();
   }
   onActionSelect(model: FileContentModel): void {
     this.dataModelSelect = model;

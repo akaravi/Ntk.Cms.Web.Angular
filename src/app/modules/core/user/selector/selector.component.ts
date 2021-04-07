@@ -64,7 +64,7 @@ export class CoreUserSelectorComponent implements OnInit {
   displayOption(model?: CoreUserModel): string | undefined {
     return model ? (model.Username + ' # ' + model.Name + ' # ' + model.LastName + ' # ' + model.Id) : undefined;
   }
-  DataGetAll(text: string | number | any): Observable<CoreUserModel[]> {
+  async DataGetAll(text: string | number | any): Promise<CoreUserModel[]> {
     const filteModel = new FilterModel();
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
@@ -91,12 +91,12 @@ export class CoreUserSelectorComponent implements OnInit {
     }
     this.loading.Globally = false;
     this.loading.display = true;
-    return this.categoryService.ServiceGetAll(filteModel)
+    return await this.categoryService.ServiceGetAll(filteModel)
       .pipe(
         map(response => {
-          this.dataModelResult = response;
           return response.ListItems;
-        }));
+        })
+      ).toPromise();
   }
   onActionSelect(model: CoreUserModel): void {
     this.dataModelSelect = model;

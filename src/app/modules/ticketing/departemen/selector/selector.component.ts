@@ -64,7 +64,7 @@ export class TicketingDepartemenSelectorComponent implements OnInit {
   displayOption(model?: TicketingDepartemenModel): string | undefined {
     return model ? model.Title : undefined;
   }
-  DataGetAll(text: string | number | any): Observable<TicketingDepartemenModel[]> {
+  async DataGetAll(text: string | number | any): Promise<TicketingDepartemenModel[]> {
     const filteModel = new FilterModel();
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
@@ -91,12 +91,12 @@ export class TicketingDepartemenSelectorComponent implements OnInit {
     }
     this.loading.Globally = false;
     this.loading.display = true;
-    return this.categoryService.ServiceGetAll(filteModel)
+    return await this.categoryService.ServiceGetAll(filteModel)
       .pipe(
         map(response => {
-          this.dataModelResult = response;
           return response.ListItems;
-        }));
+        })
+      ).toPromise();
   }
   onActionSelect(model: TicketingDepartemenModel): void {
     this.dataModelSelect = model;

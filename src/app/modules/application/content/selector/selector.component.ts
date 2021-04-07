@@ -64,7 +64,7 @@ export class ApplicationAppSelectorComponent implements OnInit {
   displayOption(model?: ApplicationAppModel): string | undefined {
     return model ? model.Title : undefined;
   }
-  DataGetAll(text: string | number | any): Observable<ApplicationAppModel[]> {
+  async DataGetAll(text: string | number | any): Promise<ApplicationAppModel[]> {
     const filteModel = new FilterModel();
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
@@ -90,12 +90,12 @@ export class ApplicationAppSelectorComponent implements OnInit {
     }
     this.loading.Globally = false;
     this.loading.display = true;
-    return this.categoryService.ServiceGetAll(filteModel)
+    return await this.categoryService.ServiceGetAll(filteModel)
       .pipe(
         map(response => {
-          this.dataModelResult = response;
           return response.ListItems;
-        }));
+        })
+      ).toPromise();
   }
   onActionSelect(model: ApplicationAppModel): void {
     this.dataModelSelect = model;

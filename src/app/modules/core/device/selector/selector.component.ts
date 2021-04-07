@@ -62,7 +62,7 @@ export class CoreDeviceSelectorComponent implements OnInit {
   displayOption(model?: CoreDeviceModel): string | undefined {
     return model ? (model.PackageName + ' # ' + model.Id) : undefined;
   }
-  DataGetAll(text: string | number | any): Observable<CoreDeviceModel[]> {
+  async DataGetAll(text: string | number | any): Promise<CoreDeviceModel[]> {
     const filteModel = new FilterModel();
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
@@ -89,12 +89,12 @@ export class CoreDeviceSelectorComponent implements OnInit {
     }
     this.loading.Globally = false;
     this.loading.display = true;
-    return this.categoryService.ServiceGetAll(filteModel)
+    return await this.categoryService.ServiceGetAll(filteModel)
       .pipe(
         map(response => {
-          this.dataModelResult = response;
           return response.ListItems;
-        }));
+        })
+      ).toPromise();
   }
   onActionSelect(model: CoreDeviceModel): void {
     this.dataModelSelect = model;

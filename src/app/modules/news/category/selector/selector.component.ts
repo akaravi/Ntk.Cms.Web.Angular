@@ -88,7 +88,7 @@ export class NewsCategorySelectorComponent implements OnInit {
   displayOption(model?: NewsCategoryModel): string | undefined {
     return model ? model.Title : undefined;
   }
-  DataGetAll(text: string | number | any): Observable<NewsCategoryModel[]> {
+  async DataGetAll(text: string | number | any): Promise<NewsCategoryModel[]> {
     const filteModel = new FilterModel();
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
@@ -115,12 +115,12 @@ export class NewsCategorySelectorComponent implements OnInit {
     }
     this.loading.Globally = false;
     this.loading.display = true;
-    return this.categoryService.ServiceGetAll(filteModel)
+    return await this.categoryService.ServiceGetAll(filteModel)
       .pipe(
         map(response => {
-          this.dataModelResult = response;
           return response.ListItems;
-        }));
+        })
+      ).toPromise();
   }
   onActionSelect(model: NewsCategoryModel): void {
     this.dataModelSelect = model;

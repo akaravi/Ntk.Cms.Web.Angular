@@ -64,7 +64,7 @@ export class CoreSiteSelectorComponent implements OnInit {
   displayOption(model?: CoreSiteModel): string | undefined {
     return model ? (model.Title + ' # ' + model.Id) : undefined;
   }
-  DataGetAll(text: string | number | any): Observable<CoreSiteModel[]> {
+  async DataGetAll(text: string | number | any): Promise<CoreSiteModel[]> {
     const filteModel = new FilterModel();
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
@@ -107,19 +107,18 @@ export class CoreSiteSelectorComponent implements OnInit {
     }
     this.loading.Globally = false;
     this.loading.display = true;
-    return this.categoryService.ServiceGetAll(filteModel)
+    return await this.categoryService.ServiceGetAll(filteModel)
       .pipe(
         map(response => {
           return response.ListItems;
-        }),
-
-      );
+        })
+      ).toPromise();
   }
   onActionSelect(model: CoreSiteModel): void {
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
   }
-  onActionSelectClear(): void{
+  onActionSelectClear(): void {
     this.formControl.setValue(null);
     this.optionSelect.emit(null);
   }

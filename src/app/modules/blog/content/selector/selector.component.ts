@@ -63,7 +63,7 @@ export class BlogContentSelectorComponent implements OnInit {
   displayOption(model?: BlogContentModel): string | undefined {
     return model ? model.Title : undefined;
   }
-  DataGetAll(text: string | number | any): Observable<BlogContentModel[]> {
+  async DataGetAll(text: string | number | any): Promise<BlogContentModel[]> {
     const filteModel = new FilterModel();
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
@@ -95,7 +95,7 @@ export class BlogContentSelectorComponent implements OnInit {
         map(response => {
           this.dataModelResult = response;
           return response.ListItems;
-        }));
+        })).toPromise();
   }
   onActionSelect(model: BlogContentModel): void {
     this.dataModelSelect = model;

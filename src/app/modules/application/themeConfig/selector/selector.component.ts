@@ -69,7 +69,7 @@ export class ApplicationThemeConfigSelectorComponent implements OnInit {
   displayOption(model?: ApplicationThemeConfigModel): string | undefined {
     return model ? model.Title : undefined;
   }
-  DataGetAll(text: string | number | any): Observable<ApplicationThemeConfigModel[]> {
+  async DataGetAll(text: string | number | any): Promise<ApplicationThemeConfigModel[]> {
     const filteModel = new FilterModel();
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
@@ -114,12 +114,12 @@ export class ApplicationThemeConfigSelectorComponent implements OnInit {
     }
     this.loading.Globally = false;
     this.loading.display = true;
-    return this.categoryService.ServiceGetAll(filteModel)
+    return await this.categoryService.ServiceGetAll(filteModel)
       .pipe(
         map(response => {
-          this.dataModelResult = response;
           return response.ListItems;
-        }));
+        })
+      ).toPromise();
   }
   onActionSelect(model: ApplicationThemeConfigModel): void {
     this.dataModelSelect = model;

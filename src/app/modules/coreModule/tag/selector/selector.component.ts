@@ -63,7 +63,7 @@ export class CoreModuleTagSelectorComponent implements OnInit {
   displayOption(model?: CoreModuleTagModel): string | undefined {
     return model ? model.Title : undefined;
   }
-  DataGetAll(text: string | number | any): Observable<CoreModuleTagModel[]> {
+  async DataGetAll(text: string | number | any): Promise<CoreModuleTagModel[]> {
     const filteModel = new FilterModel();
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
@@ -95,7 +95,7 @@ export class CoreModuleTagSelectorComponent implements OnInit {
         map(response => {
           this.dataModelResult = response;
           return response.ListItems;
-        }));
+        })).toPromise();
   }
   onActionSelect(model: CoreModuleTagModel): void {
     this.dataModelSelect = model;
@@ -108,7 +108,7 @@ export class CoreModuleTagSelectorComponent implements OnInit {
     //   }
     // }
   }
-  onActionSelectClear(): void{
+  onActionSelectClear(): void {
     this.formControl.setValue(null);
     this.optionSelect.emit(null);
   }

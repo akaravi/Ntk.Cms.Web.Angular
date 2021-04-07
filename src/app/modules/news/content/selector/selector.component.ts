@@ -63,7 +63,7 @@ export class NewsContentSelectorComponent implements OnInit {
   displayOption(model?: NewsContentModel): string | undefined {
     return model ? model.Title : undefined;
   }
-  DataGetAll(text: string | number | any): Observable<NewsContentModel[]> {
+  async DataGetAll(text: string | number | any): Promise<NewsContentModel[]> {
     const filteModel = new FilterModel();
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
@@ -95,7 +95,7 @@ export class NewsContentSelectorComponent implements OnInit {
         map(response => {
           this.dataModelResult = response;
           return response.ListItems;
-        }));
+        })).toPromise();
   }
   onActionSelect(model: NewsContentModel): void {
     this.dataModelSelect = model;
@@ -108,7 +108,7 @@ export class NewsContentSelectorComponent implements OnInit {
     //   }
     // }
   }
-  onActionSelectClear(): void{
+  onActionSelectClear(): void {
     this.formControl.setValue(null);
     this.optionSelect.emit(null);
   }

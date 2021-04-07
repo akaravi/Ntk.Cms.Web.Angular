@@ -53,7 +53,7 @@ export class CoreGuideSelectorComponent implements OnInit {
   displayOption(model?: CoreGuideModel): string | undefined {
     return model ? (model.Title + ' # ' + model.Id) : undefined;
   }
-  DataGetAll(text: string | number | any): Observable<CoreGuideModel[]> {
+  async DataGetAll(text: string | number | any): Promise<CoreGuideModel[]> {
     const filteModel = new FilterModel();
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
@@ -80,12 +80,12 @@ export class CoreGuideSelectorComponent implements OnInit {
     }
     this.loading.Globally = false;
     this.loading.display = true;
-    return this.categoryService.ServiceGetAll(filteModel)
+    return await this.categoryService.ServiceGetAll(filteModel)
       .pipe(
         map(response => {
-          this.dataModelResult = response;
           return response.ListItems;
-        }));
+        })
+      ).toPromise();
   }
   onActionSelect(model: CoreGuideModel): void {
     this.dataModelSelect = model;

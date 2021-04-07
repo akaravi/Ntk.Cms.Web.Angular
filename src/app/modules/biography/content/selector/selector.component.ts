@@ -63,7 +63,7 @@ export class BiographyContentSelectorComponent implements OnInit {
   displayOption(model?: BiographyContentModel): string | undefined {
     return model ? model.Title : undefined;
   }
-  DataGetAll(text: string | number | any): Observable<BiographyContentModel[]> {
+  async DataGetAll(text: string | number | any): Promise<BiographyContentModel[]> {
     const filteModel = new FilterModel();
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
@@ -95,7 +95,7 @@ export class BiographyContentSelectorComponent implements OnInit {
         map(response => {
           this.dataModelResult = response;
           return response.ListItems;
-        }));
+        })).toPromise();
   }
   onActionSelect(model: BiographyContentModel): void {
     this.dataModelSelect = model;

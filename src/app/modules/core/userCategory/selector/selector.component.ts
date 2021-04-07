@@ -62,7 +62,7 @@ export class CoreUserGroupSelectorComponent implements OnInit {
   displayOption(model?: CoreUserGroupModel): string | undefined {
     return model ? (model.Title + ' # ' + model.Id) : undefined;
   }
-  DataGetAll(text: string | number | any): Observable<CoreUserGroupModel[]> {
+  async DataGetAll(text: string | number | any): Promise<CoreUserGroupModel[]> {
     const filteModel = new FilterModel();
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
@@ -89,12 +89,12 @@ export class CoreUserGroupSelectorComponent implements OnInit {
     }
     this.loading.Globally = false;
     this.loading.display = true;
-    return this.categoryService.ServiceGetAll(filteModel)
+    return await this.categoryService.ServiceGetAll(filteModel)
       .pipe(
         map(response => {
-          this.dataModelResult = response;
           return response.ListItems;
-        }));
+        })
+      ).toPromise();
   }
   onActionSelect(model: CoreUserGroupModel): void {
     this.dataModelSelect = model;

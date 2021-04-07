@@ -62,7 +62,7 @@ export class CoreSiteCategoryCmsModuleSelectorComponent implements OnInit {
   displayOption(model?: CoreSiteCategoryCmsModuleModel): string | undefined {
     return model ? (model.LinkCmsModuleId + '') : undefined;
   }
-  DataGetAll(text: string | number | any): Observable<CoreSiteCategoryCmsModuleModel[]> {
+  async DataGetAll(text: string | number | any): Promise<CoreSiteCategoryCmsModuleModel[]> {
     const filteModel = new FilterModel();
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
@@ -89,12 +89,12 @@ export class CoreSiteCategoryCmsModuleSelectorComponent implements OnInit {
     }
     this.loading.Globally = false;
     this.loading.display = true;
-    return this.categoryService.ServiceGetAll(filteModel)
+    return await this.categoryService.ServiceGetAll(filteModel)
       .pipe(
         map(response => {
-          this.dataModelResult = response;
           return response.ListItems;
-        }));
+        })
+      ).toPromise();
   }
   onActionSelect(model: CoreSiteCategoryCmsModuleModel): void {
     this.dataModelSelect = model;

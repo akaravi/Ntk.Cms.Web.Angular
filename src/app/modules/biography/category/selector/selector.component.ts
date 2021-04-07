@@ -88,7 +88,7 @@ export class BiographyCategorySelectorComponent implements OnInit {
   displayOption(model?: BiographyCategoryModel): string | undefined {
     return model ? model.Title : undefined;
   }
-  DataGetAll(text: string | number | any): Observable<BiographyCategoryModel[]> {
+  async DataGetAll(text: string | number | any): Promise<BiographyCategoryModel[]> {
     const filteModel = new FilterModel();
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
@@ -115,12 +115,12 @@ export class BiographyCategorySelectorComponent implements OnInit {
     }
     this.loading.Globally = false;
     this.loading.display = true;
-    return this.categoryService.ServiceGetAll(filteModel)
+    return await this.categoryService.ServiceGetAll(filteModel)
       .pipe(
         map(response => {
-          this.dataModelResult = response;
           return response.ListItems;
-        }));
+        })
+      ).toPromise();
   }
   onActionSelect(model: BiographyCategoryModel): void {
     this.dataModelSelect = model;

@@ -62,7 +62,7 @@ export class PollingCategorySelectorComponent implements OnInit {
   displayOption(model?: PollingCategoryModel): string | undefined {
     return model ? model.Title : undefined;
   }
-  DataGetAll(text: string | number | any): Observable<PollingCategoryModel[]> {
+  async DataGetAll(text: string | number | any): Promise<PollingCategoryModel[]> {
     const filteModel = new FilterModel();
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
@@ -89,12 +89,12 @@ export class PollingCategorySelectorComponent implements OnInit {
     }
     this.loading.Globally = false;
     this.loading.display = true;
-    return this.categoryService.ServiceGetAll(filteModel)
+    return await this.categoryService.ServiceGetAll(filteModel)
       .pipe(
         map(response => {
-          this.dataModelResult = response;
           return response.ListItems;
-        }));
+        })
+      ).toPromise();
   }
   onActionSelect(model: PollingCategoryModel): void {
     this.dataModelSelect = model;

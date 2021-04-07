@@ -64,7 +64,7 @@ export class TicketingDepartemenOperatorSelectorComponent implements OnInit {
   displayOption(model?: TicketingDepartemenOperatorModel): string | undefined {
     return model ? model.LinkUserId + '' : undefined;
   }
-  DataGetAll(text: string | number | any): Observable<TicketingDepartemenOperatorModel[]> {
+  async DataGetAll(text: string | number | any): Promise<TicketingDepartemenOperatorModel[]> {
     const filteModel = new FilterModel();
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
@@ -91,12 +91,12 @@ export class TicketingDepartemenOperatorSelectorComponent implements OnInit {
     }
     this.loading.Globally = false;
     this.loading.display = true;
-    return this.categoryService.ServiceGetAll(filteModel)
+    return await this.categoryService.ServiceGetAll(filteModel)
       .pipe(
         map(response => {
-          this.dataModelResult = response;
           return response.ListItems;
-        }));
+        })
+      ).toPromise();
   }
   onActionSelect(model: TicketingDepartemenOperatorModel): void {
     this.dataModelSelect = model;

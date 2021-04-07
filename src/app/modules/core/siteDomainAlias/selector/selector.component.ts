@@ -62,7 +62,7 @@ export class CoreSiteDomainAliasSelectorComponent implements OnInit {
   displayOption(model?: CoreSiteDomainAliasModel): string | undefined {
     return model ? (model.Domain) : undefined;
   }
-  DataGetAll(text: string | number | any): Observable<CoreSiteDomainAliasModel[]> {
+  async DataGetAll(text: string | number | any): Promise<CoreSiteDomainAliasModel[]> {
     const filteModel = new FilterModel();
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
@@ -89,12 +89,12 @@ export class CoreSiteDomainAliasSelectorComponent implements OnInit {
     }
     this.loading.Globally = false;
     this.loading.display = true;
-    return this.categoryService.ServiceGetAll(filteModel)
+    return await this.categoryService.ServiceGetAll(filteModel)
       .pipe(
         map(response => {
-          this.dataModelResult = response;
           return response.ListItems;
-        }));
+        })
+      ).toPromise();
   }
   onActionSelect(model: CoreSiteDomainAliasModel): void {
     this.dataModelSelect = model;
