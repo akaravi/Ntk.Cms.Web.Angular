@@ -47,12 +47,12 @@
                     </mat-error>
                   </mat-form-field>
                   <app-core-sitecategory-selector (optionSelect)="onActionSelectorSelect($event)"
-                    [optionPlaceholder]="'نوع سامانه'" [attr.disabled]="false"></app-core-sitecategory-selector>
+                    [optionPlaceholder]="'نوع سامانه'" [disabled]="false"></app-core-sitecategory-selector>
 
 
 
                   <div *ngIf="formInfo.FormSubmitAllow">
-                    <button type="button" [attr.disabled]="!vform.form.valid" mat-button matStepperNext
+                    <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
                       class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
                       بعدی
                     </button>
@@ -71,7 +71,7 @@
                       class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
                       قبلی
                     </button>
-                    <button type="button" [attr.disabled]="!vform.form.valid" mat-button matStepperNext
+                    <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
                       class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
                       بعدی
                     </button>
@@ -135,7 +135,7 @@
                       class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
                       قبلی
                     </button>
-                    <button type="submit" mat-button [attr.disabled]="!vform.form.valid"
+                    <button type="submit" mat-button [disabled]="!vform.form.valid"
                       class="btn btn-success font-weight-bold text-uppercase px-9 py-4">
                       ذخیره
                     </button>

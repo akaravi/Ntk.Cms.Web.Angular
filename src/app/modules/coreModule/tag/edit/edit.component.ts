@@ -1,121 +1,98 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import * as Leaflet from 'leaflet';
-import { FormGroup } from '@angular/forms';
 import {
   CoreEnumService,
   EnumModel,
   ErrorExceptionResult,
-  FilterModel,
   FormInfoModel,
-  CoreModuleTagModel,
   CoreModuleTagService,
-  FilterDataModel,
+  CoreModuleTagModel,
   CoreModuleTagCategoryModel,
-  EnumFilterDataModelSearchTypes,
-  EnumClauseType,
 } from 'ntk-cms-api';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  Inject,
+} from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
-import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { NodeInterface, TreeModel } from 'ntk-cms-filemanager';
-import { Map as leafletMap } from 'leaflet';
+import { ComponentActionEnum } from 'src/app/core/helpers/model/component-action-enum';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
-import { StepperSelectionEvent } from '@angular/cdk/stepper';
-import { MatStepper } from '@angular/material/stepper';
-import { MatTableDataSource } from '@angular/material/table';
+import {
+  TreeModel,
+  NodeInterface,
+} from 'ntk-cms-filemanager';
+import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 
 @Component({
-  selector: 'app-tag-edit',
+  selector: 'app-tag-category-edit',
   templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.scss'
-  ]
+  styleUrls: ['./edit.component.scss'],
 })
-export class CoreModuleTagEditComponent implements OnInit, AfterViewInit {
+export class CoreModuleTagEditComponent implements OnInit {
   constructor(
-    private activatedRoute: ActivatedRoute,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
+    private dialogRef: MatDialogRef<CoreModuleTagEditComponent>,
+
     public coreEnumService: CoreEnumService,
     public coreModuleTagService: CoreModuleTagService,
-    private newsContentService: CoreModuleTagService,
-    private router: Router,
-    private cmsToastrService: CmsToastrService,
+    private cmsToastrService: CmsToastrService
   ) {
+    if (data) {
+      this.requestId = +data.id || 0;
+      this.requestParentId = +data.parentId || 0;
+    }
+    if (this.requestParentId > 0) {
+      this.dataModel.LinkCategoryId = this.requestParentId;
+    }
     this.fileManagerTree = new TreeModel();
   }
   requestId = 0;
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
-  dataModel = new CoreModuleTagModel();
-  dataModelResult: ErrorExceptionResult<CoreModuleTagModel> = new ErrorExceptionResult<CoreModuleTagModel>();
-  datatagDataModelResult: ErrorExceptionResult<CoreModuleTagModel> = new ErrorExceptionResult<CoreModuleTagModel>();
-  dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
-  loading = new ProgressSpinnerModel();
+  requestParentId = 0;
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
-  selectFileTypePodcast = ['mp3'];
-  selectFileTypeMovie = ['mp4'];
-  formInfo: FormInfoModel = new FormInfoModel();
-  mapMarker: any;
-  fileManagerOpenForm = false;
-  fileManagerOpenFormPodcast = false;
-  fileManagerOpenFormMovie = false;
+
   fileManagerTree: TreeModel;
-
   appLanguage = 'fa';
+  formMatcher = new CmsFormsErrorStateMatcher();
+  formControlRequired = new FormControl('', [
+    Validators.required,
+  ]);
+  loading = new ProgressSpinnerModel();
+  dataModelResult: ErrorExceptionResult<CoreModuleTagModel> = new ErrorExceptionResult<CoreModuleTagModel>();
+  dataModel: CoreModuleTagModel = new CoreModuleTagModel();
 
-  viewMap = false;
-  private mapModel: leafletMap;
+  ComponentAction = ComponentActionEnum.none;
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
 
+  formInfo: FormInfoModel = new FormInfoModel();
+  dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
 
+  fileManagerOpenForm = false;
 
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
+  onActionFileSelected(model: NodeInterface): void {
+    // this.dataModel.LinkMainImageId = model.id;
+    // this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
+  }
+
   ngOnInit(): void {
-    this.requestId = + Number(this.activatedRoute.snapshot.paramMap.get('Id'));
-    if (this.requestId === 0) {
-      this.cmsToastrService.typeErrorAddRowParentIsNull();
+    if (this.requestId > 0) {
+      this.ComponentAction = ComponentActionEnum.edit;
+      this.formInfo.FormTitle = 'ویرایش  ';
+      this.DataGetOneContent();
+    } else if (this.requestId === 0) {
+      this.ComponentAction = ComponentActionEnum.add;
+      this.formInfo.FormTitle = 'ثبت  جدید';
+    }
+
+    if (this.ComponentAction === ComponentActionEnum.none) {
+      this.cmsToastrService.typeErrorComponentAction();
+      this.dialogRef.close({ dialogChangedDate: false });
       return;
     }
-    this.DataGetOne();
     this.getEnumRecordStatus();
-  }
-  ngAfterViewInit(): void {
-    // this.optionsCategorySelector.parentMethods = {
-    //   onActionSelect: (x) => this.onActionSelectorSelect(x),
-    // };
-    // this.optionsContentSelector.parentMethods = {
-    //   onActionSelect: (x) => this.onActionContentSimilarSelect(x),
-    // };
-  }
-  public requestAutocompleteItems = (text: string): Observable<any> => {
-    const filteModel = new FilterModel();
-    filteModel.RowPerPage = 20;
-    filteModel.AccessLoad = true;
-    if (text && typeof text === 'string' && text.length > 0) {
-      const filter = new FilterDataModel();
-      filter.PropertyName = 'Title';
-      filter.Value = text;
-      filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
-      filteModel.Filters.push(filter);
-    } else if (text && typeof +text === 'number' && +text > 0){
-      let filter = new FilterDataModel();
-      filter.PropertyName = 'Title';
-      filter.Value = text;
-      filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
-      filter.ClauseType = EnumClauseType.Or;
-      filteModel.Filters.push(filter);
-      filter = new FilterDataModel();
-      filter.PropertyName = 'Id';
-      filter.Value = text;
-      filter.SearchType = EnumFilterDataModelSearchTypes.Equal;
-      filter.ClauseType = EnumClauseType.Or;
-      filteModel.Filters.push(filter);
-    }
-    return this.coreModuleTagService.ServiceGetAll(filteModel).pipe(
-      map((data) => data.ListItems.map(val => ({
-        value: val.Id,
-        display: val.Title
-      })))
-    );
   }
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
@@ -128,85 +105,90 @@ export class CoreModuleTagEditComponent implements OnInit, AfterViewInit {
     }
   }
 
-
-  onFormSubmit(): void {
+  DataGetOneContent(): void {
     if (this.requestId <= 0) {
-      this.cmsToastrService.typeErrorAddRowParentIsNull();
-      return;
-    }
-    if (!this.formGroup.valid) {
-      this.cmsToastrService.typeErrorFormInvalid();
+      this.cmsToastrService.typeErrorEditRowIsNull();
       return;
     }
 
-
-    this.DataEditContent();
-  }
-
-  DataGetOne(): void {
-    this.formInfo.FormSubmitAllow = false;
-    this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
+    this.formInfo.FormAlert = 'در دریافت ارسال اطلاعات از سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-
-    this.newsContentService
-      .ServiceGetOneById(this.requestId)
-      .subscribe(
-        async (next) => {
-          this.loading.display = false;
-          this.dataModelResult = next;
-          this.formInfo.FormSubmitAllow = true;
-
-          if (next.IsSuccess) {
-            this.dataModel = next.Item;
-            // this.optionsCategorySelector.childMethods.ActionSelectForce(next.Item.LinkCategoryId);
-            // this.cmsToastrService.typeSuccess();
-            this.loading.display = false;
-          } else {
-            this.cmsToastrService.typeErrorGetOne(next.ErrorMessage);
-          }
-        },
-        (error) => {
-          this.loading.display = false;
-          this.formInfo.FormSubmitAllow = true;
-          this.cmsToastrService.typeErrorGetOne(error);
+    this.coreModuleTagService.ServiceGetOneById(this.requestId).subscribe(
+      (next) => {
+        this.dataModel = next.Item;
+        if (next.IsSuccess) {
+          this.formInfo.FormTitle = this.formInfo.FormTitle + ' ' + next.Item.Title;
+          this.formInfo.FormAlert = '';
+        } else {
+          this.formInfo.FormAlert = 'برروز خطا';
+          this.formInfo.FormError = next.ErrorMessage;
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
         }
-      );
+        this.loading.display = false;
+      },
+      (error) => {
+        this.cmsToastrService.typeError(error);
+        this.loading.display = false;
+      }
+    );
   }
-  DataEditContent(): void {
-    this.formInfo.FormSubmitAllow = false;
+  DataAddContent(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-
-    this.newsContentService
-      .ServiceEdit(this.dataModel)
-      .subscribe(
-        async (next) => {
-          this.loading.display = false;
-          this.formInfo.FormSubmitAllow = true;
-          this.dataModelResult = next;
-          if (next.IsSuccess) {
-
-            this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
-            this.cmsToastrService.typeSuccessAdd();
-            // await this.DataActionAfterAddContentSuccessfulTag(this.dataModelResult.Item);
-            // await this.DataActionAfterAddContentSuccessfulSimilar(this.dataModelResult.Item);
-            // await this.DataActionAfterAddContentSuccessfulOtherInfo(this.dataModelResult.Item);
-            this.loading.display = false;
-            setTimeout(() => this.router.navigate(['/news/edit/', this.requestId]), 100);
-          } else {
-            this.cmsToastrService.typeErrorAdd(next.ErrorMessage);
-          }
-        },
-        (error) => {
-          this.loading.display = false;
-          this.formInfo.FormSubmitAllow = true;
-          this.cmsToastrService.typeErrorAdd(error);
+    if (this.requestParentId > 0) {
+      this.dataModel.LinkCategoryId = this.requestParentId;
+    }
+    this.coreModuleTagService.ServiceAdd(this.dataModel).subscribe(
+      (next) => {
+        this.formInfo.FormSubmitAllow = true;
+        this.dataModelResult = next;
+        if (next.IsSuccess) {
+          this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
+          this.cmsToastrService.typeSuccessAdd();
+          this.dialogRef.close({ dialogChangedDate: true });
+        } else {
+          this.formInfo.FormAlert = 'برروز خطا';
+          this.formInfo.FormError = next.ErrorMessage;
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
         }
-      );
+        this.loading.display = false;
+      },
+      (error) => {
+        this.formInfo.FormSubmitAllow = true;
+        this.cmsToastrService.typeError(error);
+        this.loading.display = false;
+      }
+    );
   }
+  DataEditContent(): void {
+    this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
+    this.formInfo.FormError = '';
+    this.loading.display = true;
+    this.coreModuleTagService.ServiceEdit(this.dataModel).subscribe(
+      (next) => {
+        this.formInfo.FormSubmitAllow = true;
+        this.dataModelResult = next;
+        if (next.IsSuccess) {
+          this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
+          this.cmsToastrService.typeSuccessEdit();
+          this.dialogRef.close({ dialogChangedDate: true });
 
+        } else {
+          this.formInfo.FormAlert = 'برروز خطا';
+          this.formInfo.FormError = next.ErrorMessage;
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
+        }
+        this.loading.display = false;
+      },
+      (error) => {
+        this.formInfo.FormSubmitAllow = true;
+        this.cmsToastrService.typeError(error);
+        this.loading.display = false;
+      }
+    );
+  }
   onActionSelectorSelect(model: CoreModuleTagCategoryModel | null): void {
     if (!model || model.Id <= 0) {
       const message = 'دسته بندی اطلاعات مشخص نیست';
@@ -215,21 +197,20 @@ export class CoreModuleTagEditComponent implements OnInit, AfterViewInit {
     }
     this.dataModel.LinkCategoryId = model.Id;
   }
-
-
-  onStepClick(event: StepperSelectionEvent, stepper: MatStepper): void {
-    if (event.previouslySelectedIndex < event.selectedIndex) {
-      if (!this.formGroup.valid) {
-        this.cmsToastrService.typeErrorFormInvalid();
-        setTimeout(() => {
-          stepper.selectedIndex = event.previouslySelectedIndex;
-          // stepper.previous();
-        }, 10);
-      }
+  onFormSubmit(): void {
+    if (!this.formGroup.valid) {
+      return;
     }
-  }
-  onActionBackToParent(): void {
-    this.router.navigate(['/news/content/']);
-  }
+    this.formInfo.FormSubmitAllow = false;
+    if (this.ComponentAction === ComponentActionEnum.add) {
+      this.DataAddContent();
+    }
+    if (this.ComponentAction === ComponentActionEnum.edit) {
+      this.DataEditContent();
+    }
 
+  }
+  onFormCancel(): void {
+    this.dialogRef.close({ dialogChangedDate: false });
+  }
 }

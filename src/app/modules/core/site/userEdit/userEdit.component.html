@@ -20,14 +20,14 @@
             </mat-error>
           </mat-form-field>
           <!-- LinkCmsSiteId Field -->
-          <app-core-site-selector (optionSelect)="onActionSelectorSiteSelect($event)" [attr.disabled]="false"
+          <app-core-site-selector (optionSelect)="onActionSelectorSiteSelect($event)" [disabled]="false"
             [optionSelectForce]="dataModel.LinkSiteId" [optionPlaceholder]="'وب سایت'"></app-core-site-selector>
           <!-- LinkuserId Field -->
-          <app-core-user-selector (optionSelect)="onActionSelectorUserSelect($event)" [attr.disabled]="false"
+          <app-core-user-selector (optionSelect)="onActionSelectorUserSelect($event)" [disabled]="false"
             [optionSelectForce]="dataModel.LinkUserId" [optionPlaceholder]="'کاربر'">
           </app-core-user-selector>
           <!-- LinkUserGroupId Field -->
-          <app-core-usercategory-selector (optionSelect)="onActionSelectorUserGroupSelect($event)" [attr.disabled]="false"
+          <app-core-usercategory-selector (optionSelect)="onActionSelectorUserGroupSelect($event)" [disabled]="false"
             [optionSelectForce]="dataModel.LinkUserGroupId" [optionPlaceholder]="'نوع حساب'">
           </app-core-usercategory-selector>
 
@@ -55,7 +55,7 @@
       <button type="button" (click)="onFormCancel()" class="btn btn-raised btn-warning mr-1">
         <i class="ft-x"></i> انصراف
       </button>
-      <button type="submit" (click)="onFormSubmit()" class="btn btn-raised btn-primary" [attr.disabled]="!vform.form.valid">
+      <button type="submit" (click)="onFormSubmit()" class="btn btn-raised btn-primary" [disabled]="!vform.form.valid">
         <i class="fa fa-check-square-o"></i> ذخیره
       </button>
     </div>

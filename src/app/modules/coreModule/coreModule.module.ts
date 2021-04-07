@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CoreModuleComponent } from './coreModule.component';
 import { CoreModuleRoutes } from './coreModule.routing';
-import { CoreModuleTagAddComponent } from './tag/add/add.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TreeviewModule } from 'ngx-treeview';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -16,6 +15,7 @@ import { CoreModuleTagCategoryEditComponent } from './tagCategory/edit/edit.comp
 import { CoreModuleTagCategoryTreeComponent } from './tagCategory/tree/tree.component';
 import { CoreModuleTagCategorySelectorComponent } from './tagCategory/selector/selector.component';
 import { CoreModuleTagSelectorComponent } from './tag/selector/selector.component';
+import { CoreModuleTagCategoryService, CoreModuleTagService } from 'ntk-cms-api';
 
 
 @NgModule({
@@ -32,7 +32,6 @@ import { CoreModuleTagSelectorComponent } from './tag/selector/selector.componen
   ],
   declarations: [
     CoreModuleComponent,
-    CoreModuleTagAddComponent,
     CoreModuleTagEditComponent,
     CoreModuleTagListComponent,
     CoreModuleTagCategoryEditComponent,
@@ -43,7 +42,6 @@ import { CoreModuleTagSelectorComponent } from './tag/selector/selector.componen
   ],
   exports: [
     CoreModuleComponent,
-    CoreModuleTagAddComponent,
     CoreModuleTagEditComponent,
     CoreModuleTagListComponent,
     CoreModuleTagCategoryEditComponent,
@@ -51,6 +49,10 @@ import { CoreModuleTagSelectorComponent } from './tag/selector/selector.componen
     CoreModuleTagCategoryTreeComponent,
     CoreModuleTagCategorySelectorComponent,
     CoreModuleTagSelectorComponent,
+  ],
+  providers: [
+    CoreModuleTagService,
+    CoreModuleTagCategoryService,
   ]
 })
 export class CoreModuleModule { }

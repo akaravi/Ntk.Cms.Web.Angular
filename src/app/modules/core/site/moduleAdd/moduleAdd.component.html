@@ -21,10 +21,10 @@
           </mat-form-field>
 
           <!-- LinkCmsSiteId Field -->
-          <app-core-site-selector (optionSelect)="onActionSiteSelect($event)" [attr.disabled]="false"
+          <app-core-site-selector (optionSelect)="onActionSiteSelect($event)" [disabled]="false"
             [optionSelectForce]="dataModel.LinkSiteId" [optionPlaceholder]="'وب سایت'"></app-core-site-selector>
           <!-- LinkModuleId Field -->
-          <app-core-module-selector (optionSelect)="onActionSelectorModuleSelect($event)" [attr.disabled]="false"
+          <app-core-module-selector (optionSelect)="onActionSelectorModuleSelect($event)" [disabled]="false"
             [optionSelectForce]="dataModel.LinkModuleId" [optionPlaceholder]="'ماژول'">
           </app-core-module-selector>
            <!-- ExpireDate Field -->
@@ -52,7 +52,7 @@
     <button type="button" (click)="onFormCancel()" class="btn btn-raised btn-warning mr-1">
       <i class="ft-x"></i> انصراف
     </button>
-        <button type="submit" (click)="onFormSubmit()" class="btn btn-raised btn-primary" [attr.disabled]="!vform.form.valid">
+        <button type="submit" (click)="onFormSubmit()" class="btn btn-raised btn-primary" [disabled]="!vform.form.valid">
       <i class="fa fa-check-square-o"></i> ذخیره
     </button>
   </div>

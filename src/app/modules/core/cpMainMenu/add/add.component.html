@@ -60,7 +60,7 @@
     <button type="button" (click)="onFormCancel()" class="btn btn-raised btn-warning mr-1">
       <i class="ft-x"></i> انصراف
     </button>
-        <button type="submit" (click)="onFormSubmit()" class="btn btn-raised btn-primary" [attr.disabled]="!vform.form.valid">
+        <button type="submit" (click)="onFormSubmit()" class="btn btn-raised btn-primary" [disabled]="!vform.form.valid">
       <i class="fa fa-check-square-o"></i> ذخیره
     </button>
   </div>

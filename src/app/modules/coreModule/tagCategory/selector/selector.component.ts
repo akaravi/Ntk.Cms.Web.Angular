@@ -6,8 +6,8 @@ import {
   ErrorExceptionResult,
   FilterDataModel,
   FilterModel,
-  NewsCategoryModel,
-  NewsCategoryService
+  CoreModuleTagCategoryModel,
+  CoreModuleTagCategoryService
 } from 'ntk-cms-api';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -25,19 +25,19 @@ import { Type } from '@angular/core';
 export class CoreModuleTagCategorySelectorComponent implements OnInit {
   constructor(
     public coreEnumService: CoreEnumService,
-    public categoryService: NewsCategoryService) {
+    public categoryService: CoreModuleTagCategoryService) {
 
 
   }
-  dataModelResult: ErrorExceptionResult<NewsCategoryModel> = new ErrorExceptionResult<NewsCategoryModel>();
-  dataModelSelect: NewsCategoryModel = new NewsCategoryModel();
+  dataModelResult: ErrorExceptionResult<CoreModuleTagCategoryModel> = new ErrorExceptionResult<CoreModuleTagCategoryModel>();
+  dataModelSelect: CoreModuleTagCategoryModel = new CoreModuleTagCategoryModel();
   loading = new ProgressSpinnerModel();
   formControl = new FormControl();
-  filteredOptions: Observable<NewsCategoryModel[]>;
+  filteredOptions: Observable<CoreModuleTagCategoryModel[]>;
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Output() optionSelect = new EventEmitter();
   @Input() optionReload = () => this.onActionReload();
-  @Input() set optionSelectForce(x: number | NewsCategoryModel) {
+  @Input() set optionSelectForce(x: number | CoreModuleTagCategoryModel) {
     this.onActionSelectForce(x);
   }
 
@@ -57,13 +57,13 @@ export class CoreModuleTagCategorySelectorComponent implements OnInit {
       );
   }
 
-  displayFn(model?: NewsCategoryModel): string | undefined {
+  displayFn(model?: CoreModuleTagCategoryModel): string | undefined {
     return model ? model.Title : undefined;
   }
-  displayOption(model?: NewsCategoryModel): string | undefined {
+  displayOption(model?: CoreModuleTagCategoryModel): string | undefined {
     return model ? model.Title : undefined;
   }
-  async DataGetAll(text: string | number | any): Promise<NewsCategoryModel[]> {
+  async DataGetAll(text: string | number | any): Promise<CoreModuleTagCategoryModel[]> {
     const filteModel = new FilterModel();
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
@@ -97,7 +97,7 @@ export class CoreModuleTagCategorySelectorComponent implements OnInit {
         })
       ).toPromise();
   }
-  onActionSelect(model: NewsCategoryModel): void {
+  onActionSelect(model: CoreModuleTagCategoryModel): void {
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
     // this.optionsData.Select = this.dataModelSelect;
@@ -112,7 +112,7 @@ export class CoreModuleTagCategorySelectorComponent implements OnInit {
     this.formControl.setValue(null);
     this.optionSelect.emit(null);
   }
-  push(newvalue: NewsCategoryModel): Observable<NewsCategoryModel[]> {
+  push(newvalue: CoreModuleTagCategoryModel): Observable<CoreModuleTagCategoryModel[]> {
     return this.filteredOptions.pipe(map(items => {
       if (items.find(x => x.Id === newvalue.Id)) {
         return items;
@@ -122,7 +122,7 @@ export class CoreModuleTagCategorySelectorComponent implements OnInit {
     }));
 
   }
-  onActionSelectForce(id: number | NewsCategoryModel): void {
+  onActionSelectForce(id: number | CoreModuleTagCategoryModel): void {
     if (typeof id === 'number' && id > 0) {
       this.categoryService.ServiceGetOneById(id).subscribe((next) => {
         if (next.IsSuccess) {
@@ -133,9 +133,9 @@ export class CoreModuleTagCategorySelectorComponent implements OnInit {
       });
       return;
     }
-    if (typeof id === typeof NewsCategoryModel) {
-      this.filteredOptions = this.push((id as NewsCategoryModel));
-      this.dataModelSelect = (id as NewsCategoryModel);
+    if (typeof id === typeof CoreModuleTagCategoryModel) {
+      this.filteredOptions = this.push((id as CoreModuleTagCategoryModel));
+      this.dataModelSelect = (id as CoreModuleTagCategoryModel);
       this.formControl.setValue(id);
       return;
     }
@@ -146,8 +146,8 @@ export class CoreModuleTagCategorySelectorComponent implements OnInit {
     // if (this.dataModelSelect && this.dataModelSelect.Id > 0) {
     //   this.onActionSelect(null);
     // }
-    this.dataModelSelect = new NewsCategoryModel();
-    // this.optionsData.Select = new NewsCategoryModel();
+    this.dataModelSelect = new CoreModuleTagCategoryModel();
+    // this.optionsData.Select = new CoreModuleTagCategoryModel();
     this.DataGetAll(null);
   }
 }

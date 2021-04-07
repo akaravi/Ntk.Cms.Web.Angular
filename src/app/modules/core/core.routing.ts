@@ -63,6 +63,10 @@ const routes: Routes = [
         path: 'device',
         loadChildren: () =>
           import('./device/coreDevice.module').then((m) => m.CoreDeviceModule),
+      },      {
+        path: 'guide',
+        loadChildren: () =>
+          import('./guides/coreGuide.module').then((m) => m.CoreGuideCmsModule),
       },
     ]
   },

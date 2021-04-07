@@ -2,7 +2,7 @@
 import { Component, OnInit, Input, ViewChild, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup } from '@angular/forms';
-import { CoreEnumService, ErrorExceptionResult, FilterModel, FormInfoModel, NewsCategoryModel, NewsCategoryService } from 'ntk-cms-api';
+import { CoreEnumService, ErrorExceptionResult, FilterModel, FormInfoModel, CoreModuleTagCategoryModel, CoreModuleTagCategoryService } from 'ntk-cms-api';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
@@ -19,7 +19,7 @@ export class CoreModuleTagCategoryDeleteComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<CoreModuleTagCategoryDeleteComponent>,
     private activatedRoute: ActivatedRoute,
-    private newsCategoryService: NewsCategoryService,
+    private coreModuleTagCategoryService: CoreModuleTagCategoryService,
     private cmsToastrService: CmsToastrService
   ) {
     if (data) {
@@ -29,8 +29,8 @@ export class CoreModuleTagCategoryDeleteComponent implements OnInit {
 
   }
   loading = new ProgressSpinnerModel();
-  dataModelResultCategory: ErrorExceptionResult<NewsCategoryModel> = new ErrorExceptionResult<NewsCategoryModel>();
-  dataModelResultCategoryAllData: ErrorExceptionResult<NewsCategoryModel> = new ErrorExceptionResult<NewsCategoryModel>();
+  dataModelResultCategory: ErrorExceptionResult<CoreModuleTagCategoryModel> = new ErrorExceptionResult<CoreModuleTagCategoryModel>();
+  dataModelResultCategoryAllData: ErrorExceptionResult<CoreModuleTagCategoryModel> = new ErrorExceptionResult<CoreModuleTagCategoryModel>();
     dataModel: any = {};
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
   formInfo: FormInfoModel = new FormInfoModel();
@@ -51,7 +51,7 @@ export class CoreModuleTagCategoryDeleteComponent implements OnInit {
     }
     this.formInfo.FormAlert = 'در حال لود اطلاعات';
     this.loading.display = true;
-    this.newsCategoryService
+    this.coreModuleTagCategoryService
       .ServiceGetOneById(this.requestId)
       .subscribe(
         (next) => {
@@ -80,7 +80,7 @@ export class CoreModuleTagCategoryDeleteComponent implements OnInit {
     const filterModel: FilterModel = new FilterModel();
     filterModel.RowPerPage = 100;
     this.loading.display = true;
-    this.newsCategoryService
+    this.coreModuleTagCategoryService
       .ServiceGetAll(filterModel)
       .subscribe(
         (next) => {
@@ -122,30 +122,30 @@ export class CoreModuleTagCategoryDeleteComponent implements OnInit {
 
     this.formInfo.ButtonSubmittedEnabled = false;
     this.loading.display = true;
-    this.newsCategoryService
-      .ServiceMove(this.requestId, this.dataModel.NewCatId)
-      .subscribe(
-        (next) => {
-          if (!next.IsSuccess) {
-            this.formInfo.FormAlert = 'برروز خطا';
-            this.formInfo.FormError = next.ErrorMessage;
-            this.cmsToastrService.typeErrorMove();
-          } else {
-            this.formInfo.FormAlert = 'جابجایی با موفقیت انجام شد';
-            this.cmsToastrService.typeSuccessMove();
-          }
+    // this.coreModuleTagCategoryService
+    //   .ServiceMove(this.requestId, this.dataModel.NewCatId)
+    //   .subscribe(
+    //     (next) => {
+    //       if (!next.IsSuccess) {
+    //         this.formInfo.FormAlert = 'برروز خطا';
+    //         this.formInfo.FormError = next.ErrorMessage;
+    //         this.cmsToastrService.typeErrorMove();
+    //       } else {
+    //         this.formInfo.FormAlert = 'جابجایی با موفقیت انجام شد';
+    //         this.cmsToastrService.typeSuccessMove();
+    //       }
           this.formInfo.FormSubmitAllow = true;
           this.formInfo.ButtonSubmittedEnabled = true;
           this.loading.display = false;
-        },
-        (error) => {
-          this.formInfo.FormAlert = 'برروز خطا';
-          this.cmsToastrService.typeError(error);
-          this.formInfo.ButtonSubmittedEnabled = true;
-          this.formInfo.FormSubmitAllow = true;
-          this.loading.display = false;
-        }
-      );
+    //     },
+    //     (error) => {
+    //       this.formInfo.FormAlert = 'برروز خطا';
+    //       this.cmsToastrService.typeError(error);
+    //       this.formInfo.ButtonSubmittedEnabled = true;
+    //       this.formInfo.FormSubmitAllow = true;
+    //       this.loading.display = false;
+    //     }
+    //   );
   }
   onFormDelete(): void {
     if (this.requestId === 0) {
@@ -158,7 +158,7 @@ export class CoreModuleTagCategoryDeleteComponent implements OnInit {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.ButtonSubmittedEnabled = false;
     this.loading.display = true;
-    this.newsCategoryService
+    this.coreModuleTagCategoryService
       .ServiceDelete(this.requestId)
       .subscribe(
         (next) => {
@@ -186,7 +186,7 @@ export class CoreModuleTagCategoryDeleteComponent implements OnInit {
       );
 
   }
-  onFormChangeNewCatId(model: NewsCategoryModel): void {
+  onFormChangeNewCatId(model: CoreModuleTagCategoryModel): void {
     this.formInfo.FormAlert = '';
     if (this.requestId === 0 || !model || model.Id <= 0) {
       this.cmsToastrService.typeErrorDeleteRowIsNull();

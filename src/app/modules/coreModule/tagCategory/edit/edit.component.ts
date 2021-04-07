@@ -3,8 +3,8 @@ import {
   EnumModel,
   ErrorExceptionResult,
   FormInfoModel,
-  NewsCategoryService,
-  NewsCategoryModel,
+  CoreModuleTagCategoryService,
+  CoreModuleTagCategoryModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -36,7 +36,7 @@ export class CoreModuleTagCategoryEditComponent implements OnInit {
     private dialogRef: MatDialogRef<CoreModuleTagCategoryEditComponent>,
 
     public coreEnumService: CoreEnumService,
-    public newsCategoryService: NewsCategoryService,
+    public coreModuleTagCategoryService: CoreModuleTagCategoryService,
     private cmsToastrService: CmsToastrService
   ) {
     if (data) {
@@ -57,8 +57,8 @@ export class CoreModuleTagCategoryEditComponent implements OnInit {
     Validators.required,
   ]);
   loading = new ProgressSpinnerModel();
-  dataModelResult: ErrorExceptionResult<NewsCategoryModel> = new ErrorExceptionResult<NewsCategoryModel>();
-  dataModel: NewsCategoryModel = new NewsCategoryModel();
+  dataModelResult: ErrorExceptionResult<CoreModuleTagCategoryModel> = new ErrorExceptionResult<CoreModuleTagCategoryModel>();
+  dataModel: CoreModuleTagCategoryModel = new CoreModuleTagCategoryModel();
 
   ComponentAction = ComponentActionEnum.none;
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
@@ -70,9 +70,8 @@ export class CoreModuleTagCategoryEditComponent implements OnInit {
 
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
   onActionFileSelected(model: NodeInterface): void {
-    this.dataModel.LinkMainImageId = model.id;
-    this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
-
+    // this.dataModel.LinkMainImageId = model.id;
+    // this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
   }
 
   ngOnInit(): void {
@@ -84,7 +83,9 @@ export class CoreModuleTagCategoryEditComponent implements OnInit {
       this.ComponentAction = ComponentActionEnum.add;
       this.formInfo.FormTitle = 'ثبت دسته بندی جدید';
     }
-
+    if (this.requestParentId > 0) {
+      this.dataModel.LinkParentId = this.requestParentId;
+    }
     if (this.ComponentAction === ComponentActionEnum.none) {
       this.cmsToastrService.typeErrorComponentAction();
       this.dialogRef.close({ dialogChangedDate: false });
@@ -112,7 +113,7 @@ export class CoreModuleTagCategoryEditComponent implements OnInit {
     this.formInfo.FormAlert = 'در دریافت ارسال اطلاعات از سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.newsCategoryService.ServiceGetOneById(this.requestId).subscribe(
+    this.coreModuleTagCategoryService.ServiceGetOneById(this.requestId).subscribe(
       (next) => {
         this.dataModel = next.Item;
         if (next.IsSuccess) {
@@ -138,7 +139,7 @@ export class CoreModuleTagCategoryEditComponent implements OnInit {
     if (this.requestParentId > 0) {
       this.dataModel.LinkParentId = this.requestParentId;
     }
-    this.newsCategoryService.ServiceAdd(this.dataModel).subscribe(
+    this.coreModuleTagCategoryService.ServiceAdd(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormSubmitAllow = true;
         this.dataModelResult = next;
@@ -164,7 +165,7 @@ export class CoreModuleTagCategoryEditComponent implements OnInit {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.newsCategoryService.ServiceEdit(this.dataModel).subscribe(
+    this.coreModuleTagCategoryService.ServiceEdit(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormSubmitAllow = true;
         this.dataModelResult = next;
@@ -186,6 +187,14 @@ export class CoreModuleTagCategoryEditComponent implements OnInit {
         this.loading.display = false;
       }
     );
+  }
+  onActionSelectorSelect(model: CoreModuleTagCategoryModel | null): void {
+    if (!model || model.Id <= 0) {
+      const message = 'دسته بندی اطلاعات مشخص نیست';
+      this.cmsToastrService.typeErrorSelected(message);
+      return;
+    }
+    this.dataModel.LinkParentId = model.Id;
   }
   onFormSubmit(): void {
     if (!this.formGroup.valid) {

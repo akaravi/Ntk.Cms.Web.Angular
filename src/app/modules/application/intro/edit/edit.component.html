@@ -11,7 +11,7 @@
 
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['RecordStatus']?.AccessWatchField">
             <mat-select placeholder="{{fieldsInfo['RecordStatus']?.FieldTitle}}" [(ngModel)]="dataModel.RecordStatus"
-              [attr.disabled]="!fieldsInfo['RecordStatus']?.AccessEditField" name="dataModel.RecordStatus"
+              [disabled]="!fieldsInfo['RecordStatus']?.AccessEditField" name="dataModel.RecordStatus"
               #RecordStatus="ngModel" panelClass="recordStatus-{{ dataModel.RecordStatus }}" required>
               <mat-option *ngFor="
                 let item of dataModelEnumRecordStatusResult.ListItems;
@@ -26,12 +26,12 @@
 
           <app-application-app-selector (optionSelect)="onActionSelectApplication($event)"
             [optionSelectForce]="this.dataModel.LinkApplicationId" [optionPlaceholder]="' اپلیکیشن'"
-            [attr.disabled]="!fieldsInfo['LinkApplicationId']?.AccessEditField"></app-application-app-selector>
+            [disabled]="!fieldsInfo['LinkApplicationId']?.AccessEditField"></app-application-app-selector>
 
 
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Title']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['Title']?.FieldTitle }}</mat-label>
-            <input matInput [(ngModel)]="dataModel.Title" [attr.disabled]="!fieldsInfo['Title']?.AccessEditField"
+            <input matInput [(ngModel)]="dataModel.Title" [disabled]="!fieldsInfo['Title']?.AccessEditField"
               name="dataModel.Title" #Title type="text" placeholder="عنوان" minlength="3" maxlength="100" required />
             <mat-icon matSuffix *ngIf="dataModel.Title && fieldsInfo['Title']?.AccessEditField" matSuffix mat-icon-button
               aria-label="Clear" (click)="dataModel.Title = ''">close</mat-icon>
@@ -47,7 +47,7 @@
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Description']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['Description']?.FieldDescription }}</mat-label>
             <textarea matInput [(ngModel)]="dataModel.Description"
-              [attr.disabled]="!fieldsInfo['Description']?.AccessEditField" name="dataModel.Description" #Description
+              [disabled]="!fieldsInfo['Description']?.AccessEditField" name="dataModel.Description" #Description
               type="text" placeholder="توضیحات" row="10" minlength="3" maxlength="100" required></textarea>
             <mat-icon matSuffix *ngIf="dataModel.Description && fieldsInfo['Description']?.AccessEditField" matSuffix
               mat-icon-button aria-label="Clear" (click)="dataModel.Description = ''">close</mat-icon>
@@ -64,7 +64,7 @@
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
               بازگشت
             </button>
-            <button type="button" [attr.disabled]="!vform.form.valid" mat-button matStepperNext
+            <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
               بعدی
             </button>
@@ -84,7 +84,7 @@
 
               <mat-label (click)="fileManagerOpenForm = true">{{fieldsInfo['LinkMainImageId']?.FieldTitle}}</mat-label>
               <input matInput [(ngModel)]="dataModel.LinkMainImageId"
-                [attr.disabled]="!fieldsInfo['LinkMainImageId']?.AccessEditField" name="dataModel.LinkMainImageId"
+                [disabled]="!fieldsInfo['LinkMainImageId']?.AccessEditField" name="dataModel.LinkMainImageId"
                 #LinkMainImageId type="text" placeholder="شناسه فایل اصلی" (click)="fileManagerOpenForm = true" />
               <mat-icon matSuffix *ngIf="dataModel.LinkMainImageId && fieldsInfo['LinkMainImageId']?.AccessEditField"
                 matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.LinkMainImageId = null">close</mat-icon>
@@ -107,7 +107,7 @@
 
               <mat-label (click)="fileManagerOpenForm = true">{{fieldsInfo['LinkMainVideoId']?.FieldTitle}}</mat-label>
               <input matInput [(ngModel)]="dataModel.LinkMainVideoId"
-                [attr.disabled]="!fieldsInfo['LinkMainVideoId']?.AccessEditField" name="dataModel.LinkMainVideoId"
+                [disabled]="!fieldsInfo['LinkMainVideoId']?.AccessEditField" name="dataModel.LinkMainVideoId"
                 #LinkMainVideoId type="text" placeholder="شناسه فایل اصلی" (click)="fileManagerOpenForm = true" />
               <mat-icon matSuffix *ngIf="dataModel.LinkMainVideoId && fieldsInfo['LinkMainVideoId']?.AccessEditField"
                 matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.LinkMainVideoId = null">close</mat-icon>
@@ -135,7 +135,7 @@
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
               قبلی
             </button>
-            <button type="submit" mat-button [attr.disabled]="!vform.form.valid"
+            <button type="submit" mat-button [disabled]="!vform.form.valid"
             class="btn btn-success font-weight-bold text-uppercase px-9 py-4">
             ذخیره
           </button>
