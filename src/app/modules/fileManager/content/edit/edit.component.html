@@ -70,7 +70,7 @@
             <mat-datepicker touchUi #ExpireDate></mat-datepicker>
           </mat-form-field>
           <hr class="pb-5" />
-          <angular-editor [placeholder]="'Enter text here...'" [config]="publicHelper.editorConfig" [(ngModel)]="dataModel.Body"
+          <angular-editor [placeholder]="'Enter text here...'" [config]="publicHelper.editorConfig" id="main" [(ngModel)]="dataModel.Body"
             name="dataModel.Body"></angular-editor>
 
        <div *ngIf="formInfo.FormSubmitAllow">
