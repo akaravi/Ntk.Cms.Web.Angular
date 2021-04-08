@@ -47,8 +47,6 @@ import { CoreSiteCategoryCmsModuleListViewComponent } from './listview/listview.
     SharedModule.forRoot(),
     AngularEditorModule,
     TagInputModule,
-    // CmsFileManagerModule
-
   ],
   providers: [
     CoreSiteCategoryCmsModuleService,

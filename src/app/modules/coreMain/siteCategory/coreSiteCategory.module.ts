@@ -49,8 +49,6 @@ import { CoreSiteCategoryModuleListComponent } from './moduleList/moduleList.com
     SharedModule.forRoot(),
     AngularEditorModule,
     TagInputModule,
-    // CmsFileManagerModule
-
   ],
   providers: [
     CoreSiteCategoryService,

@@ -40,6 +40,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('./siteCategory/coreSiteCategory.module').then((m) => m.CoreSiteCategoryCmsModule),
       },
+      // {
+      //   path: 'sitecategorymodule',
+      //   loadChildren: () =>
+      //     import('./siteCategorymodule/coreSiteCategoryCmsModule.module').then((m) => m.CoreSiteCategoryCmsModuleModule),
+      // },
       {
         path: 'sitedomainalias',
         loadChildren: () =>
@@ -49,7 +54,8 @@ const routes: Routes = [
         path: 'cpmainmenu',
         loadChildren: () =>
           import('./cpMainMenu/coreCpMainMenu.module').then((m) => m.CoreCpMainMenu),
-      }, {
+      },
+      {
         path: 'module',
         loadChildren: () =>
           import('./module/coreModule.module').then((m) => m.CoreModuleModule),
@@ -63,7 +69,7 @@ const routes: Routes = [
         path: 'device',
         loadChildren: () =>
           import('./device/coreDevice.module').then((m) => m.CoreDeviceModule),
-      },      {
+      }, {
         path: 'guide',
         loadChildren: () =>
           import('./guides/coreGuide.module').then((m) => m.CoreGuideCmsModule),

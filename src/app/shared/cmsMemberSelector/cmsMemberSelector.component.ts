@@ -91,13 +91,13 @@ export class CmsMemberSelectorComponent implements OnInit {
       filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
       filter.ClauseType = EnumClauseType.Or;
       filteModel.Filters.push(filter);
-       /*Filters */
-       filter = new FilterDataModel();
-       filter.PropertyName = 'lastname';
-       filter.Value = text;
-       filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
-       filter.ClauseType = EnumClauseType.Or;
-       filteModel.Filters.push(filter);
+      /*Filters */
+      filter = new FilterDataModel();
+      filter.PropertyName = 'lastname';
+      filter.Value = text;
+      filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
+      filter.ClauseType = EnumClauseType.Or;
+      filteModel.Filters.push(filter);
 
       if (text && typeof +text === 'number' && +text > 0) {
         /*Filters */

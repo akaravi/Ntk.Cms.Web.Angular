@@ -31,7 +31,7 @@ export class CoreModuleTagCategoryDeleteComponent implements OnInit {
   loading = new ProgressSpinnerModel();
   dataModelResultCategory: ErrorExceptionResult<CoreModuleTagCategoryModel> = new ErrorExceptionResult<CoreModuleTagCategoryModel>();
   dataModelResultCategoryAllData: ErrorExceptionResult<CoreModuleTagCategoryModel> = new ErrorExceptionResult<CoreModuleTagCategoryModel>();
-    dataModel: any = {};
+  dataModel: any = {};
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
   formInfo: FormInfoModel = new FormInfoModel();
   ngOnInit(): void {
@@ -134,9 +134,9 @@ export class CoreModuleTagCategoryDeleteComponent implements OnInit {
     //         this.formInfo.FormAlert = 'جابجایی با موفقیت انجام شد';
     //         this.cmsToastrService.typeSuccessMove();
     //       }
-          this.formInfo.FormSubmitAllow = true;
-          this.formInfo.ButtonSubmittedEnabled = true;
-          this.loading.display = false;
+    this.formInfo.FormSubmitAllow = true;
+    this.formInfo.ButtonSubmittedEnabled = true;
+    this.loading.display = false;
     //     },
     //     (error) => {
     //       this.formInfo.FormAlert = 'برروز خطا';
