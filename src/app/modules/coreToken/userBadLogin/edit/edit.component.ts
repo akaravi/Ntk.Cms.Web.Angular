@@ -3,8 +3,8 @@ import {
   EnumModel,
   ErrorExceptionResult,
   FormInfoModel,
-  CoreTokenUserService,
-  CoreTokenUserModel,
+  CoreTokenUserBadLoginService,
+  CoreTokenUserBadLoginModel,
   CoreSiteModel,
   TokenInfoModel,
   NtkCmsApiStoreService,
@@ -38,14 +38,14 @@ import { PublicHelper } from 'src/app/core/helpers/publicHelper';
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.scss'],
 })
-export class CoreTokenUserEditComponent implements OnInit, OnDestroy {
+export class CoreTokenUserBadLoginEditComponent implements OnInit, OnDestroy {
   requestId = '';
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
-    private dialogRef: MatDialogRef<CoreTokenUserEditComponent>,
+    private dialogRef: MatDialogRef<CoreTokenUserBadLoginEditComponent>,
     public coreEnumService: CoreEnumService,
-    public coreTokenUserService: CoreTokenUserService,
+    public coreTokenUserBadLoginService: CoreTokenUserBadLoginService,
     private cmsApiStore: NtkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
     private coreUserService: CoreUserService,
@@ -62,14 +62,13 @@ export class CoreTokenUserEditComponent implements OnInit, OnDestroy {
     Validators.required,
   ]);
   loading = new ProgressSpinnerModel();
-  dataModelResult: ErrorExceptionResult<CoreTokenUserModel> = new ErrorExceptionResult<CoreTokenUserModel>();
-  dataModel: CoreTokenUserModel = new CoreTokenUserModel();
+  dataModelResult: ErrorExceptionResult<CoreTokenUserBadLoginModel> = new ErrorExceptionResult<CoreTokenUserBadLoginModel>();
+  dataModel: CoreTokenUserBadLoginModel = new CoreTokenUserBadLoginModel();
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   dataModelEnumManageUserAccessAreaTypesResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
-  dataModelEnumManageUserAccessControllerTypesResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
 
@@ -93,7 +92,6 @@ export class CoreTokenUserEditComponent implements OnInit, OnDestroy {
     this.DataGetAccess();
     this.getEnumRecordStatus();
     this.getEnumManageUserAccessAreaTypes();
-    this.getEnumManageUserAccessControllerTypes();
   }
 
   getEnumManageUserAccessAreaTypes(): void {
@@ -101,11 +99,7 @@ export class CoreTokenUserEditComponent implements OnInit, OnDestroy {
       this.dataModelEnumManageUserAccessAreaTypesResult = next;
     });
   }
-  getEnumManageUserAccessControllerTypes(): void {
-    this.coreEnumService.ServiceEnumManageUserAccessControllerTypes().subscribe((next) => {
-      this.dataModelEnumManageUserAccessControllerTypesResult = next;
-    });
-  }
+
   ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
@@ -145,7 +139,7 @@ export class CoreTokenUserEditComponent implements OnInit, OnDestroy {
     this.formInfo.FormAlert = 'در دریافت ارسال اطلاعات از سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.coreTokenUserService.ServiceGetOneById(this.requestId).subscribe(
+    this.coreTokenUserBadLoginService.ServiceGetOneById(this.requestId).subscribe(
       (next) => {
         this.dataModel = next.Item;
         if (next.IsSuccess) {
@@ -165,57 +159,7 @@ export class CoreTokenUserEditComponent implements OnInit, OnDestroy {
     );
   }
 
-  DataEditContent(): void {
-    this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
-    this.formInfo.FormError = '';
-    this.loading.display = true;
-    this.coreTokenUserService.ServiceEdit(this.dataModel).subscribe(
-      (next) => {
-        this.formInfo.FormSubmitAllow = true;
-        this.dataModelResult = next;
-        if (next.IsSuccess) {
-          this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
-          this.cmsToastrService.typeSuccessEdit();
-          this.dialogRef.close({ dialogChangedDate: true });
 
-        } else {
-          this.formInfo.FormAlert = 'برروز خطا';
-          this.formInfo.FormError = next.ErrorMessage;
-          this.cmsToastrService.typeErrorEdit(next.ErrorMessage);
-
-        }
-        this.loading.display = false;
-      },
-      (error) => {
-        this.formInfo.FormSubmitAllow = true;
-        this.cmsToastrService.typeError(error);
-        this.loading.display = false;
-      }
-    );
-  }
-  onActionSiteSelect(model: CoreSiteModel): void {
-    if (model && model.Id > 0) {
-      this.dataModel.LinkSiteId = model.Id;
-    }
-  }
-  onActionUserSelect(model: CoreUserModel): void {
-    if (model && model.Id > 0) {
-      this.dataModel.LinkUserId = model.Id;
-    }
-  }
-  onActionMemberSelect(model: MemberUserModel): void {
-    if (model && model.Id > 0) {
-      this.dataModel.LinkMemberUserId = model.Id;
-    }
-  }
-  onFormSubmit(): void {
-    if (!this.formGroup.valid) {
-      return;
-    }
-
-    this.formInfo.FormSubmitAllow = false;
-    this.DataEditContent();
-  }
   onFormCancel(): void {
     this.dialogRef.close({ dialogChangedDate: false });
   }

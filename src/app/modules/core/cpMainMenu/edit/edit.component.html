@@ -143,7 +143,6 @@
         <input matInput [(ngModel)]="dataModel.ShowInMenuOrder" name="dataModel.ShowInMenuOrder" #ShowInMenuOrder
           type="number" [disabled]="!fieldsInfo['ShowInMenuOrder']?.AccessEditField"
           placeholder="{{fieldsInfo['ShowInMenuOrder']?.FieldTitle}}" />
-        <span class="input-group-addon"><i [ngClass]="dataModel.ShowInMenuOrder"></i></span>
         <mat-icon matSuffix *ngIf="dataModel.ShowInMenuOrder" matSuffix mat-icon-button aria-label="Clear"
           (click)="dataModel.ShowInMenuOrder = 1">close</mat-icon>
         <mat-icon matSuffix>mode_edit</mat-icon>

@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>{{ formInfo.FormTitle }}</h2>
 <mat-dialog-content>
-  <form (ngSubmit)="onFormSubmit()" #vform="ngForm" class="form form-horizontal">
+  <form #vform="ngForm" class="form form-horizontal">
     <app-progress-spinner [options]="loading"> </app-progress-spinner>
     <div *ngIf="!loading.display" class="form-body">
 
@@ -47,15 +47,15 @@
         </mat-error>
       </mat-form-field>
       <!-- LinkSiteId Field -->
-      <app-cms-site-selector (optionSelect)="onActionSiteSelect($event)" [disabled]="false"
-        [optionSelectForce]=" this.dataModel.LinkSiteId" [optionPlaceholder]="'وب سایت'"></app-cms-site-selector>
+      <app-cms-site-selector [disabled]="true" [optionSelectForce]=" this.dataModel.LinkSiteId"
+        [optionPlaceholder]="'وب سایت'"></app-cms-site-selector>
 
       <!-- LinkUserId Field -->
-      <app-cms-user-selector (optionSelect)="onActionUserSelect($event)" [disabled]="false"
-        [optionSelectForce]=" this.dataModel.LinkUserId" [optionPlaceholder]="'کاربر'"></app-cms-user-selector>
+      <app-cms-user-selector [disabled]="true" [optionSelectForce]=" this.dataModel.LinkUserId"
+        [optionPlaceholder]="'کاربر'"></app-cms-user-selector>
       <!-- LinkMemberUserId Field -->
-      <app-cms-member-selector (optionSelect)="onActionMemberSelect($event)" [disabled]="false"
-        [optionSelectForce]=" this.dataModel.LinkMemberUserId" [optionPlaceholder]="'عضو'"></app-cms-member-selector>
+      <app-cms-member-selector [disabled]="true" [optionSelectForce]=" this.dataModel.LinkMemberUserId"
+        [optionPlaceholder]="'عضو'"></app-cms-member-selector>
       <!-- UserAccessAdminAllowToAllData Field -->
       <div class="example-full-width">
         <mat-slide-toggle [(ngModel)]="dataModel.UserAccessAdminAllowToAllData"
@@ -101,23 +101,6 @@
           (click)="dataModel.UserLanguage = null">close</mat-icon>
         <mat-icon matSuffix>mode_edit</mat-icon>
       </mat-form-field>
-      <!-- DeviceClientMAC Field -->
-      <mat-form-field class="example-full-width">
-        <mat-label>DeviceClientMAC</mat-label>
-        <input matInput [(ngModel)]="dataModel.DeviceClientMAC" name="dataModel.DeviceClientMAC" #DeviceClientMAC
-          type="text" placeholder="DeviceClientMAC" />
-        <mat-icon matSuffix *ngIf="dataModel.DeviceClientMAC" matSuffix mat-icon-button aria-label="Clear"
-          (click)="dataModel.DeviceClientMAC = null">close</mat-icon>
-        <mat-icon matSuffix>mode_edit</mat-icon>
-      </mat-form-field>
-      <!-- Token Field -->
-      <mat-form-field class="example-full-width">
-        <mat-label>Token</mat-label>
-        <input matInput [(ngModel)]="dataModel.Token" name="dataModel.Token" #Token type="text" placeholder="Token" />
-        <mat-icon matSuffix *ngIf="dataModel.Token" matSuffix mat-icon-button aria-label="Clear"
-          (click)="dataModel.Token = null">close</mat-icon>
-        <mat-icon matSuffix>mode_edit</mat-icon>
-      </mat-form-field>
       <!-- LinkDeviceId Field -->
       <mat-form-field class="example-full-width">
         <mat-label>LinkDeviceId</mat-label>
@@ -135,6 +118,23 @@
           type="text" placeholder="LinkApplicationId" />
         <mat-icon matSuffix *ngIf="dataModel.LinkApplicationId" matSuffix mat-icon-button aria-label="Clear"
           (click)="dataModel.LinkApplicationId = null">close</mat-icon>
+        <mat-icon matSuffix>mode_edit</mat-icon>
+      </mat-form-field>
+      <!-- DeviceClientMAC Field -->
+      <mat-form-field class="example-full-width">
+        <mat-label>DeviceClientMAC</mat-label>
+        <input matInput [(ngModel)]="dataModel.DeviceClientMAC" name="dataModel.DeviceClientMAC" #DeviceClientMAC
+          type="text" placeholder="DeviceClientMAC" />
+        <mat-icon matSuffix *ngIf="dataModel.DeviceClientMAC" matSuffix mat-icon-button aria-label="Clear"
+          (click)="dataModel.DeviceClientMAC = null">close</mat-icon>
+        <mat-icon matSuffix>mode_edit</mat-icon>
+      </mat-form-field>
+      <!-- Token Field -->
+      <mat-form-field class="example-full-width">
+        <mat-label>Token</mat-label>
+        <input matInput [(ngModel)]="dataModel.Token" name="dataModel.Token" #Token type="text" placeholder="Token" />
+        <mat-icon matSuffix *ngIf="dataModel.Token" matSuffix mat-icon-button aria-label="Clear"
+          (click)="dataModel.Token = null">close</mat-icon>
         <mat-icon matSuffix>mode_edit</mat-icon>
       </mat-form-field>
 
@@ -164,9 +164,6 @@
   <div class="form-actions" *ngIf="formInfo.FormSubmitAllow">
     <button type="button" (click)="onFormCancel()" class="btn btn-raised btn-warning mr-1">
       <i class="ft-x"></i> انصراف
-    </button>
-    <button type="submit" (click)="onFormSubmit()" class="btn btn-raised btn-primary" [disabled]="!vform.form.valid">
-      <i class="fa fa-check-square-o"></i> ذخیره
     </button>
   </div>
 </mat-dialog-actions>

@@ -54,12 +54,7 @@
           </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.LinkMemberUserId}} </mat-cell>
         </ng-container>
-        <!-- RecordStatus Column -->
-        <ng-container matColumnDef="RecordStatus">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['RecordStatus']?.FieldTitle}}
-          </mat-header-cell>
-          <mat-cell *matCellDef="let row"> <i [ngClass]="row.RecordStatus|statusClass"></i> </mat-cell>
-        </ng-container>
+
         <!-- UserAccessAreaType Column -->
         <ng-container matColumnDef="UserAccessAreaType">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['UserAccessAreaType']?.FieldTitle}}
@@ -67,32 +62,14 @@
           <mat-cell *matCellDef="let row"> {{row.UserAccessAreaType | enums :
             dataModelEnumManageUserAccessAreaTypesResult.ListItems}} </mat-cell>
         </ng-container>
-        <!-- UserType Column -->
-        <ng-container matColumnDef="UserType">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['UserType']?.FieldTitle}} </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.UserType | enums :
-            dataModelEnumManageUserAccessControllerTypesResult.ListItems}} </mat-cell>
-        </ng-container>
-        <!-- UserAccessAdminAllowToAllData Column -->
-        <ng-container matColumnDef="UserAccessAdminAllowToAllData">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>
-            {{fieldsInfo['UserAccessAdminAllowToAllData']?.FieldTitle}} </mat-header-cell>
-          <mat-cell *matCellDef="let row"> <i [ngClass]="row.UserAccessAdminAllowToAllData|boolclass"></i> </mat-cell>
+
+        <!-- UsedUsername Column -->
+        <ng-container matColumnDef="UsedUsername">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['UsedUsername']?.FieldTitle}}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.UsedUsername}} </mat-cell>
         </ng-container>
 
-        <!-- UserAccessAdminAllowToProfessionalData Column -->
-        <ng-container matColumnDef="UserAccessAdminAllowToProfessionalData">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>
-            {{fieldsInfo['UserAccessAdminAllowToProfessionalData']?.FieldTitle}} </mat-header-cell>
-          <mat-cell *matCellDef="let row"> <i [ngClass]="row.UserAccessAdminAllowToProfessionalData|boolclass"></i>
-          </mat-cell>
-        </ng-container>
-        <!-- RememberOnDevice Column -->
-        <ng-container matColumnDef="RememberOnDevice">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['RememberOnDevice']?.FieldTitle}}
-          </mat-header-cell>
-          <mat-cell *matCellDef="let row"> <i [ngClass]="row.RememberOnDevice|boolclass"></i> </mat-cell>
-        </ng-container>
 
         <!-- CreatedDate Column -->
         <ng-container matColumnDef="CreatedDate">
@@ -100,12 +77,7 @@
           </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.CreatedDate) }} </mat-cell>
         </ng-container>
-        <!-- ExpireDate Column -->
-        <ng-container matColumnDef="ExpireDate">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['ExpireDate']?.FieldTitle}}
-          </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.ExpireDate) }} </mat-cell>
-        </ng-container>
+
 
         <!-- Action Column -->
         <ng-container matColumnDef="Action">

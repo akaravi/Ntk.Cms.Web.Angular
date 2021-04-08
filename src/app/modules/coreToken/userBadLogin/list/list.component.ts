@@ -12,8 +12,8 @@ import {
   TokenInfoModel,
   FilterDataModel,
   EnumRecordStatus,
-  CoreTokenUserService,
-  CoreTokenUserModel,
+  CoreTokenUserBadLoginService,
+  CoreTokenUserBadLoginModel,
   DataFieldInfoModel,
   EnumModel,
   CoreEnumService
@@ -28,7 +28,7 @@ import { MatSort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { CoreTokenUserEditComponent } from '../edit/edit.component';
+import { CoreTokenUserBadLoginEditComponent } from '../edit/edit.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 
 @Component({
@@ -36,13 +36,13 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class CoreTokenUserListComponent implements OnInit, OnDestroy {
+export class CoreTokenUserBadLoginListComponent implements OnInit, OnDestroy {
   requestLinkSiteId = 0;
   requestLinkUserId = 0;
   requestLinkDeviceId = 0;
   constructor(
     private coreEnumService: CoreEnumService,
-    private coreTokenUserService: CoreTokenUserService,
+    private coreTokenUserBadLoginService: CoreTokenUserBadLoginService,
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
@@ -84,15 +84,15 @@ export class CoreTokenUserListComponent implements OnInit, OnDestroy {
   tableContentSelected = [];
 
   filteModelContent = new FilterModel();
-  dataModelResult: ErrorExceptionResult<CoreTokenUserModel> = new ErrorExceptionResult<CoreTokenUserModel>();
+  dataModelResult: ErrorExceptionResult<CoreTokenUserBadLoginModel> = new ErrorExceptionResult<CoreTokenUserBadLoginModel>();
   optionsSearch: ComponentOptionSearchModel = new ComponentOptionSearchModel();
   optionsStatist: ComponentOptionStatistModel = new ComponentOptionStatistModel();
   optionsExport: ComponentOptionExportModel = new ComponentOptionExportModel();
   tokenInfo = new TokenInfoModel();
   loading = new ProgressSpinnerModel();
-  tableRowsSelected: Array<CoreTokenUserModel> = [];
-  tableRowSelected: CoreTokenUserModel = new CoreTokenUserModel();
-  tableSource: MatTableDataSource<CoreTokenUserModel> = new MatTableDataSource<CoreTokenUserModel>();
+  tableRowsSelected: Array<CoreTokenUserBadLoginModel> = [];
+  tableRowSelected: CoreTokenUserBadLoginModel = new CoreTokenUserBadLoginModel();
+  tableSource: MatTableDataSource<CoreTokenUserBadLoginModel> = new MatTableDataSource<CoreTokenUserBadLoginModel>();
 
 
   tabledisplayedColumns: string[] = [
@@ -101,17 +101,12 @@ export class CoreTokenUserListComponent implements OnInit, OnDestroy {
     'LinkUserId',
     'LinkMemberUserId',
     'UserAccessAreaType',
-    'UserType',
-    'UserAccessAdminAllowToAllData',
-    'UserAccessAdminAllowToProfessionalData',
-    'RememberOnDevice',
+    'UsedUsername',
     'CreatedDate',
-    'ExpireDate',
     'Action'
   ];
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
   dataModelEnumManageUserAccessAreaTypesResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
-  dataModelEnumManageUserAccessControllerTypesResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
 
 
   expandedElement: CoreSiteModel | null;
@@ -127,32 +122,26 @@ export class CoreTokenUserListComponent implements OnInit, OnDestroy {
       this.tokenInfo = next;
     });
     this.getEnumManageUserAccessAreaTypes();
-    this.getEnumManageUserAccessControllerTypes();
   }
 
   getEnumManageUserAccessAreaTypes(): void {
-    // this.coreEnumService.ServiceEnumManageUserAccessAreaTypes().subscribe((next) => {
-    //   this.dataModelEnumManageUserAccessAreaTypesResult = next;
-    // });
+    this.coreEnumService.ServiceEnumManageUserAccessAreaTypes().subscribe((next) => {
+      this.dataModelEnumManageUserAccessAreaTypesResult = next;
+    });
   }
-  // {{row.UserAccessAreaType | enums : dataModelEnumManageUserAccessAreaTypesResult.ListItems}}
-  getEnumManageUserAccessControllerTypes(): void {
-    // this.coreEnumService.ServiceEnumManageUserAccessControllerTypes().subscribe((next) => {
-    //   this.dataModelEnumManageUserAccessControllerTypesResult = next;
-    // });
-  }
+
   ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
   DataGetAll(): void {
     this.tableRowsSelected = [];
-    this.tableRowSelected = new CoreTokenUserModel();
+    this.tableRowSelected = new CoreTokenUserBadLoginModel();
 
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
 
-    this.coreTokenUserService.ServiceGetAll(this.filteModelContent).subscribe(
+    this.coreTokenUserBadLoginService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
           this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
@@ -215,7 +204,7 @@ export class CoreTokenUserListComponent implements OnInit, OnDestroy {
 
 
 
-  onActionbuttonEditRow(model: CoreTokenUserModel = this.tableRowSelected): void {
+  onActionbuttonEditRow(model: CoreTokenUserBadLoginModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id.length === 0) {
       this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
@@ -230,7 +219,7 @@ export class CoreTokenUserListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessEdit();
       return;
     }
-    const dialogRef = this.dialog.open(CoreTokenUserEditComponent, {
+    const dialogRef = this.dialog.open(CoreTokenUserBadLoginEditComponent, {
       data: { id: this.tableRowSelected.Id }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -239,7 +228,7 @@ export class CoreTokenUserListComponent implements OnInit, OnDestroy {
       }
     });
   }
-  onActionbuttonDeleteRow(model: CoreTokenUserModel = this.tableRowSelected): void {
+  onActionbuttonDeleteRow(model: CoreTokenUserBadLoginModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id.length === 0) {
       const emessage = 'ردیفی برای حذف انتخاب نشده است';
       this.cmsToastrService.typeErrorSelected(emessage);
@@ -264,7 +253,7 @@ export class CoreTokenUserListComponent implements OnInit, OnDestroy {
       .then((confirmed) => {
         if (confirmed) {
           this.loading.display = true;
-          this.coreTokenUserService.ServiceDelete(this.tableRowSelected.Id).subscribe(
+          this.coreTokenUserBadLoginService.ServiceDelete(this.tableRowSelected.Id).subscribe(
             (next) => {
               if (next.IsSuccess) {
                 this.cmsToastrService.typeSuccessRemove();
@@ -300,7 +289,7 @@ export class CoreTokenUserListComponent implements OnInit, OnDestroy {
     const statist = new Map<string, number>();
     statist.set('Active', 0);
     statist.set('All', 0);
-    this.coreTokenUserService.ServiceGetCount(this.filteModelContent).subscribe(
+    this.coreTokenUserBadLoginService.ServiceGetCount(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('All', next.TotalRowCount);
@@ -317,7 +306,7 @@ export class CoreTokenUserListComponent implements OnInit, OnDestroy {
     fastfilter.PropertyName = 'RecordStatus';
     fastfilter.Value = EnumRecordStatus.Available;
     filterStatist1.Filters.push(fastfilter);
-    this.coreTokenUserService.ServiceGetCount(filterStatist1).subscribe(
+    this.coreTokenUserBadLoginService.ServiceGetCount(filterStatist1).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('Active', next.TotalRowCount);
@@ -332,7 +321,7 @@ export class CoreTokenUserListComponent implements OnInit, OnDestroy {
 
   }
 
-  onActionbuttonViewUserRow(model: CoreTokenUserModel = this.tableRowSelected): void {
+  onActionbuttonViewUserRow(model: CoreTokenUserBadLoginModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id.length === 0) {
       this.cmsToastrService.typeErrorSelected('ردیفی انتخاب نشده است');
@@ -346,7 +335,7 @@ export class CoreTokenUserListComponent implements OnInit, OnDestroy {
     this.router.navigate(['/core/user/edit', this.tableRowSelected.LinkUserId]);
   }
 
-  onActionbuttonViewMemberRow(model: CoreTokenUserModel = this.tableRowSelected): void {
+  onActionbuttonViewMemberRow(model: CoreTokenUserBadLoginModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id.length === 0) {
       this.cmsToastrService.typeErrorSelected('ردیفی انتخاب نشده است');
@@ -360,7 +349,7 @@ export class CoreTokenUserListComponent implements OnInit, OnDestroy {
     this.router.navigate(['/member/user/edit', this.tableRowSelected.LinkMemberUserId]);
   }
 
-  onActionbuttonViewSiteRow(model: CoreTokenUserModel = this.tableRowSelected): void {
+  onActionbuttonViewSiteRow(model: CoreTokenUserBadLoginModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id.length === 0) {
       this.cmsToastrService.typeErrorSelected('ردیفی انتخاب نشده است');
@@ -373,7 +362,7 @@ export class CoreTokenUserListComponent implements OnInit, OnDestroy {
     }
     this.router.navigate(['/core/site/edit', this.tableRowSelected.LinkSiteId]);
   }
-  onActionbuttonViewDeviceRow(model: CoreTokenUserModel = this.tableRowSelected): void {
+  onActionbuttonViewDeviceRow(model: CoreTokenUserBadLoginModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id.length === 0) {
       this.cmsToastrService.typeErrorSelected('ردیفی انتخاب نشده است');
@@ -398,7 +387,7 @@ export class CoreTokenUserListComponent implements OnInit, OnDestroy {
     this.filteModelContent.Filters = model;
     this.DataGetAll();
   }
-  onActionTableRowSelect(row: CoreTokenUserModel): void {
+  onActionTableRowSelect(row: CoreTokenUserBadLoginModel): void {
     this.tableRowSelected = row;
   }
   onActionBackToParent(): void {

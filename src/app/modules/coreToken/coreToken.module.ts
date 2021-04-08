@@ -4,10 +4,20 @@ import { CoreTokenComponent } from './coreToken.component';
 import { CoreTokenRoutes } from './coreToken.routing';
 import { CoreTokenUserListComponent } from './user/list/list.component';
 import { CoreTokenUserEditComponent } from './user/edit/edit.component';
-import { CoreEnumService, CoreTokenUserService, CoreUserService } from 'ntk-cms-api';
+import {
+  CoreEnumService,
+  CoreTokenUserBadLoginService,
+  CoreTokenUserLogService,
+  CoreTokenUserService,
+  CoreUserService
+} from 'ntk-cms-api';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { CoreTokenUserLogListComponent } from './userLog/list/list.component';
+import { CoreTokenUserLogEditComponent } from './userLog/edit/edit.component';
+import { CoreTokenUserBadLoginListComponent } from './userBadLogin/list/list.component';
+import { CoreTokenUserBadLoginEditComponent } from './userBadLogin/edit/edit.component';
 
 @NgModule({
   imports: [
@@ -21,10 +31,16 @@ import { SharedModule } from 'src/app/shared/shared.module';
     CoreTokenComponent,
     CoreTokenUserListComponent,
     CoreTokenUserEditComponent,
+    CoreTokenUserLogListComponent,
+    CoreTokenUserLogEditComponent,
+    CoreTokenUserBadLoginListComponent,
+    CoreTokenUserBadLoginEditComponent,
   ],
   providers: [
     CoreEnumService,
     CoreTokenUserService,
+    CoreTokenUserLogService,
+    CoreTokenUserBadLoginService,
     CoreUserService,
     CmsConfirmationDialogService
   ]
