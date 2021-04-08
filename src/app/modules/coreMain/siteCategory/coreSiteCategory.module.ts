@@ -4,7 +4,7 @@ import { CoreSiteCategoryRouting } from './coreSiteCategory.routing';
 import { CoreSiteCategoryComponent } from './coreSiteCategory.component';
 import {
   CoreModuleService,
-  CoreSiteCategoryModuleService,
+  CoreSiteCategoryCmsModuleService,
   CoreSiteCategoryService,
 } from 'ntk-cms-api';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -17,8 +17,7 @@ import { CoreSiteCategoryListComponent } from './list/list.component';
 import { TreeviewModule } from 'ngx-treeview';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { TagInputModule } from 'ngx-chips';
-import { CoreSiteCategoryModuleListComponent } from './moduleList/moduleList.component';
-
+// import { CoreSiteCategoryCmsModuleListComponent } from './moduleList/moduleList.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +27,7 @@ import { CoreSiteCategoryModuleListComponent } from './moduleList/moduleList.com
     CoreSiteCategoryEditComponent,
     CoreSiteCategorySelectorComponent,
     CoreSiteCategoryTreeComponent,
-    CoreSiteCategoryModuleListComponent,
+    // CoreSiteCategoryCmsModuleListComponent,
   ],
   exports: [
     CoreSiteCategoryComponent,
@@ -37,7 +36,7 @@ import { CoreSiteCategoryModuleListComponent } from './moduleList/moduleList.com
     CoreSiteCategoryEditComponent,
     CoreSiteCategorySelectorComponent,
     CoreSiteCategoryTreeComponent,
-    CoreSiteCategoryModuleListComponent,
+    // CoreSiteCategoryCmsModuleListComponent,
   ],
   imports: [
     CommonModule,
@@ -51,9 +50,9 @@ import { CoreSiteCategoryModuleListComponent } from './moduleList/moduleList.com
   ],
   providers: [
     CoreSiteCategoryService,
-    CoreSiteCategoryModuleService,
+    CoreSiteCategoryCmsModuleService,
     CoreModuleService,
-    CoreSiteCategoryModuleService,
+    CoreSiteCategoryCmsModuleService,
   ]
 })
 export class CoreSiteCategoryCmsModule {

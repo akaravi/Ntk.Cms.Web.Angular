@@ -313,7 +313,7 @@ export class CoreSiteCategoryListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorSelected();
       return;
     }
-    this.router.navigate(['/core/sitecategorymodule/', this.tableRowSelected.Id]);
+    this.router.navigate(['/core/sitecategorymodule/LinkCmsSiteCategoryId', this.tableRowSelected.Id]);
 
 
   }
