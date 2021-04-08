@@ -17,10 +17,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { ApplicationMemberInfoWidgetComponent } from 'src/app/modules/application/memberInfo/widget/widget.component';
 import { NewsContentWidgetComponent } from 'src/app/modules/news/content/widget/widget.component';
 import { ArticleContentWidgetComponent } from 'src/app/modules/article/content/widget/widget.component';
-import { CoreSiteWidgetCountComponent } from 'src/app/modules/core/site/widget/count/widget.component';
-import { CoreSiteWidgetStatusComponent } from 'src/app/modules/core/site/widget/status/widget.component';
-import { CoreUserWidgetComponent } from 'src/app/modules/core/user/widget/widget.component';
-import { CoreSiteWidgetModuleComponent } from 'src/app/modules/core/site/widget/module/widget.component';
+import { CoreSiteWidgetCountComponent } from 'src/app/modules/coreMain/site/widget/count/widget.component';
+import { CoreSiteWidgetStatusComponent } from 'src/app/modules/coreMain/site/widget/status/widget.component';
+import { CoreUserWidgetComponent } from 'src/app/modules/coreMain/user/widget/widget.component';
+import { CoreSiteWidgetModuleComponent } from 'src/app/modules/coreMain/site/widget/module/widget.component';
 
 
 @NgModule({

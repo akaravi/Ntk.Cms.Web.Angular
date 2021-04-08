@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
   CoreSiteCategoryCmsModuleModel,
@@ -11,13 +11,9 @@ import {
   NtkCmsApiStoreService,
   TokenInfoModel
 } from 'ntk-cms-api';
-import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
-import { MatDialog } from '@angular/material/dialog';
-import { ComponentOptionExportModel } from 'src/app/core/cmsComponentModels/base/componentOptionExportModel';
-import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/base/componentOptionStatistModel';
 import { MatSort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
@@ -38,7 +34,7 @@ export class CoreSiteCategoryCmsModuleListViewComponent implements OnInit, OnDes
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
-    public dialog: MatDialog) {
+    ) {
   }
   tableContentSelected = [];
   filteModelContent = new FilterModel();
@@ -80,25 +76,24 @@ export class CoreSiteCategoryCmsModuleListViewComponent implements OnInit, OnDes
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
+
+    const filteModel = JSON.parse(JSON.stringify(this.filteModelContent));
     if (this.linkSiteCategoryId && this.linkSiteCategoryId > 0) {
       const fastfilter = new FilterDataModel();
       fastfilter.PropertyName = 'LinkCmsSiteCategoryId';
       fastfilter.Value = this.linkSiteCategoryId;
-      this.filteModelContent.Filters.push(fastfilter);
+      filteModel.Filters.push(fastfilter);
     }
-    this.coreSiteCategoryCmsModuleService.ServiceGetAll(this.filteModelContent).subscribe(
+    this.coreSiteCategoryCmsModuleService.ServiceGetAll(filteModel).subscribe(
       (next) => {
         if (next.IsSuccess) {
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;
-
-
         }
         this.loading.display = false;
       },
       (error) => {
         this.cmsToastrService.typeError(error);
-
         this.loading.display = false;
       }
     );

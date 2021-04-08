@@ -15,7 +15,7 @@ const routes: Routes = [
       {
         path: 'core',
         loadChildren: () =>
-          import('../modules/core/core.module').then(m => m.CoreModule)
+          import('../modules/coreMain/core.module').then(m => m.CoreModule)
       },
       {
         path: 'coremodule',

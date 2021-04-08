@@ -209,9 +209,10 @@ export class CoreSiteCategoryCmsModuleListComponent implements OnInit, OnDestroy
     //   });
   }
   onActionbuttonDeleteRow(model: CoreSiteCategoryCmsModuleModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0) {
+    if (!model || !model.LinkCmsModuleId || model.LinkCmsModuleId === 0 ||
+      !model.LinkCmsSiteCategoryId || model.LinkCmsSiteCategoryId === 0) {
       const emessage = 'ردیفی برای حذف انتخاب نشده است';
-      this.cmsToastrService.typeErrorSelected(emessage);      return;
+      this.cmsToastrService.typeErrorSelected(emessage); return;
     }
     this.tableRowSelected = model;
 
@@ -235,7 +236,8 @@ export class CoreSiteCategoryCmsModuleListComponent implements OnInit, OnDestroy
   }
 
   onActionbuttonGoToSiteCategoryCmsModuleList(model: CoreSiteCategoryCmsModuleModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0) {
+    if (!model || !model.LinkCmsModuleId || model.LinkCmsModuleId === 0 ||
+      !model.LinkCmsSiteCategoryId || model.LinkCmsSiteCategoryId === 0) {
       const message = 'ردیفی برای نمایش انتخاب نشده است';
       this.cmsToastrService.typeErrorSelected(message);
       return;

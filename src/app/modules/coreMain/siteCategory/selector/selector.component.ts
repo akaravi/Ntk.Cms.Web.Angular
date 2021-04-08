@@ -57,10 +57,10 @@ export class CoreSiteCategorySelectorComponent implements OnInit {
   }
 
   displayFn(model?: CoreSiteCategoryModel): string | undefined {
-    return model ? (model.Title + ' # ' + model.Id) : undefined;
+    return model ? (model.Title ) : undefined;
   }
   displayOption(model?: CoreSiteCategoryModel): string | undefined {
-    return model ? (model.Title + ' # ' + model.Id) : undefined;
+    return model ? (model.Title ) : undefined;
   }
   async DataGetAll(text: string | number | any): Promise<CoreSiteCategoryModel[]> {
     const filteModel = new FilterModel();

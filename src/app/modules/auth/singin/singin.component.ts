@@ -13,7 +13,7 @@ import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 export class AuthSingInComponent implements OnInit, OnDestroy {
   formInfo: FormInfoModel = new FormInfoModel();
 
-  modelData: AuthUserSignInModel = new AuthUserSignInModel();
+  dataModel: AuthUserSignInModel = new AuthUserSignInModel();
   captchaModel: CaptchaModel = new CaptchaModel();
   expireDate: string;
   aoutoCaptchaOrder = 1;
@@ -82,8 +82,8 @@ export class AuthSingInComponent implements OnInit, OnDestroy {
   onActionSubmit(): void {
     this.formInfo.ButtonSubmittedEnabled = false;
     this.hasError = false;
-    this.modelData.CaptchaKey = this.captchaModel.Key;
-    this.coreAuthService.ServiceSigninUser(this.modelData).subscribe(
+    this.dataModel.CaptchaKey = this.captchaModel.Key;
+    this.coreAuthService.ServiceSigninUser(this.dataModel).subscribe(
       (res) => {
         if (res.IsSuccess) {
           this.cmsToastrService.typeSuccessLogin();
@@ -102,7 +102,7 @@ export class AuthSingInComponent implements OnInit, OnDestroy {
   }
 
   onCaptchaOrder(): void {
-    this.modelData.CaptchaText = '';
+    this.dataModel.CaptchaText = '';
     this.coreAuthService.ServiceCaptcha().subscribe(
       (next) => {
 

@@ -28,6 +28,9 @@ export class AuthSingUpComponent implements OnInit, OnDestroy {
   Roulaccespt = false;
   isLoading$: Observable<boolean>;
   captchaModel: CaptchaModel = new CaptchaModel();
+  expireDate: string;
+  aoutoCaptchaOrder = 1;
+
   dataModel: AuthUserSignUpModel = new AuthUserSignUpModel();
   loading = new ProgressSpinnerModel();
   ngOnInit(): void {
@@ -49,11 +52,11 @@ export class AuthSingUpComponent implements OnInit, OnDestroy {
         }
       }, (error) => {
         this.cmsToastrService.typeError(error);
+        this.onCaptchaOrder();
       });
   }
   onRoulaccespt(): void {
     const dialogRef = this.dialog.open(SingupRuleComponent);
-
     dialogRef.afterClosed().subscribe(result => {
       // console.log(`Dialog result: ${result}`);
       this.Roulaccespt = result;
@@ -64,12 +67,20 @@ export class AuthSingUpComponent implements OnInit, OnDestroy {
     this.dataModel.CaptchaText = '';
     this.coreAuthService.ServiceCaptcha().subscribe(
       (next) => {
+
         this.captchaModel = next.Item;
+        this.expireDate = next.Item.Expire.split('+')[1];
+        const startDate = new Date();
+        const endDate = new Date(next.Item.Expire);
+        const seconds = (endDate.getTime() - startDate.getTime());
+        if (this.aoutoCaptchaOrder < 10) {
+          this.aoutoCaptchaOrder = this.aoutoCaptchaOrder + 1;
+          setTimeout(() => { this.onCaptchaOrder(); }, seconds);
+        }
         if (!next.IsSuccess) {
           this.cmsToastrService.typeErrorGetCpatcha(next.ErrorMessage);
         }
       }
     );
   }
-
 }

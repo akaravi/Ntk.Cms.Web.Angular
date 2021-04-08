@@ -159,7 +159,6 @@ export class CoreSiteCategoryModuleListComponent implements OnInit, OnDestroy {
 
 
   onActionbuttonNewRow(): void {
-
     if (
       this.dataModelResult == null ||
       this.dataModelResult.Access == null ||
@@ -180,7 +179,8 @@ export class CoreSiteCategoryModuleListComponent implements OnInit, OnDestroy {
 
   onActionbuttonEditRow(model: CoreSiteCategoryCmsModuleModel = this.tableRowSelected): void {
 
-    if (!model || !model.Id || model.Id === 0) {
+    if (!model || !model.LinkCmsModuleId || model.LinkCmsModuleId === 0 ||
+      !model.LinkCmsSiteCategoryId || model.LinkCmsSiteCategoryId === 0) {
       this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
       return;
     }
@@ -203,7 +203,8 @@ export class CoreSiteCategoryModuleListComponent implements OnInit, OnDestroy {
     // });
   }
   onActionbuttonDeleteRow(model: CoreSiteCategoryCmsModuleModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0) {
+    if (!model || !model.LinkCmsModuleId || model.LinkCmsModuleId === 0 ||
+      !model.LinkCmsSiteCategoryId || model.LinkCmsSiteCategoryId === 0) {
       const emessage = 'ردیفی برای حذف انتخاب نشده است';
       this.cmsToastrService.typeErrorSelected(emessage); return;
     }

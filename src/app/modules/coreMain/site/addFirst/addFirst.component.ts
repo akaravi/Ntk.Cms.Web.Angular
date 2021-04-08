@@ -14,7 +14,6 @@ import {
 import { environment } from '../../../../../environments/environment';
 import { Router } from '@angular/router';
 import { CmsToastrService } from '../../../../core/services/cmsToastr.service';
-import { PublicHelper } from '../../../../core/helpers/publicHelper';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { MatStepper } from '@angular/material/stepper';
@@ -32,7 +31,6 @@ export class CoreSiteAddFirstComponent implements OnInit {
     private cmsToastrService: CmsToastrService,
     private coreSiteService: CoreSiteService,
     private coreAuthService: CoreAuthService,
-    private coreSiteCategoryService: CoreSiteCategoryService,
     private router: Router
   ) {
 
@@ -44,6 +42,9 @@ export class CoreSiteAddFirstComponent implements OnInit {
   filterModel = new FilterModel();
   dataModelResultDomains = new ErrorExceptionResult<DomainModel>();
   captchaModel: CaptchaModel = new CaptchaModel();
+  expireDate: string;
+  aoutoCaptchaOrder = 1;
+
   formInfo: FormInfoModel = new FormInfoModel();
   modelDateSiteCategory = new CoreSiteCategoryModel();
 
@@ -71,18 +72,25 @@ export class CoreSiteAddFirstComponent implements OnInit {
   domain(item): void {
     this.dataModel.Domain = item;
   }
-
   onCaptchaOrder(): void {
     this.dataModel.CaptchaText = '';
     this.coreAuthService.ServiceCaptcha().subscribe(
       (next) => {
+
         this.captchaModel = next.Item;
-      },
-      (error) => {
-        this.cmsToastrService.typeError(error, 'خطا در دریافت عکس کپچا');
+        this.expireDate = next.Item.Expire.split('+')[1];
+        const startDate = new Date();
+        const endDate = new Date(next.Item.Expire);
+        const seconds = (endDate.getTime() - startDate.getTime());
+        if (this.aoutoCaptchaOrder < 10) {
+          this.aoutoCaptchaOrder = this.aoutoCaptchaOrder + 1;
+          setTimeout(() => { this.onCaptchaOrder(); }, seconds);
+        }
+        if (!next.IsSuccess) {
+          this.cmsToastrService.typeErrorGetCpatcha(next.ErrorMessage);
+        }
       }
     );
-
   }
   onFormSubmit(): void {
     this.dataModel.CaptchaKey = this.captchaModel.Key;
