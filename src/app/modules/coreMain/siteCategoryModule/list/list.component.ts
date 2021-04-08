@@ -4,7 +4,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
   CoreSiteCategoryCmsModuleModel,
-  CoreSiteCategoryModuleService,
+  CoreSiteCategoryCmsModuleService,
   CoreAuthService,
   EnumSortType,
   ErrorExceptionResult,
@@ -26,6 +26,8 @@ import { MatSort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { CoreSiteCategoryCmsModuleEditComponent } from '../edit/edit.component';
+import { CoreSiteCategoryCmsModuleAddComponent } from '../add/add.component';
 
 
 @Component({
@@ -34,9 +36,10 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
   styleUrls: ['./list.component.scss']
 })
 export class CoreSiteCategoryCmsModuleListComponent implements OnInit, OnDestroy {
-  requestId = 0;
+  requestLinkCmsModuleId = 0;
+  requestLinkCmsSiteCategoryId = 0;
   constructor(
-    private coreSiteCategoryModuleService: CoreSiteCategoryModuleService,
+    private coreSiteCategoryCmsModuleService: CoreSiteCategoryCmsModuleService,
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
@@ -47,11 +50,18 @@ export class CoreSiteCategoryCmsModuleListComponent implements OnInit, OnDestroy
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
-    this.requestId = + Number(this.activatedRoute.snapshot.paramMap.get('Id'));
-    if (this.requestId > 0) {
+    this.requestLinkCmsModuleId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkCmsModuleId'));
+    this.requestLinkCmsSiteCategoryId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkCmsSiteCategoryId'));
+    if (this.requestLinkCmsModuleId > 0) {
+      const filter = new FilterDataModel();
+      filter.PropertyName = 'LinkCmsModuleId';
+      filter.Value = this.requestLinkCmsModuleId;
+      this.filteModelContent.Filters.push(filter);
+    }
+    if (this.requestLinkCmsSiteCategoryId > 0) {
       const filter = new FilterDataModel();
       filter.PropertyName = 'LinkCmsSiteCategoryId';
-      filter.Value = this.requestId;
+      filter.Value = this.requestLinkCmsSiteCategoryId;
       this.filteModelContent.Filters.push(filter);
     }
   }
@@ -91,7 +101,7 @@ export class CoreSiteCategoryCmsModuleListComponent implements OnInit, OnDestroy
   cmsApiStoreSubscribe: Subscription;
 
   ngOnInit(): void {
-    this.filteModelContent.SortColumn = 'Title';
+    this.filteModelContent.SortColumn = 'LinkCmsModuleId';
     this.DataGetAll();
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
@@ -110,7 +120,7 @@ export class CoreSiteCategoryCmsModuleListComponent implements OnInit, OnDestroy
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
 
-    this.coreSiteCategoryModuleService.ServiceGetAll(this.filteModelContent).subscribe(
+    this.coreSiteCategoryCmsModuleService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
           this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
@@ -168,14 +178,17 @@ export class CoreSiteCategoryCmsModuleListComponent implements OnInit, OnDestroy
       this.cmsToastrService.typeErrorAccessAdd();
       return;
     }
-    // const dialogRef = this.dialog.open(CoreSiteCategoryCmsModuleAddComponent, {
-    //   data: {}
-    // });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   if (result && result.dialogChangedDate) {
-    //     this.DataGetAll();
-    //   }
-    // });
+    const dialogRef = this.dialog.open(CoreSiteCategoryCmsModuleAddComponent, {
+      data: {
+        LinkCmsModuleId: this.requestLinkCmsModuleId,
+        LinkCmsSiteCategoryId: this.requestLinkCmsSiteCategoryId
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.dialogChangedDate) {
+        this.DataGetAll();
+      }
+    });
   }
 
   onActionbuttonEditRow(model: CoreSiteCategoryCmsModuleModel = this.tableRowSelected): void {
@@ -193,14 +206,17 @@ export class CoreSiteCategoryCmsModuleListComponent implements OnInit, OnDestroy
       this.cmsToastrService.typeErrorAccessEdit();
       return;
     }
-    //   const dialogRef = this.dialog.open(CoreSiteCategoryCmsModuleEditComponent, {
-    //     data: { id: this.tableRowSelected.Id }
-    //   });
-    //   dialogRef.afterClosed().subscribe(result => {
-    //     if (result && result.dialogChangedDate) {
-    //       this.DataGetAll();
-    //     }
-    //   });
+    const dialogRef = this.dialog.open(CoreSiteCategoryCmsModuleEditComponent, {
+      data: {
+        LinkCmsModuleId: this.tableRowSelected.LinkCmsModuleId,
+        LinkCmsSiteCategoryId: this.tableRowSelected.LinkCmsSiteCategoryId
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.dialogChangedDate) {
+        this.DataGetAll();
+      }
+    });
   }
   onActionbuttonDeleteRow(model: CoreSiteCategoryCmsModuleModel = this.tableRowSelected): void {
     if (!model || !model.LinkCmsModuleId || model.LinkCmsModuleId === 0 ||
@@ -226,7 +242,7 @@ export class CoreSiteCategoryCmsModuleListComponent implements OnInit, OnDestroy
       .then((confirmed) => {
         if (confirmed) {
           this.loading.display = true;
-          this.coreSiteCategoryModuleService.ServiceDeleteEntity(this.tableRowSelected).subscribe(
+          this.coreSiteCategoryCmsModuleService.ServiceDeleteEntity(this.tableRowSelected).subscribe(
             (next) => {
               if (next.IsSuccess) {
                 this.cmsToastrService.typeSuccessRemove();
@@ -270,7 +286,7 @@ export class CoreSiteCategoryCmsModuleListComponent implements OnInit, OnDestroy
     const statist = new Map<string, number>();
     statist.set('Active', 0);
     statist.set('All', 0);
-    this.coreSiteCategoryModuleService.ServiceGetCount(this.filteModelContent).subscribe(
+    this.coreSiteCategoryCmsModuleService.ServiceGetCount(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('All', next.TotalRowCount);
@@ -287,7 +303,7 @@ export class CoreSiteCategoryCmsModuleListComponent implements OnInit, OnDestroy
     fastfilter.PropertyName = 'RecordStatus';
     fastfilter.Value = EnumRecordStatus.Available;
     filterStatist1.Filters.push(fastfilter);
-    this.coreSiteCategoryModuleService.ServiceGetCount(filterStatist1).subscribe(
+    this.coreSiteCategoryCmsModuleService.ServiceGetCount(filterStatist1).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('Active', next.TotalRowCount);

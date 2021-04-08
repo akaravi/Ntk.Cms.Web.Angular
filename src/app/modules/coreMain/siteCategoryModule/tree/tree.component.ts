@@ -16,7 +16,7 @@ import {
   ErrorExceptionResult,
   FilterModel,
   CoreSiteCategoryCmsModuleModel,
-  CoreSiteCategoryModuleService,
+  CoreSiteCategoryCmsModuleService,
   NtkCmsApiStoreService,
 } from 'ntk-cms-api';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
@@ -37,7 +37,7 @@ export class CoreSiteCategoryCmsModuleTreeComponent implements OnInit, OnDestroy
     private cmsApiStore: NtkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
     public coreEnumService: CoreEnumService,
-    public categoryService: CoreSiteCategoryModuleService,
+    public categoryService: CoreSiteCategoryCmsModuleService,
     private cmsConfirmationDialogService: CmsConfirmationDialogService,
     private router: Router,
     public dialog: MatDialog

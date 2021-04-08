@@ -11,7 +11,11 @@ const routes: Routes = [
         component: CoreSiteCategoryCmsModuleListComponent
       },
       {
-        path: ':Id',
+        path: 'LinkCmsModuleId/:LinkCmsModuleId',
+        component: CoreSiteCategoryCmsModuleListComponent
+      },
+      {
+        path: 'LinkCmsSiteCategoryId/:LinkCmsSiteCategoryId',
         component: CoreSiteCategoryCmsModuleListComponent
       }
     ]

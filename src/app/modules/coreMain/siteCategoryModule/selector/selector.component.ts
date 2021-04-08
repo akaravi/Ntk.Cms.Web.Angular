@@ -5,7 +5,7 @@ import {
   FilterDataModel,
   FilterModel,
   CoreSiteCategoryCmsModuleModel,
-  CoreSiteCategoryModuleService,
+  CoreSiteCategoryCmsModuleService,
   EnumFilterDataModelSearchTypes,
   EnumClauseType
 } from 'ntk-cms-api';
@@ -17,7 +17,7 @@ import { Output } from '@angular/core';
 
 
 @Component({
-  selector: 'app-core-site-categorycmsmodule-selector',
+  selector: 'app-core-sitecategorycmsmodule-selector',
   templateUrl: './selector.component.html',
   styleUrls: ['./selector.component.scss']
 })
@@ -25,7 +25,7 @@ export class CoreSiteCategoryCmsModuleSelectorComponent implements OnInit {
 
   constructor(
     public coreEnumService: CoreEnumService,
-    public categoryService: CoreSiteCategoryModuleService) {
+    public categoryService: CoreSiteCategoryCmsModuleService) {
   }
   dataModelResult: ErrorExceptionResult<CoreSiteCategoryCmsModuleModel> = new ErrorExceptionResult<CoreSiteCategoryCmsModuleModel>();
   dataModelSelect: CoreSiteCategoryCmsModuleModel = new CoreSiteCategoryCmsModuleModel();
@@ -117,6 +117,7 @@ export class CoreSiteCategoryCmsModuleSelectorComponent implements OnInit {
   }
   onActionSelectForce(id: number | CoreSiteCategoryCmsModuleModel): void {
     if (typeof id === 'number' && id > 0) {
+      //این میرد دوباره لود کندی باید از لیست موجود بخود اول
       this.categoryService.ServiceGetOneById(id).subscribe((next) => {
         if (next.IsSuccess) {
           this.filteredOptions = this.push(next.Item);

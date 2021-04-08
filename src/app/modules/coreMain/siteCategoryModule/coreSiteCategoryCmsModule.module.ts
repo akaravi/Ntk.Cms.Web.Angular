@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import {
   CoreModuleService,
-  CoreSiteCategoryModuleService,
+  CoreSiteCategoryCmsModuleService,
 } from 'ntk-cms-api';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -17,6 +17,10 @@ import { CoreSiteCategoryCmsModuleComponent } from './coreSiteCategoryCmsModule.
 import { CoreSiteCategoryCmsModuleRouting } from './coreSiteCategoryCmsModule.routing';
 import { CoreSiteCategoryCmsModuleListViewComponent } from './listview/listview.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { CoreSiteCategoryCmsModuleAddComponent } from './add/add.component';
+import { CoreSiteCategoryCmsModuleEditComponent } from './edit/edit.component';
+import { CoreModuleModule } from '../module/coreModule.module';
+import { CoreSiteCategoryCmsModule } from '../siteCategory/coreSiteCategory.module';
 
 
 @NgModule({
@@ -24,6 +28,8 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
     CoreSiteCategoryCmsModuleComponent,
     CoreSiteCategoryCmsModuleListComponent,
     CoreSiteCategoryCmsModuleListViewComponent,
+    CoreSiteCategoryCmsModuleAddComponent,
+    CoreSiteCategoryCmsModuleEditComponent,
 
     CoreSiteCategoryCmsModuleSelectorComponent,
     CoreSiteCategoryCmsModuleTreeComponent,
@@ -32,6 +38,8 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
     CoreSiteCategoryCmsModuleComponent,
     CoreSiteCategoryCmsModuleListComponent,
     CoreSiteCategoryCmsModuleListViewComponent,
+    CoreSiteCategoryCmsModuleAddComponent,
+    CoreSiteCategoryCmsModuleEditComponent,
 
     CoreSiteCategoryCmsModuleSelectorComponent,
     CoreSiteCategoryCmsModuleTreeComponent,
@@ -45,9 +53,11 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
     SharedModule.forRoot(),
     AngularEditorModule,
     TagInputModule,
+    CoreModuleModule,
+    CoreSiteCategoryCmsModule,
   ],
   providers: [
-    CoreSiteCategoryModuleService,
+    CoreSiteCategoryCmsModuleService,
     CmsConfirmationDialogService,
     CoreModuleService,
   ]
