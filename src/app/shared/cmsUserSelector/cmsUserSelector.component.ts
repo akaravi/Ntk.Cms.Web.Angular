@@ -11,25 +11,23 @@ import {
 } from 'ntk-cms-api';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { Output } from '@angular/core';
 
 
 @Component({
-  selector: 'app-core-user-selector',
-  templateUrl: './selector.component.html',
-  styleUrls: ['./selector.component.scss']
+  selector: 'app-cms-user-selector',
+  templateUrl: './cmsUserSelector.component.html',
+  styleUrls: ['./cmsUserSelector.component.scss']
 })
-export class CoreUserSelectorComponent implements OnInit {
+export class CmsUserSelectorComponent implements OnInit {
 
   constructor(
     public coreEnumService: CoreEnumService,
     public categoryService: CoreUserService) {
-
-
   }
-  dataModelResult: ErrorExceptionResult<CoreUserModel> = new ErrorExceptionResult<CoreUserModel>();
+  // dataModelResult: ErrorExceptionResult<CoreUserModel> = new ErrorExceptionResult<CoreUserModel>();
   dataModelSelect: CoreUserModel = new CoreUserModel();
   loading = new ProgressSpinnerModel();
   formControl = new FormControl();
@@ -50,9 +48,9 @@ export class CoreUserSelectorComponent implements OnInit {
         distinctUntilChanged(),
         switchMap(val => {
           if (typeof val === 'string' || typeof val === 'number') {
-            return this.DataGetAll(val || '');
+            return this.DataGetAll(val);
           }
-          return [];
+          return this.DataGetAll('');
         }),
         // tap(() => this.myControl.setValue(this.options[0]))
       );
@@ -125,11 +123,10 @@ export class CoreUserSelectorComponent implements OnInit {
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
   }
-  onActionSelectClear(): void{
+  onActionSelectClear(): void {
     this.formControl.setValue(null);
     this.optionSelect.emit(null);
   }
-
   push(newvalue: CoreUserModel): Observable<CoreUserModel[]> {
     return this.filteredOptions.pipe(map(items => {
       if (items.find(x => x.Id === newvalue.Id)) {

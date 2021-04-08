@@ -27,6 +27,9 @@ import { KeysPipe } from '../core/pipe/keys.pipe';
 import { EnumsPipe } from '../core/pipe/enums.pipe';
 import { PrettyjsonPipe } from '../core/pipe/prettyjson.pipe';
 import { CmsSiteSelectorComponent } from './cmsSiteSelector/cmsSiteSelector.component';
+import { CmsUserSelectorComponent } from './cmsUserSelector/cmsUserSelector.component';
+import { CmsMemberSelectorComponent } from './cmsMemberSelector/cmsMemberSelector.component';
+import { CoreSiteService, CoreUserService, MemberUserService } from 'ntk-cms-api';
 
 
 
@@ -59,6 +62,8 @@ import { CmsSiteSelectorComponent } from './cmsSiteSelector/cmsSiteSelector.comp
     CmsStatistListComponent,
     CmsExportListComponent,
     CmsSiteSelectorComponent,
+    CmsUserSelectorComponent,
+    CmsMemberSelectorComponent,
     PersianDate,
     PersianDateFull,
     CmsMapComponent,
@@ -85,6 +90,8 @@ import { CmsSiteSelectorComponent } from './cmsSiteSelector/cmsSiteSelector.comp
     CmsStatistListComponent,
     CmsExportListComponent,
     CmsSiteSelectorComponent,
+    CmsUserSelectorComponent,
+    CmsMemberSelectorComponent,
     CmsMapComponent,
     TagAutocompleteComponent,
     ProgressSpinnerComponent,
@@ -92,6 +99,9 @@ import { CmsSiteSelectorComponent } from './cmsSiteSelector/cmsSiteSelector.comp
   providers: [
     OverlayService,
     { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true },
+    MemberUserService,
+    CoreUserService,
+    CoreSiteService,
   ]
   /* No providers here! Since they’ll be already provided in AppModule. */
 })

@@ -219,7 +219,6 @@ export class CmsTokenAccessComponent implements OnInit, OnDestroy {
     );
   }
   onActionSiteSelect(model: CoreSiteModel): void {
-
     if (model && model.Id > 0) {
       this.SiteId = model.Id;
       this.onActionbuttonSelectSite();

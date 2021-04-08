@@ -1,5 +1,5 @@
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -29,7 +29,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './configMainAdmin.component.html',
   styleUrls: ['./configMainAdmin.component.scss']
 })
-export class CoreConfigMainAdminComponent implements OnInit {
+export class CoreConfigMainAdminComponent implements OnInit , OnDestroy {
   requestLinkSiteId = 0;
   constructor(
     private configService: CoreConfigurationService,
@@ -76,6 +76,9 @@ export class CoreConfigMainAdminComponent implements OnInit {
 
     this.onLoadDate();
     this.getEnumRecordStatus();
+  }
+  ngOnDestroy(): void {
+    this.cmsApiStoreSubscribe.unsubscribe();
   }
   getEnumRecordStatus(): void {
     if (this.storeSnapshot
