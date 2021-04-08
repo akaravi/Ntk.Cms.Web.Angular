@@ -40,11 +40,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('./siteCategory/coreSiteCategory.module').then((m) => m.CoreSiteCategoryCmsModule),
       },
-      // {
-      //   path: 'sitecategorymodule',
-      //   loadChildren: () =>
-      //     import('./siteCategorymodule/coreSiteCategoryCmsModule.module').then((m) => m.CoreSiteCategoryCmsModuleModule),
-      // },
+      {
+        path: 'sitecategorymodule',
+        loadChildren: () =>
+          import('./siteCategoryModule/coreSiteCategoryCmsModule.module').then((m) => m.CoreSiteCategoryCmsModuleModule),
+      },
       {
         path: 'sitedomainalias',
         loadChildren: () =>

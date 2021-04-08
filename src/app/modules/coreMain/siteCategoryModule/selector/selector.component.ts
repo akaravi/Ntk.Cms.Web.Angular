@@ -5,7 +5,7 @@ import {
   FilterDataModel,
   FilterModel,
   CoreSiteCategoryCmsModuleModel,
-  CoreSiteCategoryCmsModuleService,
+  CoreSiteCategoryModuleService,
   EnumFilterDataModelSearchTypes,
   EnumClauseType
 } from 'ntk-cms-api';
@@ -25,7 +25,7 @@ export class CoreSiteCategoryCmsModuleSelectorComponent implements OnInit {
 
   constructor(
     public coreEnumService: CoreEnumService,
-    public categoryService: CoreSiteCategoryCmsModuleService) {
+    public categoryService: CoreSiteCategoryModuleService) {
   }
   dataModelResult: ErrorExceptionResult<CoreSiteCategoryCmsModuleModel> = new ErrorExceptionResult<CoreSiteCategoryCmsModuleModel>();
   dataModelSelect: CoreSiteCategoryCmsModuleModel = new CoreSiteCategoryCmsModuleModel();

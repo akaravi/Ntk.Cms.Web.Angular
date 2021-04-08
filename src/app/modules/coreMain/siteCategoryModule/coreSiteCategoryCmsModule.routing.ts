@@ -10,6 +10,10 @@ const routes: Routes = [
         path: '',
         component: CoreSiteCategoryCmsModuleListComponent
       },
+      {
+        path: ':Id',
+        component: CoreSiteCategoryCmsModuleListComponent
+      }
     ]
   },
 ];

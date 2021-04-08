@@ -1,10 +1,10 @@
 
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
   CoreSiteCategoryCmsModuleModel,
-  CoreSiteCategoryCmsModuleService,
+  CoreSiteCategoryModuleService,
   CoreAuthService,
   EnumSortType,
   ErrorExceptionResult,
@@ -13,7 +13,7 @@ import {
   TokenInfoModel,
   FilterDataModel,
   EnumRecordStatus,
-  DataFieldInfoModel
+  DataFieldInfoModel,
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -25,7 +25,7 @@ import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/bas
 import { MatSort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
-import { CoreSiteCategoryCmsModuleDeleteComponent } from '../delete/delete.component';
+import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 
 
 @Component({
@@ -34,16 +34,26 @@ import { CoreSiteCategoryCmsModuleDeleteComponent } from '../delete/delete.compo
   styleUrls: ['./list.component.scss']
 })
 export class CoreSiteCategoryCmsModuleListComponent implements OnInit, OnDestroy {
+  requestId = 0;
   constructor(
-    private coreSiteCategoryCmsModuleService: CoreSiteCategoryCmsModuleService,
+    private coreSiteCategoryModuleService: CoreSiteCategoryModuleService,
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
     private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private cmsConfirmationDialogService: CmsConfirmationDialogService,
     public dialog: MatDialog) {
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
+    this.requestId = + Number(this.activatedRoute.snapshot.paramMap.get('Id'));
+    if (this.requestId > 0) {
+      const filter = new FilterDataModel();
+      filter.PropertyName = 'LinkCmsSiteCategoryId';
+      filter.Value = this.requestId;
+      this.filteModelContent.Filters.push(filter);
+    }
   }
   comment: string;
   author: string;
@@ -65,13 +75,11 @@ export class CoreSiteCategoryCmsModuleListComponent implements OnInit, OnDestroy
 
 
   tabledisplayedColumns: string[] = [
-    'MainImageSrc',
-    'Id',
-    'linkCreatedBySiteCategoryCmsModuleId',
+    'LinkCmsModuleId',
+    'LinkCmsSiteCategoryId',
     'RecordStatus',
-    'Title',
-    'SubDomain',
-    'Domain',
+    'virtual_CmsSiteCategory.Title',
+    'virtual_CmsModule.Title',
     'CreatedDate',
     'UpdatedDate',
     'Action'
@@ -102,26 +110,12 @@ export class CoreSiteCategoryCmsModuleListComponent implements OnInit, OnDestroy
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
 
-    this.coreSiteCategoryCmsModuleService.ServiceGetAll(this.filteModelContent).subscribe(
+    this.coreSiteCategoryModuleService.ServiceGetAll(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
           this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
-
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;
-          if (this.tokenInfo.UserAccessAdminAllowToAllData) {
-            this.tabledisplayedColumns = this.publicHelper.listAddIfNotExist(
-              this.tabledisplayedColumns,
-              'linkCreatedBySiteCategoryCmsModuleId',
-              0
-            );
-          } else {
-            this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
-              this.tabledisplayedColumns,
-              'linkCreatedBySiteCategoryCmsModuleId'
-            );
-          }
-
           if (this.optionsSearch.childMethods) {
             this.optionsSearch.childMethods.setAccess(next.Access);
           }
@@ -185,8 +179,8 @@ export class CoreSiteCategoryCmsModuleListComponent implements OnInit, OnDestroy
   }
 
   onActionbuttonEditRow(model: CoreSiteCategoryCmsModuleModel = this.tableRowSelected): void {
-
-    if (!model || !model.Id || model.Id === 0) {
+    if (!model || !model.LinkCmsModuleId || model.LinkCmsModuleId === 0 ||
+      !model.LinkCmsSiteCategoryId || model.LinkCmsSiteCategoryId === 0) {
       this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
       return;
     }
@@ -224,14 +218,36 @@ export class CoreSiteCategoryCmsModuleListComponent implements OnInit, OnDestroy
       this.cmsToastrService.typeErrorAccessDelete();
       return;
     }
-    const dialogRef = this.dialog.open(CoreSiteCategoryCmsModuleDeleteComponent, {
-      data: { id: this.tableRowSelected.Id }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result && result.dialogChangedDate) {
-        this.DataGetAll();
+
+    const title = 'لطفا تایید کنید...';
+    const message = 'آیا مایل به حدف این محتوا می باشید ' + '?' + '<br> ( '
+      + this.tableRowSelected.virtual_CmsModule.Title + '<==>' + this.tableRowSelected.virtual_CmsSiteCategory.Title + ' ) ';
+    this.cmsConfirmationDialogService.confirm(title, message)
+      .then((confirmed) => {
+        if (confirmed) {
+          this.loading.display = true;
+          this.coreSiteCategoryModuleService.ServiceDeleteEntity(this.tableRowSelected).subscribe(
+            (next) => {
+              if (next.IsSuccess) {
+                this.cmsToastrService.typeSuccessRemove();
+                this.DataGetAll();
+              } else {
+                this.cmsToastrService.typeErrorRemove();
+              }
+              this.loading.display = false;
+            },
+            (error) => {
+              this.cmsToastrService.typeError(error);
+              this.loading.display = false;
+            }
+          );
+        }
       }
-    });
+      )
+      .catch(() => {
+        // console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)')
+      }
+      );
 
   }
 
@@ -254,7 +270,7 @@ export class CoreSiteCategoryCmsModuleListComponent implements OnInit, OnDestroy
     const statist = new Map<string, number>();
     statist.set('Active', 0);
     statist.set('All', 0);
-    this.coreSiteCategoryCmsModuleService.ServiceGetCount(this.filteModelContent).subscribe(
+    this.coreSiteCategoryModuleService.ServiceGetCount(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('All', next.TotalRowCount);
@@ -271,7 +287,7 @@ export class CoreSiteCategoryCmsModuleListComponent implements OnInit, OnDestroy
     fastfilter.PropertyName = 'RecordStatus';
     fastfilter.Value = EnumRecordStatus.Available;
     filterStatist1.Filters.push(fastfilter);
-    this.coreSiteCategoryCmsModuleService.ServiceGetCount(filterStatist1).subscribe(
+    this.coreSiteCategoryModuleService.ServiceGetCount(filterStatist1).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('Active', next.TotalRowCount);
@@ -284,6 +300,16 @@ export class CoreSiteCategoryCmsModuleListComponent implements OnInit, OnDestroy
       }
     );
 
+  }
+  onActionbuttonConfigMainAdminRow(model: CoreSiteCategoryCmsModuleModel = this.tableRowSelected): void {
+    if (!model || !model.LinkCmsModuleId || model.LinkCmsModuleId === 0
+      || !model.LinkCmsSiteCategoryId || model.LinkCmsSiteCategoryId === 0) {
+      const emessage = 'ردیفی انتخاب نشده است';
+      this.cmsToastrService.typeErrorSelected(emessage);
+      return;
+    }
+    this.tableRowSelected = model;
+    this.router.navigate([model.virtual_CmsModule.ClassName + '/config/mainadmin/']);
   }
   onActionbuttonExport(): void {
     this.optionsExport.data.show = !this.optionsExport.data.show;
@@ -300,5 +326,7 @@ export class CoreSiteCategoryCmsModuleListComponent implements OnInit, OnDestroy
   onActionTableRowSelect(row: CoreSiteCategoryCmsModuleModel): void {
     this.tableRowSelected = row;
   }
-
+  onActionBackToParent(): void {
+    this.router.navigate(['/core/sitecategory/']);
+  }
 }

@@ -4,7 +4,6 @@ import { CoreSiteCategoryRouting } from './coreSiteCategory.routing';
 import { CoreSiteCategoryComponent } from './coreSiteCategory.component';
 import {
   CoreModuleService,
-  CoreSiteCategoryCmsModuleService,
   CoreSiteCategoryModuleService,
   CoreSiteCategoryService,
 } from 'ntk-cms-api';
@@ -52,7 +51,7 @@ import { CoreSiteCategoryModuleListComponent } from './moduleList/moduleList.com
   ],
   providers: [
     CoreSiteCategoryService,
-    CoreSiteCategoryCmsModuleService,
+    CoreSiteCategoryModuleService,
     CoreModuleService,
     CoreSiteCategoryModuleService,
   ]

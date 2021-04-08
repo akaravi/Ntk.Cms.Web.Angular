@@ -16,15 +16,15 @@ import {
   ErrorExceptionResult,
   FilterModel,
   CoreSiteCategoryCmsModuleModel,
-  CoreSiteCategoryCmsModuleService,
+  CoreSiteCategoryModuleService,
   NtkCmsApiStoreService,
 } from 'ntk-cms-api';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { CoreSiteCategoryCmsModuleDeleteComponent } from '../delete/delete.component';
 import { MatDialog } from '@angular/material/dialog';
+import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 
 
 @Component({
@@ -37,7 +37,8 @@ export class CoreSiteCategoryCmsModuleTreeComponent implements OnInit, OnDestroy
     private cmsApiStore: NtkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
     public coreEnumService: CoreEnumService,
-    public categoryService: CoreSiteCategoryCmsModuleService,
+    public categoryService: CoreSiteCategoryModuleService,
+    private cmsConfirmationDialogService: CmsConfirmationDialogService,
     private router: Router,
     public dialog: MatDialog
   ) {
@@ -149,13 +150,36 @@ export class CoreSiteCategoryCmsModuleTreeComponent implements OnInit, OnDestroy
       this.cmsToastrService.typeErrorSelected(message);
       return;
     }
-    const dialogRef = this.dialog.open(CoreSiteCategoryCmsModuleDeleteComponent, {
-      data: { id }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result && result.dialogChangedDate) {
-        this.DataGetAll();
+
+    const title = 'لطفا تایید کنید...';
+    const message = 'آیا مایل به حدف این محتوا می باشید ' + '?' + '<br> ( '
+      + this.dataModelSelect.virtual_CmsModule.Title + '<==>' + this.dataModelSelect.virtual_CmsSiteCategory.Title + ' ) ';
+    this.cmsConfirmationDialogService.confirm(title, message)
+      .then((confirmed) => {
+        if (confirmed) {
+          this.loading.display = true;
+          this.categoryService.ServiceDeleteEntity(this.dataModelSelect).subscribe(
+            (next) => {
+              if (next.IsSuccess) {
+                this.cmsToastrService.typeSuccessRemove();
+                this.DataGetAll();
+              } else {
+                this.cmsToastrService.typeErrorRemove();
+              }
+              this.loading.display = false;
+            },
+            (error) => {
+              this.cmsToastrService.typeError(error);
+              this.loading.display = false;
+            }
+          );
+        }
       }
-    });
+      )
+      .catch(() => {
+        // console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)')
+      }
+      );
+
   }
 }

@@ -81,7 +81,6 @@ export class CoreSiteCategoryModuleListComponent implements OnInit, OnDestroy {
     'virtual_CmsModule.Title',
     'CreatedDate',
     'UpdatedDate',
-
     'Action'
   ];
 

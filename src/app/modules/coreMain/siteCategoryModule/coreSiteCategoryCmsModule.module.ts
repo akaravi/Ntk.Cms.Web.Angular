@@ -3,20 +3,20 @@ import { CommonModule } from '@angular/common';
 
 import {
   CoreModuleService,
-  CoreSiteCategoryCmsModuleService,
+  CoreSiteCategoryModuleService,
 } from 'ntk-cms-api';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CoreSiteCategoryCmsModuleTreeComponent } from './tree/tree.component';
 import { CoreSiteCategoryCmsModuleSelectorComponent } from './selector/selector.component';
-import { CoreSiteCategoryCmsModuleDeleteComponent } from './delete/delete.component';
 import { CoreSiteCategoryCmsModuleListComponent } from './list/list.component';
 import { TreeviewModule } from 'ngx-treeview';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { TagInputModule } from 'ngx-chips';
 import { CoreSiteCategoryCmsModuleComponent } from './coreSiteCategoryCmsModule.component';
-import { CoreSiteCategoryCmsModuleRouting } from './coreSiteCategoryModule.routing';
+import { CoreSiteCategoryCmsModuleRouting } from './coreSiteCategoryCmsModule.routing';
 import { CoreSiteCategoryCmsModuleListViewComponent } from './listview/listview.component';
+import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 
 
 @NgModule({
@@ -25,7 +25,6 @@ import { CoreSiteCategoryCmsModuleListViewComponent } from './listview/listview.
     CoreSiteCategoryCmsModuleListComponent,
     CoreSiteCategoryCmsModuleListViewComponent,
 
-    CoreSiteCategoryCmsModuleDeleteComponent,
     CoreSiteCategoryCmsModuleSelectorComponent,
     CoreSiteCategoryCmsModuleTreeComponent,
   ],
@@ -34,7 +33,6 @@ import { CoreSiteCategoryCmsModuleListViewComponent } from './listview/listview.
     CoreSiteCategoryCmsModuleListComponent,
     CoreSiteCategoryCmsModuleListViewComponent,
 
-    CoreSiteCategoryCmsModuleDeleteComponent,
     CoreSiteCategoryCmsModuleSelectorComponent,
     CoreSiteCategoryCmsModuleTreeComponent,
   ],
@@ -49,7 +47,8 @@ import { CoreSiteCategoryCmsModuleListViewComponent } from './listview/listview.
     TagInputModule,
   ],
   providers: [
-    CoreSiteCategoryCmsModuleService,
+    CoreSiteCategoryModuleService,
+    CmsConfirmationDialogService,
     CoreModuleService,
   ]
 })

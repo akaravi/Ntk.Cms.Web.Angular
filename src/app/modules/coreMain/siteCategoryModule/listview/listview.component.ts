@@ -3,7 +3,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
   CoreSiteCategoryCmsModuleModel,
-  CoreSiteCategoryCmsModuleService,
+  CoreSiteCategoryModuleService,
   EnumSortType,
   ErrorExceptionResult,
   FilterDataModel,
@@ -30,7 +30,7 @@ export class CoreSiteCategoryCmsModuleListViewComponent implements OnInit, OnDes
   }
   linkSiteCategoryId = 0;
   constructor(
-    private coreSiteCategoryCmsModuleService: CoreSiteCategoryCmsModuleService,
+    private coreSiteCategoryModuleService: CoreSiteCategoryModuleService,
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
@@ -84,7 +84,7 @@ export class CoreSiteCategoryCmsModuleListViewComponent implements OnInit, OnDes
       fastfilter.Value = this.linkSiteCategoryId;
       filteModel.Filters.push(fastfilter);
     }
-    this.coreSiteCategoryCmsModuleService.ServiceGetAll(filteModel).subscribe(
+    this.coreSiteCategoryModuleService.ServiceGetAll(filteModel).subscribe(
       (next) => {
         if (next.IsSuccess) {
           this.dataModelResult = next;

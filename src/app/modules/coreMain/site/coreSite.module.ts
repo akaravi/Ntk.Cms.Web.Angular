@@ -5,7 +5,7 @@ import { CoreSiteComponent } from './coreSite.component';
 import {
   CoreModuleService,
   CoreModuleSiteService,
-  CoreSiteCategoryCmsModuleService,
+  CoreSiteCategoryModuleService,
   CoreSiteCategoryService,
   CoreSiteDomainAliasService,
   CoreSiteService,
@@ -95,7 +95,7 @@ import { CoreUserGroupCmsModule } from '../userCategory/coreUserGroup.module';
   ],
   providers: [
     CoreSiteService,
-    CoreSiteCategoryCmsModuleService,
+    CoreSiteCategoryModuleService,
     CoreModuleService,
     CoreSiteCategoryService,
     CoreSiteResolver,
