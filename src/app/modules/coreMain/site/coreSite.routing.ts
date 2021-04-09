@@ -22,7 +22,7 @@ const routes: Routes = [
         path: 'list/LinkUserId/:LinkUserId',
         component: CoreSiteListComponent
       },
-           {
+      {
         path: 'list/LinkSiteCategoryId/:LinkSiteCategoryId',
         component: CoreSiteListComponent
       },
@@ -67,7 +67,15 @@ const routes: Routes = [
         component: CoreSiteModuleEditComponent
       },
       {
-        path: 'userlist/:LinkSiteId',
+        path: 'userlist/LinkSiteId/:LinkSiteId',
+        component: CoreSiteUserListComponent
+      },
+      {
+        path: 'userlist/LinkUserGroupId/:LinkUserGroupId',
+        component: CoreSiteUserListComponent
+      },
+      {
+        path: 'userlist/LinkUserId/:LinkUserId',
         component: CoreSiteUserListComponent
       }
     ]

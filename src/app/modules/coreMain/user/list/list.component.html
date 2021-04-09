@@ -18,7 +18,8 @@
       </a>
       <button (click)="onActionbuttonExport()" type="button" class="btn btn-bg-info BTN">خروجی فایل</button>
       <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">برسی مجدد</button>
-      <button (click)="onActionBackToParentSiteList()" *ngIf="this.requestLinkSiteId>0" type="button"  class="btn btn-warning BTN">بازگشت</button>
+      <button (click)="onActionBackToParentSiteList()" *ngIf="this.requestLinkSiteId>0" type="button"
+        class="btn btn-warning BTN">بازگشت</button>
       <app-cms-search-list [(options)]="optionsSearch"></app-cms-search-list>
       <app-cms-export-list [(options)]="optionsExport"></app-cms-export-list>
       <app-cms-statist-list [(options)]="optionsStatist"></app-cms-statist-list>
@@ -45,12 +46,14 @@
         </ng-container>
         <!-- LinkSiteId Column -->
         <ng-container matColumnDef="LinkSiteId">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkSiteId']?.FieldTitle}} </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkSiteId']?.FieldTitle}}
+          </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.LinkSiteId}} </mat-cell>
         </ng-container>
         <!-- RecordStatus Column -->
         <ng-container matColumnDef="RecordStatus">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['RecordStatus']?.FieldTitle}} </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['RecordStatus']?.FieldTitle}}
+          </mat-header-cell>
           <mat-cell *matCellDef="let row"> <i [ngClass]="row.RecordStatus|statusClass"></i> </mat-cell>
         </ng-container>
         <!-- Username Column -->
@@ -85,12 +88,14 @@
         </ng-container>
         <!-- CreatedDate Column -->
         <ng-container matColumnDef="CreatedDate">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['CreatedDate']?.FieldTitle}} </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['CreatedDate']?.FieldTitle}}
+          </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.CreatedDate) }} </mat-cell>
         </ng-container>
         <!-- UpdatedDate Column -->
         <ng-container matColumnDef="UpdatedDate">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['UpdatedDate']?.FieldTitle}} </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['UpdatedDate']?.FieldTitle}}
+          </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.UpdatedDate) }} </mat-cell>
         </ng-container>
         <!-- Action Column -->
@@ -113,6 +118,10 @@
               <button mat-menu-item (click)="onActionbuttonSiteList(row)">
                 <mat-icon>delete_forever</mat-icon>
                 <span>سایت های عضو</span>
+              </button>
+              <button mat-menu-item (click)="onActionbuttonSiteByGroupList(row)">
+                <mat-icon>delete_forever</mat-icon>
+                <span>دسترسی سایت های عضو</span>
               </button>
             </mat-menu>
           </mat-cell>

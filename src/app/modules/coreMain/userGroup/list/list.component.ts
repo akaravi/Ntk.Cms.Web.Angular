@@ -67,15 +67,13 @@ export class CoreUserGroupListComponent implements OnInit, OnDestroy {
 
 
   tabledisplayedColumns: string[] = [
-    'MainImageSrc',
     'Id',
-    'linkCreatedByUserCategoryId',
     'RecordStatus',
     'Title',
-    'SubDomain',
-    'Domain',
-    'CreatedDate',
-    'UpdatedDate',
+    'TitleML',
+    'TitleResourceLanguage',
+    'UserType',
+    'UserTypeTitle',
     'Action'
   ];
 
@@ -111,18 +109,6 @@ export class CoreUserGroupListComponent implements OnInit, OnDestroy {
 
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;
-          if (this.tokenInfo.UserAccessAdminAllowToAllData) {
-            this.tabledisplayedColumns = this.publicHelper.listAddIfNotExist(
-              this.tabledisplayedColumns,
-              'linkCreatedByUserCategoryId',
-              0
-            );
-          } else {
-            this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
-              this.tabledisplayedColumns,
-              'linkCreatedByUserCategoryId'
-            );
-          }
 
           if (this.optionsSearch.childMethods) {
             this.optionsSearch.childMethods.setAccess(next.Access);
@@ -260,15 +246,14 @@ export class CoreUserGroupListComponent implements OnInit, OnDestroy {
   }
 
 
-  onActionbuttonGoToUserCategoryList(model: CoreUserGroupModel = this.tableRowSelected): void {
+  onActionbuttonUserList(model: CoreUserGroupModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
       const message = 'ردیفی برای نمایش انتخاب نشده است';
       this.cmsToastrService.typeErrorSelected(message);
       return;
     }
     this.tableRowSelected = model;
-
-    this.router.navigate(['/core/userUserCategory/', this.tableRowSelected.Id]);
+    this.router.navigate(['/core/site/userlist/LinkUserGroupId/', this.tableRowSelected.Id]);
   }
   onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;

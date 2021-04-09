@@ -327,7 +327,16 @@ export class CoreUserListComponent implements OnInit, OnDestroy {
       return;
     }
     this.tableRowSelected = model;
-    this.router.navigate(['/core/site/list/LinkUserId', model.Id]);
+    this.router.navigate(['/core/site/list/LinkUserId', this.tableRowSelected.Id]);
+
+  }
+  onActionbuttonSiteByGroupList(model: CoreUserModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id === 0) {
+      this.cmsToastrService.typeErrorSelected('ردیفی انتخاب نشده است');
+      return;
+    }
+    this.tableRowSelected = model;
+    this.router.navigate(['/core/site/userlist/LinkUserId/', this.tableRowSelected.Id]);
   }
   onActionBackToParentSiteList(): void {
     this.router.navigate(['/core/site/']);
