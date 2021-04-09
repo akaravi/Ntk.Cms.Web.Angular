@@ -32,7 +32,7 @@ export class CmsMemberSelectorComponent implements OnInit {
   loading = new ProgressSpinnerModel();
   formControl = new FormControl();
   filteredOptions: Observable<MemberUserModel[]>;
-    @Input() disabled = new EventEmitter<boolean>();
+  @Input() disabled = new EventEmitter<boolean>();
   public optionSelectFirstItem = true;
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Output() optionSelect = new EventEmitter();
@@ -116,7 +116,7 @@ export class CmsMemberSelectorComponent implements OnInit {
     return await this.categoryService.ServiceGetAll(filteModel)
       .pipe(
         map(response => {
-          this.dataModelResult=response;
+          this.dataModelResult = response;
           return response.ListItems;
         })
       ).toPromise();

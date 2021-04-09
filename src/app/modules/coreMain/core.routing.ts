@@ -31,6 +31,11 @@ const routes: Routes = [
           import('./user/coreUser.module').then((m) => m.CoreUserModule),
       },
       {
+        path: 'usergroup',
+        loadChildren: () =>
+          import('./userGroup/coreUserGroup.module').then((m) => m.CoreUserGroupCmsModule),
+      },
+      {
         path: 'site',
         loadChildren: () =>
           import('./site/coreSite.module').then((m) => m.CoreSiteModule),

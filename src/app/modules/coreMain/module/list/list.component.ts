@@ -294,13 +294,31 @@ export class CoreModuleListComponent implements OnInit, OnDestroy {
 
   }
   onActionbuttonConfigMainAdminRow(model: CoreModuleModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0 ) {
+    if (!model || !model.Id || model.Id === 0) {
       const emessage = 'ردیفی انتخاب نشده است';
       this.cmsToastrService.typeErrorSelected(emessage);
       return;
     }
     this.tableRowSelected = model;
     this.router.navigate([model.ClassName + '/config/mainadmin/']);
+  }
+  onActionbuttonSiteList(model: CoreModuleModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id === 0) {
+      const emessage = 'ردیفی انتخاب نشده است';
+      this.cmsToastrService.typeErrorSelected(emessage);
+      return;
+    }
+    this.tableRowSelected = model;
+    this.router.navigate(['core/site/modulelist/LinkModuleId/', model.Id]);
+  }
+  onActionbuttonSiteCategoryList(model: CoreModuleModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id === 0) {
+      const emessage = 'ردیفی انتخاب نشده است';
+      this.cmsToastrService.typeErrorSelected(emessage);
+      return;
+    }
+    this.tableRowSelected = model;
+    this.router.navigate(['core/sitecategorymodule/LinkCmsModuleId/', model.Id]);
   }
   onActionbuttonExport(): void {
     this.optionsExport.data.show = !this.optionsExport.data.show;

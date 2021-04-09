@@ -296,7 +296,7 @@ export class CoreSiteCategoryListComponent implements OnInit, OnDestroy {
     );
 
   }
-  onActionbuttonModuleListRow(model: CoreSiteCategoryModel = this.tableRowSelected): void {
+  onActionbuttonModuleList(model: CoreSiteCategoryModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
 
       const message = 'ردیفی انتخاب نشده است';
@@ -314,6 +314,27 @@ export class CoreSiteCategoryListComponent implements OnInit, OnDestroy {
       return;
     }
     this.router.navigate(['/core/sitecategorymodule/LinkCmsSiteCategoryId', this.tableRowSelected.Id]);
+
+
+  }
+  onActionbuttonSiteList(model: CoreSiteCategoryModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id === 0) {
+
+      const message = 'ردیفی انتخاب نشده است';
+      this.cmsToastrService.typeErrorSelected(message);
+      return;
+    }
+    this.tableRowSelected = model;
+
+    if (
+      this.dataModelResult == null ||
+      this.dataModelResult.Access == null ||
+      !this.dataModelResult.Access.AccessDeleteRow
+    ) {
+      this.cmsToastrService.typeErrorSelected();
+      return;
+    }
+    this.router.navigate(['/core/site/list/LinkSiteCategoryId', this.tableRowSelected.Id]);
 
 
   }

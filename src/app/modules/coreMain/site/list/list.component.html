@@ -18,6 +18,10 @@
       </a>
       <button (click)="onActionbuttonExport()" type="button" class="btn btn-bg-info BTN">خروجی فایل</button>
       <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">برسی مجدد</button>
+      <button (click)="onActionBackToParentUserList()" *ngIf="this.requestLinkUserId>0" type="button"
+        class="btn btn-warning BTN">بازگشت</button>
+        <button (click)="onActionBackToParentSiteCategoryList()" *ngIf="this.requestLinkSiteCategoryId>0" type="button"
+          class="btn btn-warning BTN">بازگشت</button>
       <app-cms-search-list [(options)]="optionsSearch"></app-cms-search-list>
       <app-cms-export-list [(options)]="optionsExport"></app-cms-export-list>
       <app-cms-statist-list [(options)]="optionsStatist"></app-cms-statist-list>
@@ -122,6 +126,7 @@
                 <mat-icon>devices</mat-icon>
                 <span>دستگاه ها</span>
               </button>
+              
             </mat-menu>
 
 

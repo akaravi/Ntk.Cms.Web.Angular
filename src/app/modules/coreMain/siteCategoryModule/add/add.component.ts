@@ -113,13 +113,13 @@ export class CoreSiteCategoryCmsModuleAddComponent implements OnInit {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.coreSiteCategoryCmsModuleService.ServiceEdit(this.dataModel).subscribe(
+    this.coreSiteCategoryCmsModuleService.ServiceAdd(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormSubmitAllow = true;
         this.dataModelResult = next;
         if (next.IsSuccess) {
           this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
-          this.cmsToastrService.typeSuccessEdit();
+          this.cmsToastrService.typeSuccessAdd();
           this.dialogRef.close({ dialogChangedDate: true });
 
               } else {

@@ -94,6 +94,14 @@
                 <mat-icon>extension</mat-icon>
                 <span>تنظیمات مدیریتی</span>
               </button>
+              <button mat-menu-item (click)="onActionbuttonSiteList(row)"  *ngIf="tokenInfo.UserAccessAdminAllowToProfessionalData">
+                <mat-icon>extension</mat-icon>
+                <span>لیست سایتهایی</span>
+              </button>
+              <button mat-menu-item (click)="onActionbuttonSiteCategoryList(row)"  *ngIf="tokenInfo.UserAccessAdminAllowToProfessionalData">
+                <mat-icon>extension</mat-icon>
+                <span>لیست دسته بندی سایتهایی</span>
+              </button>
             </mat-menu>
           </mat-cell>
         </ng-container>

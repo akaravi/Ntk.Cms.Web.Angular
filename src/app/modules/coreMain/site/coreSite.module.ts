@@ -38,7 +38,7 @@ import { CoreSiteUserListComponent } from './userList/userList.component';
 import { CoreSiteUserAddComponent } from './userAdd/userAdd.component';
 import { CoreSiteUserEditComponent } from './userEdit/userEdit.component';
 import { CoreUserModule } from '../user/coreUser.module';
-import { CoreUserGroupCmsModule } from '../userCategory/coreUserGroup.module';
+import { CoreUserGroupCmsModule } from '../userGroup/coreUserGroup.module';
 
 
 

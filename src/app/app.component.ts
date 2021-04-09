@@ -9,7 +9,7 @@ import { TranslationService } from './core/i18n/translation.service';
 // import { locale as faLang } from '../assets/i18n/fa';
 import { CoreAuthService, CoreEnumService, EnumDeviceType, EnumOperatingSystemType, TokenDeviceClientInfoDtoModel } from 'ntk-cms-api';
 import { environment } from '../environments/environment';
-import { SplashScreenService } from './core/partials/layout/splash-screen/splash-screen.service';
+import { SplashScreenService } from './pages/partials/layout/splash-screen/splash-screen.service';
 import { Subscription } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
 import { CmsStoreService } from './core/reducers/cmsStore.service';

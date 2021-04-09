@@ -146,8 +146,8 @@ export class CoreSiteCategoryCmsModuleTreeComponent implements OnInit, OnDestroy
       id = this.dataModelSelect.Id;
     }
     if (id === 0) {
-      const message = 'دسته بندی انتخاب نشده است';
-      this.cmsToastrService.typeErrorSelected(message);
+      const message1 = 'دسته بندی انتخاب نشده است';
+      this.cmsToastrService.typeErrorSelected(message1);
       return;
     }
 

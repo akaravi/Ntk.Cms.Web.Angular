@@ -17,17 +17,16 @@
       </a>
       <button (click)="onActionbuttonExport()" type="button" class="btn btn-bg-info BTN">خروجی فایل</button>
       <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">برسی مجدد</button>
-      <button (click)="onActionBackToParent()" *ngIf="this.requestLinkCmsModuleId>0" type="button"
+      <button (click)="onActionBackToParent()" *ngIf="this.requestLinkCmsSiteCategoryId>0" type="button"
         class="btn btn-warning BTN">بازگشت</button>
-
+        <button (click)="onActionBackToParentModule()" *ngIf="this.requestLinkCmsModuleId>0" type="button"
+          class="btn btn-warning BTN">بازگشت</button>
       <app-cms-search-list [(options)]="optionsSearch"></app-cms-search-list>
       <app-cms-export-list [(options)]="optionsExport"></app-cms-export-list>
       <app-cms-statist-list [(options)]="optionsStatist"></app-cms-statist-list>
     </div>
-
     <app-progress-spinner [options]="loading">
     </app-progress-spinner>
-
     <div class="example-container mat-elevation-z8">
       <mat-table [dataSource]="tableSource" matSort #tableSort="matSort" (matSortChange)="onTableSortData(tableSort)">
 
@@ -93,11 +92,9 @@
               <button mat-menu-item (click)="onActionbuttonConfigMainAdminRow(row)"
                 *ngIf="tokenInfo.UserAccessAdminAllowToProfessionalData">
                 <mat-icon>extension</mat-icon>
-                <span>تنظیمات مدیریتی</span>
+                <span>تنظیمات مدیریتی مازول</span>
               </button>
-
             </mat-menu>
-
           </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="tabledisplayedColumns"></mat-header-row>

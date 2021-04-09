@@ -18,11 +18,11 @@
         </mat-error>
       </mat-form-field>
       <!-- LinkCmsSiteId Field -->
-      <app-core-sitecategory-selector (optionSelect)="onActionSiteCategorySelect($event)" [disabled]="false"
+      <app-core-sitecategory-selector (optionSelect)="onActionSiteCategorySelect($event)" [disabled]="!fieldsInfo['LinkCmsSiteCategoryId'].AccessEditField"
         [optionSelectForce]="dataModel.LinkCmsSiteCategoryId" [optionPlaceholder]="'دسته بندی سایت'">
       </app-core-sitecategory-selector>
       <!-- LinkModuleId Field -->
-      <app-core-module-selector (optionSelect)="onActionSelectorModuleSelect($event)" [disabled]="false"
+      <app-core-module-selector (optionSelect)="onActionSelectorModuleSelect($event)" [disabled]="!fieldsInfo['LinkCmsModuleId'].AccessEditField"
         [optionSelectForce]="dataModel.LinkCmsModuleId" [optionPlaceholder]="'ماژول'">
       </app-core-module-selector>
       <!-- ConfigValuesJson Field -->

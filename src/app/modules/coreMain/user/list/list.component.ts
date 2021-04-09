@@ -327,7 +327,7 @@ export class CoreUserListComponent implements OnInit, OnDestroy {
       return;
     }
     this.tableRowSelected = model;
-    this.router.navigate(['/core/site/list', model.Id]);
+    this.router.navigate(['/core/site/list/LinkUserId', model.Id]);
   }
   onActionBackToParentSiteList(): void {
     this.router.navigate(['/core/site/']);

@@ -19,7 +19,11 @@ const routes: Routes = [
         component: CoreSiteListComponent
       },
       {
-        path: 'list/:LinkUserId',
+        path: 'list/LinkUserId/:LinkUserId',
+        component: CoreSiteListComponent
+      },
+           {
+        path: 'list/LinkSiteCategoryId/:LinkSiteCategoryId',
         component: CoreSiteListComponent
       },
       {
@@ -43,7 +47,11 @@ const routes: Routes = [
         component: CoreSiteModuleListComponent
       },
       {
-        path: 'modulelist/:Id',
+        path: 'modulelist/LinkSiteId/:LinkSiteId',
+        component: CoreSiteModuleListComponent
+      },
+      {
+        path: 'modulelist/LinkModuleId/:LinkModuleId',
         component: CoreSiteModuleListComponent
       },
       {

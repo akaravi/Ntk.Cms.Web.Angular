@@ -37,6 +37,7 @@ import { CoreSiteAddComponent } from '../add/add.component';
 })
 export class CoreSiteListComponent implements OnInit, OnDestroy {
   requestLinkUserId = 0;
+  requestLinkSiteCategoryId = 0;
   constructor(
     private coreSiteService: CoreSiteService,
     private coreAuthService: CoreAuthService,
@@ -50,11 +51,18 @@ export class CoreSiteListComponent implements OnInit, OnDestroy {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
     this.requestLinkUserId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkUserId'));
+    this.requestLinkSiteCategoryId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkSiteCategoryId'));
     if (this.requestLinkUserId > 0) {
       const filter = new FilterDataModel();
       filter.PropertyAnyName = 'LinkUserId';
       filter.PropertyName = 'SiteUsers';
       filter.Value = this.requestLinkUserId;
+      this.filteModelContent.Filters.push(filter);
+    }
+    if (this.requestLinkSiteCategoryId > 0) {
+      const filter = new FilterDataModel();
+      filter.PropertyName = 'LinkSiteCategoryId';
+      filter.Value = this.requestLinkSiteCategoryId;
       this.filteModelContent.Filters.push(filter);
     }
   }
@@ -355,5 +363,10 @@ export class CoreSiteListComponent implements OnInit, OnDestroy {
   onActionTableRowSelect(row: CoreSiteModel): void {
     this.tableRowSelected = row;
   }
-
+  onActionBackToParentUserList(): void {
+    this.router.navigate(['/core/user/']);
+  }
+   onActionBackToParentSiteCategoryList(): void {
+    this.router.navigate(['/core/sitecategory/']);
+  }
 }

@@ -10,7 +10,7 @@ import typescript from 'highlight.js/lib/languages/typescript';
 import { HIGHLIGHT_OPTIONS, HighlightModule } from 'ngx-highlightjs';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { ToastrModule } from 'ngx-toastr';
-import { SplashScreenModule } from './core/partials/layout/splash-screen/splash-screen.module';
+import { SplashScreenModule } from './pages/partials/layout/splash-screen/splash-screen.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';

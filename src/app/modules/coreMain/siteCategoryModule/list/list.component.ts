@@ -345,4 +345,7 @@ export class CoreSiteCategoryCmsModuleListComponent implements OnInit, OnDestroy
   onActionBackToParent(): void {
     this.router.navigate(['/core/sitecategory/']);
   }
+  onActionBackToParentModule(): void {
+    this.router.navigate(['/core/module/']);
+  }
 }

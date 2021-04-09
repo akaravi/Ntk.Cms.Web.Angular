@@ -13,10 +13,10 @@ import {HeaderMenuDynamicComponent} from './_layout/components/header/header-men
 import {TopbarComponent} from './_layout/components/topbar/topbar.component';
 import {LanguageSelectorComponent} from './_layout/components/topbar/language-selector/language-selector.component';
 import {HeaderMobileComponent} from './_layout/components/header-mobile/header-mobile.component';
-import {ExtrasModule} from '../core/partials/layout/extras/extras.module';
+import {ExtrasModule} from './partials/layout/extras/extras.module';
 import {TranslationModule} from '../core/i18n/translation.module';
 import {CoreModule} from '../core';
-import {SubheaderModule} from '../core/partials/layout/subheader/subheader.module';
+import {SubheaderModule} from './partials/layout/subheader/subheader.module';
 import {CoreSiteModule} from '../modules/coreMain/site/coreSite.module';
 import {CoreAuthService, CoreCpMainMenuService} from 'ntk-cms-api';
 

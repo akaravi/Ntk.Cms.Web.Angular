@@ -16,8 +16,10 @@
       </a>
       <button (click)="onActionbuttonExport()" type="button" class="btn btn-bg-info BTN">خروجی فایل</button>
       <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">برسی مجدد</button>
-      <button (click)="onActionBackToParent()" *ngIf="this.requestId>0" type="button"
+      <button (click)="onActionBackToParent()" *ngIf="this.requestLinkSiteId>0" type="button"
         class="btn btn-warning BTN">بازگشت</button>
+        <button (click)="onActionBackToParentModuleList()" *ngIf="this.requestLinkModuleId>0" type="button"
+          class="btn btn-warning BTN">بازگشت</button>
 
       <app-cms-search-list [(options)]="optionsSearch"></app-cms-search-list>
       <app-cms-export-list [(options)]="optionsExport"></app-cms-export-list>

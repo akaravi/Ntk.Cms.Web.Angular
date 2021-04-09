@@ -1,22 +1,22 @@
-import { CoreModuleTagCategoryModel } from 'ntk-cms-api';
-import { ComponentOptionModel } from '../base/componentOptionModel';
+// import { CoreModuleTagCategoryModel } from 'ntk-cms-api';
+// import { ComponentOptionModel } from '../base/componentOptionModel';
 
-// tslint:disable-next-line: max-line-length
-export class ComponentOptionCoreModuleTagCategoryModel implements ComponentOptionModel<ComponentOptionCoreModuleTagCategoryDataModel, ComponentOptionCoreModuleTagCategoryActionsModel, ComponentOptionCoreModuleTagCategoryMethodsModel> {
-  childMethods: ComponentOptionCoreModuleTagCategoryActionsModel;
-  parentMethods: ComponentOptionCoreModuleTagCategoryMethodsModel;
-  data: ComponentOptionCoreModuleTagCategoryDataModel;
+// // tslint:disable-next-line: max-line-length
+// export class ComponentOptionCoreModuleTagCategoryModel implements ComponentOptionModel<ComponentOptionCoreModuleTagCategoryDataModel, ComponentOptionCoreModuleTagCategoryActionsModel, ComponentOptionCoreModuleTagCategoryMethodsModel> {
+//   childMethods: ComponentOptionCoreModuleTagCategoryActionsModel;
+//   parentMethods: ComponentOptionCoreModuleTagCategoryMethodsModel;
+//   data: ComponentOptionCoreModuleTagCategoryDataModel;
 
-}
+// }
 
-export class ComponentOptionCoreModuleTagCategoryActionsModel {
-  onActionSelect: (x: CoreModuleTagCategoryModel) => void;
-}
-export class ComponentOptionCoreModuleTagCategoryMethodsModel {
-  ActionReload: () => void;
-  ActionSelectForce: (id: number) => void;
-}
-export class ComponentOptionCoreModuleTagCategoryDataModel {
-  SelectId: number;
-  Select: CoreModuleTagCategoryModel;
-}
+// export class ComponentOptionCoreModuleTagCategoryActionsModel {
+//   onActionSelect: (x: CoreModuleTagCategoryModel) => void;
+// }
+// export class ComponentOptionCoreModuleTagCategoryMethodsModel {
+//   ActionReload: () => void;
+//   ActionSelectForce: (id: number) => void;
+// }
+// export class ComponentOptionCoreModuleTagCategoryDataModel {
+//   SelectId: number;
+//   Select: CoreModuleTagCategoryModel;
+// }

@@ -37,10 +37,10 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
   styleUrls: ['./moduleList.component.scss']
 })
 export class CoreSiteModuleListComponent implements OnInit, OnDestroy {
-  requestId = 0;
+  requestLinkSiteId = 0;
+  requestLinkModuleId = 0;
   constructor(
     private coreModuleSiteService: CoreModuleSiteService,
-    private coreSiteService: CoreSiteService,
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
@@ -49,11 +49,18 @@ export class CoreSiteModuleListComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private router: Router,
   ) {
-    this.requestId = + Number(this.activatedRoute.snapshot.paramMap.get('Id'));
-    if (this.requestId > 0) {
+    this.requestLinkSiteId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkSiteId'));
+    this.requestLinkModuleId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkModuleId'));
+    if (this.requestLinkSiteId > 0) {
       const filter = new FilterDataModel();
       filter.PropertyName = 'LinkSiteId';
-      filter.Value = this.requestId;
+      filter.Value = this.requestLinkSiteId;
+      this.filteModelContent.Filters.push(filter);
+    }
+    if (this.requestLinkModuleId > 0) {
+      const filter = new FilterDataModel();
+      filter.PropertyName = 'LinkModuleId';
+      filter.Value = this.requestLinkModuleId;
       this.filteModelContent.Filters.push(filter);
     }
     this.optionsSearch.parentMethods = {
@@ -177,7 +184,10 @@ export class CoreSiteModuleListComponent implements OnInit, OnDestroy {
     }
 
     const dialogRef = this.dialog.open(CoreSiteModuleAddComponent, {
-      data: { LinkSiteId: this.requestId }
+      data: {
+        LinkSiteId: this.requestLinkSiteId,
+        LinkModuleId: this.requestLinkModuleId,
+       }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.dialogChangedDate) {
@@ -360,6 +370,9 @@ export class CoreSiteModuleListComponent implements OnInit, OnDestroy {
   }
   onActionBackToParent(): void {
     this.router.navigate(['/core/site/']);
+  }
+  onActionBackToParentModuleList(): void {
+    this.router.navigate(['/core/module/']);
   }
 
 }
