@@ -27,7 +27,8 @@ export class CoreUserGroupChecklistComponent implements OnInit {
   formControl = new FormControl();
   fieldsStatus: Map<number, boolean> = new Map<number, boolean>();
 
-  @Input() disabled = new EventEmitter<boolean>();
+    @Input() disabled = new EventEmitter<boolean>();
+  public optionSelectFirstItem = true;
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Output() optionSelect = new EventEmitter();
   @Output() optionSelectAdded = new EventEmitter();

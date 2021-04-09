@@ -27,12 +27,13 @@ export class CmsUserSelectorComponent implements OnInit {
     public coreEnumService: CoreEnumService,
     public categoryService: CoreUserService) {
   }
-  // dataModelResult: ErrorExceptionResult<CoreUserModel> = new ErrorExceptionResult<CoreUserModel>();
+  dataModelResult: ErrorExceptionResult<CoreUserModel> = new ErrorExceptionResult<CoreUserModel>();
   dataModelSelect: CoreUserModel = new CoreUserModel();
   loading = new ProgressSpinnerModel();
   formControl = new FormControl();
   filteredOptions: Observable<CoreUserModel[]>;
-  @Input() disabled = new EventEmitter<boolean>();
+    @Input() disabled = new EventEmitter<boolean>();
+  public optionSelectFirstItem = true;
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Output() optionSelect = new EventEmitter();
   @Input() optionReload = () => this.onActionReload();
@@ -115,6 +116,15 @@ export class CmsUserSelectorComponent implements OnInit {
     return await this.categoryService.ServiceGetAll(filteModel)
       .pipe(
         map(response => {
+          this.dataModelResult = response;
+          /*select First Item */
+          if (this.optionSelectFirstItem &&
+            (!this.dataModelSelect || !this.dataModelSelect.Id || this.dataModelSelect.Id <= 0) &&
+            this.dataModelResult.ListItems.length > 0) {
+            this.optionSelectFirstItem = false;
+            setTimeout(() => { this.formControl.setValue(this.dataModelResult.ListItems[0]); }, 1000);
+          }
+          /*select First Item */
           return response.ListItems;
         })
       ).toPromise();
@@ -139,6 +149,15 @@ export class CmsUserSelectorComponent implements OnInit {
   }
   onActionSelectForce(id: number | CoreUserModel): void {
     if (typeof id === 'number' && id > 0) {
+      if (this.dataModelSelect && this.dataModelSelect.Id === id) {
+        return;
+      }
+      if (this.dataModelResult && this.dataModelResult.ListItems && this.dataModelResult.ListItems.find(x => x.Id === id)) {
+        const item = this.dataModelResult.ListItems.find(x => x.Id === id);
+        this.dataModelSelect = item;
+        this.formControl.setValue(item);
+        return;
+      }
       this.categoryService.ServiceGetOneById(id).subscribe((next) => {
         if (next.IsSuccess) {
           this.filteredOptions = this.push(next.Item);

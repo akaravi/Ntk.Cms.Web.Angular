@@ -191,15 +191,15 @@ export class CoreSiteCategoryCmsModuleEditComponent implements OnInit {
     );
   }
   onActionSiteCategorySelect(model: CoreSiteCategoryModel): void {
-    this.dataModel.LinkCmsModuleId = null;
-    if (model && model.Id > 0) {
-      this.dataModel.LinkCmsModuleId = model.Id;
-    }
-  }
-  onActionSelectorModuleSelect(model: CoreModuleModel): void {
     this.dataModel.LinkCmsSiteCategoryId = null;
     if (model && model.Id > 0) {
       this.dataModel.LinkCmsSiteCategoryId = model.Id;
+    }
+  }
+  onActionSelectorModuleSelect(model: CoreModuleModel): void {
+    this.dataModel.LinkCmsModuleId = null;
+    if (model && model.Id > 0) {
+      this.dataModel.LinkCmsModuleId = model.Id;
     }
   }
   onFormSubmit(): void {

@@ -36,6 +36,7 @@ export class ArticleCategorySelectorComponent implements OnInit {
   formControl = new FormControl();
   filteredOptions: Observable<ArticleCategoryModel[]>;
   @Input() optionPlaceholder = new EventEmitter<string>();
+  @Input() optionSelectFirstItem = false;
   @Output() optionSelect = new EventEmitter();
   @Input() optionReload = () => this.onActionReload();
   @Input() set optionSelectForce(x: number | ArticleCategoryModel) {
@@ -94,6 +95,15 @@ export class ArticleCategorySelectorComponent implements OnInit {
     return await this.categoryService.ServiceGetAll(filteModel)
       .pipe(
         map(response => {
+          this.dataModelResult = response;
+          /*select First Item */
+          if (this.optionSelectFirstItem &&
+            (!this.dataModelSelect || !this.dataModelSelect.Id || this.dataModelSelect.Id <= 0) &&
+            this.dataModelResult.ListItems.length > 0) {
+            this.optionSelectFirstItem = false;
+            setTimeout(() => { this.formControl.setValue(this.dataModelResult.ListItems[0]); }, 1000);
+          }
+          /*select First Item */
           return response.ListItems;
         })
       ).toPromise();
@@ -125,6 +135,15 @@ export class ArticleCategorySelectorComponent implements OnInit {
   }
   onActionSelectForce(id: number | ArticleCategoryModel): void {
     if (typeof id === 'number' && id > 0) {
+      if (this.dataModelSelect && this.dataModelSelect.Id === id) {
+        return;
+      }
+      if (this.dataModelResult && this.dataModelResult.ListItems && this.dataModelResult.ListItems.find(x => x.Id === id)) {
+        const item = this.dataModelResult.ListItems.find(x => x.Id === id);
+        this.dataModelSelect = item;
+        this.formControl.setValue(item);
+        return;
+      }
       this.categoryService.ServiceGetOneById(id).subscribe((next) => {
         if (next.IsSuccess) {
           this.filteredOptions = this.push(next.Item);

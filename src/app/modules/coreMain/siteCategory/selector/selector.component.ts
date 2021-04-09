@@ -32,7 +32,8 @@ export class CoreSiteCategorySelectorComponent implements OnInit {
   loading = new ProgressSpinnerModel();
   formControl = new FormControl();
   filteredOptions: Observable<CoreSiteCategoryModel[]>;
-  @Input() disabled = new EventEmitter<boolean>();
+    @Input() disabled = new EventEmitter<boolean>();
+  public optionSelectFirstItem = true;
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Output() optionSelect = new EventEmitter();
   @Input() optionReload = () => this.onActionReload();
@@ -57,10 +58,10 @@ export class CoreSiteCategorySelectorComponent implements OnInit {
   }
 
   displayFn(model?: CoreSiteCategoryModel): string | undefined {
-    return model ? (model.Title ) : undefined;
+    return model ? (model.Title) : undefined;
   }
   displayOption(model?: CoreSiteCategoryModel): string | undefined {
-    return model ? (model.Title ) : undefined;
+    return model ? (model.Title) : undefined;
   }
   async DataGetAll(text: string | number | any): Promise<CoreSiteCategoryModel[]> {
     const filteModel = new FilterModel();
@@ -92,6 +93,15 @@ export class CoreSiteCategorySelectorComponent implements OnInit {
     return await this.categoryService.ServiceGetAll(filteModel)
       .pipe(
         map(response => {
+          this.dataModelResult = response;
+          /*select First Item */
+          if (this.optionSelectFirstItem &&
+            (!this.dataModelSelect || !this.dataModelSelect.Id || this.dataModelSelect.Id <= 0) &&
+            this.dataModelResult.ListItems.length > 0) {
+            this.optionSelectFirstItem = false;
+            setTimeout(() => { this.formControl.setValue(this.dataModelResult.ListItems[0]); }, 1000);
+          }
+          /*select First Item */
           return response.ListItems;
         })
       ).toPromise();
@@ -100,7 +110,7 @@ export class CoreSiteCategorySelectorComponent implements OnInit {
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
   }
-  onActionSelectClear(): void{
+  onActionSelectClear(): void {
     this.formControl.setValue(null);
     this.optionSelect.emit(null);
   }
@@ -117,6 +127,15 @@ export class CoreSiteCategorySelectorComponent implements OnInit {
   }
   onActionSelectForce(id: number | CoreSiteCategoryModel): void {
     if (typeof id === 'number' && id > 0) {
+      if (this.dataModelSelect && this.dataModelSelect.Id === id) {
+        return;
+      }
+      if (this.dataModelResult && this.dataModelResult.ListItems && this.dataModelResult.ListItems.find(x => x.Id === id)) {
+        const item = this.dataModelResult.ListItems.find(x => x.Id === id);
+        this.dataModelSelect = item;
+        this.formControl.setValue(item);
+        return;
+      }
       this.categoryService.ServiceGetOneById(id).subscribe((next) => {
         if (next.IsSuccess) {
           this.filteredOptions = this.push(next.Item);

@@ -33,6 +33,7 @@ export class CoreModuleSelectorComponent implements OnInit {
   formControl = new FormControl();
   filteredOptions: Observable<CoreModuleModel[]>;
   @Input() disabled = new EventEmitter<boolean>();
+  @Input() optionSelectFirstItem: false;
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Output() optionSelect = new EventEmitter();
   @Input() optionReload = () => this.onActionReload();
@@ -73,7 +74,7 @@ export class CoreModuleSelectorComponent implements OnInit {
       filter.Value = text;
       filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
       filteModel.Filters.push(filter);
-    } else if (text && typeof +text === 'number' && +text > 0){
+    } else if (text && typeof +text === 'number' && +text > 0) {
       let filter = new FilterDataModel();
       filter.PropertyName = 'Title';
       filter.Value = text;
@@ -92,6 +93,15 @@ export class CoreModuleSelectorComponent implements OnInit {
     return await this.categoryService.ServiceGetAll(filteModel)
       .pipe(
         map(response => {
+          this.dataModelResult = response;
+          /*select First Item */
+          if (this.optionSelectFirstItem &&
+            (!this.dataModelSelect || !this.dataModelSelect.Id || this.dataModelSelect.Id <= 0) &&
+            this.dataModelResult.ListItems.length > 0) {
+            this.optionSelectFirstItem = false;
+            setTimeout(() => { this.formControl.setValue(this.dataModelResult.ListItems[0]); }, 1000);
+          }
+          /*select First Item */
           return response.ListItems;
         })
       ).toPromise();
@@ -100,7 +110,7 @@ export class CoreModuleSelectorComponent implements OnInit {
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
   }
-  onActionSelectClear(): void{
+  onActionSelectClear(): void {
     this.formControl.setValue(null);
     this.optionSelect.emit(null);
   }
@@ -121,6 +131,15 @@ export class CoreModuleSelectorComponent implements OnInit {
   }
   onActionSelectForce(id: number | CoreModuleModel): void {
     if (typeof id === 'number' && id > 0) {
+      if (this.dataModelSelect && this.dataModelSelect.Id === id) {
+        return;
+      }
+      if (this.dataModelResult && this.dataModelResult.ListItems && this.dataModelResult.ListItems.find(x => x.Id === id)) {
+        const item = this.dataModelResult.ListItems.find(x => x.Id === id);
+        this.dataModelSelect = item;
+        this.formControl.setValue(item);
+        return;
+      }
       this.categoryService.ServiceGetOneById(id).subscribe((next) => {
         if (next.IsSuccess) {
           this.filteredOptions = this.push(next.Item);

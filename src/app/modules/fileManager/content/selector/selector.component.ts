@@ -32,6 +32,7 @@ export class FileContentSelectorComponent implements OnInit {
   formControl = new FormControl();
   filteredOptions: Observable<FileContentModel[]>;
   @Input() optionPlaceholder = new EventEmitter<string>();
+  @Input() optionSelectFirstItem = false;
   @Output() optionSelect = new EventEmitter();
   @Input() optionReload = () => this.onActionReload();
   @Input() set optionSelectForce(x: number | FileContentModel) {
@@ -90,6 +91,14 @@ export class FileContentSelectorComponent implements OnInit {
       .pipe(
         map(response => {
           this.dataModelResult = response;
+          /*select First Item */
+          if (this.optionSelectFirstItem &&
+            (!this.dataModelSelect || !this.dataModelSelect.Id || this.dataModelSelect.Id <= 0) &&
+            this.dataModelResult.ListItems.length > 0) {
+            this.optionSelectFirstItem = false;
+            setTimeout(() => { this.formControl.setValue(this.dataModelResult.ListItems[0]); }, 1000);
+          }
+          /*select First Item */
           return response.ListItems;
         })).toPromise();
   }

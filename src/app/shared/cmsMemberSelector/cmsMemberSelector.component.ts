@@ -27,12 +27,13 @@ export class CmsMemberSelectorComponent implements OnInit {
     public coreEnumService: CoreEnumService,
     public categoryService: MemberUserService) {
   }
-  // dataModelResult: ErrorExceptionResult<MemberUserModel> = new ErrorExceptionResult<MemberUserModel>();
+  dataModelResult: ErrorExceptionResult<MemberUserModel> = new ErrorExceptionResult<MemberUserModel>();
   dataModelSelect: MemberUserModel = new MemberUserModel();
   loading = new ProgressSpinnerModel();
   formControl = new FormControl();
   filteredOptions: Observable<MemberUserModel[]>;
-  @Input() disabled = new EventEmitter<boolean>();
+    @Input() disabled = new EventEmitter<boolean>();
+  public optionSelectFirstItem = true;
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Output() optionSelect = new EventEmitter();
   @Input() optionReload = () => this.onActionReload();
@@ -115,6 +116,7 @@ export class CmsMemberSelectorComponent implements OnInit {
     return await this.categoryService.ServiceGetAll(filteModel)
       .pipe(
         map(response => {
+          this.dataModelResult=response;
           return response.ListItems;
         })
       ).toPromise();
@@ -139,6 +141,15 @@ export class CmsMemberSelectorComponent implements OnInit {
   }
   onActionSelectForce(id: number | MemberUserModel): void {
     if (typeof id === 'number' && id > 0) {
+      if (this.dataModelSelect && this.dataModelSelect.Id === id) {
+        return;
+      }
+      if (this.dataModelResult && this.dataModelResult.ListItems && this.dataModelResult.ListItems.find(x => x.Id === id)) {
+        const item = this.dataModelResult.ListItems.find(x => x.Id === id);
+        this.dataModelSelect = item;
+        this.formControl.setValue(item);
+        return;
+      }
       this.categoryService.ServiceGetOneById(id).subscribe((next) => {
         if (next.IsSuccess) {
           this.filteredOptions = this.push(next.Item);

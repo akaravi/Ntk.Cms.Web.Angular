@@ -23,7 +23,7 @@
       </app-core-sitecategory-selector>
       <!-- LinkModuleId Field -->
       <app-core-module-selector (optionSelect)="onActionSelectorModuleSelect($event)" [disabled]="false"
-        [optionSelectForce]="dataModel.LinkCmsModuleId" [optionPlaceholder]="'ماژول'">
+        [optionSelectForce]="dataModel.LinkCmsModuleId" [optionPlaceholder]="'ماژول'" [optionSelectFirstItem]="true">
       </app-core-module-selector>
       <!-- ConfigValuesJson Field -->
       <mat-form-field class="example-full-width" *ngIf="fieldsInfo['ConfigValuesJson']?.AccessWatchField">
