@@ -69,6 +69,10 @@
           </mat-error>
         </mat-form-field>
 
+        <app-password-strength
+        [passwordToCheck]="dataModel.Password"
+        (passwordStrength)="passwordValid($event)"
+        ></app-password-strength>
 
         <mat-form-field class="example-full-width">
           <mat-label> {{'AUTH.INPUT.CONFIRM_PASSWORD' | translate}}</mat-label>

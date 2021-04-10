@@ -30,6 +30,7 @@ import { CmsSiteSelectorComponent } from './cmsSiteSelector/cmsSiteSelector.comp
 import { CmsUserSelectorComponent } from './cmsUserSelector/cmsUserSelector.component';
 import { CmsMemberSelectorComponent } from './cmsMemberSelector/cmsMemberSelector.component';
 import { CoreSiteService, CoreUserService, MemberUserService } from 'ntk-cms-api';
+import { PasswordStrengthComponent } from './password-strength/password-strength.component';
 
 
 
@@ -69,6 +70,7 @@ import { CoreSiteService, CoreUserService, MemberUserService } from 'ntk-cms-api
     CmsMapComponent,
     TagAutocompleteComponent,
     ProgressSpinnerComponent,
+    PasswordStrengthComponent,
   ],
   exports: [
     // common and shared components/directives/pipes between more than one module and components will be listed here.
@@ -95,6 +97,7 @@ import { CoreSiteService, CoreUserService, MemberUserService } from 'ntk-cms-api
     CmsMapComponent,
     TagAutocompleteComponent,
     ProgressSpinnerComponent,
+    PasswordStrengthComponent
   ],
   providers: [
     OverlayService,

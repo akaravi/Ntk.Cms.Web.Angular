@@ -80,7 +80,10 @@
             password is <strong>required</strong>
           </mat-error>
         </mat-form-field>
-
+        <app-password-strength
+        [passwordToCheck]="dataModel.Pwd"
+        (passwordStrength)="passwordValid($event)"
+        ></app-password-strength>
 
 
 

@@ -14,6 +14,7 @@ import { CoreUserListComponent } from './list/list.component';
 import { CoreUserAddComponent } from './add/add.component';
 import { CoreUserEditComponent } from './edit/edit.component';
 import { CoreUserSelectorComponent } from './selector/selector.component';
+import { CoreUserChangePasswordComponent } from './changePassword/changePassword.component';
 
 
 
@@ -23,6 +24,7 @@ import { CoreUserSelectorComponent } from './selector/selector.component';
     CoreUserListComponent,
     CoreUserAddComponent,
     CoreUserEditComponent,
+    CoreUserChangePasswordComponent,
     CoreUserSelectorComponent,
   ],
   exports: [
@@ -30,6 +32,7 @@ import { CoreUserSelectorComponent } from './selector/selector.component';
     CoreUserListComponent,
     CoreUserAddComponent,
     CoreUserEditComponent,
+    CoreUserChangePasswordComponent,
     CoreUserSelectorComponent,
   ],
   imports: [

@@ -12,7 +12,8 @@ export class CmsToastrService {
   }
   private now(): string {
     const myDate = new Date();
-    return myDate.getHours() + ' : ' + myDate.getMinutes() + ' : ' + myDate.getSeconds() + ' => ';
+    const retStr = myDate.getHours() + ' : ' + myDate.getMinutes() + ' : ' + myDate.getSeconds() + ' => ';
+    return '';
   }
   // typeOrderAction
   typeOrderActionLogout(): void {
@@ -53,7 +54,9 @@ export class CmsToastrService {
   typeSuccessEdit(): void {
     this.toastr.success('با موفقیت ویرایش شد', this.now() + 'Success!');
   }
-
+  typeSuccessChangePassword(): void {
+    this.toastr.success('کلمه عبور شما با موفقیت ویرایش شد', this.now() + 'Success!');
+  }
   typeSuccessMove(): void {
     this.toastr.success('با موفقیت منتقل شد', this.now() + 'Success!');
   }
@@ -310,7 +313,7 @@ export class CmsToastrService {
     }
     this.toastr.error(message, this.now() + 'Error!');
   }
-  typeErrorMessage(message: string ): void {
+  typeErrorMessage(message: string): void {
 
     this.toastr.error(message, this.now() + 'Error!');
   }

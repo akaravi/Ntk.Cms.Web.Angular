@@ -30,7 +30,7 @@ export class AuthSingUpComponent implements OnInit, OnDestroy {
   captchaModel: CaptchaModel = new CaptchaModel();
   expireDate: string;
   aoutoCaptchaOrder = 1;
-
+  passwordIsValid = false;
   dataModel: AuthUserSignUpModel = new AuthUserSignUpModel();
   loading = new ProgressSpinnerModel();
   ngOnInit(): void {
@@ -62,7 +62,9 @@ export class AuthSingUpComponent implements OnInit, OnDestroy {
       this.Roulaccespt = result;
     });
   }
-
+  passwordValid(event):void {
+    this.passwordIsValid = event;
+  }
   onCaptchaOrder(): void {
     this.dataModel.CaptchaText = '';
     this.coreAuthService.ServiceCaptcha().subscribe(
