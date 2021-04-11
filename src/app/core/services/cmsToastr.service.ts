@@ -26,6 +26,9 @@ export class CmsToastrService {
   typeSuccessAddFirstSite(): void {
     this.toastr.success('با موفقیت  اولین سامانه شما اضافه شد', this.now() + 'Success!');
   }
+  typeSuccessMessage(message: string): void {
+    this.toastr.success(message, this.now() + 'Success!');
+  }
   typeSuccessAdd(): void {
     this.toastr.success('با موفقیت اضافه شد', this.now() + 'Success!');
   }

@@ -19,7 +19,6 @@ export class AuthSingInComponent implements OnInit, OnDestroy {
   aoutoCaptchaOrder = 1;
 
   // KeenThemes mock, change it to:
-  loginForm: FormGroup;
   hasError: boolean;
   returnUrl: string;
   isLoading$: Observable<boolean>;
@@ -39,45 +38,12 @@ export class AuthSingInComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.onCaptchaOrder();
-    this.initForm();
     // get return url from route parameters or default to '/'
     this.returnUrl =
       this.route.snapshot.queryParams['returnUrl'.toString()] || '/';
 
   }
 
-  // convenience getter for easy access to form fields
-  get f(): any {
-    return this.loginForm.controls;
-  }
-
-  initForm(): void {
-    this.loginForm = this.fb.group({
-      captcha: [
-        '',
-        Validators.compose([
-          Validators.required
-        ]),
-      ],
-      email: [
-        '',
-        Validators.compose([
-          Validators.required,
-          Validators.email,
-          Validators.minLength(3),
-          Validators.maxLength(320),
-        ]),
-      ],
-      password: [
-        '',
-        Validators.compose([
-          Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(100),
-        ]),
-      ],
-    });
-  }
 
   onActionSubmit(): void {
     this.formInfo.ButtonSubmittedEnabled = false;

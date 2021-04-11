@@ -1,8 +1,7 @@
 <!--begin::Signin-->
 <div class="login-form login-signin">
   <!--begin::Form-->
-  <form class="form" [formGroup]="loginForm" novalidate="novalidate" id="kt_login_signin_form"
-    (ngSubmit)="onActionSubmit()">
+  <form class="form" #vform="ngForm" novalidate="novalidate" id="kt_login_signin_form" (ngSubmit)="onActionSubmit()">
     <!--begin::Title-->
     <div class="pb-13 pt-lg-0 pt-5">
       <h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">
@@ -12,100 +11,75 @@
     </div>
     <!--end::Title-->
 
-    <!-- begin::Alert error-->
-    <ng-container *ngIf="hasError">
-      <div class="mb-10 alert alert-custom alert-light-danger alert-dismissible">
-        <div class="alert-text">The login details are incorrect</div>
-      </div>
-    </ng-container>
-    <!-- end::Alert error-->
+    <!--Mobile Field-->
+    <mat-form-field class="example-full-width">
+      <mat-label> {{'AUTH.INPUT.MOBILE' | translate}}</mat-label>
+      <input matInput [(ngModel)]="dataModel.Mobile" name="dataModel.Mobile"
+        [disabled]=" !formInfo.ButtonSubmittedEnabled" #Mobile type="text" autocomplete="off"
+        class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h4"
+        placeholder=" {{'AUTH.INPUT.MOBILE' | translate}}" minlength="5" maxlength="20" required />
+      <mat-icon matSuffix *ngIf="dataModel.Mobile" matSuffix mat-icon-button aria-label="Clear"
+        (click)="dataModel.Mobile = ''">
+        close</mat-icon>
+      <mat-icon matSuffix>mode_edit</mat-icon>
+      <mat-hint align="end">{{ Mobile.value.length }} / 100</mat-hint>
+      <mat-error *ngIf="Mobile.errors?.required">
+        Mobile is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
 
-    <!--begin::Form group-->
-    <div class="form-group">
-      <label class="font-size-h6 font-weight-bolder text-dark">{{'AUTH.INPUT.EMAIL' | translate}}</label>
-      <input [(ngModel)]="dataModel.Email" [disabled]=" !formInfo.ButtonSubmittedEnabled" class="form-control form-control-solid h-auto py-7 px-6 rounded-lg"
-        type="email" name="email" formControlName="email" autocomplete="off"
-        [ngClass]="{ 'is-invalid': loginForm.controls['email'].invalid }" />
-      <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-          validation: 'required',
-          message: 'لطفا ایمیل خود را وارد کنید',
-          control: loginForm.controls['email']
-        }"></ng-container>
-      <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-          validation: 'email',
-          message: 'ایمیل مورد نظر نامعتبر است',
-          control: loginForm.controls['email']
-        }"></ng-container>
-      <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-          validation: 'minLength',
-          message: 'ایمیل باید حداقل 3 کارکتر داشته باشد',
-          control: loginForm.controls['email']
-        }"></ng-container>
-      <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-          validation: 'maxLength',
-          message: 'ایمیل باید حداکثر دارای 100 کاراکتر باشد',
-          control: loginForm.controls['email']
-        }"></ng-container>
-    </div>
-    <!--end::Form group-->
 
-    <!--begin::Form group-->
-    <div class="form-group">
-      <div class="d-flex justify-content-between mt-n5">
-        <label class="font-size-h6 font-weight-bolder text-dark pt-5">{{'AUTH.INPUT.PASSWORD' | translate}}</label>
+    <!--Email Field-->
+    <mat-form-field class="example-full-width">
+      <mat-label> {{'AUTH.INPUT.EMAIL' | translate}}</mat-label>
+      <input matInput [(ngModel)]="dataModel.Email" name="dataModel.Email"
+        [disabled]=" !formInfo.ButtonSubmittedEnabled" #Email type="text" autocomplete="off"
+        class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h4"
+        placeholder=" {{'AUTH.INPUT.EMAIL' | translate}}" minlength="5" maxlength="20" required />
+      <mat-icon matSuffix *ngIf="dataModel.Email" matSuffix mat-icon-button aria-label="Clear"
+        (click)="dataModel.Email = ''">
+        close</mat-icon>
+      <mat-icon matSuffix>mode_edit</mat-icon>
+      <mat-hint align="end">{{ Email.value.length }} / 100</mat-hint>
+      <mat-error *ngIf="Email.errors?.required">
+        Email is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
 
-      </div>
 
-      <input [(ngModel)]="dataModel.Password" [disabled]=" !formInfo.ButtonSubmittedEnabled" class="form-control form-control-solid h-auto py-7 px-6 rounded-lg"
-        type="password" name="password" autocomplete="off" formControlName="password"
-        [ngClass]="{ 'is-invalid': loginForm.controls['password'].invalid }" />
-      <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-          validation: 'required',
-          message: 'لطفا پسورد خود را وارد کنید' +
-           '',
-          control: loginForm.controls['password']
-        }"></ng-container>
-      <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-          validation: 'minlength',
-          message: 'پسورد باید حداقل 3 کارکتر داشته باشد',
-          control: loginForm.controls['password']
-        }"></ng-container>
-      <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-          validation: 'maxLength',
-          message: 'پسورد باید حداکثر دارای 50 کاراکتر باشد',
-          control: loginForm.controls['password']
-        }"></ng-container>
-    </div>
-    <!--end::Form group-->
 
-    <!--begin::Form group-->
-    <div class="form-group">
-      <img src="{{captchaModel.Image}}" (click)="onCaptchaOrder()" class="mb-3" alt="">
-      <input [(ngModel)]="dataModel.CaptchaText" [disabled]=" !formInfo.ButtonSubmittedEnabled"
-        class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6" type="text"
-        placeholder="{{'AUTH.INPUT.CAPTCHACODE' | translate}}" name="captcha" autocomplete="off"
-        formControlName="captcha" [ngClass]="{'is-invalid': loginForm.controls['captcha'].invalid}" />
-      <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-          validation: 'required',
-          message: 'لطفا کد کپچا را وارد کنید',
-          control: loginForm.controls['captcha']
-        }"></ng-container>
-    </div>
-    <!--end::Form group-->
+
+    <!--CaptchaText Field-->
+    <img src="{{captchaModel.Image}}" (click)="onCaptchaOrder()" class="mb-3" alt="">
+    <mat-form-field class="example-full-width">
+      <mat-label> {{'AUTH.INPUT.CAPTCHACODE' | translate}}</mat-label>
+      <input matInput [(ngModel)]="dataModel.CaptchaText" name="dataModel.CaptchaText"
+        [disabled]=" !formInfo.ButtonSubmittedEnabled" #CaptchaText type="text"
+        class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h4" autocomplete="off"
+        placeholder=" {{'AUTH.INPUT.CAPTCHACODE' | translate}}" required />
+      <mat-icon matSuffix *ngIf="dataModel.CaptchaText" matSuffix mat-icon-button aria-label="Clear"
+        (click)="dataModel.CaptchaText = ''">
+        close</mat-icon>
+      <mat-icon matSuffix>mode_edit</mat-icon>
+      <mat-error *ngIf="CaptchaText.errors?.required">
+        CaptchaText is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+
 
     <!--begin::Action-->
     <div class="pb-lg-0 pb-5">
-      <button  type="submit"
-        class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3" style="margin: 5px;"
-        [disabled]="loginForm.invalid || !formInfo.ButtonSubmittedEnabled">
+      <button type="submit" [disabled]="vform.invalid || !formInfo.ButtonSubmittedEnabled"
+        class="btn btn-primary font-weight-bolder font-size-h4 px-8 py-4 my-3" style="margin: 5px;">
         {{'AUTH.LOGIN.BUTTON' | translate}}
       </button>
-      <button type="button" [routerLink]="['/auth/forgot-password']"
-        class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3" style="margin: 5px;">
+      <button type="button" [routerLink]="['/auth/forgot-password']" [disabled]=" !formInfo.ButtonSubmittedEnabled"
+        class="btn btn-primary font-weight-bolder font-size-h4 px-8 py-4 my-3" style="margin: 5px;">
         {{'AUTH.FORGOT.TITLE' | translate}}
       </button>
-      <button type="button" [routerLink]="['/auth/singup']"
-        class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3" style="margin: 5px;">
+      <button type="button" [routerLink]="['/auth/singup']" [disabled]=" !formInfo.ButtonSubmittedEnabled"
+        class="btn btn-primary font-weight-bolder font-size-h4 px-8 py-4 my-3" style="margin: 5px;">
         {{ 'AUTH.GENERAL.SIGNUP_BUTTON' | translate }}
       </button>
 

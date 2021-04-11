@@ -1,99 +1,142 @@
-import {Component, OnInit} from '@angular/core';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import {Observable, Subscription} from 'rxjs';
-import {first} from 'rxjs/operators';
-import {CaptchaModel, CoreAuthService, AuthUserForgetPasswordModel} from 'ntk-cms-api';
-import {ToastrService} from 'ngx-toastr';
-import {Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Observable, Subscription } from 'rxjs';
+import { first } from 'rxjs/operators';
+import {
+  CaptchaModel,
+  CoreAuthService,
+  AuthUserForgetPasswordModel,
+  AuthUserForgetPasswordEntryPinCodeModel,
+  FormInfoModel
+} from 'ntk-cms-api';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 
 enum ErrorStates {
-    NotSubmitted,
-    HasError,
-    NoError,
+  NotSubmitted,
+  HasError,
+  NoError,
 }
 
 @Component({
-    selector: 'app-auth-forgot-password',
-    templateUrl: './forgot-password.component.html',
-    styleUrls: ['./forgot-password.component.scss'],
+  selector: 'app-auth-forgot-password',
+  templateUrl: './forgot-password.component.html',
+  styleUrls: ['./forgot-password.component.scss'],
 })
 export class AuthForgotPasswordComponent implements OnInit {
-    forgotPasswordForm: FormGroup;
-    errorState: ErrorStates = ErrorStates.NotSubmitted;
-    errorStates = ErrorStates;
-    isLoading$: Observable<boolean>;
-    forgetPasswordModel: AuthUserForgetPasswordModel = new AuthUserForgetPasswordModel();
-    captchaModel: CaptchaModel = new CaptchaModel();
-    // private fields
-    unsubscribe: Subscription[] = [];
+  errorState: ErrorStates = ErrorStates.NotSubmitted;
+  errorStates = ErrorStates;
+  isLoading$: Observable<boolean>;
+  dataModelforgetPasswordBySms: AuthUserForgetPasswordModel = new AuthUserForgetPasswordModel();
+  dataModelforgetPasswordByEmail: AuthUserForgetPasswordModel = new AuthUserForgetPasswordModel();
+  dataModelforgetPasswordEntryPinCode: AuthUserForgetPasswordEntryPinCodeModel = new AuthUserForgetPasswordEntryPinCodeModel();
+  captchaModel: CaptchaModel = new CaptchaModel();
+  // private fields
+  forgetState = 'sms';
+  constructor(
+    private fb: FormBuilder,
+    private coreAuthService: CoreAuthService,
+    private cmsToastrService: CmsToastrService,
+    private router: Router
+  ) {
+    this.RePassword = '';
+  }
+  formInfo: FormInfoModel = new FormInfoModel();
+  passwordIsValid = false;
+  RePassword: string;
+  ngOnInit(): void {
+    this.onCaptchaOrder();
+  }
 
-    constructor(
-        private fb: FormBuilder,
-        private coreAuthService: CoreAuthService,
-        private cmsToastrService: ToastrService,
-        private router: Router
-    ) {
 
-    }
 
-    ngOnInit(): void {
+  onActionSubmitOrderCodeBySms(): void {
+    this.formInfo.ButtonSubmittedEnabled = false;
+    this.errorState = ErrorStates.NotSubmitted;
+    this.dataModelforgetPasswordBySms.CaptchaKey = this.captchaModel.Key;
+    this.dataModelforgetPasswordEntryPinCode.Email = '';
+    this.dataModelforgetPasswordEntryPinCode.Mobile = this.dataModelforgetPasswordByEmail.Mobile;
+    this.coreAuthService
+      .ServiceForgetPassword(this.dataModelforgetPasswordBySms)
+      .subscribe((res) => {
+        if (res.IsSuccess) {
+          this.cmsToastrService.typeSuccessMessage('کد فعال سازی برای پیامک شد');
+          this.forgetState = 'entrycode';
+        }
+        else {
+          this.cmsToastrService.typeErrorMessage(res.ErrorMessage);
+        }
+        this.formInfo.ButtonSubmittedEnabled = true;
         this.onCaptchaOrder();
-        this.initForm();
-    }
-
-    // convenience getter for easy access to form fields
-    get f(): any {
-        return this.forgotPasswordForm.controls;
-    }
-
-    initForm(): void {
-        this.forgotPasswordForm = this.fb.group({
-            email: [
-                '',
-                Validators.compose([
-                    Validators.required,
-                    Validators.email,
-                    Validators.minLength(3),
-                    Validators.maxLength(320),
-                ]),
-            ],
-            mobile: [
-                '',
-                Validators.compose([
-                    Validators.required,
-                    Validators.maxLength(11),
-                ]),
-            ],
-            captcha: [
-                '',
-                Validators.compose([
-                    Validators.required,
-                ]),
-            ]
+      },
+        (error) => {
+          this.cmsToastrService.typeError(error);
+          this.formInfo.ButtonSubmittedEnabled = true;
+          this.onCaptchaOrder();
         });
-    }
-
-    submit(): void {
-        this.errorState = ErrorStates.NotSubmitted;
-        this.forgetPasswordModel.CaptchaKey = this.captchaModel.Key;
-        const forgotPasswordSubscr = this.coreAuthService
-            .ServiceForgetPassword(this.forgetPasswordModel)
-            .pipe(first())
-            .subscribe((res) => {
-                if (res.IsSuccess) {
-                    this.cmsToastrService.success('عملیات با موفقیت انجام شد');
-                    this.router.navigate(['/']);
-                }
-            });
-        this.unsubscribe.push(forgotPasswordSubscr);
-    }
-
-    onCaptchaOrder(): void {
-        this.forgetPasswordModel.CaptchaText = '';
-        this.coreAuthService.ServiceCaptcha().subscribe(
-            (next) => {
-                this.captchaModel = next.Item;
-            }
-        );
-    }
+  }
+  onActionSubmitOrderCodeByEmail(): void {
+    this.formInfo.ButtonSubmittedEnabled = false;
+    this.errorState = ErrorStates.NotSubmitted;
+    this.dataModelforgetPasswordByEmail.CaptchaKey = this.captchaModel.Key;
+    this.dataModelforgetPasswordEntryPinCode.Mobile = '';
+    this.dataModelforgetPasswordEntryPinCode.Email = this.dataModelforgetPasswordByEmail.Email;
+    this.coreAuthService
+      .ServiceForgetPassword(this.dataModelforgetPasswordByEmail)
+      .subscribe((res) => {
+        if (res.IsSuccess) {
+          this.cmsToastrService.typeSuccessMessage('کد فعال سازی برای شما ایمیل شد');
+          this.forgetState = 'entrycode';
+        }
+        else {
+          this.cmsToastrService.typeErrorMessage(res.ErrorMessage);
+        }
+        this.formInfo.ButtonSubmittedEnabled = true;
+        this.onCaptchaOrder();
+      },
+        (error) => {
+          this.cmsToastrService.typeError(error);
+          this.formInfo.ButtonSubmittedEnabled = true;
+          this.onCaptchaOrder();
+        });
+  }
+  onActionSubmitEntryPinCode(): void {
+    this.formInfo.ButtonSubmittedEnabled = false;
+    this.errorState = ErrorStates.NotSubmitted;
+    this.dataModelforgetPasswordEntryPinCode.CaptchaKey = this.captchaModel.Key;
+    this.coreAuthService
+      .ServiceForgetPasswordEntryPinCode(this.dataModelforgetPasswordEntryPinCode)
+      .subscribe((res) => {
+        if (res.IsSuccess) {
+          this.cmsToastrService.typeSuccessMessage('کلمه عبور شما با موفقیت تغییر داده شد.');
+          this.router.navigate(['/']);
+        }
+        else {
+          this.cmsToastrService.typeErrorMessage(res.ErrorMessage);
+        }
+        this.formInfo.ButtonSubmittedEnabled = true;
+        this.onCaptchaOrder();
+      },
+        (error) => {
+          this.cmsToastrService.typeError(error);
+          this.formInfo.ButtonSubmittedEnabled = true;
+          this.onCaptchaOrder();
+        }
+      );
+  }
+  passwordValid(event): void {
+    this.passwordIsValid = event;
+  }
+  onCaptchaOrder(): void {
+    this.dataModelforgetPasswordBySms.CaptchaText = '';
+    this.coreAuthService.ServiceCaptcha().subscribe(
+      (next) => {
+        this.captchaModel = next.Item;
+      }
+    );
+  }
+  changeforgetState(model: string): void {
+    this.forgetState = model;
+  }
 }

@@ -13,7 +13,8 @@ import {
   TokenInfoModel,
   FilterDataModel,
   EnumRecordStatus,
-  DataFieldInfoModel
+  DataFieldInfoModel,
+  AuthRenewTokenModel
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -45,6 +46,7 @@ export class CoreUserListComponent implements OnInit, OnDestroy {
     private cmsToastrService: CmsToastrService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private coreAuthService: CoreAuthService,
     public dialog: MatDialog) {
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
@@ -288,7 +290,34 @@ export class CoreUserListComponent implements OnInit, OnDestroy {
       }
       );
   }
+  onActionbuttonLoginToRow(model: CoreUserModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id === 0) {
 
+      const message = 'ردیفی انتخاب نشده است';
+      this.cmsToastrService.typeErrorSelected(message);
+      return;
+    }
+    this.tableRowSelected = model;
+
+
+    let authModel: AuthRenewTokenModel;
+    authModel = new AuthRenewTokenModel();
+    authModel.UserId = this.tableRowSelected.Id;
+    this.coreAuthService.ServiceRenewToken(authModel).subscribe(
+      (res) => {
+        if (res.IsSuccess) {
+          this.cmsToastrService.typeSuccessSelected();
+          this.router.navigate(['/']);
+        }
+        else {
+          this.cmsToastrService.typeErrorSelected();
+        }
+      },
+      (error) => {
+        this.cmsToastrService.typeError(error);
+      }
+    );
+  }
 
 
   onActionbuttonStatist(): void {

@@ -107,17 +107,25 @@
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #actionMenu="matMenu">
-              <button mat-menu-item (click)="onActionbuttonEditRow(row)">
+              <button mat-menu-item *ngIf="tokenInfo.UserAccessAdminAllowToProfessionalData || row.Id==tokenInfo.UserId"
+                (click)="onActionbuttonEditRow(row)">
                 <mat-icon>mode_edit</mat-icon>
                 <span>ویرایش</span>
               </button>
-              <button mat-menu-item (click)="onActionbuttonChangePassword(row)">
+              <button mat-menu-item *ngIf="tokenInfo.UserAccessAdminAllowToProfessionalData || row.Id==tokenInfo.UserId"
+                (click)="onActionbuttonChangePassword(row)">
                 <mat-icon>lock</mat-icon>
                 <span>تغییر کلمه عبور</span>
               </button>
-              <button mat-menu-item (click)="onActionbuttonDeleteRow(row)">
+              <button mat-menu-item *ngIf="tokenInfo.UserAccessAdminAllowToProfessionalData"
+                (click)="onActionbuttonDeleteRow(row)">
                 <mat-icon>delete_forever</mat-icon>
                 <span>حذف</span>
+              </button>
+              <button mat-menu-item *ngIf="tokenInfo.UserAccessAdminAllowToProfessionalData"
+                (click)="onActionbuttonLoginToRow(row)">
+                <mat-icon>login</mat-icon>
+                <span>ورود به این کاربر</span>
               </button>
               <button mat-menu-item (click)="onActionbuttonSiteList(row)">
                 <mat-icon>supervised_user_circle</mat-icon>

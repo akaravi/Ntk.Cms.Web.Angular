@@ -28,6 +28,11 @@ const routes: Routes = [
           import('../modules/coreToken/coreToken.module').then(m => m.CoreTokenModule)
       },
       {
+        path: 'corelog',
+        loadChildren: () =>
+          import('../modules/coreLog/coreLog.module').then(m => m.CoreLogModule)
+      },
+      {
         path: 'apitelegram',
         loadChildren: () =>
           import('../modules/apiTelegram/apiTelegram.module').then(m => m.ApiTelegramModule)
