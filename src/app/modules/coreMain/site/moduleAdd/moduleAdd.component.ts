@@ -61,10 +61,7 @@ export class CoreSiteModuleAddComponent implements OnInit {
   dataAccessModel: AccessModel;
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
-  formMatcher = new CmsFormsErrorStateMatcher();
-  formControlRequired = new FormControl('', [
-    Validators.required,
-  ]);
+
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<CoreModuleSiteModel> = new ErrorExceptionResult<CoreModuleSiteModel>();
   dataModel: CoreModuleSiteModel = new CoreModuleSiteModel();

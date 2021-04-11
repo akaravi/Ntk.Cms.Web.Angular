@@ -7,6 +7,7 @@ import {
   EnumModel,
   ErrorExceptionResult,
   FormInfoModel,
+  TicketingDepartemenModel,
 } from 'ntk-cms-api';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
@@ -22,36 +23,34 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
   styleUrls: ['./add.component.scss']
 })
 export class TicketingTemplateAddComponent implements OnInit {
+  requestParentId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
     private dialogRef: MatDialogRef<TicketingTemplateAddComponent>,
     public coreEnumService: CoreEnumService,
     public ticketingTemplateService: TicketingTemplateService,
-    private cmsToastrService: CmsToastrService
+    private cmsToastrService: CmsToastrService,
+    public publicHelper: PublicHelper,
   ) {
     if (data) {
       this.requestParentId = +data.parentId || 0;
     }
-
+    if (this.requestParentId > 0) {
+      this.dataModel.LinkTicketingDepartemenId = this.requestParentId;
+    }
   }
-  requestParentId = 0;
-
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
   formMatcher = new CmsFormsErrorStateMatcher();
-
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<TicketingTemplateModel> = new ErrorExceptionResult<TicketingTemplateModel>();
   dataModel: TicketingTemplateModel = new TicketingTemplateModel();
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
-
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
-
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
 
 
   ngOnInit(): void {
-
     this.formInfo.FormTitle = 'ثبت محتوای جدید';
     this.getEnumRecordStatus();
   }
@@ -70,10 +69,6 @@ export class TicketingTemplateAddComponent implements OnInit {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    if (this.requestParentId > 0) {
-      this.dataModel.LinkTicketingDepartemenId = this.requestParentId;
-    }
-
     this.ticketingTemplateService.ServiceAdd(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormSubmitAllow = true;
@@ -82,10 +77,10 @@ export class TicketingTemplateAddComponent implements OnInit {
           this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
           this.cmsToastrService.typeSuccessAdd();
           this.dialogRef.close({ dialogChangedDate: true });
-              } else {
+        } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
-          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
         }
         this.loading.display = false;
       },
@@ -110,10 +105,10 @@ export class TicketingTemplateAddComponent implements OnInit {
           this.cmsToastrService.typeSuccessEdit();
           this.dialogRef.close({ dialogChangedDate: true });
 
-              } else {
+        } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
-          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
         }
         this.loading.display = false;
       },
@@ -123,6 +118,14 @@ export class TicketingTemplateAddComponent implements OnInit {
         this.loading.display = false;
       }
     );
+  }
+  onActionSelectorSelect(model: TicketingDepartemenModel | null): void {
+    if (!model || model.Id <= 0) {
+      const message = 'دپارتمان اطلاعات مشخص نیست';
+      this.cmsToastrService.typeErrorSelected(message);
+      return;
+    }
+    this.dataModel.LinkTicketingDepartemenId = model.Id;
   }
   onFormSubmit(): void {
     if (!this.formGroup.valid) {

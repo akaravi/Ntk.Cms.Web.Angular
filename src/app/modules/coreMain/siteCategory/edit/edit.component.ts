@@ -48,10 +48,7 @@ export class CoreSiteCategoryEditComponent implements OnInit {
 
   fileManagerTree: TreeModel;
   appLanguage = 'fa';
-  formMatcher = new CmsFormsErrorStateMatcher();
-  formControlRequired = new FormControl('', [
-    Validators.required,
-  ]);
+
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<CoreSiteCategoryModel> = new ErrorExceptionResult<CoreSiteCategoryModel>();
   dataModel: CoreSiteCategoryModel = new CoreSiteCategoryModel();

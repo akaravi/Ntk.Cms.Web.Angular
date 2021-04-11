@@ -13,7 +13,8 @@ import {
   NtkCmsApiStoreService,
   TokenInfoModel,
   EnumRecordStatus,
-  DataFieldInfoModel
+  DataFieldInfoModel,
+  EnumClauseType
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -32,6 +33,8 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./list.component.scss']
 })
 export class TicketingDepartemenLogListComponent implements OnInit, OnDestroy {
+  requestDepartemenId = 0;
+  requestOperatorId = 0;
   constructor(
     private ticketingDepartemenLogService: TicketingDepartemenLogService,
     private activatedRoute: ActivatedRoute,
@@ -44,7 +47,7 @@ export class TicketingDepartemenLogListComponent implements OnInit, OnDestroy {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
   }
-  requestSourceId = 0;
+
   comment: string;
   author: string;
   dataSource: any;
@@ -73,19 +76,39 @@ export class TicketingDepartemenLogListComponent implements OnInit, OnDestroy {
     'Action'
   ];
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
-
-
   expandedElement: TicketingDepartemenLogModel | null;
   cmsApiStoreSubscribe: Subscription;
 
   ngOnInit(): void {
-    this.requestSourceId = + Number(this.activatedRoute.snapshot.paramMap.get('SourceId'));
+    this.requestDepartemenId = + Number(this.activatedRoute.snapshot.paramMap.get('DepartemenId'));
+    this.requestOperatorId = + Number(this.activatedRoute.snapshot.paramMap.get('OperatorId'));
     this.DataGetAll();
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
     });
+    let filter = new FilterDataModel();
+    if (this.requestOperatorId > 0) {
+      filter.PropertyName = 'LinkFromOperatorId';
+      filter.Value = this.requestOperatorId;
+      this.filteModelContent.Filters.push(filter);
+    }
+
+    if (this.requestDepartemenId > 0) {
+      filter = new FilterDataModel();
+      filter.PropertyName = 'LinkFromTicketingDepartemenId';
+      filter.Value = this.requestDepartemenId;
+      filter.ClauseType = EnumClauseType.Or;
+      this.filteModelContent.Filters.push(filter);
+      /*filter*/
+      filter = new FilterDataModel();
+      filter.PropertyName = 'LinkToTicketingDepartemenId';
+      filter.Value = this.requestDepartemenId;
+      filter.ClauseType = EnumClauseType.Or;
+      this.filteModelContent.Filters.push(filter);
+    }
+
   }
   ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
@@ -98,19 +121,10 @@ export class TicketingDepartemenLogListComponent implements OnInit, OnDestroy {
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
-    const filter = new FilterDataModel();
-    if (this.requestSourceId > 0) {
-
-      filter.PropertyName = 'LinkSourceId';
-      filter.Value = this.requestSourceId;
-      this.filteModelContent.Filters.push(filter);
-    }
-    if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
-      filter.PropertyName = 'LinkSourceId';
-      filter.Value = this.categoryModelSelected.Id;
-      this.filteModelContent.Filters.push(filter);
-    }
-    this.ticketingDepartemenLogService.ServiceGetAll(this.filteModelContent).subscribe(
+    /*filter CLone*/
+    const filterModel = JSON.parse(JSON.stringify(this.filteModelContent));
+    /*filter CLone*/
+    this.ticketingDepartemenLogService.ServiceGetAll(filterModel).subscribe(
       (next) => {
         this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
 
@@ -130,12 +144,7 @@ export class TicketingDepartemenLogListComponent implements OnInit, OnDestroy {
               'LinkSiteId'
             );
           }
-          if (this.requestSourceId === 0) {
-            this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
-              this.tabledisplayedColumns,
-              'LinkSourceId'
-            );
-          }
+
           if (this.optionsSearch.childMethods) {
             this.optionsSearch.childMethods.setAccess(next.Access);
           }
@@ -182,36 +191,6 @@ export class TicketingDepartemenLogListComponent implements OnInit, OnDestroy {
   }
 
 
-  onActionbuttonNewRow(): void {
-    if (
-      this.requestSourceId == null ||
-      this.requestSourceId === 0
-    ) {
-      const message = 'محتوا انتخاب نشده است';
-      this.cmsToastrService.typeErrorSelected(message);
-
-      return;
-    }
-    if (
-      this.dataModelResult == null ||
-      this.dataModelResult.Access == null ||
-      !this.dataModelResult.Access.AccessAddRow
-    ) {
-      this.cmsToastrService.typeErrorAccessAdd();
-      return;
-    }
-    // const dialogRef = this.dialog.open(NewsCommentEditComponent, {
-    //   data: { contentId: this.requestContentId }
-    // });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   // console.log(`Dialog result: ${result}`);
-    //   if (result && result.dialogChangedDate) {
-    //     this.DataGetAll();
-    //   }
-    // });
-    this.router.navigate(['/application/app/add/', this.requestSourceId]);
-
-  }
 
   onActionSelectorSelect(model: ApplicationSourceModel | null): void {
     this.filteModelContent = new FilterModel();

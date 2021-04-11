@@ -57,10 +57,7 @@ export class CoreLogErrorEditComponent implements OnInit, OnDestroy {
   }
   tokenInfo = new TokenInfoModel();
 
-  formMatcher = new CmsFormsErrorStateMatcher();
-  formControlRequired = new FormControl('', [
-    Validators.required,
-  ]);
+
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<CoreLogErrorModel> = new ErrorExceptionResult<CoreLogErrorModel>();
   dataModel: CoreLogErrorModel = new CoreLogErrorModel();

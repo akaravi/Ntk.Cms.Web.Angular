@@ -62,10 +62,7 @@ export class CoreSiteCategoryCmsModuleAddComponent implements OnInit {
   dataAccessModel: AccessModel;
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
-  formMatcher = new CmsFormsErrorStateMatcher();
-  formControlRequired = new FormControl('', [
-    Validators.required,
-  ]);
+
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<CoreSiteCategoryCmsModuleModel> = new ErrorExceptionResult<CoreSiteCategoryCmsModuleModel>();
   dataModel: CoreSiteCategoryCmsModuleModel = new CoreSiteCategoryCmsModuleModel();

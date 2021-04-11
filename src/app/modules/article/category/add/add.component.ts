@@ -49,10 +49,7 @@ export class ArticleCategoryAddComponent implements OnInit {
 
   fileManagerTree: TreeModel;
   appLanguage = 'fa';
-  formMatcher = new CmsFormsErrorStateMatcher();
-  formControlRequired = new FormControl('', [
-    Validators.required,
-  ]);
+
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<ArticleCategoryModel> = new ErrorExceptionResult<ArticleCategoryModel>();
   dataModel: ArticleCategoryModel = new ArticleCategoryModel();

@@ -31,7 +31,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class TicketingDepartemenOperatorListComponent implements OnInit , OnDestroy {
+export class TicketingDepartemenOperatorListComponent implements OnInit, OnDestroy {
   constructor(
     private ticketingDepartemenOperatorService: TicketingDepartemenOperatorService,
     private activatedRoute: ActivatedRoute,
@@ -100,18 +100,21 @@ export class TicketingDepartemenOperatorListComponent implements OnInit , OnDest
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
+    /*filter CLone*/
+    const filterModel = JSON.parse(JSON.stringify(this.filteModelContent));
+    /*filter CLone*/
     const filter = new FilterDataModel();
     if (this.requestDepartemenId > 0) {
       filter.PropertyName = 'LinkSourceId';
       filter.Value = this.requestDepartemenId;
-      this.filteModelContent.Filters.push(filter);
+      filterModel.Filters.push(filter);
     }
     if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
       filter.PropertyName = 'LinkSourceId';
       filter.Value = this.categoryModelSelected.Id;
-      this.filteModelContent.Filters.push(filter);
+      filterModel.Filters.push(filter);
     }
-    this.ticketingDepartemenOperatorService.ServiceGetAll(this.filteModelContent).subscribe(
+    this.ticketingDepartemenOperatorService.ServiceGetAll(filterModel).subscribe(
       (next) => {
         this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
         if (next.IsSuccess) {

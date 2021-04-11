@@ -10,10 +10,8 @@ import {
   Component,
   OnInit,
   ViewChild,
-  ChangeDetectorRef,
   Inject,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
@@ -39,36 +37,19 @@ export class TicketingDepartemenAddComponent implements OnInit {
     public ticketingDepartemenService: TicketingDepartemenService,
     private cmsToastrService: CmsToastrService
   ) {
-
-
     this.fileManagerTree = new TreeModel();
   }
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
-
   fileManagerTree: TreeModel;
   appLanguage = 'fa';
-  formMatcher = new CmsFormsErrorStateMatcher();
-  formControlRequired = new FormControl('', [
-    Validators.required,
-  ]);
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<TicketingDepartemenModel> = new ErrorExceptionResult<TicketingDepartemenModel>();
   dataModel: TicketingDepartemenModel = new TicketingDepartemenModel();
-
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
-
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
-
   fileManagerOpenForm = false;
-
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
-  onActionFileSelected(model: NodeInterface): void {
-    this.dataModel.LinkMainImageId = model.id;
-    this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
-
-  }
-
   ngOnInit(): void {
 
     this.formInfo.FormTitle = 'اضافه کردن  ';
@@ -84,27 +65,28 @@ export class TicketingDepartemenAddComponent implements OnInit {
       this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
     }
   }
-
-
-  DataEditContent(): void {
+  onActionFileSelected(model: NodeInterface): void {
+    this.dataModel.LinkMainImageId = model.id;
+    this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
+  }
+  DataAddContent(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.ticketingDepartemenService.ServiceEdit(this.dataModel).subscribe(
+    this.ticketingDepartemenService.ServiceAdd(this.dataModel).subscribe(
       (next) => {
-        this.formInfo.FormSubmitAllow = true;
         this.dataModelResult = next;
         if (next.IsSuccess) {
           this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
-          this.cmsToastrService.typeSuccessEdit();
+          this.cmsToastrService.typeSuccessAdd();
           this.dialogRef.close({ dialogChangedDate: true });
-
-              } else {
+        } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
-          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
         }
         this.loading.display = false;
+        this.formInfo.FormSubmitAllow = true;
       },
       (error) => {
         this.formInfo.FormSubmitAllow = true;
@@ -118,10 +100,7 @@ export class TicketingDepartemenAddComponent implements OnInit {
       return;
     }
     this.formInfo.FormSubmitAllow = false;
-
-    this.DataEditContent();
-
-
+    this.DataAddContent();
   }
   onFormCancel(): void {
     this.dialogRef.close({ dialogChangedDate: false });

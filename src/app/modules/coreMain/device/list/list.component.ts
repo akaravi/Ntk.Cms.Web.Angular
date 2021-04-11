@@ -129,8 +129,10 @@ export class CoreDeviceListComponent implements OnInit, OnDestroy {
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
-
-    this.coreDeviceService.ServiceGetAll(this.filteModelContent).subscribe(
+    /*filter CLone*/
+    const filterModel = JSON.parse(JSON.stringify(this.filteModelContent));
+    /*filter CLone*/
+    this.coreDeviceService.ServiceGetAll(filterModel).subscribe(
       (next) => {
         this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
         if (next.IsSuccess) {

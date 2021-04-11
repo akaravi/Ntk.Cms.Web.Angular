@@ -110,17 +110,18 @@ export class BiographyCommentListComponent implements OnInit, OnDestroy {
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
+    /*filter CLone*/
+    const filterModel = JSON.parse(JSON.stringify(this.filteModelContent));
+    /*filter CLone*/
     if (this.requestContentId > 0) {
       const filter = new FilterDataModel();
       filter.PropertyName = 'linkContentId';
       filter.Value = this.requestContentId;
-      this.filteModelContent.Filters.push(filter);
+      filterModel.Filters.push(filter);
     }
-    this.biographyCommentService.ServiceGetAll(this.filteModelContent).subscribe(
+    this.biographyCommentService.ServiceGetAll(filterModel).subscribe(
       (next) => {
         this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
-
-
         if (next.IsSuccess) {
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;

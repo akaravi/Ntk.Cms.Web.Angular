@@ -50,10 +50,7 @@ export class BlogCategoryEditComponent implements OnInit {
 
   fileManagerTree: TreeModel;
   appLanguage = 'fa';
-  formMatcher = new CmsFormsErrorStateMatcher();
-  formControlRequired = new FormControl('', [
-    Validators.required,
-  ]);
+
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<BlogCategoryModel> = new ErrorExceptionResult<BlogCategoryModel>();
   dataModel: BlogCategoryModel = new BlogCategoryModel();

@@ -95,13 +95,16 @@ export class ArticleContentListComponent implements OnInit, OnDestroy {
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
+    /*filter CLone*/
+    const filterModel = JSON.parse(JSON.stringify(this.filteModelContent));
+    /*filter CLone*/
     if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
       const fastfilter = new FilterDataModel();
       fastfilter.PropertyName = 'LinkCategoryId';
       fastfilter.Value = this.categoryModelSelected.Id;
-      this.filteModelContent.Filters.push(fastfilter);
+      filterModel.Filters.push(fastfilter);
     }
-    this.articleContentService.ServiceGetAll(this.filteModelContent).subscribe(
+    this.articleContentService.ServiceGetAll(filterModel).subscribe(
       (next) => {
         this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
 

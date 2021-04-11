@@ -97,18 +97,21 @@ export class TicketingTemplateListComponent implements OnInit, OnDestroy {
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
+    /*filter CLone*/
+    const filterModel = JSON.parse(JSON.stringify(this.filteModelContent));
+    /*filter CLone*/
     const filter = new FilterDataModel();
     if (this.requestDepartemenId > 0) {
       filter.PropertyName = 'LinkTicketingDepartemenId';
       filter.Value = this.requestDepartemenId;
-      this.filteModelContent.Filters.push(filter);
+      filterModel.Filters.push(filter);
     }
     if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
       filter.PropertyName = 'LinkTicketingDepartemenId';
       filter.Value = this.categoryModelSelected.Id;
-      this.filteModelContent.Filters.push(filter);
+      filterModel.Filters.push(filter);
     }
-    this.ticketingTemplateService.ServiceGetAll(this.filteModelContent).subscribe(
+    this.ticketingTemplateService.ServiceGetAll(filterModel).subscribe(
       (next) => {
         this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
         if (next.IsSuccess) {
@@ -194,7 +197,7 @@ export class TicketingTemplateListComponent implements OnInit, OnDestroy {
       parentId = this.categoryModelSelected.Id;
     }
     const dialogRef = this.dialog.open(TicketingTemplateAddComponent, {
-      data: { requestParentId: parentId }
+      data: { parentId }
     });
     dialogRef.afterClosed().subscribe(result => {
       // console.log(`Dialog result: ${result}`);

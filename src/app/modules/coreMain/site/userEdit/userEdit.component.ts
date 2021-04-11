@@ -58,10 +58,7 @@ requestLinkUserGroupId = 0;
   }
 
 
-  formMatcher = new CmsFormsErrorStateMatcher();
-  formControlRequired = new FormControl('', [
-    Validators.required,
-  ]);
+
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<CoreSiteUserModel> = new ErrorExceptionResult<CoreSiteUserModel>();
   dataModel: CoreSiteUserModel = new CoreSiteUserModel();

@@ -108,13 +108,16 @@ export class ArticleCommentListComponent implements OnInit, OnDestroy {
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
+    /*filter CLone*/
+    const filterModel = JSON.parse(JSON.stringify(this.filteModelContent));
+    /*filter CLone*/
     if (this.requestContentId > 0) {
       const filter = new FilterDataModel();
       filter.PropertyName = 'linkContentId';
       filter.Value = this.requestContentId;
-      this.filteModelContent.Filters.push(filter);
+      filterModel.Filters.push(filter);
     }
-    this.articleCommentService.ServiceGetAll(this.filteModelContent).subscribe(
+    this.articleCommentService.ServiceGetAll(filterModel).subscribe(
       (next) => {
         this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
 

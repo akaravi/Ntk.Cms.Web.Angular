@@ -63,10 +63,7 @@ export class CoreUserChangePasswordComponent implements OnInit, OnDestroy {
   NewPasswordRepeat: string;
   passwordIsValid = false;
 
-  formMatcher = new CmsFormsErrorStateMatcher();
-  formControlRequired = new FormControl('', [
-    Validators.required,
-  ]);
+
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<CoreUserModel> = new ErrorExceptionResult<CoreUserModel>();
   dataModel: AuthUserChangePasswordModel = new AuthUserChangePasswordModel();

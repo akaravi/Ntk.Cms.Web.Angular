@@ -5,11 +5,8 @@ import {
   FormInfoModel,
   CoreLogSmsService,
   CoreLogSmsModel,
-  CoreSiteModel,
   TokenInfoModel,
   NtkCmsApiStoreService,
-  CoreUserModel,
-  MemberUserModel,
   DataFieldInfoModel,
   CoreUserService,
 } from 'ntk-cms-api';
@@ -20,15 +17,10 @@ import {
   Inject,
   OnDestroy,
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
-import {
-  TreeModel,
-  NodeInterface,
-} from 'ntk-cms-filemanager';
-import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 import { Subscription } from 'rxjs';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -57,10 +49,7 @@ export class CoreLogSmsEditComponent implements OnInit, OnDestroy {
   }
   tokenInfo = new TokenInfoModel();
 
-  formMatcher = new CmsFormsErrorStateMatcher();
-  formControlRequired = new FormControl('', [
-    Validators.required,
-  ]);
+
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<CoreLogSmsModel> = new ErrorExceptionResult<CoreLogSmsModel>();
   dataModel: CoreLogSmsModel = new CoreLogSmsModel();

@@ -10,7 +10,7 @@ import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
   templateUrl: './singin.component.html',
   styleUrls: ['./singin.component.scss'],
 })
-export class AuthSingInComponent implements OnInit, OnDestroy {
+export class AuthSingInComponent implements OnInit {
   formInfo: FormInfoModel = new FormInfoModel();
 
   dataModel: AuthUserSignInModel = new AuthUserSignInModel();
@@ -22,10 +22,7 @@ export class AuthSingInComponent implements OnInit, OnDestroy {
   hasError: boolean;
   returnUrl: string;
   isLoading$: Observable<boolean>;
-
-  // private fields
-  unsubscribe: Subscription[] = [];
-
+  loginType = 'email';
   constructor(
     private cmsToastrService: CmsToastrService,
     private fb: FormBuilder,
@@ -66,7 +63,9 @@ export class AuthSingInComponent implements OnInit, OnDestroy {
       }
     );
   }
-
+  onloginTypeChange(model: string): void {
+    this.loginType = model;
+  }
   onCaptchaOrder(): void {
     this.dataModel.CaptchaText = '';
     this.coreAuthService.ServiceCaptcha().subscribe(
@@ -88,7 +87,4 @@ export class AuthSingInComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnDestroy(): void {
-    this.unsubscribe.forEach((sb) => sb.unsubscribe());
-  }
 }

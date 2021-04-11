@@ -57,10 +57,7 @@ export class CoreTokenUserLogEditComponent implements OnInit, OnDestroy {
   }
   tokenInfo = new TokenInfoModel();
 
-  formMatcher = new CmsFormsErrorStateMatcher();
-  formControlRequired = new FormControl('', [
-    Validators.required,
-  ]);
+
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<CoreTokenUserLogModel> = new ErrorExceptionResult<CoreTokenUserLogModel>();
   dataModel: CoreTokenUserLogModel = new CoreTokenUserLogModel();

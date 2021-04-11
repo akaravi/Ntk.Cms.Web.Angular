@@ -45,10 +45,7 @@ export class CoreSiteDomainAliasEditComponent implements OnInit {
 
   }
 
-  formMatcher = new CmsFormsErrorStateMatcher();
-  formControlRequired = new FormControl('', [
-    Validators.required,
-  ]);
+
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<CoreSiteDomainAliasModel> = new ErrorExceptionResult<CoreSiteDomainAliasModel>();
   dataModel: CoreSiteDomainAliasModel = new CoreSiteDomainAliasModel();

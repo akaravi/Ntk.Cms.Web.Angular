@@ -181,7 +181,15 @@
     <mat-step label="دسترسی ها" state="seo">
       <p>دسترسی ها به این محتوا را مشخص کنید</p>
 
-
+    <!-- ShowInMenu Field -->
+    <div class="example-full-width">
+      <mat-slide-toggle [(ngModel)]="dataModel.ShowInMenu"
+        *ngIf="fieldsInfo['ShowInMenu']?.AccessWatchField"
+        [disabled]="!fieldsInfo['ShowInMenu']?.AccessEditField"
+        name="dataModel.ShowInMenu">
+        {{fieldsInfo['ShowInMenu']?.FieldTitle}}
+      </mat-slide-toggle>
+    </div>
       <!-- ShowInAccessAdminAllowToProfessionalData Field -->
       <div class="example-full-width">
         <mat-slide-toggle [(ngModel)]="dataModel.ShowInAccessAdminAllowToProfessionalData"

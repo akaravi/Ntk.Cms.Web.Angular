@@ -54,10 +54,7 @@ export class CoreGuideEditComponent implements OnInit {
   requestId = 0;
 
   appLanguage = 'fa';
-  formMatcher = new CmsFormsErrorStateMatcher();
-  formControlRequired = new FormControl('', [
-    Validators.required,
-  ]);
+
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<CoreGuideModel> = new ErrorExceptionResult<CoreGuideModel>();
   dataModel: CoreGuideModel = new CoreGuideModel();

@@ -7,6 +7,7 @@ import {
   EnumModel,
   ErrorExceptionResult,
   FormInfoModel,
+  TicketingDepartemenModel,
 } from 'ntk-cms-api';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
@@ -29,7 +30,8 @@ export class TicketingFaqEditComponent implements OnInit {
     private dialogRef: MatDialogRef<TicketingFaqEditComponent>,
     public coreEnumService: CoreEnumService,
     public ticketingFaqService: TicketingFaqService,
-    private cmsToastrService: CmsToastrService
+    private cmsToastrService: CmsToastrService,
+    public publicHelper: PublicHelper,
   ) {
     if (data) {
       this.requestId = +data.id || 0;
@@ -65,16 +67,13 @@ export class TicketingFaqEditComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-    if (this.requestId > 0) {
-      this.formInfo.FormTitle = 'ویرایش  دسته بندی';
-      this.DataGetOneContent();
-    } else {
+    this.formInfo.FormTitle = 'ویرایش  ';
+    if (this.requestId <= 0) {
       this.cmsToastrService.typeErrorComponentAction();
       this.dialogRef.close({ dialogChangedDate: false });
       return;
     }
-
-
+    this.DataGetOneContent();
     this.getEnumRecordStatus();
   }
   getEnumRecordStatus(): void {
@@ -109,16 +108,16 @@ export class TicketingFaqEditComponent implements OnInit {
           if (this.dataModel.LinkFileIds && this.dataModel.LinkFileIds.length > 0) {
             this.dataModel.LinkFileIds.split(',').forEach((element, index) => {
               let link = '';
-              if (this.dataModel.LinkFileIds.length >= this.dataModel.LinkFileIds.length) {
-                link = this.dataModel.LinkFileIds[index];
+              if (this.dataModel.LinkFileIdsSrc.length >= this.dataModel.LinkFileIdsSrc.length) {
+                link = this.dataModel.LinkFileIdsSrc[index];
               }
               this.dataFileModel.set(+element, link);
             });
           }
-              } else {
+        } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
-          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
         }
         this.loading.display = false;
       },
@@ -135,7 +134,10 @@ export class TicketingFaqEditComponent implements OnInit {
     this.loading.display = true;
     this.dataModel.LinkFileIds = '';
     if (this.dataFileModel) {
-      this.dataModel.LinkFileIds = this.dataFileModel.keys.toString();
+      const keys = Array.from(this.dataFileModel.keys());
+      if (keys && keys.length > 0) {
+        this.dataModel.LinkFileIds = keys.join(',');
+      }
     }
     this.ticketingFaqService.ServiceEdit(this.dataModel).subscribe(
       (next) => {
@@ -146,10 +148,10 @@ export class TicketingFaqEditComponent implements OnInit {
           this.cmsToastrService.typeSuccessEdit();
           this.dialogRef.close({ dialogChangedDate: true });
 
-              } else {
+        } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
-          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
         }
         this.loading.display = false;
       },
@@ -159,6 +161,14 @@ export class TicketingFaqEditComponent implements OnInit {
         this.loading.display = false;
       }
     );
+  }
+  onActionSelectorSelect(model: TicketingDepartemenModel | null): void {
+    if (!model || model.Id <= 0) {
+      const message = 'دپارتمان اطلاعات مشخص نیست';
+      this.cmsToastrService.typeErrorSelected(message);
+      return;
+    }
+    this.dataModel.LinkTicketingDepartemenId = model.Id;
   }
   onFormSubmit(): void {
     if (!this.formGroup.valid) {

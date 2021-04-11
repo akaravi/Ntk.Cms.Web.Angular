@@ -48,26 +48,15 @@ export class CoreCpMainMenuAddComponent implements OnInit {
     }
 
   }
-
-  formMatcher = new CmsFormsErrorStateMatcher();
-  formControlRequired = new FormControl('', [
-    Validators.required,
-  ]);
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<CoreCpMainMenuModel> = new ErrorExceptionResult<CoreCpMainMenuModel>();
   dataModel: CoreCpMainMenuModel = new CoreCpMainMenuModel();
-
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
-
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   dataModelEnumMenuPlaceTypeResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
-
   fileManagerOpenForm = false;
-
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
-
-
   ngOnInit(): void {
 
     this.formInfo.FormTitle = 'اضافه کردن  ';
@@ -90,18 +79,17 @@ export class CoreCpMainMenuAddComponent implements OnInit {
     }
   }
 
-
-  DataEditContent(): void {
+  DataAddContent(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.coreCpMainMenuService.ServiceEdit(this.dataModel).subscribe(
+    this.coreCpMainMenuService.ServiceAdd(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormSubmitAllow = true;
         this.dataModelResult = next;
         if (next.IsSuccess) {
           this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
-          this.cmsToastrService.typeSuccessEdit();
+          this.cmsToastrService.typeSuccessAdd();
           this.dialogRef.close({ dialogChangedDate: true });
 
               } else {
@@ -129,10 +117,7 @@ export class CoreCpMainMenuAddComponent implements OnInit {
       return;
     }
     this.formInfo.FormSubmitAllow = false;
-
-    this.DataEditContent();
-
-
+    this.DataAddContent();
   }
   onFormCancel(): void {
     this.dialogRef.close({ dialogChangedDate: false });

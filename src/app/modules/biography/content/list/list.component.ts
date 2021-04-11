@@ -93,13 +93,16 @@ export class BiographyContentListComponent implements OnInit, OnDestroy {
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
+    /*filter CLone*/
+    const filterModel = JSON.parse(JSON.stringify(this.filteModelContent));
+    /*filter CLone*/
     if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
       const filter = new FilterDataModel();
       filter.PropertyName = 'LinkCategoryId';
       filter.Value = this.categoryModelSelected.Id;
-      this.filteModelContent.Filters.push(filter);
+      filterModel.Filters.push(filter);
     }
-    this.biographyContentService.ServiceGetAll(this.filteModelContent).subscribe(
+    this.biographyContentService.ServiceGetAll(filterModel).subscribe(
       (next) => {
         this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
 

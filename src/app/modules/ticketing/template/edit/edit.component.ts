@@ -7,6 +7,7 @@ import {
   EnumModel,
   ErrorExceptionResult,
   FormInfoModel,
+  TicketingDepartemenModel,
 } from 'ntk-cms-api';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
@@ -29,7 +30,8 @@ export class TicketingTemplateEditComponent implements OnInit {
     private dialogRef: MatDialogRef<TicketingTemplateEditComponent>,
     public coreEnumService: CoreEnumService,
     public ticketingTemplateService: TicketingTemplateService,
-    private cmsToastrService: CmsToastrService
+    private cmsToastrService: CmsToastrService,
+    public publicHelper: PublicHelper,
   ) {
     if (data) {
       this.requestId = +data.id || 0;
@@ -136,6 +138,14 @@ export class TicketingTemplateEditComponent implements OnInit {
         this.loading.display = false;
       }
     );
+  }
+  onActionSelectorSelect(model: TicketingDepartemenModel | null): void {
+    if (!model || model.Id <= 0) {
+      const message = 'دپارتمان اطلاعات مشخص نیست';
+      this.cmsToastrService.typeErrorSelected(message);
+      return;
+    }
+    this.dataModel.LinkTicketingDepartemenId = model.Id;
   }
   onFormSubmit(): void {
     if (!this.formGroup.valid) {

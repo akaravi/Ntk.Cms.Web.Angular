@@ -57,10 +57,7 @@ export class CoreTokenUserBadLoginEditComponent implements OnInit, OnDestroy {
   }
   tokenInfo = new TokenInfoModel();
 
-  formMatcher = new CmsFormsErrorStateMatcher();
-  formControlRequired = new FormControl('', [
-    Validators.required,
-  ]);
+
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<CoreTokenUserBadLoginModel> = new ErrorExceptionResult<CoreTokenUserBadLoginModel>();
   dataModel: CoreTokenUserBadLoginModel = new CoreTokenUserBadLoginModel();

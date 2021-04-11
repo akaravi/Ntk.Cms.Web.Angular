@@ -60,10 +60,7 @@ export class CoreSiteCategoryCmsModuleEditComponent implements OnInit {
 
 
 
-  formMatcher = new CmsFormsErrorStateMatcher();
-  formControlRequired = new FormControl('', [
-    Validators.required,
-  ]);
+
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<CoreSiteCategoryCmsModuleModel> = new ErrorExceptionResult<CoreSiteCategoryCmsModuleModel>();
   dataModel: CoreSiteCategoryCmsModuleModel = new CoreSiteCategoryCmsModuleModel();

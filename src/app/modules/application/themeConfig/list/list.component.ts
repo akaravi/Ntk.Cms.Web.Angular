@@ -99,19 +99,22 @@ export class ApplicationThemeConfigListComponent implements OnInit, OnDestroy {
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
+    /*filter CLone*/
+    const filterModel = JSON.parse(JSON.stringify(this.filteModelContent));
+    /*filter CLone*/
     const filter = new FilterDataModel();
     if (this.requestSourceId > 0) {
       filter.PropertyName = 'LinkSourceId';
       filter.Value = this.requestSourceId;
-      this.filteModelContent.Filters.push(filter);
+      filterModel.Filters.push(filter);
     }
     if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
 
       filter.PropertyName = 'LinkSourceId';
       filter.Value = this.requestSourceId;
-      this.filteModelContent.Filters.push(filter);
+      filterModel.Filters.push(filter);
     }
-    this.applicationThemeConfigService.ServiceGetAll(this.filteModelContent).subscribe(
+    this.applicationThemeConfigService.ServiceGetAll(filterModel).subscribe(
       (next) => {
         this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
 

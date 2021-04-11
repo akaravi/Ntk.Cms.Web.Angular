@@ -10,6 +10,7 @@ import { TicketingTaskListComponent } from './task/list/list.component';
 import { TicketingTemplateListComponent } from './template/list/list.component';
 import { TicketingConfigMainAdminComponent } from './config/mainAdmin/configMainAdmin.component';
 import { TicketingConfigSiteComponent } from './config/site/configSite.component';
+import { TicketingDepartemenLogListComponent } from './departemenLog/list/list.component';
 
 
 
@@ -43,6 +44,14 @@ const routes: Routes = [
       {
         path: 'departemen/edit/:Id',
         component: TicketingDepartemenEditComponent
+      },
+       {
+        path: 'departemenlog/DepartemenId/:DepartemenId',
+        component: TicketingDepartemenLogListComponent
+      },
+         {
+        path: 'departemenlog/OperatorId/:OperatorId',
+        component: TicketingDepartemenLogListComponent
       },
       {
         path: 'faq',

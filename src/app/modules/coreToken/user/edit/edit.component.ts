@@ -57,10 +57,7 @@ export class CoreTokenUserEditComponent implements OnInit, OnDestroy {
   }
   tokenInfo = new TokenInfoModel();
 
-  formMatcher = new CmsFormsErrorStateMatcher();
-  formControlRequired = new FormControl('', [
-    Validators.required,
-  ]);
+
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<CoreTokenUserModel> = new ErrorExceptionResult<CoreTokenUserModel>();
   dataModel: CoreTokenUserModel = new CoreTokenUserModel();

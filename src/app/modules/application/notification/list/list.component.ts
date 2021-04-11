@@ -101,18 +101,21 @@ export class ApplicationNotificationListComponent implements OnInit, OnDestroy {
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
+    /*filter CLone*/
+    const filterModel = JSON.parse(JSON.stringify(this.filteModelContent));
+    /*filter CLone*/
     const filter = new FilterDataModel();
     if (this.requestApplicationId > 0) {
       filter.PropertyName = 'LinkApplicationId';
       filter.Value = this.requestApplicationId;
-      this.filteModelContent.Filters.push(filter);
+      filterModel.Filters.push(filter);
     }
     if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
       filter.PropertyName = 'LinkApplicationId';
       filter.Value = this.categoryModelSelected.Id;
-      this.filteModelContent.Filters.push(filter);
+      filterModel.Filters.push(filter);
     }
-    this.applicationLogNotificationService.ServiceGetAll(this.filteModelContent).subscribe(
+    this.applicationLogNotificationService.ServiceGetAll(filterModel).subscribe(
       (next) => {
         this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
 

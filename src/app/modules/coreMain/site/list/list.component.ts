@@ -123,8 +123,10 @@ export class CoreSiteListComponent implements OnInit, OnDestroy {
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
-
-    this.coreSiteService.ServiceGetAll(this.filteModelContent).subscribe(
+    /*filter CLone*/
+    const filterModel = JSON.parse(JSON.stringify(this.filteModelContent));
+    /*filter CLone*/
+    this.coreSiteService.ServiceGetAll(filterModel).subscribe(
       (next) => {
         if (next.IsSuccess) {
           this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);

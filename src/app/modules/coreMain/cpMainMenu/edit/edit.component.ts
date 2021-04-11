@@ -58,10 +58,7 @@ export class CoreCpMainMenuEditComponent implements OnInit {
   requestId = 0;
 
   appLanguage = 'fa';
-  formMatcher = new CmsFormsErrorStateMatcher();
-  formControlRequired = new FormControl('', [
-    Validators.required,
-  ]);
+
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<CoreCpMainMenuModel> = new ErrorExceptionResult<CoreCpMainMenuModel>();
   dataModel: CoreCpMainMenuModel = new CoreCpMainMenuModel();

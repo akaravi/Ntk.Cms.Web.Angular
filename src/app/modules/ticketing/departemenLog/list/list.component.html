@@ -1,11 +1,9 @@
 <div class="row">
-  <div *ngIf="requestSourceId===0" class="col-xl-3">
+  <div *ngIf="requestDepartemenId===0" class="col-xl-3">
     <app-ticketing-departemen-tree (optionSelect)="onActionSelectorSelect($event)"></app-ticketing-departemen-tree>
   </div>
-  <div [ngClass]="(requestSourceId===0)?'col-xl-9':'col-xl-12'">
+  <div [ngClass]="(requestDepartemenId===0)?'col-xl-9':'col-xl-12'">
     <div class="button-row">
-      <button *ngIf="dataModelResult.Access.AccessAddRow " (click)="onActionbuttonNewRow()" type="button"
-        class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">اضافه</button>
       <button *ngIf="dataModelResult.Access.AccessEditRow && tableRowSelected.Id>0" (click)="onActionbuttonEditRow()"
         type="button" class="btn btn-warning ml-2" data-toggle="modal" data-target="#categoryModal">ویرایش</button>
       <button *ngIf="dataModelResult.Access.AccessDeleteRow && tableRowSelected.Id>0"
@@ -22,7 +20,7 @@
       <button (click)="onActionbuttonExport()" type="button" class="btn btn-bg-info BTN">خروجی فایل</button>
       <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">برسی مجدد</button>
 
-      <button (click)="onActionBackToParent()" *ngIf="requestSourceId>0" type="button"
+      <button (click)="onActionBackToParent()" *ngIf="requestDepartemenId>0" type="button"
         class="btn btn-warning BTN">بازگشت</button>
       <app-cms-search-list [(options)]="optionsSearch"></app-cms-search-list>
       <app-cms-export-list [(options)]="optionsExport"></app-cms-export-list>

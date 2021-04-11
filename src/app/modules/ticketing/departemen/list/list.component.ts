@@ -98,8 +98,10 @@ export class TicketingDepartemenListComponent implements OnInit, OnDestroy {
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
-
-    this.ticketingDepartemenService.ServiceGetAll(this.filteModelContent).subscribe(
+    /*filter CLone*/
+    const filterModel = JSON.parse(JSON.stringify(this.filteModelContent));
+    /*filter CLone*/
+    this.ticketingDepartemenService.ServiceGetAll(filterModel).subscribe(
       (next) => {
         this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
         if (next.IsSuccess) {
@@ -249,6 +251,16 @@ export class TicketingDepartemenListComponent implements OnInit, OnDestroy {
     this.tableRowSelected = model;
 
     this.router.navigate(['/ticketing/template/', this.tableRowSelected.Id]);
+  }
+  onActionbuttonLogList(model: TicketingDepartemenModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id === 0) {
+      const message = 'ردیفی برای نمایش انتخاب نشده است';
+      this.cmsToastrService.typeErrorSelected(message);
+      return;
+    }
+    this.tableRowSelected = model;
+
+    this.router.navigate(['/ticketing/departemenlog/DepartemenId/', this.tableRowSelected.Id]);
   }
   onActionbuttonTaskList(model: TicketingDepartemenModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {

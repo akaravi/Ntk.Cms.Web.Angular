@@ -36,6 +36,7 @@ import { TicketingFaqAddComponent } from '../add/add.component';
   styleUrls: ['./list.component.scss']
 })
 export class TicketingFaqListComponent implements OnInit, OnDestroy {
+  requestDepartemenId = 0;
   constructor(
     private ticketingFaqService: TicketingFaqService,
     private activatedRoute: ActivatedRoute,
@@ -49,7 +50,6 @@ export class TicketingFaqListComponent implements OnInit, OnDestroy {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
   }
-  requestDepartemenId = 0;
   comment: string;
   author: string;
   dataSource: any;
@@ -67,28 +67,30 @@ export class TicketingFaqListComponent implements OnInit, OnDestroy {
   tableRowSelected: TicketingFaqModel = new TicketingFaqModel();
   tableSource: MatTableDataSource<TicketingFaqModel> = new MatTableDataSource<TicketingFaqModel>();
   categoryModelSelected: TicketingDepartemenModel;
-
   tabledisplayedColumns: string[] = [
     'Id',
     'RecordStatus',
     'Question',
-
     'Action'
   ];
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
-
   cmsApiStoreSubscribe: Subscription;
-
-
-
   ngOnInit(): void {
     this.requestDepartemenId = + Number(this.activatedRoute.snapshot.paramMap.get('DepartemenId'));
+    if (this.requestDepartemenId > 0) {
+      const filter = new FilterDataModel();
+      filter.PropertyName = 'LinkTicketingDepartemenId';
+      filter.Value = this.requestDepartemenId;
+      this.filteModelContent.Filters.push(filter);
+    }
+
     this.DataGetAll();
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
     });
+
   }
   ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
@@ -101,19 +103,17 @@ export class TicketingFaqListComponent implements OnInit, OnDestroy {
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
-    const filter = new FilterDataModel();
-    if (this.requestDepartemenId > 0) {
-      filter.PropertyName = 'LinkTicketingDepartemenId';
-      filter.Value = this.requestDepartemenId;
-      this.filteModelContent.Filters.push(filter);
-    }
+    /*filter CLone*/
+    const filterModel = JSON.parse(JSON.stringify(this.filteModelContent));
+    /*filter CLone*/
     if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
-
+      const filter = new FilterDataModel();
       filter.PropertyName = 'LinkTicketingDepartemenId';
       filter.Value = this.categoryModelSelected.Id;
-      this.filteModelContent.Filters.push(filter);
+      filterModel.Filters.push(filter);
     }
-    this.ticketingFaqService.ServiceGetAll(this.filteModelContent).subscribe(
+
+    this.ticketingFaqService.ServiceGetAll(filterModel).subscribe(
       (next) => {
         this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
 
@@ -203,7 +203,7 @@ export class TicketingFaqListComponent implements OnInit, OnDestroy {
       parentId = this.categoryModelSelected.Id;
     }
     const dialogRef = this.dialog.open(TicketingFaqAddComponent, {
-      data: { requestParentId: parentId }
+      data: { parentId }
     });
     dialogRef.afterClosed().subscribe(result => {
       // console.log(`Dialog result: ${result}`);

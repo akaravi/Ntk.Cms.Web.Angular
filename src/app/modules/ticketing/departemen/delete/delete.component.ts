@@ -24,13 +24,11 @@ export class TicketingDepartemenDeleteComponent implements OnInit {
     if (data) {
       this.requestId = +data.id || 0;
     }
-
-
   }
   loading = new ProgressSpinnerModel();
   dataModelResultCategory: ErrorExceptionResult<TicketingDepartemenModel> = new ErrorExceptionResult<TicketingDepartemenModel>();
   dataModelResultCategoryAllData: ErrorExceptionResult<TicketingDepartemenModel> = new ErrorExceptionResult<TicketingDepartemenModel>();
-    dataModel: any = {};
+  dataModel: any = {};
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
   formInfo: FormInfoModel = new FormInfoModel();
   ngOnInit(): void {
@@ -43,7 +41,6 @@ export class TicketingDepartemenDeleteComponent implements OnInit {
     this.DataGetOne();
     this.DataGetAll();
   }
-
   DataGetOne(): void {
     if (this.requestId === 0) {
       this.cmsToastrService.typeErrorDeleteRowIsNull();
@@ -59,11 +56,11 @@ export class TicketingDepartemenDeleteComponent implements OnInit {
           if (!next.IsSuccess) {
             this.formInfo.FormAlert = 'برروز خطا';
             this.formInfo.FormError = next.ErrorMessage;
-            this.formInfo.FormErrorStatus = true;
             this.cmsToastrService.typeErrorGetOne();
           } else {
             this.formInfo.FormAlert = '';
           }
+          this.formInfo.FormErrorStatus = true;
           this.loading.display = false;
         },
         (error) => {
@@ -73,7 +70,6 @@ export class TicketingDepartemenDeleteComponent implements OnInit {
           this.loading.display = false;
         }
       );
-
   }
   DataGetAll(): void {
     this.formInfo.FormAlert = 'در حال لود اطلاعات';
@@ -104,7 +100,6 @@ export class TicketingDepartemenDeleteComponent implements OnInit {
       );
 
   }
-
   onFormDelete(): void {
     if (this.requestId === 0) {
       this.cmsToastrService.typeErrorDeleteRowIsNull();

@@ -151,8 +151,10 @@ export class CoreTokenUserListComponent implements OnInit, OnDestroy {
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
-
-    this.coreTokenUserService.ServiceGetAll(this.filteModelContent).subscribe(
+    /*filter CLone*/
+    const filterModel = JSON.parse(JSON.stringify(this.filteModelContent));
+    /*filter CLone*/
+    this.coreTokenUserService.ServiceGetAll(filterModel).subscribe(
       (next) => {
         if (next.IsSuccess) {
           this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
@@ -346,7 +348,7 @@ export class CoreTokenUserListComponent implements OnInit, OnDestroy {
     this.router.navigate(['/core/user/edit', this.tableRowSelected.LinkUserId]);
   }
 
-onActionbuttonViewMemberRow(model: CoreTokenUserModel = this.tableRowSelected): void {
+  onActionbuttonViewMemberRow(model: CoreTokenUserModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id.length === 0) {
       this.cmsToastrService.typeErrorSelected('ردیفی انتخاب نشده است');
