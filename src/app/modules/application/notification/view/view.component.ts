@@ -44,7 +44,7 @@ export class ApplicationLogNotificationViewComponent implements OnInit, OnDestro
     public publicHelper: PublicHelper,
   ) {
     if (data) {
-      this.requestId =  data.id+'';
+      this.requestId = data.id + '';
     }
   }
   tokenInfo = new TokenInfoModel();
@@ -66,10 +66,10 @@ export class ApplicationLogNotificationViewComponent implements OnInit, OnDestro
 
   ngOnInit(): void {
     this.formInfo.FormTitle = 'مشاهده  ';
-    if (this.requestId.length==0) {
+    if (this.requestId.length === 0) {
       this.cmsToastrService.typeErrorComponentAction();
       this.dialogRef.close({ dialogChangedDate: false });
-      return
+      return;
     }
     this.DataGetOneContent();
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
