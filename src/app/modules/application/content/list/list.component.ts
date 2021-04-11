@@ -36,6 +36,8 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
   styleUrls: ['./list.component.scss']
 })
 export class ApplicationAppListComponent implements OnInit, OnDestroy {
+  requestLinkSourceId = 0;
+  requestLinkThemeConfigId = 0;
   constructor(
     private applicationAppService: ApplicationAppService,
     private activatedRoute: ActivatedRoute,
@@ -49,7 +51,6 @@ export class ApplicationAppListComponent implements OnInit, OnDestroy {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
   }
-  requestSourceId = 0;
   comment: string;
   author: string;
   dataSource: any;
@@ -87,7 +88,19 @@ export class ApplicationAppListComponent implements OnInit, OnDestroy {
   cmsApiStoreSubscribe: Subscription;
 
   ngOnInit(): void {
-    this.requestSourceId = + Number(this.activatedRoute.snapshot.paramMap.get('SourceId'));
+    this.requestLinkSourceId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkSourceId'));
+    this.requestLinkThemeConfigId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkThemeConfigId'));
+    const filter = new FilterDataModel();
+    if (this.requestLinkSourceId > 0) {
+      filter.PropertyName = 'LinkSourceId';
+      filter.Value = this.requestLinkSourceId;
+      this.filteModelContent.Filters.push(filter);
+    }
+    if (this.requestLinkThemeConfigId > 0) {
+      filter.PropertyName = 'LinkThemeConfigId';
+      filter.Value = this.requestLinkThemeConfigId;
+      this.filteModelContent.Filters.push(filter);
+    }
     this.DataGetAll();
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
@@ -114,11 +127,7 @@ export class ApplicationAppListComponent implements OnInit, OnDestroy {
       filter.Value = this.categoryModelSelected.Id;
       filterModel.Filters.push(filter);
     }
-    if (this.requestSourceId > 0) {
-      filter.PropertyName = 'LinkSourceId';
-      filter.Value = this.requestSourceId;
-      filterModel.Filters.push(filter);
-    }
+
     this.applicationAppService.ServiceGetAll(filterModel).subscribe(
       (next) => {
         if (next.IsSuccess) {
@@ -138,7 +147,7 @@ export class ApplicationAppListComponent implements OnInit, OnDestroy {
               'LinkSiteId'
             );
           }
-          if (this.requestSourceId === 0) {
+          if (this.requestLinkSourceId === 0) {
             this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
               this.tabledisplayedColumns,
               'LinkSourceId'
@@ -194,10 +203,10 @@ export class ApplicationAppListComponent implements OnInit, OnDestroy {
     let sourceId = 0;
 
     if (
-      this.requestSourceId &&
-      this.requestSourceId > 0
+      this.requestLinkSourceId &&
+      this.requestLinkSourceId > 0
     ) {
-      sourceId = this.requestSourceId;
+      sourceId = this.requestLinkSourceId;
     }
     if (
       this.categoryModelSelected &&
@@ -354,7 +363,10 @@ export class ApplicationAppListComponent implements OnInit, OnDestroy {
     this.tableRowSelected = row;
   }
   onActionBackToParent(): void {
-    this.router.navigate(['/application/app/']);
+    this.router.navigate(['/application/source/']);
+  }
+  onActionBackToParentTheme(): void {
+    this.router.navigate(['/application/themeconfig/']);
   }
   onActionbuttonUploadApp(mode: ApplicationAppModel = this.tableRowSelected): void {
     if (mode == null || !mode.Id || mode.Id === 0) {
@@ -435,5 +447,25 @@ export class ApplicationAppListComponent implements OnInit, OnDestroy {
       }
     });
 
+  }
+  onActionbuttonMemberList(mode: ApplicationAppModel = this.tableRowSelected): void {
+    if (mode == null || !mode.Id || mode.Id === 0) {
+
+      const message = 'ردیفی  انتخاب نشده است';
+      this.cmsToastrService.typeErrorSelected(message);
+      return;
+    }
+    this.tableRowSelected = mode;
+    this.router.navigate(['/application/memberinfo/LinkApplicationId/', this.tableRowSelected.Id]);
+  }
+  onActionbuttonIntroList(mode: ApplicationAppModel = this.tableRowSelected): void {
+    if (mode == null || !mode.Id || mode.Id === 0) {
+
+      const message = 'ردیفی  انتخاب نشده است';
+      this.cmsToastrService.typeErrorSelected(message);
+      return;
+    }
+    this.tableRowSelected = mode;
+    this.router.navigate(['/application/intro/LinkApplicationId/', this.tableRowSelected.Id]);
   }
 }

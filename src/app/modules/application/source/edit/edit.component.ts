@@ -61,7 +61,6 @@ export class ApplicationSourceEditComponent implements OnInit {
       this.cmsToastrService.typeErrorAddRowParentIsNull();
       return;
     }
-    this.DataGetAccess();
     this.DataGetOne(this.requestId);
     this.getEnumRecordStatus();
     this.getEnumOsType();
@@ -89,33 +88,21 @@ export class ApplicationSourceEditComponent implements OnInit {
     this.DataEditContent();
   }
 
-  DataGetAccess(): void {
-    this.applicationSourceService
-      .ServiceViewModel()
-      .subscribe(
-        async (next) => {
-          if (next.IsSuccess) {
-            this.dataAccessModel = next.Access;
-            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
-          } else {
-            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
-          }
-        },
-        (error) => {
-          this.cmsToastrService.typeErrorGetAccess(error);
-        }
-      );
-  }
+
   DataGetOne(requestId: number): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-
+    /*َAccess Field*/
+    this.applicationSourceService.setAccessLoad();
     this.applicationSourceService
       .ServiceGetOneById(requestId)
       .subscribe(
         async (next) => {
+          /*َAccess Field*/
+          this.dataAccessModel = next.Access;
+          this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
           this.loading.display = false;
           this.dataModelResult = next;
           this.formInfo.FormSubmitAllow = true;

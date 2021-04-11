@@ -87,7 +87,6 @@ export class CoreCpMainMenuEditComponent implements OnInit {
     }
 
     this.getEnumRecordStatus();
-    this.DataGetAccess();
     this.getEnumMenuPlaceType();
   }
   getEnumMenuPlaceType(): void {
@@ -114,17 +113,23 @@ export class CoreCpMainMenuEditComponent implements OnInit {
     this.formInfo.FormAlert = 'در دریافت ارسال اطلاعات از سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
+    /*َAccess Field*/
+    this.coreCpMainMenuService.setAccessLoad();
+
     this.coreCpMainMenuService.ServiceGetOneById(this.requestId).subscribe(
       (next) => {
+        /*َAccess Field*/
+        this.dataAccessModel = next.Access;
+        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
         this.dataModel = next.Item;
         if (next.IsSuccess) {
           this.DataGetAllMenuCoreUserGroup();
           this.formInfo.FormTitle = this.formInfo.FormTitle + ' ' + next.Item.Title;
           this.formInfo.FormAlert = '';
-              } else {
+        } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
-          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
         }
         this.loading.display = false;
       },
@@ -160,10 +165,10 @@ export class CoreCpMainMenuEditComponent implements OnInit {
         this.dataCoreCpMainMenuIds = listG;
         if (next.IsSuccess) {
           this.formInfo.FormAlert = '';
-              } else {
+        } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
-          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
         }
         this.loading.display = false;
       },
@@ -173,23 +178,7 @@ export class CoreCpMainMenuEditComponent implements OnInit {
       }
     );
   }
-  DataGetAccess(): void {
-    this.coreCpMainMenuService
-      .ServiceViewModel()
-      .subscribe(
-        async (next) => {
-          if (next.IsSuccess) {
-            this.dataAccessModel = next.Access;
-            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
-          } else {
-            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
-          }
-        },
-        (error) => {
-          this.cmsToastrService.typeErrorGetAccess(error);
-        }
-      );
-  }
+
   DataEditContent(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
@@ -202,10 +191,10 @@ export class CoreCpMainMenuEditComponent implements OnInit {
           this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
           this.cmsToastrService.typeSuccessEdit();
           this.dialogRef.close({ dialogChangedDate: true });
-              } else {
+        } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
-          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
         }
         this.loading.display = false;
       },
@@ -263,10 +252,10 @@ export class CoreCpMainMenuEditComponent implements OnInit {
           this.formInfo.FormAlert = 'ثبت در این گروه با موفقیت انجام شد';
           this.cmsToastrService.typeSuccessEdit();
           // this.dialogRef.close({ dialogChangedDate: true });
-              } else {
+        } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
-          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
         }
 
       },
@@ -288,10 +277,10 @@ export class CoreCpMainMenuEditComponent implements OnInit {
           this.formInfo.FormAlert = 'حذف از این گروه با موفقیت انجام شد';
           this.cmsToastrService.typeSuccessEdit();
           // this.dialogRef.close({ dialogChangedDate: true });
-              } else {
+        } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
-          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
         }
       },
       (error) => {

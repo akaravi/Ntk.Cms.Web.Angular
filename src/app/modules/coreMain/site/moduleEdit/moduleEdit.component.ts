@@ -63,7 +63,6 @@ export class CoreSiteModuleEditComponent implements OnInit {
   dataModelResult: ErrorExceptionResult<CoreModuleSiteModel> = new ErrorExceptionResult<CoreModuleSiteModel>();
   dataModel: CoreModuleSiteModel = new CoreModuleSiteModel();
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
-  @ViewChild('viewContainer', {read: ViewContainerRef}) viewContainer: ViewContainerRef;
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
@@ -79,7 +78,6 @@ export class CoreSiteModuleEditComponent implements OnInit {
       this.dialogRef.close({ dialogChangedDate: false });
       return;
     }
-    this.DataGetAccess();
     this.getEnumRecordStatus();
     this.DataGetOneContent();
   }
@@ -93,30 +91,7 @@ export class CoreSiteModuleEditComponent implements OnInit {
       this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
     }
   }
-  // onActionTest(): void{
-  //   this.viewContainer.clear(); // clear all views
-  //   const componentFactory = this.resolver.resolveComponentFactory(
-  //     FirstComponent
-  //   );
-  //   this.viewContainer.createComponent(componentFactory);
-  // }
-  DataGetAccess(): void {
-    this.coreModuleSiteService
-      .ServiceViewModel()
-      .subscribe(
-        async (next) => {
-          if (next.IsSuccess) {
-            this.dataAccessModel = next.Access;
-            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
-          } else {
-            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
-          }
-        },
-        (error) => {
-          this.cmsToastrService.typeErrorGetAccess(error);
-        }
-      );
-  }
+
   DataGetOneContent(): void {
 
 
@@ -139,6 +114,10 @@ export class CoreSiteModuleEditComponent implements OnInit {
     filteModelContent.AccessLoad = true;
     this.coreModuleSiteService.ServiceGetAll(filteModelContent).subscribe(
       (next) => {
+        /*َAccess Field*/
+        this.dataAccessModel = next.Access;
+        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
         this.dataModel = next.Item;
         if (next.IsSuccess) {
           if (next.ListItems && next.ListItems.length > 0) {
@@ -150,10 +129,10 @@ export class CoreSiteModuleEditComponent implements OnInit {
             this.cmsToastrService.typeError('ماژول جهت ویرایش یافت نشد');
 
           }
-              } else {
+        } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
-          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
         }
         this.loading.display = false;
       },
@@ -177,10 +156,10 @@ export class CoreSiteModuleEditComponent implements OnInit {
           this.cmsToastrService.typeSuccessEdit();
           this.dialogRef.close({ dialogChangedDate: true });
 
-              } else {
+        } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
-          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
         }
         this.loading.display = false;
       },

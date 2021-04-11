@@ -33,7 +33,7 @@ export class CmsMemberSelectorComponent implements OnInit {
   formControl = new FormControl();
   filteredOptions: Observable<MemberUserModel[]>;
   @Input() disabled = new EventEmitter<boolean>();
-  public optionSelectFirstItem = true;
+  @Input() optionSelectFirstItem = false;
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Output() optionSelect = new EventEmitter();
   @Input() optionReload = () => this.onActionReload();

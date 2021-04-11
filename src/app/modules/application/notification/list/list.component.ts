@@ -25,14 +25,17 @@ import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/bas
 import { MatSort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
+import { ApplicationLogNotificationViewComponent } from '../view/view.component';
+import { ApplicationLogNotificationAddComponent } from '../add/add.component';
 
 @Component({
-  selector: 'app-application-memberinfo-list',
+  selector: 'app-application-notification-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ApplicationNotificationListComponent implements OnInit, OnDestroy {
-
+export class ApplicationLogNotificationListComponent implements OnInit, OnDestroy {
+  requestLinkApplicationId = 0;
+  requestLinkApplicationMemberId = '';
   constructor(
     private applicationLogNotificationService: ApplicationLogNotificationService,
     private activatedRoute: ActivatedRoute,
@@ -45,7 +48,6 @@ export class ApplicationNotificationListComponent implements OnInit, OnDestroy {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
   }
-  requestApplicationId = 0;
   comment: string;
   author: string;
   dataSource: any;
@@ -82,7 +84,22 @@ export class ApplicationNotificationListComponent implements OnInit, OnDestroy {
   cmsApiStoreSubscribe: Subscription;
 
   ngOnInit(): void {
-    this.requestApplicationId = + Number(this.activatedRoute.snapshot.paramMap.get('ApplicationId'));
+
+    this.requestLinkApplicationId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkApplicationId'));
+    this.requestLinkApplicationMemberId = this.activatedRoute.snapshot.paramMap.get('LinkApplicationMemberId') + '';
+    if (this.requestLinkApplicationId > 0) {
+      const filter = new FilterDataModel();
+      filter.PropertyName = 'LinkApplicationId';
+      filter.Value = this.requestLinkApplicationId;
+      this.filteModelContent.Filters.push(filter);
+    }
+    if (this.requestLinkApplicationMemberId.length > 0) {
+      const filter = new FilterDataModel();
+      filter.PropertyName = 'LinkApplicationMemberId';
+      filter.Value = this.requestLinkApplicationMemberId;
+      this.filteModelContent.Filters.push(filter);
+
+    }
     this.DataGetAll();
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
@@ -105,11 +122,7 @@ export class ApplicationNotificationListComponent implements OnInit, OnDestroy {
     const filterModel = JSON.parse(JSON.stringify(this.filteModelContent));
     /*filter CLone*/
     const filter = new FilterDataModel();
-    if (this.requestApplicationId > 0) {
-      filter.PropertyName = 'LinkApplicationId';
-      filter.Value = this.requestApplicationId;
-      filterModel.Filters.push(filter);
-    }
+
     if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
       filter.PropertyName = 'LinkApplicationId';
       filter.Value = this.categoryModelSelected.Id;
@@ -134,7 +147,7 @@ export class ApplicationNotificationListComponent implements OnInit, OnDestroy {
               'LinkSiteId'
             );
           }
-          if (this.requestApplicationId === 0) {
+          if (this.requestLinkApplicationId === 0) {
             this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
               this.tabledisplayedColumns,
               'LinkApplicationId'
@@ -182,10 +195,32 @@ export class ApplicationNotificationListComponent implements OnInit, OnDestroy {
   }
 
 
+  onActionbuttonViewRow(model: ApplicationLogNotificationModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id.length === 0) {
+      this.cmsToastrService.typeErrorSelected('ردیفی انتخاب نشده است');
+      return;
+    }
+    if (
+      this.dataModelResult == null ||
+      this.dataModelResult.Access == null ||
+      !this.dataModelResult.Access.AccessWatchRow
+    ) {
+      this.cmsToastrService.typeErrorAccessAdd();
+      return;
+    }
+    const dialogRef = this.dialog.open(ApplicationLogNotificationViewComponent, {
+      data: { id: this.tableRowSelected.Id }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log(`Dialog result: ${result}`);
+      if (result && result.dialogChangedDate) {
+      }
+    });
+  }
   onActionbuttonNewRow(): void {
     if (
-      this.requestApplicationId == null ||
-      this.requestApplicationId === 0
+      this.requestLinkApplicationId == null ||
+      this.requestLinkApplicationId === 0
     ) {
 
       const message = 'محتوا انتخاب نشده است';
@@ -213,7 +248,7 @@ export class ApplicationNotificationListComponent implements OnInit, OnDestroy {
 
 
   onActionbuttonEditRow(model: ApplicationLogNotificationModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0) {
+    if (!model || !model.Id || model.Id.length === 0) {
       this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
       return;
     }
@@ -238,7 +273,7 @@ export class ApplicationNotificationListComponent implements OnInit, OnDestroy {
     // });
   }
   onActionbuttonDeleteRow(model: ApplicationLogNotificationModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0) {
+    if (!model || !model.Id || model.Id.length === 0) {
       const emessage = 'ردیفی برای حذف انتخاب نشده است';
       this.cmsToastrService.typeErrorSelected(emessage);
       return;
@@ -262,6 +297,30 @@ export class ApplicationNotificationListComponent implements OnInit, OnDestroy {
     //     this.DataGetAll();
     //   }
     // });
+  }
+  onActionbuttonNotifictionSend(model: ApplicationLogNotificationModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id.length === 0) {
+      this.cmsToastrService.typeErrorSelected('ردیفی  انتخاب نشده است');
+      return;
+    }
+    this.tableRowSelected = model;
+    if (
+      this.dataModelResult == null ||
+      this.dataModelResult.Access == null ||
+      !this.dataModelResult.Access.AccessEditRow
+    ) {
+      this.cmsToastrService.typeErrorAccessEdit();
+      return;
+    }
+    const dialogRef = this.dialog.open(ApplicationLogNotificationAddComponent, {
+      data: { LinkApplicationMemberId: this.tableRowSelected.LinkApplicationMemberId }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log(`Dialog result: ${result}`);
+      if (result && result.dialogChangedDate) {
+
+      }
+    });
   }
   onActionSelectorSelect(model: ApplicationAppModel | null): void {
     this.filteModelContent = new FilterModel();
@@ -324,6 +383,9 @@ export class ApplicationNotificationListComponent implements OnInit, OnDestroy {
     this.tableRowSelected = row;
   }
   onActionBackToParent(): void {
-    this.router.navigate(['/news/content/']);
+    this.router.navigate(['/application/app/']);
+  }
+  onActionBackToParentMember(): void {
+    this.router.navigate(['/application/memberinfo/']);
   }
 }

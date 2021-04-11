@@ -32,8 +32,8 @@ export class CmsSiteSelectorComponent implements OnInit {
   loading = new ProgressSpinnerModel();
   formControl = new FormControl();
   filteredOptions: Observable<CoreSiteModel[]>;
-    @Input() disabled = new EventEmitter<boolean>();
-  public optionSelectFirstItem = true;
+  @Input() disabled = new EventEmitter<boolean>();
+  @Input() optionSelectFirstItem = false;
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Output() optionSelect = new EventEmitter();
   @Input() optionReload = () => this.onActionReload();

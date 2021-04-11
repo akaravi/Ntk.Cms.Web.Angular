@@ -47,7 +47,6 @@ export class ArticleCategoryEditComponent implements OnInit {
   }
   requestId = 0;
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
-
   fileManagerTree: TreeModel;
   appLanguage = 'fa';
 

@@ -103,30 +103,12 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
       return;
     }
     this.DataGetOne();
-    this.DataGetAccess();
     this.getEnumRecordStatus();
   }
   ngAfterViewInit(): void {
 
   }
 
- DataGetAccess(): void {
-  this.newsContentService
-    .ServiceViewModel()
-    .subscribe(
-      async (next) => {
-        if (next.IsSuccess) {
-          this.dataAccessModel = next.Access;
-          this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
-        } else {
-          this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
-        }
-      },
-      (error) => {
-        this.cmsToastrService.typeErrorGetAccess(error);
-      }
-    );
-}
   onActionFileSelectedLinkMainImageId(model: NodeInterface): void {
     this.dataModel.LinkMainImageId = model.id;
     this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
@@ -175,11 +157,17 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
+    /*َAccess Field*/
+    this.newsContentService.setAccessLoad();
 
     this.newsContentService
       .ServiceGetOneById(this.requestId)
       .subscribe(
         async (next) => {
+
+          /*َAccess Field*/
+          this.dataAccessModel = next.Access;
+          this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
           this.loading.display = false;
           this.dataModelResult = next;
           this.formInfo.FormSubmitAllow = true;
@@ -217,7 +205,7 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
     const filteModel = new FilterModel();
     const filter = new FilterDataModel();
     filter.PropertyName = 'LinkContentId';
-    filter.Value =  this.dataModelResult.Item.Id ;
+    filter.Value = this.dataModelResult.Item.Id;
     filter.ClauseType = EnumClauseType.And;
     filteModel.Filters.push(filter);
 
@@ -261,7 +249,7 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
     const filteModel = new FilterModel();
     const filter = new FilterDataModel();
     filter.PropertyName = 'LinkContentId';
-    filter.Value =  this.dataModelResult.Item.Id ;
+    filter.Value = this.dataModelResult.Item.Id;
     filter.ClauseType = EnumClauseType.And;
     filteModel.Filters.push(filter);
 
@@ -296,12 +284,12 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
     const filteModel = new FilterModel();
     const filter = new FilterDataModel();
     filter.PropertyName = 'LinkSourceId';
-    filter.Value =  this.dataModelResult.Item.Id ;
+    filter.Value = this.dataModelResult.Item.Id;
     filter.ClauseType = EnumClauseType.Or;
     filteModel.Filters.push(filter);
 
     filter.PropertyName = 'LinkDestinationId';
-    filter.Value =  this.dataModelResult.Item.Id ;
+    filter.Value = this.dataModelResult.Item.Id;
     filter.ClauseType = EnumClauseType.Or;
     filteModel.Filters.push(filter);
 

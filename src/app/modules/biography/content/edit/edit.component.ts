@@ -104,29 +104,12 @@ export class BiographyContentEditComponent implements OnInit, AfterViewInit {
       return;
     }
     this.DataGetOne();
-    this.DataGetAccess();
     this.getEnumRecordStatus();
   }
   ngAfterViewInit(): void {
 
   }
-  DataGetAccess(): void {
-    this.biographyContentService
-      .ServiceViewModel()
-      .subscribe(
-        async (next) => {
-          if (next.IsSuccess) {
-            this.dataAccessModel = next.Access;
-            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
-          } else {
-            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
-          }
-        },
-        (error) => {
-          this.cmsToastrService.typeErrorGetAccess(error);
-        }
-      );
-  }
+
   onActionFileSelectedLinkMainImageId(model: NodeInterface): void {
     this.dataModel.LinkMainImageId = model.id;
     this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
@@ -175,6 +158,8 @@ export class BiographyContentEditComponent implements OnInit, AfterViewInit {
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
+    /*َAccess Field*/
+    this.biographyContentService.setAccessLoad();
 
     this.biographyContentService
       .ServiceGetOneById(this.requestId)
@@ -185,6 +170,10 @@ export class BiographyContentEditComponent implements OnInit, AfterViewInit {
           this.formInfo.FormSubmitAllow = true;
 
           if (next.IsSuccess) {
+            /*َAccess Field*/
+            this.dataAccessModel = next.Access;
+            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
             this.dataModel = next.Item;
             const lat = this.dataModel.Geolocationlatitude;
             const lon = this.dataModel.Geolocationlongitude;

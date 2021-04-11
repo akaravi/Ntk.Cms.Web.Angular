@@ -27,7 +27,7 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
   styleUrls: ['./edit.component.scss']
 })
 export class ApplicationIntroEditComponent implements OnInit {
-
+  requestId = 0;
   constructor(
     private activatedRoute: ActivatedRoute,
     private cmsStoreService: CmsStoreService,
@@ -38,8 +38,9 @@ export class ApplicationIntroEditComponent implements OnInit {
     private cmsToastrService: CmsToastrService,
     private router: Router) {
     this.fileManagerTree = new TreeModel();
+    this.requestId = + Number(this.activatedRoute.snapshot.paramMap.get('Id'));
+
   }
-  requestId = 0;
 
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
   loading = new ProgressSpinnerModel();
@@ -59,12 +60,10 @@ export class ApplicationIntroEditComponent implements OnInit {
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
 
   ngOnInit(): void {
-    this.requestId = + Number(this.activatedRoute.snapshot.paramMap.get('Id'));
     if (this.requestId === 0) {
       this.cmsToastrService.typeErrorAddRowParentIsNull();
       return;
     }
-    this.DataGetAccess();
     this.DataGetOne(this.requestId);
     this.getEnumRecordStatus();
   }
@@ -93,33 +92,21 @@ export class ApplicationIntroEditComponent implements OnInit {
     this.DataEditContent();
   }
 
-  DataGetAccess(): void {
-    this.applicationIntroService
-      .ServiceViewModel()
-      .subscribe(
-        async (next) => {
-          if (next.IsSuccess) {
-            this.dataAccessModel = next.Access;
-            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
-          } else {
-            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
-          }
-        },
-        (error) => {
-          this.cmsToastrService.typeErrorGetAccess(error);
-        }
-      );
-  }
+
   DataGetOne(requestId: number): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-
+    /*َAccess Field*/
+    this.applicationIntroService.setAccessLoad();
     this.applicationIntroService
       .ServiceGetOneById(requestId)
       .subscribe(
         async (next) => {
+          /*َAccess Field*/
+          this.dataAccessModel = next.Access;
+          this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
           this.loading.display = false;
           this.dataModelResult = next;
           this.formInfo.FormSubmitAllow = true;

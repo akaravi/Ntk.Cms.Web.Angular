@@ -1,0 +1,51 @@
+<h2 mat-dialog-title>{{ formInfo.FormTitle }}</h2>
+<mat-dialog-content>
+  <form #vform="ngForm" class="form form-horizontal">
+    <app-progress-spinner [options]="loading"> </app-progress-spinner>
+    <div *ngIf="!loading.display" class="form-body">
+
+
+
+      <!-- LinkUserId Field -->
+      <app-cms-site-selector [disabled]="true" [optionSelectForce]=" this.dataModel.LinkSiteId"
+        [optionPlaceholder]="'سایت'"></app-cms-site-selector>
+      <!-- LinkUserId Field -->
+      <app-cms-user-selector [disabled]="true" [optionSelectForce]=" this.dataModel.LinkUserId"
+        [optionPlaceholder]="'کاربر'"></app-cms-user-selector>
+
+      <table>
+        <thead>
+          <tr>
+            <th>
+              پارامتر
+            </th>
+            <th>
+              مقادیر
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let head of dataModel | keys">
+            <td>{{head}}</td>
+            <td>{{dataModel[head]}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+
+
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <div class="form-actions">
+    <small class="form-text text-muted">{{ formInfo.FormAlert }} </small>
+    <small class="form-text text-muted danger">{{ formInfo.FormError }}
+    </small>
+  </div>
+  <div class="form-actions" *ngIf="formInfo.FormSubmitAllow">
+    <button type="button" (click)="onFormCancel()" class="btn btn-raised btn-warning mr-1">
+      <i class="ft-x"></i> انصراف
+    </button>
+  </div>
+</mat-dialog-actions>

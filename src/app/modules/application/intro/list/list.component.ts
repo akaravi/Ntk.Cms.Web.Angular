@@ -33,7 +33,7 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
   styleUrls: ['./list.component.scss']
 })
 export class ApplicationIntroListComponent implements OnInit, OnDestroy {
-
+  requestLinkApplicationId = 0;
   constructor(
     private applicationIntroService: ApplicationIntroService,
     private activatedRoute: ActivatedRoute,
@@ -47,7 +47,6 @@ export class ApplicationIntroListComponent implements OnInit, OnDestroy {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
   }
-  requestApplicationId = 0;
   comment: string;
   author: string;
   dataSource: any;
@@ -82,7 +81,13 @@ export class ApplicationIntroListComponent implements OnInit, OnDestroy {
   cmsApiStoreSubscribe: Subscription;
 
   ngOnInit(): void {
-    this.requestApplicationId = + Number(this.activatedRoute.snapshot.paramMap.get('ApplicationId'));
+    this.requestLinkApplicationId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkApplicationId'));
+    const filter = new FilterDataModel();
+    if (this.requestLinkApplicationId > 0) {
+      filter.PropertyName = 'LinkApplicationId';
+      filter.Value = this.requestLinkApplicationId;
+      this.filteModelContent.Filters.push(filter);
+    }
     this.DataGetAll();
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
@@ -109,11 +114,7 @@ export class ApplicationIntroListComponent implements OnInit, OnDestroy {
       filter.Value = this.categoryModelSelected.Id;
       filterModel.Filters.push(filter);
     }
-    if (this.requestApplicationId > 0) {
-      filter.PropertyName = 'LinkApplicationId';
-      filter.Value = this.requestApplicationId;
-      filterModel.Filters.push(filter);
-    }
+
     this.applicationIntroService.ServiceGetAll(filterModel).subscribe(
       (next) => {
         this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
@@ -133,7 +134,7 @@ export class ApplicationIntroListComponent implements OnInit, OnDestroy {
               'LinkSiteId'
             );
           }
-          if (this.requestApplicationId === 0) {
+          if (this.requestLinkApplicationId === 0) {
             this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
               this.tabledisplayedColumns,
               'LinkApplicationId'
@@ -182,12 +183,15 @@ export class ApplicationIntroListComponent implements OnInit, OnDestroy {
 
 
   onActionbuttonNewRow(): void {
-    if (
-      this.requestApplicationId == null ||
-      this.requestApplicationId === 0
-    ) {
-
-      const message = 'محتوا انتخاب نشده است';
+    let ApplicationId = 0;
+    if (this.requestLinkApplicationId > 0) {
+      ApplicationId = this.requestLinkApplicationId;
+    }
+    if (this.categoryModelSelected && this.categoryModelSelected.Id && this.categoryModelSelected.Id > 0) {
+      ApplicationId = this.categoryModelSelected.Id;
+    }
+    if (ApplicationId <= 0) {
+      const message = 'اپلیکیشنی انتخاب نشده است';
       this.cmsToastrService.typeErrorSelected(message);
       return;
     }
@@ -199,7 +203,7 @@ export class ApplicationIntroListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessAdd();
       return;
     }
-    this.router.navigate(['/application/intro/', this.requestApplicationId]);
+    this.router.navigate(['/application/intro/', ApplicationId]);
 
   }
 
@@ -325,6 +329,6 @@ export class ApplicationIntroListComponent implements OnInit, OnDestroy {
     this.tableRowSelected = row;
   }
   onActionBackToParent(): void {
-    this.router.navigate(['/application/content/']);
+    this.router.navigate(['/application/app/']);
   }
 }

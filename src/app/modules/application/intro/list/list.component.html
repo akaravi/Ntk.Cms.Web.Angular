@@ -1,8 +1,8 @@
 <div class="row">
-  <div *ngIf="requestApplicationId===0" class="col-xl-3">
+  <div *ngIf="requestLinkApplicationId===0" class="col-xl-3">
     <app-application-app-tree (optionSelect)="onActionSelectorSelect($event)"></app-application-app-tree>
   </div>
-  <div [ngClass]="(requestApplicationId===0)?'col-xl-9':'col-xl-12'">
+  <div [ngClass]="(requestLinkApplicationId===0)?'col-xl-9':'col-xl-12'">
     <div class="button-row">
       <button *ngIf="dataModelResult.Access.AccessAddRow " (click)="onActionbuttonNewRow()" type="button"
         class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">اضافه</button>
@@ -21,7 +21,7 @@
       </a>
       <button (click)="onActionbuttonExport()" type="button" class="btn btn-bg-info BTN">خروجی فایل</button>
       <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">برسی مجدد</button>
-      <button (click)="onActionBackToParent()" *ngIf="requestApplicationId>0" type="button"
+      <button (click)="onActionBackToParent()" *ngIf="requestLinkApplicationId>0" type="button"
         class="btn btn-warning BTN">بازگشت</button>
       <app-cms-search-list [(options)]="optionsSearch"></app-cms-search-list>
       <app-cms-export-list [(options)]="optionsExport"></app-cms-export-list>
@@ -78,11 +78,11 @@
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #actionMenu="matMenu">
-              <button mat-menu-item (click)="onActionbuttonEditRow(row)">
+              <button mat-menu-item (click)="onActionbuttonEditRow(row)" *ngIf="dataModelResult.Access.AccessEditRow">
                 <mat-icon>mode_edit</mat-icon>
                 <span>ویرایش</span>
               </button>
-              <button mat-menu-item (click)="onActionbuttonDeleteRow(row)">
+              <button mat-menu-item (click)="onActionbuttonDeleteRow(row)" *ngIf="dataModelResult.Access.AccessDeleteRow">
                 <mat-icon>delete_forever</mat-icon>
                 <span>حذف</span>
               </button>

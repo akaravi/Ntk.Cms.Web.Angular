@@ -25,6 +25,10 @@ import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/bas
 import { MatSort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
+import { ApplicationMemberInfoViewComponent } from '../view/view.component';
+import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { ApplicationLogNotificationAddComponent } from '../../notification/add/add.component';
+
 
 @Component({
   selector: 'app-application-memberinfo-list',
@@ -32,9 +36,11 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./list.component.scss']
 })
 export class ApplicationMemberInfoListComponent implements OnInit, OnDestroy {
-
+  requestLinkApplicationId = 0;
+  requestLinkMemberId = 0;
   constructor(
     private applicationMemberInfoService: ApplicationMemberInfoService,
+    private cmsConfirmationDialogService: CmsConfirmationDialogService,
     private activatedRoute: ActivatedRoute,
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
@@ -45,7 +51,6 @@ export class ApplicationMemberInfoListComponent implements OnInit, OnDestroy {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
   }
-  requestApplicationId = 0;
   comment: string;
   author: string;
   dataSource: any;
@@ -76,19 +81,25 @@ export class ApplicationMemberInfoListComponent implements OnInit, OnDestroy {
     'ScorePercent',
     'LinkApplicationId',
     'CreatedDate',
-    'UpdatedDate',
     'Action'
   ];
-
-
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
-
-
   expandedElement: ApplicationMemberInfoModel | null;
   cmsApiStoreSubscribe: Subscription;
-
   ngOnInit(): void {
-    this.requestApplicationId = + Number(this.activatedRoute.snapshot.paramMap.get('ApplicationId'));
+    this.requestLinkApplicationId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkApplicationId'));
+    this.requestLinkMemberId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkMemberId'));
+    const filter = new FilterDataModel();
+    if (this.requestLinkApplicationId > 0) {
+      filter.PropertyName = 'LinkApplicationId';
+      filter.Value = this.requestLinkApplicationId;
+      this.filteModelContent.Filters.push(filter);
+    }
+    if (this.requestLinkMemberId > 0) {
+      filter.PropertyName = 'LinkMemberId';
+      filter.Value = this.requestLinkMemberId;
+      this.filteModelContent.Filters.push(filter);
+    }
     this.DataGetAll();
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
@@ -110,21 +121,14 @@ export class ApplicationMemberInfoListComponent implements OnInit, OnDestroy {
     const filterModel = JSON.parse(JSON.stringify(this.filteModelContent));
     /*filter CLone*/
     const filter = new FilterDataModel();
-    if (this.requestApplicationId > 0) {
-      filter.PropertyName = 'LinkSourceId';
-      filter.Value = this.requestApplicationId;
-      filterModel.Filters.push(filter);
-    }
     if (this.categoryModelSelected && this.categoryModelSelected.Id) {
-      filter.PropertyName = 'LinkSourceId';
+      filter.PropertyName = 'LinkApplicationId';
       filter.Value = this.categoryModelSelected.Id;
       filterModel.Filters.push(filter);
     }
     this.applicationMemberInfoService.ServiceGetAll(filterModel).subscribe(
       (next) => {
         this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
-
-
         if (next.IsSuccess) {
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;
@@ -140,7 +144,7 @@ export class ApplicationMemberInfoListComponent implements OnInit, OnDestroy {
               'LinkSiteId'
             );
           }
-          if (this.requestApplicationId === 0) {
+          if (this.requestLinkApplicationId === 0) {
             this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
               this.tabledisplayedColumns,
               'LinkApplicationId'
@@ -187,10 +191,33 @@ export class ApplicationMemberInfoListComponent implements OnInit, OnDestroy {
     this.DataGetAll();
   }
 
+  onActionbuttonViewRow(model: ApplicationMemberInfoModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id.length === 0) {
+      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      return;
+    }
+    this.tableRowSelected = model;
+    if (
+      this.dataModelResult == null ||
+      this.dataModelResult.Access == null ||
+      !this.dataModelResult.Access.AccessEditRow
+    ) {
+      this.cmsToastrService.typeErrorAccessEdit();
+      return;
+    }
 
+    const dialogRef = this.dialog.open(ApplicationMemberInfoViewComponent, {
+      data: { id: this.tableRowSelected.Id }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log(`Dialog result: ${result}`);
+      if (result && result.dialogChangedDate) {
+      }
+    });
+  }
 
   onActionbuttonEditRow(model: ApplicationMemberInfoModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0) {
+    if (!model || !model.Id || model.Id.length === 0) {
 
       this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
       return;
@@ -215,13 +242,15 @@ export class ApplicationMemberInfoListComponent implements OnInit, OnDestroy {
     //   }
     // });
   }
+
   onActionbuttonDeleteRow(model: ApplicationMemberInfoModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0) {
+    if (!model || !model.Id || model.Id.length === 0) {
       const emessage = 'ردیفی برای حذف انتخاب نشده است';
       this.cmsToastrService.typeErrorSelected(emessage);
       return;
     }
     this.tableRowSelected = model;
+
     if (
       this.dataModelResult == null ||
       this.dataModelResult.Access == null ||
@@ -230,16 +259,84 @@ export class ApplicationMemberInfoListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessDelete();
       return;
     }
-    // const dialogRef = this.dialog.open(NewsCommentDeleteComponent, {
-    //   data: { id: this.tableRowSelected.Id }
-    // });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   // console.log(`Dialog result: ${result}`);
-    //   if (result && result.dialogChangedDate) {
-    //     this.DataGetAll();
-    //   }
-    // });
+
+
+    const title = 'لطفا تایید کنید...';
+    const message = 'آیا مایل به حدف این محتوا می باشید ' + '?' +
+      '<br> ( ' + this.tableRowSelected.Id + ' ) ';
+    this.cmsConfirmationDialogService.confirm(title, message)
+      .then((confirmed) => {
+        if (confirmed) {
+          this.loading.display = true;
+          this.applicationMemberInfoService.ServiceDelete(this.tableRowSelected.Id).subscribe(
+            (next) => {
+              if (next.IsSuccess) {
+                this.cmsToastrService.typeSuccessRemove();
+                this.DataGetAll();
+              } else {
+                this.cmsToastrService.typeErrorRemove();
+              }
+              this.loading.display = false;
+            },
+            (error) => {
+              this.cmsToastrService.typeError(error);
+              this.loading.display = false;
+            }
+          );
+        }
+      }
+      )
+      .catch(() => {
+        // console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)')
+      }
+      );
+
   }
+
+  onActionbuttonNotifictionList(model: ApplicationMemberInfoModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id.length === 0) {
+
+      this.cmsToastrService.typeErrorSelected('ردیفی  انتخاب نشده است');
+      return;
+    }
+    this.tableRowSelected = model;
+    if (
+      this.dataModelResult == null ||
+      this.dataModelResult.Access == null ||
+      !this.dataModelResult.Access.AccessEditRow
+    ) {
+      this.cmsToastrService.typeErrorAccessEdit();
+      return;
+    }
+    this.router.navigate(['/application/notification/LinkApplicationMemberId', this.tableRowSelected.Id]);
+
+  }
+  onActionbuttonNotifictionSend(model: ApplicationMemberInfoModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id.length === 0) {
+      this.cmsToastrService.typeErrorSelected('ردیفی  انتخاب نشده است');
+      return;
+    }
+    this.tableRowSelected = model;
+    if (
+      this.dataModelResult == null ||
+      this.dataModelResult.Access == null ||
+      !this.dataModelResult.Access.AccessEditRow
+    ) {
+      this.cmsToastrService.typeErrorAccessEdit();
+      return;
+    }
+    const dialogRef = this.dialog.open(ApplicationLogNotificationAddComponent, {
+      data: { LinkApplicationMemberId: this.tableRowSelected.Id}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log(`Dialog result: ${result}`);
+      if (result && result.dialogChangedDate) {
+
+      }
+    });
+
+  }
+
   onActionSelectorSelect(model: ApplicationAppModel | null): void {
     this.filteModelContent = new FilterModel();
     this.categoryModelSelected = model;
@@ -300,6 +397,6 @@ export class ApplicationMemberInfoListComponent implements OnInit, OnDestroy {
     this.tableRowSelected = row;
   }
   onActionBackToParent(): void {
-    this.router.navigate(['/news/content/']);
+    this.router.navigate(['/application/app/']);
   }
 }

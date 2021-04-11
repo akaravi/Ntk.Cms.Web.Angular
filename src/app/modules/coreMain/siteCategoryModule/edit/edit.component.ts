@@ -42,7 +42,7 @@ import { MatStepper } from '@angular/material/stepper';
 export class CoreSiteCategoryCmsModuleEditComponent implements OnInit {
   requestLinkCmsModuleId = 0;
   requestLinkCmsSiteCategoryId = 0;
-   constructor(
+  constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
     private dialogRef: MatDialogRef<CoreSiteCategoryCmsModuleEditComponent>,
@@ -65,7 +65,7 @@ export class CoreSiteCategoryCmsModuleEditComponent implements OnInit {
   dataModelResult: ErrorExceptionResult<CoreSiteCategoryCmsModuleModel> = new ErrorExceptionResult<CoreSiteCategoryCmsModuleModel>();
   dataModel: CoreSiteCategoryCmsModuleModel = new CoreSiteCategoryCmsModuleModel();
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
-  @ViewChild('viewContainer', { read: ViewContainerRef }) viewContainer: ViewContainerRef;
+
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
@@ -82,8 +82,6 @@ export class CoreSiteCategoryCmsModuleEditComponent implements OnInit {
       return;
     }
 
-
-    this.DataGetAccess();
     this.getEnumRecordStatus();
     this.DataGetOneContent();
   }
@@ -97,23 +95,7 @@ export class CoreSiteCategoryCmsModuleEditComponent implements OnInit {
       this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
     }
   }
-  DataGetAccess(): void {
-    this.coreSiteCategoryCmsModuleService
-      .ServiceViewModel()
-      .subscribe(
-        async (next) => {
-          if (next.IsSuccess) {
-            this.dataAccessModel = next.Access;
-            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
-          } else {
-            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
-          }
-        },
-        (error) => {
-          this.cmsToastrService.typeErrorGetAccess(error);
-        }
-      );
-  }
+
   DataGetOneContent(): void {
 
 
@@ -134,8 +116,15 @@ export class CoreSiteCategoryCmsModuleEditComponent implements OnInit {
     filteModelContent.Filters.push(filter);
 
     filteModelContent.AccessLoad = true;
+    /*َAccess Field*/
+    this.coreSiteCategoryCmsModuleService.setAccessLoad();
+
     this.coreSiteCategoryCmsModuleService.ServiceGetAll(filteModelContent).subscribe(
       (next) => {
+
+        /*َAccess Field*/
+        this.dataAccessModel = next.Access;
+        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
         this.dataModel = next.Item;
         if (next.IsSuccess) {
           if (next.ListItems && next.ListItems.length > 0) {

@@ -78,7 +78,7 @@
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #actionMenu="matMenu">
-              <button mat-menu-item (click)="onActionbuttonEditRow(row)">
+              <button mat-menu-item (click)="onActionbuttonEditRow(row)" *ngIf="dataModelResult.Access.AccessEditRow">
                 <mat-icon>mode_edit</mat-icon>
                 <span>ویرایش</span>
               </button>

@@ -5,7 +5,7 @@ import { ApplicationRoutes } from './application.routing';
 import { ApplicationAppListComponent } from './content/list/list.component';
 import { ApplicationMemberInfoListComponent } from './memberInfo/list/list.component';
 import { ApplicationIntroListComponent } from './intro/list/list.component';
-import { ApplicationNotificationListComponent } from './notification/list/list.component';
+import { ApplicationLogNotificationListComponent } from './notification/list/list.component';
 import { ApplicationSourceListComponent } from './source/list/list.component';
 import { ApplicationThemeConfigListComponent } from './themeConfig/list/list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -31,9 +31,9 @@ import { ApplicationSourceTreeComponent } from './source/tree/tree.component';
 import { ApplicationAppTreeComponent } from './content/tree/tree.component';
 import { ApplicationSourceAddComponent } from './source/add/add.component';
 import { ApplicationSourceEditComponent } from './source/edit/edit.component';
-import {MatIconModule} from '@angular/material/icon';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatStepperModule} from '@angular/material/stepper';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatStepperModule } from '@angular/material/stepper';
 import { ApplicationSourceSelectorComponent } from './source/selector/selector.component';
 import { ApplicationThemeConfigSelectorComponent } from './themeConfig/selector/selector.component';
 import { ApplicationAppEditComponent } from './content/edit/edit.component';
@@ -48,6 +48,11 @@ import { CmsFileUploaderModule } from 'ntk-cms-fileuploader';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 import { ApplicationConfigSiteComponent } from './config/site/configSite.component';
 import { ApplicationConfigMainAdminComponent } from './config/mainAdmin/configMainAdmin.component';
+import { ApplicationThemeConfigEditComponent } from './themeConfig/edit/edit.component';
+import { ApplicationThemeConfigAddComponent } from './themeConfig/add/add.component';
+import { ApplicationMemberInfoViewComponent } from './memberInfo/view/view.component';
+import { ApplicationLogNotificationViewComponent } from './notification/view/view.component';
+import { ApplicationLogNotificationAddComponent } from './notification/add/add.component';
 
 @NgModule({
   declarations: [
@@ -61,27 +66,40 @@ import { ApplicationConfigMainAdminComponent } from './config/mainAdmin/configMa
     ApplicationSourceAddComponent,
     ApplicationSourceEditComponent,
     ApplicationSourceSelectorComponent,
+
     ApplicationAppListComponent,
+    ApplicationAppTreeComponent,
     ApplicationAppAddComponent,
     ApplicationAppEditComponent,
     ApplicationAppSelectorComponent,
     ApplicationAppDownloadComponent,
     ApplicationAppUploadAppComponent,
     ApplicationAppUploadUpdateComponent,
-    ApplicationMemberInfoListComponent,
+
     ApplicationIntroListComponent,
     ApplicationIntroAddComponent,
     ApplicationIntroEditComponent,
-    ApplicationNotificationListComponent,
+
+    ApplicationMemberInfoListComponent,
+    ApplicationMemberInfoViewComponent,
+
+    ApplicationLogNotificationListComponent,
+    ApplicationLogNotificationViewComponent,
+    ApplicationLogNotificationAddComponent,
+
     ApplicationThemeConfigListComponent,
     ApplicationThemeConfigSelectorComponent,
-    ApplicationAppTreeComponent,
+    ApplicationThemeConfigAddComponent,
+    ApplicationThemeConfigEditComponent,
+
+
+
   ],
   imports: [
     CommonModule,
     ApplicationRoutes,
     FormsModule,
-    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
+    ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
     TreeviewModule.forRoot(),
     SharedModule.forRoot(),
     AngularEditorModule,
@@ -95,7 +113,7 @@ import { ApplicationConfigMainAdminComponent } from './config/mainAdmin/configMa
   providers: [
     CoreEnumService,
     CoreAuthService,
-    CmsConfirmationDialogService ,
+    CmsConfirmationDialogService,
     ApplicationEnumService,
     CoreModuleTagService,
     ApplicationAppService,
@@ -104,7 +122,7 @@ import { ApplicationConfigMainAdminComponent } from './config/mainAdmin/configMa
     ApplicationMemberInfoService,
     ApplicationLogNotificationService,
     ApplicationThemeConfigService,
-    ApplicationConfigurationService ,
+    ApplicationConfigurationService,
   ]
 })
 export class ApplicationModule { }

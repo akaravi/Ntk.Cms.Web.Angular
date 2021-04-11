@@ -26,6 +26,8 @@ import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/bas
 import { MatSort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
+import { ApplicationThemeConfigAddComponent } from '../add/add.component';
+import { ApplicationThemeConfigEditComponent } from '../edit/edit.component';
 
 @Component({
   selector: 'app-application-app-list',
@@ -33,6 +35,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./list.component.scss']
 })
 export class ApplicationThemeConfigListComponent implements OnInit, OnDestroy {
+  requestLinkSourceId = 0;
   constructor(
     private applicationThemeConfigService: ApplicationThemeConfigService,
     private activatedRoute: ActivatedRoute,
@@ -45,13 +48,11 @@ export class ApplicationThemeConfigListComponent implements OnInit, OnDestroy {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
   }
-  requestSourceId = 0;
   comment: string;
   author: string;
   dataSource: any;
   flag = false;
   tableContentSelected = [];
-
   filteModelContent = new FilterModel();
   dataModelResult: ErrorExceptionResult<ApplicationThemeConfigModel> = new ErrorExceptionResult<ApplicationThemeConfigModel>();
   optionsSearch: ComponentOptionSearchModel = new ComponentOptionSearchModel();
@@ -63,7 +64,9 @@ export class ApplicationThemeConfigListComponent implements OnInit, OnDestroy {
   tableRowSelected: ApplicationThemeConfigModel = new ApplicationThemeConfigModel();
   tableSource: MatTableDataSource<ApplicationThemeConfigModel> = new MatTableDataSource<ApplicationThemeConfigModel>();
   categoryModelSelected: ApplicationSourceModel;
-
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+  expandedElement: ApplicationThemeConfigModel | null;
+  cmsApiStoreSubscribe: Subscription;
   tabledisplayedColumns: string[] = [
     'LinkMainImageIdSrc',
     'Id',
@@ -76,12 +79,14 @@ export class ApplicationThemeConfigListComponent implements OnInit, OnDestroy {
     'Action'
   ];
 
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
-  expandedElement: ApplicationThemeConfigModel | null;
-  cmsApiStoreSubscribe: Subscription;
-
   ngOnInit(): void {
-    this.requestSourceId = + Number(this.activatedRoute.snapshot.paramMap.get('SourceId'));
+    this.requestLinkSourceId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkSourceId'));
+    const filter = new FilterDataModel();
+    if (this.requestLinkSourceId > 0) {
+      filter.PropertyName = 'LinkSourceId';
+      filter.Value = this.requestLinkSourceId;
+      this.filteModelContent.Filters.push(filter);
+    }
     this.DataGetAll();
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
@@ -103,15 +108,10 @@ export class ApplicationThemeConfigListComponent implements OnInit, OnDestroy {
     const filterModel = JSON.parse(JSON.stringify(this.filteModelContent));
     /*filter CLone*/
     const filter = new FilterDataModel();
-    if (this.requestSourceId > 0) {
-      filter.PropertyName = 'LinkSourceId';
-      filter.Value = this.requestSourceId;
-      filterModel.Filters.push(filter);
-    }
-    if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
 
+    if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
       filter.PropertyName = 'LinkSourceId';
-      filter.Value = this.requestSourceId;
+      filter.Value = this.categoryModelSelected.Id;
       filterModel.Filters.push(filter);
     }
     this.applicationThemeConfigService.ServiceGetAll(filterModel).subscribe(
@@ -134,7 +134,7 @@ export class ApplicationThemeConfigListComponent implements OnInit, OnDestroy {
               'LinkSiteId'
             );
           }
-          if (this.requestSourceId === 0) {
+          if (this.requestLinkSourceId === 0) {
             this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
               this.tabledisplayedColumns,
               'LinkSourceId'
@@ -183,11 +183,15 @@ export class ApplicationThemeConfigListComponent implements OnInit, OnDestroy {
 
 
   onActionbuttonNewRow(): void {
-    if (
-      this.requestSourceId == null ||
-      this.requestSourceId === 0
-    ) {
-      const message = 'محتوا انتخاب نشده است';
+    let ApplicationId = 0;
+    if (this.requestLinkSourceId > 0) {
+      ApplicationId = this.requestLinkSourceId;
+    }
+    if (this.categoryModelSelected && this.categoryModelSelected.Id && this.categoryModelSelected.Id > 0) {
+      ApplicationId = this.categoryModelSelected.Id;
+    }
+    if (ApplicationId <= 0) {
+      const message = 'سورسی انتخاب نشده است';
       this.cmsToastrService.typeErrorSelected(message);
       return;
     }
@@ -199,15 +203,15 @@ export class ApplicationThemeConfigListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessAdd();
       return;
     }
-    // const dialogRef = this.dialog.open(NewsCommentEditComponent, {
-    //   data: { contentId: this.requestContentId }
-    // });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   // console.log(`Dialog result: ${result}`);
-    //   if (result && result.dialogChangedDate) {
-    //     this.DataGetAll();
-    //   }
-    // });
+    const dialogRef = this.dialog.open(ApplicationThemeConfigAddComponent, {
+      data: { contentId: ApplicationId }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log(`Dialog result: ${result}`);
+      if (result && result.dialogChangedDate) {
+        this.DataGetAll();
+      }
+    });
   }
 
   onActionSelectorSelect(model: ApplicationSourceModel | null): void {
@@ -231,15 +235,15 @@ export class ApplicationThemeConfigListComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // const dialogRef = this.dialog.open(NewsCommentEditComponent, {
-    //   data: { id: this.tableRowSelected.Id }
-    // });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   // console.log(`Dialog result: ${result}`);
-    //   if (result && result.dialogChangedDate) {
-    //     this.DataGetAll();
-    //   }
-    // });
+    const dialogRef = this.dialog.open(ApplicationThemeConfigEditComponent, {
+      data: { id: this.tableRowSelected.Id }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log(`Dialog result: ${result}`);
+      if (result && result.dialogChangedDate) {
+        this.DataGetAll();
+      }
+    });
   }
   onActionbuttonDeleteRow(model: ApplicationThemeConfigModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
@@ -306,6 +310,15 @@ export class ApplicationThemeConfigListComponent implements OnInit, OnDestroy {
     );
 
   }
+  onActionbuttonApplicationList(model: ApplicationThemeConfigModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id === 0) {
+      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      return;
+    }
+    this.tableRowSelected = model;
+
+    this.router.navigate(['/application/app/LinkThemeConfigId', this.tableRowSelected.Id]);
+  }
   onActionbuttonExport(): void {
     this.optionsExport.data.show = !this.optionsExport.data.show;
     this.optionsExport.childMethods.runExport(this.filteModelContent.Filters);
@@ -322,6 +335,6 @@ export class ApplicationThemeConfigListComponent implements OnInit, OnDestroy {
     this.tableRowSelected = row;
   }
   onActionBackToParent(): void {
-    this.router.navigate(['/news/content/']);
+    this.router.navigate(['/application/app/']);
   }
 }

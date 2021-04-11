@@ -7,6 +7,7 @@ git remote add origin https://github.com/akaravi/Ntk.Cms.Web.AngularV3.git
 git push -u origin main
 
 
+npm run build-prod
 
 ===================RTL
 npm run rtl

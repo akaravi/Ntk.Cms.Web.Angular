@@ -61,7 +61,7 @@ export class AuthForgotPasswordComponent implements OnInit {
       .ServiceForgetPassword(this.dataModelforgetPasswordBySms)
       .subscribe((res) => {
         if (res.IsSuccess) {
-          this.cmsToastrService.typeSuccessMessage('کد فعال سازی برای پیامک شد');
+          this.cmsToastrService.typeSuccessMessage('کد فعال سازی به همراه شما پیامک شد');
           this.forgetState = 'entrycode';
         }
         else {

@@ -80,7 +80,6 @@ export class CoreGuideEditComponent implements OnInit {
     }
 
     this.getEnumRecordStatus();
-    this.DataGetAccess();
   }
 
   getEnumRecordStatus(): void {
@@ -102,16 +101,22 @@ export class CoreGuideEditComponent implements OnInit {
     this.formInfo.FormAlert = 'در دریافت ارسال اطلاعات از سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
+    /*َAccess Field*/
+    this.coreGuideService.setAccessLoad();
+
     this.coreGuideService.ServiceGetOneById(this.requestId).subscribe(
       (next) => {
+        /*َAccess Field*/
+        this.dataAccessModel = next.Access;
+        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
         this.dataModel = next.Item;
         if (next.IsSuccess) {
           this.formInfo.FormTitle = this.formInfo.FormTitle + ' ' + next.Item.Title;
           this.formInfo.FormAlert = '';
-              } else {
+        } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
-          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
         }
         this.loading.display = false;
       },
@@ -122,23 +127,6 @@ export class CoreGuideEditComponent implements OnInit {
     );
   }
 
-  DataGetAccess(): void {
-    this.coreGuideService
-      .ServiceViewModel()
-      .subscribe(
-        async (next) => {
-          if (next.IsSuccess) {
-            this.dataAccessModel = next.Access;
-            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
-          } else {
-            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
-          }
-        },
-        (error) => {
-          this.cmsToastrService.typeErrorGetAccess(error);
-        }
-      );
-  }
   DataEditContent(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
@@ -151,10 +139,10 @@ export class CoreGuideEditComponent implements OnInit {
           this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
           this.cmsToastrService.typeSuccessEdit();
           this.dialogRef.close({ dialogChangedDate: true });
-              } else {
+        } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
-          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
         }
         this.loading.display = false;
       },

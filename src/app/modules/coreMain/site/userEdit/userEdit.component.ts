@@ -40,7 +40,7 @@ import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 export class CoreSiteUserEditComponent implements OnInit {
   requestLinkSiteId = 0;
   requestLinkUserId = 0;
-requestLinkUserGroupId = 0;
+  requestLinkUserGroupId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
@@ -78,7 +78,6 @@ requestLinkUserGroupId = 0;
       this.dialogRef.close({ dialogChangedDate: false });
       return;
     }
-    this.DataGetAccess();
     this.getEnumRecordStatus();
     this.DataGetOneContent();
   }
@@ -92,23 +91,7 @@ requestLinkUserGroupId = 0;
       this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
     }
   }
-  DataGetAccess(): void {
-    this.coreSiteUserService
-      .ServiceViewModel()
-      .subscribe(
-        async (next) => {
-          if (next.IsSuccess) {
-            this.dataAccessModel = next.Access;
-            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
-          } else {
-            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
-          }
-        },
-        (error) => {
-          this.cmsToastrService.typeErrorGetAccess(error);
-        }
-      );
-  }
+
   DataGetOneContent(): void {
 
 
@@ -129,23 +112,28 @@ requestLinkUserGroupId = 0;
     filteModelContent.Filters.push(filter);
 
     filteModelContent.AccessLoad = true;
+
     this.coreSiteUserService.ServiceGetAll(filteModelContent).subscribe(
       (next) => {
+        /*َAccess Field*/
+        this.dataAccessModel = next.Access;
+        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
         this.dataModel = next.Item;
         if (next.IsSuccess) {
           if (next.ListItems && next.ListItems.length > 0) {
             this.dataModel = next.ListItems[0];
-            this.formInfo.FormTitle = this.formInfo.FormTitle ;
+            this.formInfo.FormTitle = this.formInfo.FormTitle;
             this.formInfo.FormAlert = '';
           }
           else {
             this.cmsToastrService.typeError('ماژول جهت ویرایش یافت نشد');
 
           }
-              } else {
+        } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
-          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
         }
         this.loading.display = false;
       },
@@ -169,10 +157,10 @@ requestLinkUserGroupId = 0;
           this.cmsToastrService.typeSuccessEdit();
           this.dialogRef.close({ dialogChangedDate: true });
 
-              } else {
+        } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
-          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
         }
         this.loading.display = false;
       },

@@ -3,8 +3,7 @@
   <form (ngSubmit)="onFormSubmit()" #vform="ngForm" class="form form-horizontal">
     <app-progress-spinner [options]="loading"> </app-progress-spinner>
     <div *ngIf="!loading.display" class="form-body">
-
-
+      <!-- RecordStatus Field -->
       <mat-form-field class="example-full-width">
         <mat-select placeholder="وضعیت" [(ngModel)]="dataModel.RecordStatus" name="dataModel.RecordStatus"
           #RecordStatus="ngModel" panelClass="recordStatus-{{ dataModel.RecordStatus }}" required>
@@ -18,6 +17,7 @@
           RecordStatus is <strong>required</strong>
         </mat-error>
       </mat-form-field>
+      <!-- Title Field -->
       <mat-form-field class="example-full-width">
         <mat-label>عنوان</mat-label>
         <input matInput [(ngModel)]="dataModel.Title" name="dataModel.Title" #Title type="text" placeholder="عنوان"
@@ -30,7 +30,7 @@
           Title is <strong>required</strong>
         </mat-error>
       </mat-form-field>
-
+      <!-- Description Field -->
       <mat-form-field class="example-full-width">
         <mat-label>توضیحات</mat-label>
         <textarea matInput [(ngModel)]="dataModel.Description" name="dataModel.Description" #Description type="text"

@@ -106,28 +106,11 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
       return;
     }
     this.DataGetOne();
-    this.DataGetAccess();
     this.getEnumRecordStatus();
   }
   ngAfterViewInit(): void {
   }
-  DataGetAccess(): void {
-    this.articleContentService
-      .ServiceViewModel()
-      .subscribe(
-        async (next) => {
-          if (next.IsSuccess) {
-            this.dataAccessModel = next.Access;
-            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
-          } else {
-            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
-          }
-        },
-        (error) => {
-          this.cmsToastrService.typeErrorGetAccess(error);
-        }
-      );
-  }
+
   onActionFileSelectedLinkMainImageId(model: NodeInterface): void {
     this.dataModel.LinkMainImageId = model.id;
     this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
@@ -176,11 +159,15 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-
+    /*َAccess Field*/
+    this.articleContentService.setAccessLoad();
     this.articleContentService
       .ServiceGetOneById(this.requestId)
       .subscribe(
         async (next) => {
+           /*َAccess Field*/
+        this.dataAccessModel = next.Access;
+        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
           this.loading.display = false;
           this.dataModelResult = next;
           this.formInfo.FormSubmitAllow = true;

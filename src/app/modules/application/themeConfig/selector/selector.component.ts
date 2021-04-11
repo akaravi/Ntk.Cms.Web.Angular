@@ -43,7 +43,7 @@ export class ApplicationThemeConfigSelectorComponent implements OnInit {
   filteredOptions: Observable<ApplicationThemeConfigModel[]>;
   parentId = 0;
     @Input() disabled = new EventEmitter<boolean>();
-  public optionSelectFirstItem = true;
+  @Input() optionSelectFirstItem = false;
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Output() optionSelect = new EventEmitter();
 

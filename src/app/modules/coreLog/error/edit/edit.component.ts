@@ -84,7 +84,6 @@ export class CoreLogErrorEditComponent implements OnInit, OnDestroy {
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.tokenInfo = next;
     });
-    this.DataGetAccess();
 
   }
 
@@ -92,23 +91,6 @@ export class CoreLogErrorEditComponent implements OnInit, OnDestroy {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
 
-  DataGetAccess(): void {
-    this.coreUserService
-      .ServiceViewModel()
-      .subscribe(
-        async (next) => {
-          if (next.IsSuccess) {
-            // this.dataAccessModel = next.Access;
-            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
-          } else {
-            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
-          }
-        },
-        (error) => {
-          this.cmsToastrService.typeErrorGetAccess(error);
-        }
-      );
-  }
   DataGetOneContent(): void {
     if (!this.requestId || this.requestId.length === 0) {
       this.cmsToastrService.typeErrorEditRowIsNull();
@@ -118,8 +100,14 @@ export class CoreLogErrorEditComponent implements OnInit, OnDestroy {
     this.formInfo.FormAlert = 'در دریافت ارسال اطلاعات از سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
+    /*َAccess Field*/
+    this.coreLogErrorService.setAccessLoad();
+
     this.coreLogErrorService.ServiceGetOneById(this.requestId).subscribe(
       (next) => {
+        /*َAccess Field*/
+        // this.dataAccessModel = next.Access;
+        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
         this.dataModel = next.Item;
         if (next.IsSuccess) {
           this.formInfo.FormTitle = this.formInfo.FormTitle + ' ' + next.Item.Id;

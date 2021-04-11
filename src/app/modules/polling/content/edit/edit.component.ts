@@ -96,7 +96,6 @@ export class PollingContentEditComponent implements OnInit, AfterViewInit {
       return;
     }
     this.DataGetOne();
-    this.DataGetAccess();
     this.getEnumRecordStatus();
   }
   ngAfterViewInit(): void {
@@ -139,33 +138,24 @@ export class PollingContentEditComponent implements OnInit, AfterViewInit {
 
     this.DataEditContent();
   }
-  DataGetAccess(): void {
-    this.pollingContentService
-      .ServiceViewModel()
-      .subscribe(
-        async (next) => {
-          if (next.IsSuccess) {
-            this.dataAccessModel = next.Access;
-            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
-          } else {
-            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
-          }
-        },
-        (error) => {
-          this.cmsToastrService.typeErrorGetAccess(error);
-        }
-      );
-  }
+
   DataGetOne(): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
+    /*َAccess Field*/
+    this.pollingContentService.setAccessLoad();
 
     this.pollingContentService
       .ServiceGetOneById(this.requestId)
       .subscribe(
         async (next) => {
+
+          /*َAccess Field*/
+          this.dataAccessModel = next.Access;
+          this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
           this.loading.display = false;
           this.dataModelResult = next;
           this.formInfo.FormSubmitAllow = true;

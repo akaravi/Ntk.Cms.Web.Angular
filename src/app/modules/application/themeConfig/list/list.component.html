@@ -1,8 +1,8 @@
 <div class="row">
-  <div *ngIf="requestSourceId===0" class="col-xl-3">
+  <div *ngIf="requestLinkSourceId===0" class="col-xl-3">
     <app-application-source-tree (optionSelect)="onActionSelectorSelect($event)"></app-application-source-tree>
   </div>
-  <div [ngClass]="(requestSourceId===0)?'col-xl-9':'col-xl-12'">
+  <div [ngClass]="(requestLinkSourceId===0)?'col-xl-9':'col-xl-12'">
     <div class="button-row">
       <button *ngIf="dataModelResult.Access.AccessAddRow " (click)="onActionbuttonNewRow()" type="button"
         class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">اضافه</button>
@@ -21,7 +21,7 @@
       </a>
       <button (click)="onActionbuttonExport()" type="button" class="btn btn-bg-info BTN">خروجی فایل</button>
       <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">برسی مجدد</button>
-      <button (click)="onActionBackToParent()" *ngIf="requestSourceId>0" type="button"
+      <button (click)="onActionBackToParent()" *ngIf="requestLinkSourceId>0" type="button"
         class="btn btn-warning BTN">بازگشت</button>
       <app-cms-search-list [(options)]="optionsSearch"></app-cms-search-list>
       <app-cms-export-list [(options)]="optionsExport"></app-cms-export-list>
@@ -93,13 +93,17 @@
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #actionMenu="matMenu">
-              <button mat-menu-item (click)="onActionbuttonEditRow(row)">
+              <button mat-menu-item (click)="onActionbuttonEditRow(row)" *ngIf="dataModelResult.Access.AccessEditRow">
                 <mat-icon>mode_edit</mat-icon>
                 <span>ویرایش</span>
               </button>
-              <button mat-menu-item (click)="onActionbuttonDeleteRow(row)">
+              <button mat-menu-item (click)="onActionbuttonDeleteRow(row)" *ngIf="dataModelResult.Access.AccessDeleteRow">
                 <mat-icon>delete_forever</mat-icon>
                 <span>حذف</span>
+              </button>
+              <button mat-menu-item (click)="onActionbuttonApplicationList(row)">
+                <mat-icon>list</mat-icon>
+                <span>لیست اپ ها</span>
               </button>
             </mat-menu>
           </mat-cell>

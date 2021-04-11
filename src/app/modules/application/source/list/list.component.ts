@@ -249,7 +249,16 @@ export class ApplicationSourceListComponent implements OnInit, OnDestroy {
     }
     this.tableRowSelected = model;
 
-    this.router.navigate(['/application/app/', this.tableRowSelected.Id]);
+    this.router.navigate(['/application/app/LinkSourceId', this.tableRowSelected.Id]);
+  }
+  onActionbuttonThemeList(model: ApplicationSourceModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id === 0) {
+      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      return;
+    }
+    this.tableRowSelected = model;
+
+    this.router.navigate(['/application/themeconfig/LinkSourceId', this.tableRowSelected.Id]);
   }
   onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;
