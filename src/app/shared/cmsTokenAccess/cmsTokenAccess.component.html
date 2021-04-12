@@ -18,7 +18,7 @@
     <div class="input-group-prepend">
       <button (click)="onActionbuttonSelectUser()" class="btn btn-outline-primary" type="button">برو</button>
     </div>
-    <input [(ngModel)]="UserId" type="text" class="form-control" placeholder="شناسه کاربر">
+    <input [(ngModel)]="inputUserId" type="text" class="form-control" placeholder="شناسه کاربر">
   </div>
   <div class="input-group"
     *ngIf="tokenInfo &&( tokenInfo.UserType == 1 || tokenInfo.UserType == 2 || tokenInfo.UserType == 3)"
@@ -26,7 +26,7 @@
     <div class="input-group-prepend">
       <button (click)="onActionbuttonSelectSite()" class="btn btn-outline-primary" type="button">برو</button>
     </div>
-    <input [(ngModel)]="SiteId" type="text" class="form-control" placeholder="شناسه سایت">
+    <input [(ngModel)]="inputSiteId" type="text" class="form-control" placeholder="شناسه سایت">
   </div>
   <!-- LinkCmsSiteId Field -->
   <app-cms-site-selector (optionSelect)="onActionSiteSelect($event)" [disabled]="false"

@@ -43,6 +43,8 @@ export class CmsTokenAccessComponent implements OnInit, OnDestroy {
       if (this.tokenInfo && this.tokenInfo.UserId > 0 && this.tokenInfo.SiteId <= 0) {
         this.router.navigate(['/core/site/selection']);
       }
+      this.inputSiteId = this.tokenInfo.SiteId;
+      this.inputUserId = this.tokenInfo.UserId;
     });
 
 
@@ -50,8 +52,8 @@ export class CmsTokenAccessComponent implements OnInit, OnDestroy {
 
   tokenInfo: TokenInfoModel = new TokenInfoModel();
   loadingStatus = false;
-  SiteId: number;
-  UserId: number;
+  inputSiteId: number;
+  inputUserId: number;
   cmsApiStoreSubscribe: Subscription;
 
   ngOnInit(): void {
@@ -142,7 +144,7 @@ export class CmsTokenAccessComponent implements OnInit, OnDestroy {
   }
 
   onActionbuttonSelectUser(): void {
-    if (this.UserId === this.tokenInfo.UserId) {
+    if (this.inputUserId === this.tokenInfo.UserId) {
       const etitle = 'هشدار';
       const emessage = 'شناسه درخواستی این کاربر با کاربری که در آن هستید یکسان است';
       this.cmsToastrService.toastr.warning(emessage, etitle);
@@ -152,7 +154,7 @@ export class CmsTokenAccessComponent implements OnInit, OnDestroy {
     authModel.UserAccessAdminAllowToProfessionalData = this.tokenInfo.UserAccessAdminAllowToProfessionalData;
     authModel.UserAccessAdminAllowToAllData = this.tokenInfo.UserAccessAdminAllowToAllData;
     authModel.SiteId = this.tokenInfo.SiteId;
-    authModel.UserId = this.UserId;
+    authModel.UserId = this.inputUserId;
     authModel.Lang = this.tokenInfo.Language;
 
     const title = 'اطلاعات ';
@@ -163,7 +165,7 @@ export class CmsTokenAccessComponent implements OnInit, OnDestroy {
       (next) => {
         this.loadingStatus = false;
         if (next.IsSuccess) {
-          if (next.Item.UserId === this.UserId) {
+          if (next.Item.UserId === this.inputUserId) {
 
             this.cmsToastrService.toastr.success('دسترسی به کاربر جدید تایید شد', title);
           } else {
@@ -181,7 +183,7 @@ export class CmsTokenAccessComponent implements OnInit, OnDestroy {
   }
 
   onActionbuttonSelectSite(): void {
-    if (this.SiteId === this.tokenInfo.SiteId) {
+    if (this.inputSiteId === this.tokenInfo.SiteId) {
       const etitle = 'هشدار';
       const emessage = 'شناسه این وب سایت با وب سایتی که در آن هستید یکسان است';
       this.cmsToastrService.toastr.warning(emessage, etitle);
@@ -191,7 +193,7 @@ export class CmsTokenAccessComponent implements OnInit, OnDestroy {
     authModel.UserAccessAdminAllowToProfessionalData = this.tokenInfo.UserAccessAdminAllowToProfessionalData;
     authModel.UserAccessAdminAllowToAllData = this.tokenInfo.UserAccessAdminAllowToAllData;
     authModel.UserId = this.tokenInfo.UserId;
-    authModel.SiteId = this.SiteId;
+    authModel.SiteId = this.inputSiteId;
     authModel.Lang = this.tokenInfo.Language;
 
     const title = 'اطلاعات ';
@@ -202,7 +204,7 @@ export class CmsTokenAccessComponent implements OnInit, OnDestroy {
       (next) => {
         this.loadingStatus = false;
         if (next.IsSuccess) {
-          if (next.Item.SiteId === +this.SiteId) {
+          if (next.Item.SiteId === +this.inputSiteId) {
             this.cmsToastrService.toastr.success('دسترسی به سایت جدید تایید شد', title);
           } else {
             this.cmsToastrService.toastr.warning('دسترسی به سایت جدید تایید نشد', title);
@@ -218,8 +220,10 @@ export class CmsTokenAccessComponent implements OnInit, OnDestroy {
   }
   onActionSiteSelect(model: CoreSiteModel): void {
     if (model && model.Id > 0) {
-      this.SiteId = model.Id;
-      this.onActionbuttonSelectSite();
+      this.inputSiteId = model.Id;
+      if (this.inputSiteId !== this.tokenInfo.SiteId) {
+        this.onActionbuttonSelectSite();
+      }
     }
   }
 }
