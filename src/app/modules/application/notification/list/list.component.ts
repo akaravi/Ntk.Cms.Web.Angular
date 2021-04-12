@@ -47,6 +47,9 @@ export class ApplicationLogNotificationListComponent implements OnInit, OnDestro
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
+    this.optionsExport.parentMethods = {
+      onSubmit: (model) => this.onSubmitOptionExport(model),
+    };
   }
   comment: string;
   author: string;
@@ -369,7 +372,22 @@ export class ApplicationLogNotificationListComponent implements OnInit, OnDestro
   }
   onActionbuttonExport(): void {
     this.optionsExport.data.show = !this.optionsExport.data.show;
-    // this.optionsExport.childMethods.setExportLinkFile(this.filteModelContent.Filters);
+    this.optionsExport.childMethods.setExportFilterModel(this.filteModelContent);
+  }
+  onSubmitOptionExport(model: FilterModel): void {
+    const exportlist = new Map<string, string>();
+    exportlist.set('Download', 'loading ... ');
+    this.applicationLogNotificationService.ServiceExportFile(model).subscribe(
+      (next) => {
+        if (next.IsSuccess) {
+          exportlist.set('Download', next.LinkFile);
+          this.optionsExport.childMethods.setExportLinkFile(exportlist);
+        }
+      },
+      (error) => {
+        this.cmsToastrService.typeError(error);
+      }
+    );
   }
 
   onActionbuttonReload(): void {

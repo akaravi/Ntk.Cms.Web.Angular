@@ -52,6 +52,7 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
     this.optionsExport.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionExport(model),
     };
+
   }
   filteModelContent = new FilterModel();
   categoryModelSelected: NewsCategoryModel;

@@ -75,9 +75,9 @@ export class CmsExportListComponent implements OnInit {
     this.modelData = model;
   }
   setExportFilterModel(model: FilterModel): void {
-    this.filterModel = model;
+    this.filterModel = JSON.parse(JSON.stringify(model));;
     if (!this.filterModel.ExportFile) {
-      this.filterModel.ExportFile = this.exportFileModel;
+      this.filterModel.ExportFile = new ExportFileModel();
     }
   }
 

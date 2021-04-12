@@ -46,6 +46,9 @@ export class TicketingTemplateListComponent implements OnInit, OnDestroy {
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
+    this.optionsExport.parentMethods = {
+      onSubmit: (model) => this.onSubmitOptionExport(model),
+    };
   }
   requestDepartemenId = 0;
   comment: string;
@@ -324,7 +327,22 @@ export class TicketingTemplateListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonExport(): void {
     this.optionsExport.data.show = !this.optionsExport.data.show;
-    // this.optionsExport.childMethods.setExportLinkFile(this.filteModelContent.Filters);
+    this.optionsExport.childMethods.setExportFilterModel(this.filteModelContent);
+  }
+  onSubmitOptionExport(model: FilterModel): void {
+    const exportlist = new Map<string, string>();
+    exportlist.set('Download', 'loading ... ');
+    this.ticketingTemplateService.ServiceExportFile(model).subscribe(
+      (next) => {
+        if (next.IsSuccess) {
+          exportlist.set('Download', next.LinkFile);
+          this.optionsExport.childMethods.setExportLinkFile(exportlist);
+        }
+      },
+      (error) => {
+        this.cmsToastrService.typeError(error);
+      }
+    );
   }
 
   onActionbuttonReload(): void {
