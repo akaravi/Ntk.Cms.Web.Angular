@@ -11,8 +11,6 @@ import {
 import { Subscription } from 'rxjs';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 
-
-
 @Component({
   selector: 'app-cms-token-access',
   templateUrl: './cmsTokenAccess.component.html',

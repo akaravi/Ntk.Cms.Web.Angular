@@ -1,0 +1,46 @@
+<!--optionMethod 1-->
+<table *ngIf="optionMethod===1">
+  <thead>
+    <tr>
+      <th>
+        پارامتر
+      </th>
+      <th>
+        مقادیر
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let head of dataModel | keys">
+      <td>{{head}}</td>
+      <td>{{dataModel[head]}}</td>
+    </tr>
+  </tbody>
+</table>
+<!--optionMethod 2-->
+<table *ngIf="optionMethod===2">
+  <thead>
+    <tr>
+      <th *ngFor="let head of dataModel[0] | keys">{{head}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of dataModel">
+      <td *ngFor="let list of item | keys">{{item[list]}}</td>
+    </tr>
+  </tbody>
+</table>
+
+<!--optionMethod 3-->
+<table *ngIf="optionMethod===3">
+  <thead>
+    <tr>
+      <th *ngFor="let head of dataModel | keys">{{head}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td *ngFor="let list of dataModel | keys">{{dataModel[list]}}</td>
+    </tr>
+  </tbody>
+</table>

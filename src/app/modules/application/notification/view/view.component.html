@@ -13,24 +13,7 @@
       <app-cms-user-selector [disabled]="true" [optionSelectForce]=" this.dataModel.LinkUserId"
         [optionPlaceholder]="'کاربر'"></app-cms-user-selector>
 
-      <table>
-        <thead>
-          <tr>
-            <th>
-              پارامتر
-            </th>
-            <th>
-              مقادیر
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let head of dataModel | keys">
-            <td>{{head}}</td>
-            <td>{{dataModel[head]}}</td>
-          </tr>
-        </tbody>
-      </table>
+        <app-cms-json-list [dataModel]="dataModel" [optionMethod]="1" ></app-cms-json-list>
 
 
 
