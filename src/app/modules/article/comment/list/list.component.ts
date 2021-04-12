@@ -319,7 +319,7 @@ export class ArticleCommentListComponent implements OnInit, OnDestroy {
       (next) => {
         if (next.IsSuccess) {
           statist.set('All', next.TotalRowCount);
-          this.optionsStatist.childMethods.runStatist(statist);
+          this.optionsStatist.childMethods.setStatistValue(statist);
         }
       },
       (error) => {
@@ -336,7 +336,7 @@ export class ArticleCommentListComponent implements OnInit, OnDestroy {
       (next) => {
         if (next.IsSuccess) {
           statist.set('Active', next.TotalRowCount);
-          this.optionsStatist.childMethods.runStatist(statist);
+          this.optionsStatist.childMethods.setStatistValue(statist);
         }
       }
       ,
@@ -348,7 +348,7 @@ export class ArticleCommentListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonExport(): void {
     this.optionsExport.data.show = !this.optionsExport.data.show;
-    // this.optionsExport.childMethods.runExport(this.filteModelContent.Filters);
+    // this.optionsExport.childMethods.setExportLinkFile(this.filteModelContent.Filters);
   }
 
   onActionbuttonReload(): void {

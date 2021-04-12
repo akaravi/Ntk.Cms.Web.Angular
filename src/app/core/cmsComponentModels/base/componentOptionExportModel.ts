@@ -1,4 +1,4 @@
-import { AccessModel, FilterDataModel } from 'ntk-cms-api';
+import { AccessModel, FilterDataModel, FilterModel } from 'ntk-cms-api';
 import { ComponentOptionModel } from './componentOptionModel';
 
 export class ComponentOptionExportModel
@@ -17,10 +17,11 @@ export class ComponentOptionExportModel
 }
 
 export class ComponentOptionExportChildMethodsModel {
-  runExport: (x: Map<string, string>) => void;
+  setExportLinkFile: (x: Map<string, string>) => void;
+  setExportFilterModel: (x: FilterModel) => void;
 }
 export class ComponentOptionExportParentMethodsModel {
-  onSubmit: (x: Map<string, string>) => void;
+  onSubmit: (model: FilterModel) => void;
 }
 export class ComponentOptionExportDataModel {
   show = false;

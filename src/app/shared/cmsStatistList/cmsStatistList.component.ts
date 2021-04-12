@@ -19,7 +19,7 @@ export class CmsStatistListComponent implements OnInit {
     }
     this.optionsData = model;
     this.optionsData.childMethods = {
-      runStatist: (x: Map<string, number>) => this.runStatist(x),
+      setStatistValue: (x: Map<string, number>) => this.setStatistValue(x),
     };
     this.optionsChange.emit(model);
   }
@@ -28,7 +28,7 @@ export class CmsStatistListComponent implements OnInit {
   }
   modelData: Map<string, number> = new Map<string, number>();
   ngOnInit(): void { }
-  runStatist(model: Map<string, number>): void {
+  setStatistValue(model: Map<string, number>): void {
     this.modelData = model;
   }
 }

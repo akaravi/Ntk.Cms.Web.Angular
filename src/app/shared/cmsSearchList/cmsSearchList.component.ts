@@ -166,7 +166,9 @@ export class CmsSearchListComponent implements OnInit {
   onSubmit(): void {
     // this.model = { name: "ali" };
     this.getRules();
-    this.optionsData.parentMethods.onSubmit(this.Filters);
+    if (this.optionsData.parentMethods) {
+      this.optionsData.parentMethods.onSubmit(this.Filters);
+    }
   }
   onGetRules(): void {
     // console.log(this.query);

@@ -17,7 +17,7 @@ export class ComponentOptionStatistModel
 }
 
 export class ComponentOptionStatistChildMethodsModel {
-  runStatist: (x: Map<string, number>) => void;
+  setStatistValue: (x: Map<string, number>) => void;
 }
 export class ComponentOptionStatistParentMethodsModel {
   onSubmit: (x: Array<FilterDataModel>) => void;

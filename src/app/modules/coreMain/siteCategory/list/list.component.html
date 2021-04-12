@@ -16,7 +16,10 @@
         <mat-slide-toggle (click)="onActionbuttonStatist()">آمار
         </mat-slide-toggle>
       </a>
-      <button (click)="onActionbuttonExport()" type="button" class="btn btn-bg-info BTN">خروجی فایل</button>
+      <a class="btn btn-info btn-sm BTN">
+        <mat-slide-toggle (click)="onActionbuttonExport()">خروجی فایل
+        </mat-slide-toggle>
+      </a>
       <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">برسی مجدد</button>
       <app-cms-search-list [(options)]="optionsSearch"></app-cms-search-list>
       <app-cms-export-list [(options)]="optionsExport"></app-cms-export-list>

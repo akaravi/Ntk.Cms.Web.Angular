@@ -19,7 +19,10 @@
         <mat-slide-toggle (click)="onActionbuttonStatist()">آمار
         </mat-slide-toggle>
       </a>
-      <button (click)="onActionbuttonExport()" type="button" class="btn btn-bg-info BTN">خروجی فایل</button>
+      <a class="btn btn-info btn-sm BTN">
+        <mat-slide-toggle (click)="onActionbuttonExport()">خروجی فایل
+        </mat-slide-toggle>
+      </a>
       <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">برسی مجدد</button>
       <button (click)="onActionBackToParent()" *ngIf="requestLinkSourceId>0" type="button"
         class="btn btn-warning BTN">بازگشت</button>

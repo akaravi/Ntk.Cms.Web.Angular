@@ -49,7 +49,9 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
-
+    this.optionsExport.parentMethods = {
+      onSubmit: (model) => this.onSubmitOptionExport(model),
+    };
   }
   filteModelContent = new FilterModel();
   categoryModelSelected: NewsCategoryModel;
@@ -240,7 +242,7 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
       (next) => {
         if (next.IsSuccess) {
           statist.set('All', next.TotalRowCount);
-          this.optionsStatist.childMethods.runStatist(statist);
+          this.optionsStatist.childMethods.setStatistValue(statist);
         }
       },
       (error) => {
@@ -257,7 +259,7 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
       (next) => {
         if (next.IsSuccess) {
           statist.set('Active', next.TotalRowCount);
-          this.optionsStatist.childMethods.runStatist(statist);
+          this.optionsStatist.childMethods.setStatistValue(statist);
         }
       }
       ,
@@ -269,22 +271,23 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonExport(): void {
     this.optionsExport.data.show = !this.optionsExport.data.show;
+    this.optionsExport.childMethods.setExportFilterModel(this.filteModelContent);
+  }
+  onSubmitOptionExport(model: FilterModel): void {
     const exportlist = new Map<string, string>();
     exportlist.set('Download', 'loading ... ');
-    this.newsContentService.ServiceExportFile(this.filteModelContent).subscribe(
+    this.newsContentService.ServiceExportFile(model).subscribe(
       (next) => {
         if (next.IsSuccess) {
           exportlist.set('Download', next.LinkFile);
-          this.optionsExport.childMethods.runExport(exportlist);
+          this.optionsExport.childMethods.setExportLinkFile(exportlist);
         }
       },
       (error) => {
         this.cmsToastrService.typeError(error);
       }
     );
-
   }
-
   onActionbuttonReload(): void {
     this.DataGetAll();
   }

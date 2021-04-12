@@ -272,7 +272,7 @@ export class ApplicationSourceListComponent implements OnInit, OnDestroy {
       (next) => {
         if (next.IsSuccess) {
           statist.set('All', next.TotalRowCount);
-          this.optionsStatist.childMethods.runStatist(statist);
+          this.optionsStatist.childMethods.setStatistValue(statist);
         }
       },
       (error) => {
@@ -289,7 +289,7 @@ export class ApplicationSourceListComponent implements OnInit, OnDestroy {
       (next) => {
         if (next.IsSuccess) {
           statist.set('Active', next.TotalRowCount);
-          this.optionsStatist.childMethods.runStatist(statist);
+          this.optionsStatist.childMethods.setStatistValue(statist);
         }
       }
       ,
@@ -301,7 +301,7 @@ export class ApplicationSourceListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonExport(): void {
     this.optionsExport.data.show = !this.optionsExport.data.show;
-    // this.optionsExport.childMethods.runExport(this.filteModelContent.Filters);
+    // this.optionsExport.childMethods.setExportLinkFile(this.filteModelContent.Filters);
   }
   onActionbuttonBuildApps(mode: ApplicationSourceModel = this.tableRowSelected): void {
     if (mode == null || !mode.Id || mode.Id === 0) {
