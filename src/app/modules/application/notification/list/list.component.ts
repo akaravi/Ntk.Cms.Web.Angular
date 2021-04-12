@@ -26,7 +26,7 @@ import { MatSort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
 import { ApplicationLogNotificationViewComponent } from '../view/view.component';
-import { ApplicationLogNotificationAddComponent } from '../add/add.component';
+import { ApplicationLogNotificationActionSendComponent } from '../action-send/action-send.component';
 
 @Component({
   selector: 'app-application-notification-list',
@@ -298,7 +298,7 @@ export class ApplicationLogNotificationListComponent implements OnInit, OnDestro
     //   }
     // });
   }
-  onActionbuttonNotifictionSend(model: ApplicationLogNotificationModel = this.tableRowSelected): void {
+  onActionbuttonNotifictionActionSend(model: ApplicationLogNotificationModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id.length === 0) {
       this.cmsToastrService.typeErrorSelected('ردیفی  انتخاب نشده است');
       return;
@@ -312,7 +312,7 @@ export class ApplicationLogNotificationListComponent implements OnInit, OnDestro
       this.cmsToastrService.typeErrorAccessEdit();
       return;
     }
-    const dialogRef = this.dialog.open(ApplicationLogNotificationAddComponent, {
+    const dialogRef = this.dialog.open(ApplicationLogNotificationActionSendComponent, {
       data: { LinkApplicationMemberId: this.tableRowSelected.LinkApplicationMemberId }
     });
     dialogRef.afterClosed().subscribe(result => {

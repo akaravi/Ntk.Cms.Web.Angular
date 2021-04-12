@@ -52,7 +52,8 @@ import { ApplicationThemeConfigEditComponent } from './themeConfig/edit/edit.com
 import { ApplicationThemeConfigAddComponent } from './themeConfig/add/add.component';
 import { ApplicationMemberInfoViewComponent } from './memberInfo/view/view.component';
 import { ApplicationLogNotificationViewComponent } from './notification/view/view.component';
-import { ApplicationLogNotificationAddComponent } from './notification/add/add.component';
+import { ApplicationLogNotificationActionSendComponent } from './notification/action-send/action-send.component';
+import { ApplicationMemberInfoSelectorComponent } from './memberInfo/selector/selector.component';
 
 @NgModule({
   declarations: [
@@ -82,10 +83,11 @@ import { ApplicationLogNotificationAddComponent } from './notification/add/add.c
 
     ApplicationMemberInfoListComponent,
     ApplicationMemberInfoViewComponent,
+    ApplicationMemberInfoSelectorComponent,
 
     ApplicationLogNotificationListComponent,
     ApplicationLogNotificationViewComponent,
-    ApplicationLogNotificationAddComponent,
+    ApplicationLogNotificationActionSendComponent,
 
     ApplicationThemeConfigListComponent,
     ApplicationThemeConfigSelectorComponent,

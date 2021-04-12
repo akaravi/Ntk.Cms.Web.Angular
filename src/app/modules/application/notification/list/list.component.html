@@ -112,11 +112,10 @@
                 <mat-icon>delete_forever</mat-icon>
                 <span>حذف</span>
               </button>
-              <button mat-menu-item (click)="onActionbuttonNotifictionSend(row)"
-                *ngIf="dataModelResult.Access.AccessDeleteRow">
-                <mat-icon>sms</mat-icon>
-                <span>ارسال نوتیفیکیشن</span>
-              </button>
+              <button mat-menu-item (click)="onActionbuttonNotifictionActionSend(row)">
+              <mat-icon>sms</mat-icon>
+              <span>ارسال نوتیفیکیشن</span>
+            </button>
             </mat-menu>
           </mat-cell>
         </ng-container>

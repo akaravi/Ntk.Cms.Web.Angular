@@ -5,19 +5,18 @@ import {
   FormInfoModel,
   ApplicationLogNotificationService,
   ApplicationLogNotificationModel,
-  CmsStore,
   SendNotificationModel,
   ApplicationAppModel,
+  ApplicationEnumService,
+  ApplicationMemberInfoModel,
 } from 'ntk-cms-api';
 import {
   Component,
   OnInit,
   ViewChild,
-  ChangeDetectorRef,
   Inject,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
@@ -25,21 +24,18 @@ import {
   TreeModel,
   NodeInterface,
 } from 'ntk-cms-filemanager';
-import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 
 @Component({
-  selector: 'app-application-notification-add',
-  templateUrl: './add.component.html',
-  styleUrls: ['./add.component.scss']
+  selector: 'app-application-notification-action-send',
+  templateUrl: './action-send.component.html',
+  styleUrls: ['./action-send.component.scss']
 })
-export class ApplicationLogNotificationAddComponent implements OnInit {
-  requestLinkApplicationId = 0;
-  requestLinkApplicationMemberId = '';
+export class ApplicationLogNotificationActionSendComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialogRef: MatDialogRef<ApplicationLogNotificationAddComponent>,
-    public coreEnumService: CoreEnumService,
+    private dialogRef: MatDialogRef<ApplicationLogNotificationActionSendComponent>,
+    public applicationEnumService: ApplicationEnumService,
     public applicationLogNotificationService: ApplicationLogNotificationService,
     private cmsToastrService: CmsToastrService,
     private cmsStoreService: CmsStoreService,
@@ -48,57 +44,58 @@ export class ApplicationLogNotificationAddComponent implements OnInit {
       this.requestLinkApplicationId = +data.LinkApplicationId || 0;
       this.requestLinkApplicationMemberId = data.LinkApplicationMemberId + '';
     }
+    if (this.requestLinkApplicationMemberId.length > 0) {
+      this.LinkMemberId = this.requestLinkApplicationMemberId;
+    }
+    if (this.requestLinkApplicationId > 0) {
+      this.dataModel.AppId = this.requestLinkApplicationId;
+    }
     this.fileManagerTree = new TreeModel();
   }
-  requestParentId = 0;
+  requestLinkApplicationId = 0;
+  requestLinkApplicationMemberId = '';
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  LinkMemberId = '';
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
-
   fileManagerTree: TreeModel;
   appLanguage = 'fa';
-
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<ApplicationLogNotificationModel> = new ErrorExceptionResult<ApplicationLogNotificationModel>();
   dataModel: SendNotificationModel = new SendNotificationModel();
-
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
-
+  dataModelEnumContentTypeResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   formInfo: FormInfoModel = new FormInfoModel();
-  dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
-
-  fileManagerOpenForm = false;
-
+  fileManagerOpenFormSmallFile = false;
+  fileManagerOpenFormBigFile = false;
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
-  onActionFileSelected(model: NodeInterface): void {
-    // this.dataModel.LinkMainImageId = model.id;
-    // this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
+  SmallImageIdSrc = '';
+  BigImageIdSrc = '';
+  applicationMemberInfoModel = new ApplicationMemberInfoModel();
+  onActionFileSelectedSmallImage(model: NodeInterface): void {
+    this.dataModel.SmallImageId = model.id;
+    this.SmallImageIdSrc = model.downloadLinksrc;
+
+  }
+  onActionFileSelectedBigImage(model: NodeInterface): void {
+    this.dataModel.BigImageId = model.id;
+    this.BigImageIdSrc = model.downloadLinksrc;
 
   }
 
   ngOnInit(): void {
-
     this.formInfo.FormTitle = 'ثبت دسته بندی جدید';
-
-    this.getEnumRecordStatus();
+    this.getEnumContentType();
   }
-  getEnumRecordStatus(): void {
-    if (this.storeSnapshot &&
-      this.storeSnapshot.EnumRecordStatus &&
-      this.storeSnapshot.EnumRecordStatus &&
-      this.storeSnapshot.EnumRecordStatus.IsSuccess &&
-      this.storeSnapshot.EnumRecordStatus.ListItems &&
-      this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
-      this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
-    }
+  getEnumContentType(): void {
+    this.applicationEnumService.ServiceEnumNotificationType().subscribe((next) => {
+      this.dataModelEnumContentTypeResult = next;
+    });
   }
-
 
   DataAddContent(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    if (this.requestParentId > 0) {
-      // this.dataModel.LinkParentId = this.requestParentId;
-    }
+
     this.applicationLogNotificationService.ServiceSendNotification(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormSubmitAllow = true;
@@ -131,10 +128,35 @@ export class ApplicationLogNotificationAddComponent implements OnInit {
     }
     this.dataModel.AppId = model.Id;
   }
+  onActionSelectMemberInfo(model: ApplicationMemberInfoModel | null): void {
+    if (!model || !model.Id || model.Id.length === 0) {
+      this.cmsToastrService.toastr.error(
+        'عضو اپلیکیشن را مشخص کنید',
+        'عضو اپلیکیشن اطلاعات مشخص نیست'
+      );
+      return;
+    }
+    this.applicationMemberInfoModel = model;
+    this.LinkMemberId = model.Id;
+  }
   onFormSubmit(): void {
+    debugger
     if (!this.formGroup.valid) {
       return;
     }
+    if (this.LinkMemberId && this.LinkMemberId.length > 0) {
+      this.dataModel.LinkMemberIds = [];
+      this.dataModel.LinkMemberIds.push(this.LinkMemberId);
+      this.dataModel.AppId = this.applicationMemberInfoModel.LinkApplicationId;
+    }
+
+    if ((this.LinkMemberId || this.LinkMemberId.length === 0) && this.dataModel.AppId <= 0) {
+      this.cmsToastrService.toastr.error(
+        'گیرنده را مشخص کنید',
+        'اپلیکیشن و یا کاربری جهت دریافت مشخص نشده است'
+      );
+    }
+
     this.formInfo.FormSubmitAllow = false;
 
     this.DataAddContent();

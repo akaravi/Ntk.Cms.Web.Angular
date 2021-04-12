@@ -3,8 +3,8 @@ import {
   EnumModel,
   ErrorExceptionResult,
   FormInfoModel,
-  ApplicationMemberInfoService,
-  ApplicationMemberInfoModel,
+  ApplicationLogNotificationService,
+  ApplicationLogNotificationModel,
   TokenInfoModel,
   NtkCmsApiStoreService,
   DataFieldInfoModel,
@@ -37,7 +37,7 @@ export class ApplicationLogNotificationViewComponent implements OnInit, OnDestro
     private cmsStoreService: CmsStoreService,
     private dialogRef: MatDialogRef<ApplicationLogNotificationViewComponent>,
     public coreEnumService: CoreEnumService,
-    public applicationMemberInfoService: ApplicationMemberInfoService,
+    public applicationLogNotificationService: ApplicationLogNotificationService,
     private cmsApiStore: NtkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
     private coreUserService: CoreUserService,
@@ -47,23 +47,17 @@ export class ApplicationLogNotificationViewComponent implements OnInit, OnDestro
       this.requestId = data.id + '';
     }
   }
-  tokenInfo = new TokenInfoModel();
-
-
-  loading = new ProgressSpinnerModel();
-  dataModelResult: ErrorExceptionResult<ApplicationMemberInfoModel> = new ErrorExceptionResult<ApplicationMemberInfoModel>();
-  dataModel: ApplicationMemberInfoModel = new ApplicationMemberInfoModel();
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
-
+  tokenInfo = new TokenInfoModel();
+  loading = new ProgressSpinnerModel();
+  dataModelResult: ErrorExceptionResult<ApplicationLogNotificationModel> = new ErrorExceptionResult<ApplicationLogNotificationModel>();
+  dataModel: ApplicationLogNotificationModel = new ApplicationLogNotificationModel();
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumSendSmsStatusTypeResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
-
-
   fileManagerOpenForm = false;
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
   cmsApiStoreSubscribe: Subscription;
-
   ngOnInit(): void {
     this.formInfo.FormTitle = 'مشاهده  ';
     if (this.requestId.length === 0) {
@@ -95,9 +89,9 @@ export class ApplicationLogNotificationViewComponent implements OnInit, OnDestro
     this.formInfo.FormError = '';
     this.loading.display = true;
     /*َAccess Field*/
-    this.applicationMemberInfoService.setAccessLoad();
+    this.applicationLogNotificationService.setAccessLoad();
 
-    this.applicationMemberInfoService.ServiceGetOneById(this.requestId).subscribe(
+    this.applicationLogNotificationService.ServiceGetOneById(this.requestId).subscribe(
       (next) => {
         /*َAccess Field*/
         // this.dataAccessModel = next.Access;

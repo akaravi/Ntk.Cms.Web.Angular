@@ -27,7 +27,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
 import { ApplicationMemberInfoViewComponent } from '../view/view.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
-import { ApplicationLogNotificationAddComponent } from '../../notification/add/add.component';
+import { ApplicationLogNotificationActionSendComponent } from '../../notification/action-send/action-send.component';
 
 
 @Component({
@@ -311,9 +311,13 @@ export class ApplicationMemberInfoListComponent implements OnInit, OnDestroy {
     this.router.navigate(['/application/notification/LinkApplicationMemberId', this.tableRowSelected.Id]);
 
   }
-  onActionbuttonNotifictionSend(model: ApplicationMemberInfoModel = this.tableRowSelected): void {
+  onActionbuttonNotifictionActionSend(model: ApplicationMemberInfoModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id.length === 0) {
       this.cmsToastrService.typeErrorSelected('ردیفی  انتخاب نشده است');
+      return;
+    }
+    if (!model.NotificationId || model.NotificationId.length === 0) {
+      this.cmsToastrService.typeErrorSelected('ردیف انتخاب شده داری نوتیفیکیشن آی دی نمی باشد');
       return;
     }
     this.tableRowSelected = model;
@@ -325,7 +329,7 @@ export class ApplicationMemberInfoListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessEdit();
       return;
     }
-    const dialogRef = this.dialog.open(ApplicationLogNotificationAddComponent, {
+    const dialogRef = this.dialog.open(ApplicationLogNotificationActionSendComponent, {
       data: { LinkApplicationMemberId: this.tableRowSelected.Id}
     });
     dialogRef.afterClosed().subscribe(result => {

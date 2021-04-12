@@ -134,12 +134,12 @@
                 <span>حذف</span>
               </button>
               <button mat-menu-item (click)="onActionbuttonNotifictionList(row)"
-                *ngIf="dataModelResult.Access.AccessDeleteRow">
+                *ngIf="row.NotificationId && row.NotificationId.length>0">
                 <mat-icon>sms</mat-icon>
                 <span>گزارش نوتیفیکیشن</span>
               </button>
-              <button mat-menu-item (click)="onActionbuttonNotifictionSend(row)"
-                *ngIf="dataModelResult.Access.AccessDeleteRow">
+              <button mat-menu-item (click)="onActionbuttonNotifictionActionSend(row)"
+                *ngIf="row.NotificationId && row.NotificationId.length>0">
                 <mat-icon>sms</mat-icon>
                 <span>ارسال نوتیفیکیشن</span>
               </button>

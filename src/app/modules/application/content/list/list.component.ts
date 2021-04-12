@@ -29,6 +29,7 @@ import { ApplicationAppUploadAppComponent } from '../uploadApp/uploadApp.compone
 import { ApplicationAppUploadUpdateComponent } from '../uploadUpdate/uploadUpdate.component';
 import { Subscription } from 'rxjs';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { ApplicationLogNotificationActionSendComponent } from '../../notification/action-send/action-send.component';
 
 @Component({
   selector: 'app-application-app-list',
@@ -447,6 +448,30 @@ export class ApplicationAppListComponent implements OnInit, OnDestroy {
       }
     });
 
+  }
+  onActionbuttonNotifictionActionSend(model: ApplicationAppModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id === 0) {
+      this.cmsToastrService.typeErrorSelected('ردیفی  انتخاب نشده است');
+      return;
+    }
+    this.tableRowSelected = model;
+    if (
+      this.dataModelResult == null ||
+      this.dataModelResult.Access == null ||
+      !this.dataModelResult.Access.AccessEditRow
+    ) {
+      this.cmsToastrService.typeErrorAccessEdit();
+      return;
+    }
+    const dialogRef = this.dialog.open(ApplicationLogNotificationActionSendComponent, {
+      data: { LinkApplicationId: this.tableRowSelected.Id }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log(`Dialog result: ${result}`);
+      if (result && result.dialogChangedDate) {
+
+      }
+    });
   }
   onActionbuttonMemberList(mode: ApplicationAppModel = this.tableRowSelected): void {
     if (mode == null || !mode.Id || mode.Id === 0) {
