@@ -269,7 +269,20 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonExport(): void {
     this.optionsExport.data.show = !this.optionsExport.data.show;
-    this.optionsExport.childMethods.runExport(this.filteModelContent.Filters);
+    const exportlist = new Map<string, string>();
+    exportlist.set('Download', 'loading ... ');
+    this.newsContentService.ServiceExportFile(this.filteModelContent).subscribe(
+      (next) => {
+        if (next.IsSuccess) {
+          exportlist.set('Download', next.LinkFile);
+          this.optionsExport.childMethods.runExport(exportlist);
+        }
+      },
+      (error) => {
+        this.cmsToastrService.typeError(error);
+      }
+    );
+
   }
 
   onActionbuttonReload(): void {

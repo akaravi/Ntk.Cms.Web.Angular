@@ -17,10 +17,10 @@ export class ComponentOptionExportModel
 }
 
 export class ComponentOptionExportChildMethodsModel {
-  runExport: (x: Array<FilterDataModel>) => void;
+  runExport: (x: Map<string, string>) => void;
 }
 export class ComponentOptionExportParentMethodsModel {
-  onSubmit: (x: Array<FilterDataModel>) => void;
+  onSubmit: (x: Map<string, string>) => void;
 }
 export class ComponentOptionExportDataModel {
   show = false;

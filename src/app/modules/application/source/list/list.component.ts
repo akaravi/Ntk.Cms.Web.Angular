@@ -301,7 +301,7 @@ export class ApplicationSourceListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonExport(): void {
     this.optionsExport.data.show = !this.optionsExport.data.show;
-    this.optionsExport.childMethods.runExport(this.filteModelContent.Filters);
+    // this.optionsExport.childMethods.runExport(this.filteModelContent.Filters);
   }
   onActionbuttonBuildApps(mode: ApplicationSourceModel = this.tableRowSelected): void {
     if (mode == null || !mode.Id || mode.Id === 0) {

@@ -11,26 +11,25 @@ import { Input } from '@angular/core';
   styleUrls: ['./cmsExportList.component.scss']
 })
 export class CmsExportListComponent implements OnInit {
+  constructor() { }
   public optionsData: ComponentOptionExportModel = new ComponentOptionExportModel();
-  @Output()
-  optionsChange: EventEmitter<ComponentOptionExportModel> = new EventEmitter<ComponentOptionExportModel>();
+  @Output() optionsChange: EventEmitter<ComponentOptionExportModel> = new EventEmitter<ComponentOptionExportModel>();
   @Input() set options(model: ComponentOptionExportModel) {
     if (!model) {
       model = new ComponentOptionExportModel();
     }
     this.optionsData = model;
     this.optionsData.childMethods = {
-      runExport: (x: Array<FilterDataModel>) => this.runExport(x),
+      runExport: (x: Map<string, string>) => this.runExport(x),
     };
     this.optionsChange.emit(model);
   }
   get options(): ComponentOptionExportModel {
     return this.optionsData;
   }
-  constructor() {}
-
-  ngOnInit(): void {}
-  runExport(model: Array<FilterDataModel>): void {
-    // todo: karavi;
+  modelData: Map<string, string> = new Map<string, string>();
+  ngOnInit(): void { }
+  runExport(model: Map<string, string>): void {
+    this.modelData = model;
   }
 }

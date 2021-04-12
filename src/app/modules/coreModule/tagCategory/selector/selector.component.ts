@@ -148,6 +148,7 @@ export class CoreModuleTagCategorySelectorComponent implements OnInit {
           this.filteredOptions = this.push(next.Item);
           this.dataModelSelect = next.Item;
           this.formControl.setValue(next.Item);
+          this.optionSelect.emit(next.Item);
         }
       });
       return;

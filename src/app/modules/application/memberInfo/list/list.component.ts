@@ -387,7 +387,7 @@ export class ApplicationMemberInfoListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonExport(): void {
     this.optionsExport.data.show = !this.optionsExport.data.show;
-    this.optionsExport.childMethods.runExport(this.filteModelContent.Filters);
+    // this.optionsExport.childMethods.runExport(this.filteModelContent.Filters);
   }
 
   onActionbuttonReload(): void {

@@ -1,8 +1,6 @@
 import { Output, Input } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
-
-import { AccessModel, FilterDataModel } from 'ntk-cms-api';
 import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/base/componentOptionStatistModel';
 
 @Component({
@@ -11,10 +9,11 @@ import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/bas
   styleUrls: ['./cmsStatistList.component.scss'],
 })
 export class CmsStatistListComponent implements OnInit {
+  constructor() { }
   public optionsData: ComponentOptionStatistModel = new ComponentOptionStatistModel();
   @Output()
   optionsChange: EventEmitter<ComponentOptionStatistModel> = new EventEmitter<ComponentOptionStatistModel>();
-    @Input() set options(model: ComponentOptionStatistModel) {
+  @Input() set options(model: ComponentOptionStatistModel) {
     if (!model) {
       model = new ComponentOptionStatistModel();
     }
@@ -27,7 +26,6 @@ export class CmsStatistListComponent implements OnInit {
   get options(): ComponentOptionStatistModel {
     return this.optionsData;
   }
-  constructor() { }
   modelData: Map<string, number> = new Map<string, number>();
   ngOnInit(): void { }
   runStatist(model: Map<string, number>): void {
