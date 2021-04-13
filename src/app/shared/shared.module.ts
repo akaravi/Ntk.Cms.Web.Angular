@@ -29,9 +29,11 @@ import { PrettyjsonPipe } from '../core/pipe/prettyjson.pipe';
 import { CmsSiteSelectorComponent } from './cmsSiteSelector/cmsSiteSelector.component';
 import { CmsUserSelectorComponent } from './cmsUserSelector/cmsUserSelector.component';
 import { CmsMemberSelectorComponent } from './cmsMemberSelector/cmsMemberSelector.component';
-import { CoreSiteService, CoreUserService, MemberUserService } from 'ntk-cms-api';
-import { PasswordStrengthComponent } from './password-strength/password-strength.component';import { CmsJsonListComponent } from './cmsJsonList/cmsJsonList.component';
+import { CoreGuideService, CoreSiteService, CoreUserService, MemberUserService } from 'ntk-cms-api';
+import { PasswordStrengthComponent } from './password-strength/password-strength.component';import { CmsJsonListComponent } from './cmsJsonList/cmsJsonList.component';;
+import { CmsGuideComponent } from './cms-guide/cms-guide.component'
 ;
+import { CmsGuideDirective } from '../core/directive/cms-guide.directive';
 
 
 
@@ -73,6 +75,9 @@ import { PasswordStrengthComponent } from './password-strength/password-strength
     ProgressSpinnerComponent,
     PasswordStrengthComponent,
     CmsJsonListComponent,
+    CmsGuideComponent,
+    /**Directive */
+    CmsGuideDirective,
   ],
   exports: [
     // common and shared components/directives/pipes between more than one module and components will be listed here.
@@ -100,7 +105,11 @@ import { PasswordStrengthComponent } from './password-strength/password-strength
     TagAutocompleteComponent,
     ProgressSpinnerComponent,
     PasswordStrengthComponent,
-    CmsJsonListComponent
+    CmsJsonListComponent,
+    CmsGuideComponent,
+    /**Directive */
+    CmsGuideDirective,
+
   ],
   providers: [
     OverlayService,
@@ -108,6 +117,7 @@ import { PasswordStrengthComponent } from './password-strength/password-strength
     MemberUserService,
     CoreUserService,
     CoreSiteService,
+    CoreGuideService
   ]
   /* No providers here! Since they’ll be already provided in AppModule. */
 })

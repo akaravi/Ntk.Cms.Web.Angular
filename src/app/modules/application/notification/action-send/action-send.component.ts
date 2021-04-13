@@ -140,7 +140,6 @@ export class ApplicationLogNotificationActionSendComponent implements OnInit {
     this.LinkMemberId = model.Id;
   }
   onFormSubmit(): void {
-    debugger
     if (!this.formGroup.valid) {
       return;
     }
