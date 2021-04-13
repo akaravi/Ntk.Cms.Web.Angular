@@ -5,10 +5,6 @@
   <div class="col-xl-9">
     <div class="button-row">
 
-
-      <p [appCmsGuide]="5" >Highlight me!</p>
-
-      <app-cms-guide Identity="5"></app-cms-guide>
       <button *ngIf="dataModelResult.Access.AccessAddRow && this.categoryModelSelected?.Id>0"
         (click)="onActionbuttonNewRow()" type="button" class="btn btn-primary" id="openModalButton" data-toggle="modal"
         data-target="#categoryModal">اضافه</button>

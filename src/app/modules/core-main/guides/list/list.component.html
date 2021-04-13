@@ -3,6 +3,18 @@
     <app-core-guide-tree (optionSelect)="onActionSelectorSelect($event)"></app-core-guide-tree>
   </div>
   <div class="col-xl-6">
+
+    <!-- <div class="tooltip-example">
+      <div tooltip="tootip on left" placement="left" delay="500">tootip on left</div>
+      <div tooltip="tootip on top" placement="top" delay="500">tootip on top</div>
+      <div tooltip="tootip on bottom" placement="bottom" delay="500">tootip on bottom</div>
+      <div tooltip="tootip on right" placement="right" delay="500">tootip on right</div>
+    </div>
+
+    <p [tooltipGuide]="5" placement="right" delay="500">Highlight me!</p>
+
+    <app-cms-guide Identity="5"></app-cms-guide> -->
+
     <div class="button-row">
       <button *ngIf="dataModelResult.Access.AccessAddRow " (click)="onActionbuttonNewRow()" type="button"
         class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">اضافه</button>
@@ -38,7 +50,9 @@
         <!-- ID Column -->
         <ng-container matColumnDef="Id">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Id']?.FieldTitle}} </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.Id}} </mat-cell>
+          <mat-cell *matCellDef="let row">
+            <p [tooltipGuide] Identity="{{row.Id}}" placement="right" delay="500">{{row.Id}}</p>
+          </mat-cell>
         </ng-container>
         <!-- RecordStatus Column -->
         <ng-container matColumnDef="RecordStatus">
@@ -46,6 +60,13 @@
           </mat-header-cell>
           <mat-cell *matCellDef="let row">
             <i [ngClass]="row.RecordStatus|statusClass"></i>
+          </mat-cell>
+        </ng-container>
+        <!-- Key Column -->
+        <ng-container matColumnDef="Key">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Key']?.FieldTitle}}</mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <p [tooltipGuide]="5" placement="right" delay="500" *ngIf="row.Key?.length>0">{{row.Key}}</p>
           </mat-cell>
         </ng-container>
         <!-- Title Column -->
@@ -72,7 +93,8 @@
                 <mat-icon>mode_edit</mat-icon>
                 <span>ویرایش</span>
               </button>
-              <button mat-menu-item (click)="onActionbuttonDeleteRow(row)" *ngIf="dataModelResult.Access.AccessDeleteRow">
+              <button mat-menu-item (click)="onActionbuttonDeleteRow(row)"
+                *ngIf="dataModelResult.Access.AccessDeleteRow">
                 <mat-icon>delete_forever</mat-icon>
                 <span>حذف</span>
               </button>

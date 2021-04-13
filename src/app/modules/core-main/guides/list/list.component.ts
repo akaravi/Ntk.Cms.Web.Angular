@@ -75,6 +75,7 @@ export class CoreGuideListComponent implements OnInit, OnDestroy {
   tabledisplayedColumns: string[] = [
     'Id',
     'RecordStatus',
+    'Key',
     'Title',
     'ShowInMenuOrder',
     'Action',

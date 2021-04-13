@@ -45,12 +45,12 @@ export class CmsGuideComponent implements OnInit {
           })
       ).toPromise();
     } else if (this.Key && this.Key.length > 0) {
-      this.coreGuideService.ServiceGetOneById(this.Identity).pipe(
+      this.coreGuideService.ServiceGetOneByKey(this.Key).pipe(
         map(
           (next) => {
             if (next.IsSuccess) {
-              this.title = next.Item.Title;
-              this.message = next.Item.BodyFa;
+              // this.title = next.Item.Title;
+              // this.message = next.Item.BodyFa;
               this.open(content);
             } else {
               this.cmsToastrService.typeErrorMessage(next.ErrorMessage);

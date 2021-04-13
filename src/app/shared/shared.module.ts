@@ -31,9 +31,9 @@ import { CmsUserSelectorComponent } from './cmsUserSelector/cmsUserSelector.comp
 import { CmsMemberSelectorComponent } from './cmsMemberSelector/cmsMemberSelector.component';
 import { CoreGuideService, CoreSiteService, CoreUserService, MemberUserService } from 'ntk-cms-api';
 import { PasswordStrengthComponent } from './password-strength/password-strength.component';import { CmsJsonListComponent } from './cmsJsonList/cmsJsonList.component';;
-import { CmsGuideComponent } from './cms-guide/cms-guide.component'
-;
-import { CmsGuideDirective } from '../core/directive/cms-guide.directive';
+import { CmsGuideComponent } from './cms-guide/cms-guide.component';
+import { TooltipGuideDirective } from '../core/directive/tooltip-guide.directive';
+import { TooltipDirective } from '../core/directive/tooltip.directive';
 
 
 
@@ -77,7 +77,8 @@ import { CmsGuideDirective } from '../core/directive/cms-guide.directive';
     CmsJsonListComponent,
     CmsGuideComponent,
     /**Directive */
-    CmsGuideDirective,
+    TooltipGuideDirective,
+    TooltipDirective,
   ],
   exports: [
     // common and shared components/directives/pipes between more than one module and components will be listed here.
@@ -108,7 +109,8 @@ import { CmsGuideDirective } from '../core/directive/cms-guide.directive';
     CmsJsonListComponent,
     CmsGuideComponent,
     /**Directive */
-    CmsGuideDirective,
+    TooltipGuideDirective,
+    TooltipDirective,
 
   ],
   providers: [
