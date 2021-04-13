@@ -30,6 +30,7 @@ import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { CoreLogSmsEditComponent } from '../edit/edit.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { CoreLogSmsViewComponent } from '../view/view.component';
 
 @Component({
   selector: 'app-corelog-user-list',
@@ -212,7 +213,30 @@ export class CoreLogSmsListComponent implements OnInit, OnDestroy {
 
 
 
-  onActionbuttonEditRow(model: CoreLogSmsModel = this.tableRowSelected): void {
+  onActionbuttonViewRow(model: CoreLogSmsModel = this.tableRowSelected): void {
+
+    if (!model || !model.Id || model.Id.length === 0) {
+      this.cmsToastrService.typeErrorSelected('ردیفی  انتخاب نشده است');
+      return;
+    }
+    this.tableRowSelected = model;
+    if (
+      this.dataModelResult == null ||
+      this.dataModelResult.Access == null ||
+      !this.dataModelResult.Access.AccessEditRow
+    ) {
+      this.cmsToastrService.typeErrorAccessEdit();
+      return;
+    }
+    const dialogRef = this.dialog.open(CoreLogSmsViewComponent, {
+      data: { id: this.tableRowSelected.Id }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.dialogChangedDate) {
+        this.DataGetAll();
+      }
+    });
+  }onActionbuttonEditRow(model: CoreLogSmsModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id.length === 0) {
       this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');

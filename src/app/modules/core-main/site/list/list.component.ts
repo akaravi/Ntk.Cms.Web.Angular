@@ -254,7 +254,7 @@ export class CoreSiteListComponent implements OnInit, OnDestroy {
       return;
     }
     this.tableRowSelected = model;
-    this.router.navigate(['/core/site/modulelist/', this.tableRowSelected.Id]);
+    this.router.navigate(['/core/site/modulelist/LinkSiteId/', this.tableRowSelected.Id]);
   }
   onActionbuttonLoginToRow(model: CoreSiteModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {

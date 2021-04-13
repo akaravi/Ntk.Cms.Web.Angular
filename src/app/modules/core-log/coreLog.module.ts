@@ -16,6 +16,7 @@ import { CoreLogSmsListComponent } from './sms/list/list.component';
 import { CoreLogErrorEditComponent } from './error/edit/edit.component';
 import { CoreLogErrorListComponent } from './error/list/list.component';
 import { CoreLogSmsEditComponent } from './sms/edit/edit.component';
+import { CoreLogSmsViewComponent } from './sms/view/view.component';
 
 
 
@@ -37,6 +38,7 @@ import { CoreLogSmsEditComponent } from './sms/edit/edit.component';
     CoreLogSmsEditComponent,
     CoreLogErrorListComponent,
     CoreLogErrorEditComponent,
+    CoreLogSmsViewComponent,
   ],
   exports: [
     CoreLogComponent,
@@ -44,7 +46,7 @@ import { CoreLogSmsEditComponent } from './sms/edit/edit.component';
     CoreLogSmsEditComponent,
     CoreLogErrorListComponent,
     CoreLogErrorEditComponent,
-
+    CoreLogSmsViewComponent,
   ],
   providers: [
     CoreLogErrorService,

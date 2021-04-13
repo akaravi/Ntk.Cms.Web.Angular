@@ -1,6 +1,9 @@
 <div class="row">
   <div class="col-xl-12">
     <div class="button-row">
+      <button *ngIf="dataModelResult.Access.AccessWatchRow && tableRowSelected?.Id?.length>0"
+        (click)="onActionbuttonViewRow()" type="button" class="btn btn-info ml-2" data-toggle="modal"
+        data-target="#categoryModal">مشاهده</button>
       <button *ngIf="dataModelResult.Access.AccessEditRow && tableRowSelected?.Id?.length>0"
         (click)="onActionbuttonEditRow()" type="button" class="btn btn-warning ml-2" data-toggle="modal"
         data-target="#categoryModal">ویرایش</button>
@@ -110,15 +113,20 @@
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #actionMenu="matMenu">
+              <button mat-menu-item (click)="onActionbuttonViewRow(row)" *ngIf="dataModelResult.Access.AccessWatchRow">
+                <mat-icon>view</mat-icon>
+                <span>مشاهده</span>
+              </button>
               <button mat-menu-item (click)="onActionbuttonEditRow(row)" *ngIf="dataModelResult.Access.AccessEditRow">
                 <mat-icon>mode_edit</mat-icon>
                 <span>ویرایش</span>
               </button>
-              <button mat-menu-item (click)="onActionbuttonDeleteRow(row)" *ngIf="dataModelResult.Access.AccessDeleteRow">
+              <button mat-menu-item (click)="onActionbuttonDeleteRow(row)"
+                *ngIf="dataModelResult.Access.AccessDeleteRow">
                 <mat-icon>delete_forever</mat-icon>
                 <span>حذف</span>
               </button>
-              <button mat-menu-item (click)="onActionbuttonViewUserRow(row)"  *ngIf="row.LinkUserId > 0">
+              <button mat-menu-item (click)="onActionbuttonViewUserRow(row)" *ngIf="row.LinkUserId > 0">
                 <mat-icon>supervisor_account</mat-icon>
                 <span>کاربر</span>
               </button>
