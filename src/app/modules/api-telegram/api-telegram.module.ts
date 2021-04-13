@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ApiTelegramComponent } from './apiTelegram.component';
-import { ApiTelegramRoutes } from './apiTelegram.routing';
+import { ApiTelegramComponent } from './api-telegram.component';
+import { ApiTelegramRoutes } from './api-telegram.routing';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TreeviewModule } from 'ngx-treeview';

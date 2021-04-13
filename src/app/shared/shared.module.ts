@@ -14,7 +14,7 @@ import { CmsStatistListComponent } from './cmsStatistList/cmsStatistList.compone
 import { CmsExportListComponent } from './cmsExportList/cmsExportList.component';
 import { CmsMapComponent } from './cmsMap/cmsMap.Component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
-import { TagAutocompleteComponent } from '../modules/coreModule/tag/autocomplete/autocomplete.component';
+import { TagAutocompleteComponent } from '../modules/core-module/tag/autocomplete/autocomplete.component';
 import { TagInputModule } from 'ngx-chips';
 import { RecordStatusClassPipe } from '../core/pipe/recordStatusClass.pipe';
 import { BoolStatusClassPipe } from '../core/pipe/boolStatusClass.pipe';

@@ -15,27 +15,27 @@ const routes: Routes = [
       {
         path: 'core',
         loadChildren: () =>
-          import('../modules/coreMain/core.module').then(m => m.CoreModule)
+          import('../modules/core-main/core.module').then(m => m.CoreModule)
       },
       {
         path: 'coremodule',
         loadChildren: () =>
-          import('../modules/coreModule/coreModule.module').then(m => m.CoreModuleModule)
+          import('../modules/core-module/coreModule.module').then(m => m.CoreModuleModule)
       },
       {
         path: 'coretoken',
         loadChildren: () =>
-          import('../modules/coreToken/coreToken.module').then(m => m.CoreTokenModule)
+          import('../modules/core-token/coreToken.module').then(m => m.CoreTokenModule)
       },
       {
         path: 'corelog',
         loadChildren: () =>
-          import('../modules/coreLog/coreLog.module').then(m => m.CoreLogModule)
+          import('../modules/core-log/coreLog.module').then(m => m.CoreLogModule)
       },
       {
         path: 'apitelegram',
         loadChildren: () =>
-          import('../modules/apiTelegram/apiTelegram.module').then(m => m.ApiTelegramModule)
+          import('../modules/api-telegram/api-telegram.module').then(m => m.ApiTelegramModule)
       },
       {
         path: 'application',
@@ -50,7 +50,7 @@ const routes: Routes = [
       {
         path: 'bankPayment',
         loadChildren: () =>
-          import('../modules/bankPayment/bankPayment.module').then(m => m.BankPaymentModule)
+          import('../modules/bank-payment/bank-payment.module').then(m => m.BankPaymentModule)
       },
       {
         path: 'biography',
@@ -65,12 +65,12 @@ const routes: Routes = [
       {
         path: 'hypershop',
         loadChildren: () =>
-          import('../modules/hyperShop/hyperShop.module').then(m => m.HyperShopModule)
+          import('../modules/hyper-shop/hyperShop.module').then(m => m.HyperShopModule)
       },
       {
         path: 'linkmanagment',
         loadChildren: () =>
-          import('../modules/linkManagment/linkManagment.module').then(m => m.LinkManagmentModule)
+          import('../modules/link-managment/linkManagment.module').then(m => m.LinkManagmentModule)
       },
       {
         path: 'member',
@@ -87,7 +87,7 @@ const routes: Routes = [
       {
         path: 'filemanager',
         loadChildren: () =>
-          import('../modules/filemanager/filemanager.module').then(m => m.FileManagerModule)
+          import('../modules/file-manager/filemanager.module').then(m => m.FileManagerModule)
       },
       {
         path: 'polling',
@@ -107,12 +107,12 @@ const routes: Routes = [
       {
         path: 'universalmenu',
         loadChildren: () =>
-          import('../modules/universalMenu/universalMenu.module').then(m => m.UniversalMenuModule)
+          import('../modules/universal-menu/universalMenu.module').then(m => m.UniversalMenuModule)
       },
       {
         path: 'webdesigner',
         loadChildren: () =>
-          import('../modules/webDesigner/webDesigner.module').then(m => m.WebDesignerModule)
+          import('../modules/web-designer/webDesigner.module').then(m => m.WebDesignerModule)
       },
       {
         path: '',

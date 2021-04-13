@@ -18,7 +18,7 @@
           RecordStatus is <strong>required</strong>
         </mat-error>
       </mat-form-field>
-      <!-- Title Field -->
+      <!-- LinkParentId Field -->
       <app-core-guide-selector (optionSelect)="onActionSelectorSelect($event)" [disabled]="false"
         [optionSelectForce]="dataModel.LinkParentId" [optionPlaceholder]="'منوی والد'">
       </app-core-guide-selector>
@@ -33,6 +33,19 @@
         <mat-hint align="end">{{ Title.value.length }} / 100</mat-hint>
         <mat-error *ngIf="Title.errors?.required">
           Title is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <!-- Key Field -->
+      <mat-form-field class="example-full-width">
+        <mat-label>Key</mat-label>
+        <input matInput [(ngModel)]="dataModel.Key" name="dataModel.Key" #Key type="text" placeholder="Key"
+          minlength="3" maxlength="100" required />
+        <mat-icon matSuffix *ngIf="dataModel.Key" matSuffix mat-icon-button aria-label="Clear"
+          (click)="dataModel.Key = ''">close</mat-icon>
+        <mat-icon matSuffix>mode_edit</mat-icon>
+        <mat-hint align="end">{{ Key.value.length }} / 100</mat-hint>
+        <mat-error *ngIf="Key.errors?.required">
+          Key is <strong>required</strong>
         </mat-error>
       </mat-form-field>
       <!-- BodyFa Field -->

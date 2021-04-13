@@ -30,6 +30,7 @@ import { CoreUserEditComponent } from '../edit/edit.component';
 import { CoreUserAddComponent } from '../add/add.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 import { CoreUserChangePasswordComponent } from '../changePassword/changePassword.component';
+import { CoreUserViewComponent } from '../view/view.component';
 
 @Component({
   selector: 'app-core-user-list',
@@ -203,6 +204,30 @@ export class CoreUserListComponent implements OnInit, OnDestroy {
     });
   }
 
+  onActionbuttonViewRow(model: CoreUserModel = this.tableRowSelected): void {
+
+    if (!model || !model.Id || model.Id === 0) {
+      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      return;
+    }
+    this.tableRowSelected = model;
+    if (
+      this.dataModelResult == null ||
+      this.dataModelResult.Access == null ||
+      !this.dataModelResult.Access.AccessWatchRow
+    ) {
+      this.cmsToastrService.typeErrorAccessEdit();
+      return;
+    }
+    const dialogRef = this.dialog.open(CoreUserViewComponent, {
+      data: { id: this.tableRowSelected.Id }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.dialogChangedDate) {
+        this.DataGetAll();
+      }
+    });
+  }
   onActionbuttonEditRow(model: CoreUserModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id === 0) {
@@ -219,14 +244,7 @@ export class CoreUserListComponent implements OnInit, OnDestroy {
       return;
     }
     this.router.navigate(['/core/user/edit', this.tableRowSelected.Id]);
-    // const dialogRef = this.dialog.open(CoreUserEditComponent, {
-    //   data: { id: this.tableRowSelected.Id }
-    // });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   if (result && result.dialogChangedDate) {
-    //     this.DataGetAll();
-    //   }
-    // });
+
   }
   onActionbuttonChangePassword(model: CoreUserModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {

@@ -19,7 +19,7 @@ export class ApplicationMemberInfoWidgetComponent implements OnInit, OnDestroy {
     private cmsApiStore: NtkCmsApiStoreService,
   ) { }
   ngOnInit(): void {
-    this.widgetInfoModel.title = 'کاربران های شما';
+    this.widgetInfoModel.title = 'کاربران شما';
     this.widgetInfoModel.description = 'کاربرانی که در اپلیکیشن های شما وارد شده اند';
     this.widgetInfoModel.link = '/application/memberinfo';
 

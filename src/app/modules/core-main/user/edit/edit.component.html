@@ -116,7 +116,7 @@
             <mat-label> {{fieldsInfo['Name']?.FieldTitle}}</mat-label>
             <input matInput [(ngModel)]="dataModel.Name" name="dataModel.Name" #Name type="text"
               [disabled]="!fieldsInfo['Name']?.AccessEditField" placeholder="{{fieldsInfo['Name']?.FieldTitle}}"
-              minlength="3" maxlength="100" required />
+              minlength="3" maxlength="100"  />
             <mat-icon matSuffix *ngIf="dataModel.Name" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.Name = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
@@ -132,7 +132,7 @@
             <mat-label> {{fieldsInfo['LastName']?.FieldTitle}}</mat-label>
             <input matInput [(ngModel)]="dataModel.LastName" name="dataModel.LastName" #LastName type="text"
               [disabled]="!fieldsInfo['LastName']?.AccessEditField" placeholder="{{fieldsInfo['LastName']?.FieldTitle}}"
-              minlength="3" maxlength="100" required />
+              minlength="3" maxlength="100"  />
             <mat-icon matSuffix *ngIf="dataModel.LastName" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.LastName = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>

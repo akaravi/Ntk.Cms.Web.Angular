@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BankPaymentComponent } from './bankPayment.component';
-import { BankPaymentRoutes } from './bankPayment.routing';
+import { BankPaymentComponent } from './bank-payment.component';
+import { BankPaymentRoutes } from './bank-payment.routing';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TreeviewModule } from 'ngx-treeview';

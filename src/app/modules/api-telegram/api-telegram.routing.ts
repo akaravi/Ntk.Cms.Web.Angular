@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ApiTelegramComponent } from './apiTelegram.component';
+import { ApiTelegramComponent } from './api-telegram.component';
 
 const routes: Routes = [
   {

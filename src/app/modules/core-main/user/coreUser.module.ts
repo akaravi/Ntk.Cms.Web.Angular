@@ -15,6 +15,7 @@ import { CoreUserAddComponent } from './add/add.component';
 import { CoreUserEditComponent } from './edit/edit.component';
 import { CoreUserSelectorComponent } from './selector/selector.component';
 import { CoreUserChangePasswordComponent } from './changePassword/changePassword.component';
+import { CoreUserViewComponent } from './view/view.component';
 
 
 
@@ -26,6 +27,7 @@ import { CoreUserChangePasswordComponent } from './changePassword/changePassword
     CoreUserEditComponent,
     CoreUserChangePasswordComponent,
     CoreUserSelectorComponent,
+    CoreUserViewComponent,
   ],
   exports: [
     CoreUserComponent,
@@ -34,6 +36,7 @@ import { CoreUserChangePasswordComponent } from './changePassword/changePassword
     CoreUserEditComponent,
     CoreUserChangePasswordComponent,
     CoreUserSelectorComponent,
+    CoreUserViewComponent
   ],
   imports: [
     CommonModule,

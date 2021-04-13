@@ -29,15 +29,13 @@
       </mat-error>
       <mat-hint align="start" (click)="onloginTypeChange('email')" style="color: blue;" >ورود با ایمیل</mat-hint>
     </mat-form-field>
-
-
     <!--Email Field-->
     <mat-form-field *ngIf="loginType=='email'" class="example-full-width">
       <mat-label> {{'AUTH.INPUT.EMAIL' | translate}}</mat-label>
       <input matInput [(ngModel)]="dataModel.Email" name="dataModel.Email"
         [disabled]=" !formInfo.ButtonSubmittedEnabled" #Email type="email" autocomplete="off"
         class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h4"
-        placeholder=" {{'AUTH.INPUT.EMAIL' | translate}}" minlength="5" maxlength="20" required />
+        placeholder=" {{'AUTH.INPUT.EMAIL' | translate}}" minlength="5" maxlength="50" required />
       <mat-icon matSuffix *ngIf="dataModel.Email" matSuffix mat-icon-button aria-label="Clear"
         (click)="dataModel.Email = ''">
         close</mat-icon>
@@ -64,7 +62,6 @@
         Password is <strong>required</strong>
       </mat-error>
     </mat-form-field>
-
     <!--CaptchaText Field-->
     <img src="{{captchaModel.Image}}" (click)="onCaptchaOrder()" class="mb-3" alt="">
     <mat-form-field class="example-full-width">
