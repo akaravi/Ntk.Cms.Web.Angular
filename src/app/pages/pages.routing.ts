@@ -48,7 +48,7 @@ const routes: Routes = [
           import('../modules/article/article.module').then(m => m.ArticleModule)
       },
       {
-        path: 'bankPayment',
+        path: 'bankpayment',
         loadChildren: () =>
           import('../modules/bank-payment/bank-payment.module').then(m => m.BankPaymentModule)
       },

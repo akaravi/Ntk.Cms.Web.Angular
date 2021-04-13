@@ -1,8 +1,9 @@
 <div class="row">
-  <div class="col-xl-12">
+  <div *ngIf="requestLinkPublicConfigId===0" class="col-xl-3">
+    <app-bankpayment-publicconfig-tree (optionSelect)="onActionSelectorSelect($event)"></app-bankpayment-publicconfig-tree>
+  </div>
+  <div [ngClass]="(requestLinkPublicConfigId===0)?'col-xl-9':'col-xl-12'">
     <div class="button-row">
-      <button *ngIf="dataModelResult.Access.AccessWatchRow && tableRowSelected.Id>0" (click)="onActionbuttonViewRow()"
-        type="button" class="btn btn-info ml-2" data-toggle="modal" data-target="#categoryModal">مشاهده</button>
       <button *ngIf="dataModelResult.Access.AccessAddRow " (click)="onActionbuttonNewRow()" type="button"
         class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">اضافه</button>
       <button *ngIf="dataModelResult.Access.AccessEditRow && tableRowSelected.Id>0" (click)="onActionbuttonEditRow()"
@@ -23,11 +24,12 @@
         </mat-slide-toggle>
       </a>
       <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">برسی مجدد</button>
-      <button (click)="onActionBackToParentSiteList()" *ngIf="this.requestLinkSiteId>0" type="button"
+      <button (click)="onActionBackToParent()" *ngIf="requestLinkPublicConfigId>0" type="button"
         class="btn btn-warning BTN">بازگشت</button>
       <app-cms-search-list [(options)]="optionsSearch"></app-cms-search-list>
       <app-cms-export-list [(options)]="optionsExport"></app-cms-export-list>
       <app-cms-statist-list [(options)]="optionsStatist"></app-cms-statist-list>
+
     </div>
 
     <app-progress-spinner [options]="loading">
@@ -55,41 +57,32 @@
           </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.LinkSiteId}} </mat-cell>
         </ng-container>
+        <!-- LinkApplicationId Column -->
+        <ng-container matColumnDef="LinkPublicConfigId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> شناسه سورس </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.LinkPublicConfigId}} </mat-cell>
+        </ng-container>
+
         <!-- RecordStatus Column -->
         <ng-container matColumnDef="RecordStatus">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['RecordStatus']?.FieldTitle}}
           </mat-header-cell>
           <mat-cell *matCellDef="let row"> <i [ngClass]="row.RecordStatus|statusClass"></i> </mat-cell>
         </ng-container>
-        <!-- Username Column -->
-        <ng-container matColumnDef="Username">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> نام کاربری </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.Username}} </mat-cell>
+        <!-- Title Column -->
+        <ng-container matColumnDef="Title">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Title']?.FieldTitle}} </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.Title}} </mat-cell>
         </ng-container>
-        <!-- Mobile Column -->
-        <ng-container matColumnDef="Mobile">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Mobile </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.Mobile}} </mat-cell>
+        <!-- MinTransactionAmount Column -->
+        <ng-container matColumnDef="MinTransactionAmount">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> min </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.MinTransactionAmount}} </mat-cell>
         </ng-container>
-        <!-- Email Column -->
-        <ng-container matColumnDef="Email">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.Email}} </mat-cell>
-        </ng-container>
-        <!-- Name Column -->
-        <ng-container matColumnDef="Name">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.Name}} </mat-cell>
-        </ng-container>
-        <!-- LastName Column -->
-        <ng-container matColumnDef="LastName">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> LastName </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.LastName}} </mat-cell>
-        </ng-container>
-        <!-- CompanyName Column -->
-        <ng-container matColumnDef="CompanyName">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> CompanyName </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.CompanyName}} </mat-cell>
+        <!-- MaxTransactionAmount Column -->
+        <ng-container matColumnDef="MaxTransactionAmount">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> max </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.MaxTransactionAmount}} </mat-cell>
         </ng-container>
         <!-- CreatedDate Column -->
         <ng-container matColumnDef="CreatedDate">
@@ -112,35 +105,19 @@
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #actionMenu="matMenu">
-              <button mat-menu-item *ngIf="tokenInfo.UserAccessAdminAllowToProfessionalData || row.Id==tokenInfo.UserId"
-                (click)="onActionbuttonEditRow(row)">
+              <button mat-menu-item (click)="onActionbuttonEditRow(row)" *ngIf="dataModelResult.Access.AccessEditRow">
                 <mat-icon>mode_edit</mat-icon>
                 <span>ویرایش</span>
               </button>
-              <button mat-menu-item *ngIf="tokenInfo.UserAccessAdminAllowToProfessionalData || row.Id==tokenInfo.UserId"
-                (click)="onActionbuttonChangePassword(row)">
-                <mat-icon>lock</mat-icon>
-                <span>تغییر کلمه عبور</span>
-              </button>
-              <button mat-menu-item *ngIf="tokenInfo.UserAccessAdminAllowToProfessionalData"
-                (click)="onActionbuttonDeleteRow(row)">
+              <button mat-menu-item (click)="onActionbuttonDeleteRow(row)"
+                *ngIf="dataModelResult.Access.AccessDeleteRow">
                 <mat-icon>delete_forever</mat-icon>
                 <span>حذف</span>
               </button>
-              <button mat-menu-item *ngIf="tokenInfo.UserAccessAdminAllowToProfessionalData"
-                (click)="onActionbuttonLoginToRow(row)">
-                <mat-icon>login</mat-icon>
-                <span>ورود به این کاربر</span>
+              <button mat-menu-item (click)="onActionbuttonTransactionList(row)">
+                <mat-icon>list</mat-icon>
+                <span>تراکنش ها</span>
               </button>
-              <button mat-menu-item (click)="onActionbuttonSiteList(row)">
-                <mat-icon>supervised_user_circle</mat-icon>
-                <span>سایت های عضو</span>
-              </button>
-              <button mat-menu-item (click)="onActionbuttonSiteByGroupList(row)">
-                <mat-icon>supervisor_account</mat-icon>
-                <span>دسترسی سایت های عضو</span>
-              </button>
-
             </mat-menu>
           </mat-cell>
         </ng-container>

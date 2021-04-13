@@ -14,20 +14,20 @@ const routes: Routes = [
     path: '',
     component: BiographyComponent,
     children: [
-            /*Config*/
-            {
-              path: 'config/mainadmin',
-              component: BiographyConfigMainAdminComponent
-            },
-            {
-              path: 'config/site',
-              component: BiographyConfigSiteComponent
-            },
-            {
-              path: 'config/site/:LinkSiteId',
-              component: BiographyConfigSiteComponent
-            },
-            /*Config*/
+      /*Config*/
+      {
+        path: 'config/mainadmin',
+        component: BiographyConfigMainAdminComponent
+      },
+      {
+        path: 'config/site',
+        component: BiographyConfigSiteComponent
+      },
+      {
+        path: 'config/site/:LinkSiteId',
+        component: BiographyConfigSiteComponent
+      },
+      /*Config*/
       {
         path: 'content',
         // resolve: {categoryList: CategoryResolver},

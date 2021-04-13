@@ -6,6 +6,7 @@ import { environment } from '../../../../../../../environments/environment';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { map } from 'rxjs/operators';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-offcanvas',
@@ -13,13 +14,12 @@ import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
   styleUrls: ['./user-offcanvas.component.scss'],
 })
 export class UserOffcanvasComponent implements OnInit, OnDestroy {
-
   constructor(
     private layout: LayoutService,
     private auth: CoreAuthService,
     private cmsToastrService: CmsToastrService,
     private cmsApiStore: NtkCmsApiStoreService,
-
+    private router: Router,
   ) {
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((value) => {
@@ -40,6 +40,10 @@ export class UserOffcanvasComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
+  }
+  onActionButtonProfileEdit(): void {
+    this.router.navigate(['/core/user/edit', this.tokenInfo.UserId]);
+
   }
   async logout(): Promise<void> {
     this.loading.display = true;
