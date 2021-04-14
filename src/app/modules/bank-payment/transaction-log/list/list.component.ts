@@ -3,10 +3,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
   ApplicationAppModel,
+  BankPaymentEnumService,
   BankPaymentTransactionLogModel,
   BankPaymentTransactionLogService,
   CoreAuthService,
   DataFieldInfoModel,
+  EnumModel,
   EnumRecordStatus,
   EnumSortType,
   ErrorExceptionResult,
@@ -40,6 +42,7 @@ export class BankPaymentTransactionLogListComponent implements OnInit, OnDestroy
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
+    private bankPaymentEnumService: BankPaymentEnumService,
     private router: Router,
     public dialog: MatDialog) {
     this.optionsSearch.parentMethods = {
@@ -68,15 +71,14 @@ export class BankPaymentTransactionLogListComponent implements OnInit, OnDestroy
   tableRowsSelected: Array<BankPaymentTransactionLogModel> = [];
   tableRowSelected: BankPaymentTransactionLogModel = new BankPaymentTransactionLogModel();
   tableSource: MatTableDataSource<BankPaymentTransactionLogModel> = new MatTableDataSource<BankPaymentTransactionLogModel>();
+  dataModelEnumTransactionRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
+
   tabledisplayedColumns: string[] = [
     'Id',
-    'RecordStatus',
+    'TransactionStatus',
     'LinkTransactionId',
-    'LinkApplicationMemberId',
-    'Title',
-    'ContentType',
+    'Memo',
     'CreatedDate',
-    'UpdatedDate',
     'Action'
   ];
 
@@ -102,6 +104,12 @@ export class BankPaymentTransactionLogListComponent implements OnInit, OnDestroy
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
+    });
+    this.getEnumTransactionRecordStatus();
+  }
+  getEnumTransactionRecordStatus(): void {
+    this.bankPaymentEnumService.ServiceEnumTransactionRecordStatus().subscribe((next) => {
+      this.dataModelEnumTransactionRecordStatusResult = next;
     });
   }
   ngOnDestroy(): void {
@@ -132,24 +140,7 @@ export class BankPaymentTransactionLogListComponent implements OnInit, OnDestroy
         if (next.IsSuccess) {
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;
-          if (this.tokenInfo.UserAccessAdminAllowToAllData) {
-            this.tabledisplayedColumns = this.publicHelper.listAddIfNotExist(
-              this.tabledisplayedColumns,
-              'LinkSiteId',
-              0
-            );
-          } else {
-            this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
-              this.tabledisplayedColumns,
-              'LinkSiteId'
-            );
-          }
-          if (this.requestLinkTransactionId === 0) {
-            this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
-              this.tabledisplayedColumns,
-              'LinkTransactionId'
-            );
-          }
+
           if (this.optionsSearch.childMethods) {
             this.optionsSearch.childMethods.setAccess(next.Access);
           }

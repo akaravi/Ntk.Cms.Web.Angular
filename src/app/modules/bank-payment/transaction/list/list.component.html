@@ -8,8 +8,6 @@
       <button *ngIf="dataModelResult.Access.AccessWatchRow && tableRowSelected.LinkPrivateSiteConfigId>0"
         (click)="onActionbuttonViewRow()" type="button" class="btn btn-info ml-2" data-toggle="modal"
         data-target="#categoryModal">مشاهده</button>
-      <button *ngIf="dataModelResult.Access.AccessAddRow " (click)="onActionbuttonNewRow()" type="button"
-        class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">اضافه</button>
       <button *ngIf="dataModelResult.Access.AccessEditRow && tableRowSelected.Id && tableRowSelected.Id"
         (click)="onActionbuttonEditRow()" type="button" class="btn btn-warning ml-2" data-toggle="modal"
         data-target="#categoryModal">ویرایش</button>
@@ -49,45 +47,51 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Id']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Id}} </mat-cell>
         </ng-container>
-        <!-- LinkSiteId Column -->
-        <ng-container matColumnDef="LinkSiteId">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkSiteId']?.FieldTitle}}
-          </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.LinkSiteId}} </mat-cell>
-        </ng-container>
-        <!-- LinkPrivateSiteConfigId Column -->
-        <ng-container matColumnDef="LinkPrivateSiteConfigId">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> شناسه اپ </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.LinkPrivateSiteConfigId}} </mat-cell>
-        </ng-container>
         <!-- LinkUserId Column -->
         <ng-container matColumnDef="LinkUserId">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> شناسه کاربر </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkUserId']?.FieldTitle}}
+          </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.LinkUserId}} </mat-cell>
         </ng-container>
-
         <!-- RecordStatus Column -->
         <ng-container matColumnDef="RecordStatus">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['RecordStatus']?.FieldTitle}}
           </mat-header-cell>
           <mat-cell *matCellDef="let row"> <i [ngClass]="row.RecordStatus|statusClass"></i> </mat-cell>
         </ng-container>
-        <!-- Title Column -->
-        <ng-container matColumnDef="Title">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Title']?.FieldTitle}} </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.Title}} </mat-cell>
-        </ng-container>
-        <!-- ContentType Column -->
-        <ng-container matColumnDef="ContentType">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> نوع </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.ContentType}} </mat-cell>
-        </ng-container>
-        <!-- CreatedDate Column -->
-        <ng-container matColumnDef="CreatedDate">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['CreatedDate']?.FieldTitle}}
+        <!-- TransactionStatus Column -->
+        <ng-container matColumnDef="TransactionStatus">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['TransactionStatus']?.FieldTitle}}
           </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.CreatedDate) }} </mat-cell>
+          <mat-cell *matCellDef="let row"> {{row.TransactionStatus | enums :
+            dataModelEnumTransactionRecordStatusResult.ListItems}} </mat-cell>
         </ng-container>
+
+        <!-- BankStatus Column -->
+        <ng-container matColumnDef="BankStatus">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['BankStatus']?.FieldTitle}}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.BankStatus | enums :
+            dataModelEnumTransactionBankStatusResult.ListItems}} </mat-cell>
+        </ng-container>
+
+        <!-- Amount Column -->
+        <ng-container matColumnDef="Amount">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Amount']?.FieldTitle}} </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.Amount}} </mat-cell>
+        </ng-container>
+        <!-- AmountPure Column -->
+        <ng-container matColumnDef="AmountPure">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['AmountPure']?.FieldTitle}}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.AmountPure}} </mat-cell>
+        </ng-container>
+        <!-- CurrencyUnit Column -->
+        <ng-container matColumnDef="CurrencyUnit">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> CurrencyUnit </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.CurrencyUnit}} </mat-cell>
+        </ng-container>
+
         <!-- UpdatedDate Column -->
         <ng-container matColumnDef="UpdatedDate">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['UpdatedDate']?.FieldTitle}}

@@ -39,51 +39,31 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Id']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Id}} </mat-cell>
         </ng-container>
-        <!-- LinkSiteId Column -->
-        <ng-container matColumnDef="LinkSiteId">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkSiteId']?.FieldTitle}}
+        <!-- TransactionStatus Column -->
+        <ng-container matColumnDef="TransactionStatus">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['TransactionStatus']?.FieldTitle}}
           </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.LinkSiteId}} </mat-cell>
+          <mat-cell *matCellDef="let row"> {{row.TransactionStatus | enums :
+            dataModelEnumTransactionRecordStatusResult.ListItems}} </mat-cell>
         </ng-container>
-        <!-- LinkApplicationId Column -->
-        <ng-container matColumnDef="LinkApplicationId">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> شناسه اپ </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.LinkApplicationId}} </mat-cell>
+        <!-- LinkTransactionId Column -->
+        <ng-container matColumnDef="LinkTransactionId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkTransactionId']?.FieldTitle}}</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.LinkTransactionId}} </mat-cell>
         </ng-container>
-        <!-- LinkApplicationMemberId Column -->
-        <ng-container matColumnDef="LinkApplicationMemberId">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> شناسه کاربر </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.LinkApplicationMemberId}} </mat-cell>
+        <!-- Memo Column -->
+        <ng-container matColumnDef="Memo">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Memo']?.FieldTitle}}</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.Memo}} </mat-cell>
         </ng-container>
 
-        <!-- RecordStatus Column -->
-        <ng-container matColumnDef="RecordStatus">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['RecordStatus']?.FieldTitle}}
-          </mat-header-cell>
-          <mat-cell *matCellDef="let row"> <i [ngClass]="row.RecordStatus|statusClass"></i> </mat-cell>
-        </ng-container>
-        <!-- Title Column -->
-        <ng-container matColumnDef="Title">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Title']?.FieldTitle}} </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.Title}} </mat-cell>
-        </ng-container>
-        <!-- ContentType Column -->
-        <ng-container matColumnDef="ContentType">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> نوع </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.ContentType}} </mat-cell>
-        </ng-container>
         <!-- CreatedDate Column -->
         <ng-container matColumnDef="CreatedDate">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['CreatedDate']?.FieldTitle}}
           </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.CreatedDate) }} </mat-cell>
         </ng-container>
-        <!-- UpdatedDate Column -->
-        <ng-container matColumnDef="UpdatedDate">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['UpdatedDate']?.FieldTitle}}
-          </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.UpdatedDate) }} </mat-cell>
-        </ng-container>
+
         <!-- Action Column -->
         <ng-container matColumnDef="Action">
           <mat-header-cell *matHeaderCellDef> ... </mat-header-cell>

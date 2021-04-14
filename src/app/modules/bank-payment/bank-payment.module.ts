@@ -24,7 +24,8 @@ import {
   BankPaymentPublicConfigService,
   BankPaymentPrivateSiteConfigService,
   BankPaymentTransactionService,
-  BankPaymentTransactionLogService
+  BankPaymentTransactionLogService,
+  BankPaymentEnumService
 } from 'ntk-cms-api';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -50,6 +51,7 @@ import { BankPaymentTransactionListComponent } from './transaction/list/list.com
 import { BankPaymentTransactionViewComponent } from './transaction/view/view.component';
 import { BankPaymentTransactionLogListComponent } from './transaction-log/list/list.component';
 import { BankPaymentTransactionLogViewComponent } from './transaction-log/view/view.component';
+import { BankPaymentTransactionEditComponent } from './transaction/edit/edit.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +60,7 @@ import { BankPaymentTransactionLogViewComponent } from './transaction-log/view/v
     BankPaymentConfigMainAdminComponent,
     BankPaymentConfigSiteComponent,
     /*Config*/
+
     BankPaymentPublicConfigAddComponent,
     BankPaymentPublicConfigEditComponent,
     BankPaymentPublicConfigListComponent,
@@ -72,6 +75,7 @@ import { BankPaymentTransactionLogViewComponent } from './transaction-log/view/v
     /* */
     BankPaymentTransactionListComponent,
     BankPaymentTransactionViewComponent,
+    BankPaymentTransactionEditComponent,
     /* */
     BankPaymentTransactionLogListComponent,
     BankPaymentTransactionLogViewComponent,
@@ -94,6 +98,7 @@ import { BankPaymentTransactionLogViewComponent } from './transaction-log/view/v
     /*Config*/
     BankPaymentConfigurationService,
     /*Config*/
+    BankPaymentEnumService,
     CmsConfirmationDialogService,
     BankPaymentPublicConfigService,
     BankPaymentPrivateSiteConfigService,

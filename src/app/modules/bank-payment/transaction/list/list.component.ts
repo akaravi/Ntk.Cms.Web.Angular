@@ -7,13 +7,15 @@ import {
   BankPaymentTransactionService,
   CoreAuthService,
   DataFieldInfoModel,
+  EnumModel,
   EnumRecordStatus,
   EnumSortType,
   ErrorExceptionResult,
   FilterDataModel,
   FilterModel,
   NtkCmsApiStoreService,
-  TokenInfoModel
+  TokenInfoModel,
+  BankPaymentEnumService
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -26,6 +28,8 @@ import { MatSort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
 import { BankPaymentTransactionViewComponent } from '../view/view.component';
+import { BankPaymentTransactionEditComponent } from '../edit/edit.component';
+import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 
 
 @Component({
@@ -42,6 +46,8 @@ export class BankPaymentTransactionListComponent implements OnInit, OnDestroy {
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
+    private bankPaymentEnumService: BankPaymentEnumService,
+    private cmsConfirmationDialogService: CmsConfirmationDialogService,
     private router: Router,
     public dialog: MatDialog) {
     this.optionsSearch.parentMethods = {
@@ -72,12 +78,12 @@ export class BankPaymentTransactionListComponent implements OnInit, OnDestroy {
   tableSource: MatTableDataSource<BankPaymentTransactionModel> = new MatTableDataSource<BankPaymentTransactionModel>();
   tabledisplayedColumns: string[] = [
     'Id',
-    'RecordStatus',
-    'LinkPrivateSiteConfigId',
     'LinkUserId',
-    'Title',
-    'ContentType',
-    'CreatedDate',
+    'RecordStatus',
+    'TransactionStatus',
+    'BankStatus',
+    'Amount',
+    'AmountPure',
     'UpdatedDate',
     'Action'
   ];
@@ -85,6 +91,8 @@ export class BankPaymentTransactionListComponent implements OnInit, OnDestroy {
 
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
+  dataModelEnumTransactionRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
+  dataModelEnumTransactionBankStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
 
   expandedElement: BankPaymentTransactionModel | null;
   cmsApiStoreSubscribe: Subscription;
@@ -111,6 +119,18 @@ export class BankPaymentTransactionListComponent implements OnInit, OnDestroy {
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
+    });
+    this.getEnumTransactionRecordStatus();
+    this.getEnumTransactionBankStatus();
+  }
+  getEnumTransactionRecordStatus(): void {
+    this.bankPaymentEnumService.ServiceEnumTransactionRecordStatus().subscribe((next) => {
+      this.dataModelEnumTransactionRecordStatusResult = next;
+    });
+  }
+  getEnumTransactionBankStatus(): void {
+    this.bankPaymentEnumService.ServiceEnumTransactionBankStatus().subscribe((next) => {
+      this.dataModelEnumTransactionBankStatusResult = next;
     });
   }
   ngOnDestroy(): void {
@@ -141,24 +161,7 @@ export class BankPaymentTransactionListComponent implements OnInit, OnDestroy {
         if (next.IsSuccess) {
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;
-          if (this.tokenInfo.UserAccessAdminAllowToAllData) {
-            this.tabledisplayedColumns = this.publicHelper.listAddIfNotExist(
-              this.tabledisplayedColumns,
-              'LinkSiteId',
-              0
-            );
-          } else {
-            this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
-              this.tabledisplayedColumns,
-              'LinkSiteId'
-            );
-          }
-          if (this.requestLinkPrivateSiteConfigId === 0) {
-            this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
-              this.tabledisplayedColumns,
-              'LinkPrivateSiteConfigId'
-            );
-          }
+
           if (this.optionsSearch.childMethods) {
             this.optionsSearch.childMethods.setAccess(next.Access);
           }
@@ -223,35 +226,6 @@ export class BankPaymentTransactionListComponent implements OnInit, OnDestroy {
       }
     });
   }
-  onActionbuttonNewRow(): void {
-    if (
-      this.requestLinkPrivateSiteConfigId == null ||
-      this.requestLinkPrivateSiteConfigId === 0
-    ) {
-
-      const message = 'محتوا انتخاب نشده است';
-      this.cmsToastrService.typeErrorSelected(message);
-      return;
-    }
-    if (
-      this.dataModelResult == null ||
-      this.dataModelResult.Access == null ||
-      !this.dataModelResult.Access.AccessAddRow
-    ) {
-      this.cmsToastrService.typeErrorAccessAdd();
-      return;
-    }
-    // const dialogRef = this.dialog.open(NewsCommentEditComponent, {
-    //   data: { contentId: this.requestContentId }
-    // });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   // console.log(`Dialog result: ${result}`);
-    //   if (result && result.dialogChangedDate) {
-    //     this.DataGetAll();
-    //   }
-    // });
-  }
-
 
   onActionbuttonEditRow(model: BankPaymentTransactionModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id <= 0) {
@@ -268,15 +242,15 @@ export class BankPaymentTransactionListComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // const dialogRef = this.dialog.open(NewsCommentEditComponent, {
-    //   data: { id: this.tableRowSelected.Id }
-    // });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   // console.log(`Dialog result: ${result}`);
-    //   if (result && result.dialogChangedDate) {
-    //     this.DataGetAll();
-    //   }
-    // });
+    const dialogRef = this.dialog.open(BankPaymentTransactionEditComponent, {
+      data: { id: this.tableRowSelected.Id }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log(`Dialog result: ${result}`);
+      if (result && result.dialogChangedDate) {
+        this.DataGetAll();
+      }
+    });
   }
   onActionbuttonDeleteRow(model: BankPaymentTransactionModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id <= 0) {
@@ -294,15 +268,34 @@ export class BankPaymentTransactionListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessDelete();
       return;
     }
-    // const dialogRef = this.dialog.open(NewsCommentDeleteComponent, {
-    //   data: { id: this.tableRowSelected.Id }
-    // });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   // console.log(`Dialog result: ${result}`);
-    //   if (result && result.dialogChangedDate) {
-    //     this.DataGetAll();
-    //   }
-    // });
+    const title = 'لطفا تایید کنید...';
+    const message = 'آیا مایل به حدف این محتوا می باشید ' + '?' + '<br> ( ' + this.tableRowSelected.Id + ' ) ';
+    this.cmsConfirmationDialogService.confirm(title, message)
+      .then((confirmed) => {
+        if (confirmed) {
+          this.loading.display = true;
+          this.bankPaymentTransactionService.ServiceDelete(this.tableRowSelected.Id).subscribe(
+            (next) => {
+              if (next.IsSuccess) {
+                this.cmsToastrService.typeSuccessRemove();
+                this.DataGetAll();
+              } else {
+                this.cmsToastrService.typeErrorRemove();
+              }
+              this.loading.display = false;
+            },
+            (error) => {
+              this.cmsToastrService.typeError(error);
+              this.loading.display = false;
+            }
+          );
+        }
+      }
+      )
+      .catch(() => {
+        // console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)')
+      }
+      );
   }
   onActionbuttonLog(model: BankPaymentTransactionModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id <= 0) {
@@ -312,7 +305,7 @@ export class BankPaymentTransactionListComponent implements OnInit, OnDestroy {
     }
     this.tableRowSelected = model;
 
-    this.router.navigate(['/bankayment/transactionlog/LinkTransactionId/',this.tableRowSelected.Id]);
+    this.router.navigate(['/bankpayment/transactionlog/LinkTransactionId/',this.tableRowSelected.Id]);
 
   }
   onActionbuttonNotifictionActionSend(model: BankPaymentTransactionModel = this.tableRowSelected): void {

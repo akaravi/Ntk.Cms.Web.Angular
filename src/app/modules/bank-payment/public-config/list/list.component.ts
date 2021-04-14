@@ -315,7 +315,7 @@ export class BankPaymentPublicConfigListComponent implements OnInit, OnDestroy {
     if (
       this.dataModelResult == null ||
       this.dataModelResult.Access == null ||
-      !this.dataModelResult.Access.AccessDeleteRow
+      !this.dataModelResult.Access.AccessWatchRow
     ) {
       this.cmsToastrService.typeErrorSelected();
       return;

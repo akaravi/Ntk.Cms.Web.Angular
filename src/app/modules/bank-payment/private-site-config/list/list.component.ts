@@ -14,7 +14,8 @@ import {
   TokenInfoModel,
   NtkCmsApiStoreService,
   EnumRecordStatus,
-  DataFieldInfoModel
+  DataFieldInfoModel,
+  CoreCpMainMenuService
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -28,6 +29,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
 import { BankPaymentPrivateSiteConfigAddComponent } from '../add/add.component';
 import { BankPaymentPrivateSiteConfigEditComponent } from '../edit/edit.component';
+import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 
 @Component({
   selector: 'app-bankpayment-privateconfig-list',
@@ -42,6 +44,7 @@ export class BankPaymentPrivateSiteConfigListComponent implements OnInit, OnDest
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
+    private cmsConfirmationDialogService: CmsConfirmationDialogService,
     private router: Router,
     public dialog: MatDialog) {
     this.optionsSearch.parentMethods = {
@@ -268,15 +271,34 @@ export class BankPaymentPrivateSiteConfigListComponent implements OnInit, OnDest
       this.cmsToastrService.typeErrorAccessDelete();
       return;
     }
-    // const dialogRef = this.dialog.open(NewsCommentDeleteComponent, {
-    //   data: { id: this.tableRowSelected.Id }
-    // });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   // console.log(`Dialog result: ${result}`);
-    //   if (result && result.dialogChangedDate) {
-    //     this.DataGetAll();
-    //   }
-    // });
+    const title = 'لطفا تایید کنید...';
+    const message = 'آیا مایل به حدف این محتوا می باشید ' + '?' + '<br> ( ' + this.tableRowSelected.Title + ' ) ';
+    this.cmsConfirmationDialogService.confirm(title, message)
+      .then((confirmed) => {
+        if (confirmed) {
+          this.loading.display = true;
+          this.bankPaymentPrivateSiteConfigService.ServiceDelete(this.tableRowSelected.Id).subscribe(
+            (next) => {
+              if (next.IsSuccess) {
+                this.cmsToastrService.typeSuccessRemove();
+                this.DataGetAll();
+              } else {
+                this.cmsToastrService.typeErrorRemove();
+              }
+              this.loading.display = false;
+            },
+            (error) => {
+              this.cmsToastrService.typeError(error);
+              this.loading.display = false;
+            }
+          );
+        }
+      }
+      )
+      .catch(() => {
+        // console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)')
+      }
+      );
   }
   onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;
@@ -357,6 +379,6 @@ export class BankPaymentPrivateSiteConfigListComponent implements OnInit, OnDest
     this.tableRowSelected = row;
   }
   onActionBackToParent(): void {
-    this.router.navigate(['/application/app/']);
+    this.router.navigate(['/bankpayment/publicconfig/']);
   }
 }
