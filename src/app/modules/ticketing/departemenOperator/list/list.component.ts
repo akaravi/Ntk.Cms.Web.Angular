@@ -46,6 +46,9 @@ export class TicketingDepartemenOperatorListComponent implements OnInit, OnDestr
     this.optionsExport.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionExport(model),
     };
+    /*filter Sort*/
+    this.filteModelContent.SortColumn = 'Id';
+    this.filteModelContent.SortType = EnumSortType.Descending;
   }
   requestDepartemenId = 0;
   comment: string;

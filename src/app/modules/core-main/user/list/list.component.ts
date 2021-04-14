@@ -49,13 +49,17 @@ export class CoreUserListComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private coreAuthService: CoreAuthService,
     public dialog: MatDialog) {
+    this.requestLinkSiteId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkSiteId'));
+
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
     this.optionsExport.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionExport(model),
     };
-    this.requestLinkSiteId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkSiteId'));
+    /*filter Sort*/
+    this.filteModelContent.SortColumn = 'Id';
+    this.filteModelContent.SortType = EnumSortType.Descending;
     if (this.requestLinkSiteId > 0) {
       const filter = new FilterDataModel();
       filter.PropertyAnyName = 'LinkSiteId';

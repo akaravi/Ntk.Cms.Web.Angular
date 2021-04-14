@@ -53,6 +53,9 @@ export class CoreSiteListComponent implements OnInit, OnDestroy {
     this.optionsExport.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionExport(model),
     };
+    /*filter Sort*/
+    this.filteModelContent.SortColumn = 'Id';
+    this.filteModelContent.SortType = EnumSortType.Descending;
     this.requestLinkUserId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkUserId'));
     this.requestLinkSiteCategoryId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkSiteCategoryId'));
     if (this.requestLinkUserId > 0) {

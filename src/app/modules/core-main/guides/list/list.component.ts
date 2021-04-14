@@ -52,6 +52,7 @@ export class CoreGuideListComponent implements OnInit, OnDestroy {
     this.optionsExport.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionExport(model),
     };
+    /*filter Sort*/
     this.filteModelContent.SortColumn = 'ShowInMenuOrder';
     this.filteModelContent.SortType = EnumSortType.Ascending;
   }

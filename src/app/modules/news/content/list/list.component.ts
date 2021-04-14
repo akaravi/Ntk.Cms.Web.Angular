@@ -42,17 +42,15 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
     private router: Router,
     public dialog: MatDialog
   ) {
-    // this.optionsCategoryTree.parentMethods = {
-    //   onActionSelect: (x) => this.onActionSelectorSelect(x),
-    // };
-
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
     this.optionsExport.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionExport(model),
     };
-
+    /*filter Sort*/
+    this.filteModelContent.SortColumn = 'Id';
+    this.filteModelContent.SortType = EnumSortType.Descending;
   }
   filteModelContent = new FilterModel();
   categoryModelSelected: NewsCategoryModel;

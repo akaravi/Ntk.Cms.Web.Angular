@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {Subscription} from 'rxjs';
-import {environment} from '../../../../../environments/environment';
-import {ActivatedRoute, Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { environment } from '../../../../../environments/environment';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 import {
@@ -13,8 +13,7 @@ import {
   FilterModel,
   FormInfoModel
 } from 'ntk-cms-api';
-import {PublicHelper} from '../../../../core/helpers/publicHelper';
-import {CmsToastrService} from '../../../../core/services/cmsToastr.service';
+import { CmsToastrService } from '../../../../core/services/cmsToastr.service';
 
 
 @Component({
@@ -34,9 +33,10 @@ export class CoreSiteSelectionComponent implements OnInit {
     private cmsToastrService: CmsToastrService,
     private router: Router,
   ) {
+
   }
   formInfo: FormInfoModel = new FormInfoModel();
-
+  statusCheckExistWebSite = true;
   ngOnInit(): void {
     // this.dataModel = this.activatedRoute.snapshot.data.list;
     this.DataGetAll();
@@ -48,9 +48,9 @@ export class CoreSiteSelectionComponent implements OnInit {
       (next) => {
         if (next.IsSuccess) {
           this.dataModelResult = next;
+          this.statusCheckExistWebSite = false;
         }
-        else
-        {
+        else {
           this.cmsToastrService.typeError(next.ErrorMessage);
         }
       },
@@ -61,7 +61,7 @@ export class CoreSiteSelectionComponent implements OnInit {
   }
 
   onActionClickSelectSite(id: number): void {
-    if (!this.formInfo.ButtonSubmittedEnabled){
+    if (!this.formInfo.ButtonSubmittedEnabled) {
       return;
     }
 
@@ -77,8 +77,7 @@ export class CoreSiteSelectionComponent implements OnInit {
             this.formInfo.ButtonSubmittedEnabled = true;
             this.router.navigate(['/']);
           }
-          else
-          {
+          else {
             this.cmsToastrService.typeErrorSelected();
             this.formInfo.ButtonSubmittedEnabled = true;
           }

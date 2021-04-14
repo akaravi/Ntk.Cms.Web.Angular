@@ -54,6 +54,10 @@ export class CoreDeviceListComponent implements OnInit, OnDestroy {
     this.optionsExport.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionExport(model),
     };
+    /*filter Sort*/
+    this.filteModelContent.SortColumn = 'Id';
+    this.filteModelContent.SortType = EnumSortType.Descending;
+
     this.requestLinkSiteId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkSiteId'));
     if (this.requestLinkSiteId > 0) {
       const filter = new FilterDataModel();

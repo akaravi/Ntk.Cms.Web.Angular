@@ -79,6 +79,9 @@ export class CoreTokenUserListComponent implements OnInit, OnDestroy {
     this.optionsExport.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionExport(model),
     };
+    /*filter Sort*/
+    this.filteModelContent.SortColumn = 'CreatedDate';
+    this.filteModelContent.SortType = EnumSortType.Descending;
   }
   comment: string;
   author: string;

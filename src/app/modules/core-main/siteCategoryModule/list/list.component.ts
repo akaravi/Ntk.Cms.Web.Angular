@@ -53,6 +53,9 @@ export class CoreSiteCategoryCmsModuleListComponent implements OnInit, OnDestroy
     this.optionsExport.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionExport(model),
     };
+    /*filter Sort*/
+    this.filteModelContent.SortColumn = 'Id';
+    this.filteModelContent.SortType = EnumSortType.Descending;
     this.requestLinkCmsModuleId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkCmsModuleId'));
     this.requestLinkCmsSiteCategoryId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkCmsSiteCategoryId'));
     if (this.requestLinkCmsModuleId > 0) {

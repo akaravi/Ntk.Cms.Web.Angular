@@ -29,7 +29,7 @@ export class DashboardOneComponent implements OnInit {
         (error) => {
           this.cmsToastrService.typeErrorEdit(error);
         }
-      ));
+      )).toPromise();
   }
 
   ngOnInit(): void {

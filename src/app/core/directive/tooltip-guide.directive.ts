@@ -39,7 +39,7 @@ export class TooltipGuideDirective {
               // this.title = next.Item.Title;
               // this.message = next.Item.BodyFa;
               // this.create('<p>' + next.Item.Title + '</p><br>' + next.Item.BodyFa);
-              this.create( next.Item.BodyFa);
+              this.create(next.Item.BodyFa);
               this.setPosition();
               this.renderer.addClass(this.tooltip, 'ng-tooltip-show');
               /*run */
@@ -58,7 +58,7 @@ export class TooltipGuideDirective {
             if (next.IsSuccess) {
               /*run */
               // this.create('<p>' + next.Item.Title + '</p><br>' + next.Item.BodyFa);
-              this.create( next.Item.BodyFa);
+              this.create(next.Item.BodyFa);
               this.setPosition();
               this.renderer.addClass(this.tooltip, 'ng-tooltip-show');
               /*run */
@@ -115,7 +115,8 @@ export class TooltipGuideDirective {
     // 스크롤이 발생한 경우, tooltip 요소의 top에 세로 스크롤 좌표값을 반영하여야 한다.
     const scrollPos = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
 
-    let top, left;
+    let top = 0;
+    let left = 0;
 
     if (this.placement === 'top') {
       top = hostPos.top - tooltipPos.height - this.offset;
