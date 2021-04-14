@@ -43,8 +43,8 @@ export class CmsTokenAccessComponent implements OnInit, OnDestroy {
       if (this.tokenInfo && this.tokenInfo.UserId > 0 && this.tokenInfo.SiteId <= 0) {
         this.router.navigate(['/core/site/selection']);
       }
-      this.inputSiteId = this.tokenInfo.SiteId;
-      this.inputUserId = this.tokenInfo.UserId;
+      // this.inputSiteId = this.tokenInfo.SiteId;
+      // this.inputUserId = this.tokenInfo.UserId;
     });
 
 
@@ -52,8 +52,8 @@ export class CmsTokenAccessComponent implements OnInit, OnDestroy {
 
   tokenInfo: TokenInfoModel = new TokenInfoModel();
   loadingStatus = false;
-  inputSiteId: number;
-  inputUserId: number;
+  inputSiteId?: number;
+  inputUserId?: number;
   cmsApiStoreSubscribe: Subscription;
 
   ngOnInit(): void {
@@ -165,11 +165,12 @@ export class CmsTokenAccessComponent implements OnInit, OnDestroy {
       (next) => {
         this.loadingStatus = false;
         if (next.IsSuccess) {
-          if (next.Item.UserId === this.inputUserId) {
+          if (next.Item.UserId === authModel.UserId) {
 
             this.cmsToastrService.toastr.success('دسترسی به کاربر جدید تایید شد', title);
+            this.inputSiteId = null;
+            this.inputUserId = null;
           } else {
-
             this.cmsToastrService.toastr.warning('دسترسی به کاربر جدید تایید نشد', title);
           }
         } else {
@@ -204,14 +205,17 @@ export class CmsTokenAccessComponent implements OnInit, OnDestroy {
       (next) => {
         this.loadingStatus = false;
         if (next.IsSuccess) {
-          if (next.Item.SiteId === +this.inputSiteId) {
+          if (next.Item.SiteId === authModel.SiteId ) {
             this.cmsToastrService.toastr.success('دسترسی به سایت جدید تایید شد', title);
+            this.inputSiteId = null;
+            this.inputUserId = null;
           } else {
             this.cmsToastrService.toastr.warning('دسترسی به سایت جدید تایید نشد', title);
           }
         } else {
           this.cmsToastrService.typeErrorAccessChange(next.ErrorMessage);
         }
+
       },
       (error) => {
         this.cmsToastrService.typeErrorAccessChange(error);
@@ -220,8 +224,8 @@ export class CmsTokenAccessComponent implements OnInit, OnDestroy {
   }
   onActionSiteSelect(model: CoreSiteModel): void {
     if (model && model.Id > 0) {
-      this.inputSiteId = model.Id;
-      if (this.inputSiteId !== this.tokenInfo.SiteId) {
+      // this.inputSiteId = model.Id;
+      if ( model.Id !== this.tokenInfo.SiteId) {
         this.onActionbuttonSelectSite();
       }
     }
