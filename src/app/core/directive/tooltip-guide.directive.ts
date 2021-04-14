@@ -12,6 +12,7 @@ export class TooltipGuideDirective {
   @Input() placement: string;
   @Input() delay: number;
   tooltip: HTMLElement;
+  viewError = false;
   // 호스트 요소와 tooltip 요소 간의 거리
   offset = 10;
   constructor(
@@ -41,12 +42,20 @@ export class TooltipGuideDirective {
               this.renderer.addClass(this.tooltip, 'ng-tooltip-show');
               /*run */
             } else {
-              this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
-
+              if (this.viewError) {
+                this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
+              }
+              /*run */
+              this.create('Identity :' + this.Identity);
+              this.setPosition();
+              this.renderer.addClass(this.tooltip, 'ng-tooltip-show');
+              /*run */
             }
           },
           (error) => {
-            this.cmsToastrService.typeError(error);
+            if (this.viewError) {
+              this.cmsToastrService.typeError(error);
+            }
           })
       ).toPromise();
     } else if (this.tooltipGuide && this.tooltipGuide.length > 0) {
@@ -60,11 +69,20 @@ export class TooltipGuideDirective {
               this.renderer.addClass(this.tooltip, 'ng-tooltip-show');
               /*run */
             } else {
-              this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
+              if (this.viewError) {
+                this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
+              }
+              /*run */
+              this.create('Key :' + this.tooltipGuide);
+              this.setPosition();
+              this.renderer.addClass(this.tooltip, 'ng-tooltip-show');
+              /*run */
             }
           },
           (error) => {
-            this.cmsToastrService.typeError(error);
+            if (this.viewError) {
+              this.cmsToastrService.typeError(error);
+            }
           })
       ).toPromise();
     }

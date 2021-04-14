@@ -66,7 +66,6 @@ export class PollingContentAddComponent implements OnInit, AfterViewInit {
   optionActionButtomEnable = true;
   optionTabledisplayedColumns = ['Id', 'Option', 'OptionAnswer', 'IsCorrectAnswer', 'NumberOfVotes', 'ScoreOfVotes', 'Action'];
 
-
   loading = new ProgressSpinnerModel();
   loadingOption = new ProgressSpinnerModel();
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
@@ -244,6 +243,7 @@ export class PollingContentAddComponent implements OnInit, AfterViewInit {
           this.dataModelResult = next;
           if (next.IsSuccess) {
             this.cmsToastrService.typeSuccessAdd();
+            this.dataModel = next.Item;
           } else {
             this.cmsToastrService.typeErrorAdd(next.ErrorMessage);
           }
@@ -276,7 +276,7 @@ export class PollingContentAddComponent implements OnInit, AfterViewInit {
             this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
             this.cmsToastrService.typeSuccessAdd();
             this.loading.display = false;
-            setTimeout(() => this.router.navigate(['/polling/content']), 100);
+            setTimeout(() => this.router.navigate(['/polling/content']), 1000);
           } else {
             this.cmsToastrService.typeErrorAdd(next.ErrorMessage);
           }

@@ -165,9 +165,9 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
       .ServiceGetOneById(this.requestId)
       .subscribe(
         async (next) => {
-           /*َAccess Field*/
-        this.dataAccessModel = next.Access;
-        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+          /*َAccess Field*/
+          this.dataAccessModel = next.Access;
+          this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
           this.loading.display = false;
           this.dataModelResult = next;
           this.formInfo.FormSubmitAllow = true;
@@ -179,6 +179,7 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
             if (lat > 0 && lon > 0) {
               this.mapMarkerPoints.push({ lat, lon });
             }
+            this.dataModel.Keyword = this.dataModel.Keyword + '';
             this.keywordDataModel = this.dataModel.Keyword.split(',');
             this.DataTagGetAll();
             this.DataOtherInfoGetAll();
@@ -205,7 +206,7 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
     const filteModel = new FilterModel();
     const filter = new FilterDataModel();
     filter.PropertyName = 'LinkContentId';
-    filter.Value =  this.dataModelResult.Item.Id ;
+    filter.Value = this.dataModelResult.Item.Id;
     filter.ClauseType = EnumClauseType.And;
     filteModel.Filters.push(filter);
 
@@ -248,7 +249,7 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
     const filteModel = new FilterModel();
     const filter = new FilterDataModel();
     filter.PropertyName = 'LinkContentId';
-    filter.Value =  this.dataModelResult.Item.Id ;
+    filter.Value = this.dataModelResult.Item.Id;
     filter.ClauseType = EnumClauseType.And;
     filteModel.Filters.push(filter);
 
@@ -283,12 +284,12 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
     const filteModel = new FilterModel();
     const filter = new FilterDataModel();
     filter.PropertyName = 'LinkSourceId';
-    filter.Value =  this.dataModelResult.Item.Id ;
+    filter.Value = this.dataModelResult.Item.Id;
     filter.ClauseType = EnumClauseType.Or;
     filteModel.Filters.push(filter);
 
     filter.PropertyName = 'LinkDestinationId';
-    filter.Value =  this.dataModelResult.Item.Id ;
+    filter.Value = this.dataModelResult.Item.Id;
     filter.ClauseType = EnumClauseType.Or;
     filteModel.Filters.push(filter);
 
@@ -381,11 +382,12 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
 
             this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
             this.cmsToastrService.typeSuccessAdd();
-            await this.DataActionAfterAddContentSuccessfulTag(this.dataModelResult.Item);
-            await this.DataActionAfterAddContentSuccessfulSimilar(this.dataModelResult.Item);
-            await this.DataActionAfterAddContentSuccessfulOtherInfo(this.dataModelResult.Item);
+            await this.DataActionAfterAddContentSuccessfulTag(this.dataModel);
+            await this.DataActionAfterAddContentSuccessfulSimilar(this.dataModel);
+            await this.DataActionAfterAddContentSuccessfulOtherInfo(this.dataModel);
             this.loading.display = false;
-            setTimeout(() => this.router.navigate(['/article/edit/', this.requestId]), 100);
+            // setTimeout(() => this.router.navigate(['/article/content/edit/', this.requestId]), 100);
+            setTimeout(() => this.router.navigate(['/article/content']), 1000);
           } else {
             this.cmsToastrService.typeErrorAdd(next.ErrorMessage);
           }

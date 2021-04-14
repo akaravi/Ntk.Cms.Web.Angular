@@ -147,6 +147,7 @@ export class FileContentEditComponent implements OnInit, AfterViewInit {
             if (lat > 0 && lon > 0) {
               this.mapMarkerPoints.push({ lat, lon });
             }
+            this.dataModel.Keyword = this.dataModel.Keyword + '';
             this.keywordDataModel = this.dataModel.Keyword.split(',');
             this.loading.display = false;
           } else {
@@ -179,7 +180,7 @@ export class FileContentEditComponent implements OnInit, AfterViewInit {
             this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
             this.cmsToastrService.typeSuccessAdd();
             this.loading.display = false;
-            setTimeout(() => this.router.navigate(['/file/edit/', this.requestId]), 100);
+            setTimeout(() => this.router.navigate(['/file/content/edit/', this.requestId]), 100);
           } else {
             this.cmsToastrService.typeErrorAdd(next.ErrorMessage);
           }

@@ -103,7 +103,7 @@
           <app-tag-autocomplete (optionChange)="onActionTagChange($event)" [optionPlaceholder]="' + Tag '">
           </app-tag-autocomplete>
           <!-- KeywordModel Field -->
-          <tag-input [(ngModel)]="keywordDataModel" name="KeywordModel" [placeholder]="'+ کلمه کلیدی'"
+          <tag-input [(ngModel)]="keywordDataModel" name="keywordDataModel" [placeholder]="'+ کلمه کلیدی'"
             [secondaryPlaceholder]="'انتخاب کلمات کلیدی نسبت به مطلب'" [identifyBy]="'display'">
           </tag-input>
           <div *ngIf="formInfo.FormSubmitAllow">

@@ -147,9 +147,9 @@ export class CoreSiteEditComponent implements OnInit {
             if (lat > 0 && lon > 0) {
               this.mapMarkerPoints.push({ lat, lon });
             }
-            if (this.dataModel.Keyword && this.dataModel.Keyword.length > 0) {
-              this.keywordDataModel = this.dataModel.Keyword.split(',');
-            }
+            this.dataModel.Keyword = this.dataModel.Keyword + '';
+            this.keywordDataModel = this.dataModel.Keyword.split(',');
+
 
           } else {
             this.cmsToastrService.typeErrorGetOne(next.ErrorMessage);

@@ -24,7 +24,7 @@ export class CmsMapComponent implements OnInit, OnDestroy {
     // center: latLng(0, 0)
   };
   @Input() set optonCenter(model: PoinModel) {
-    if (model && model.lat && model.lon && model.lat !== 0 && model.lon !== 0) {
+    if (this.map && model && model.lat && model.lon && model.lat !== 0 && model.lon !== 0) {
       this.map.setView(new L.LatLng(model.lat, model.lon), this.zoom);
     }
   }

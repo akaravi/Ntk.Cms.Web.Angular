@@ -180,6 +180,7 @@ export class BiographyContentEditComponent implements OnInit, AfterViewInit {
             if (lat > 0 && lon > 0) {
               this.mapMarkerPoints.push({ lat, lon });
             }
+            this.dataModel.Keyword = this.dataModel.Keyword + '';
             this.keywordDataModel = this.dataModel.Keyword.split(',');
             this.DataTagGetAll();
             this.DataOtherInfoGetAll();
@@ -383,11 +384,12 @@ export class BiographyContentEditComponent implements OnInit, AfterViewInit {
 
             this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
             this.cmsToastrService.typeSuccessAdd();
-            await this.DataActionAfterAddContentSuccessfulTag(this.dataModelResult.Item);
-            await this.DataActionAfterAddContentSuccessfulSimilar(this.dataModelResult.Item);
-            await this.DataActionAfterAddContentSuccessfulOtherInfo(this.dataModelResult.Item);
+            await this.DataActionAfterAddContentSuccessfulTag(this.dataModel);
+            await this.DataActionAfterAddContentSuccessfulSimilar(this.dataModel);
+            await this.DataActionAfterAddContentSuccessfulOtherInfo(this.dataModel);
             this.loading.display = false;
-            setTimeout(() => this.router.navigate(['/biography/edit/', this.requestId]), 100);
+            // setTimeout(() => this.router.navigate(['/biography/content/edit/', this.requestId]), 100);
+            setTimeout(() => this.router.navigate(['/biography/content']), 1000);
           } else {
             this.cmsToastrService.typeErrorAdd(next.ErrorMessage);
           }
