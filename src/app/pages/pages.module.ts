@@ -19,6 +19,7 @@ import {CoreModule} from '../core';
 import {SubheaderModule} from './partials/layout/subheader/subheader.module';
 import {CoreSiteModule} from '../modules/core-main/site/coreSite.module';
 import {CoreAuthService, CoreCpMainMenuService} from 'ntk-cms-api';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import {CoreAuthService, CoreCpMainMenuService} from 'ntk-cms-api';
     NgbProgressbarModule,
     CoreModule,
     SubheaderModule,
-    CoreSiteModule
+    CoreSiteModule,
+    SharedModule.forRoot(),
   ],
   providers: [
     CoreCpMainMenuService,

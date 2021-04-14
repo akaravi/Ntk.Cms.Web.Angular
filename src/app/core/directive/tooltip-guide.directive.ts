@@ -7,7 +7,7 @@ import { CmsToastrService } from '../services/cmsToastr.service';
   selector: '[tooltipGuide]'
 })
 export class TooltipGuideDirective {
-  @Input('tooltipGuide') key: string;
+  @Input() tooltipGuide: string;
   @Input() Identity: number;
   @Input() placement: string;
   @Input() delay: number;
@@ -36,28 +36,25 @@ export class TooltipGuideDirective {
           (next) => {
             if (next.IsSuccess) {
               /*run */
-              // this.title = next.Item.Title;
-              // this.message = next.Item.BodyFa;
-              // this.create('<p>' + next.Item.Title + '</p><br>' + next.Item.BodyFa);
               this.create(next.Item.BodyFa);
               this.setPosition();
               this.renderer.addClass(this.tooltip, 'ng-tooltip-show');
               /*run */
             } else {
               this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
+
             }
           },
           (error) => {
             this.cmsToastrService.typeError(error);
           })
       ).toPromise();
-    } else if (this.key && this.key.length > 0) {
-      this.coreGuideService.ServiceGetOneByKey(this.key).pipe(
+    } else if (this.tooltipGuide && this.tooltipGuide.length > 0) {
+      this.coreGuideService.ServiceGetOneByKey(this.tooltipGuide).pipe(
         map(
           (next) => {
             if (next.IsSuccess) {
               /*run */
-              // this.create('<p>' + next.Item.Title + '</p><br>' + next.Item.BodyFa);
               this.create(next.Item.BodyFa);
               this.setPosition();
               this.renderer.addClass(this.tooltip, 'ng-tooltip-show');
@@ -84,11 +81,16 @@ export class TooltipGuideDirective {
 
   create(text: string): void {
     this.tooltip = this.renderer.createElement('span');
+    text = text + '';
+    if (text.indexOf('</') > 0 || text.indexOf('/>') > 0) {
+      this.tooltip.insertAdjacentHTML('beforeend', text);
+    } else {
+      this.renderer.appendChild(
+        this.tooltip,
+        this.renderer.createText(text) // textNode
+      );
+    }
 
-    this.renderer.appendChild(
-      this.tooltip,
-      this.renderer.createText(text) // textNode
-    );
 
     this.renderer.appendChild(document.body, this.tooltip);
     // this.renderer.appendChild(this.el.nativeElement, this.tooltip);
