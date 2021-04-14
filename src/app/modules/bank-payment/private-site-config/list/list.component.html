@@ -24,6 +24,8 @@
         </mat-slide-toggle>
       </a>
       <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">برسی مجدد</button>
+      <button *ngIf="dataModelResult.Access.AccessAddRow " (click)="onActionbuttonTestPayment()" type="button"
+      class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">تست پرداخت</button>
       <button (click)="onActionBackToParent()" *ngIf="requestLinkPublicConfigId>0" type="button"
         class="btn btn-warning BTN">بازگشت</button>
       <app-cms-search-list [(options)]="optionsSearch"></app-cms-search-list>
@@ -117,6 +119,10 @@
               <button mat-menu-item (click)="onActionbuttonTransactionList(row)">
                 <mat-icon>list</mat-icon>
                 <span>تراکنش ها</span>
+              </button>
+              <button mat-menu-item (click)="onActionbuttonTestPayment(row)">
+                <mat-icon>payment</mat-icon>
+                <span>تست پرداخت</span>
               </button>
             </mat-menu>
           </mat-cell>

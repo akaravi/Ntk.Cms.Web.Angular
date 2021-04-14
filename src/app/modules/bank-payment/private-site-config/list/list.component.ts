@@ -30,6 +30,7 @@ import { Subscription } from 'rxjs';
 import { BankPaymentPrivateSiteConfigAddComponent } from '../add/add.component';
 import { BankPaymentPrivateSiteConfigEditComponent } from '../edit/edit.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { BankPaymentPrivateSiteConfigPaymentTestComponent } from '../paymentTest/paymentTest.component';
 
 @Component({
   selector: 'app-bankpayment-privateconfig-list',
@@ -348,6 +349,34 @@ export class BankPaymentPrivateSiteConfigListComponent implements OnInit, OnDest
 
     this.router.navigate(['/bankpayment/transaction/LinkPrivateSiteConfigId', this.tableRowSelected.Id]);
   }
+  onActionbuttonTestPayment(model: BankPaymentPrivateSiteConfigModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id === 0) {
+
+      const message = 'ردیفی انتخاب نشده است';
+      this.cmsToastrService.typeErrorSelected(message);
+      return;
+    }
+    this.tableRowSelected = model;
+
+    if (
+      this.dataModelResult == null ||
+      this.dataModelResult.Access == null ||
+      !this.dataModelResult.Access.AccessWatchRow
+    ) {
+      this.cmsToastrService.typeErrorSelected();
+      return;
+    }
+    const dialogRef = this.dialog.open(BankPaymentPrivateSiteConfigPaymentTestComponent, {
+      data: { LinkPrivateSiteConfigId: this.tableRowSelected.Id }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log(`Dialog result: ${result}`);
+      if (result && result.dialogChangedDate) {
+        this.DataGetAll();
+      }
+    });
+  }
+
   onActionbuttonExport(): void {
     this.optionsExport.data.show = !this.optionsExport.data.show;
     this.optionsExport.childMethods.setExportFilterModel(this.filteModelContent);

@@ -52,6 +52,7 @@ import { BankPaymentTransactionViewComponent } from './transaction/view/view.com
 import { BankPaymentTransactionLogListComponent } from './transaction-log/list/list.component';
 import { BankPaymentTransactionLogViewComponent } from './transaction-log/view/view.component';
 import { BankPaymentTransactionEditComponent } from './transaction/edit/edit.component';
+import { BankPaymentPrivateSiteConfigPaymentTestComponent } from './private-site-config/paymentTest/paymentTest.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { BankPaymentTransactionEditComponent } from './transaction/edit/edit.com
     BankPaymentPrivateSiteConfigListComponent,
     BankPaymentPrivateSiteConfigSelectorComponent,
     BankPaymentPrivateSiteConfigTreeComponent,
+    BankPaymentPrivateSiteConfigPaymentTestComponent,
     /* */
     BankPaymentTransactionListComponent,
     BankPaymentTransactionViewComponent,
