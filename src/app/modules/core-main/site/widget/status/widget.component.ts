@@ -29,12 +29,13 @@ export class CoreSiteWidgetStatusComponent implements OnInit, OnDestroy {
     this.widgetInfoModel.description = 'خلاصه مشخصات حساب این سامانه ';
     this.widgetInfoModel.link = '/core/site';
 
-    this.onActionStatist();
     this.tokenInfoModel = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.tokenInfoModel = next;
       this.onActionStatist();
     });
+    this.onActionStatist();
+
   }
   ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();

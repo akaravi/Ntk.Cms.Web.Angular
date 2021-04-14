@@ -26,12 +26,13 @@ export class CoreUserWidgetComponent implements OnInit, OnDestroy {
     this.widgetInfoModel.description = 'خلاصه مشخصات حساب کاربری شما';
     this.widgetInfoModel.link = '/core/User';
 
-    this.onActionStatist();
+
     this.tokenInfoModel = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.tokenInfoModel = next;
       this.onActionStatist();
     });
+    this.onActionStatist();
   }
   ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
