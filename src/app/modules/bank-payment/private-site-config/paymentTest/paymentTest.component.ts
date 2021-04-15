@@ -1,38 +1,24 @@
 import {
   CoreEnumService,
-  EnumModel,
-  ErrorExceptionResult,
   FormInfoModel,
-  CoreSiteModel,
-  FilterModel,
-  FilterDataModel,
   BankPaymentPrivateSiteConfigService,
   BankPaymentPrivateSiteConfigModel,
-  CoreModuleModel,
-  AccessModel,
-  DataFieldInfoModel,
-  CoreSiteCategoryModel,
+  BankPaymentInjectOnlineTransactionDtoModel,
+  ErrorExceptionResult,
+  BankPaymentInjectPaymentGotoBankStep2LandingSitePageModel,
 } from 'ntk-cms-api';
 import {
   Component,
   OnInit,
   ViewChild,
   Inject,
-  ViewContainerRef,
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
-import {
-  TreeModel,
-  NodeInterface,
-} from 'ntk-cms-filemanager';
-import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
-import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
-import { PublicHelper } from 'src/app/core/helpers/publicHelper';
-import { StepperSelectionEvent } from '@angular/cdk/stepper';
-import { MatStepper } from '@angular/material/stepper';
+import { DOCUMENT } from '@angular/common';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-bankpayment-privateconfig-paymenttest',
@@ -40,132 +26,86 @@ import { MatStepper } from '@angular/material/stepper';
   styleUrls: ['./paymentTest.component.scss'],
 })
 export class BankPaymentPrivateSiteConfigPaymentTestComponent implements OnInit {
-  requestId = 0;
+  requestLinkPrivateSiteConfigId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private cmsStoreService: CmsStoreService,
+    @Inject(DOCUMENT) private document: any,
     private dialogRef: MatDialogRef<BankPaymentPrivateSiteConfigPaymentTestComponent>,
     public coreEnumService: CoreEnumService,
     public bankPaymentPrivateSiteConfigService: BankPaymentPrivateSiteConfigService,
     private cmsToastrService: CmsToastrService,
-    private publicHelper: PublicHelper,
-
   ) {
     if (data) {
-      this.requestId = +data.id || 0;
+      this.requestLinkPrivateSiteConfigId = +data.LinkPrivateSiteConfigId || 0;
     }
-    this.fileManagerTree = new TreeModel();
+    this.dataModel.LastUrlAddressInUse = this.document.location.href;
   }
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
-  selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
-  fileManagerTree: TreeModel;
-  appLanguage = 'fa';
-
-
   loading = new ProgressSpinnerModel();
-  dataModelResult: ErrorExceptionResult<BankPaymentPrivateSiteConfigModel> = new ErrorExceptionResult<BankPaymentPrivateSiteConfigModel>();
-  dataModel: BankPaymentPrivateSiteConfigModel = new BankPaymentPrivateSiteConfigModel();
-
-
+  dataModelParentSelected: BankPaymentPrivateSiteConfigModel = new BankPaymentPrivateSiteConfigModel();
+  dataModel: BankPaymentInjectOnlineTransactionDtoModel = new BankPaymentInjectOnlineTransactionDtoModel();
+  dataModelResult: ErrorExceptionResult<BankPaymentInjectPaymentGotoBankStep2LandingSitePageModel> = new ErrorExceptionResult<BankPaymentInjectPaymentGotoBankStep2LandingSitePageModel>();
   formInfo: FormInfoModel = new FormInfoModel();
-  dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
-
-  fileManagerOpenForm = false;
-  storeSnapshot = this.cmsStoreService.getStateSnapshot();
-  dataAccessModel: AccessModel;
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
   ngOnInit(): void {
-    if (this.requestId <= 0) {
+    if (this.requestLinkPrivateSiteConfigId <= 0) {
       this.cmsToastrService.typeErrorComponentAction();
       this.dialogRef.close({ dialogChangedDate: false });
       return;
     }
-
-    this.getEnumRecordStatus();
-    this.DataGetOneContent();
-  }
-  getEnumRecordStatus(): void {
-    if (this.storeSnapshot &&
-      this.storeSnapshot.EnumRecordStatus &&
-      this.storeSnapshot.EnumRecordStatus &&
-      this.storeSnapshot.EnumRecordStatus.IsSuccess &&
-      this.storeSnapshot.EnumRecordStatus.ListItems &&
-      this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
-      this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
-    }
+    this.dataModel.BankPaymentPrivateId = this.requestLinkPrivateSiteConfigId;
   }
 
-  DataGetOneContent(): void {
-    this.formInfo.FormAlert = 'در دریافت ارسال اطلاعات از سرور';
-    this.formInfo.FormError = '';
-    this.loading.display = true;
 
-    /*َAccess Field*/
-    this.bankPaymentPrivateSiteConfigService.setAccessLoad();
-    this.bankPaymentPrivateSiteConfigService.ServiceGetOneById(this.requestId).subscribe(
-      (next) => {
-        /*َAccess Field*/
-        this.dataAccessModel = next.Access;
-        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
-        if (next.IsSuccess) {
-          this.dataModel = next.Item;
-          this.formInfo.FormTitle = this.formInfo.FormTitle + ' ' + next.Item.Title;
-          this.formInfo.FormAlert = '';
-        } else {
-          this.formInfo.FormAlert = 'برروز خطا';
-          this.formInfo.FormError = next.ErrorMessage;
-          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
-        }
-        this.loading.display = false;
-      },
-      (error) => {
-        this.cmsToastrService.typeError(error);
-        this.loading.display = false;
-      }
-    );
-  }
 
-  DataEditContent(): void {
-    this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
-    this.formInfo.FormError = '';
-    this.loading.display = true;
-    this.bankPaymentPrivateSiteConfigService.ServiceEdit(this.dataModel).subscribe(
-      (next) => {
-        this.formInfo.FormSubmitAllow = true;
-        this.dataModelResult = next;
-        if (next.IsSuccess) {
-          this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
-          this.cmsToastrService.typeSuccessEdit();
-          this.dialogRef.close({ dialogChangedDate: true });
-
-        } else {
-          this.formInfo.FormAlert = 'برروز خطا';
-          this.formInfo.FormError = next.ErrorMessage;
-          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
-        }
-        this.loading.display = false;
-      },
-      (error) => {
-        this.formInfo.FormSubmitAllow = true;
-        this.cmsToastrService.typeError(error);
-        this.loading.display = false;
-      }
-    );
-  }
-  onActionSelectSource(model: CoreSiteCategoryModel): void {
-    this.dataModel.LinkPublicConfigId = null;
+  onActionSelectPrivateSiteConfig(model: BankPaymentPrivateSiteConfigModel): void {
+    this.dataModel.BankPaymentPrivateId = null;
+    this.dataModelParentSelected = model;
     if (model && model.Id > 0) {
-      this.dataModel.LinkPublicConfigId = model.Id;
+      this.dataModel.BankPaymentPrivateId = model.Id;
     }
   }
-
+  dataModelResultGotoBank = false;
+  onGotoBank() {
+    if (this.dataModelResultGotoBank && this.dataModelResult.IsSuccess && this.dataModelResult.Item.UrlToPay.length > 0) {
+      this.cmsToastrService.typeSuccessMessage('درحال انتقال به درگاه پرداخت');
+      this.document.location.href = this.dataModelResult.Item.UrlToPay;
+    }
+  }
   onFormSubmit(): void {
     if (!this.formGroup.valid) {
       return;
     }
+    if (!this.dataModel.BankPaymentPrivateId || this.dataModel.BankPaymentPrivateId <= 0) {
+      this.cmsToastrService.typeErrorFormInvalid();
+    }
+    if (!this.dataModel.Amount || this.dataModel.Amount <= 0) {
+      this.cmsToastrService.typeErrorFormInvalid();
+    }
     this.formInfo.FormSubmitAllow = false;
-    this.DataEditContent();
+    this.bankPaymentPrivateSiteConfigService.ServiceTestPay(this.dataModel).pipe(
+      map((next) => {
+        this.formInfo.FormSubmitAllow = true;
+        this.dataModelResult = next;
+        if (next.IsSuccess) {
+          this.formInfo.FormAlert = 'درخواست پرداخت با موفقیت ثبت شد';
+          this.cmsToastrService.typeSuccessMessage('درخواست پرداخت با موفقیت ثبت شد');
+          this.dataModelResultGotoBank = true;
+
+
+        } else {
+          this.formInfo.FormAlert = 'برروز خطا';
+          this.formInfo.FormError = next.ErrorMessage;
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
+        }
+        this.loading.display = false;
+      },
+        (error) => {
+          this.formInfo.FormSubmitAllow = true;
+          this.cmsToastrService.typeError(error);
+          this.loading.display = false;
+        }
+      )).toPromise()
   }
   onFormCancel(): void {
     this.dialogRef.close({ dialogChangedDate: false });

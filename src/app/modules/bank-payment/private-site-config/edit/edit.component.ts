@@ -12,6 +12,7 @@ import {
   AccessModel,
   DataFieldInfoModel,
   CoreSiteCategoryModel,
+  BankPaymentPrivateSiteConfigAliasJsonModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -64,7 +65,7 @@ export class BankPaymentPrivateSiteConfigEditComponent implements OnInit {
 
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<BankPaymentPrivateSiteConfigModel> = new ErrorExceptionResult<BankPaymentPrivateSiteConfigModel>();
-  dataModel: BankPaymentPrivateSiteConfigModel = new BankPaymentPrivateSiteConfigModel();
+  dataModel: BankPaymentPrivateSiteConfigAliasJsonModel = new BankPaymentPrivateSiteConfigAliasJsonModel();
 
 
   formInfo: FormInfoModel = new FormInfoModel();
@@ -103,7 +104,7 @@ export class BankPaymentPrivateSiteConfigEditComponent implements OnInit {
 
     /*َAccess Field*/
     this.bankPaymentPrivateSiteConfigService.setAccessLoad();
-    this.bankPaymentPrivateSiteConfigService.ServiceGetOneById(this.requestId).subscribe(
+    this.bankPaymentPrivateSiteConfigService.ServiceGetOneWithJsonFormatter(this.requestId).subscribe(
       (next) => {
         /*َAccess Field*/
         this.dataAccessModel = next.Access;

@@ -5,6 +5,7 @@ import {
   FormInfoModel,
   BankPaymentPublicConfigService,
   BankPaymentPublicConfigModel,
+  BankPaymentPublicConfigAliasJsonModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -50,7 +51,7 @@ export class BankPaymentPublicConfigEditComponent implements OnInit {
 
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<BankPaymentPublicConfigModel> = new ErrorExceptionResult<BankPaymentPublicConfigModel>();
-  dataModel: BankPaymentPublicConfigModel = new BankPaymentPublicConfigModel();
+  dataModel: BankPaymentPublicConfigAliasJsonModel = new BankPaymentPublicConfigAliasJsonModel();
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
 
   formInfo: FormInfoModel = new FormInfoModel();
@@ -90,7 +91,7 @@ export class BankPaymentPublicConfigEditComponent implements OnInit {
     this.formInfo.FormAlert = 'در دریافت ارسال اطلاعات از سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.bankPaymentPublicConfigService.ServiceGetOneById(this.requestId).subscribe(
+    this.bankPaymentPublicConfigService.ServiceGetOneWithJsonFormatter(this.requestId).subscribe(
       (next) => {
         this.dataModel = next.Item;
         if (next.IsSuccess) {

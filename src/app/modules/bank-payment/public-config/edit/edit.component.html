@@ -103,6 +103,14 @@
           [selectFileType]="selectFileTypeMainImage" [openFilemanagerButtonView]="false"></cms-file-manager>
       </div>
 
+      <p>تنظیمات درگاه عمومی</p>
+      <div *ngFor="let item of dataModel.PublicConfigJsonFormatter">
+        <!-- {{item| json}} -->
+      </div>
+      <p>پیش فرض تنظیمات درگاه سایت ها</p>
+      <div *ngFor="let item of dataModel.PrivateConfigJsonFormatter">
+        <!-- {{item| json}} -->
+      </div>
     </div>
 
   </form>

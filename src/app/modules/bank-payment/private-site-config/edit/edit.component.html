@@ -111,6 +111,10 @@
           Memo is <strong>required</strong>
         </mat-error>
       </mat-form-field>
+      <p>تنظیمات درگاه</p>
+      <div *ngFor="let item of dataModel.PrivateConfigJsonFormatter">
+        {{item| json}}
+      </div>
     </div>
   </form>
 </mat-dialog-content>

@@ -24,7 +24,7 @@
         </mat-slide-toggle>
       </a>
       <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">برسی مجدد</button>
-      <button *ngIf="dataModelResult.Access.AccessAddRow " (click)="onActionbuttonTestPayment()" type="button"
+      <button *ngIf="dataModelResult.Access.AccessWatchRow && tableRowSelected.Id>0" (click)="onActionbuttonTestPayment()" type="button"
       class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">تست پرداخت</button>
       <button (click)="onActionBackToParent()" *ngIf="requestLinkPublicConfigId>0" type="button"
         class="btn btn-warning BTN">بازگشت</button>

@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
   ApplicationAppModel,
@@ -30,6 +30,7 @@ import { Subscription } from 'rxjs';
 import { BankPaymentTransactionViewComponent } from '../view/view.component';
 import { BankPaymentTransactionEditComponent } from '../edit/edit.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { DOCUMENT } from '@angular/common';
 
 
 @Component({
@@ -41,6 +42,7 @@ export class BankPaymentTransactionListComponent implements OnInit, OnDestroy {
   requestLinkPrivateSiteConfigId = 0;
   requestLinkUserId = 0;
   constructor(
+    @Inject(DOCUMENT) private document: any,
     private bankPaymentTransactionService: BankPaymentTransactionService,
     private activatedRoute: ActivatedRoute,
     private cmsApiStore: NtkCmsApiStoreService,
@@ -307,6 +309,15 @@ export class BankPaymentTransactionListComponent implements OnInit, OnDestroy {
 
     this.router.navigate(['/bankpayment/transactionlog/LinkTransactionId/',this.tableRowSelected.Id]);
 
+  }
+  onActionbuttonGotoBank(model: BankPaymentTransactionModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id <= 0) {
+      const emessage = 'ردیفی انتخاب نشده است';
+      this.cmsToastrService.typeErrorSelected(emessage);
+      return;
+    }
+    this.cmsToastrService.typeSuccessMessage('درحال انتقال به درگاه پرداخت');
+    this.document.location.href=this.bankPaymentTransactionService.ServiceGoToBank(model.Id);
   }
   onActionbuttonNotifictionActionSend(model: BankPaymentTransactionModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id <= 0) {

@@ -18,7 +18,7 @@ import { Output } from '@angular/core';
 
 
 @Component({
-  selector: 'app-bankpayment-privateconfig-selector',
+  selector: 'app-bankpayment-privatesiteconfig-selector',
   templateUrl: './selector.component.html',
   styleUrls: ['./selector.component.scss']
 })
