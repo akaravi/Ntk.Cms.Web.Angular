@@ -112,9 +112,17 @@
         </mat-error>
       </mat-form-field>
       <p>تنظیمات درگاه</p>
-      <div *ngFor="let item of dataModel.PrivateConfigJsonFormatter">
-        {{item| json}}
-      </div>
+      <dynamic-form-builder-cms [formGroup]="vform.form" [propertiesInfos]="dataModel?.PrivateConfigJsonFormatter"
+        [(jsonValue)]="dataModel.PrivateConfigJsonValues"></dynamic-form-builder-cms>
+      <!-- <br>
+      <hr>
+      <br>
+      {{dataModel.PrivateConfigJsonValues}}
+
+      <hr>
+      <br>
+      {{vform.form?.value|json}} -->
+
     </div>
   </form>
 </mat-dialog-content>

@@ -15,7 +15,7 @@ import { FormGroup } from '@angular/forms';
       <dropdown *ngSwitchCase="'dropdown'" [field]="field" [optionFormControl]="formGroup.get(field.name)"></dropdown>
       <checkbox *ngSwitchCase="'checkbox'" [field]="field" [optionFormGroup]="formGroup.get(field.name)"></checkbox>
       <radio *ngSwitchCase="'radio'" [field]="field" [optionFormControl]="formGroup.get(field.name)"></radio>
-      <file *ngSwitchCase="'file'" [field]="field" [optionFormControl]="formGroup.get(field.name)"></file>
+      <file *ngSwitchCase="'file'" [field]="field" [formControl]="formGroup.get(field.name)"></file>
       <div class="alert alert-danger my-1 p-2 fadeInDown animated" *ngIf="!isValid && isDirty">{{field.label}} is required</div>
     </div>
   </div>
