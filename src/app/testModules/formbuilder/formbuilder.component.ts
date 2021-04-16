@@ -1,5 +1,5 @@
-import { Component,OnInit } from '@angular/core';
-import { FormGroup, FormControl,Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-formbuilder',
@@ -80,26 +80,12 @@ export class FormBuilderComponent implements OnInit {
     })
     this.unsubcribe = this.form.valueChanges.subscribe((update) => {
       console.log(update);
-      this.fields = JSON.parse(update.fields);
+      // this.fields = JSON.parse(update.fields);
     });
   }
-  ngOnInit()
-  {
-    this.form=new FormGroup({});
-    this.fields.forEach(x=>{
-      if (x.type=='checkbox')
-      {
-        this.form.addControl(x.name,new FormGroup({}))
-        x.options.forEach(o=>{
-          (this.form.get(x.name) as FormGroup).addControl(o.key,new FormControl(false))
-        })
-      }
-      else
-      {
-      this.form.addControl(x.name,
-        new FormControl(x.value ||'',x.required?Validators.required:null))
-      }
-    })
+  ngOnInit() {
+    // this.form = new FormGroup({});
+
   }
 
   onUpload(e) {

@@ -1,10 +1,16 @@
-
 <div class="col-sm-12">
   <div class="card">
     <div class="card-header">Dynamic Forms</div>
     <div class="card-body">
       <form [formGroup]="form">
-      <dynamic-form-builder [formGroup]="form" [fields]="getFields()"></dynamic-form-builder>
+        <dynamic-form-builder [formGroup]="form" [fields]="getFields()"></dynamic-form-builder>
+        <div class="form-group row">
+          <div class="col-md-3"></div>
+          <div class="col-md-9">
+            <button type="submit" [disabled]="!form.valid" class="btn btn-primary">Save</button>
+            <strong>Saved all values</strong>
+          </div>
+        </div>
       </form>
     </div>
   </div>

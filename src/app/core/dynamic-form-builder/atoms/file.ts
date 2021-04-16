@@ -5,7 +5,7 @@ import { FormGroup } from '@angular/forms';
 @Component({
   selector: 'file',
   template: `
-      <div [formGroup]="form">
+      <div [formGroup]="optionFormControl">
         <div *ngIf="!field.value" class="drop-container dropzone" dropZone (hovered)="toggleHover($event)"
           (dropped)="field.onUpload($event)" [class.hovering]="isHovering">
           <p class="m-0">
@@ -73,9 +73,9 @@ import { FormGroup } from '@angular/forms';
 })
 export class FileComponent {
   @Input() field: any = {};
-  @Input() form: FormGroup;
-  get isValid() { return this.form.controls[this.field.name].valid; }
-  get isDirty() { return this.form.controls[this.field.name].dirty; }
+  @Input() optionFormControl: FormGroup;
+  get isValid() { return this.optionFormControl.controls[this.field.name].valid; }
+  get isDirty() { return this.optionFormControl.controls[this.field.name].dirty; }
 
   constructor() {
 
