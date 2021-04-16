@@ -10,16 +10,8 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { TagInputModule } from 'ngx-chips';
 import { CmsFileManagerModule } from 'ntk-cms-filemanager';
 import {
-  ApplicationAppService,
-  ApplicationIntroService,
-  ApplicationLogNotificationService,
-  ApplicationMemberInfoService,
-  ApplicationSourceService,
-  ApplicationThemeConfigService,
   CoreAuthService,
   CoreEnumService,
-  ApplicationEnumService,
-  CoreModuleTagService,
   BankPaymentConfigurationService,
   BankPaymentPublicConfigService,
   BankPaymentPrivateSiteConfigService,
@@ -27,11 +19,7 @@ import {
   BankPaymentTransactionLogService,
   BankPaymentEnumService
 } from 'ntk-cms-api';
-import { MatIconModule } from '@angular/material/icon';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatStepperModule } from '@angular/material/stepper';
 
-import { CmsFileUploaderModule } from 'ntk-cms-fileuploader';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 import { BankPaymentConfigMainAdminComponent } from './config/mainAdmin/configMainAdmin.component';
 import { BankPaymentConfigSiteComponent } from './config/site/configSite.component';
@@ -53,6 +41,7 @@ import { BankPaymentTransactionLogListComponent } from './transaction-log/list/l
 import { BankPaymentTransactionLogViewComponent } from './transaction-log/view/view.component';
 import { BankPaymentTransactionEditComponent } from './transaction/edit/edit.component';
 import { BankPaymentPrivateSiteConfigPaymentTestComponent } from './private-site-config/paymentTest/paymentTest.component';
+import { DynamicFormBuilderModule } from 'src/app/core/dynamic-form-builder/dynamic-form-builder.module';
 
 @NgModule({
   declarations: [
@@ -92,7 +81,8 @@ import { BankPaymentPrivateSiteConfigPaymentTestComponent } from './private-site
     SharedModule.forRoot(),
     AngularEditorModule,
     TagInputModule,
-    CmsFileManagerModule
+    CmsFileManagerModule,
+    DynamicFormBuilderModule
   ],
   providers: [
     CoreEnumService,

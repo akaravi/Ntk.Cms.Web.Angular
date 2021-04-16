@@ -1,0 +1,12 @@
+
+<div class="col-sm-12">
+  <div class="card">
+    <div class="card-header">Dynamic Forms</div>
+    <div class="card-body">
+      <form [formGroup]="form">
+      <dynamic-form-builder [formGroup]="form" [fields]="getFields()"></dynamic-form-builder>
+      </form>
+    </div>
+  </div>
+</div>
+{{form?.value|json}}

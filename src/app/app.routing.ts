@@ -11,15 +11,18 @@ const routes: Routes = [
   {
     path: 'test',
     loadChildren: () =>
-    import('./testModules/test/test.module').then((m) => m.TestModule),
+      import('./testModules/test/test.module').then((m) => m.TestModule),
 
   },
   {
     path: 'barcode',
     loadChildren: () =>
-    import('./testModules/barcode/barcode.module').then((m) => m.BarcodeModule),
-
-
+      import('./testModules/barcode/barcode.module').then((m) => m.BarcodeModule),
+  },
+  {
+    path: 'formbuilder',
+    loadChildren: () =>
+      import('./testModules/formbuilder/formbuilder.module').then((m) => m.FormBuilderModule),
   },
   {
     path: '',
@@ -33,4 +36,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRouting {}
+export class AppRouting { }

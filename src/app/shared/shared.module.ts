@@ -33,7 +33,8 @@ import { CoreGuideService, CoreSiteService, CoreUserService, MemberUserService }
 import { PasswordStrengthComponent } from './password-strength/password-strength.component';import { CmsJsonListComponent } from './cmsJsonList/cmsJsonList.component';;
 import { CmsGuideComponent } from './cms-guide/cms-guide.component';
 import { TooltipGuideDirective } from '../core/directive/tooltip-guide.directive';
-import { TooltipDirective } from '../core/directive/tooltip.directive';
+import { TooltipDirective } from '../core/directive/tooltip.directive';;
+import { CmsFormBuilderPropertiesComponent } from './cms-form-builder-properties/cms-form-builder-properties.component'
 
 
 
@@ -76,6 +77,7 @@ import { TooltipDirective } from '../core/directive/tooltip.directive';
     PasswordStrengthComponent,
     CmsJsonListComponent,
     CmsGuideComponent,
+    CmsFormBuilderPropertiesComponent,
     /**Directive */
     TooltipGuideDirective,
     TooltipDirective,
@@ -108,6 +110,7 @@ import { TooltipDirective } from '../core/directive/tooltip.directive';
     PasswordStrengthComponent,
     CmsJsonListComponent,
     CmsGuideComponent,
+    CmsFormBuilderPropertiesComponent,
     /**Directive */
     TooltipGuideDirective,
     TooltipDirective,
