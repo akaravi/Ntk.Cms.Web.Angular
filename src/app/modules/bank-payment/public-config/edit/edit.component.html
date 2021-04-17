@@ -104,13 +104,9 @@
       </div>
 
       <p>تنظیمات درگاه عمومی</p>
-      <div *ngFor="let item of dataModel.PublicConfigJsonFormatter">
-        <!-- {{item| json}} -->
-      </div>
-      <p>پیش فرض تنظیمات درگاه سایت ها</p>
-      <div *ngFor="let item of dataModel.PrivateConfigJsonFormatter">
-        <!-- {{item| json}} -->
-      </div>
+      <dynamic-form-builder-cms [formGroup]="vform.form" [propertiesInfos]="dataModel?.PublicConfigJsonFormatter"
+      [(jsonValue)]="dataModel.PublicConfigJsonValues"></dynamic-form-builder-cms>
+
     </div>
 
   </form>

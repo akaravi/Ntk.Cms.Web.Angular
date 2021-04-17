@@ -30,13 +30,14 @@ export class DynamicFormBuilderCmsComponent implements OnInit {
 
   ngOnInit(): void {
     this.unsubcribe = this.formGroup.valueChanges.subscribe((update) => {
-      const modelValue: FormBuilderFieldModel[] = [];
+      const modelValue = {};
       this.propertiesInfos.forEach(x => {
         if (update[x.FieldName]) {
-          modelValue.push({
-            fieldName: x.FieldName,
-            value: update[x.FieldName]
-          });
+          // modelValue.push({
+          //   fieldName: x.FieldName,
+          //   value: update[x.FieldName]
+          // });
+          modelValue[x.FieldName] = update[x.FieldName];
         }
       });
       this.jsonValueChange.emit(JSON.stringify(modelValue));
