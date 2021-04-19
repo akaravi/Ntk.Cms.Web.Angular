@@ -45,7 +45,7 @@ export class TicketingDepartemenOperatorTreeComponent implements OnInit {
   loading = new ProgressSpinnerModel();
   treeControl = new NestedTreeControl<TicketingDepartemenOperatorModel>(node => null);
   dataSource = new MatTreeNestedDataSource<TicketingDepartemenOperatorModel>();
-  @Output() optionSelect = new EventEmitter();
+  @Output() optionSelect = new EventEmitter<TicketingDepartemenOperatorModel>();
   @Input() optionReload = () => this.onActionReload();
   @Input() set optionSelectForce(x: number | TicketingDepartemenOperatorModel) {
     this.onActionSelectForce(x);

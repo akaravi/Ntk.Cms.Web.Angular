@@ -130,6 +130,12 @@ export class TicketingDepartemenLogListComponent implements OnInit, OnDestroy {
     /*filter CLone*/
     const filterModel = JSON.parse(JSON.stringify(this.filteModelContent));
     /*filter CLone*/
+    if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
+      const fastfilter = new FilterDataModel();
+      fastfilter.PropertyName = 'LinkFromTicketingDepartemenId';
+      fastfilter.Value = this.categoryModelSelected.Id;
+      filterModel.Filters.push(fastfilter);
+    }
     this.ticketingDepartemenLogService.ServiceGetAll(filterModel).subscribe(
       (next) => {
         this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
@@ -138,18 +144,7 @@ export class TicketingDepartemenLogListComponent implements OnInit, OnDestroy {
         if (next.IsSuccess) {
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;
-          if (this.tokenInfo.UserAccessAdminAllowToAllData) {
-            this.tabledisplayedColumns = this.publicHelper.listAddIfNotExist(
-              this.tabledisplayedColumns,
-              'LinkSiteId',
-              0
-            );
-          } else {
-            this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
-              this.tabledisplayedColumns,
-              'LinkSiteId'
-            );
-          }
+
 
           if (this.optionsSearch.childMethods) {
             this.optionsSearch.childMethods.setAccess(next.Access);

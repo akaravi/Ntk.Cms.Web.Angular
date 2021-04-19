@@ -35,7 +35,7 @@ export class CoreLocationSelectorComponent implements OnInit {
     @Input() disabled = new EventEmitter<boolean>();
   @Input() optionSelectFirstItem = false;
   @Input() optionPlaceholder = new EventEmitter<string>();
-  @Output() optionSelect = new EventEmitter();
+  @Output() optionSelect = new EventEmitter<CoreLocationModel>();
   @Input() optionReload = () => this.onActionReload();
   @Input() set optionSelectForce(x: number | CoreLocationModel) {
     this.onActionSelectForce(x);

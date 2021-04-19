@@ -35,7 +35,7 @@ export class PollingCategorySelectorComponent implements OnInit {
   filteredOptions: Observable<PollingCategoryModel[]>;
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Input() optionSelectFirstItem = false;
-  @Output() optionSelect = new EventEmitter();
+  @Output() optionSelect = new EventEmitter<PollingCategoryModel>();
   @Input() optionReload = () => this.onActionReload();
   @Input() set optionSelectForce(x: number | PollingCategoryModel) {
     this.onActionSelectForce(x);

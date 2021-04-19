@@ -36,7 +36,7 @@ export class CoreModuleTagCategorySelectorComponent implements OnInit {
   filteredOptions: Observable<CoreModuleTagCategoryModel[]>;
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Input() optionSelectFirstItem = false;
-  @Output() optionSelect = new EventEmitter();
+  @Output() optionSelect = new EventEmitter<CoreModuleTagCategoryModel>();
   @Input() optionReload = () => this.onActionReload();
   @Input() set optionSelectForce(x: number | CoreModuleTagCategoryModel) {
     this.onActionSelectForce(x);

@@ -105,9 +105,7 @@ export class TicketingDepartemenDeleteComponent implements OnInit {
       this.cmsToastrService.typeErrorDeleteRowIsNull();
       return;
     }
-    if (!this.formGroup.valid) {
-      return;
-    }
+
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.ButtonSubmittedEnabled = false;
     this.loading.display = true;

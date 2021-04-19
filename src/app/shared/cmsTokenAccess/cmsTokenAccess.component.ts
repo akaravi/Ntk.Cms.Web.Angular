@@ -165,7 +165,7 @@ export class CmsTokenAccessComponent implements OnInit, OnDestroy {
       (next) => {
         this.loadingStatus = false;
         if (next.IsSuccess) {
-          if (next.Item.UserId === authModel.UserId) {
+          if (next.Item.UserId === this.inputUserId) {
 
             this.cmsToastrService.toastr.success('دسترسی به کاربر جدید تایید شد', title);
             this.inputSiteId = null;

@@ -33,7 +33,7 @@ export class FileContentSelectorComponent implements OnInit {
   filteredOptions: Observable<FileContentModel[]>;
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Input() optionSelectFirstItem = false;
-  @Output() optionSelect = new EventEmitter();
+  @Output() optionSelect = new EventEmitter<FileContentModel>();
   @Input() optionReload = () => this.onActionReload();
   @Input() set optionSelectForce(x: number | FileContentModel) {
     this.onActionSelectForce(x);

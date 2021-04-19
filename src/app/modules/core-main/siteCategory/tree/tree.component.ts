@@ -52,7 +52,7 @@ export class CoreSiteCategoryTreeComponent implements OnInit, OnDestroy {
   loading = new ProgressSpinnerModel();
   treeControl = new NestedTreeControl<CoreSiteCategoryModel>(node => null);
   dataSource = new MatTreeNestedDataSource<CoreSiteCategoryModel>();
-  @Output() optionSelect = new EventEmitter();
+  @Output() optionSelect = new EventEmitter<CoreSiteCategoryModel>();
   cmsApiStoreSubscribe: Subscription;
   @Input() optionReload = () => this.onActionReload();
 

@@ -7,6 +7,7 @@ import { TagInputModule } from 'ngx-chips';
 import {
   CoreEnumService,
   CoreModuleTagService,
+  TicketingAnswerService,
   TicketingConfigurationService,
   TicketingDepartemenLogService,
   TicketingDepartemenOperatorService,
@@ -46,6 +47,9 @@ import { TicketingDepartemenOperatorSelectorComponent } from './departemenOperat
 import { TicketingDepartemenOperatorListComponent } from './departemenOperator/list/list.component';
 import { TicketingConfigSiteComponent } from './config/site/configSite.component';
 import { TicketingConfigMainAdminComponent } from './config/mainAdmin/configMainAdmin.component';
+import { TicketingAnswerListComponent } from './answer/list/list.component';
+import { TicketingAnswerAddComponent } from './answer/add/add.component';
+import { TicketingAnswerEditComponent } from './answer/edit/edit.component';
 
 
 
@@ -62,21 +66,32 @@ import { TicketingConfigMainAdminComponent } from './config/mainAdmin/configMain
     TicketingDepartemenDeleteComponent,
     TicketingDepartemenSelectorComponent,
     TicketingDepartemenTreeComponent,
+    /* */
     TicketingFaqAddComponent,
     TicketingFaqEditComponent,
     TicketingFaqListComponent,
+    /* */
     TicketingTemplateAddComponent,
     TicketingTemplateEditComponent,
     TicketingTemplateListComponent,
+    /** */
     TicketingTaskListComponent,
     TicketingTaskEditComponent,
     TicketingTaskAddComponent,
+    /* */
+    TicketingDepartemenOperatorListComponent,
     TicketingDepartemenLogEditComponent,
     TicketingDepartemenOperatorAddComponent,
     TicketingDepartemenOperatorEditComponent,
-    TicketingDepartemenOperatorListComponent,
-    TicketingDepartemenLogListComponent,
     TicketingDepartemenOperatorSelectorComponent,
+    /* */
+    TicketingAnswerListComponent,
+    TicketingAnswerAddComponent,
+    TicketingAnswerEditComponent,
+    /* */
+    TicketingDepartemenLogListComponent,
+    /** */
+
   ],
   imports: [
     CommonModule,
@@ -100,6 +115,7 @@ import { TicketingConfigMainAdminComponent } from './config/mainAdmin/configMain
     TicketingDepartemenOperatorService,
     TicketingTaskService,
     TicketingFaqService,
+    TicketingAnswerService,
     TicketingTemplateService,
     CmsConfirmationDialogService
   ]

@@ -193,7 +193,7 @@ export class BankPaymentTransactionLogListComponent implements OnInit, OnDestroy
       this.dataModelResult.Access == null ||
       !this.dataModelResult.Access.AccessWatchRow
     ) {
-      this.cmsToastrService.typeErrorAccessAdd();
+      this.cmsToastrService.typeErrorAccessWatch();
       return;
     }
     const dialogRef = this.dialog.open(BankPaymentTransactionLogViewComponent, {

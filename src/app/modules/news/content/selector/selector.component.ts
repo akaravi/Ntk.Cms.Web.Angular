@@ -37,7 +37,7 @@ export class NewsContentSelectorComponent implements OnInit {
   filteredOptions: Observable<NewsContentModel[]>;
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Input() optionSelectFirstItem = false;
-  @Output() optionSelect = new EventEmitter();
+  @Output() optionSelect = new EventEmitter<NewsContentModel>();
   @Input() optionReload = () => this.onActionReload();
   @Input() set optionSelectForce(x: number | NewsContentModel) {
     this.onActionSelectForce(x);

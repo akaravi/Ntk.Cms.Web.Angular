@@ -1,6 +1,11 @@
 <div class="row">
   <div class="col-xl-12">
     <div class="button-row">
+      <button *ngIf="dataModelResult.Access.AccessWatchRow && tableRowSelected?.Id?.length>0"
+        (click)="onActionbuttonViewRow()" type="button" class="btn btn-info ml-2" data-toggle="modal"
+        data-target="#categoryModal">مشاهده</button>
+
+
       <button *ngIf="dataModelResult.Access.AccessEditRow && tableRowSelected?.Id?.length>0"
         (click)="onActionbuttonEditRow()" type="button" class="btn btn-warning ml-2" data-toggle="modal"
         data-target="#categoryModal">ویرایش</button>

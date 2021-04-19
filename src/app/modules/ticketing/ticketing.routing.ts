@@ -11,6 +11,7 @@ import { TicketingTemplateListComponent } from './template/list/list.component';
 import { TicketingConfigMainAdminComponent } from './config/mainAdmin/configMainAdmin.component';
 import { TicketingConfigSiteComponent } from './config/site/configSite.component';
 import { TicketingDepartemenLogListComponent } from './departemenLog/list/list.component';
+import { TicketingAnswerListComponent } from './answer/list/list.component';
 
 
 
@@ -45,11 +46,11 @@ const routes: Routes = [
         path: 'departemen/edit/:Id',
         component: TicketingDepartemenEditComponent
       },
-       {
+      {
         path: 'departemenlog/DepartemenId/:DepartemenId',
         component: TicketingDepartemenLogListComponent
       },
-         {
+      {
         path: 'departemenlog/OperatorId/:OperatorId',
         component: TicketingDepartemenLogListComponent
       },
@@ -78,18 +79,21 @@ const routes: Routes = [
         path: 'task/:DepartemenId',
         component: TicketingTaskListComponent
       }
-      , {
+      ,
+      {
         path: 'task/edit/:id',
         component: TicketingTaskEditComponent
       }
-      // {
-      //   path: 'vote',
-      //   component: TicketingVoteListComponent
-      // },
-      // {
-      //   path: 'vote/:ContentId',
-      //   component: TicketingVoteListComponent
-      // },
+      ,
+      {
+        path: 'answer',
+        component: TicketingAnswerListComponent
+      },
+      ,
+      {
+        path: 'answer/LinkTicketId:LinkTicketId',
+        component: TicketingAnswerListComponent
+      },
     ]
   },
 ];

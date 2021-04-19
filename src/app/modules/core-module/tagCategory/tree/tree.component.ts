@@ -51,7 +51,7 @@ export class CoreModuleTagCategoryTreeComponent implements OnInit, OnDestroy {
   loading = new ProgressSpinnerModel();
   treeControl = new NestedTreeControl<CoreModuleTagCategoryModel>(node => node.Children);
   dataSource = new MatTreeNestedDataSource<CoreModuleTagCategoryModel>();
-  @Output() optionSelect = new EventEmitter();
+  @Output() optionSelect = new EventEmitter<CoreModuleTagCategoryModel>();
   cmsApiStoreSubscribe: Subscription;
   @Input() optionReload = () => this.onActionReload();
 

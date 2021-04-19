@@ -52,7 +52,7 @@ export class CoreDeviceTreeComponent implements OnInit, OnDestroy {
   loading = new ProgressSpinnerModel();
   treeControl = new NestedTreeControl<CoreDeviceModel>(node => null);
   dataSource = new MatTreeNestedDataSource<CoreDeviceModel>();
-  @Output() optionSelect = new EventEmitter();
+  @Output() optionSelect = new EventEmitter<CoreDeviceModel>();
   cmsApiStoreSubscribe: Subscription;
   @Input() optionReload = () => this.onActionReload();
 

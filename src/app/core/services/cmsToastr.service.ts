@@ -146,7 +146,13 @@ export class CmsToastrService {
     }
     this.toastr.error(message, this.now() + 'Error!');
   }
-  typeErrorAccessEdit(str: string = ''): void {
+  typeErrorAccessWatch(str: string = ''): void {
+    let message = 'دسترسی مشاهده کردن ندارید';
+    if (str && str.length > 0) {
+      message = message + ' error: ' + str;
+    }
+    this.toastr.error(message, this.now() + 'Error!');
+  }  typeErrorAccessEdit(str: string = ''): void {
     let message = 'دسترسی ویرایش کردن ندارید';
     if (str && str.length > 0) {
       message = message + ' error: ' + str;

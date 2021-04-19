@@ -45,7 +45,7 @@ export class BankPaymentPrivateSiteConfigSelectorComponent implements OnInit {
     @Input() disabled = new EventEmitter<boolean>();
   @Input() optionSelectFirstItem = false;
   @Input() optionPlaceholder = new EventEmitter<string>();
-  @Output() optionSelect = new EventEmitter();
+  @Output() optionSelect = new EventEmitter<BankPaymentPrivateSiteConfigModel>();
 
   @Input() optionReload = () => this.onActionReload();
   ngOnInit(): void {

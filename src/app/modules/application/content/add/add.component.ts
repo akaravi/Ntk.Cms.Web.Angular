@@ -130,7 +130,7 @@ export class ApplicationAppAddComponent implements OnInit {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-
+    this.applicationAppService.setAccessLoad();
     this.applicationAppService
       .ServiceAdd(this.dataModel)
       .subscribe(

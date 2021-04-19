@@ -1,66 +1,46 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { HyperShopContentModel } from 'ntk-cms-api';
+import { HyperShopCategoryListComponent } from './category/list/list.component';
+import { HyperShopConfigMainAdminComponent } from './config/mainAdmin/configMainAdmin.component';
+import { HyperShopConfigSiteComponent } from './config/site/configSite.component';
+import { HyperShopContentListComponent } from './content/list/list.component';
 import { HyperShopComponent } from './hyperShop.component';
 
 const routes: Routes = [
   {
     path: '',
     component: HyperShopComponent,
-    // children: [
-    //   {
-    //     path: 'source',
-    //     component: ApplicationSourceListComponent
-    //   },
-    //   {
-    //     path: 'source/add',
-    //     component: ApplicationSourceAddComponent
-    //   },
-    //   {
-    //     path: 'source/edit/:Id',
-    //     component: ApplicationSourceEditComponent
-    //   },
-    //   {
-    //     path: 'app',
-    //     component: ApplicationAppListComponent
-    //   },
-    //   {
-    //     path: 'app/:SourceId',
-    //     component: ApplicationAppListComponent
-    //   },
-    //   {
-    //     path: 'app/add/:SourceId',
-    //     component: ApplicationAppAddComponent
-    //   },
-    //   {
-    //     path: 'app/edit/:Id',
-    //     component: ApplicationAppEditComponent
-    //   },
-    //   {
-    //     path: 'intro',
-    //     component: ApplicationIntroListComponent
-    //   },
-    //   {
-    //     path: 'intro/add/:ApplicationId',
-    //     component: ApplicationIntroListComponent
-    //   },
-    //   {
-    //     path: 'intro/edit/:Id',
-    //     component: ApplicationIntroListComponent
-    //   },
-    //   {
-    //     path: 'memberinfo',
-    //     component: ApplicationMemberInfoListComponent
-    //   },
-    //   {
-    //     path: 'notification',
-    //     component: ApplicationNotificationListComponent
-    //   },
-
-    //   {
-    //     path: 'themeconfig',
-    //     component: ApplicationThemeConfigListComponent
-    //   },
-    // ]
+    children: [
+      /*Config*/
+      {
+        path: 'config/mainadmin',
+        component: HyperShopConfigMainAdminComponent
+      },
+      {
+        path: 'config/site',
+        component: HyperShopConfigSiteComponent
+      },
+      {
+        path: 'config/site/:LinkSiteId',
+        component: HyperShopConfigSiteComponent
+      },
+      /*Config*/
+      {
+        path: 'category',
+        component: HyperShopCategoryListComponent
+      },
+      /**/
+      {
+        path: 'content',
+        component: HyperShopContentListComponent
+      },
+      {
+        path: 'content/PareintId/:PareintId',
+        component: HyperShopContentListComponent
+      },
+      /**/
+    ]
   },
 ];
 

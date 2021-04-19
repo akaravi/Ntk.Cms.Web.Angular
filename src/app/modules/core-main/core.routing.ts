@@ -65,6 +65,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('./module/coreModule.module').then((m) => m.CoreModuleModule),
       },
+           {
+        path: 'modulesale',
+        loadChildren: () =>
+          import('./module-sale/core-module-sale.module').then((m) => m.CoreModuleSaleModule),
+      },
       {
         path: 'location',
         loadChildren: () =>
@@ -74,7 +79,8 @@ const routes: Routes = [
         path: 'device',
         loadChildren: () =>
           import('./device/coreDevice.module').then((m) => m.CoreDeviceModule),
-      }, {
+      },
+       {
         path: 'guide',
         loadChildren: () =>
           import('./guides/coreGuide.module').then((m) => m.CoreGuideCmsModule),

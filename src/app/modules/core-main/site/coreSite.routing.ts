@@ -42,6 +42,7 @@ const routes: Routes = [
         path: 'edit/:Id',
         component: CoreSiteEditComponent
       },
+      /** modulelist */
       {
         path: 'modulelist',
         component: CoreSiteModuleListComponent
@@ -54,6 +55,7 @@ const routes: Routes = [
         path: 'modulelist/LinkModuleId/:LinkModuleId',
         component: CoreSiteModuleListComponent
       },
+      /** modulelist */
       {
         path: 'moduleadd/:LinkSiteId',
         component: CoreSiteModuleAddComponent
@@ -65,6 +67,11 @@ const routes: Routes = [
       {
         path: 'moduleedit/:LinkSiteId/:LinkModuleId',
         component: CoreSiteModuleEditComponent
+      },
+      /** userlist */
+      {
+        path: 'userlist',
+        component: CoreSiteUserListComponent
       },
       {
         path: 'userlist/LinkSiteId/:LinkSiteId',
@@ -78,6 +85,7 @@ const routes: Routes = [
         path: 'userlist/LinkUserId/:LinkUserId',
         component: CoreSiteUserListComponent
       }
+      /** userlist */
     ]
   },
 ];

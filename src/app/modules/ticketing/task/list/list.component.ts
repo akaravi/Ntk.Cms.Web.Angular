@@ -257,6 +257,25 @@ export class TicketingTaskListComponent implements OnInit, OnDestroy {
 
 
   }
+  onActionbuttonAnswerList(mode: TicketingTaskModel = this.tableRowSelected): void {
+    if (!mode || !mode.Id || mode.Id === 0) {
+      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      return;
+    }
+    this.tableRowSelected = mode;
+    if (
+      this.dataModelResult == null ||
+      this.dataModelResult.Access == null ||
+      !this.dataModelResult.Access.AccessWatchRow
+    ) {
+      this.cmsToastrService.typeErrorAccessEdit();
+      return;
+    }
+
+    this.router.navigate(['/ticketing/answer/LinkTicketId/',this.tableRowSelected.Id]);
+
+
+  }
   onActionbuttonDeleteRow(mode: TicketingTaskModel = this.tableRowSelected): void {
     if (mode == null || !mode.Id || mode.Id === 0) {
       const emessage = 'ردیفی برای حذف انتخاب نشده است';

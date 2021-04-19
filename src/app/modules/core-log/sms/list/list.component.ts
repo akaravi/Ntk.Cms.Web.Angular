@@ -226,9 +226,9 @@ export class CoreLogSmsListComponent implements OnInit, OnDestroy {
     if (
       this.dataModelResult == null ||
       this.dataModelResult.Access == null ||
-      !this.dataModelResult.Access.AccessEditRow
+      !this.dataModelResult.Access.AccessWatchRow
     ) {
-      this.cmsToastrService.typeErrorAccessEdit();
+      this.cmsToastrService.typeErrorAccessWatch();
       return;
     }
     const dialogRef = this.dialog.open(CoreLogSmsViewComponent, {
@@ -236,10 +236,11 @@ export class CoreLogSmsListComponent implements OnInit, OnDestroy {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.dialogChangedDate) {
-        this.DataGetAll();
+        // this.DataGetAll();
       }
     });
-  }onActionbuttonEditRow(model: CoreLogSmsModel = this.tableRowSelected): void {
+  }
+  onActionbuttonEditRow(model: CoreLogSmsModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id.length === 0) {
       this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');

@@ -216,7 +216,7 @@ export class BankPaymentTransactionListComponent implements OnInit, OnDestroy {
       this.dataModelResult.Access == null ||
       !this.dataModelResult.Access.AccessWatchRow
     ) {
-      this.cmsToastrService.typeErrorAccessAdd();
+      this.cmsToastrService.typeErrorAccessWatch();
       return;
     }
     const dialogRef = this.dialog.open(BankPaymentTransactionViewComponent, {
@@ -419,9 +419,9 @@ export class BankPaymentTransactionListComponent implements OnInit, OnDestroy {
     this.tableRowSelected = row;
   }
   onActionBackToParent(): void {
-    this.router.navigate(['/application/app/']);
+    this.router.navigate(['/bankpayment/privatesiteconfig/']);
   }
   onActionBackToParentMember(): void {
-    this.router.navigate(['/application/memberinfo/']);
+    this.router.navigate(['/core/user/']);
   }
 }

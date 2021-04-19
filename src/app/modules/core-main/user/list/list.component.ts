@@ -220,7 +220,7 @@ export class CoreUserListComponent implements OnInit, OnDestroy {
       this.dataModelResult.Access == null ||
       !this.dataModelResult.Access.AccessWatchRow
     ) {
-      this.cmsToastrService.typeErrorAccessEdit();
+      this.cmsToastrService.typeErrorAccessWatch();
       return;
     }
     const dialogRef = this.dialog.open(CoreUserViewComponent, {
@@ -228,7 +228,7 @@ export class CoreUserListComponent implements OnInit, OnDestroy {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.dialogChangedDate) {
-        this.DataGetAll();
+        // this.DataGetAll();
       }
     });
   }

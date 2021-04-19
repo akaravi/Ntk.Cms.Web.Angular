@@ -36,7 +36,7 @@ export class FileCategorySelectorComponent implements OnInit {
   filteredOptions: Observable<FileCategoryModel[]>;
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Input() optionSelectFirstItem = false;
-  @Output() optionSelect = new EventEmitter();
+  @Output() optionSelect = new EventEmitter<FileCategoryModel>();
   @Input() optionReload = () => this.onActionReload();
   @Input() set optionSelectForce(x: number | FileCategoryModel) {
     this.onActionSelectForce(x);

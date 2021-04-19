@@ -35,7 +35,7 @@ export class BankPaymentPublicConfigSelectorComponent implements OnInit {
     @Input() disabled = new EventEmitter<boolean>();
   @Input() optionSelectFirstItem = false;
   @Input() optionPlaceholder = new EventEmitter<string>();
-  @Output() optionSelect = new EventEmitter();
+  @Output() optionSelect = new EventEmitter<BankPaymentPublicConfigModel>();
   @Input() optionReload = () => this.onActionReload();
   @Input() set optionSelectForce(x: number | BankPaymentPublicConfigModel) {
     this.onActionSelectForce(x);

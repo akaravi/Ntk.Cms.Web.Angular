@@ -37,7 +37,7 @@ export class ApplicationMemberInfoSelectorComponent implements OnInit {
   @Input() disabled = new EventEmitter<boolean>();
   @Input() optionSelectFirstItem = false;
   @Input() optionPlaceholder = new EventEmitter<string>();
-  @Output() optionSelect = new EventEmitter();
+  @Output() optionSelect = new EventEmitter<ApplicationMemberInfoModel>();
   @Input() optionReload = () => this.onActionReload();
   @Input() set optionSelectForce(x: string | ApplicationMemberInfoModel) {
     this.onActionSelectForce(x);

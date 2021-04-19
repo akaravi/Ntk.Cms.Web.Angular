@@ -51,7 +51,7 @@ export class BlogCategoryTreeComponent implements OnInit, OnDestroy {
   loading = new ProgressSpinnerModel();
   treeControl = new NestedTreeControl<BlogCategoryModel>(node => node.Children);
   dataSource = new MatTreeNestedDataSource<BlogCategoryModel>();
-  @Output() optionSelect = new EventEmitter();
+  @Output() optionSelect = new EventEmitter<BlogCategoryModel>();
   cmsApiStoreSubscribe: Subscription;
   @Input() optionReload = () => this.onActionReload();
 

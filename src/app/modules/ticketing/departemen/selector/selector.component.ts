@@ -37,7 +37,7 @@ export class TicketingDepartemenSelectorComponent implements OnInit {
     @Input() disabled = new EventEmitter<boolean>();
   @Input() optionSelectFirstItem = false;
   @Input() optionPlaceholder = new EventEmitter<string>();
-  @Output() optionSelect = new EventEmitter();
+  @Output() optionSelect = new EventEmitter<TicketingDepartemenModel>();
   @Input() optionReload = () => this.onActionReload();
   @Input() set optionSelectForce(x: number | TicketingDepartemenModel) {
     this.onActionSelectForce(x);

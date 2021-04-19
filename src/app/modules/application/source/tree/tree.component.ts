@@ -49,7 +49,7 @@ export class ApplicationSourceTreeComponent implements OnInit, OnDestroy {
   loading = new ProgressSpinnerModel();
   treeControl = new NestedTreeControl<ApplicationSourceModel>(node => null);
   dataSource = new MatTreeNestedDataSource<ApplicationSourceModel>();
-  @Output() optionSelect = new EventEmitter();
+  @Output() optionSelect = new EventEmitter<ApplicationSourceModel>();
   cmsApiStoreSubscribe: Subscription;
   @Input() optionReload = () => this.onActionReload();
 

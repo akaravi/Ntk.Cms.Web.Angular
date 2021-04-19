@@ -30,6 +30,7 @@ import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { CoreTokenUserBadLoginEditComponent } from '../edit/edit.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { CoreTokenUserBadLoginViewComponent } from '../view/view.component';
 
 @Component({
   selector: 'app-coretoken-user-list',
@@ -212,6 +213,30 @@ export class CoreTokenUserBadLoginListComponent implements OnInit, OnDestroy {
 
 
 
+  onActionbuttonViewRow(model: CoreTokenUserBadLoginModel = this.tableRowSelected): void {
+
+    if (!model || !model.Id || model.Id.length === 0) {
+      this.cmsToastrService.typeErrorSelected('ردیفی  انتخاب نشده است');
+      return;
+    }
+    this.tableRowSelected = model;
+    if (
+      this.dataModelResult == null ||
+      this.dataModelResult.Access == null ||
+      !this.dataModelResult.Access.AccessWatchRow
+    ) {
+      this.cmsToastrService.typeErrorAccessWatch();
+      return;
+    }
+    const dialogRef = this.dialog.open(CoreTokenUserBadLoginViewComponent, {
+      data: { id: this.tableRowSelected.Id }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.dialogChangedDate) {
+        // this.DataGetAll();
+      }
+    });
+  }
   onActionbuttonEditRow(model: CoreTokenUserBadLoginModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id.length === 0) {

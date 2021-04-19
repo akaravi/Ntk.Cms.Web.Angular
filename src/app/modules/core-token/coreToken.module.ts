@@ -18,6 +18,9 @@ import { CoreTokenUserLogListComponent } from './userLog/list/list.component';
 import { CoreTokenUserLogEditComponent } from './userLog/edit/edit.component';
 import { CoreTokenUserBadLoginListComponent } from './userBadLogin/list/list.component';
 import { CoreTokenUserBadLoginEditComponent } from './userBadLogin/edit/edit.component';
+import { CoreTokenUserViewComponent } from './user/view/view.component';
+import { CoreTokenUserBadLoginViewComponent } from './userBadLogin/view/view.component';
+import { CoreTokenUserLogViewComponent } from './userLog/view/view.component';
 
 @NgModule({
   imports: [
@@ -35,6 +38,9 @@ import { CoreTokenUserBadLoginEditComponent } from './userBadLogin/edit/edit.com
     CoreTokenUserLogEditComponent,
     CoreTokenUserBadLoginListComponent,
     CoreTokenUserBadLoginEditComponent,
+    CoreTokenUserViewComponent,
+    CoreTokenUserBadLoginViewComponent,
+    CoreTokenUserLogViewComponent
   ],
   providers: [
     CoreEnumService,

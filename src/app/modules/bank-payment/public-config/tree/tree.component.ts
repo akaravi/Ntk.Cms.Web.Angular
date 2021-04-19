@@ -51,7 +51,7 @@ export class BankPaymentPublicConfigTreeComponent implements OnInit, OnDestroy {
   loading = new ProgressSpinnerModel();
   treeControl = new NestedTreeControl<BankPaymentPublicConfigModel>(node => null);
   dataSource = new MatTreeNestedDataSource<BankPaymentPublicConfigModel>();
-  @Output() optionSelect = new EventEmitter();
+  @Output() optionSelect = new EventEmitter<BankPaymentPublicConfigModel>();
   cmsApiStoreSubscribe: Subscription;
   @Input() optionReload = () => this.onActionReload();
 

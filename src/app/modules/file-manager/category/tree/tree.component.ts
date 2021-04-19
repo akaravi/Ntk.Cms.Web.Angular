@@ -50,7 +50,7 @@ export class FileCategoryTreeComponent implements OnInit, OnDestroy {
   loading = new ProgressSpinnerModel();
   treeControl = new NestedTreeControl<FileCategoryModel>(node => node.Children);
   dataSource = new MatTreeNestedDataSource<FileCategoryModel>();
-  @Output() optionSelect = new EventEmitter();
+  @Output() optionSelect = new EventEmitter<FileCategoryModel>();
   cmsApiStoreSubscribe: Subscription;
   @Input() optionReload = () => this.onActionReload();
 

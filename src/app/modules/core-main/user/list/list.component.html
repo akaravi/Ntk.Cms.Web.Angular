@@ -112,6 +112,10 @@
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #actionMenu="matMenu">
+              <button mat-menu-item (click)="onActionbuttonViewRow(row)">
+                <mat-icon>view</mat-icon>
+                <span>مشاهده</span>
+              </button>
               <button mat-menu-item *ngIf="tokenInfo.UserAccessAdminAllowToProfessionalData || row.Id==tokenInfo.UserId"
                 (click)="onActionbuttonEditRow(row)">
                 <mat-icon>mode_edit</mat-icon>

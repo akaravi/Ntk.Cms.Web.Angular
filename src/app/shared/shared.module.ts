@@ -26,15 +26,16 @@ import { HttpConfigInterceptor } from '../core/interceptor/httpConfigInterceptor
 import { KeysPipe } from '../core/pipe/keys.pipe';
 import { EnumsPipe } from '../core/pipe/enums.pipe';
 import { PrettyjsonPipe } from '../core/pipe/prettyjson.pipe';
-import { CmsSiteSelectorComponent } from './cmsSiteSelector/cmsSiteSelector.component';
-import { CmsUserSelectorComponent } from './cmsUserSelector/cmsUserSelector.component';
-import { CmsMemberSelectorComponent } from './cmsMemberSelector/cmsMemberSelector.component';
+import { CmsSiteSelectorComponent } from './cms-site-selector/cmsSiteSelector.component';
+import { CmsUserSelectorComponent } from './cms-user-selector/cmsUserSelector.component';
+import { CmsMemberSelectorComponent } from './cms-member-selector/cmsMemberSelector.component';
 import { CoreGuideService, CoreSiteService, CoreUserService, MemberUserService } from 'ntk-cms-api';
 import { PasswordStrengthComponent } from './password-strength/password-strength.component';import { CmsJsonListComponent } from './cmsJsonList/cmsJsonList.component';;
 import { CmsGuideComponent } from './cms-guide/cms-guide.component';
 import { TooltipGuideDirective } from '../core/directive/tooltip-guide.directive';
 import { TooltipDirective } from '../core/directive/tooltip.directive';;
 import { CmsFormBuilderPropertiesComponent } from './cms-form-builder-properties/cms-form-builder-properties.component'
+import { CmsModuleSelectorComponent } from './cms-module-selector/cms-module-selector.component';
 
 
 
@@ -69,6 +70,7 @@ import { CmsFormBuilderPropertiesComponent } from './cms-form-builder-properties
     CmsSiteSelectorComponent,
     CmsUserSelectorComponent,
     CmsMemberSelectorComponent,
+    CmsModuleSelectorComponent,
     PersianDate,
     PersianDateFull,
     CmsMapComponent,
@@ -104,6 +106,7 @@ import { CmsFormBuilderPropertiesComponent } from './cms-form-builder-properties
     CmsSiteSelectorComponent,
     CmsUserSelectorComponent,
     CmsMemberSelectorComponent,
+    CmsModuleSelectorComponent,
     CmsMapComponent,
     TagAutocompleteComponent,
     ProgressSpinnerComponent,

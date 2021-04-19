@@ -34,7 +34,7 @@
       <div class="form-actions" *ngIf="formInfo.FormSubmitAllow">
 
         <button type="button" (click)="onFormDelete()"
-          [disabled]="!vform.form.valid || !formInfo.ButtonSubmittedEnabled" class="btn btn-raised btn-warning mr-1">
+          [disabled]=" !formInfo.ButtonSubmittedEnabled" class="btn btn-raised btn-warning mr-1">
           <i class="fa fa-check-square-o"></i> حذف
         </button>
         <button type="button" (click)="onFormCancel()" class="btn btn-raised btn-warning mr-1">

@@ -61,7 +61,7 @@ export class BiographyCategorySelectorComponent implements OnInit {
   filteredOptions: Observable<BiographyCategoryModel[]>;
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Input() optionSelectFirstItem = false;
-  @Output() optionSelect = new EventEmitter();
+  @Output() optionSelect = new EventEmitter<BiographyCategoryModel>();
   @Input() optionReload = () => this.onActionReload();
   @Input() set optionSelectForce(x: number | BiographyCategoryModel) {
     this.onActionSelectForce(x);

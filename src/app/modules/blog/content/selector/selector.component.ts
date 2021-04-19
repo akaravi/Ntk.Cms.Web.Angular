@@ -37,7 +37,7 @@ export class BlogContentSelectorComponent implements OnInit {
   filteredOptions: Observable<BlogContentModel[]>;
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Input() optionSelectFirstItem = false;
-  @Output() optionSelect = new EventEmitter();
+  @Output() optionSelect = new EventEmitter<BlogContentModel>();
   @Input() optionReload = () => this.onActionReload();
   @Input() set optionSelectForce(x: number | BlogContentModel) {
     this.onActionSelectForce(x);

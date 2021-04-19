@@ -45,7 +45,7 @@ export class ApplicationThemeConfigSelectorComponent implements OnInit {
     @Input() disabled = new EventEmitter<boolean>();
   @Input() optionSelectFirstItem = false;
   @Input() optionPlaceholder = new EventEmitter<string>();
-  @Output() optionSelect = new EventEmitter();
+  @Output() optionSelect = new EventEmitter<ApplicationThemeConfigModel>();
 
   @Input() optionReload = () => this.onActionReload();
   ngOnInit(): void {

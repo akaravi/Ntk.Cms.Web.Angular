@@ -206,9 +206,9 @@ export class ApplicationMemberInfoListComponent implements OnInit, OnDestroy {
     if (
       this.dataModelResult == null ||
       this.dataModelResult.Access == null ||
-      !this.dataModelResult.Access.AccessEditRow
+      !this.dataModelResult.Access.AccessWatchRow
     ) {
-      this.cmsToastrService.typeErrorAccessEdit();
+      this.cmsToastrService.typeErrorAccessWatch();
       return;
     }
 
