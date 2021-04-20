@@ -88,6 +88,10 @@
         {{'AUTH.LOGIN.BUTTON' | translate}}
       </button>
       <br>
+      <button type="button" [routerLink]="['/auth/singinbysms']" [disabled]=" !formInfo.ButtonSubmittedEnabled"
+      class="btn btn-primary font-weight-bolder font-size-h4 px-8 py-4 my-3" style="margin: 5px;">
+      {{'AUTH.LOGIN.SMS' | translate}}
+    </button>
       <button type="button" [routerLink]="['/auth/forgot-password']" [disabled]=" !formInfo.ButtonSubmittedEnabled"
         class="btn btn-primary font-weight-bolder font-size-h4 px-8 py-4 my-3" style="margin: 5px;">
         {{'AUTH.FORGOT.TITLE' | translate}}

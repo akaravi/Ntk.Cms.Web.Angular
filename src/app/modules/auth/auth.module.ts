@@ -11,10 +11,12 @@ import { AuthComponent } from './auth.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AuthSingUpComponent } from './singup/singup.component';
 import { SingupRuleComponent } from './singupRule/singupRule.Component';
+import { AuthSingInBySmsComponent } from './singin-bysms/singin-bysms.component';
 
 @NgModule({
   declarations: [
     AuthSingInComponent,
+    AuthSingInBySmsComponent,
     AuthSingUpComponent,
     AuthForgotPasswordComponent,
     AuthSingoutComponent,

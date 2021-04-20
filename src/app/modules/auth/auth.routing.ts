@@ -5,6 +5,7 @@ import {AuthSingUpComponent} from './singup/singup.component';
 import {AuthForgotPasswordComponent} from './forgot-password/forgot-password.component';
 import { AuthSingoutComponent } from './singout/singout.component';
 import { AuthSingInComponent } from './singin/singin.component';
+import { AuthSingInBySmsComponent } from './singin-bysms/singin-bysms.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,10 @@ const routes: Routes = [
       {
         path: 'singin',
         component: AuthSingInComponent,
+      },
+      {
+        path: 'singinbysms',
+        component: AuthSingInBySmsComponent,
       },
       {
         path: 'singout',

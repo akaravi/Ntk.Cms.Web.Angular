@@ -127,18 +127,31 @@
         <mat-step label="تنطیمات ساخت" state="seo">
           <p>تنظیمات ساخت اپلیکیشن و برروز رسانی را انتخاب کنید</p>
 
+          <!-- DefaultAppId Field -->
+          <mat-form-field class="example-full-width" *ngIf="fieldsInfo['DefaultAppId']?.AccessWatchField">
+            <mat-label>{{fieldsInfo['DefaultAppId']?.FieldTitle}}</mat-label>
+            <input matInput [(ngModel)]="dataModel.DefaultAppId"
+              [disabled]="!fieldsInfo['DefaultAppId']?.AccessEditField" name="dataModel.DefaultAppId" #DefaultAppId
+              type="number" placeholder="پش فرض" />
+            <mat-icon matSuffix *ngIf="dataModel.DefaultAppId && fieldsInfo['DefaultAppId']?.AccessEditField" matSuffix
+              mat-icon-button aria-label="Clear" (click)="dataModel.DefaultAppId = null">close</mat-icon>
+            <mat-icon *ngIf="fieldsInfo['DefaultAppId']?.AccessEditField" matSuffix>mode_edit</mat-icon>
+          </mat-form-field>
+          <!-- IsPublish Field -->
           <div class="example-full-width">
             <mat-slide-toggle [(ngModel)]="dataModel.IsPublish" *ngIf="fieldsInfo['IsPublish']?.AccessWatchField"
               [disabled]="!fieldsInfo['IsPublish']?.AccessEditField" name="dataModel.IsPublish">
               {{fieldsInfo['IsPublish']?.FieldTitle}}
             </mat-slide-toggle>
           </div>
+          <!-- ForceUpdate Field -->
           <div class="example-full-width">
             <mat-slide-toggle [(ngModel)]="dataModel.ForceUpdate" *ngIf="fieldsInfo['ForceUpdate']?.AccessWatchField"
               [disabled]="!fieldsInfo['ForceUpdate']?.AccessEditField" name="dataModel.ForceUpdate">
               {{fieldsInfo['ForceUpdate']?.FieldTitle}}
             </mat-slide-toggle>
           </div>
+          <!-- UpdateSourceByGit Field -->
           <div class="example-full-width">
             <mat-slide-toggle [(ngModel)]="dataModel.UpdateSourceByGit"
               *ngIf="fieldsInfo['UpdateSourceByGit']?.AccessWatchField"
@@ -146,6 +159,7 @@
               {{fieldsInfo['UpdateSourceByGit']?.FieldTitle}}
             </mat-slide-toggle>
           </div>
+          <!-- IsAbilityGradleBuild Field -->
           <div class="example-full-width">
             <mat-slide-toggle [(ngModel)]="dataModel.IsAbilityGradleBuild"
               *ngIf="fieldsInfo['IsAbilityGradleBuild']?.AccessWatchField"
@@ -153,10 +167,7 @@
               {{fieldsInfo['IsAbilityGradleBuild']?.FieldTitle}}
             </mat-slide-toggle>
           </div>
-
-
-
-
+          <!-- SourceNameGit Field -->
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['SourceNameGit']?.AccessWatchField">
             <mat-label>{{fieldsInfo['SourceNameGit']?.FieldTitle}}</mat-label>
             <input matInput [(ngModel)]="dataModel.SourceNameGit"
@@ -168,7 +179,7 @@
             <mat-hint align="end">{{ SourceNameGit.value.length }} / 100</mat-hint>
           </mat-form-field>
 
-
+          <!-- FireBaseServerKey Field -->
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['FireBaseServerKey']?.AccessWatchField">
             <mat-label>{{fieldsInfo['FireBaseServerKey']?.FieldTitle}}</mat-label>
             <textarea matInput [(ngModel)]="dataModel.FireBaseServerKey"

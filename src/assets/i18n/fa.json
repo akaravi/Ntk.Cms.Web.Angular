@@ -27,7 +27,8 @@
     },
     "LOGIN": {
       "TITLE": "حساب کاربری",
-      "BUTTON": "ورود به حساب کاربری"
+      "BUTTON": "ورود به حساب",
+      "SMS": "یکبار رمز"
     },
     "FORGOT": {
       "TITLE": "یادآوری پسورد؟",
@@ -42,6 +43,17 @@
       "PIN_CODE": "پین کد دریافتی",
       "SEND_PIN_CODE": "ارسال کد",
       "RESET_PASSWORD": "تنظیم مجدد رمز عبور"
+    },
+    "SINGINBYSMS": {
+      "TITLE": "وروبه به حساب با پیامک",
+      "MOBILE": "شماره همراه",
+      "EMAIL": "آدرس ایمیل",
+      "DESCSMS": "شماره موبایل تان را وارد کنید تا کد یکبار رمز برای شما پیامک شود",
+      "DESCENTRYCODE": "کددریافت شده را وارد کنید",
+      "SUCCESS": "Your account has been successfully reset.",
+      "PIN_CODE": "پین کد دریافتی",
+      "SEND_PIN_CODE": "ارسال کد",
+      "LOGIN": "ورود به حساب"
     },
     "REGISTER": {
       "SIGNUP": "ثبت نام",
