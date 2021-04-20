@@ -1,5 +1,5 @@
 
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
@@ -44,7 +44,10 @@ export class CoreModuleSaleHeaderListComponent implements OnInit, OnDestroy {
     private cmsToastrService: CmsToastrService,
     private cmsConfirmationDialogService: CmsConfirmationDialogService,
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     public dialog: MatDialog) {
+    this.requestHeaderGroupId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkHeaderGroupId'));
+
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
@@ -54,6 +57,12 @@ export class CoreModuleSaleHeaderListComponent implements OnInit, OnDestroy {
     /*filter Sort*/
     this.filteModelContent.SortColumn = 'Id';
     this.filteModelContent.SortType = EnumSortType.Descending;
+    if (this.requestHeaderGroupId > 0) {
+      const filter = new FilterDataModel();
+      filter.PropertyName = 'LinkModuleSaleHeaderGroupId';
+      filter.Value = this.requestHeaderGroupId;
+      this.filteModelContent.Filters.push(filter);
+    }
   }
   comment: string;
   author: string;
@@ -75,12 +84,13 @@ export class CoreModuleSaleHeaderListComponent implements OnInit, OnDestroy {
   categoryModelSelected: CoreModuleSaleHeaderGroupModel = new CoreModuleSaleHeaderGroupModel();
 
   tabledisplayedColumns: string[] = [
-    'MainImageSrc',
     'Id',
     'RecordStatus',
     'Title',
-    'SubDomain',
-    'Domain',
+    'SalePrice',
+    'HasDemo',
+    'FromDate',
+    'ExpireDate',
     'CreatedDate',
     'UpdatedDate',
     'Action'
@@ -271,7 +281,7 @@ export class CoreModuleSaleHeaderListComponent implements OnInit, OnDestroy {
   }
 
 
-  onActionbuttonGoToModuleSaleHeaderList(model: CoreModuleSaleHeaderModel = this.tableRowSelected): void {
+  onActionbuttonItemList(model: CoreModuleSaleHeaderModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
       const message = 'ردیفی برای نمایش انتخاب نشده است';
       this.cmsToastrService.typeErrorSelected(message);
@@ -279,7 +289,7 @@ export class CoreModuleSaleHeaderListComponent implements OnInit, OnDestroy {
     }
     this.tableRowSelected = model;
 
-    this.router.navigate(['/core/siteModuleSaleHeader/', this.tableRowSelected.Id]);
+    this.router.navigate(['/core/modulesale/item/LinkModuleSaleHeader/', this.tableRowSelected.Id]);
   }
   onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;
@@ -385,6 +395,7 @@ export class CoreModuleSaleHeaderListComponent implements OnInit, OnDestroy {
   onActionbuttonReload(): void {
     this.DataGetAll();
   }
+
   onSubmitOptionsSearch(model: any): void {
     this.filteModelContent.Filters = model;
     this.DataGetAll();
@@ -392,5 +403,7 @@ export class CoreModuleSaleHeaderListComponent implements OnInit, OnDestroy {
   onActionTableRowSelect(row: CoreModuleSaleHeaderModel): void {
     this.tableRowSelected = row;
   }
-
+  onActionBackToParent(): void {
+    this.router.navigate(['/core/modulesale/headergroup']);
+  }
 }

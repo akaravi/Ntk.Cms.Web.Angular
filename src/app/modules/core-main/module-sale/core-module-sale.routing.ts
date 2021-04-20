@@ -20,6 +20,10 @@ const routes: Routes = [
         component: CoreModuleSaleHeaderListComponent
       },
       {
+        path: 'header/:LinkHeaderGroupId',
+        component: CoreModuleSaleHeaderListComponent
+      },
+      {
         path: 'invoice',
         component: CoreModuleSaleInvoiceListComponent
       },
@@ -28,7 +32,11 @@ const routes: Routes = [
         component: CoreModuleSaleInvoiceDetailListComponent
       },
       {
-        path: 'Item',
+        path: 'item',
+        component: CoreModuleSaleItemListComponent
+      },
+      {
+        path: 'item/LinkModuleSaleHeader/:LinkModuleSaleHeader',
         component: CoreModuleSaleItemListComponent
       },
       {

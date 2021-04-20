@@ -13,6 +13,7 @@ import {
   FilterDataModel,
   EnumRecordStatus,
   DataFieldInfoModel,
+  CoreModuleSaleSerialModel,
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -24,8 +25,6 @@ import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/bas
 import { MatSort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
-import { CoreModuleSaleInvoiceEditComponent } from '../edit/edit.component';
-import { CoreModuleSaleInvoiceAddComponent } from '../add/add.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 import { CoreModuleSaleInvoiceViewComponent } from '../view/view.component';
 
@@ -71,7 +70,7 @@ export class CoreModuleSaleInvoiceListComponent implements OnInit, OnDestroy {
   tableRowSelected: CoreModuleSaleInvoiceModel = new CoreModuleSaleInvoiceModel();
   tableSource: MatTableDataSource<CoreModuleSaleInvoiceModel> = new MatTableDataSource<CoreModuleSaleInvoiceModel>();
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
-  categoryModelSelected: CoreModuleSaleInvoiceGroupModel = new CoreModuleSaleInvoiceGroupModel();
+  categoryModelSelected: CoreModuleSaleSerialModel = new CoreModuleSaleSerialModel();
 
   tabledisplayedColumns: string[] = [
     'MainImageSrc',
@@ -115,7 +114,7 @@ export class CoreModuleSaleInvoiceListComponent implements OnInit, OnDestroy {
 
     if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
       const fastfilter = new FilterDataModel();
-      fastfilter.PropertyName = 'LinkUserGroupId';
+      fastfilter.PropertyName = 'LinkModuleSaleSerialId';
       fastfilter.Value = this.categoryModelSelected.Id;
       filterModel.Filters.push(fastfilter);
     }
@@ -169,52 +168,10 @@ export class CoreModuleSaleInvoiceListComponent implements OnInit, OnDestroy {
   }
 
 
-  onActionbuttonNewRow(): void {
 
-    if (
-      this.dataModelResult == null ||
-      this.dataModelResult.Access == null ||
-      !this.dataModelResult.Access.AccessAddRow
-    ) {
-      this.cmsToastrService.typeErrorAccessAdd();
-      return;
-    }
-    const dialogRef = this.dialog.open(CoreModuleSaleInvoiceAddComponent, {
-      data: {}
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result && result.dialogChangedDate) {
-        this.DataGetAll();
-      }
-    });
-  }
 
-  onActionbuttonEditRow(model: CoreModuleSaleInvoiceModel = this.tableRowSelected): void {
 
-    if (!model || !model.Id || model.Id === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
-      return;
-    }
-    this.tableRowSelected = model;
-    if (
-      this.dataModelResult == null ||
-      this.dataModelResult.Access == null ||
-      !this.dataModelResult.Access.AccessEditRow
-    ) {
-      this.cmsToastrService.typeErrorAccessEdit();
-      return;
-    }
-    const dialogRef = this.dialog.open(CoreModuleSaleInvoiceEditComponent, {
-      data: { id: this.tableRowSelected.Id }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result && result.dialogChangedDate) {
-        this.DataGetAll();
-      }
-    });
-  }
-
-  onActionSelectorSelect(model: CoreModuleSaleInvoiceGroupModel | null): void {
+  onActionSelectorSelect(model: CoreModuleSaleSerialModel | null): void {
     this.filteModelContent = new FilterModel();
     this.categoryModelSelected = model;
 

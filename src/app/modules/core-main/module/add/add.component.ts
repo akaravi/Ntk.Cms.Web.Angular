@@ -73,17 +73,17 @@ export class CoreModuleAddComponent implements OnInit {
   }
 
 
-  DataEditContent(): void {
+  DataAddContent(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.coreModuleService.ServiceEdit(this.dataModel).subscribe(
+    this.coreModuleService.ServiceAdd(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormSubmitAllow = true;
         this.dataModelResult = next;
         if (next.IsSuccess) {
           this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
-          this.cmsToastrService.typeSuccessEdit();
+          this.cmsToastrService.typeSuccessAdd();
           this.dialogRef.close({ dialogChangedDate: true });
 
               } else {
@@ -106,7 +106,7 @@ export class CoreModuleAddComponent implements OnInit {
     }
     this.formInfo.FormSubmitAllow = false;
 
-    this.DataEditContent();
+    this.DataAddContent();
 
 
   }

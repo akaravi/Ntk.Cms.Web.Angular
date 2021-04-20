@@ -1,5 +1,5 @@
 
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
@@ -15,6 +15,8 @@ import {
   EnumRecordStatus,
   DataFieldInfoModel,
   CoreModuleSaleHeaderModel,
+  CoreEnumService,
+  EnumModel,
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -36,15 +38,19 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
   styleUrls: ['./list.component.scss']
 })
 export class CoreModuleSaleItemListComponent implements OnInit, OnDestroy {
-  requestHeaderId = 0;
+  requestLinkModuleSaleHeader = 0;
   constructor(
     private coreModuleSaleItemService: CoreModuleSaleItemService,
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
     private cmsConfirmationDialogService: CmsConfirmationDialogService,
+    public coreEnumService: CoreEnumService,
+    private activatedRoute: ActivatedRoute,
     private router: Router,
     public dialog: MatDialog) {
+    this.requestLinkModuleSaleHeader = + Number(this.activatedRoute.snapshot.paramMap.get('LinkModuleSaleHeader'));
+
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
@@ -54,6 +60,12 @@ export class CoreModuleSaleItemListComponent implements OnInit, OnDestroy {
     /*filter Sort*/
     this.filteModelContent.SortColumn = 'Id';
     this.filteModelContent.SortType = EnumSortType.Descending;
+    if (this.requestLinkModuleSaleHeader > 0) {
+      const filter = new FilterDataModel();
+      filter.PropertyName = 'LinkModuleSaleHeader';
+      filter.Value = this.requestLinkModuleSaleHeader;
+      this.filteModelContent.Filters.push(filter);
+    }
   }
   comment: string;
   author: string;
@@ -73,16 +85,16 @@ export class CoreModuleSaleItemListComponent implements OnInit, OnDestroy {
   tableSource: MatTableDataSource<CoreModuleSaleItemModel> = new MatTableDataSource<CoreModuleSaleItemModel>();
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
   categoryModelSelected: CoreModuleSaleHeaderModel = new CoreModuleSaleHeaderModel();
+  dataModelEnumCmsModuleSaleItemTypeResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
 
   tabledisplayedColumns: string[] = [
-    'MainImageSrc',
     'Id',
     'RecordStatus',
-    'Title',
-    'SubDomain',
-    'Domain',
-    'CreatedDate',
-    'UpdatedDate',
+    'LinkModuleSaleHeader',
+    'LinkModuleId',
+    'MonthLength',
+    'EnumCmsModuleSaleItemType',
+    'ExpireDate',
     'Action'
   ];
 
@@ -98,6 +110,12 @@ export class CoreModuleSaleItemListComponent implements OnInit, OnDestroy {
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
+    });
+    this.getEnumCmsModuleSaleItemType();
+  }
+  getEnumCmsModuleSaleItemType(): void {
+    this.coreEnumService.ServiceEnumCmsModuleSaleItemType().subscribe((next) => {
+      this.dataModelEnumCmsModuleSaleItemTypeResult = next;
     });
   }
   ngOnDestroy(): void {
@@ -181,7 +199,7 @@ export class CoreModuleSaleItemListComponent implements OnInit, OnDestroy {
       return;
     }
     const dialogRef = this.dialog.open(CoreModuleSaleItemAddComponent, {
-      data: {}
+      data: { LinkModuleSaleHeader: this.requestLinkModuleSaleHeader }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.dialogChangedDate) {
@@ -392,5 +410,7 @@ export class CoreModuleSaleItemListComponent implements OnInit, OnDestroy {
   onActionTableRowSelect(row: CoreModuleSaleItemModel): void {
     this.tableRowSelected = row;
   }
-
+  onActionBackToParent(): void {
+    this.router.navigate(['/core/modulesale/headergroup']);
+  }
 }

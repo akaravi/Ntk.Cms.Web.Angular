@@ -5,8 +5,9 @@ import {
   FormInfoModel,
   CoreModuleSaleHeaderGroupService,
   CoreModuleSaleHeaderGroupModel,
-  CoreModuleSaleHeaderGroupModel,
   DataFieldInfoModel,
+  CoreSiteCategoryModel,
+  CoreUserGroupModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -103,7 +104,7 @@ export class CoreModuleSaleHeaderGroupEditComponent implements OnInit {
         this.dataModel = next.Item;
         if (next.IsSuccess) {
 
-          this.formInfo.FormTitle = this.formInfo.FormTitle + ' ' + next.Item.Id;
+          this.formInfo.FormTitle = this.formInfo.FormTitle + ' ' + next.Item.Title;
           this.formInfo.FormAlert = '';
               } else {
           this.formInfo.FormAlert = 'برروز خطا';
@@ -146,15 +147,19 @@ export class CoreModuleSaleHeaderGroupEditComponent implements OnInit {
       }
     );
   }
-  onActionSelectHeaderGroup(model: CoreModuleSaleHeaderGroupModel | null): void {
+  onActionSelectUserGroup(model: CoreUserGroupModel | null): void {
     if (!model || model.Id <= 0) {
-      this.cmsToastrService.toastr.error(
-        'دسته بندی را مشخص کنید',
-        'دسته بندی اطلاعات مشخص نیست'
-      );
+      this.dataModel.LinkUserGroupId =null;
       return;
     }
-    this.dataModel.LinkModuleSaleHeaderGroupId = model.Id;
+    this.dataModel.LinkUserGroupId = model.Id;
+  }
+  onActionSelectSiteCategory(model: CoreSiteCategoryModel | null): void {
+    if (!model || model.Id <= 0) {
+      this.dataModel.LinkCmsSiteCategoryId = null;
+      return;
+    }
+    this.dataModel.LinkCmsSiteCategoryId = model.Id;
   }
   onFormSubmit(): void {
     if (!this.formGroup.valid) {

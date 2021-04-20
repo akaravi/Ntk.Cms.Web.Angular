@@ -6,6 +6,8 @@ import {
   CoreModuleSaleHeaderGroupService,
   CoreModuleSaleHeaderGroupModel,
   DataFieldInfoModel,
+  CoreSiteCategoryModel,
+  CoreUserGroupModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -98,17 +100,17 @@ export class CoreModuleSaleHeaderGroupAddComponent implements OnInit {
   }
 
 
-  DataEditContent(): void {
+  DataAddContent(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.coreModuleSaleHeaderGroupService.ServiceEdit(this.dataModel).subscribe(
+    this.coreModuleSaleHeaderGroupService.ServiceAdd(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormSubmitAllow = true;
         this.dataModelResult = next;
         if (next.IsSuccess) {
           this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
-          this.cmsToastrService.typeSuccessEdit();
+          this.cmsToastrService.typeSuccessAdd();
           this.dialogRef.close({ dialogChangedDate: true });
 
         } else {
@@ -125,15 +127,19 @@ export class CoreModuleSaleHeaderGroupAddComponent implements OnInit {
       }
     );
   }
-  onActionSelectHeaderGroup(model: CoreModuleSaleHeaderGroupModel | null): void {
+  onActionSelectUserGroup(model: CoreUserGroupModel | null): void {
     if (!model || model.Id <= 0) {
-      this.cmsToastrService.toastr.error(
-        'دسته بندی را مشخص کنید',
-        'دسته بندی اطلاعات مشخص نیست'
-      );
+      this.dataModel.LinkUserGroupId =null;
       return;
     }
-    this.dataModel.LinkModuleSaleHeaderGroupId = model.Id;
+    this.dataModel.LinkUserGroupId = model.Id;
+  }
+  onActionSelectSiteCategory(model: CoreSiteCategoryModel | null): void {
+    if (!model || model.Id <= 0) {
+      this.dataModel.LinkCmsSiteCategoryId = null;
+      return;
+    }
+    this.dataModel.LinkCmsSiteCategoryId = model.Id;
   }
   onFormSubmit(): void {
     if (!this.formGroup.valid) {
@@ -141,7 +147,7 @@ export class CoreModuleSaleHeaderGroupAddComponent implements OnInit {
     }
     this.formInfo.FormSubmitAllow = false;
 
-    this.DataEditContent();
+    this.DataAddContent();
 
 
   }

@@ -31,7 +31,7 @@ import { PublicHelper } from 'src/app/core/helpers/publicHelper';
   styleUrls: ['./view.component.scss']
 })
 export class CoreModuleSaleInvoiceViewComponent implements OnInit, OnDestroy {
-  requestId = '';
+  requestId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
@@ -44,7 +44,7 @@ export class CoreModuleSaleInvoiceViewComponent implements OnInit, OnDestroy {
     public publicHelper: PublicHelper,
   ) {
     if (data) {
-      this.requestId =  data.id+'';
+      this.requestId = + data.id || 0;
     }
   }
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
@@ -60,7 +60,7 @@ export class CoreModuleSaleInvoiceViewComponent implements OnInit, OnDestroy {
   cmsApiStoreSubscribe: Subscription;
   ngOnInit(): void {
     this.formInfo.FormTitle = 'مشاهده  ';
-    if (this.requestId.length === 0) {
+    if (this.requestId === 0) {
       this.cmsToastrService.typeErrorComponentAction();
       this.dialogRef.close({ dialogChangedDate: false });
       return;

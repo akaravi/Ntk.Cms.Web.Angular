@@ -13,7 +13,11 @@ import {
   TokenInfoModel,
   FilterDataModel,
   EnumRecordStatus,
-  DataFieldInfoModel
+  DataFieldInfoModel,
+  CoreUserGroupService,
+  CoreSiteCategoryService,
+  CoreUserGroupModel,
+  CoreSiteCategoryModel
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -41,6 +45,8 @@ export class CoreModuleSaleHeaderGroupListComponent implements OnInit, OnDestroy
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
     private cmsConfirmationDialogService: CmsConfirmationDialogService,
+    private coreUserGroupService: CoreUserGroupService,
+    private coreSiteCategoryService: CoreSiteCategoryService,
     private router: Router,
     public dialog: MatDialog) {
     this.optionsSearch.parentMethods = {
@@ -61,6 +67,8 @@ export class CoreModuleSaleHeaderGroupListComponent implements OnInit, OnDestroy
 
   filteModelContent = new FilterModel();
   dataModelResult: ErrorExceptionResult<CoreModuleSaleHeaderGroupModel> = new ErrorExceptionResult<CoreModuleSaleHeaderGroupModel>();
+  dataModelCoreUserGroupResult: ErrorExceptionResult<CoreUserGroupModel> = new ErrorExceptionResult<CoreUserGroupModel>();
+  dataModelCoreSiteCategoryResult: ErrorExceptionResult<CoreSiteCategoryModel> = new ErrorExceptionResult<CoreSiteCategoryModel>();
   optionsSearch: ComponentOptionSearchModel = new ComponentOptionSearchModel();
   optionsStatist: ComponentOptionStatistModel = new ComponentOptionStatistModel();
   optionsExport: ComponentOptionExportModel = new ComponentOptionExportModel();
@@ -73,12 +81,12 @@ export class CoreModuleSaleHeaderGroupListComponent implements OnInit, OnDestroy
 
 
   tabledisplayedColumns: string[] = [
-    'MainImageSrc',
     'Id',
     'RecordStatus',
     'Title',
-    'SubDomain',
-    'Domain',
+    'TitleML',
+    'LinkUserGroupId',
+    'LinkCmsSiteCategoryId',
     'CreatedDate',
     'UpdatedDate',
     'Action'
@@ -96,6 +104,22 @@ export class CoreModuleSaleHeaderGroupListComponent implements OnInit, OnDestroy
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
+    });
+    this.getUserGroup();
+    this.getSiteCategory();
+  }
+  getUserGroup(): void {
+    const filter = new FilterModel();
+    filter.RowPerPage = 100;
+    this.coreUserGroupService.ServiceGetAll(filter).subscribe((next) => {
+      this.dataModelCoreUserGroupResult = next;
+    });
+  }
+  getSiteCategory(): void {
+    const filter = new FilterModel();
+    filter.RowPerPage = 100;
+    this.coreSiteCategoryService.ServiceGetAll(filter).subscribe((next) => {
+      this.dataModelCoreSiteCategoryResult = next;
     });
   }
   ngOnDestroy(): void {
@@ -255,7 +279,7 @@ export class CoreModuleSaleHeaderGroupListComponent implements OnInit, OnDestroy
   }
 
 
-  onActionbuttonGoToModuleSaleHeaderGroupList(model: CoreModuleSaleHeaderGroupModel = this.tableRowSelected): void {
+  onActionbuttonHeaderList(model: CoreModuleSaleHeaderGroupModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
       const message = 'ردیفی برای نمایش انتخاب نشده است';
       this.cmsToastrService.typeErrorSelected(message);
@@ -263,7 +287,7 @@ export class CoreModuleSaleHeaderGroupListComponent implements OnInit, OnDestroy
     }
     this.tableRowSelected = model;
 
-    this.router.navigate(['/core/siteModuleSaleHeaderGroup/', this.tableRowSelected.Id]);
+    this.router.navigate(['/core/modulesale/header/', this.tableRowSelected.Id]);
   }
   onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;

@@ -80,17 +80,17 @@ export class CoreGuideAddComponent implements OnInit {
   }
 
 
-  DataEditContent(): void {
+  DataAddContent(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.coreGuideService.ServiceEdit(this.dataModel).subscribe(
+    this.coreGuideService.ServiceAdd(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormSubmitAllow = true;
         this.dataModelResult = next;
         if (next.IsSuccess) {
           this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
-          this.cmsToastrService.typeSuccessEdit();
+          this.cmsToastrService.typeSuccessAdd();
           this.dialogRef.close({ dialogChangedDate: true });
 
         } else {
@@ -119,7 +119,7 @@ export class CoreGuideAddComponent implements OnInit {
     }
     this.formInfo.FormSubmitAllow = false;
 
-    this.DataEditContent();
+    this.DataAddContent();
 
 
   }

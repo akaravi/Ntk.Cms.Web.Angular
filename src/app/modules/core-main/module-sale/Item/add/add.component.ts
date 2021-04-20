@@ -31,6 +31,7 @@ import { PublicHelper } from 'src/app/core/helpers/publicHelper';
   styleUrls: ['./add.component.scss'],
 })
 export class CoreModuleSaleItemAddComponent implements OnInit {
+  requestLinkModuleSaleHeader = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
@@ -40,7 +41,12 @@ export class CoreModuleSaleItemAddComponent implements OnInit {
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService
   ) {
-
+    if (data) {
+      this.requestLinkModuleSaleHeader = +data.LinkModuleSaleHeader || 0;
+    }
+    if (this.requestLinkModuleSaleHeader > 0) {
+      this.dataModel.LinkModuleSaleHeader = this.requestLinkModuleSaleHeader;
+    }
 
     this.fileManagerTree = new TreeModel();
   }
@@ -107,17 +113,17 @@ export class CoreModuleSaleItemAddComponent implements OnInit {
   }
 
 
-  DataEditContent(): void {
+  DataAddContent(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.coreModuleSaleItemService.ServiceEdit(this.dataModel).subscribe(
+    this.coreModuleSaleItemService.ServiceAdd(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormSubmitAllow = true;
         this.dataModelResult = next;
         if (next.IsSuccess) {
           this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
-          this.cmsToastrService.typeSuccessEdit();
+          this.cmsToastrService.typeSuccessAdd();
           this.dialogRef.close({ dialogChangedDate: true });
 
         } else {
@@ -160,7 +166,7 @@ export class CoreModuleSaleItemAddComponent implements OnInit {
     }
     this.formInfo.FormSubmitAllow = false;
 
-    this.DataEditContent();
+    this.DataAddContent();
 
 
   }

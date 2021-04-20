@@ -29,13 +29,16 @@ import { PrettyjsonPipe } from '../core/pipe/prettyjson.pipe';
 import { CmsSiteSelectorComponent } from './cms-site-selector/cmsSiteSelector.component';
 import { CmsUserSelectorComponent } from './cms-user-selector/cmsUserSelector.component';
 import { CmsMemberSelectorComponent } from './cms-member-selector/cmsMemberSelector.component';
-import { CoreGuideService, CoreSiteService, CoreUserService, MemberUserService } from 'ntk-cms-api';
-import { PasswordStrengthComponent } from './password-strength/password-strength.component';import { CmsJsonListComponent } from './cmsJsonList/cmsJsonList.component';;
+import { CoreGuideService, CoreSiteCategoryService, CoreSiteService, CoreUserGroupService, CoreUserService, MemberUserService } from 'ntk-cms-api';
+import { PasswordStrengthComponent } from './password-strength/password-strength.component'; import { CmsJsonListComponent } from './cmsJsonList/cmsJsonList.component';;
 import { CmsGuideComponent } from './cms-guide/cms-guide.component';
 import { TooltipGuideDirective } from '../core/directive/tooltip-guide.directive';
 import { TooltipDirective } from '../core/directive/tooltip.directive';;
 import { CmsFormBuilderPropertiesComponent } from './cms-form-builder-properties/cms-form-builder-properties.component'
 import { CmsModuleSelectorComponent } from './cms-module-selector/cms-module-selector.component';
+import { CmsSiteCategorySelectorComponent } from './cms-site-category-selector/cmsSiteCategorySelector.component';
+import { CmsUserGroupSelectorComponent } from './cms-user-group-selector/cmsUserGroupSelector.component';
+import { TitlePipe } from '../core/pipe/title.pipe';
 
 
 
@@ -61,6 +64,7 @@ import { CmsModuleSelectorComponent } from './cms-module-selector/cms-module-sel
     TruncatePipe,
     KeysPipe,
     EnumsPipe,
+    TitlePipe,
     PrettyjsonPipe,
     RecordStatusClassPipe,
     BoolStatusClassPipe,
@@ -68,7 +72,9 @@ import { CmsModuleSelectorComponent } from './cms-module-selector/cms-module-sel
     CmsStatistListComponent,
     CmsExportListComponent,
     CmsSiteSelectorComponent,
+    CmsSiteCategorySelectorComponent,
     CmsUserSelectorComponent,
+    CmsUserGroupSelectorComponent,
     CmsMemberSelectorComponent,
     CmsModuleSelectorComponent,
     PersianDate,
@@ -95,6 +101,7 @@ import { CmsModuleSelectorComponent } from './cms-module-selector/cms-module-sel
     TruncatePipe,
     KeysPipe,
     EnumsPipe,
+    TitlePipe,
     PrettyjsonPipe,
     RecordStatusClassPipe,
     BoolStatusClassPipe,
@@ -104,7 +111,9 @@ import { CmsModuleSelectorComponent } from './cms-module-selector/cms-module-sel
     CmsStatistListComponent,
     CmsExportListComponent,
     CmsSiteSelectorComponent,
+    CmsSiteCategorySelectorComponent,
     CmsUserSelectorComponent,
+    CmsUserGroupSelectorComponent,
     CmsMemberSelectorComponent,
     CmsModuleSelectorComponent,
     CmsMapComponent,
@@ -124,7 +133,9 @@ import { CmsModuleSelectorComponent } from './cms-module-selector/cms-module-sel
     { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true },
     MemberUserService,
     CoreUserService,
+    CoreUserGroupService,
     CoreSiteService,
+    CoreSiteCategoryService,
     CoreGuideService
   ]
   /* No providers here! Since they’ll be already provided in AppModule. */

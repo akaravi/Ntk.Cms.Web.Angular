@@ -14,7 +14,6 @@ import {
   FilterDataModel,
   EnumRecordStatus,
   DataFieldInfoModel,
-  CoreModuleSaleInvoiceDetailGroupModel
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -26,8 +25,6 @@ import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/bas
 import { MatSort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
-import { CoreModuleSaleInvoiceDetailEditComponent } from '../edit/edit.component';
-import { CoreModuleSaleInvoiceDetailAddComponent } from '../add/add.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 import { CoreModuleSaleInvoiceDetailViewComponent } from '../view/view.component';
 
@@ -73,7 +70,6 @@ export class CoreModuleSaleInvoiceDetailListComponent implements OnInit, OnDestr
   tableRowSelected: CoreModuleSaleInvoiceDetailModel = new CoreModuleSaleInvoiceDetailModel();
   tableSource: MatTableDataSource<CoreModuleSaleInvoiceDetailModel> = new MatTableDataSource<CoreModuleSaleInvoiceDetailModel>();
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
-  categoryModelSelected: CoreModuleSaleInvoiceDetailGroupModel = new CoreModuleSaleInvoiceDetailGroupModel();
 
   tabledisplayedColumns: string[] = [
     'MainImageSrc',
@@ -115,12 +111,6 @@ export class CoreModuleSaleInvoiceDetailListComponent implements OnInit, OnDestr
     const filterModel = JSON.parse(JSON.stringify(this.filteModelContent));
     /*filter CLone*/
 
-    if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
-      const fastfilter = new FilterDataModel();
-      fastfilter.PropertyName = 'LinkUserGroupId';
-      fastfilter.Value = this.categoryModelSelected.Id;
-      filterModel.Filters.push(fastfilter);
-    }
     this.coreModuleSaleInvoiceDetailService.ServiceGetAll(filterModel).subscribe(
       (next) => {
         if (next.IsSuccess) {
@@ -171,25 +161,6 @@ export class CoreModuleSaleInvoiceDetailListComponent implements OnInit, OnDestr
   }
 
 
-  onActionbuttonNewRow(): void {
-
-    if (
-      this.dataModelResult == null ||
-      this.dataModelResult.Access == null ||
-      !this.dataModelResult.Access.AccessAddRow
-    ) {
-      this.cmsToastrService.typeErrorAccessAdd();
-      return;
-    }
-    const dialogRef = this.dialog.open(CoreModuleSaleInvoiceDetailAddComponent, {
-      data: {}
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result && result.dialogChangedDate) {
-        this.DataGetAll();
-      }
-    });
-  }
   onActionbuttonViewRow(model: CoreModuleSaleInvoiceDetailModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id === 0) {
@@ -214,37 +185,8 @@ export class CoreModuleSaleInvoiceDetailListComponent implements OnInit, OnDestr
       }
     });
   }
-  onActionbuttonEditRow(model: CoreModuleSaleInvoiceDetailModel = this.tableRowSelected): void {
 
-    if (!model || !model.Id || model.Id === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
-      return;
-    }
-    this.tableRowSelected = model;
-    if (
-      this.dataModelResult == null ||
-      this.dataModelResult.Access == null ||
-      !this.dataModelResult.Access.AccessEditRow
-    ) {
-      this.cmsToastrService.typeErrorAccessEdit();
-      return;
-    }
-    const dialogRef = this.dialog.open(CoreModuleSaleInvoiceDetailEditComponent, {
-      data: { id: this.tableRowSelected.Id }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result && result.dialogChangedDate) {
-        this.DataGetAll();
-      }
-    });
-  }
-
-  onActionSelectorSelect(model: CoreModuleSaleInvoiceDetailGroupModel | null): void {
-    this.filteModelContent = new FilterModel();
-    this.categoryModelSelected = model;
-
-    this.DataGetAll();
-  }
+ 
   onActionbuttonDeleteRow(model: CoreModuleSaleInvoiceDetailModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
       const emessage = 'ردیفی برای حذف انتخاب نشده است';

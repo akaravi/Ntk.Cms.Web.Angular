@@ -31,28 +31,15 @@
 
     <div class="example-container mat-elevation-z8">
       <mat-table [dataSource]="tableSource" matSort #tableSort="matSort" (matSortChange)="onTableSortData(tableSort)">
-        <!-- MainImageSrc Column -->
-        <ng-container matColumnDef="MainImageSrc">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> عکس </mat-header-cell>
-          <mat-cell *matCellDef="let row">
-            <img *ngIf="row?.MainImageSrc?.length>0" style="vertical-align:middle;" aria-hidden
-              src="{{row.MainImageSrc}}" height="40" width="40" />
-
-          </mat-cell>
-        </ng-container>
-        <!-- ID Column -->
+         <!-- ID Column -->
         <ng-container matColumnDef="Id">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Id']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Id}} </mat-cell>
         </ng-container>
-        <!-- linkCreatedBySiteId Column -->
-        <ng-container matColumnDef="linkCreatedBySiteId">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> سایت والد </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.linkCreatedBySiteId}} </mat-cell>
-        </ng-container>
         <!-- RecordStatus Column -->
         <ng-container matColumnDef="RecordStatus">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['RecordStatus']?.FieldTitle}} </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['RecordStatus']?.FieldTitle}}
+          </mat-header-cell>
           <mat-cell *matCellDef="let row"> <i [ngClass]="row.RecordStatus|statusClass"></i> </mat-cell>
         </ng-container>
         <!-- Title Column -->
@@ -60,34 +47,36 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Title']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Title}} </mat-cell>
         </ng-container>
-        <!-- SubDomain Column -->
-        <ng-container matColumnDef="SubDomain">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> SubDomain </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.SubDomain}} </mat-cell>
+        <!-- TitleML Column -->
+        <ng-container matColumnDef="TitleML">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['TitleML']?.FieldTitle}} </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.TitleML}} </mat-cell>
         </ng-container>
-        <!-- Domain Column -->
-        <ng-container matColumnDef="Domain">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Domain </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.Domain}} </mat-cell>
+        <!-- LinkCmsSiteCategoryId Column -->
+        <ng-container matColumnDef="LinkCmsSiteCategoryId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkCmsSiteCategoryId']?.FieldTitle}}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.LinkCmsSiteCategoryId | title : dataModelCoreSiteCategoryResult.ListItems}} </mat-cell>
+        </ng-container>
+         <!-- LinkUserGroupId Column -->
+        <ng-container matColumnDef="LinkUserGroupId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkUserGroupId']?.FieldTitle}}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.LinkUserGroupId | title : dataModelCoreUserGroupResult.ListItems}} </mat-cell>
         </ng-container>
         <!-- CreatedDate Column -->
         <ng-container matColumnDef="CreatedDate">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['CreatedDate']?.FieldTitle}} </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['CreatedDate']?.FieldTitle}}
+          </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.CreatedDate) }} </mat-cell>
         </ng-container>
         <!-- UpdatedDate Column -->
         <ng-container matColumnDef="UpdatedDate">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['UpdatedDate']?.FieldTitle}} </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['UpdatedDate']?.FieldTitle}}
+          </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.UpdatedDate) }} </mat-cell>
         </ng-container>
-        <!-- ExpireDate Column -->
-        <ng-container matColumnDef="ExpireDate">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['ExpireDate']?.FieldTitle}}
-          </mat-header-cell>
-          <mat-cell *matCellDef="let row"
-            [ngStyle]="{'background':publicHelper.RowStyleExpireDate(row.ExpireDate) }">
-            {{ publicHelper.LocaleDate(row.ExpireDate) }} </mat-cell>
-        </ng-container>
+
         <!-- Action Column -->
         <ng-container matColumnDef="Action">
           <mat-header-cell *matHeaderCellDef> ... </mat-header-cell>
@@ -101,18 +90,16 @@
                 <mat-icon>mode_edit</mat-icon>
                 <span>ویرایش</span>
               </button>
-              <button mat-menu-item (click)="onActionbuttonDeleteRow(row)" *ngIf="dataModelResult.Access.AccessDeleteRow">
+              <button mat-menu-item (click)="onActionbuttonDeleteRow(row)"
+                *ngIf="dataModelResult.Access.AccessDeleteRow">
                 <mat-icon>delete_forever</mat-icon>
                 <span>حذف</span>
               </button>
-              <button mat-menu-item (click)="onActionbuttonModuleList(row)">
+              <button mat-menu-item (click)="onActionbuttonHeaderList(row)">
                 <mat-icon>view_module</mat-icon>
-                <span>ماژول ها</span>
+                <span>بسته ها</span>
               </button>
-              <button mat-menu-item (click)="onActionbuttonSiteList(row)">
-                <mat-icon>view_module</mat-icon>
-                <span>سایت ها</span>
-              </button>
+
             </mat-menu>
           </mat-cell>
         </ng-container>
