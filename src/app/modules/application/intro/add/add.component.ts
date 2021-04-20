@@ -41,7 +41,7 @@ export class ApplicationIntroAddComponent implements OnInit {
     private router: Router) {
     this.fileManagerTree = new TreeModel();
   }
-  requestApplicationId = 0;
+  requestLinkApplicationId = 0;
 
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
   loading = new ProgressSpinnerModel();
@@ -55,18 +55,19 @@ export class ApplicationIntroAddComponent implements OnInit {
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
   selectFileTypeMainVideo = ['mp4'];
   fileManagerOpenForm = false;
+  fileManagerOpenFormVideo = false;
   appLanguage = 'fa';
 
   fileManagerTree: TreeModel;
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
 
   ngOnInit(): void {
-    this.requestApplicationId = + Number(this.activatedRoute.snapshot.paramMap.get('ApplicationId'));
-    if (this.requestApplicationId === 0) {
+    this.requestLinkApplicationId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkApplicationId'));
+    if (this.requestLinkApplicationId === 0) {
       this.cmsToastrService.typeErrorAddRowParentIsNull();
       return;
     }
-    this.dataModel.LinkApplicationId = this.requestApplicationId;
+    this.dataModel.LinkApplicationId = this.requestLinkApplicationId;
     this.DataGetAccess();
     this.getEnumRecordStatus();
   }
@@ -129,7 +130,7 @@ export class ApplicationIntroAddComponent implements OnInit {
           if (next.IsSuccess) {
             this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
             this.cmsToastrService.typeSuccessEdit();
-            setTimeout(() => this.router.navigate(['/application/app/']), 100);
+            setTimeout(() => this.router.navigate(['/application/intro/']), 100);
           } else {
             this.cmsToastrService.typeErrorEdit(next.ErrorMessage);
           }

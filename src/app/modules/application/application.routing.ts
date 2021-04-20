@@ -13,6 +13,8 @@ import { ApplicationAppAddComponent } from './content/add/add.component';
 import { ApplicationConfigMainAdminComponent } from './config/mainAdmin/configMainAdmin.component';
 import { ApplicationConfigSiteComponent } from './config/site/configSite.component';
 import { ApplicationLogNotificationListComponent } from './notification/list/list.component';
+import { ApplicationIntroAddComponent } from './intro/add/add.component';
+import { ApplicationIntroEditComponent } from './intro/edit/edit.component';
 
 
 const routes: Routes = [
@@ -75,11 +77,11 @@ const routes: Routes = [
       },
       {
         path: 'intro/add/:LinkApplicationId',
-        component: ApplicationIntroListComponent
+        component: ApplicationIntroAddComponent
       },
       {
         path: 'intro/edit/:Id',
-        component: ApplicationIntroListComponent
+        component: ApplicationIntroEditComponent
       },
       {
         path: 'memberinfo',

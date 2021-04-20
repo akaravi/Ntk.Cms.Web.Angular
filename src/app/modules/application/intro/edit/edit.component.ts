@@ -54,6 +54,7 @@ export class ApplicationIntroEditComponent implements OnInit {
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
   selectFileTypeMainVideo = ['mp4'];
   fileManagerOpenForm = false;
+  fileManagerOpenFormVideo = false;
   appLanguage = 'fa';
 
   fileManagerTree: TreeModel;
@@ -140,7 +141,7 @@ export class ApplicationIntroEditComponent implements OnInit {
           if (next.IsSuccess) {
             this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
             this.cmsToastrService.typeSuccessEdit();
-            setTimeout(() => this.router.navigate(['/application/source/']), 100);
+            setTimeout(() => this.router.navigate(['/application/intro/']), 100);
           } else {
             this.cmsToastrService.typeErrorEdit(next.ErrorMessage);
           }
