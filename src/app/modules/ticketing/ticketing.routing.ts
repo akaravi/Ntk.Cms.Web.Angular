@@ -13,8 +13,6 @@ import { TicketingConfigSiteComponent } from './config/site/configSite.component
 import { TicketingDepartemenLogListComponent } from './departemenLog/list/list.component';
 import { TicketingAnswerListComponent } from './answer/list/list.component';
 
-
-
 const routes: Routes = [
   {
     path: '',
