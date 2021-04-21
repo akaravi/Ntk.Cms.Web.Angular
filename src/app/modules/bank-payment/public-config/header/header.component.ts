@@ -2,8 +2,8 @@ import {
   CoreEnumService,
   EnumModel,
   ErrorExceptionResult,
-  CoreModuleSaleHeaderGroupService,
-  CoreModuleSaleHeaderGroupModel,
+  BankPaymentPublicConfigService,
+  BankPaymentPublicConfigModel,
   DataFieldInfoModel,
 } from 'ntk-cms-api';
 import {
@@ -17,23 +17,23 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 @Component({
-  selector: 'app-core-modulesaleheadergroup-header',
+  selector: 'app-bank-paymentpublic-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class CoreModuleSaleHeaderGroupHeaderComponent implements OnInit {
+export class BankPaymentPublicConfigHeaderComponent implements OnInit {
   constructor(
     private cmsStoreService: CmsStoreService,
     public coreEnumService: CoreEnumService,
-    public coreModuleSaleHeaderGroupService: CoreModuleSaleHeaderGroupService,
+    public bankPaymentPublicConfigService: BankPaymentPublicConfigService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
   ) {
-
+    
   }
   @Input() optionId = 0;
   loading = new ProgressSpinnerModel();
-  dataModelResult: ErrorExceptionResult<CoreModuleSaleHeaderGroupModel> = new ErrorExceptionResult<CoreModuleSaleHeaderGroupModel>();
+  dataModelResult: ErrorExceptionResult<BankPaymentPublicConfigModel> = new ErrorExceptionResult<BankPaymentPublicConfigModel>();
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
@@ -58,8 +58,8 @@ export class CoreModuleSaleHeaderGroupHeaderComponent implements OnInit {
   }
   DataGetOneContent(): void {
     this.loading.display = true;
-    this.coreModuleSaleHeaderGroupService.setAccessLoad();
-    this.coreModuleSaleHeaderGroupService.ServiceGetOneById(this.optionId).subscribe(
+    this.bankPaymentPublicConfigService.setAccessLoad();
+    this.bankPaymentPublicConfigService.ServiceGetOneById(this.optionId).subscribe(
       (next) => {
         this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
         if (next.IsSuccess) {

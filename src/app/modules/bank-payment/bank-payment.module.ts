@@ -42,6 +42,7 @@ import { BankPaymentTransactionLogViewComponent } from './transaction-log/view/v
 import { BankPaymentTransactionEditComponent } from './transaction/edit/edit.component';
 import { BankPaymentPrivateSiteConfigPaymentTestComponent } from './private-site-config/paymentTest/paymentTest.component';
 import { DynamicFormBuilderModule } from 'src/app/core/dynamic-form-builder/dynamic-form-builder.module';
+import { BankPaymentPublicConfigHeaderComponent } from './public-config/header/header.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { DynamicFormBuilderModule } from 'src/app/core/dynamic-form-builder/dyna
     BankPaymentPublicConfigListComponent,
     BankPaymentPublicConfigSelectorComponent,
     BankPaymentPublicConfigTreeComponent,
+    BankPaymentPublicConfigHeaderComponent,
     /* */
     BankPaymentPrivateSiteConfigAddComponent,
     BankPaymentPrivateSiteConfigEditComponent,
