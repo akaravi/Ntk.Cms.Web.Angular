@@ -40,7 +40,7 @@ export class CoreConfigMainAdminComponent implements OnInit , OnDestroy {
     public coreEnumService: CoreEnumService,
     private cmsToastrService: CmsToastrService,
     private router: Router) {
-    this.fileManagerTree = new TreeModel();
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
   dataConfigSiteValuesDefaultModel = new CoreModuleConfigSiteValuesModel();
   dataConfigSiteAccessValuesDefaultModel = new CoreModuleConfigSiteAccessValuesModel();

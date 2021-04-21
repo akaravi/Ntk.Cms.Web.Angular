@@ -51,7 +51,7 @@ export class BiographyContentAddComponent implements OnInit, AfterViewInit {
     private router: Router,
     private biographyContentTagService: BiographyContentTagService
   ) {
-    this.fileManagerTree = new TreeModel();
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
 
   }
   requestCategoryId = 0;

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { AccessModel, DataFieldInfoModel, ErrorExceptionResultBase } from 'ntk-cms-api';
+import { TreeModel } from 'ntk-cms-filemanager';
 import { environment } from 'src/environments/environment';
 import { CmsToastrService } from '../services/cmsToastr.service';
 
@@ -56,7 +57,11 @@ export class PublicHelper {
       ['fontSize']
     ]
   };
-
+  fileManagerTreeConfig: TreeModel = new TreeModel();
+  GetfileManagerTreeConfig(): TreeModel {
+    this.fileManagerTreeConfig.config.baseUploadURL = environment.cmsServerConfig.configRouteUploadFileContent;
+    return this.fileManagerTreeConfig;
+  }
   CheckError(model: any): any {
     if (!model) {
       return 'Error';

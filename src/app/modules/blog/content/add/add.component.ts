@@ -51,7 +51,7 @@ export class BlogContentAddComponent implements OnInit, AfterViewInit {
     private router: Router,
     private blogContentTagService: BlogContentTagService
   ) {
-    this.fileManagerTree = new TreeModel();
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
 
   }
   requestCategoryId = 0;

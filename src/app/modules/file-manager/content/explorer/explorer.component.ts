@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TreeModel } from 'ntk-cms-filemanager';
+import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -9,9 +10,8 @@ import { environment } from 'src/environments/environment';
 })
 export class FileContentExplorerComponent implements OnInit {
 
-  constructor() {
-    this.fileManagerTree = new TreeModel();
-    this.fileManagerTree.config.baseUploadURL = environment.cmsServerConfig.configRouteUploadFileContent;
+  constructor(public publicHelper: PublicHelper  ) {
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
   appLanguage = 'fa';
   fileManagerOpenForm = true;

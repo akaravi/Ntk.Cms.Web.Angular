@@ -49,7 +49,7 @@ export class PollingContentAddComponent implements OnInit, AfterViewInit {
     private router: Router,
 
   ) {
-    this.fileManagerTree = new TreeModel();
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
   requestCategoryId = 0;
   @ViewChild('vform', { static: false }) formGroup: FormGroup;

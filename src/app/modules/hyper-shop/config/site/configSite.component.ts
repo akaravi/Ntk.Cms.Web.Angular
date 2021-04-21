@@ -41,7 +41,7 @@ export class HyperShopConfigSiteComponent implements OnInit {
     public coreEnumService: CoreEnumService,
     private cmsToastrService: CmsToastrService,
     private router: Router) {
-    this.fileManagerTree = new TreeModel();
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
   dataSiteStorageModel = new HyperShopModuleSiteStorageValuesModel();
   dataConfigSiteValuesModel = new HyperShopModuleConfigSiteValuesModel();

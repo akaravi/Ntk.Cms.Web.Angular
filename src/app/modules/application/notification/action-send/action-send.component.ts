@@ -25,6 +25,7 @@ import {
   NodeInterface,
 } from 'ntk-cms-filemanager';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
+import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 @Component({
   selector: 'app-application-notification-action-send',
@@ -39,6 +40,7 @@ export class ApplicationLogNotificationActionSendComponent implements OnInit {
     public applicationLogNotificationService: ApplicationLogNotificationService,
     private cmsToastrService: CmsToastrService,
     private cmsStoreService: CmsStoreService,
+    public publicHelper: PublicHelper,
   ) {
     if (data) {
       this.requestLinkApplicationId = +data.LinkApplicationId || 0;
@@ -50,7 +52,7 @@ export class ApplicationLogNotificationActionSendComponent implements OnInit {
     if (this.requestLinkApplicationId > 0) {
       this.dataModel.AppId = this.requestLinkApplicationId;
     }
-    this.fileManagerTree = new TreeModel();
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
   requestLinkApplicationId = 0;
   requestLinkApplicationMemberId = '';

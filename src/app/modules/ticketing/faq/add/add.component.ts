@@ -40,7 +40,7 @@ export class TicketingFaqAddComponent implements OnInit {
     if (this.requestParentId > 0) {
       this.dataModel.LinkTicketingDepartemenId = this.requestParentId;
     }
-    this.fileManagerTree = new TreeModel();
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];

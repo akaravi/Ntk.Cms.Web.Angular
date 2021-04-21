@@ -41,7 +41,7 @@ export class CoreSiteCategoryAddComponent implements OnInit {
   ) {
 
 
-    this.fileManagerTree = new TreeModel();
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
 

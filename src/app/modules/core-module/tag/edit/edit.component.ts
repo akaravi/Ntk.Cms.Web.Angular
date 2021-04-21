@@ -47,7 +47,7 @@ export class CoreModuleTagEditComponent implements OnInit {
     if (this.requestParentId > 0) {
       this.dataModel.LinkCategoryId = this.requestParentId;
     }
-    this.fileManagerTree = new TreeModel();
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
   requestId = 0;
   requestParentId = 0;

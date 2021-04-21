@@ -46,7 +46,7 @@ export class FileCategoryEditComponent implements OnInit {
       this.requestParentId = +data.parentId || 0;
     }
 
-    this.fileManagerTree = new TreeModel();
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
   storeSnapshot = this.cmsStoreService.getStateSnapshot();

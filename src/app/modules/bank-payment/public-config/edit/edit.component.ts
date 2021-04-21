@@ -41,7 +41,7 @@ export class BankPaymentPublicConfigEditComponent implements OnInit {
       this.requestId = +data.id || 0;
     }
 
-    this.fileManagerTree = new TreeModel();
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
   requestId = 0;
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];

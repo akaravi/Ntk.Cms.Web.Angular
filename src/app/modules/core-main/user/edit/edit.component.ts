@@ -46,7 +46,7 @@ export class CoreUserEditComponent implements OnInit {
   ) {
     this.requestId = + Number(this.activatedRoute.snapshot.paramMap.get('Id'));
 
-    this.fileManagerTree = new TreeModel();
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
   requestId = 0;
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];

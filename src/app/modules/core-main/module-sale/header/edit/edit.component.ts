@@ -44,7 +44,7 @@ export class CoreModuleSaleHeaderEditComponent implements OnInit {
       this.requestId = +data.id || 0;
     }
 
-    this.fileManagerTree = new TreeModel();
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
 

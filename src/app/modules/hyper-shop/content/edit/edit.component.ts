@@ -37,7 +37,7 @@ export class HyperShopContentEditComponent implements OnInit {
       this.requestId = data.id + '';
     }
 
-    this.fileManagerTree = new TreeModel();
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
   requestId = '';
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];

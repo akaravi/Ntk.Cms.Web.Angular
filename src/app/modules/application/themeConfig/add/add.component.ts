@@ -52,7 +52,7 @@ export class ApplicationThemeConfigAddComponent implements OnInit {
     if (this.requestLinkSourceId > 0) {
       this.dataModel.LinkSourceId = this.requestLinkSourceId;
     }
-    this.fileManagerTree = new TreeModel();
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
 
   }
   @ViewChild('vform', { static: false }) formGroup: FormGroup;

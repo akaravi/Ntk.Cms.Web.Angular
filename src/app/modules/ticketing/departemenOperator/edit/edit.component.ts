@@ -36,7 +36,7 @@ export class TicketingDepartemenOperatorEditComponent implements OnInit {
     private ticketingDepartemenOperatorService: TicketingDepartemenOperatorService,
     private cmsToastrService: CmsToastrService,
     private router: Router) {
-    this.fileManagerTree = new TreeModel();
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
   requestId = 0;
 

@@ -42,7 +42,7 @@ export class FileContentEditComponent implements OnInit, AfterViewInit {
     private router: Router,
 
   ) {
-    this.fileManagerTree = new TreeModel();
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
   dataModel = new FileContentModel();

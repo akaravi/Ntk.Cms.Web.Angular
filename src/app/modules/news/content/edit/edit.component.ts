@@ -32,6 +32,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { PoinModel } from 'src/app/core/models/pointModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-news-content-edit',
@@ -40,6 +41,7 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
   ]
 })
 export class NewsContentEditComponent implements OnInit, AfterViewInit {
+  requestId = 0;
   constructor(
     private activatedRoute: ActivatedRoute,
     private cmsStoreService: CmsStoreService,
@@ -53,9 +55,9 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
     private router: Router,
 
   ) {
-    this.fileManagerTree = new TreeModel();
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
+
   }
-  requestId = 0;
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
   dataModel = new NewsContentModel();
   dataModelResult: ErrorExceptionResult<NewsContentModel> = new ErrorExceptionResult<NewsContentModel>();

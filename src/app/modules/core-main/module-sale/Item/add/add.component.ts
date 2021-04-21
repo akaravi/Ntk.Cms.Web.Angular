@@ -48,7 +48,7 @@ export class CoreModuleSaleItemAddComponent implements OnInit {
       this.dataModel.LinkModuleSaleHeader = this.requestLinkModuleSaleHeader;
     }
 
-    this.fileManagerTree = new TreeModel();
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
 

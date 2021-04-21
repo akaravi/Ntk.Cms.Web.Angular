@@ -37,7 +37,7 @@ export class ApplicationIntroEditComponent implements OnInit {
     private applicationIntroService: ApplicationIntroService,
     private cmsToastrService: CmsToastrService,
     private router: Router) {
-    this.fileManagerTree = new TreeModel();
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
     this.requestId = + Number(this.activatedRoute.snapshot.paramMap.get('Id'));
 
   }

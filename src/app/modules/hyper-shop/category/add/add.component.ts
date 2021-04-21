@@ -37,7 +37,7 @@ export class HyperShopCategoryAddComponent implements OnInit {
     public hyperShopCategoryService: HyperShopCategoryService,
     private cmsToastrService: CmsToastrService
   ) {
-    this.fileManagerTree = new TreeModel();
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
   fileManagerTree: TreeModel;

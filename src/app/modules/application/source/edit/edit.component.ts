@@ -36,7 +36,7 @@ export class ApplicationSourceEditComponent implements OnInit {
     private applicationSourceService: ApplicationSourceService,
     private cmsToastrService: CmsToastrService,
     private router: Router) {
-    this.fileManagerTree = new TreeModel();
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
   requestId = 0;
 

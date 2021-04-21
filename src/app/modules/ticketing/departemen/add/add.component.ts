@@ -37,7 +37,7 @@ export class TicketingDepartemenAddComponent implements OnInit {
     public ticketingDepartemenService: TicketingDepartemenService,
     private cmsToastrService: CmsToastrService
   ) {
-    this.fileManagerTree = new TreeModel();
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
   fileManagerTree: TreeModel;

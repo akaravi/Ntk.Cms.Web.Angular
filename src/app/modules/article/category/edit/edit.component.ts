@@ -24,6 +24,7 @@ import {
 } from 'ntk-cms-filemanager';
 import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
+import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 @Component({
   selector: 'app-article-category-edit',
@@ -37,13 +38,15 @@ export class ArticleCategoryEditComponent implements OnInit {
     private dialogRef: MatDialogRef<ArticleCategoryEditComponent>,
     public coreEnumService: CoreEnumService,
     public articleCategoryService: ArticleCategoryService,
-    private cmsToastrService: CmsToastrService
+    private cmsToastrService: CmsToastrService,
+    public publicHelper: PublicHelper,
+
   ) {
     if (data) {
       this.requestId = +data.id || 0;
     }
 
-    this.fileManagerTree = new TreeModel();
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
   requestId = 0;
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];

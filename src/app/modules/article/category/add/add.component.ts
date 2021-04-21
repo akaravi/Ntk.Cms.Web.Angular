@@ -42,7 +42,7 @@ export class ArticleCategoryAddComponent implements OnInit {
       this.requestParentId = +data.parentId || 0;
     }
 
-    this.fileManagerTree = new TreeModel();
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
   requestParentId = 0;
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];

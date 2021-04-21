@@ -40,7 +40,7 @@ export class HyperShopContentAddComponent implements OnInit {
     if (this.requestParentId.length > 0) {
       this.dataModel.CategoryCode = this.requestParentId;
     }
-    this.fileManagerTree = new TreeModel();
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];

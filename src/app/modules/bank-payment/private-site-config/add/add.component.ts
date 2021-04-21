@@ -52,7 +52,7 @@ export class BankPaymentPrivateSiteConfigAddComponent implements OnInit {
     if (this.requestLinkPublicConfigId > 0) {
       this.dataModel.LinkPublicConfigId = this.requestLinkPublicConfigId;
     }
-    this.fileManagerTree = new TreeModel();
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
 
   }
   @ViewChild('vform', { static: false }) formGroup: FormGroup;

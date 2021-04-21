@@ -34,7 +34,7 @@ export class ApplicationSourceAddComponent implements OnInit {
     private applicationSourceService: ApplicationSourceService,
     private cmsToastrService: CmsToastrService,
     private router: Router) {
-    this.fileManagerTree = new TreeModel();
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
 
   @ViewChild('vform', { static: false }) formGroup: FormGroup;

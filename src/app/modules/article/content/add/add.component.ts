@@ -51,7 +51,7 @@ export class ArticleContentAddComponent implements OnInit, AfterViewInit {
     private router: Router,
     private articleContentTagService: ArticleContentTagService
   ) {
-    this.fileManagerTree = new TreeModel();
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
   requestCategoryId = 0;
   @ViewChild('vform', { static: false }) formGroup: FormGroup;

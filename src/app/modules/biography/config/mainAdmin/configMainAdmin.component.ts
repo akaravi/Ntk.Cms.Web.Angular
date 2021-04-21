@@ -39,7 +39,7 @@ export class BiographyConfigMainAdminComponent implements OnInit {
     public coreEnumService: CoreEnumService,
     private cmsToastrService: CmsToastrService,
     private router: Router) {
-    this.fileManagerTree = new TreeModel();
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
   dataConfigSiteValuesDefaultModel = new BiographyModuleConfigSiteValuesModel();
   dataConfigSiteAccessValuesDefaultModel = new BiographyModuleConfigSiteAccessValuesModel();

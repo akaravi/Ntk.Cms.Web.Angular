@@ -41,7 +41,7 @@ export class ApplicationAppAddComponent implements OnInit {
     private applicationAppService: ApplicationAppService,
     private cmsToastrService: CmsToastrService,
     private router: Router) {
-    this.fileManagerTree = new TreeModel();
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
   requestSourceId = 0;
 

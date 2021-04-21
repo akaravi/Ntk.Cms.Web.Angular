@@ -47,7 +47,7 @@ export class CoreLocationAddComponent implements OnInit {
     if (this.requestId > 0) {
       this.dataModel.LinkParentId = this.requestId;
     }
-    this.fileManagerTree = new TreeModel();
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
 

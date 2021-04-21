@@ -39,7 +39,7 @@ export class ApplicationIntroAddComponent implements OnInit {
     private applicationIntroService: ApplicationIntroService,
     private cmsToastrService: CmsToastrService,
     private router: Router) {
-    this.fileManagerTree = new TreeModel();
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
   requestLinkApplicationId = 0;
 

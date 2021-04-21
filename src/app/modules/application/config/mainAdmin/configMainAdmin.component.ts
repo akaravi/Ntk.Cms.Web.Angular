@@ -39,7 +39,7 @@ export class ApplicationConfigMainAdminComponent implements OnInit {
     public coreEnumService: CoreEnumService,
     private cmsToastrService: CmsToastrService,
     private router: Router) {
-    this.fileManagerTree = new TreeModel();
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
   dataConfigSiteValuesDefaultModel = new ApplicationModuleConfigSiteValuesModel();
   dataConfigSiteAccessValuesDefaultModel = new ApplicationModuleConfigSiteAccessValuesModel();

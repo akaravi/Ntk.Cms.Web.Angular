@@ -39,7 +39,7 @@ export class TicketingTaskEditComponent implements OnInit {
     private ticketingTaskService: TicketingTaskService,
     private cmsToastrService: CmsToastrService,
     private router: Router) {
-    this.fileManagerTree = new TreeModel();
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
   requestId = 0;
 

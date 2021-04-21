@@ -51,7 +51,7 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
     private router: Router,
     private newsContentTagService: NewsContentTagService
   ) {
-    this.fileManagerTree = new TreeModel();
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
 
   }
   requestCategoryId = 0;
