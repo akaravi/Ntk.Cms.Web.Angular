@@ -1,4 +1,8 @@
-<app-progress-spinner [options]="loading"> </app-progress-spinner>
-<div *ngIf="!loading.display" class="form-body">
-  <app-cms-json-list [dataModel]="dataModelResult.Item" [optionMethod]="1" [optionViewHead]="false" [optionFields]="optionFields" ></app-cms-json-list>
+
+<div class="table">
+  <div class="tr" *ngFor="let head of dataModelResult?.Item | keys : optionFields ">
+    <div class="td">{{(optionFields && optionFields.size>0)? optionFields.get(head): head}}</div>
+    <div class="td">{{dataModelResult.Item[head]}}</div>
+    <div style="clear: both;"></div>
+  </div>
 </div>
