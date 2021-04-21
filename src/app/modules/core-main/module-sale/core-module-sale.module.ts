@@ -39,6 +39,7 @@ import { CoreModuleSaleInvoiceDetailListComponent } from './invoice-detail/list/
 import { CoreModuleSaleInvoiceListComponent } from './invoice/list/list.component';
 import { CoreModuleSaleInvoiceViewComponent } from './invoice/view/view.component';
 import { CoreModuleSaleInvoiceDetailViewComponent } from './invoice-detail/view/view.component';
+import { CoreModuleSaleHeaderGroupHeaderComponent } from './header-group/header/header.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { CoreModuleSaleInvoiceDetailViewComponent } from './invoice-detail/view/
     CoreModuleSaleHeaderGroupEditComponent,
     CoreModuleSaleHeaderGroupSelectorComponent,
     CoreModuleSaleHeaderGroupTreeComponent,
+    CoreModuleSaleHeaderGroupHeaderComponent,
     /** */
     /** */
     CoreModuleSaleHeaderListComponent,

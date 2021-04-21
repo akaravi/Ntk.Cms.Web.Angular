@@ -10,6 +10,8 @@ export class CmsJsonListComponent implements OnInit {
   constructor() { }
   @Input() optionMethod = 1;
   @Input() dataModel: any;
+  @Input() optionFields: Map<string, string>;
+  @Input() optionViewHead: boolean = true;
   ngOnInit(): void {
   }
 

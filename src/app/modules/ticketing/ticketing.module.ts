@@ -117,7 +117,8 @@ import { TicketingAnswerEditComponent } from './answer/edit/edit.component';
     TicketingFaqService,
     TicketingAnswerService,
     TicketingTemplateService,
-    CmsConfirmationDialogService
+    CmsConfirmationDialogService,
+    
   ]
 })
 export class TicketingModule { }

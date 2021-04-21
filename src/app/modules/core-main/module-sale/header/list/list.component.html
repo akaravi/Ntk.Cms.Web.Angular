@@ -36,6 +36,8 @@
     </app-progress-spinner>
 
     <div class="example-container mat-elevation-z8">
+      <app-core-modulesaleheadergroup-header *ngIf="requestHeaderGroupId>0" [optionId]="requestHeaderGroupId">
+      </app-core-modulesaleheadergroup-header>
       <mat-table [dataSource]="tableSource" matSort #tableSort="matSort" (matSortChange)="onTableSortData(tableSort)">
         <!-- ID Column -->
         <ng-container matColumnDef="Id">

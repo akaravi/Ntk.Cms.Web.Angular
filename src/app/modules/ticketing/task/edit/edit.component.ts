@@ -4,7 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
-  AccessModel, ApplicationEnumService,
+  AccessModel,
   TicketingTaskModel,
   TicketingTaskService,
   CoreEnumService,
@@ -35,7 +35,6 @@ export class TicketingTaskEditComponent implements OnInit {
     private cmsStoreService: CmsStoreService,
     public publicHelper: PublicHelper,
     public coreEnumService: CoreEnumService,
-    public applicationEnumService: ApplicationEnumService,
     private ticketingTaskService: TicketingTaskService,
     private cmsToastrService: CmsToastrService,
     private router: Router) {

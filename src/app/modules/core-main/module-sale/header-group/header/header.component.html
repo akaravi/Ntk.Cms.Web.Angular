@@ -1,0 +1,4 @@
+<app-progress-spinner [options]="loading"> </app-progress-spinner>
+<div *ngIf="!loading.display" class="form-body">
+  <app-cms-json-list [dataModel]="dataModelResult.Item" [optionMethod]="1" [optionViewHead]="false" [optionFields]="optionFields" ></app-cms-json-list>
+</div>

@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
-  AccessModel, ApplicationEnumService,
+  AccessModel,
   TicketingAnswerModel,
   TicketingAnswerService,
   CoreEnumService,
@@ -31,7 +31,6 @@ export class TicketingAnswerAddComponent implements OnInit {
     private cmsStoreService: CmsStoreService,
     public publicHelper: PublicHelper,
     public coreEnumService: CoreEnumService,
-    public applicationEnumService: ApplicationEnumService,
     private ticketingAnswerService: TicketingAnswerService,
     private cmsToastrService: CmsToastrService,
     private router: Router) {

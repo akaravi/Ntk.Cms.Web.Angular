@@ -4,7 +4,6 @@ import { TicketingComponent } from './ticketing.component';
 import { TicketingDepartemenListComponent } from './departemen/list/list.component';
 import { TicketingDepartemenEditComponent } from './departemen/edit/edit.component';
 import { TicketingFaqListComponent } from './faq/list/list.component';
-import { TicketingFaqEditComponent } from './faq/edit/edit.component';
 import { TicketingTaskEditComponent } from './task/edit/edit.component';
 import { TicketingTaskListComponent } from './task/list/list.component';
 import { TicketingTemplateListComponent } from './template/list/list.component';
@@ -87,11 +86,11 @@ const routes: Routes = [
         path: 'answer',
         component: TicketingAnswerListComponent
       },
-      ,
       {
-        path: 'answer/LinkTicketId:LinkTicketId',
+        path: 'answer/LinkTicketId/:LinkTicketId',
         component: TicketingAnswerListComponent
       },
+
     ]
   },
 ];

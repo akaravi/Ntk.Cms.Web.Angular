@@ -1,6 +1,6 @@
 <!--optionMethod 1-->
 <table *ngIf="optionMethod===1">
-  <thead>
+  <thead  *ngIf="optionViewHead" >
     <tr>
       <th>
         پارامتر
@@ -11,36 +11,36 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let head of dataModel | keys">
-      <td>{{head}}</td>
+    <tr *ngFor="let head of dataModel | keys : optionFields ">
+      <td>{{(optionFields && optionFields.size>0)? optionFields.get(head): head}}</td>
       <td>{{dataModel[head]}}</td>
     </tr>
   </tbody>
 </table>
 <!--optionMethod 2-->
 <table *ngIf="optionMethod===2">
-  <thead>
+  <thead  *ngIf="optionViewHead" >
     <tr>
-      <th *ngFor="let head of dataModel[0] | keys">{{head}}</th>
+      <th *ngFor="let head of dataModel[0] | keys : optionFields">{{(optionFields && optionFields.size>0)? optionFields.get(head): head}}</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let item of dataModel">
-      <td *ngFor="let list of item | keys">{{item[list]}}</td>
+      <td *ngFor="let list of item | keys: optionFields">{{item[list]}}</td>
     </tr>
   </tbody>
 </table>
 
 <!--optionMethod 3-->
 <table *ngIf="optionMethod===3">
-  <thead>
+  <thead  *ngIf="optionViewHead" >
     <tr>
-      <th *ngFor="let head of dataModel | keys">{{head}}</th>
+      <th *ngFor="let head of dataModel | keys: optionFields">{{(optionFields && optionFields.size>0)? optionFields.get(head): head}}</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td *ngFor="let list of dataModel | keys">{{dataModel[list]}}</td>
+      <td *ngFor="let list of dataModel | keys : optionFields">{{dataModel[list]}}</td>
     </tr>
   </tbody>
 </table>
