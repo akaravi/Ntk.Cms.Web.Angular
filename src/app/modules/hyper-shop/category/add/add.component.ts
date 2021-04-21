@@ -22,6 +22,7 @@ import {
 } from 'ntk-cms-filemanager';
 import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
+import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 @Component({
   selector: 'app-ticketing-departemen-add',
@@ -35,7 +36,8 @@ export class HyperShopCategoryAddComponent implements OnInit {
     private dialogRef: MatDialogRef<HyperShopCategoryAddComponent>,
     public coreEnumService: CoreEnumService,
     public hyperShopCategoryService: HyperShopCategoryService,
-    private cmsToastrService: CmsToastrService
+    private cmsToastrService: CmsToastrService,
+    public publicHelper: PublicHelper,
   ) {
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }

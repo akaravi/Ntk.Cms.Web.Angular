@@ -21,6 +21,7 @@ import {
   NodeInterface,
 } from 'ntk-cms-filemanager';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
+import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 @Component({
   selector: 'app-ticketing-departemen-edit',
@@ -35,7 +36,8 @@ export class HyperShopCategoryEditComponent implements OnInit {
     private dialogRef: MatDialogRef<HyperShopCategoryEditComponent>,
     public coreEnumService: CoreEnumService,
     public hyperShopCategoryService: HyperShopCategoryService,
-    private cmsToastrService: CmsToastrService
+    private cmsToastrService: CmsToastrService,
+    public publicHelper: PublicHelper,
   ) {
     if (data) {
       this.requestId = data.id;

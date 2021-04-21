@@ -24,6 +24,7 @@ import {
 } from 'ntk-cms-filemanager';
 import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
+import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 @Component({
   selector: 'app-polling-category-add',
@@ -37,7 +38,8 @@ export class PollingCategoryAddComponent implements OnInit {
     private dialogRef: MatDialogRef<PollingCategoryAddComponent>,
     public coreEnumService: CoreEnumService,
     public pollingCategoryService: PollingCategoryService,
-    private cmsToastrService: CmsToastrService
+    private cmsToastrService: CmsToastrService,
+    public publicHelper: PublicHelper,
   ) {
     if (data) {
       this.requestParentId = +data.parentId || 0;

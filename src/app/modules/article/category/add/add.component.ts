@@ -22,6 +22,7 @@ import {
 } from 'ntk-cms-filemanager';
 import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
+import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 @Component({
   selector: 'app-article-category-add',
@@ -33,7 +34,7 @@ export class ArticleCategoryAddComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
     private dialogRef: MatDialogRef<ArticleCategoryAddComponent>,
-
+    public publicHelper: PublicHelper,
     public coreEnumService: CoreEnumService,
     public articleCategoryService: ArticleCategoryService,
     private cmsToastrService: CmsToastrService

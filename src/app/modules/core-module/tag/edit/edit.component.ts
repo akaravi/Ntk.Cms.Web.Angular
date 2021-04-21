@@ -24,6 +24,7 @@ import {
 } from 'ntk-cms-filemanager';
 import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
+import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 @Component({
   selector: 'app-tag-category-edit',
@@ -35,7 +36,7 @@ export class CoreModuleTagEditComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
     private dialogRef: MatDialogRef<CoreModuleTagEditComponent>,
-
+    public publicHelper: PublicHelper,
     public coreEnumService: CoreEnumService,
     public coreModuleTagService: CoreModuleTagService,
     private cmsToastrService: CmsToastrService

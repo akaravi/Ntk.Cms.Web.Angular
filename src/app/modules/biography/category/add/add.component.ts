@@ -25,6 +25,7 @@ import {
 } from 'ntk-cms-filemanager';
 import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
+import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 @Component({
   selector: 'app-biography-category-add',
@@ -39,6 +40,7 @@ export class BiographyCategoryAddComponent implements OnInit {
     public biographyCategoryService: BiographyCategoryService,
     private cmsToastrService: CmsToastrService,
     private cmsStoreService: CmsStoreService,
+    public publicHelper: PublicHelper,
   ) {
     if (data) {
       this.requestParentId = +data.parentId || 0;

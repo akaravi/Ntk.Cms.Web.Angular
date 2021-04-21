@@ -22,6 +22,7 @@ import {
 } from 'ntk-cms-filemanager';
 import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
+import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 @Component({
   selector: 'app-core-module-edit',
@@ -35,7 +36,8 @@ export class CoreModuleEditComponent implements OnInit {
     private dialogRef: MatDialogRef<CoreModuleEditComponent>,
     public coreEnumService: CoreEnumService,
     public coreModuleService: CoreModuleService,
-    private cmsToastrService: CmsToastrService
+    private cmsToastrService: CmsToastrService,
+    public publicHelper: PublicHelper,
   ) {
     if (data) {
       this.requestId = +data.id || 0;

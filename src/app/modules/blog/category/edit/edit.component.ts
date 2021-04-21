@@ -24,6 +24,7 @@ import {
 } from 'ntk-cms-filemanager';
 import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
+import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 @Component({
   selector: 'app-blog-category-edit',
@@ -37,7 +38,8 @@ export class BlogCategoryEditComponent implements OnInit {
     private dialogRef: MatDialogRef<BlogCategoryEditComponent>,
     public coreEnumService: CoreEnumService,
     public blogCategoryService: BlogCategoryService,
-    private cmsToastrService: CmsToastrService
+    private cmsToastrService: CmsToastrService,
+    public publicHelper: PublicHelper,
   ) {
     if (data) {
       this.requestId = +data.id || 0;

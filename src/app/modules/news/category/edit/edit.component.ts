@@ -24,6 +24,7 @@ import {
 } from 'ntk-cms-filemanager';
 import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
+import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 @Component({
   selector: 'app-news-category-edit',
@@ -38,7 +39,8 @@ export class NewsCategoryEditComponent implements OnInit {
     private dialogRef: MatDialogRef<NewsCategoryEditComponent>,
     public coreEnumService: CoreEnumService,
     public newsCategoryService: NewsCategoryService,
-    private cmsToastrService: CmsToastrService
+    private cmsToastrService: CmsToastrService,
+    public publicHelper: PublicHelper,
   ) {
     if (data) {
       this.requestId = +data.id || 0;

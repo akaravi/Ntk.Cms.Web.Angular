@@ -73,7 +73,7 @@ export class CoreSiteWidgetStatusComponent implements OnInit, OnDestroy {
   onActionSiteSelect(model: CoreSiteModel): void {
     if (model && model.Id > 0) {
       // this.inputSiteId = model.Id;
-      if ( model.Id !== this.tokenInfoModel.SiteId) {
+      if (model.Id !== this.tokenInfoModel.SiteId) {
         if (model.Id === this.tokenInfoModel.SiteId) {
           const etitle = 'هشدار';
           const emessage = 'شناسه این وب سایت با وب سایتی که در آن هستید یکسان است';
@@ -92,8 +92,8 @@ export class CoreSiteWidgetStatusComponent implements OnInit, OnDestroy {
         this.cmsToastrService.toastr.info(message, title);
         this.coreAuthService.ServiceRenewToken(authModel).subscribe(
           (next) => {
-             if (next.IsSuccess) {
-              if (next.Item.SiteId === authModel.SiteId ) {
+            if (next.IsSuccess) {
+              if (next.Item.SiteId === +model.Id) {
                 this.cmsToastrService.toastr.success('دسترسی به سایت جدید تایید شد', title);
 
               } else {
@@ -107,7 +107,8 @@ export class CoreSiteWidgetStatusComponent implements OnInit, OnDestroy {
           (error) => {
             this.cmsToastrService.typeErrorAccessChange(error);
           }
-        );      }
+        );
+      }
     }
   }
 }

@@ -21,6 +21,7 @@ import {
   TreeModel,
 } from 'ntk-cms-filemanager';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
+import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 @Component({
   selector: 'app-bankpayment-publicconfig-add',
@@ -34,7 +35,8 @@ export class BankPaymentPublicConfigAddComponent implements OnInit {
     private dialogRef: MatDialogRef<BankPaymentPublicConfigAddComponent>,
     public coreEnumService: CoreEnumService,
     public bankPaymentPublicConfigService: BankPaymentPublicConfigService,
-    private cmsToastrService: CmsToastrService
+    private cmsToastrService: CmsToastrService,
+    public publicHelper: PublicHelper,
   ) {
 
 

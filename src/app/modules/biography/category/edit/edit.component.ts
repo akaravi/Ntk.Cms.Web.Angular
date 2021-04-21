@@ -24,6 +24,7 @@ import {
 } from 'ntk-cms-filemanager';
 import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
+import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 @Component({
   selector: 'app-biography-category-edit',
@@ -37,7 +38,8 @@ export class BiographyCategoryEditComponent implements OnInit {
     private dialogRef: MatDialogRef<BiographyCategoryEditComponent>,
     public coreEnumService: CoreEnumService,
     public biographyCategoryService: BiographyCategoryService,
-    private cmsToastrService: CmsToastrService
+    private cmsToastrService: CmsToastrService,
+    public publicHelper: PublicHelper,
   ) {
     if (data) {
       this.requestId = +data.id || 0;
