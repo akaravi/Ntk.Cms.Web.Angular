@@ -23,7 +23,11 @@
         <mat-slide-toggle (click)="onActionbuttonExport()">خروجی فایل
         </mat-slide-toggle>
       </a>
+      <a class="btn btn-secondary btn-sm BTN">
+        <mat-slide-toggle (click)="onActionbuttonWithHierarchy()">نمایش دسته ای</mat-slide-toggle>
+      </a>
       <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">برسی مجدد</button>
+
       <app-cms-search-list [(options)]="optionsSearch"></app-cms-search-list>
       <app-cms-export-list [(options)]="optionsExport"></app-cms-export-list>
       <app-cms-statist-list [(options)]="optionsStatist"></app-cms-statist-list>

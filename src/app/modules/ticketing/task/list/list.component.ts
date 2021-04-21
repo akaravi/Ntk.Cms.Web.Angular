@@ -259,7 +259,7 @@ export class TicketingTaskListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonAnswerList(mode: TicketingTaskModel = this.tableRowSelected): void {
     if (!mode || !mode.Id || mode.Id === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelected('ردیفی  انتخاب نشده است');
       return;
     }
     this.tableRowSelected = mode;
@@ -268,11 +268,11 @@ export class TicketingTaskListComponent implements OnInit, OnDestroy {
       this.dataModelResult.Access == null ||
       !this.dataModelResult.Access.AccessWatchRow
     ) {
-      this.cmsToastrService.typeErrorAccessEdit();
+      this.cmsToastrService.typeErrorAccessWatch();
       return;
     }
 
-    this.router.navigate(['/ticketing/answer/LinkTicketId/',this.tableRowSelected.Id]);
+    this.router.navigate(['/ticketing/answer/LinkTicketId/', this.tableRowSelected.Id]);
 
 
   }

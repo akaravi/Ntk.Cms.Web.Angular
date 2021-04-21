@@ -83,6 +83,7 @@ export class ArticleContentListComponent implements OnInit, OnDestroy {
 
 
   cmsApiStoreSubscribe: Subscription;
+  GetAllWithHierarchyCategoryId = false;
   ngOnInit(): void {
     this.DataGetAll();
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
@@ -278,6 +279,10 @@ export class ArticleContentListComponent implements OnInit, OnDestroy {
   onActionbuttonExport(): void {
     this.optionsExport.data.show = !this.optionsExport.data.show;
     this.optionsExport.childMethods.setExportFilterModel(this.filteModelContent);
+  }
+  onActionbuttonWithHierarchy(): void {
+    this.GetAllWithHierarchyCategoryId = !this.GetAllWithHierarchyCategoryId;
+    this.DataGetAll();
   }
   onSubmitOptionExport(model: FilterModel): void {
     const exportlist = new Map<string, string>();

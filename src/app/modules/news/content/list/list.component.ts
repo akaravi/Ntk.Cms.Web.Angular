@@ -75,6 +75,7 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
   ];
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
   cmsApiStoreSubscribe: Subscription;
+  GetAllWithHierarchyCategoryId = false;
   ngOnInit(): void {
 
     this.DataGetAll();
@@ -97,44 +98,83 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
     /*filter CLone*/
     const filterModel = JSON.parse(JSON.stringify(this.filteModelContent));
     /*filter CLone*/
-    if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
-      const filter = new FilterDataModel();
-      filter.PropertyName = 'LinkCategoryId';
-      filter.Value = this.categoryModelSelected.Id;
-      filterModel.Filters.push(filter);
-    }
-    this.newsContentService.ServiceGetAll(filterModel).subscribe(
-      (next) => {
-        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+    if (this.GetAllWithHierarchyCategoryId) {
+      /** GetAllWithHierarchyCategoryId */
+      this.newsContentService.ServiceGetAllWithHierarchyCategoryId(this.categoryModelSelected.Id, filterModel).subscribe(
+        (next) => {
+          this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
 
 
-        if (next.IsSuccess) {
-          this.dataModelResult = next;
-          this.tableSource.data = next.ListItems;
-          if (this.tokenInfo.UserAccessAdminAllowToAllData) {
-            this.tabledisplayedColumns = this.publicHelper.listAddIfNotExist(
-              this.tabledisplayedColumns,
-              'LinkSiteId',
-              0
-            );
-          } else {
-            this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
-              this.tabledisplayedColumns,
-              'LinkSiteId'
-            );
+          if (next.IsSuccess) {
+            this.dataModelResult = next;
+            this.tableSource.data = next.ListItems;
+            if (this.tokenInfo.UserAccessAdminAllowToAllData) {
+              this.tabledisplayedColumns = this.publicHelper.listAddIfNotExist(
+                this.tabledisplayedColumns,
+                'LinkSiteId',
+                0
+              );
+            } else {
+              this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
+                this.tabledisplayedColumns,
+                'LinkSiteId'
+              );
+            }
+            if (this.optionsSearch.childMethods) {
+              this.optionsSearch.childMethods.setAccess(next.Access);
+            }
           }
-          if (this.optionsSearch.childMethods) {
-            this.optionsSearch.childMethods.setAccess(next.Access);
-          }
+          this.loading.display = false;
+        },
+        (error) => {
+          this.cmsToastrService.typeError(error);
+
+          this.loading.display = false;
         }
-        this.loading.display = false;
-      },
-      (error) => {
-        this.cmsToastrService.typeError(error);
-
-        this.loading.display = false;
+      );
+      /** GetAllWithHierarchyCategoryId */
+    } else {
+      /** Normal */
+      if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
+        const filter = new FilterDataModel();
+        filter.PropertyName = 'LinkCategoryId';
+        filter.Value = this.categoryModelSelected.Id;
+        filterModel.Filters.push(filter);
       }
-    );
+      this.newsContentService.ServiceGetAll(filterModel).subscribe(
+        (next) => {
+          this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
+
+          if (next.IsSuccess) {
+            this.dataModelResult = next;
+            this.tableSource.data = next.ListItems;
+            if (this.tokenInfo.UserAccessAdminAllowToAllData) {
+              this.tabledisplayedColumns = this.publicHelper.listAddIfNotExist(
+                this.tabledisplayedColumns,
+                'LinkSiteId',
+                0
+              );
+            } else {
+              this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
+                this.tabledisplayedColumns,
+                'LinkSiteId'
+              );
+            }
+            if (this.optionsSearch.childMethods) {
+              this.optionsSearch.childMethods.setAccess(next.Access);
+            }
+          }
+          this.loading.display = false;
+        },
+        (error) => {
+          this.cmsToastrService.typeError(error);
+
+          this.loading.display = false;
+        }
+      );
+      /** Normal */
+    }
   }
 
   onTableSortData(sort: MatSort): void {
@@ -271,6 +311,10 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
   onActionbuttonExport(): void {
     this.optionsExport.data.show = !this.optionsExport.data.show;
     this.optionsExport.childMethods.setExportFilterModel(this.filteModelContent);
+  }
+  onActionbuttonWithHierarchy(): void {
+    this.GetAllWithHierarchyCategoryId = !this.GetAllWithHierarchyCategoryId;
+    this.DataGetAll();
   }
   onSubmitOptionExport(model: FilterModel): void {
     const exportlist = new Map<string, string>();

@@ -279,6 +279,11 @@ export class BlogContentListComponent implements OnInit, OnDestroy {
     this.optionsExport.data.show = !this.optionsExport.data.show;
     this.optionsExport.childMethods.setExportFilterModel(this.filteModelContent);
   }
+  GetAllWithHierarchyCategoryId = false;
+  onActionbuttonWithHierarchy(): void {
+    this.GetAllWithHierarchyCategoryId = !this.GetAllWithHierarchyCategoryId;
+    this.DataGetAll();
+  }
   onSubmitOptionExport(model: FilterModel): void {
     const exportlist = new Map<string, string>();
     exportlist.set('Download', 'loading ... ');
