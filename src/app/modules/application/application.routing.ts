@@ -67,6 +67,7 @@ const routes: Routes = [
         path: 'app/edit/:Id',
         component: ApplicationAppEditComponent
       },
+      /** */
       {
         path: 'intro',
         component: ApplicationIntroListComponent
@@ -83,6 +84,7 @@ const routes: Routes = [
         path: 'intro/edit/:Id',
         component: ApplicationIntroEditComponent
       },
+      /** */
       {
         path: 'memberinfo',
         component: ApplicationMemberInfoListComponent

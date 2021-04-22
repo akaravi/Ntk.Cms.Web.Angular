@@ -42,7 +42,7 @@ export class BankPaymentPrivateSiteConfigSelectorComponent implements OnInit {
   formControl = new FormControl();
   filteredOptions: Observable<BankPaymentPrivateSiteConfigModel[]>;
   parentId = 0;
-    @Input() disabled = new EventEmitter<boolean>();
+  @Input() disabled = new EventEmitter<boolean>();
   @Input() optionSelectFirstItem = false;
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Output() optionSelect = new EventEmitter<BankPaymentPrivateSiteConfigModel>();
@@ -75,19 +75,13 @@ export class BankPaymentPrivateSiteConfigSelectorComponent implements OnInit {
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
     const filters = new Array<FilterDataModel>();
-    if (text && typeof text === 'string' && text.length > 0) {
-      const filter = new FilterDataModel();
-      filter.PropertyName = 'Title';
-      filter.Value = text;
-      filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
-      filteModel.Filters.push(filter);
-    } else if (text && typeof +text === 'number' && +text > 0){
-      let filter = new FilterDataModel();
-      filter.PropertyName = 'Title';
-      filter.Value = text;
-      filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
-      filter.ClauseType = EnumClauseType.Or;
-      filteModel.Filters.push(filter);
+        let filter = new FilterDataModel();
+    filter.PropertyName = 'Title';
+    filter.Value = text;
+    filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
+    filter.ClauseType = EnumClauseType.Or;
+    filteModel.Filters.push(filter);
+    if (text && typeof +text === 'number' && +text > 0) {
       filter = new FilterDataModel();
       filter.PropertyName = 'Id';
       filter.Value = text;
@@ -135,7 +129,7 @@ export class BankPaymentPrivateSiteConfigSelectorComponent implements OnInit {
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
   }
-  onActionSelectClear(): void{
+  onActionSelectClear(): void {
     this.formControl.setValue(null);
     this.optionSelect.emit(null);
   }

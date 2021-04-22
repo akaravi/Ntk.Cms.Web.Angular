@@ -10,33 +10,62 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { TagInputModule } from 'ngx-chips';
 import { CmsFileManagerModule } from 'ntk-cms-filemanager';
 import {
-  ApplicationAppService,
-  ApplicationIntroService,
-  ApplicationLogNotificationService,
-  ApplicationMemberInfoService,
-  ApplicationSourceService,
-  ApplicationThemeConfigService,
   CoreAuthService,
   CoreEnumService,
-  ApplicationEnumService,
-  CoreModuleTagService
+  CoreModuleTagService,
+  WebDesignerConfigurationService,
+  WebDesignerLogPageSafeService,
+  WebDesignerMainIntroService,
+  WebDesignerMainMenuService,
+  WebDesignerMainPageDependencyService,
+  WebDesignerMainPageService,
+  WebDesignerMainPageTemplateService
 } from 'ntk-cms-api';
-import {MatIconModule} from '@angular/material/icon';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatStepperModule} from '@angular/material/stepper';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatStepperModule } from '@angular/material/stepper';
 
 import { CmsFileUploaderModule } from 'ntk-cms-fileuploader';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { WebDesignerConfigMainAdminComponent } from './config/mainAdmin/configMainAdmin.component';
+import { WebDesignerConfigSiteComponent } from './config/site/configSite.component';
+import { WebDesignerMainIntroListComponent } from './intro/list/list.component';
+import { WebDesignerMainIntroAddComponent } from './intro/add/add.component';
+import { WebDesignerMainIntroEditComponent } from './intro/edit/edit.component';
+import { WebDesignerMainMenuEditComponent } from './menu/edit/edit.component';
+import { WebDesignerMainMenuListComponent } from './menu/list/list.component';
+import { WebDesignerMainMenuSelectorComponent } from './menu/selector/selector.component';
+import { WebDesignerMainMenuTreeComponent } from './menu/tree/tree.component';
+import { WebDesignerMainMenuAddComponent } from './menu/add/add.component';
+import { ColorPickerModule } from 'ngx-color-picker';
+import { IconPickerModule } from 'ngx-icon-picker';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
     WebDesignerComponent,
+    /*Config*/
+    WebDesignerConfigMainAdminComponent,
+    WebDesignerConfigSiteComponent,
+    /*Config*/
+    /** */
+    WebDesignerMainIntroAddComponent,
+    WebDesignerMainIntroEditComponent,
+    WebDesignerMainIntroListComponent,
+    /** */
+    /** */
+    WebDesignerMainMenuAddComponent,
+    WebDesignerMainMenuEditComponent,
+    WebDesignerMainMenuListComponent,
+    WebDesignerMainMenuSelectorComponent,
+    WebDesignerMainMenuTreeComponent,
+    /** */
   ],
   imports: [
     CommonModule,
     WebDesignerRoutes,
     FormsModule,
-    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
+    ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
     TreeviewModule.forRoot(),
     SharedModule.forRoot(),
     AngularEditorModule,
@@ -45,20 +74,25 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
     MatIconModule,
     MatFormFieldModule,
     MatStepperModule,
-    CmsFileUploaderModule
+    CmsFileUploaderModule,
+    ColorPickerModule,
+    IconPickerModule,
+    DragDropModule
   ],
   providers: [
     CoreEnumService,
     CoreAuthService,
-    CmsConfirmationDialogService ,
-    ApplicationEnumService,
+    /*Config*/
+    WebDesignerConfigurationService,
+    /*Config*/
+    CmsConfirmationDialogService,
     CoreModuleTagService,
-    ApplicationAppService,
-    ApplicationIntroService,
-    ApplicationSourceService,
-    ApplicationMemberInfoService,
-    ApplicationLogNotificationService,
-    ApplicationThemeConfigService,
+    WebDesignerLogPageSafeService,
+    WebDesignerMainIntroService,
+    WebDesignerMainMenuService,
+    WebDesignerMainPageService,
+    WebDesignerMainPageDependencyService,
+    WebDesignerMainPageTemplateService
   ]
 })
 export class WebDesignerModule { }

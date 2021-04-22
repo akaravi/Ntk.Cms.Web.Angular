@@ -8,7 +8,7 @@
       <mat-horizontal-stepper *ngIf="!loading.display" (selectionChange)="onStepClick($event,stepper)" #stepper>
 
         <mat-step label="اطلاعات الزامی" state="main">
-
+          <!-- RecordStatus Field -->
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['RecordStatus']?.AccessWatchField">
             <mat-select placeholder="{{fieldsInfo['RecordStatus']?.FieldTitle}}" [(ngModel)]="dataModel.RecordStatus"
               [disabled]="!fieldsInfo['RecordStatus']?.AccessAddField" name="dataModel.RecordStatus"
@@ -23,12 +23,11 @@
               {{ fieldsInfo['RecordStatus']?.FieldTitle }} is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-
+          <!-- LinkApplicationId Field -->
           <app-application-app-selector (optionSelect)="onActionSelectApplication($event)"
             [optionSelectForce]="this.dataModel.LinkApplicationId" [optionPlaceholder]="' اپلیکیشن'"
             [disabled]="!fieldsInfo['LinkApplicationId']?.AccessAddField"></app-application-app-selector>
-
-
+          <!-- Title Field -->
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Title']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['Title']?.FieldTitle }}</mat-label>
             <input matInput [(ngModel)]="dataModel.Title" [disabled]="!fieldsInfo['Title']?.AccessAddField"
@@ -41,9 +40,7 @@
               {{ fieldsInfo['Title']?.FieldTitle }} is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-
-
-
+          <!-- Description Field -->
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Description']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['Description']?.FieldDescription }}</mat-label>
             <textarea matInput [(ngModel)]="dataModel.Description"
@@ -60,7 +57,7 @@
           </mat-form-field>
 
           <div *ngIf="formInfo.FormSubmitAllow">
-           <button type="button" mat-button  (click)="onActionBackToParent()"
+            <button type="button" mat-button (click)="onActionBackToParent()"
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
               بازگشت
             </button>
@@ -74,7 +71,7 @@
 
         <mat-step label="فایل های پیوست" state="file">
           <p>عکسها و فایل های اپلیکیشن</p>
-
+          <!-- LinkMainImageId Field -->
           <div class="mb-3">
             <img *ngIf="dataModel?.LinkMainImageIdSrc?.length>0" style="vertical-align:middle;" aria-hidden
               src="{{dataModel.LinkMainImageIdSrc}}" height="50" width="50" />
@@ -97,7 +94,7 @@
               [openFilemanagerButtonLabelKey]="'select'" [selectFileType]="selectFileTypeMainImage"
               [openFilemanagerButtonView]="false"></cms-file-manager>
           </div>
-
+          <!-- LinkMainVideoId Field -->
           <div class="mb-3">
             <img *ngIf="dataModel?.LinkMainVideoIdSrc?.length>0" style="vertical-align:middle;" aria-hidden
               src="{{dataModel.LinkMainVideoIdSrc}}" height="50" width="50" />
@@ -105,7 +102,8 @@
           <div class="mb-9">
             <mat-form-field class="example-full-width" *ngIf="fieldsInfo['LinkMainVideoId']?.AccessWatchField">
 
-              <mat-label (click)="fileManagerOpenFormVideo = true">{{fieldsInfo['LinkMainVideoId']?.FieldTitle}}</mat-label>
+              <mat-label (click)="fileManagerOpenFormVideo = true">{{fieldsInfo['LinkMainVideoId']?.FieldTitle}}
+              </mat-label>
               <input matInput [(ngModel)]="dataModel.LinkMainVideoId"
                 [disabled]="!fieldsInfo['LinkMainVideoId']?.AccessAddField" name="dataModel.LinkMainVideoId"
                 #LinkMainVideoId type="text" placeholder="شناسه فایل اصلی" (click)="fileManagerOpenFormVideo = true" />
@@ -121,28 +119,17 @@
               [openFilemanagerButtonView]="false"></cms-file-manager>
           </div>
 
-
-
-
-
-
-
-
-
-
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
               قبلی
             </button>
             <button type="submit" mat-button [disabled]="!vform.form.valid"
-            class="btn btn-success font-weight-bold text-uppercase px-9 py-4">
-            ذخیره
-          </button>
+              class="btn btn-success font-weight-bold text-uppercase px-9 py-4">
+              ذخیره
+            </button>
           </div>
         </mat-step>
-
-
 
 
       </mat-horizontal-stepper>

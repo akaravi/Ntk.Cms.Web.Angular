@@ -65,19 +65,13 @@ export class FileContentSelectorComponent implements OnInit {
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
     // this.loading.backdropEnabled = false;
-    if (text && typeof text === 'string' && text.length > 0) {
-      const filter = new FilterDataModel();
-      filter.PropertyName = 'Title';
-      filter.Value = text;
-      filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
-      filteModel.Filters.push(filter);
-    } else if (text && typeof +text === 'number' && +text > 0) {
-      let filter = new FilterDataModel();
-      filter.PropertyName = 'Title';
-      filter.Value = text;
-      filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
-      filter.ClauseType = EnumClauseType.Or;
-      filteModel.Filters.push(filter);
+    let filter = new FilterDataModel();
+    filter.PropertyName = 'Title';
+    filter.Value = text;
+    filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
+    filter.ClauseType = EnumClauseType.Or;
+    filteModel.Filters.push(filter);
+    if (text && typeof +text === 'number' && +text > 0) {
       filter = new FilterDataModel();
       filter.PropertyName = 'Id';
       filter.Value = text;

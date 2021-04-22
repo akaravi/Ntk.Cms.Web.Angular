@@ -1,66 +1,55 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { WebDesignerConfigMainAdminComponent } from './config/mainAdmin/configMainAdmin.component';
+import { WebDesignerConfigSiteComponent } from './config/site/configSite.component';
+import { WebDesignerMainIntroAddComponent } from './intro/add/add.component';
+import { WebDesignerMainIntroEditComponent } from './intro/edit/edit.component';
+import { WebDesignerMainIntroListComponent } from './intro/list/list.component';
 import { WebDesignerComponent } from './webDesigner.component';
 
 const routes: Routes = [
   {
     path: '',
     component: WebDesignerComponent,
-    // children: [
-    //   {
-    //     path: 'source',
-    //     component: ApplicationSourceListComponent
-    //   },
-    //   {
-    //     path: 'source/add',
-    //     component: ApplicationSourceAddComponent
-    //   },
-    //   {
-    //     path: 'source/edit/:Id',
-    //     component: ApplicationSourceEditComponent
-    //   },
-    //   {
-    //     path: 'app',
-    //     component: ApplicationAppListComponent
-    //   },
-    //   {
-    //     path: 'app/:SourceId',
-    //     component: ApplicationAppListComponent
-    //   },
-    //   {
-    //     path: 'app/add/:SourceId',
-    //     component: ApplicationAppAddComponent
-    //   },
-    //   {
-    //     path: 'app/edit/:Id',
-    //     component: ApplicationAppEditComponent
-    //   },
-    //   {
-    //     path: 'intro',
-    //     component: ApplicationIntroListComponent
-    //   },
-    //   {
-    //     path: 'intro/add/:ApplicationId',
-    //     component: ApplicationIntroListComponent
-    //   },
-    //   {
-    //     path: 'intro/edit/:Id',
-    //     component: ApplicationIntroListComponent
-    //   },
-    //   {
-    //     path: 'memberinfo',
-    //     component: ApplicationMemberInfoListComponent
-    //   },
-    //   {
-    //     path: 'notification',
-    //     component: ApplicationNotificationListComponent
-    //   },
+    children: [
+      /*Config*/
+      {
+        path: 'config/mainadmin',
+        component: WebDesignerConfigMainAdminComponent
+      },
+      {
+        path: 'config/site',
+        component: WebDesignerConfigSiteComponent
+      },
+      {
+        path: 'config/site/:LinkSiteId',
+        component: WebDesignerConfigSiteComponent
+      },
+      /*Config*/
+      /** */
+      {
+        path: 'intro',
+        component: WebDesignerMainIntroListComponent
+      },
+      {
+        path: 'intro/LinkPageId/:LinkPageId',
+        component: WebDesignerMainIntroListComponent
+      },
+      {
+        path: 'intro/add',
+        component: WebDesignerMainIntroAddComponent
+      },
+      {
+        path: 'intro/add/:LinkPageId',
+        component: WebDesignerMainIntroAddComponent
+      },
+      {
+        path: 'intro/edit/:Id',
+        component: WebDesignerMainIntroEditComponent
+      },
+      /** */
 
-    //   {
-    //     path: 'themeconfig',
-    //     component: ApplicationThemeConfigListComponent
-    //   },
-    // ]
+    ]
   },
 ];
 
