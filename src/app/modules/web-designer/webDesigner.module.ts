@@ -14,6 +14,7 @@ import {
   CoreEnumService,
   CoreModuleTagService,
   WebDesignerConfigurationService,
+  WebDesignerEnumService,
   WebDesignerLogPageSafeService,
   WebDesignerMainIntroService,
   WebDesignerMainMenuService,
@@ -134,7 +135,8 @@ import { WebDesignerMainPageTemplateHeaderComponent } from './page-template/head
     WebDesignerMainMenuService,
     WebDesignerMainPageService,
     WebDesignerMainPageDependencyService,
-    WebDesignerMainPageTemplateService
+    WebDesignerMainPageTemplateService,
+    WebDesignerEnumService
   ]
 })
 export class WebDesignerModule { }

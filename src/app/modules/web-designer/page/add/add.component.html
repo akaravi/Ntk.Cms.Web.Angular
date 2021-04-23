@@ -44,11 +44,22 @@
           {{fieldsInfo['Title']?.FieldTitle}} is <strong>required</strong>
         </mat-error>
       </mat-form-field>
-      <!-- KeywordModel Field -->
-      <tag-input [(ngModel)]="keywordDataModel" name="keywordDataModel" [placeholder]="'+ کلمه کلیدی'"
-        [disabled]="!fieldsInfo['Title']?.AccessAddField" [secondaryPlaceholder]="'انتخاب کلمات کلیدی نسبت به مطلب'"
-        [identifyBy]="'display'">
-      </tag-input>
+
+      <app-webdesigner-pagedependency-selector (optionSelect)="onActionSelectDependency($event)"
+        [disabled]="!fieldsInfo['LinkPageDependencyGuId']?.AccessAddField"
+        [optionSelectForce]="dataModel.LinkPageDependencyGuId" [optionPlaceholder]="'محل نمایش '">
+      </app-webdesigner-pagedependency-selector>
+
+      <app-webdesigner-pagetemplate-selector (optionSelect)="onActionSelectTemplate($event)"
+        [disabled]="!fieldsInfo['LinkPageTemplateGuId']?.AccessAddField"
+        [optionSelectForce]="dataModel.LinkPageTemplateGuId" [optionPlaceholder]="'قالب صفحه '">
+      </app-webdesigner-pagetemplate-selector>
+
+      <app-webdesigner-page-selector (optionSelect)="onActionSelectParent($event)"
+        [disabled]="!fieldsInfo['LinkCmsPageGuId']?.AccessAddField" [optionSelectForce]="dataModel.LinkCmsPageGuId"
+        [optionPlaceholder]="'صفحه والد'">
+      </app-webdesigner-page-selector>
+
       <!-- PageDependencyIsDefualtPage Field -->
       <div class="example-full-width">
         <mat-slide-toggle [(ngModel)]="dataModel.PageDependencyIsDefualtPage"
@@ -58,27 +69,12 @@
           {{fieldsInfo['PageDependencyIsDefualtPage']?.FieldTitle}}
         </mat-slide-toggle>
       </div>
-      <!-- ContentPageFindInDefaultSiteCategory Field -->
-      <div class="example-full-width">
-        <mat-slide-toggle [(ngModel)]="dataModel.ContentPageFindInDefaultSiteCategory"
-          *ngIf="fieldsInfo['ContentPageFindInDefaultSiteCategory']?.AccessWatchField"
-          [disabled]="!fieldsInfo['ContentPageFindInDefaultSiteCategory']?.AccessAddField"
-          name="dataModel.ContentPageFindInDefaultSiteCategory">
-          {{fieldsInfo['ContentPageFindInDefaultSiteCategory']?.FieldTitle}}
-        </mat-slide-toggle>
-      </div>
-      <app-webdesigner-pagedependency-selector (optionSelect)="onActionSelectDependency($event)" [disabled]="!fieldsInfo['LinkPageDependencyGuId']?.AccessAddField"
-        [optionSelectForce]="dataModel.LinkPageDependencyGuId" [optionPlaceholder]="'محل نمایش '">
-      </app-webdesigner-pagedependency-selector>
 
-      <app-webdesigner-pagetemplate-selector (optionSelect)="onActionSelectTemplate($event)" [disabled]="!fieldsInfo['LinkPageTemplateGuId']?.AccessAddField"
-        [optionSelectForce]="dataModel.LinkPageTemplateGuId" [optionPlaceholder]="'قالب صفحه '">
-      </app-webdesigner-pagetemplate-selector>
-
-      <app-webdesigner-page-selector (optionSelect)="onActionSelectParent($event)" [disabled]="!fieldsInfo['LinkCmsPageGuId']?.AccessAddField"
-        [optionSelectForce]="dataModel.LinkCmsPageGuId" [optionPlaceholder]="'صفحه والد'">
-      </app-webdesigner-page-selector>
-
+      <!-- KeywordModel Field -->
+      <tag-input [(ngModel)]="keywordDataModel" name="keywordDataModel" [placeholder]="'+ کلمه کلیدی'"
+        [disabled]="!fieldsInfo['Title']?.AccessAddField" [secondaryPlaceholder]="'انتخاب کلمات کلیدی نسبت به مطلب'"
+        [identifyBy]="'display'">
+      </tag-input>
       <!-- SpecialIdendity Field -->
       <mat-form-field class="example-full-width">
         <mat-label>{{fieldsInfo['SpecialIdendity']?.FieldTitle}}</mat-label>

@@ -221,7 +221,7 @@ export class WebDesignerMainPageListComponent implements OnInit, OnDestroy {
       return;
     }
     const dialogRef = this.dialog.open(WebDesignerMainPageAddComponent, {
-      data: { requestLinkPageDependencyGuId: this.requestLinkPageDependencyGuId }
+      data: { LinkPageDependencyGuId: this.requestLinkPageDependencyGuId }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.dialogChangedDate) {

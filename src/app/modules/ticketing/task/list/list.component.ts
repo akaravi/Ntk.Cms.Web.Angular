@@ -28,6 +28,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
 import { TicketingTaskEditComponent } from '../edit/edit.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { TicketingTaskAddComponent } from '../add/add.component';
 
 @Component({
   selector: 'app-application-app-list',
@@ -201,20 +202,13 @@ export class TicketingTaskListComponent implements OnInit, OnDestroy {
 
       return;
     }
-    if (
-      this.dataModelResult == null ||
-      this.dataModelResult.Access == null ||
-      !this.dataModelResult.Access.AccessAddRow
-    ) {
-      this.cmsToastrService.typeErrorAccessAdd();
-      return;
-    }
+
     let parentId: number = this.requestDepartemenId;
     if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
       parentId = this.categoryModelSelected.Id;
     }
-    const dialogRef = this.dialog.open(TicketingTaskEditComponent, {
-      data: { requestParentId: parentId }
+    const dialogRef = this.dialog.open(TicketingTaskAddComponent, {
+      data: { LinkDepartemenId: parentId }
     });
     dialogRef.afterClosed().subscribe(result => {
       // console.log(`Dialog result: ${result}`);

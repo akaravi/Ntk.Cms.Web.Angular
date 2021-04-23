@@ -51,7 +51,7 @@ export class WebDesignerMainPageEditComponent implements OnInit {
 
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
-   @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
 
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
   keywordDataModel = [];
@@ -112,7 +112,7 @@ export class WebDesignerMainPageEditComponent implements OnInit {
 
         this.dataModel = next.Item;
         if (next.IsSuccess) {
-          this.keywordDataModel=[];
+          this.keywordDataModel = [];
           if (this.dataModel.Keyword && this.dataModel.Keyword.length > 0) {
             this.keywordDataModel = this.dataModel.Keyword.split(',');
           }

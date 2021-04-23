@@ -39,7 +39,7 @@ export class TicketingTaskAddComponent implements OnInit {
     private router: Router) {
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
-  requestDepartemenId = 0;
+  requestLinkDepartemenId = 0;
 
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
   loading = new ProgressSpinnerModel();
@@ -59,12 +59,9 @@ export class TicketingTaskAddComponent implements OnInit {
   mapOptonCenter = {};
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
   ngOnInit(): void {
-    this.requestDepartemenId = + Number(this.activatedRoute.snapshot.paramMap.get('SourceId'));
-    if (this.requestDepartemenId === 0) {
-      this.cmsToastrService.typeErrorAddRowParentIsNull();
-      return;
-    }
-    this.dataModel.LinkTicketingDepartemenId = this.requestDepartemenId;
+    this.requestLinkDepartemenId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkDepartemenId'));
+
+    this.dataModel.LinkTicketingDepartemenId = this.requestLinkDepartemenId;
     this.DataGetAccess();
     this.getEnumRecordStatus();
   }
