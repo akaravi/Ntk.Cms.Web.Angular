@@ -61,7 +61,7 @@
         <ng-container matColumnDef="LinkModuleId">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkModuleId']?.FieldTitle}}
           </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.Title}} </mat-cell>
+          <mat-cell *matCellDef="let row"> {{row.LinkModuleId | cmstitle : dataModelCoreModuleResult.ListItems}} </mat-cell>
         </ng-container>
         <!-- SalePrice Column -->
         <ng-container matColumnDef="SalePrice">
@@ -78,7 +78,8 @@
         <ng-container matColumnDef="EnumCmsModuleSaleItemType">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['EnumCmsModuleSaleItemType']?.FieldTitle}}
           </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.EnumCmsModuleSaleItemType | enums : dataModelEnumCmsModuleSaleItemTypeResult.ListItems}} </mat-cell>
+          <mat-cell *matCellDef="let row"> {{row.EnumCmsModuleSaleItemType | enums :
+            dataModelEnumCmsModuleSaleItemTypeResult.ListItems}} </mat-cell>
         </ng-container>
 
         <!-- ExpireDate Column -->

@@ -68,9 +68,9 @@ const routes: Routes = [
           import('../modules/hyper-shop/hyperShop.module').then(m => m.HyperShopModule)
       },
       {
-        path: 'linkmanagment',
+        path: 'linkmanagement',
         loadChildren: () =>
-          import('../modules/link-managment/linkManagment.module').then(m => m.LinkManagmentModule)
+          import('../modules/link-management/linkManagement.module').then(m => m.LinkManagementModule)
       },
       {
         path: 'member',

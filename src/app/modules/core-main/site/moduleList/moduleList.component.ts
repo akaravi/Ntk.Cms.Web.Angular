@@ -15,7 +15,9 @@ import {
   CoreModuleSiteService,
   CoreModuleSiteModel,
   DataFieldInfoModel,
-  EnumFilterDataModelSearchTypes
+  EnumFilterDataModelSearchTypes,
+  CoreModuleService,
+  CoreModuleModel
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -45,6 +47,7 @@ export class CoreSiteModuleListComponent implements OnInit, OnDestroy {
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
     private activatedRoute: ActivatedRoute,
+    private coreModuleService: CoreModuleService,
     private cmsConfirmationDialogService: CmsConfirmationDialogService,
     public dialog: MatDialog,
     private router: Router,
@@ -90,6 +93,7 @@ export class CoreSiteModuleListComponent implements OnInit, OnDestroy {
   tableRowSelected: CoreModuleSiteModel = new CoreModuleSiteModel();
   tableSource: MatTableDataSource<CoreModuleSiteModel> = new MatTableDataSource<CoreModuleSiteModel>();
 
+  dataModelCoreModuleResult: ErrorExceptionResult<CoreModuleModel> = new ErrorExceptionResult<CoreModuleModel>();
 
   tabledisplayedColumns: string[] = [
     'LinkSiteId',
@@ -118,6 +122,15 @@ export class CoreSiteModuleListComponent implements OnInit, OnDestroy {
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
+    });
+
+    this.getModuleList();
+  }
+  getModuleList(): void {
+    const filter = new FilterModel();
+    filter.RowPerPage = 100;
+    this.coreModuleService.ServiceGetAll(filter).subscribe((next) => {
+      this.dataModelCoreModuleResult = next;
     });
   }
   ngOnDestroy(): void {
@@ -195,7 +208,7 @@ export class CoreSiteModuleListComponent implements OnInit, OnDestroy {
       data: {
         LinkSiteId: this.requestLinkSiteId,
         LinkModuleId: this.requestLinkModuleId,
-       }
+      }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.dialogChangedDate) {

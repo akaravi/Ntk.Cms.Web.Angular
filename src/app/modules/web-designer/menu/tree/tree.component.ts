@@ -29,7 +29,7 @@ import { WebDesignerMainMenuAddComponent } from '../add/add.component';
 
 
 @Component({
-  selector: 'app-core-cpmainmenu-tree',
+  selector: 'app-webdesigner-menu-tree',
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.scss'],
 })
@@ -96,7 +96,7 @@ export class WebDesignerMainMenuTreeComponent implements OnInit, OnDestroy {
     this.optionSelect.emit(this.dataModelSelect);
   }
   onActionReload(): void {
-    if (this.dataModelSelect && this.dataModelSelect.Id.length > 0) {
+    if (this.dataModelSelect && this.dataModelSelect?.Id?.length > 0) {
       this.onActionSelect(this.dataModelSelect);
     }
     else {
@@ -112,7 +112,7 @@ export class WebDesignerMainMenuTreeComponent implements OnInit, OnDestroy {
 
   onActionAdd(): void {
     let parentId = '';
-    if (this.dataModelSelect && this.dataModelSelect.Id.length > 0) {
+    if (this.dataModelSelect && this.dataModelSelect?.Id?.length > 0) {
       parentId = this.dataModelSelect.Id;
     }
 
@@ -133,7 +133,7 @@ export class WebDesignerMainMenuTreeComponent implements OnInit, OnDestroy {
 
   onActionEdit(): void {
     let id = '';
-    if (this.dataModelSelect && this.dataModelSelect.Id.length > 0) {
+    if (this.dataModelSelect && this.dataModelSelect?.Id?.length > 0) {
       id = this.dataModelSelect.Id;
     }
     if (id.length === 0) {
@@ -154,7 +154,7 @@ export class WebDesignerMainMenuTreeComponent implements OnInit, OnDestroy {
 
   onActionDelete(): void {
     let id = '';
-    if (this.dataModelSelect && this.dataModelSelect.Id.length > 0) {
+    if (this.dataModelSelect && this.dataModelSelect?.Id?.length > 0) {
       id = this.dataModelSelect.Id;
     }
     if (id.length === 0) {

@@ -17,7 +17,7 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 @Component({
-  selector: 'app-bank-paymentpublic-header',
+  selector: 'app-bankpayment-publicconfig-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
@@ -29,7 +29,7 @@ export class BankPaymentPublicConfigHeaderComponent implements OnInit {
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
   ) {
-    
+
   }
   @Input() optionId = 0;
   loading = new ProgressSpinnerModel();

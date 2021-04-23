@@ -87,7 +87,7 @@
             <mat-label>{{ fieldsInfo['AboutUsTitle']?.FieldAboutUsTitle }}</mat-label>
             <input matInput [(ngModel)]="dataModel.AboutUsTitle"
               [disabled]="!fieldsInfo['AboutUsTitle']?.AccessEditField" name="dataModel.AboutUsTitle" #AboutUsTitle
-              type="text" placeholder="عنوان" minlength="0" maxlength="100" />
+              type="text" placeholder="متن درباره ما" minlength="0" maxlength="100" />
             <mat-icon matSuffix *ngIf="dataModel.AboutUsTitle && fieldsInfo['AboutUsTitle']?.AccessEditField" matSuffix
               mat-icon-button aria-label="Clear" (click)="dataModel.AboutUsTitle = ''">close</mat-icon>
             <mat-icon *ngIf="fieldsInfo['AboutUsTitle']?.AccessEditField" matSuffix>mode_edit</mat-icon>
@@ -231,7 +231,7 @@
             <mat-label>{{fieldsInfo['DownloadLinkSrcCustomize']?.FieldTitle}}</mat-label>
             <input matInput [(ngModel)]="dataModel.DownloadLinkSrcCustomize"
               [disabled]="!fieldsInfo['DownloadLinkSrcCustomize']?.AccessEditField"
-              name="dataModel.DownloadLinkSrcCustomize" #DownloadLinkSrcCustomize type="text" placeholder="عنوان"
+              name="dataModel.DownloadLinkSrcCustomize" #DownloadLinkSrcCustomize type="text" placeholder="لینک دانلود"
               minlength="0" maxlength="1000" />
             <mat-icon matSuffix
               *ngIf="dataModel.DownloadLinkSrcCustomize && fieldsInfo['DownloadLinkSrcCustomize']?.AccessEditField"
@@ -249,7 +249,7 @@
             <mat-label>{{fieldsInfo['DownloadLinkSrc']?.FieldTitle}}</mat-label>
             <input matInput [(ngModel)]="dataModel.DownloadLinkSrc"
               [disabled]="!fieldsInfo['DownloadLinkSrc']?.AccessEditField" name="dataModel.DownloadLinkSrc"
-              #DownloadLinkSrc type="text" placeholder="عنوان" minlength="0" maxlength="1000" />
+              #DownloadLinkSrc type="text" placeholder="http://" minlength="0" maxlength="1000" />
             <mat-icon matSuffix *ngIf="dataModel.DownloadLinkSrc && fieldsInfo['DownloadLinkSrc']?.AccessEditField"
               matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.DownloadLinkSrc = ''">close</mat-icon>
             <mat-icon *ngIf="fieldsInfo['DownloadLinkSrc']?.AccessEditField" matSuffix>mode_edit</mat-icon>
@@ -259,7 +259,7 @@
             <mat-label>{{fieldsInfo['DownloadLinkUpdateSrc']?.FieldTitle}}</mat-label>
             <input matInput [(ngModel)]="dataModel.DownloadLinkUpdateSrc"
               [disabled]="!fieldsInfo['DownloadLinkUpdateSrc']?.AccessEditField" name="dataModel.DownloadLinkUpdateSrc"
-              #DownloadLinkUpdateSrc type="text" placeholder="عنوان" minlength="0" maxlength="1000" />
+              #DownloadLinkUpdateSrc type="text" placeholder="http://..." minlength="0" maxlength="1000" />
             <mat-icon matSuffix
               *ngIf="dataModel.DownloadLinkUpdateSrc && fieldsInfo['DownloadLinkUpdateSrc']?.AccessEditField" matSuffix
               mat-icon-button aria-label="Clear" (click)="dataModel.DownloadLinkUpdateSrc = ''">close</mat-icon>
@@ -415,7 +415,7 @@
             <textarea matInput [(ngModel)]="dataModel.ConfigBuilderAdminJsonValues"
               [disabled]="!fieldsInfo['ConfigBuilderAdminJsonValues']?.AccessEditField"
               name="dataModel.ConfigBuilderAdminJsonValues" #ConfigBuilderAdminJsonValues type="text"
-              placeholder="عنوان" rows="5"></textarea>
+              placeholder="مقادیر" rows="5"></textarea>
             <mat-icon matSuffix *ngIf="dataModel.ConfigBuilderAdminJsonValues" matSuffix mat-icon-button
               aria-label="Clear" (click)="dataModel.ConfigBuilderAdminJsonValues = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
@@ -426,7 +426,7 @@
             <textarea matInput [(ngModel)]="dataModel.ConfigRuntimeAdminJsonValues"
               [disabled]="!fieldsInfo['ConfigRuntimeAdminJsonValues']?.AccessEditField"
               name="dataModel.ConfigRuntimeAdminJsonValues" #ConfigRuntimeAdminJsonValues type="text"
-              placeholder="عنوان" rows="5"></textarea>
+              placeholder="مقادیر" rows="5"></textarea>
             <mat-icon matSuffix *ngIf="dataModel.ConfigRuntimeAdminJsonValues" matSuffix mat-icon-button
               aria-label="Clear" (click)="dataModel.ConfigRuntimeAdminJsonValues = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>

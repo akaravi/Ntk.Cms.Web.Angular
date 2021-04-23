@@ -84,7 +84,7 @@
             <mat-label>{{ fieldsInfo['AboutUsTitle']?.FieldAboutUsTitle }}</mat-label>
             <input matInput [(ngModel)]="dataModel.AboutUsTitle"
               [disabled]="!fieldsInfo['AboutUsTitle']?.AccessAddField" name="dataModel.AboutUsTitle" #AboutUsTitle
-              type="text" placeholder="عنوان" minlength="0" maxlength="100" />
+              type="text" placeholder="عنوان درباره  ما" minlength="0" maxlength="100" />
             <mat-icon matSuffix *ngIf="dataModel.AboutUsTitle && fieldsInfo['AboutUsTitle']?.AccessAddField" matSuffix
               mat-icon-button aria-label="Clear" (click)="dataModel.AboutUsTitle = ''">close</mat-icon>
             <mat-icon *ngIf="fieldsInfo['AboutUsTitle']?.AccessAddField" matSuffix>mode_edit</mat-icon>
@@ -228,7 +228,7 @@
             <mat-label>{{fieldsInfo['DownloadLinkSrcCustomize']?.FieldTitle}}</mat-label>
             <input matInput [(ngModel)]="dataModel.DownloadLinkSrcCustomize"
               [disabled]="!fieldsInfo['DownloadLinkSrcCustomize']?.AccessAddField"
-              name="dataModel.DownloadLinkSrcCustomize" #DownloadLinkSrcCustomize type="text" placeholder="عنوان"
+              name="dataModel.DownloadLinkSrcCustomize" #DownloadLinkSrcCustomize type="text" placeholder="http://..."
               minlength="0" maxlength="1000" />
             <mat-icon matSuffix
               *ngIf="dataModel.DownloadLinkSrcCustomize && fieldsInfo['DownloadLinkSrcCustomize']?.AccessAddField"
@@ -242,7 +242,7 @@
             <mat-label>{{fieldsInfo['DownloadLinkSrc']?.FieldTitle}}</mat-label>
             <input matInput [(ngModel)]="dataModel.DownloadLinkSrc"
               [disabled]="!fieldsInfo['DownloadLinkSrc']?.AccessAddField" name="dataModel.DownloadLinkSrc"
-              #DownloadLinkSrc type="text" placeholder="عنوان" minlength="0" maxlength="1000" />
+              #DownloadLinkSrc type="text" placeholder="http://" minlength="0" maxlength="1000" />
             <mat-icon matSuffix *ngIf="dataModel.DownloadLinkSrc && fieldsInfo['DownloadLinkSrc']?.AccessAddField"
               matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.DownloadLinkSrc = ''">close</mat-icon>
             <mat-icon *ngIf="fieldsInfo['DownloadLinkSrc']?.AccessAddField" matSuffix>mode_edit</mat-icon>
@@ -252,7 +252,7 @@
             <mat-label>{{fieldsInfo['DownloadLinkUpdateSrc']?.FieldTitle}}</mat-label>
             <input matInput [(ngModel)]="dataModel.DownloadLinkUpdateSrc"
               [disabled]="!fieldsInfo['DownloadLinkUpdateSrc']?.AccessAddField" name="dataModel.DownloadLinkUpdateSrc"
-              #DownloadLinkUpdateSrc type="text" placeholder="عنوان" minlength="0" maxlength="1000" />
+              #DownloadLinkUpdateSrc type="text" placeholder="http://" minlength="0" maxlength="1000" />
             <mat-icon matSuffix
               *ngIf="dataModel.DownloadLinkUpdateSrc && fieldsInfo['DownloadLinkUpdateSrc']?.AccessAddField" matSuffix
               mat-icon-button aria-label="Clear" (click)="dataModel.DownloadLinkUpdateSrc = ''">close</mat-icon>
@@ -403,7 +403,7 @@
             <textarea matInput [(ngModel)]="dataModel.ConfigBuilderAdminJsonValues"
               [disabled]="!fieldsInfo['ConfigBuilderAdminJsonValues']?.AccessAddField"
               name="dataModel.ConfigBuilderAdminJsonValues" #ConfigBuilderAdminJsonValues type="text"
-              placeholder="عنوان" rows="5"></textarea>
+              placeholder="مقادیر" rows="5"></textarea>
             <mat-icon matSuffix *ngIf="dataModel.ConfigBuilderAdminJsonValues" matSuffix mat-icon-button
               aria-label="Clear" (click)="dataModel.ConfigBuilderAdminJsonValues = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
@@ -414,7 +414,7 @@
             <textarea matInput [(ngModel)]="dataModel.ConfigRuntimeAdminJsonValues"
               [disabled]="!fieldsInfo['ConfigRuntimeAdminJsonValues']?.AccessAddField"
               name="dataModel.ConfigRuntimeAdminJsonValues" #ConfigRuntimeAdminJsonValues type="text"
-              placeholder="عنوان" rows="5"></textarea>
+              placeholder="مقادیر" rows="5"></textarea>
             <mat-icon matSuffix *ngIf="dataModel.ConfigRuntimeAdminJsonValues" matSuffix mat-icon-button
               aria-label="Clear" (click)="dataModel.ConfigRuntimeAdminJsonValues = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
@@ -424,7 +424,7 @@
             <mat-label>{{fieldsInfo['ConfigBuilderSiteJsonValues']?.FieldTitle}}</mat-label>
             <textarea matInput [(ngModel)]="dataModel.ConfigBuilderSiteJsonValues"
               [disabled]="!fieldsInfo['ConfigBuilderSiteJsonValues']?.AccessAddField"
-              name="dataModel.ConfigBuilderSiteJsonValues" #ConfigBuilderSiteJsonValues type="text" placeholder="عنوان"
+              name="dataModel.ConfigBuilderSiteJsonValues" #ConfigBuilderSiteJsonValues type="text" placeholder="مقادیر"
               rows="5"></textarea>
             <mat-icon matSuffix *ngIf="dataModel.ConfigBuilderSiteJsonValues" matSuffix mat-icon-button
               aria-label="Clear" (click)="dataModel.ConfigBuilderSiteJsonValues = ''">close</mat-icon>
@@ -435,7 +435,7 @@
             <mat-label>{{fieldsInfo['ConfigRuntimeSiteJsonValues']?.FieldTitle}}</mat-label>
             <textarea matInput [(ngModel)]="dataModel.ConfigRuntimeSiteJsonValues"
               [disabled]="!fieldsInfo['ConfigRuntimeSiteJsonValues']?.AccessAddField"
-              name="dataModel.ConfigRuntimeSiteJsonValues" #ConfigRuntimeSiteJsonValues type="text" placeholder="عنوان"
+              name="dataModel.ConfigRuntimeSiteJsonValues" #ConfigRuntimeSiteJsonValues type="text" placeholder="مقادیر"
               rows="5"></textarea>
             <mat-icon matSuffix *ngIf="dataModel.ConfigRuntimeSiteJsonValues" matSuffix mat-icon-button
               aria-label="Clear" (click)="dataModel.ConfigRuntimeSiteJsonValues = ''">close</mat-icon>
@@ -594,7 +594,7 @@
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['AppKey']?.AccessWatchField">
             <mat-label>{{fieldsInfo['AppKey']?.FieldTitle}}</mat-label>
             <textarea matInput [(ngModel)]="dataModel.AppKey" [disabled]="!fieldsInfo['AppKey']?.AccessAddField"
-              name="dataModel.AppKey" #AppKey type="text" placeholder="عنوان" rows="5"></textarea>
+              name="dataModel.AppKey" #AppKey type="text" placeholder="AAAAAAAAAA" rows="5"></textarea>
             <mat-icon matSuffix *ngIf="dataModel.AppKey" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.AppKey = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
@@ -604,7 +604,7 @@
             <mat-label>{{fieldsInfo['LastBuildAppKey']?.FieldTitle}}</mat-label>
             <textarea matInput [(ngModel)]="dataModel.LastBuildAppKey"
               [disabled]="!fieldsInfo['LastBuildAppKey']?.AccessAddField" name="dataModel.LastBuildAppKey"
-              #LastBuildAppKey type="text" placeholder="عنوان" rows="5"></textarea>
+              #LastBuildAppKey type="text" placeholder="......" rows="5"></textarea>
             <mat-icon matSuffix *ngIf="dataModel.LastBuildAppKey" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.LastBuildAppKey = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>

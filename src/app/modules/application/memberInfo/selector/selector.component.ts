@@ -132,7 +132,7 @@ export class ApplicationMemberInfoSelectorComponent implements OnInit {
           this.dataModelResult = response;
           /*select First Item */
           if (this.optionSelectFirstItem &&
-            (!this.dataModelSelect || !this.dataModelSelect.Id || this.dataModelSelect.Id.length === 0) &&
+            (!this.dataModelSelect || !this.dataModelSelect.Id || this.dataModelSelect?.Id?.length === 0) &&
             this.dataModelResult.ListItems.length > 0) {
             this.optionSelectFirstItem = false;
             setTimeout(() => { this.formControl.setValue(this.dataModelResult.ListItems[0]); }, 1000);

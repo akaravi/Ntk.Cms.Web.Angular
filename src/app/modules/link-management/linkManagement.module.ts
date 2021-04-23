@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LinkManagmentComponent } from './linkManagment.component';
-import { LinkManagmentRoutes } from './linkManagment.routing';
+import { LinkManagementComponent } from './linkManagement.component';
+import { LinkManagementRoutes } from './linkManagement.routing';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TreeviewModule } from 'ngx-treeview';
@@ -19,24 +19,31 @@ import {
   CoreAuthService,
   CoreEnumService,
   ApplicationEnumService,
-  CoreModuleTagService
+  CoreModuleTagService,
+  LinkManagementConfigurationService
 } from 'ntk-cms-api';
-import {MatIconModule} from '@angular/material/icon';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatStepperModule} from '@angular/material/stepper';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatStepperModule } from '@angular/material/stepper';
 
 import { CmsFileUploaderModule } from 'ntk-cms-fileuploader';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { LinkManagementConfigSiteComponent } from './config/site/configSite.component';
+import { LinkManagementConfigMainAdminComponent } from './config/mainAdmin/configMainAdmin.component';
 
 @NgModule({
   declarations: [
-    LinkManagmentComponent,
+    LinkManagementComponent,
+    /*Config*/
+    LinkManagementConfigMainAdminComponent,
+    LinkManagementConfigSiteComponent,
+    /*Config*/
   ],
   imports: [
     CommonModule,
-    LinkManagmentRoutes,
+    LinkManagementRoutes,
     FormsModule,
-    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
+    ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
     TreeviewModule.forRoot(),
     SharedModule.forRoot(),
     AngularEditorModule,
@@ -50,7 +57,10 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
   providers: [
     CoreEnumService,
     CoreAuthService,
-    CmsConfirmationDialogService ,
+    /*Config*/
+    LinkManagementConfigurationService,
+    /*Config*/
+    CmsConfirmationDialogService,
     ApplicationEnumService,
     CoreModuleTagService,
     ApplicationAppService,
@@ -61,4 +71,4 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
     ApplicationThemeConfigService,
   ]
 })
-export class LinkManagmentModule { }
+export class LinkManagementModule { }

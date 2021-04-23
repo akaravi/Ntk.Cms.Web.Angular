@@ -38,7 +38,7 @@ import { CmsFormBuilderPropertiesComponent } from './cms-form-builder-properties
 import { CmsModuleSelectorComponent } from './cms-module-selector/cms-module-selector.component';
 import { CmsSiteCategorySelectorComponent } from './cms-site-category-selector/cmsSiteCategorySelector.component';
 import { CmsUserGroupSelectorComponent } from './cms-user-group-selector/cmsUserGroupSelector.component';
-import { TitlePipe } from '../core/pipe/title.pipe';
+import { CmsTitlePipe } from '../core/pipe/title.pipe';
 
 
 
@@ -64,7 +64,7 @@ import { TitlePipe } from '../core/pipe/title.pipe';
     TruncatePipe,
     KeysPipe,
     EnumsPipe,
-    TitlePipe,
+    CmsTitlePipe,
     PrettyjsonPipe,
     RecordStatusClassPipe,
     BoolStatusClassPipe,
@@ -101,7 +101,7 @@ import { TitlePipe } from '../core/pipe/title.pipe';
     TruncatePipe,
     KeysPipe,
     EnumsPipe,
-    TitlePipe,
+    CmsTitlePipe,
     PrettyjsonPipe,
     RecordStatusClassPipe,
     BoolStatusClassPipe,

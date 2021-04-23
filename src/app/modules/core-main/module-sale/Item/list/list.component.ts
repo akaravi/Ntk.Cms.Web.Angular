@@ -17,6 +17,8 @@ import {
   CoreModuleSaleHeaderModel,
   CoreEnumService,
   EnumModel,
+  CoreModuleService,
+  CoreModuleModel,
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -47,6 +49,7 @@ export class CoreModuleSaleItemListComponent implements OnInit, OnDestroy {
     private cmsConfirmationDialogService: CmsConfirmationDialogService,
     public coreEnumService: CoreEnumService,
     private activatedRoute: ActivatedRoute,
+    private coreModuleService: CoreModuleService,
     private router: Router,
     public dialog: MatDialog) {
     this.requestLinkModuleSaleHeader = + Number(this.activatedRoute.snapshot.paramMap.get('LinkModuleSaleHeader'));
@@ -86,6 +89,7 @@ export class CoreModuleSaleItemListComponent implements OnInit, OnDestroy {
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
   categoryModelSelected: CoreModuleSaleHeaderModel = new CoreModuleSaleHeaderModel();
   dataModelEnumCmsModuleSaleItemTypeResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
+  dataModelCoreModuleResult: ErrorExceptionResult<CoreModuleModel> = new ErrorExceptionResult<CoreModuleModel>();
 
   tabledisplayedColumns: string[] = [
     'Id',
@@ -112,6 +116,15 @@ export class CoreModuleSaleItemListComponent implements OnInit, OnDestroy {
       this.tokenInfo = next;
     });
     this.getEnumCmsModuleSaleItemType();
+
+    this.getModuleList();
+  }
+  getModuleList(): void {
+    const filter = new FilterModel();
+    filter.RowPerPage = 100;
+    this.coreModuleService.ServiceGetAll(filter).subscribe((next) => {
+      this.dataModelCoreModuleResult = next;
+    });
   }
   getEnumCmsModuleSaleItemType(): void {
     this.coreEnumService.ServiceEnumCmsModuleSaleItemType().subscribe((next) => {

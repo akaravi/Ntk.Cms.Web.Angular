@@ -28,7 +28,7 @@ import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { MatStepper } from '@angular/material/stepper';
 
 @Component({
-  selector: 'app-core-user-edit',
+  selector: 'app-webdesigner-menu-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.scss'],
 })

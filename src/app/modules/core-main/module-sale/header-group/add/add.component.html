@@ -29,7 +29,6 @@
         [disabled]="!fieldsInfo['LinkCmsSiteCategoryId']?.AccessEditField">
       </app-cms-sitecategory-selector>
 
-
       <!-- Title Field -->
       <mat-form-field class="example-full-width">
         <mat-label>{{fieldsInfo['Title']?.FieldTitle}}</mat-label>
@@ -44,18 +43,24 @@
         </mat-error>
       </mat-form-field>
       <!-- TitleML Field -->
+      <mat-form-field class="example-full-width" *ngIf="fieldsInfo['TitleML']?.AccessWatchField">
+        <mat-label> {{fieldsInfo['TitleML']?.FieldTitle}}</mat-label>
+        <input matInput [(ngModel)]="dataModel.TitleML" name="dataModel.TitleML" type="text" [disabled]="true" />
+      </mat-form-field>
+      <!-- TitleResourceLanguage Field -->
       <mat-form-field class="example-full-width">
-        <mat-label>{{fieldsInfo['TitleML']?.FieldTitle}}</mat-label>
-        <input matInput [(ngModel)]="dataModel.TitleML" name="dataModel.TitleML" #TitleML type="text"
-          placeholder="TitleML" minlength="3" maxlength="100" required />
-        <mat-icon matSuffix *ngIf="dataModel.TitleML" matSuffix mat-icon-button aria-label="Clear"
-          (click)="dataModel.TitleML = ''">close</mat-icon>
+        <mat-label>{{fieldsInfo['TitleResourceLanguage']?.FieldTitle}}</mat-label>
+        <input matInput [(ngModel)]="dataModel.TitleResourceLanguage" name="dataModel.TitleResourceLanguage"
+          #TitleResourceLanguage type="text" placeholder="عنوان" minlength="3" maxlength="100" required />
+        <mat-icon matSuffix *ngIf="dataModel.TitleResourceLanguage" matSuffix mat-icon-button aria-label="Clear"
+          (click)="dataModel.TitleResourceLanguage = ''">close</mat-icon>
         <mat-icon matSuffix>mode_edit</mat-icon>
-        <mat-hint align="end">{{ TitleML.value.length }} / 100</mat-hint>
-        <mat-error *ngIf="TitleML.errors?.required">
-          {{fieldsInfo['TitleML']?.FieldTitle}} is <strong>required</strong>
+        <mat-hint align="end">{{ TitleResourceLanguage.value.length }} / 100</mat-hint>
+        <mat-error *ngIf="TitleResourceLanguage.errors?.required">
+          {{fieldsInfo['TitleResourceLanguage']?.FieldTitle}} is <strong>required</strong>
         </mat-error>
       </mat-form-field>
+
 
       <!-- Description Field -->
       <mat-form-field class="example-full-width">

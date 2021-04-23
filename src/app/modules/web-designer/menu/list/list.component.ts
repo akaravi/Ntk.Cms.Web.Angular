@@ -32,7 +32,7 @@ import { WebDesignerMainMenuAddComponent } from '../add/add.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDragHandle } from '@angular/cdk/drag-drop';
 @Component({
-  selector: 'app-core-user-list',
+  selector: 'app-webdesigner-menu-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })

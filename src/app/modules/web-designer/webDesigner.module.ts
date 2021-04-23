@@ -40,6 +40,12 @@ import { WebDesignerMainMenuAddComponent } from './menu/add/add.component';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { IconPickerModule } from 'ngx-icon-picker';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { WebDesignerMainPageDependencyAddComponent } from './page-dependency/add/add.component';
+import { WebDesignerMainPageDependencyEditComponent } from './page-dependency/edit/edit.component';
+import { WebDesignerMainPageDependencyListComponent } from './page-dependency/list/list.component';
+import { WebDesignerMainPageDependencySelectorComponent } from './page-dependency/selector/selector.component';
+import { WebDesignerMainPageDependencyTreeComponent } from './page-dependency/tree/tree.component';
+import { WebDesignerMainPageDependencyHeaderComponent } from './page-dependency/header/header.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +65,14 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     WebDesignerMainMenuListComponent,
     WebDesignerMainMenuSelectorComponent,
     WebDesignerMainMenuTreeComponent,
+    /** */
+    /** */
+    WebDesignerMainPageDependencyAddComponent,
+    WebDesignerMainPageDependencyEditComponent,
+    WebDesignerMainPageDependencyListComponent,
+    WebDesignerMainPageDependencySelectorComponent,
+    WebDesignerMainPageDependencyTreeComponent,
+    WebDesignerMainPageDependencyHeaderComponent,
     /** */
   ],
   imports: [

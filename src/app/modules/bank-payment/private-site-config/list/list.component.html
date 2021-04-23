@@ -38,8 +38,8 @@
     </app-progress-spinner>
 
     <div class="example-container mat-elevation-z8">
-      <app-bank-paymentpublic-header *ngIf="requestLinkPublicConfigId>0" [optionId]="requestLinkPublicConfigId">
-      </app-bank-paymentpublic-header>
+      <app-bankpayment-publicconfig-header *ngIf="requestLinkPublicConfigId>0" [optionId]="requestLinkPublicConfigId">
+      </app-bankpayment-publicconfig-header>
       <mat-table [dataSource]="tableSource" matSort #tableSort="matSort" (matSortChange)="onTableSortData(tableSort)">
         <!-- LinkMainImageIdSrc Column -->
         <ng-container matColumnDef="LinkMainImageIdSrc">

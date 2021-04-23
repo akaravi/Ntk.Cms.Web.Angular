@@ -56,13 +56,13 @@
         <ng-container matColumnDef="LinkCmsSiteCategoryId">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkCmsSiteCategoryId']?.FieldTitle}}
           </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.LinkCmsSiteCategoryId | title : dataModelCoreSiteCategoryResult.ListItems}} </mat-cell>
+          <mat-cell *matCellDef="let row"> {{row.LinkCmsSiteCategoryId | cmstitle : dataModelCoreSiteCategoryResult.ListItems}} </mat-cell>
         </ng-container>
          <!-- LinkUserGroupId Column -->
         <ng-container matColumnDef="LinkUserGroupId">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkUserGroupId']?.FieldTitle}}
           </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.LinkUserGroupId | title : dataModelCoreUserGroupResult.ListItems}} </mat-cell>
+          <mat-cell *matCellDef="let row"> {{row.LinkUserGroupId | cmstitle : dataModelCoreUserGroupResult.ListItems}} </mat-cell>
         </ng-container>
         <!-- CreatedDate Column -->
         <ng-container matColumnDef="CreatedDate">

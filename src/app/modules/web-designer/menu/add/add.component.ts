@@ -19,7 +19,7 @@ import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 
 @Component({
-  selector: 'app-webdesigner-user-add',
+  selector: 'app-webdesigner-menu-add',
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.scss'],
 })

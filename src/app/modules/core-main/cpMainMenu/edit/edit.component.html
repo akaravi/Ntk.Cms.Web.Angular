@@ -39,20 +39,7 @@
             {{fieldsInfo['Title']?.FieldTitle}} is <strong>required</strong>
           </mat-error>
         </mat-form-field>
-        <!-- TitleML Field -->
-        <mat-form-field class="example-full-width" *ngIf="fieldsInfo['TitleML']?.AccessWatchField">
-          <mat-label> {{fieldsInfo['TitleML']?.FieldTitle}}</mat-label>
-          <input matInput [(ngModel)]="dataModel.TitleML" name="dataModel.TitleML" #TitleML type="text"
-            [disabled]="!fieldsInfo['TitleML']?.AccessEditField" placeholder="{{fieldsInfo['TitleML']?.FieldTitle}}"
-            minlength="3" maxlength="100" required />
-          <mat-icon matSuffix *ngIf="dataModel.TitleML" matSuffix mat-icon-button aria-label="Clear"
-            (click)="dataModel.TitleML = ''">close</mat-icon>
-          <mat-icon matSuffix>mode_edit</mat-icon>
-          <mat-hint align="end">{{ TitleML.value.length }} / 100</mat-hint>
-          <mat-error *ngIf="TitleML.errors?.required">
-            {{fieldsInfo['TitleML']?.FieldTitle}} is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
+
         <!-- TitleEn Field -->
         <mat-form-field class="example-full-width" *ngIf="fieldsInfo['TitleEn']?.AccessWatchField">
           <mat-label> {{fieldsInfo['TitleEn']?.FieldTitle}}</mat-label>
@@ -80,6 +67,11 @@
           <mat-error *ngIf="TitleResourceLanguage.errors?.required">
             TitleResourceLanguage is <strong>required</strong>
           </mat-error>
+        </mat-form-field>
+        <!-- TitleML Field -->
+        <mat-form-field class="example-full-width" *ngIf="fieldsInfo['TitleML']?.AccessWatchField">
+          <mat-label> {{fieldsInfo['TitleML']?.FieldTitle}}</mat-label>
+          <input matInput [(ngModel)]="dataModel.TitleML" name="dataModel.TitleML" type="text" [disabled]="true" />
         </mat-form-field>
         <!-- MenuPlaceType Field -->
         <mat-form-field class="example-full-width">

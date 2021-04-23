@@ -22,9 +22,9 @@
           </mat-error>
         </mat-form-field>
         <!-- Title Field -->
-        <app-core-cpmainmenu-selector (optionSelect)="onActionSelectorSelect($event)" [disabled]="false"
+        <app-webdesigner-menu-selector (optionSelect)="onActionSelectorSelect($event)" [disabled]="false"
           [optionSelectForce]="dataModel.LinkParentId" [optionPlaceholder]="'منوی والد'">
-        </app-core-cpmainmenu-selector>
+        </app-webdesigner-menu-selector>
         <!-- Title Field -->
         <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Title']?.AccessWatchField">
           <mat-label> {{fieldsInfo['Title']?.FieldTitle}}</mat-label>
@@ -42,16 +42,7 @@
         <!-- TitleML Field -->
         <mat-form-field class="example-full-width" *ngIf="fieldsInfo['TitleML']?.AccessWatchField">
           <mat-label> {{fieldsInfo['TitleML']?.FieldTitle}}</mat-label>
-          <input matInput [(ngModel)]="dataModel.TitleML" name="dataModel.TitleML" #TitleML type="text"
-            [disabled]="!fieldsInfo['TitleML']?.AccessEditField" placeholder="{{fieldsInfo['TitleML']?.FieldTitle}}"
-            minlength="3" maxlength="100" required />
-          <mat-icon matSuffix *ngIf="dataModel.TitleML" matSuffix mat-icon-button aria-label="Clear"
-            (click)="dataModel.TitleML = ''">close</mat-icon>
-          <mat-icon matSuffix>mode_edit</mat-icon>
-          <mat-hint align="end">{{ TitleML.value.length }} / 100</mat-hint>
-          <mat-error *ngIf="TitleML.errors?.required">
-            {{fieldsInfo['TitleML']?.FieldTitle}} is <strong>required</strong>
-          </mat-error>
+          <input matInput [(ngModel)]="dataModel.TitleML" name="dataModel.TitleML" type="text" [disabled]="true" />
         </mat-form-field>
         <!-- TitleEn Field -->
         <mat-form-field class="example-full-width" *ngIf="fieldsInfo['TitleEn']?.AccessWatchField">

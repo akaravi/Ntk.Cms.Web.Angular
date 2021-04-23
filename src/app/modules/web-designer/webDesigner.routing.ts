@@ -5,6 +5,8 @@ import { WebDesignerConfigSiteComponent } from './config/site/configSite.compone
 import { WebDesignerMainIntroAddComponent } from './intro/add/add.component';
 import { WebDesignerMainIntroEditComponent } from './intro/edit/edit.component';
 import { WebDesignerMainIntroListComponent } from './intro/list/list.component';
+import { WebDesignerMainMenuListComponent } from './menu/list/list.component';
+import { WebDesignerMainPageDependencyListComponent } from './page-dependency/list/list.component';
 import { WebDesignerComponent } from './webDesigner.component';
 
 const routes: Routes = [
@@ -48,7 +50,21 @@ const routes: Routes = [
         component: WebDesignerMainIntroEditComponent
       },
       /** */
-
+      /** */
+      {
+        path: 'menu',
+        component: WebDesignerMainMenuListComponent
+      },
+      /** */
+      {
+        path: 'pagedependency',
+        component: WebDesignerMainPageDependencyListComponent
+      },
+      /** */
+      {
+        path: 'page',
+        component: WebDesignerMainPageDependencyListComponent
+      },
     ]
   },
 ];

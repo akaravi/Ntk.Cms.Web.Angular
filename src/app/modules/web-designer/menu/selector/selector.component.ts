@@ -17,7 +17,7 @@ import { Output } from '@angular/core';
 
 
 @Component({
-  selector: 'app-core-cpmainmenu-selector',
+  selector: 'app-webdesigner-menu-selector',
   templateUrl: './selector.component.html',
   styleUrls: ['./selector.component.scss']
 })
@@ -90,7 +90,7 @@ export class WebDesignerMainMenuSelectorComponent implements OnInit {
           this.dataModelResult = response;
           /*select First Item */
           if (this.optionSelectFirstItem &&
-            (!this.dataModelSelect || !this.dataModelSelect.Id || this.dataModelSelect.Id.length <= 0) &&
+            (!this.dataModelSelect || !this.dataModelSelect.Id || this.dataModelSelect?.Id?.length <= 0) &&
             this.dataModelResult.ListItems.length > 0) {
             this.optionSelectFirstItem = false;
             setTimeout(() => { this.formControl.setValue(this.dataModelResult.ListItems[0]); }, 1000);
