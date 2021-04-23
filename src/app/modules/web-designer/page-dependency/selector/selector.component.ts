@@ -17,7 +17,7 @@ import { Output } from '@angular/core';
 
 
 @Component({
-  selector: 'app-webdesigner-dependency-selector',
+  selector: 'app-webdesigner-pagedependency-selector',
   templateUrl: './selector.component.html',
   styleUrls: ['./selector.component.scss']
 })

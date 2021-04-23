@@ -6,7 +6,7 @@ import {
   WebDesignerMainPageService,
   WebDesignerMainPageModel,
   DataFieldInfoModel,
-  CoreModuleModel,
+  WebDesignerEnumService,
   WebDesignerMainPageDependencyModel,
   WebDesignerMainPageTemplateModel,
 } from 'ntk-cms-api';
@@ -28,7 +28,7 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 @Component({
-  selector: 'app-webdesigner--add',
+  selector: 'app-webdesigner-page-add',
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.scss'],
 })
@@ -38,7 +38,7 @@ export class WebDesignerMainPageAddComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
     private dialogRef: MatDialogRef<WebDesignerMainPageAddComponent>,
-    public coreEnumService: CoreEnumService,
+    public webDesignerEnumService: WebDesignerEnumService,
     public webDesignerMainPageService: WebDesignerMainPageService,
     private cmsToastrService: CmsToastrService,
     public publicHelper: PublicHelper,
@@ -54,6 +54,7 @@ export class WebDesignerMainPageAddComponent implements OnInit {
   }
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
+  keywordDataModel = [];
 
   fileManagerTree: TreeModel;
   appLanguage = 'fa';
@@ -66,6 +67,7 @@ export class WebDesignerMainPageAddComponent implements OnInit {
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
+  dataModelEnumPageAbilityTypeResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
 
   fileManagerOpenForm = false;
 
@@ -77,6 +79,12 @@ export class WebDesignerMainPageAddComponent implements OnInit {
     this.formInfo.FormTitle = 'اضافه کردن  ';
     this.getEnumRecordStatus();
     this.DataGetAccess();
+    this.getEnumPageAbilityType();
+  }
+  getEnumPageAbilityType(): void {
+    this.webDesignerEnumService.ServiceEnumPageAbilityType().subscribe((next) => {
+      this.dataModelEnumPageAbilityTypeResult = next;
+    });
   }
 
   DataGetAccess(): void {
@@ -135,10 +143,7 @@ export class WebDesignerMainPageAddComponent implements OnInit {
       }
     );
   }
-  onActionSelectParent(model: WebDesignerMainPageModel | null): void {
 
-    this.dataModel.LinkCmsPageGuId = model.Id;
-  }
   onActionSelectDependency(model: WebDesignerMainPageDependencyModel | null): void {
     if (!model || model.Id?.length <= 0) {
       this.cmsToastrService.toastr.error(
@@ -159,13 +164,24 @@ export class WebDesignerMainPageAddComponent implements OnInit {
     }
     this.dataModel.LinkPageTemplateGuId = model.Id;
   }
+  onActionSelectParent(model: WebDesignerMainPageModel): void {
+    this.dataModel.LinkCmsPageGuId = '';
+    if (model && model.Id && model.Id.length > 0) {
+      this.dataModel.LinkCmsPageGuId = model.Id;
+    }
+  }
 
   onFormSubmit(): void {
     if (!this.formGroup.valid) {
       return;
     }
     this.formInfo.FormSubmitAllow = false;
-
+    if (this.keywordDataModel && this.keywordDataModel.length > 0) {
+      const listKeyword = this.keywordDataModel.map(x => x.display);
+      if (listKeyword && listKeyword.length > 0) {
+        this.dataModel.Keyword = listKeyword.join(',');
+      }
+    }
     this.DataAddContent();
 
 

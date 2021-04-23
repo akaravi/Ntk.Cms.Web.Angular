@@ -32,7 +32,7 @@ import { CoreSiteCategoryCmsModule } from '../../siteCategory/coreSiteCategory.m
   styleUrls: ['./edit.component.scss']
 })
 export class CoreSiteEditComponent implements OnInit {
-
+  requestId = 0;
   constructor(
     private activatedRoute: ActivatedRoute,
     private cmsStoreService: CmsStoreService,
@@ -43,8 +43,6 @@ export class CoreSiteEditComponent implements OnInit {
     private router: Router) {
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
-  requestId = 0;
-
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
   loading = new ProgressSpinnerModel();
   formInfo: FormInfoModel = new FormInfoModel();
@@ -147,9 +145,10 @@ export class CoreSiteEditComponent implements OnInit {
             if (lat > 0 && lon > 0) {
               this.mapMarkerPoints.push({ lat, lon });
             }
-            this.dataModel.Keyword = this.dataModel.Keyword + '';
-            this.keywordDataModel = this.dataModel.Keyword.split(',');
-
+            this.keywordDataModel=[];
+            if (this.dataModel.Keyword && this.dataModel.Keyword.length > 0) {
+              this.keywordDataModel = this.dataModel.Keyword.split(',');
+            }
 
           } else {
             this.cmsToastrService.typeErrorGetOne(next.ErrorMessage);

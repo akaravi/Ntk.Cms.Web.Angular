@@ -26,7 +26,7 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 @Component({
-  selector: 'app-webdesigner-dependency-add',
+  selector: 'app-webdesigner-pagedependency-add',
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.scss'],
 })

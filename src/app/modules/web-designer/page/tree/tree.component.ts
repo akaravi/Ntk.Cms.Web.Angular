@@ -28,7 +28,7 @@ import { WebDesignerMainPageAddComponent } from '../add/add.component';
 
 
 @Component({
-  selector: 'app-webdesigner--tree',
+  selector: 'app-webdesigner-page-tree',
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.scss'],
 })

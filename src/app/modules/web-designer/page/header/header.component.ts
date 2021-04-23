@@ -17,7 +17,7 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 @Component({
-  selector: 'app-webdesigner--header',
+  selector: 'app-webdesigner-page-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })

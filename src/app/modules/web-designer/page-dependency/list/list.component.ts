@@ -32,7 +32,7 @@ import { WebDesignerMainPageDependencyAddComponent } from '../add/add.component'
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 
 @Component({
-  selector: 'app-webdesigner-dependency-list',
+  selector: 'app-webdesigner-pagedependency-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })

@@ -28,7 +28,7 @@ import { WebDesignerMainPageDependencyAddComponent } from '../add/add.component'
 
 
 @Component({
-  selector: 'app-webdesigner-dependency-tree',
+  selector: 'app-webdesigner-pagedependency-tree',
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.scss'],
 })

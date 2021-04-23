@@ -17,8 +17,20 @@
           RecordStatus is <strong>required</strong>
         </mat-error>
       </mat-form-field>
-
-
+      <!-- PageAbilityType Field -->
+      <mat-form-field class="example-full-width">
+        <mat-select placeholder="وضعیت" [(ngModel)]="dataModel.PageAbilityType" name="dataModel.PageAbilityType"
+          #PageAbilityType="ngModel" panelClass="PageAbilityType-{{ dataModel.PageAbilityType }}" required>
+          <mat-option *ngFor="
+                let item of dataModelEnumPageAbilityTypeResult.ListItems;
+                index as i
+              " [value]="item.Value">{{ item.Description }}</mat-option>
+        </mat-select>
+        <mat-hint align="end">انتخاب قابلیت این محتوا</mat-hint>
+        <mat-error *ngIf="PageAbilityType.errors?.required">
+          PageAbilityType is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
       <!-- Title Field -->
       <mat-form-field class="example-full-width">
         <mat-label>{{fieldsInfo['Title']?.FieldTitle}}</mat-label>
@@ -32,6 +44,64 @@
           {{fieldsInfo['Title']?.FieldTitle}} is <strong>required</strong>
         </mat-error>
       </mat-form-field>
+      <!-- KeywordModel Field -->
+      <tag-input [(ngModel)]="keywordDataModel" name="keywordDataModel" [placeholder]="'+ کلمه کلیدی'"
+        [disabled]="!fieldsInfo['Title']?.AccessEditField" [secondaryPlaceholder]="'انتخاب کلمات کلیدی نسبت به مطلب'"
+        [identifyBy]="'display'">
+      </tag-input>
+      <!-- PageDependencyIsDefualtPage Field -->
+      <div class="example-full-width">
+        <mat-slide-toggle [(ngModel)]="dataModel.PageDependencyIsDefualtPage"
+          *ngIf="fieldsInfo['PageDependencyIsDefualtPage']?.AccessWatchField"
+          [disabled]="!fieldsInfo['PageDependencyIsDefualtPage']?.AccessEditField"
+          name="dataModel.PageDependencyIsDefualtPage">
+          {{fieldsInfo['PageDependencyIsDefualtPage']?.FieldTitle}}
+        </mat-slide-toggle>
+      </div>
+      <!-- ContentPageFindInDefaultSiteCategory Field -->
+      <div class="example-full-width">
+        <mat-slide-toggle [(ngModel)]="dataModel.ContentPageFindInDefaultSiteCategory"
+          *ngIf="fieldsInfo['ContentPageFindInDefaultSiteCategory']?.AccessWatchField"
+          [disabled]="!fieldsInfo['ContentPageFindInDefaultSiteCategory']?.AccessEditField"
+          name="dataModel.ContentPageFindInDefaultSiteCategory">
+          {{fieldsInfo['ContentPageFindInDefaultSiteCategory']?.FieldTitle}}
+        </mat-slide-toggle>
+      </div>
+      <app-webdesigner-pagedependency-selector (optionSelect)="onActionSelectDependency($event)" [disabled]="!fieldsInfo['LinkPageDependencyGuId']?.AccessEditField"
+        [optionSelectForce]="dataModel.LinkPageDependencyGuId" [optionPlaceholder]="'محل نمایش '">
+      </app-webdesigner-pagedependency-selector>
+
+      <app-webdesigner-pagetemplate-selector (optionSelect)="onActionSelectTemplate($event)" [disabled]="!fieldsInfo['LinkPageTemplateGuId']?.AccessEditField"
+        [optionSelectForce]="dataModel.LinkPageTemplateGuId" [optionPlaceholder]="'قالب صفحه '">
+      </app-webdesigner-pagetemplate-selector>
+
+      <app-webdesigner-page-selector (optionSelect)="onActionSelectParent($event)" [disabled]="!fieldsInfo['LinkCmsPageGuId']?.AccessEditField"
+        [optionSelectForce]="dataModel.LinkCmsPageGuId" [optionPlaceholder]="'صفحه والد'">
+      </app-webdesigner-page-selector>
+
+      <!-- SpecialIdendity Field -->
+      <mat-form-field class="example-full-width">
+        <mat-label>{{fieldsInfo['SpecialIdendity']?.FieldTitle}}</mat-label>
+        <input matInput [(ngModel)]="dataModel.SpecialIdendity" name="dataModel.SpecialIdendity" #SpecialIdendity
+          type="text" placeholder="32323" minlength="0" maxlength="500"
+          [disabled]="!fieldsInfo['SpecialIdendity']?.AccessEditField" />
+        <mat-icon matSuffix *ngIf="dataModel.SpecialIdendity" matSuffix mat-icon-button aria-label="Clear"
+          (click)="dataModel.SpecialIdendity = ''">close</mat-icon>
+        <mat-icon matSuffix>mode_edit</mat-icon>
+        <mat-hint align="end">{{ SpecialIdendity.value.length }} / 500</mat-hint>
+      </mat-form-field>
+      <!-- SpecialUrlParameter Field -->
+      <mat-form-field class="example-full-width">
+        <mat-label>{{fieldsInfo['SpecialUrlParameter']?.FieldTitle}}</mat-label>
+        <input matInput [(ngModel)]="dataModel.SpecialUrlParameter" name="dataModel.SpecialUrlParameter"
+          #SpecialUrlParameter type="text" placeholder="esfahan" minlength="0" maxlength="500"
+          [disabled]="!fieldsInfo['SpecialUrlParameter']?.AccessEditField" />
+        <mat-icon matSuffix *ngIf="dataModel.SpecialUrlParameter" matSuffix mat-icon-button aria-label="Clear"
+          (click)="dataModel.SpecialUrlParameter = ''">close</mat-icon>
+        <mat-icon matSuffix>mode_edit</mat-icon>
+        <mat-hint align="end">{{ SpecialUrlParameter.value.length }} / 500</mat-hint>
+      </mat-form-field>
+
       <!-- Description Field -->
       <mat-form-field class="example-full-width">
         <mat-label>{{fieldsInfo['Description']?.FieldTitle}}</mat-label>
@@ -45,6 +115,7 @@
           Description is <strong>required</strong>
         </mat-error>
       </mat-form-field>
+
     </div>
 
   </form>

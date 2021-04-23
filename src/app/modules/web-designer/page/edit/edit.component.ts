@@ -9,6 +9,7 @@ import {
   CoreModuleModel,
   WebDesignerMainPageTemplateModel,
   WebDesignerMainPageDependencyModel,
+  WebDesignerEnumService,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -28,7 +29,7 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 @Component({
-  selector: 'app-webdesigner--edit',
+  selector: 'app-webdesigner-page-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.scss'],
 })
@@ -38,9 +39,10 @@ export class WebDesignerMainPageEditComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
     private dialogRef: MatDialogRef<WebDesignerMainPageEditComponent>,
-    public coreEnumService: CoreEnumService,
+    public webDesignerEnumService: WebDesignerEnumService,
     public webDesignerMainPageService: WebDesignerMainPageService,
     private cmsToastrService: CmsToastrService,
+
     public publicHelper: PublicHelper,
   ) {
     if (data) {
@@ -49,7 +51,10 @@ export class WebDesignerMainPageEditComponent implements OnInit {
 
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
+   @ViewChild('vform', { static: false }) formGroup: FormGroup;
+
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
+  keywordDataModel = [];
 
   fileManagerTree: TreeModel;
   appLanguage = 'fa';
@@ -57,10 +62,11 @@ export class WebDesignerMainPageEditComponent implements OnInit {
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<WebDesignerMainPageModel> = new ErrorExceptionResult<WebDesignerMainPageModel>();
   dataModel: WebDesignerMainPageModel = new WebDesignerMainPageModel();
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
+  dataModelEnumPageAbilityTypeResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
+
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
   fileManagerOpenForm = false;
@@ -77,6 +83,12 @@ export class WebDesignerMainPageEditComponent implements OnInit {
     }
 
     this.getEnumRecordStatus();
+    this.getEnumPageAbilityType();
+  }
+  getEnumPageAbilityType(): void {
+    this.webDesignerEnumService.ServiceEnumPageAbilityType().subscribe((next) => {
+      this.dataModelEnumPageAbilityTypeResult = next;
+    });
   }
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
@@ -100,6 +112,10 @@ export class WebDesignerMainPageEditComponent implements OnInit {
 
         this.dataModel = next.Item;
         if (next.IsSuccess) {
+          this.keywordDataModel=[];
+          if (this.dataModel.Keyword && this.dataModel.Keyword.length > 0) {
+            this.keywordDataModel = this.dataModel.Keyword.split(',');
+          }
           this.formInfo.FormTitle = this.formInfo.FormTitle + ' ' + next.Item.Title;
           this.formInfo.FormAlert = '';
         } else {
@@ -173,6 +189,12 @@ export class WebDesignerMainPageEditComponent implements OnInit {
       return;
     }
     this.formInfo.FormSubmitAllow = false;
+    if (this.keywordDataModel && this.keywordDataModel.length > 0) {
+      const listKeyword = this.keywordDataModel.map(x => x.display);
+      if (listKeyword && listKeyword.length > 0) {
+        this.dataModel.Keyword = listKeyword.join(',');
+      }
+    }
     this.DataEditContent();
   }
   onFormCancel(): void {

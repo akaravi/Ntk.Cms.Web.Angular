@@ -36,7 +36,7 @@ import { environment } from 'src/environments/environment';
 import { DOCUMENT } from '@angular/common';
 
 @Component({
-  selector: 'app-webdesigner--list',
+  selector: 'app-webdesigner-page-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
