@@ -66,7 +66,7 @@ export class BankPaymentPrivateSiteConfigPaymentTestComponent implements OnInit 
     }
   }
   dataModelResultGotoBank = false;
-  onGotoBank() {
+  onGotoBank(): void {
     if (this.dataModelResultGotoBank && this.dataModelResult.IsSuccess && this.dataModelResult.Item.UrlToPay.length > 0) {
       this.cmsToastrService.typeSuccessMessage('درحال انتقال به درگاه پرداخت');
       this.document.location.href = this.dataModelResult.Item.UrlToPay;

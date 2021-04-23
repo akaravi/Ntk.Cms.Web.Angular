@@ -18,6 +18,8 @@ export const environment = {
     configCpanelImages: '/cpanelv1/images/',
     configPathFileByIdAndName: 'https://oco.ir/files/',
     configRouteThumbnails: 'https://oco.ir/imageThumbnails/',
+    configHtmlBuilderServerPath: 'https://htmlbuilder.ntkcms.com/',
+    configHtmlViewServerPath: 'https://ntkcms.com/',
     configRouteUploadFileContent: 'https://apifile.ir/api/v1/upload/',
     // configRouteUploadFileContent: 'https://apicms.ir/api/v1/upload/',
     // configRouteUploadFileContent: 'http://localhost:2392/api/v1/upload/'

@@ -1,6 +1,6 @@
 
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
   WebDesignerMainPageModel,
@@ -32,6 +32,8 @@ import { Subscription } from 'rxjs';
 import { WebDesignerMainPageEditComponent } from '../edit/edit.component';
 import { WebDesignerMainPageAddComponent } from '../add/add.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { environment } from 'src/environments/environment';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-webdesigner--list',
@@ -43,6 +45,7 @@ export class WebDesignerMainPageListComponent implements OnInit, OnDestroy {
   requestLinkPageTemplateGuId = '';
   requestLinkPageDependencyGuId = '';
   constructor(
+    @Inject(DOCUMENT) private document: any,
     private bankPaymentPublicConfigService: WebDesignerMainPageService,
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
@@ -366,7 +369,51 @@ export class WebDesignerMainPageListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorSelected();
       return;
     }
-    this.router.navigate(['/bankpayment/privatesiteconfig/LinkPublicConfigId', this.tableRowSelected.Id]);
+    const urlTemplate = environment.cmsServerConfig.configHtmlBuilderServerPath + 'htmlbuilder/?id=' + model.Id
+      + '&token=' + encodeURIComponent(this.tokenInfo.Token);
+    // this.document.location.href = urlTemplate;
+    window.open(urlTemplate, '_blank');
+  }
+  onActionbuttonHtmlView(model: WebDesignerMainPageModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id.length === 0) {
+      const message = 'ردیفی انتخاب نشده است';
+      this.cmsToastrService.typeErrorSelected(message);
+      return;
+    }
+    this.tableRowSelected = model;
+
+    if (
+      this.dataModelResult == null ||
+      this.dataModelResult.Access == null ||
+      !this.dataModelResult.Access.AccessWatchRow
+    ) {
+      this.cmsToastrService.typeErrorSelected();
+      return;
+    }
+
+    const urlTemplate = environment.cmsServerConfig.configHtmlViewServerPath + 'page/' + model.Id + '?RenderViewPageByMaster=true&preview=true';
+    // this.document.location.href = urlTemplate;
+    window.open(urlTemplate, '_blank');
+  }
+  onActionbuttonHtmlViewWithOutParent(model: WebDesignerMainPageModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id.length === 0) {
+      const message = 'ردیفی انتخاب نشده است';
+      this.cmsToastrService.typeErrorSelected(message);
+      return;
+    }
+    this.tableRowSelected = model;
+
+    if (
+      this.dataModelResult == null ||
+      this.dataModelResult.Access == null ||
+      !this.dataModelResult.Access.AccessWatchRow
+    ) {
+      this.cmsToastrService.typeErrorSelected();
+      return;
+    }
+    const urlTemplate = environment.cmsServerConfig.configHtmlViewServerPath + 'page/' + model.Id + '?RenderViewPageByMaster=false&preview=true';
+    // this.document.location.href = urlTemplate;
+    window.open(urlTemplate, '_blank');
   }
 
   onActionbuttonExport(): void {
