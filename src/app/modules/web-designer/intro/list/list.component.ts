@@ -67,6 +67,7 @@ export class WebDesignerMainIntroListComponent implements OnInit, OnDestroy {
   tableRowSelected: WebDesignerMainIntroModel = new WebDesignerMainIntroModel();
   tableSource: MatTableDataSource<WebDesignerMainIntroModel> = new MatTableDataSource<WebDesignerMainIntroModel>();
   tabledisplayedColumns: string[] = [
+    'LinkMainImageIdSrc',
     'Id',
     'RecordStatus',
     'Title',

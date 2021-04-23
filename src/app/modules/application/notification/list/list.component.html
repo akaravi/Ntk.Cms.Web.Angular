@@ -9,10 +9,10 @@
         data-target="#categoryModal">مشاهده</button>
       <button *ngIf="dataModelResult.Access.AccessAddRow " (click)="onActionbuttonNewRow()" type="button"
         class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">اضافه</button>
-      <button *ngIf="dataModelResult.Access.AccessEditRow && tableRowSelected.Id && tableRowSelected.Id.length>0"
+      <button *ngIf="dataModelResult.Access.AccessEditRow && tableRowSelected.Id && tableRowSelected?.Id?.length>0"
         (click)="onActionbuttonEditRow()" type="button" class="btn btn-warning ml-2" data-toggle="modal"
         data-target="#categoryModal">ویرایش</button>
-      <button *ngIf="dataModelResult.Access.AccessDeleteRow &&tableRowSelected.Id && tableRowSelected.Id.length>0"
+      <button *ngIf="dataModelResult.Access.AccessDeleteRow &&tableRowSelected.Id && tableRowSelected?.Id?.length>0"
         (click)="onActionbuttonDeleteRow()" type="button" class="btn btn-danger  ml-2">حذف</button>
 
       <a class="btn btn-secondary btn-sm BTN">

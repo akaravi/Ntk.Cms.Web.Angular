@@ -40,25 +40,22 @@
             <mat-label>{{ fieldsInfo['LinkPageId']?.FieldTitle }}</mat-label>
             <input matInput [(ngModel)]="dataModel.LinkPageId" [disabled]="!fieldsInfo['LinkPageId']?.AccessAddField"
               name="dataModel.LinkPageId" #LinkPageId type="text" placeholder="Page Id" minlength="3" maxlength="100"
-              required />
+               />
             <mat-icon matSuffix *ngIf="dataModel.LinkPageId && fieldsInfo['LinkPageId']?.AccessAddField" matSuffix
               mat-icon-button aria-label="Clear" (click)="dataModel.LinkPageId = ''">close</mat-icon>
             <mat-icon *ngIf="fieldsInfo['LinkPageId']?.AccessAddField" matSuffix>mode_edit</mat-icon>
             <mat-hint align="start">{{ LinkPageId.value.length }} / 100</mat-hint>
-            <mat-error *ngIf="LinkPageId.errors?.required">
-              {{ fieldsInfo['LinkPageId']?.FieldTitle }} is <strong>required</strong>
-            </mat-error>
+
           </mat-form-field>
           <!-- Priority Field -->
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Priority']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['Priority']?.FieldTitle }}</mat-label>
             <input matInput [(ngModel)]="dataModel.Priority" [disabled]="!fieldsInfo['Priority']?.AccessAddField"
-              name="dataModel.Priority" #Priority type="text" placeholder="علویت" minlength="3" maxlength="100"
+              name="dataModel.Priority" #Priority type="number" placeholder="الویت"
               required />
             <mat-icon matSuffix *ngIf="dataModel.Priority && fieldsInfo['Priority']?.AccessAddField" matSuffix
               mat-icon-button aria-label="Clear" (click)="dataModel.Priority = 1">close</mat-icon>
             <mat-icon *ngIf="fieldsInfo['Priority']?.AccessAddField" matSuffix>mode_edit</mat-icon>
-            <mat-hint align="start">{{ Priority.value.length }} / 100</mat-hint>
             <mat-error *ngIf="Priority.errors?.required">
               {{ fieldsInfo['Priority']?.FieldTitle }} is <strong>required</strong>
             </mat-error>

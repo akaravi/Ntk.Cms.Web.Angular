@@ -3,9 +3,10 @@
     <div class="button-row">
       <button *ngIf="dataModelResult.Access.AccessAddRow " (click)="onActionbuttonNewRow()" type="button"
         class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">اضافه</button>
-      <button *ngIf="dataModelResult.Access.AccessEditRow && tableRowSelected.Id.length>0" (click)="onActionbuttonEditRow()"
-        type="button" class="btn btn-warning ml-2" data-toggle="modal" data-target="#categoryModal">ویرایش</button>
-      <button *ngIf="dataModelResult.Access.AccessDeleteRow && tableRowSelected.Id.length>0"
+      <button *ngIf="dataModelResult.Access.AccessEditRow && tableRowSelected?.Id?.length>0"
+        (click)="onActionbuttonEditRow()" type="button" class="btn btn-warning ml-2" data-toggle="modal"
+        data-target="#categoryModal">ویرایش</button>
+      <button *ngIf="dataModelResult.Access.AccessDeleteRow && tableRowSelected?.Id?.length>0"
         (click)="onActionbuttonDeleteRow()" type="button" class="btn btn-danger  ml-2">حذف</button>
 
       <a class="btn btn-secondary btn-sm BTN">
@@ -34,6 +35,15 @@
 
     <div class="example-container mat-elevation-z8">
       <mat-table [dataSource]="tableSource" matSort #tableSort="matSort" (matSortChange)="onTableSortData(tableSort)">
+        <!-- LinkMainImageIdSrc Column -->
+        <ng-container matColumnDef="LinkMainImageIdSrc">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> عکس </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <img *ngIf="row?.LinkMainImageIdSrc?.length>0" style="vertical-align:middle;" aria-hidden
+              src="{{row.LinkMainImageIdSrc}}" height="40" width="40" />
+
+          </mat-cell>
+        </ng-container>
         <!-- ID Column -->
         <ng-container matColumnDef="Id">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Id']?.FieldTitle}} </mat-header-cell>
@@ -41,7 +51,8 @@
         </ng-container>
         <!-- LinkSiteId Column -->
         <ng-container matColumnDef="LinkSiteId">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkSiteId']?.FieldTitle}} </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkSiteId']?.FieldTitle}}
+          </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.LinkSiteId}} </mat-cell>
         </ng-container>
         <!-- LinkPageId Column -->
@@ -51,7 +62,8 @@
         </ng-container>
         <!-- RecordStatus Column -->
         <ng-container matColumnDef="RecordStatus">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['RecordStatus']?.FieldTitle}} </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['RecordStatus']?.FieldTitle}}
+          </mat-header-cell>
           <mat-cell *matCellDef="let row"> <i [ngClass]="row.RecordStatus|statusClass"></i> </mat-cell>
         </ng-container>
         <!-- Title Column -->
@@ -61,12 +73,14 @@
         </ng-container>
         <!-- CreatedDate Column -->
         <ng-container matColumnDef="CreatedDate">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['CreatedDate']?.FieldTitle}} </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['CreatedDate']?.FieldTitle}}
+          </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.CreatedDate) }} </mat-cell>
         </ng-container>
         <!-- UpdatedDate Column -->
         <ng-container matColumnDef="UpdatedDate">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['UpdatedDate']?.FieldTitle}} </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['UpdatedDate']?.FieldTitle}}
+          </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.UpdatedDate) }} </mat-cell>
         </ng-container>
         <!-- Action Column -->
@@ -82,7 +96,8 @@
                 <mat-icon>mode_edit</mat-icon>
                 <span>ویرایش</span>
               </button>
-              <button mat-menu-item (click)="onActionbuttonDeleteRow(row)" *ngIf="dataModelResult.Access.AccessDeleteRow">
+              <button mat-menu-item (click)="onActionbuttonDeleteRow(row)"
+                *ngIf="dataModelResult.Access.AccessDeleteRow">
                 <mat-icon>delete_forever</mat-icon>
                 <span>حذف</span>
               </button>

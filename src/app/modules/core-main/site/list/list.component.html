@@ -113,19 +113,19 @@
                 <mat-icon>login</mat-icon>
                 <span>ورود به این سایت</span>
               </button>
-              <button mat-menu-item (click)="onActionbuttonModuleListRow(row)">
+              <button mat-menu-item (click)="onActionbuttonModuleListRow(row)" *ngIf="tokenInfo.UserAccessAdminAllowToAllData || tokenInfo.SiteId==row.Id">
                 <mat-icon>view_module</mat-icon>
                 <span>ماژول ها</span>
               </button>
-              <button mat-menu-item (click)="onActionbuttonDomainAliasListRow(row)">
+              <button mat-menu-item (click)="onActionbuttonDomainAliasListRow(row)"  *ngIf="tokenInfo.UserAccessAdminAllowToAllData || tokenInfo.SiteId==row.Id">
                 <mat-icon>domain</mat-icon>
                 <span>دامنه ها</span>
               </button>
-              <button mat-menu-item (click)="onActionbuttonUserListRow(row)">
+              <button mat-menu-item (click)="onActionbuttonUserListRow(row)"  *ngIf="tokenInfo.UserAccessAdminAllowToAllData || tokenInfo.SiteId==row.Id">
                 <mat-icon>switch_account</mat-icon>
                 <span>کاربران ها</span>
               </button>
-              <button mat-menu-item (click)="onActionbuttonDeviceListRow(row)">
+              <button mat-menu-item (click)="onActionbuttonDeviceListRow(row)"  *ngIf="tokenInfo.UserAccessAdminAllowToAllData || tokenInfo.SiteId==row.Id">
                 <mat-icon>devices</mat-icon>
                 <span>دستگاه ها</span>
               </button>

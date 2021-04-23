@@ -70,6 +70,7 @@ export class ApplicationIntroListComponent implements OnInit, OnDestroy {
   tableRowSelected: ApplicationIntroModel = new ApplicationIntroModel();
   tableSource: MatTableDataSource<ApplicationIntroModel> = new MatTableDataSource<ApplicationIntroModel>();
   tabledisplayedColumns: string[] = [
+    'LinkMainImageIdSrc',
     'Id',
     'RecordStatus',
     'Title',
