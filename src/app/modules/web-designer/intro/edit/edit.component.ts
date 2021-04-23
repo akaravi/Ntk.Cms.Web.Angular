@@ -4,7 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   AccessModel,
-    WebDesignerMainIntroModel,
+  WebDesignerMainIntroModel,
   WebDesignerMainIntroService,
   CoreEnumService,
   DataFieldInfoModel,
@@ -35,7 +35,9 @@ export class WebDesignerMainIntroEditComponent implements OnInit {
     private cmsToastrService: CmsToastrService,
     private router: Router) {
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
-    this.requestId = this.activatedRoute.snapshot.paramMap.get('Id')+'';
+    if (this.activatedRoute.snapshot.paramMap.get('Id')) {
+      this.requestId = this.activatedRoute.snapshot.paramMap.get('Id');
+    }
 
   }
 

@@ -53,8 +53,8 @@ export class WebDesignerMainPageDependencyListComponent implements OnInit, OnDes
       onSubmit: (model) => this.onSubmitOptionExport(model),
     };
     /*filter Sort*/
-    this.filteModelContent.SortColumn = 'Id';
-    this.filteModelContent.SortType = EnumSortType.Descending;
+    this.filteModelContent.SortColumn = 'LinkModuleId';
+    this.filteModelContent.SortType = EnumSortType.Ascending;
   }
   comment: string;
   author: string;
@@ -266,7 +266,7 @@ export class WebDesignerMainPageDependencyListComponent implements OnInit, OnDes
   }
 
 
-  onActionbuttonGoToSiteCategoryList(model: WebDesignerMainPageDependencyModel = this.tableRowSelected): void {
+  onActionbuttonPageList(model: WebDesignerMainPageDependencyModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id.length === 0) {
       const message = 'ردیفی برای نمایش انتخاب نشده است';
       this.cmsToastrService.typeErrorSelected(message);
@@ -274,7 +274,7 @@ export class WebDesignerMainPageDependencyListComponent implements OnInit, OnDes
     }
     this.tableRowSelected = model;
 
-    this.router.navigate(['/core/siteSiteCategory/', this.tableRowSelected.Id]);
+    this.router.navigate(['/webdesigner/page/LinkPageDependencyGuId', this.tableRowSelected.Id]);
   }
   onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;
@@ -315,25 +315,7 @@ export class WebDesignerMainPageDependencyListComponent implements OnInit, OnDes
     );
 
   }
-  onActionbuttonPrivateList(model: WebDesignerMainPageDependencyModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id.length === 0) {
 
-      const message = 'ردیفی انتخاب نشده است';
-      this.cmsToastrService.typeErrorSelected(message);
-      return;
-    }
-    this.tableRowSelected = model;
-
-    if (
-      this.dataModelResult == null ||
-      this.dataModelResult.Access == null ||
-      !this.dataModelResult.Access.AccessWatchRow
-    ) {
-      this.cmsToastrService.typeErrorSelected();
-      return;
-    }
-    this.router.navigate(['/bankpayment/privatesiteconfig/LinkPublicConfigId', this.tableRowSelected.Id]);
-  }
 
   onActionbuttonExport(): void {
     this.optionsExport.data.show = !this.optionsExport.data.show;

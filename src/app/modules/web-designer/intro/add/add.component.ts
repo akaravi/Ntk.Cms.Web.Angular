@@ -56,7 +56,9 @@ export class WebDesignerMainIntroAddComponent implements OnInit {
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
 
   ngOnInit(): void {
-    this.requestLinkPageId = this.activatedRoute.snapshot.paramMap.get('LinkPageId') + '';
+    if (this.activatedRoute.snapshot.paramMap.get('LinkPageId')) {
+      this.requestLinkPageId = this.activatedRoute.snapshot.paramMap.get('LinkPageId');
+    }
     if (this.requestLinkPageId.length > 0) {
       this.dataModel.LinkPageId = this.requestLinkPageId;
     }
@@ -79,7 +81,7 @@ export class WebDesignerMainIntroAddComponent implements OnInit {
       this.cmsToastrService.typeErrorFormInvalid();
       return;
     }
-      this.DataAddContent();
+    this.DataAddContent();
   }
 
   DataGetAccess(): void {

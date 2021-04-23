@@ -46,6 +46,18 @@ import { WebDesignerMainPageDependencyListComponent } from './page-dependency/li
 import { WebDesignerMainPageDependencySelectorComponent } from './page-dependency/selector/selector.component';
 import { WebDesignerMainPageDependencyTreeComponent } from './page-dependency/tree/tree.component';
 import { WebDesignerMainPageDependencyHeaderComponent } from './page-dependency/header/header.component';
+import { WebDesignerMainPageAddComponent } from './page/add/add.component';
+import { WebDesignerMainPageEditComponent } from './page/edit/edit.component';
+import { WebDesignerMainPageListComponent } from './page/list/list.component';
+import { WebDesignerMainPageSelectorComponent } from './page/selector/selector.component';
+import { WebDesignerMainPageTreeComponent } from './page/tree/tree.component';
+import { WebDesignerMainPageHeaderComponent } from './page/header/header.component';
+import { WebDesignerMainPageTemplateAddComponent } from './page-template/add/add.component';
+import { WebDesignerMainPageTemplateEditComponent } from './page-template/edit/edit.component';
+import { WebDesignerMainPageTemplateListComponent } from './page-template/list/list.component';
+import { WebDesignerMainPageTemplateSelectorComponent } from './page-template/selector/selector.component';
+import { WebDesignerMainPageTemplateTreeComponent } from './page-template/tree/tree.component';
+import { WebDesignerMainPageTemplateHeaderComponent } from './page-template/header/header.component';
 
 @NgModule({
   declarations: [
@@ -67,12 +79,28 @@ import { WebDesignerMainPageDependencyHeaderComponent } from './page-dependency/
     WebDesignerMainMenuTreeComponent,
     /** */
     /** */
+    WebDesignerMainPageTemplateAddComponent,
+    WebDesignerMainPageTemplateEditComponent,
+    WebDesignerMainPageTemplateListComponent,
+    WebDesignerMainPageTemplateSelectorComponent,
+    WebDesignerMainPageTemplateTreeComponent,
+    WebDesignerMainPageTemplateHeaderComponent,
+    /** */
+    /** */
     WebDesignerMainPageDependencyAddComponent,
     WebDesignerMainPageDependencyEditComponent,
     WebDesignerMainPageDependencyListComponent,
     WebDesignerMainPageDependencySelectorComponent,
     WebDesignerMainPageDependencyTreeComponent,
     WebDesignerMainPageDependencyHeaderComponent,
+    /** */
+    /** */
+    WebDesignerMainPageAddComponent,
+    WebDesignerMainPageEditComponent,
+    WebDesignerMainPageListComponent,
+    WebDesignerMainPageSelectorComponent,
+    WebDesignerMainPageTreeComponent,
+    WebDesignerMainPageHeaderComponent,
     /** */
   ],
   imports: [

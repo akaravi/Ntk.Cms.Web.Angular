@@ -1,17 +1,12 @@
 <div class="d-flex flex-column-fluid">
   <!--begin::Container-->
   <div class="container">
-
-
-
     <form (ngSubmit)="onFormSubmit()" #vform="ngForm"
       class="form mt-0 mt-lg-10 fv-plugins-bootstrap fv-plugins-framework">
       <app-progress-spinner [options]="loading">
       </app-progress-spinner>
       <mat-horizontal-stepper *ngIf="!loading.display" (selectionChange)="onStepClick($event,stepper)" #stepper>
-
         <mat-step label="اطلاعات الزامی" state="main">
-
           <div>
             کپی تنظیمات از محتوای :
             <br>
@@ -19,9 +14,8 @@
               [optionPlaceholder]="'سورس اپلیکیشن'"></app-application-source-selector>
             <br>
             با استفاده از این امکان می توانید تنطیمات سورس دیگر را کپی کنید و سپس تغییرات را انجام دهید
-
           </div>
-
+          <!-- RecordStatus Field -->
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['RecordStatus']?.AccessWatchField">
             <mat-select placeholder="{{fieldsInfo['RecordStatus']?.FieldTitle}}" [(ngModel)]="dataModel.RecordStatus"
               [disabled]="!fieldsInfo['RecordStatus']?.AccessAddField" name="dataModel.RecordStatus"
@@ -36,7 +30,7 @@
               {{ fieldsInfo['RecordStatus']?.FieldTitle }} is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-
+          <!-- OSType Field -->
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['OSType']?.AccessWatchField">
             <mat-select placeholder="{{fieldsInfo['OSType']?.FieldTitle}}" [(ngModel)]="dataModel.OSType"
               name="dataModel.OSType" #OSType="ngModel" required>
@@ -50,8 +44,7 @@
               {{ fieldsInfo['OSType']?.FieldTitle }} is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-
-
+          <!-- Title Field -->
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Title']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['Title']?.FieldTitle }}</mat-label>
             <input matInput [(ngModel)]="dataModel.Title" [disabled]="!fieldsInfo['Title']?.AccessAddField"
@@ -64,7 +57,7 @@
               {{ fieldsInfo['Title']?.FieldTitle }} is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-
+          <!-- ClassName Field -->
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['ClassName']?.AccessWatchField">
             <mat-label>{{fieldsInfo['ClassName']?.FieldTitle}}</mat-label>
             <input matInput [(ngModel)]="dataModel.ClassName" [disabled]="!fieldsInfo['ClassName']?.AccessAddField"
@@ -78,7 +71,7 @@
               ClassName is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-
+          <!-- PackageName Field -->
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['PackageName']?.AccessWatchField">
             <mat-label>{{fieldsInfo['PackageName']?.FieldTitle}}</mat-label>
             <input matInput [(ngModel)]="dataModel.PackageName" [disabled]="!fieldsInfo['PackageName']?.AccessAddField"
@@ -92,15 +85,7 @@
               PackageName is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-
-
-
-
-
-
-
-
-
+          <!-- Extension Field -->
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Extension']?.AccessWatchField">
             <mat-label>{{fieldsInfo['Extension']?.FieldTitle}}</mat-label>
             <input matInput [(ngModel)]="dataModel.Extension" [disabled]="!fieldsInfo['Extension']?.AccessAddField"
@@ -115,9 +100,7 @@
               Extension is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-
-
-
+          <!-- ExtensionUpdateFile Field -->
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['ExtensionUpdateFile']?.AccessWatchField">
             <mat-label>{{fieldsInfo['ExtensionUpdateFile']?.FieldTitle}}</mat-label>
             <input matInput [(ngModel)]="dataModel.ExtensionUpdateFile"
@@ -132,9 +115,6 @@
               Extension Update File is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-
-
-
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button (click)="onActionBackToParent()"
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
@@ -225,6 +205,7 @@
         </mat-step>
         <mat-step label="فایل های پیوست" state="file">
           <p>Socialize with each other.</p>
+          <!-- LinkMainImageId Field -->
           <div class="mb-3">
             <img *ngIf="dataModel?.LinkMainImageIdSrc?.length>0" style="vertical-align:middle;" aria-hidden
               src="{{dataModel.LinkMainImageIdSrc}}" height="50" width="50" />
@@ -262,7 +243,7 @@
 
         <mat-step label="تنظیمات قالب و ساخت" state="otherinfo">
           <p>تنظیمات پیش فرض مدیریت کل در ساخت</p>
-
+          <!-- DefaultConfigBuilderAdminJsonValues Field -->
           <mat-form-field class="example-full-width"
             *ngIf="fieldsInfo['DefaultConfigBuilderAdminJsonValues']?.AccessWatchField">
             <mat-label>{{fieldsInfo['DefaultConfigBuilderAdminJsonValues']?.FieldTitle}}</mat-label>
@@ -274,6 +255,7 @@
               aria-label="Clear" (click)="dataModel.DefaultConfigBuilderAdminJsonValues = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
           </mat-form-field>
+          <!-- DefaultConfigRuntimeAdminJsonValues Field -->
           <mat-form-field class="example-full-width"
             *ngIf="fieldsInfo['DefaultConfigRuntimeAdminJsonValues']?.AccessWatchField">
             <mat-label>{{fieldsInfo['DefaultConfigRuntimeAdminJsonValues']?.FieldTitle}}</mat-label>
@@ -285,6 +267,7 @@
               aria-label="Clear" (click)="dataModel.DefaultConfigRuntimeAdminJsonValues = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
           </mat-form-field>
+          <!-- DefaultConfigBuilderSiteJsonValues Field -->
           <mat-form-field class="example-full-width"
             *ngIf="fieldsInfo['DefaultConfigBuilderSiteJsonValues']?.AccessWatchField">
             <mat-label>{{fieldsInfo['DefaultConfigBuilderSiteJsonValues']?.FieldTitle}}</mat-label>
@@ -296,6 +279,7 @@
               aria-label="Clear" (click)="dataModel.DefaultConfigBuilderSiteJsonValues = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
           </mat-form-field>
+          <!-- DefaultConfigRuntimeSiteJsonValues Field -->
           <mat-form-field class="example-full-width"
             *ngIf="fieldsInfo['DefaultConfigRuntimeSiteJsonValues']?.AccessWatchField">
             <mat-label>{{fieldsInfo['DefaultConfigRuntimeSiteJsonValues']?.FieldTitle}}</mat-label>
@@ -307,12 +291,6 @@
               aria-label="Clear" (click)="dataModel.DefaultConfigRuntimeSiteJsonValues = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
           </mat-form-field>
-
-
-
-
-
-
 
 
           <table class="example-full-width" cellspacing="0">
@@ -433,18 +411,6 @@
           </table>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
@@ -459,13 +425,6 @@
 
         <mat-step label="گزارش" state="loaction">
           <p>گزارش آخرین وضعیت ها</p>
-
-
-
-
-
-
-
 
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['LastSuccessfullyBuildDate']?.AccessWatchField">
             <mat-label>{{fieldsInfo['LastSuccessfullyBuildDate']?.FieldTitle}}</mat-label>

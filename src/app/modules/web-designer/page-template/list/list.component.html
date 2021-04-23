@@ -57,29 +57,19 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Title']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Title}} </mat-cell>
         </ng-container>
-          <!-- TitleML Column -->
-        <ng-container matColumnDef="TitleML">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['TitleML']?.FieldTitle}} </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.TitleML}} </mat-cell>
+          <!-- Folder Column -->
+        <ng-container matColumnDef="Folder">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Folder']?.FieldTitle}} </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.Folder}} </mat-cell>
         </ng-container>
-        <!-- LinkModuleId Column -->
-        <ng-container matColumnDef="LinkModuleId">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkModuleId']?.FieldTitle}}
+
+        <!-- IndexFile Column -->
+        <ng-container matColumnDef="IndexFile">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['IndexFile']?.FieldTitle}}
           </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.LinkModuleId | cmstitle : dataModelCoreModuleResult.ListItems}} </mat-cell>
+          <mat-cell *matCellDef="let row"> {{row.IndexFile}} </mat-cell>
         </ng-container>
-        <!-- CmsModuleClassName Column -->
-        <ng-container matColumnDef="CmsModuleClassName">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['CmsModuleClassName']?.FieldTitle}}
-          </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.CmsModuleClassName}} </mat-cell>
-        </ng-container>
-        <!-- ClassActionName Column -->
-        <ng-container matColumnDef="ClassActionName">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['ClassActionName']?.FieldTitle}}
-          </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.ClassActionName}} </mat-cell>
-        </ng-container>
+
 
         <!-- Action Column -->
         <ng-container matColumnDef="Action">
@@ -101,7 +91,7 @@
               </button>
               <button mat-menu-item (click)="onActionbuttonPageList(row)">
                 <mat-icon>view_module</mat-icon>
-                <span>صفحات</span>
+                <span>صفحات ها</span>
               </button>
             </mat-menu>
           </mat-cell>

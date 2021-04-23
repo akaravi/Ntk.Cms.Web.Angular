@@ -1,19 +1,21 @@
-import { ActivatedRoute, Router } from '@angular/router';
+
+import { Router } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
-  ApplicationAppModel,
-  ApplicationLogNotificationModel,
-  ApplicationLogNotificationService,
+  WebDesignerMainPageTemplateModel,
+  WebDesignerMainPageTemplateService,
   CoreAuthService,
-  DataFieldInfoModel,
-  EnumRecordStatus,
   EnumSortType,
   ErrorExceptionResult,
-  FilterDataModel,
   FilterModel,
   NtkCmsApiStoreService,
-  TokenInfoModel
+  TokenInfoModel,
+  FilterDataModel,
+  EnumRecordStatus,
+  DataFieldInfoModel,
+  CoreModuleModel,
+  CoreModuleService
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -25,23 +27,23 @@ import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/bas
 import { MatSort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
-import { ApplicationLogNotificationViewComponent } from '../view/view.component';
-import { ApplicationLogNotificationActionSendComponent } from '../action-send/action-send.component';
+import { WebDesignerMainPageTemplateEditComponent } from '../edit/edit.component';
+import { WebDesignerMainPageTemplateAddComponent } from '../add/add.component';
+import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 
 @Component({
-  selector: 'app-application-notification-list',
+  selector: 'app-webdesigner-pagetemplate-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ApplicationLogNotificationListComponent implements OnInit, OnDestroy {
-  requestLinkApplicationId = 0;
-  requestLinkApplicationMemberId = '';
+export class WebDesignerMainPageTemplateListComponent implements OnInit, OnDestroy {
   constructor(
-    private applicationLogNotificationService: ApplicationLogNotificationService,
-    private activatedRoute: ActivatedRoute,
+    private bankPaymentPublicConfigService: WebDesignerMainPageTemplateService,
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
+    private cmsConfirmationDialogService: CmsConfirmationDialogService,
+    private coreModuleService: CoreModuleService,
     private router: Router,
     public dialog: MatDialog) {
     this.optionsSearch.parentMethods = {
@@ -51,7 +53,7 @@ export class ApplicationLogNotificationListComponent implements OnInit, OnDestro
       onSubmit: (model) => this.onSubmitOptionExport(model),
     };
     /*filter Sort*/
-    this.filteModelContent.SortColumn = 'CreatedDate';
+    this.filteModelContent.SortColumn = 'Id';
     this.filteModelContent.SortType = EnumSortType.Descending;
   }
   comment: string;
@@ -59,55 +61,37 @@ export class ApplicationLogNotificationListComponent implements OnInit, OnDestro
   dataSource: any;
   flag = false;
   tableContentSelected = [];
+
   filteModelContent = new FilterModel();
-  dataModelResult: ErrorExceptionResult<ApplicationLogNotificationModel> = new ErrorExceptionResult<ApplicationLogNotificationModel>();
+  dataModelResult: ErrorExceptionResult<WebDesignerMainPageTemplateModel> = new ErrorExceptionResult<WebDesignerMainPageTemplateModel>();
   optionsSearch: ComponentOptionSearchModel = new ComponentOptionSearchModel();
   optionsStatist: ComponentOptionStatistModel = new ComponentOptionStatistModel();
   optionsExport: ComponentOptionExportModel = new ComponentOptionExportModel();
   tokenInfo = new TokenInfoModel();
   loading = new ProgressSpinnerModel();
-  categoryModelSelected: ApplicationAppModel;
-  tableRowsSelected: Array<ApplicationLogNotificationModel> = [];
-  tableRowSelected: ApplicationLogNotificationModel = new ApplicationLogNotificationModel();
-  tableSource: MatTableDataSource<ApplicationLogNotificationModel> = new MatTableDataSource<ApplicationLogNotificationModel>();
+  tableRowsSelected: Array<WebDesignerMainPageTemplateModel> = [];
+  tableRowSelected: WebDesignerMainPageTemplateModel = new WebDesignerMainPageTemplateModel();
+  tableSource: MatTableDataSource<WebDesignerMainPageTemplateModel> = new MatTableDataSource<WebDesignerMainPageTemplateModel>();
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+  dataModelCoreModuleResult: ErrorExceptionResult<CoreModuleModel> = new ErrorExceptionResult<CoreModuleModel>();
+
+
   tabledisplayedColumns: string[] = [
     'Id',
     'RecordStatus',
-    'LinkApplicationId',
-    'LinkApplicationMemberId',
     'Title',
-    'ContentType',
-    'CreatedDate',
-    'UpdatedDate',
+    'Folder',
+    'IndexFile',
     'Action'
   ];
 
 
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
-
-  expandedElement: ApplicationLogNotificationModel | null;
+  expandedElement: WebDesignerMainPageTemplateModel | null;
   cmsApiStoreSubscribe: Subscription;
 
   ngOnInit(): void {
-
-    this.requestLinkApplicationId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkApplicationId'));
-    if (this.activatedRoute.snapshot.paramMap.get('LinkApplicationMemberId')) {
-      this.requestLinkApplicationMemberId = this.activatedRoute.snapshot.paramMap.get('LinkApplicationMemberId');
-    }
-    if (this.requestLinkApplicationId > 0) {
-      const filter = new FilterDataModel();
-      filter.PropertyName = 'LinkApplicationId';
-      filter.Value = this.requestLinkApplicationId;
-      this.filteModelContent.Filters.push(filter);
-    }
-    if (this.requestLinkApplicationMemberId.length > 0) {
-      const filter = new FilterDataModel();
-      filter.PropertyName = 'LinkApplicationMemberId';
-      filter.Value = this.requestLinkApplicationMemberId;
-      this.filteModelContent.Filters.push(filter);
-
-    }
+    this.filteModelContent.SortColumn = 'Title';
     this.DataGetAll();
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
@@ -115,13 +99,13 @@ export class ApplicationLogNotificationListComponent implements OnInit, OnDestro
       this.tokenInfo = next;
     });
   }
+
   ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
-
   DataGetAll(): void {
     this.tableRowsSelected = [];
-    this.tableRowSelected = new ApplicationLogNotificationModel();
+    this.tableRowSelected = new WebDesignerMainPageTemplateModel();
 
     this.loading.display = true;
     this.loading.Globally = false;
@@ -129,38 +113,14 @@ export class ApplicationLogNotificationListComponent implements OnInit, OnDestro
     /*filter CLone*/
     const filterModel = JSON.parse(JSON.stringify(this.filteModelContent));
     /*filter CLone*/
-    const filter = new FilterDataModel();
-
-    if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
-      filter.PropertyName = 'LinkApplicationId';
-      filter.Value = this.categoryModelSelected.Id;
-      filterModel.Filters.push(filter);
-    }
-    this.applicationLogNotificationService.ServiceGetAll(filterModel).subscribe(
+    this.bankPaymentPublicConfigService.ServiceGetAll(filterModel).subscribe(
       (next) => {
-        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
-
         if (next.IsSuccess) {
+          this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;
-          if (this.tokenInfo.UserAccessAdminAllowToAllData) {
-            this.tabledisplayedColumns = this.publicHelper.listAddIfNotExist(
-              this.tabledisplayedColumns,
-              'LinkSiteId',
-              0
-            );
-          } else {
-            this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
-              this.tabledisplayedColumns,
-              'LinkSiteId'
-            );
-          }
-          if (this.requestLinkApplicationId === 0) {
-            this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
-              this.tabledisplayedColumns,
-              'LinkApplicationId'
-            );
-          }
+
           if (this.optionsSearch.childMethods) {
             this.optionsSearch.childMethods.setAccess(next.Access);
           }
@@ -203,38 +163,8 @@ export class ApplicationLogNotificationListComponent implements OnInit, OnDestro
   }
 
 
-  onActionbuttonViewRow(model: ApplicationLogNotificationModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id.length === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی انتخاب نشده است');
-      return;
-    }
-    if (
-      this.dataModelResult == null ||
-      this.dataModelResult.Access == null ||
-      !this.dataModelResult.Access.AccessWatchRow
-    ) {
-      this.cmsToastrService.typeErrorAccessWatch();
-      return;
-    }
-    const dialogRef = this.dialog.open(ApplicationLogNotificationViewComponent, {
-      data: { id: this.tableRowSelected.Id }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      // console.log(`Dialog result: ${result}`);
-      if (result && result.dialogChangedDate) {
-      }
-    });
-  }
   onActionbuttonNewRow(): void {
-    if (
-      this.requestLinkApplicationId == null ||
-      this.requestLinkApplicationId === 0
-    ) {
 
-      const message = 'محتوا انتخاب نشده است';
-      this.cmsToastrService.typeErrorSelected(message);
-      return;
-    }
     if (
       this.dataModelResult == null ||
       this.dataModelResult.Access == null ||
@@ -243,19 +173,18 @@ export class ApplicationLogNotificationListComponent implements OnInit, OnDestro
       this.cmsToastrService.typeErrorAccessAdd();
       return;
     }
-    // const dialogRef = this.dialog.open(NewsCommentEditComponent, {
-    //   data: { contentId: this.requestContentId }
-    // });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   // console.log(`Dialog result: ${result}`);
-    //   if (result && result.dialogChangedDate) {
-    //     this.DataGetAll();
-    //   }
-    // });
+    const dialogRef = this.dialog.open(WebDesignerMainPageTemplateAddComponent, {
+      data: {}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.dialogChangedDate) {
+        this.DataGetAll();
+      }
+    });
   }
 
+  onActionbuttonEditRow(model: WebDesignerMainPageTemplateModel = this.tableRowSelected): void {
 
-  onActionbuttonEditRow(model: ApplicationLogNotificationModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id.length === 0) {
       this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
       return;
@@ -269,18 +198,16 @@ export class ApplicationLogNotificationListComponent implements OnInit, OnDestro
       this.cmsToastrService.typeErrorAccessEdit();
       return;
     }
-
-    // const dialogRef = this.dialog.open(NewsCommentEditComponent, {
-    //   data: { id: this.tableRowSelected.Id }
-    // });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   // console.log(`Dialog result: ${result}`);
-    //   if (result && result.dialogChangedDate) {
-    //     this.DataGetAll();
-    //   }
-    // });
+    const dialogRef = this.dialog.open(WebDesignerMainPageTemplateEditComponent, {
+      data: { id: this.tableRowSelected.Id }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.dialogChangedDate) {
+        this.DataGetAll();
+      }
+    });
   }
-  onActionbuttonDeleteRow(model: ApplicationLogNotificationModel = this.tableRowSelected): void {
+  onActionbuttonDeleteRow(model: WebDesignerMainPageTemplateModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id.length === 0) {
       const emessage = 'ردیفی برای حذف انتخاب نشده است';
       this.cmsToastrService.typeErrorSelected(emessage);
@@ -296,46 +223,40 @@ export class ApplicationLogNotificationListComponent implements OnInit, OnDestro
       this.cmsToastrService.typeErrorAccessDelete();
       return;
     }
-    // const dialogRef = this.dialog.open(NewsCommentDeleteComponent, {
-    //   data: { id: this.tableRowSelected.Id }
-    // });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   // console.log(`Dialog result: ${result}`);
-    //   if (result && result.dialogChangedDate) {
-    //     this.DataGetAll();
-    //   }
-    // });
-  }
-  onActionbuttonNotifictionActionSend(model: ApplicationLogNotificationModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id.length === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی  انتخاب نشده است');
-      return;
-    }
-    this.tableRowSelected = model;
-    if (
-      this.dataModelResult == null ||
-      this.dataModelResult.Access == null ||
-      !this.dataModelResult.Access.AccessEditRow
-    ) {
-      this.cmsToastrService.typeErrorAccessEdit();
-      return;
-    }
-    const dialogRef = this.dialog.open(ApplicationLogNotificationActionSendComponent, {
-      data: { LinkApplicationMemberId: this.tableRowSelected.LinkApplicationMemberId }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      // console.log(`Dialog result: ${result}`);
-      if (result && result.dialogChangedDate) {
 
+
+    const title = 'لطفا تایید کنید...';
+    const message = 'آیا مایل به حدف این محتوا می باشید ' + '?' + '<br> ( ' + this.tableRowSelected.Title + ' ) ';
+    this.cmsConfirmationDialogService.confirm(title, message)
+      .then((confirmed) => {
+        if (confirmed) {
+          this.loading.display = true;
+          this.bankPaymentPublicConfigService.ServiceDelete(this.tableRowSelected.Id).subscribe(
+            (next) => {
+              if (next.IsSuccess) {
+                this.cmsToastrService.typeSuccessRemove();
+                this.DataGetAll();
+              } else {
+                this.cmsToastrService.typeErrorRemove();
+              }
+              this.loading.display = false;
+            },
+            (error) => {
+              this.cmsToastrService.typeError(error);
+              this.loading.display = false;
+            }
+          );
+        }
       }
-    });
-  }
-  onActionSelectorSelect(model: ApplicationAppModel | null): void {
-    this.filteModelContent = new FilterModel();
-    this.categoryModelSelected = model;
+      )
+      .catch(() => {
+        // console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)')
+      }
+      );
 
-    this.DataGetAll();
   }
+
+
   onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;
     if (!this.optionsStatist.data.show) {
@@ -344,7 +265,7 @@ export class ApplicationLogNotificationListComponent implements OnInit, OnDestro
     const statist = new Map<string, number>();
     statist.set('Active', 0);
     statist.set('All', 0);
-    this.applicationLogNotificationService.ServiceGetCount(this.filteModelContent).subscribe(
+    this.bankPaymentPublicConfigService.ServiceGetCount(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('All', next.TotalRowCount);
@@ -361,7 +282,7 @@ export class ApplicationLogNotificationListComponent implements OnInit, OnDestro
     fastfilter.PropertyName = 'RecordStatus';
     fastfilter.Value = EnumRecordStatus.Available;
     filterStatist1.Filters.push(fastfilter);
-    this.applicationLogNotificationService.ServiceGetCount(filterStatist1).subscribe(
+    this.bankPaymentPublicConfigService.ServiceGetCount(filterStatist1).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('Active', next.TotalRowCount);
@@ -375,6 +296,26 @@ export class ApplicationLogNotificationListComponent implements OnInit, OnDestro
     );
 
   }
+  onActionbuttonPageList(model: WebDesignerMainPageTemplateModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id.length === 0) {
+
+      const message = 'ردیفی انتخاب نشده است';
+      this.cmsToastrService.typeErrorSelected(message);
+      return;
+    }
+    this.tableRowSelected = model;
+
+    if (
+      this.dataModelResult == null ||
+      this.dataModelResult.Access == null ||
+      !this.dataModelResult.Access.AccessWatchRow
+    ) {
+      this.cmsToastrService.typeErrorSelected();
+      return;
+    }
+    this.router.navigate(['/webdesigner/page/LinkPageTemplateGuId', this.tableRowSelected.Id]);
+  }
+
   onActionbuttonExport(): void {
     this.optionsExport.data.show = !this.optionsExport.data.show;
     this.optionsExport.childMethods.setExportFilterModel(this.filteModelContent);
@@ -382,7 +323,7 @@ export class ApplicationLogNotificationListComponent implements OnInit, OnDestro
   onSubmitOptionExport(model: FilterModel): void {
     const exportlist = new Map<string, string>();
     exportlist.set('Download', 'loading ... ');
-    this.applicationLogNotificationService.ServiceExportFile(model).subscribe(
+    this.bankPaymentPublicConfigService.ServiceExportFile(model).subscribe(
       (next) => {
         if (next.IsSuccess) {
           exportlist.set('Download', next.LinkFile);
@@ -402,13 +343,8 @@ export class ApplicationLogNotificationListComponent implements OnInit, OnDestro
     this.filteModelContent.Filters = model;
     this.DataGetAll();
   }
-  onActionTableRowSelect(row: ApplicationLogNotificationModel): void {
+  onActionTableRowSelect(row: WebDesignerMainPageTemplateModel): void {
     this.tableRowSelected = row;
   }
-  onActionBackToParent(): void {
-    this.router.navigate(['/application/app/']);
-  }
-  onActionBackToParentMember(): void {
-    this.router.navigate(['/application/memberinfo/']);
-  }
+
 }

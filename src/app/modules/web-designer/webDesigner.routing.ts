@@ -7,6 +7,8 @@ import { WebDesignerMainIntroEditComponent } from './intro/edit/edit.component';
 import { WebDesignerMainIntroListComponent } from './intro/list/list.component';
 import { WebDesignerMainMenuListComponent } from './menu/list/list.component';
 import { WebDesignerMainPageDependencyListComponent } from './page-dependency/list/list.component';
+import { WebDesignerMainPageTemplateListComponent } from './page-template/list/list.component';
+import { WebDesignerMainPageListComponent } from './page/list/list.component';
 import { WebDesignerComponent } from './webDesigner.component';
 
 const routes: Routes = [
@@ -57,14 +59,33 @@ const routes: Routes = [
       },
       /** */
       {
+        path: 'pagetemplate',
+        component: WebDesignerMainPageTemplateListComponent
+      },
+      /** */
+      /** */
+      {
         path: 'pagedependency',
         component: WebDesignerMainPageDependencyListComponent
       },
       /** */
       {
         path: 'page',
-        component: WebDesignerMainPageDependencyListComponent
+        component: WebDesignerMainPageListComponent
       },
+      {
+        path: 'page/LinkPageTemplateGuId/:LinkPageTemplateGuId',
+        component: WebDesignerMainPageListComponent
+      },
+           {
+        path: 'page/LinkCmsPageGuId/:LinkCmsPageGuId',
+        component: WebDesignerMainPageListComponent
+      },
+      {
+        path: 'page/LinkPageDependencyGuId/:LinkPageDependencyGuId',
+        component: WebDesignerMainPageListComponent
+      },
+      /** */
     ]
   },
 ];

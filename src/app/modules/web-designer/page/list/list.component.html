@@ -22,6 +22,10 @@
         </mat-slide-toggle>
       </a>
       <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">برسی مجدد</button>
+      <button (click)="onActionBackToParentTemplate()" *ngIf="this.requestLinkPageTemplateGuId?.length>0" type="button"
+        class="btn btn-warning BTN">بازگشت</button>
+        <button (click)="onActionBackToParentDependency()" *ngIf="this.requestLinkPageDependencyGuId?.length>0" type="button"
+          class="btn btn-warning BTN">بازگشت</button>
       <app-cms-search-list [(options)]="optionsSearch"></app-cms-search-list>
       <app-cms-export-list [(options)]="optionsExport"></app-cms-export-list>
       <app-cms-statist-list [(options)]="optionsStatist"></app-cms-statist-list>
@@ -57,22 +61,38 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Title']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Title}} </mat-cell>
         </ng-container>
-          <!-- TitleML Column -->
-        <ng-container matColumnDef="TitleML">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['TitleML']?.FieldTitle}} </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.TitleML}} </mat-cell>
-        </ng-container>
-        <!-- LinkModuleId Column -->
-        <ng-container matColumnDef="LinkModuleId">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkModuleId']?.FieldTitle}}
+        <!-- LinkCmsPageGuId Column -->
+        <ng-container matColumnDef="LinkCmsPageGuId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkCmsPageGuId']?.FieldTitle}}
           </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.LinkModuleId | cmstitle : dataModelCoreModuleResult.ListItems}} </mat-cell>
+          <mat-cell *matCellDef="let row"> {{row.LinkCmsPageGuId}} </mat-cell>
         </ng-container>
-        <!-- CmsModuleClassName Column -->
-        <ng-container matColumnDef="CmsModuleClassName">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['CmsModuleClassName']?.FieldTitle}}
+        <!-- LinkPageDependencyGuId Column -->
+        <ng-container matColumnDef="LinkPageDependencyGuId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkPageDependencyGuId']?.FieldTitle}}
           </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.CmsModuleClassName}} </mat-cell>
+          <mat-cell *matCellDef="let row"> {{row.LinkPageDependencyGuId}} </mat-cell>
+        </ng-container>
+        <!-- LinkPageTemplateGuId Column -->
+        <ng-container matColumnDef="LinkPageTemplateGuId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkPageTemplateGuId']?.FieldTitle}}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.LinkPageTemplateGuId | cmstitle :
+            dataModelWebDesignerMainPageTemplateResult.ListItems}} </mat-cell>
+        </ng-container>
+        <!-- ContentPageFindInDefaultSiteCategory Column -->
+        <ng-container matColumnDef="ContentPageFindInDefaultSiteCategory">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{fieldsInfo['ContentPageFindInDefaultSiteCategory']?.FieldTitle}}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> <i [ngClass]="row.ContentPageFindInDefaultSiteCategory | boolclass"></i>
+          </mat-cell>
+        </ng-container>
+        <!-- PageDependencyIsDefualtPage Column -->
+        <ng-container matColumnDef="PageDependencyIsDefualtPage">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['PageDependencyIsDefualtPage']?.FieldTitle}}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> <i [ngClass]="row.PageDependencyIsDefualtPage | boolclass"></i> </mat-cell>
         </ng-container>
         <!-- ClassActionName Column -->
         <ng-container matColumnDef="ClassActionName">
@@ -99,9 +119,9 @@
                 <mat-icon>delete_forever</mat-icon>
                 <span>حذف</span>
               </button>
-              <button mat-menu-item (click)="onActionbuttonPageList(row)">
+              <button mat-menu-item (click)="onActionbuttonHtmlEditor(row)">
                 <mat-icon>view_module</mat-icon>
-                <span>صفحات</span>
+                <span>طراحی صفحه</span>
               </button>
             </mat-menu>
           </mat-cell>
