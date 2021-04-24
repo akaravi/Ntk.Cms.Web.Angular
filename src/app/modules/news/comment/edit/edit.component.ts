@@ -39,7 +39,9 @@ export class NewsCommentEditComponent implements OnInit {
       this.requestParentId = +data.parentId || 0;
       this.requestContentId = +data.contentId || 0;
     }
-
+    if (this.requestParentId > 0) {
+       this.dataModel.LinkParentId = this.requestParentId;
+    }
 
   }
   requestId = 0;
@@ -118,9 +120,7 @@ export class NewsCommentEditComponent implements OnInit {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    if (this.requestParentId > 0) {
-      this.dataModel.LinkParentId = this.requestParentId;
-    }
+
     this.dataModel.LinkContentId = this.requestContentId;
     this.newsCommentService.ServiceAdd(this.dataModel).subscribe(
       (next) => {

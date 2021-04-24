@@ -46,7 +46,9 @@ export class FileCategoryEditComponent implements OnInit {
       this.requestId = +data.id || 0;
       this.requestParentId = +data.parentId || 0;
     }
-
+    if (this.requestParentId > 0) {
+       this.dataModel.LinkParentId = this.requestParentId;
+    }
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
@@ -131,9 +133,7 @@ export class FileCategoryEditComponent implements OnInit {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    if (this.requestParentId > 0) {
-      this.dataModel.LinkParentId = this.requestParentId;
-    }
+
     this.fileCategoryService.ServiceAdd(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormSubmitAllow = true;

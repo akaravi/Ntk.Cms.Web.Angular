@@ -44,7 +44,7 @@ export class CoreCpMainMenuAddComponent implements OnInit {
       this.requestParentId = +data.parentId || 0;
     }
     if (this.requestParentId > 0) {
-      this.dataModel.LinkParentId = this.requestParentId;
+       this.dataModel.LinkParentId = this.requestParentId;
     }
 
   }

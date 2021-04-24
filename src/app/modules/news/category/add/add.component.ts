@@ -45,6 +45,9 @@ export class NewsCategoryAddComponent implements OnInit {
     if (data) {
       this.requestParentId = +data.parentId || 0;
     }
+    if (this.requestParentId > 0) {
+       this.dataModel.LinkParentId = this.requestParentId;
+    }
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
   requestParentId = 0;
@@ -93,9 +96,7 @@ export class NewsCategoryAddComponent implements OnInit {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    if (this.requestParentId > 0) {
-      this.dataModel.LinkParentId = this.requestParentId;
-    }
+
     this.newsCategoryService.ServiceAdd(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormSubmitAllow = true;

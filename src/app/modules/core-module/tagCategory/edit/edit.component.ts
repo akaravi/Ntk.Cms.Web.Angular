@@ -44,6 +44,9 @@ export class CoreModuleTagCategoryEditComponent implements OnInit {
       this.requestId = +data.id || 0;
       this.requestParentId = +data.parentId || 0;
     }
+    if (this.requestParentId > 0) {
+       this.dataModel.LinkParentId = this.requestParentId;
+    }
 
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
@@ -81,9 +84,7 @@ export class CoreModuleTagCategoryEditComponent implements OnInit {
       this.ComponentAction = ComponentActionEnum.add;
       this.formInfo.FormTitle = 'ثبت دسته بندی جدید';
     }
-    if (this.requestParentId > 0) {
-      this.dataModel.LinkParentId = this.requestParentId;
-    }
+
     if (this.ComponentAction === ComponentActionEnum.none) {
       this.cmsToastrService.typeErrorComponentAction();
       this.dialogRef.close({ dialogChangedDate: false });
@@ -134,9 +135,7 @@ export class CoreModuleTagCategoryEditComponent implements OnInit {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    if (this.requestParentId > 0) {
-      this.dataModel.LinkParentId = this.requestParentId;
-    }
+
     this.coreModuleTagCategoryService.ServiceAdd(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormSubmitAllow = true;

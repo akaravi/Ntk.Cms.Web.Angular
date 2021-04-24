@@ -42,7 +42,10 @@ export class ArticleCategoryAddComponent implements OnInit {
     if (data) {
       this.requestParentId = +data.parentId || 0;
     }
+    if (this.requestParentId > 0) {
 
+      this.dataModel.LinkParentId = this.requestParentId;
+    }
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
   requestParentId = 0;
@@ -88,9 +91,7 @@ export class ArticleCategoryAddComponent implements OnInit {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    if (this.requestParentId > 0) {
-      this.dataModel.LinkParentId = this.requestParentId;
-    }
+
     this.articleCategoryService.ServiceAdd(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormSubmitAllow = true;
@@ -99,10 +100,10 @@ export class ArticleCategoryAddComponent implements OnInit {
           this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
           this.cmsToastrService.typeSuccessAdd();
           this.dialogRef.close({ dialogChangedDate: true });
-              } else {
+        } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
-          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
         }
         this.loading.display = false;
       },

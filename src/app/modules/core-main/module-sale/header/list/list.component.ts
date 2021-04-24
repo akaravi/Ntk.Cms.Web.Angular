@@ -191,7 +191,7 @@ export class CoreModuleSaleHeaderListComponent implements OnInit, OnDestroy {
       return;
     }
     const dialogRef = this.dialog.open(CoreModuleSaleHeaderAddComponent, {
-      data: {}
+      data: { parentId: this.requestHeaderGroupId }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.dialogChangedDate) {
