@@ -251,7 +251,7 @@ export class CoreModuleSaleInvoiceListComponent implements OnInit, OnDestroy {
   }
 
 
-  onActionbuttonGoToModuleSaleInvoiceList(model: CoreModuleSaleInvoiceModel = this.tableRowSelected): void {
+  onActionbuttonViewDetail(model: CoreModuleSaleInvoiceModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
       const message = 'ردیفی برای نمایش انتخاب نشده است';
       this.cmsToastrService.typeErrorSelected(message);
@@ -259,7 +259,7 @@ export class CoreModuleSaleInvoiceListComponent implements OnInit, OnDestroy {
     }
     this.tableRowSelected = model;
 
-    this.router.navigate(['/core/siteModuleSaleInvoice/', this.tableRowSelected.Id]);
+    this.router.navigate(['/core/modulesale/invoicedetail/LinkInvoiceId', this.tableRowSelected.Id]);
   }
   onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;

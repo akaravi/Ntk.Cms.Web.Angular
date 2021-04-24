@@ -20,6 +20,8 @@
         </mat-slide-toggle>
       </a>
       <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">برسی مجدد</button>
+      <button (click)="onActionBackToParent()" *ngIf="this.requestLinkInvoiceId>0" type="button"
+        class="btn btn-warning BTN">بازگشت</button>
       <app-cms-search-list [(options)]="optionsSearch"></app-cms-search-list>
       <app-cms-export-list [(options)]="optionsExport"></app-cms-export-list>
       <app-cms-statist-list [(options)]="optionsStatist"></app-cms-statist-list>
@@ -30,29 +32,28 @@
 
     <div class="example-container mat-elevation-z8">
       <mat-table [dataSource]="tableSource" matSort #tableSort="matSort" (matSortChange)="onTableSortData(tableSort)">
-        <!-- MainImageSrc Column -->
-        <ng-container matColumnDef="MainImageSrc">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> عکس </mat-header-cell>
-          <mat-cell *matCellDef="let row">
-            <img *ngIf="row?.MainImageSrc?.length>0" style="vertical-align:middle;" aria-hidden
-              src="{{row.MainImageSrc}}" height="40" width="40" />
-
-          </mat-cell>
-        </ng-container>
         <!-- ID Column -->
         <ng-container matColumnDef="Id">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Id']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Id}} </mat-cell>
         </ng-container>
-        <!-- linkCreatedBySiteId Column -->
-        <ng-container matColumnDef="linkCreatedBySiteId">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> سایت والد </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.linkCreatedBySiteId}} </mat-cell>
+        <!-- LinkSiteId Column -->
+        <ng-container matColumnDef="LinkSiteId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>{{fieldsInfo['LinkSiteId']?.FieldTitle}}</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.LinkSiteId}} </mat-cell>
         </ng-container>
         <!-- RecordStatus Column -->
         <ng-container matColumnDef="RecordStatus">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['RecordStatus']?.FieldTitle}} </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['RecordStatus']?.FieldTitle}}
+          </mat-header-cell>
           <mat-cell *matCellDef="let row"> <i [ngClass]="row.RecordStatus|statusClass"></i> </mat-cell>
+        </ng-container>
+        <!-- LinkModuleId Column -->
+        <ng-container matColumnDef="LinkModuleId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>{{fieldsInfo['LinkModuleId']?.FieldTitle}}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.LinkModuleId | cmstitle : dataModelCoreModuleResult.ListItems}}
+          </mat-cell>
         </ng-container>
         <!-- Title Column -->
         <ng-container matColumnDef="Title">
@@ -71,20 +72,21 @@
         </ng-container>
         <!-- CreatedDate Column -->
         <ng-container matColumnDef="CreatedDate">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['CreatedDate']?.FieldTitle}} </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['CreatedDate']?.FieldTitle}}
+          </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.CreatedDate) }} </mat-cell>
         </ng-container>
         <!-- UpdatedDate Column -->
         <ng-container matColumnDef="UpdatedDate">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['UpdatedDate']?.FieldTitle}} </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['UpdatedDate']?.FieldTitle}}
+          </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.UpdatedDate) }} </mat-cell>
         </ng-container>
         <!-- ExpireDate Column -->
         <ng-container matColumnDef="ExpireDate">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['ExpireDate']?.FieldTitle}}
           </mat-header-cell>
-          <mat-cell *matCellDef="let row"
-            [ngStyle]="{'background':publicHelper.RowStyleExpireDate(row.ExpireDate) }">
+          <mat-cell *matCellDef="let row" [ngStyle]="{'background':publicHelper.RowStyleExpireDate(row.ExpireDate) }">
             {{ publicHelper.LocaleDate(row.ExpireDate) }} </mat-cell>
         </ng-container>
         <!-- Action Column -->
@@ -96,7 +98,8 @@
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #actionMenu="matMenu">
-              <button mat-menu-item (click)="onActionbuttonDeleteRow(row)" *ngIf="dataModelResult.Access.AccessDeleteRow">
+              <button mat-menu-item (click)="onActionbuttonDeleteRow(row)"
+                *ngIf="dataModelResult.Access.AccessDeleteRow">
                 <mat-icon>delete_forever</mat-icon>
                 <span>حذف</span>
               </button>

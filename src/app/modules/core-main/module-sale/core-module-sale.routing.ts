@@ -32,6 +32,10 @@ const routes: Routes = [
         component: CoreModuleSaleInvoiceDetailListComponent
       },
       {
+        path: 'invoicedetail/LinkInvoiceId/:LinkInvoiceId',
+        component: CoreModuleSaleInvoiceDetailListComponent
+      },
+      {
         path: 'item',
         component: CoreModuleSaleItemListComponent
       },

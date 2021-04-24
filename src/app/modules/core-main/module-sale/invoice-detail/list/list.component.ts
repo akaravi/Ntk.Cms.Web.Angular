@@ -1,5 +1,5 @@
 
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
@@ -14,6 +14,8 @@ import {
   FilterDataModel,
   EnumRecordStatus,
   DataFieldInfoModel,
+  CoreModuleModel,
+  CoreModuleService,
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -34,15 +36,19 @@ import { CoreModuleSaleInvoiceDetailViewComponent } from '../view/view.component
   styleUrls: ['./list.component.scss']
 })
 export class CoreModuleSaleInvoiceDetailListComponent implements OnInit, OnDestroy {
-  requestHeaderItemGroupId = 0;
+  requestLinkInvoiceId = 0;
   constructor(
     private coreModuleSaleInvoiceDetailService: CoreModuleSaleInvoiceDetailService,
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
     private cmsConfirmationDialogService: CmsConfirmationDialogService,
+    private activatedRoute: ActivatedRoute,
+    private coreModuleService: CoreModuleService,
     private router: Router,
     public dialog: MatDialog) {
+      this.requestLinkInvoiceId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkInvoiceId'));
+
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
@@ -52,6 +58,12 @@ export class CoreModuleSaleInvoiceDetailListComponent implements OnInit, OnDestr
     /*filter Sort*/
     this.filteModelContent.SortColumn = 'Id';
     this.filteModelContent.SortType = EnumSortType.Descending;
+    if (this.requestLinkInvoiceId > 0) {
+      const filter = new FilterDataModel();
+      filter.PropertyName = 'LinkModuleSaleInvoiceId';
+      filter.Value = this.requestLinkInvoiceId;
+      this.filteModelContent.Filters.push(filter);
+    }
   }
   comment: string;
   author: string;
@@ -70,12 +82,13 @@ export class CoreModuleSaleInvoiceDetailListComponent implements OnInit, OnDestr
   tableRowSelected: CoreModuleSaleInvoiceDetailModel = new CoreModuleSaleInvoiceDetailModel();
   tableSource: MatTableDataSource<CoreModuleSaleInvoiceDetailModel> = new MatTableDataSource<CoreModuleSaleInvoiceDetailModel>();
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+  dataModelCoreModuleResult: ErrorExceptionResult<CoreModuleModel> = new ErrorExceptionResult<CoreModuleModel>();
 
   tabledisplayedColumns: string[] = [
-    'MainImageSrc',
     'Id',
+    'LinkSiteId',
     'RecordStatus',
-    'Title',
+    'LinkModuleId',
     'SubDomain',
     'Domain',
     'CreatedDate',
@@ -95,6 +108,14 @@ export class CoreModuleSaleInvoiceDetailListComponent implements OnInit, OnDestr
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
+    });
+    this.getModuleList();
+  }
+  getModuleList(): void {
+    const filter = new FilterModel();
+    filter.RowPerPage = 100;
+    this.coreModuleService.ServiceGetAll(filter).subscribe((next) => {
+      this.dataModelCoreModuleResult = next;
     });
   }
   ngOnDestroy(): void {
@@ -186,7 +207,7 @@ export class CoreModuleSaleInvoiceDetailListComponent implements OnInit, OnDestr
     });
   }
 
- 
+
   onActionbuttonDeleteRow(model: CoreModuleSaleInvoiceDetailModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
       const emessage = 'ردیفی برای حذف انتخاب نشده است';
@@ -358,5 +379,7 @@ export class CoreModuleSaleInvoiceDetailListComponent implements OnInit, OnDestr
   onActionTableRowSelect(row: CoreModuleSaleInvoiceDetailModel): void {
     this.tableRowSelected = row;
   }
-
+  onActionBackToParent(): void {
+    this.router.navigate(['/core/modulesale/invoice']);
+  }
 }

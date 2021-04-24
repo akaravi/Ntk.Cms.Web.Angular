@@ -101,13 +101,13 @@
                 <mat-icon>delete_forever</mat-icon>
                 <span>حذف</span>
               </button>
-              <button mat-menu-item (click)="onActionbuttonModuleList(row)">
+              <button mat-menu-item (click)="onActionbuttonViewRow(row)" *ngIf="dataModelResult.Access.AccessWatchRow">
                 <mat-icon>view_module</mat-icon>
-                <span>ماژول ها</span>
+                <span>مشاهده</span>
               </button>
-              <button mat-menu-item (click)="onActionbuttonSiteList(row)">
+              <button mat-menu-item (click)="onActionbuttonViewDetail(row)" *ngIf="dataModelResult.Access.AccessWatchRow">
                 <mat-icon>view_module</mat-icon>
-                <span>سایت ها</span>
+                <span>جزئیات</span>
               </button>
             </mat-menu>
           </mat-cell>
