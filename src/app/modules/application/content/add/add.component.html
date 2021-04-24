@@ -32,6 +32,7 @@
           <app-application-themeconfig-selector (optionSelect)="onActionSelectTheme($event)"
             [optionSelectForce]="this.dataModel.LinkThemeConfigId"
             [optionSelectParentForce]="this.dataModel.LinkSourceId" [optionPlaceholder]="'قالب اپلیکیشن'"
+            [optionSelectFirstItem]="true"
             [disabled]="!fieldsInfo['LinkThemeConfigId']?.AccessAddField"></app-application-themeconfig-selector>
 
           <!-- Title Field -->
