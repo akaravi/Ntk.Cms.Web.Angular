@@ -6,6 +6,9 @@ import { CoreTokenUserListComponent } from './user/list/list.component';
 import { CoreTokenUserEditComponent } from './user/edit/edit.component';
 import {
   CoreEnumService,
+  CoreTokenActivationService,
+  CoreTokenMicroServiceLogService,
+  CoreTokenMicroServiceService,
   CoreTokenUserBadLoginService,
   CoreTokenUserLogService,
   CoreTokenUserService,
@@ -21,6 +24,15 @@ import { CoreTokenUserBadLoginEditComponent } from './userBadLogin/edit/edit.com
 import { CoreTokenUserViewComponent } from './user/view/view.component';
 import { CoreTokenUserBadLoginViewComponent } from './userBadLogin/view/view.component';
 import { CoreTokenUserLogViewComponent } from './userLog/view/view.component';
+import { CoreTokenActivationListComponent } from './activation/list/list.component';
+import { CoreTokenActivationEditComponent } from './activation/edit/edit.component';
+import { CoreTokenActivationViewComponent } from './activation/view/view.component';
+import { CoreTokenMicroServiceListComponent } from './micro-service/list/list.component';
+import { CoreTokenMicroServiceEditComponent } from './micro-service/edit/edit.component';
+import { CoreTokenMicroServiceViewComponent } from './micro-service/view/view.component';
+import { CoreTokenMicroServiceLogListComponent } from './micro-service-log/list/list.component';
+import { CoreTokenMicroServiceLogEditComponent } from './micro-service-log/edit/edit.component';
+import { CoreTokenMicroServiceLogViewComponent } from './micro-service-log/view/view.component';
 
 @NgModule({
   imports: [
@@ -32,21 +44,46 @@ import { CoreTokenUserLogViewComponent } from './userLog/view/view.component';
   ],
   declarations: [
     CoreTokenComponent,
+    /** */
     CoreTokenUserListComponent,
     CoreTokenUserEditComponent,
+    CoreTokenUserViewComponent,
+    /** */
     CoreTokenUserLogListComponent,
     CoreTokenUserLogEditComponent,
+    CoreTokenUserLogViewComponent,
+    /** */
     CoreTokenUserBadLoginListComponent,
     CoreTokenUserBadLoginEditComponent,
-    CoreTokenUserViewComponent,
     CoreTokenUserBadLoginViewComponent,
-    CoreTokenUserLogViewComponent
+    /** */
+    /** */
+    CoreTokenActivationListComponent,
+    CoreTokenActivationEditComponent,
+    CoreTokenActivationViewComponent,
+    /** */
+    /** */
+    CoreTokenMicroServiceListComponent,
+    CoreTokenMicroServiceEditComponent,
+    CoreTokenMicroServiceViewComponent,
+    /** */
+    /** */
+    CoreTokenMicroServiceLogListComponent,
+    CoreTokenMicroServiceLogEditComponent,
+    CoreTokenMicroServiceLogViewComponent,
+    /** */
+
+
+
   ],
   providers: [
     CoreEnumService,
     CoreTokenUserService,
     CoreTokenUserLogService,
     CoreTokenUserBadLoginService,
+    CoreTokenActivationService,
+    CoreTokenMicroServiceService,
+    CoreTokenMicroServiceLogService,
     CoreUserService,
     CmsConfirmationDialogService
   ]
