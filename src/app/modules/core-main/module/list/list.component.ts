@@ -52,7 +52,7 @@ export class CoreModuleListComponent implements OnInit, OnDestroy {
     };
     /*filter Sort*/
     this.filteModelContent.SortColumn = 'Id';
-    this.filteModelContent.SortType = EnumSortType.Descending;
+    this.filteModelContent.SortType = EnumSortType.Ascending;
   }
   comment: string;
   author: string;
