@@ -25,8 +25,6 @@ import {
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatStepperModule } from '@angular/material/stepper';
-
-import { CmsFileUploaderModule } from 'ntk-cms-fileuploader';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 import { WebDesignerConfigMainAdminComponent } from './config/mainAdmin/configMainAdmin.component';
 import { WebDesignerConfigSiteComponent } from './config/site/configSite.component';
@@ -117,7 +115,6 @@ import { WebDesignerMainPageTemplateHeaderComponent } from './page-template/head
     MatIconModule,
     MatFormFieldModule,
     MatStepperModule,
-    CmsFileUploaderModule,
     ColorPickerModule,
     IconPickerModule,
     DragDropModule

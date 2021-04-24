@@ -22,12 +22,13 @@ export class ApplicationAppUploadAppComponent implements OnInit {
   ) {
 
   }
-  optionApiPath = environment.cmsServerConfig.configRouteUploadFileContent;
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  optionApiPath = environment.cmsServerConfig.configRouteUploadFileContent;
   formInfo: FormInfoModel = new FormInfoModel();
   dataModel = new UploadApplictionDtoModel();
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
-
+  isHovering = false;
+  fieldvalue='';
   ngOnInit(): void {
     this.dataModel.AppVersion = this.dataItemModel.AppVersion;
     this.dataModel.LastBuildAppKey = this.dataItemModel.LastBuildAppKey;
@@ -83,7 +84,13 @@ export class ApplicationAppUploadAppComponent implements OnInit {
   onFormCancel(): void {
     this.dialogRef.close({ dialogChangedDate: false });
   }
+  toggleHover(model: any): void {
+    this.isHovering = true;
+  }
+  onUpload(e) {
+    console.log(e);
 
+  }
   OnActionUploadSuccess(model: FilePreviewModel): void {
     // console.log(model);
     if (model.uploadResponse && model.uploadResponse.Item && model.uploadResponse.Item.FileKey) {

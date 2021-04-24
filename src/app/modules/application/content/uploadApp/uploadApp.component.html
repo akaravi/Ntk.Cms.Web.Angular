@@ -5,8 +5,24 @@
     <mat-card-subtitle>ver : {{dataItemModel.AppVersion}}</mat-card-subtitle>
   </mat-card-header>
   <div class="uploader-wrapper">
-    <cms-file-uploader  (optionUploadSuccess)="OnActionUploadSuccess($event)" [optionApiPath]="optionApiPath" >
-    </cms-file-uploader>
+    <!-- <cms-file-uploader  (optionUploadSuccess)="OnActionUploadSuccess($event)" [optionApiPath]="optionApiPath" >
+    </cms-file-uploader> -->
+    <div *ngIf="!fieldvalue" class="drop-container dropzone" dropZone (hovered)="toggleHover($event)"
+      (dropped)="onUpload($event)" [class.hovering]="isHovering">
+      <p class="m-0">
+        Drag a file here or
+        <label class="upload-button">
+          <input type="file" multiple="" (change)="onUpload($event.target.files)"> browse
+        </label>
+        to upload.
+      </p>
+    </div>
+    <div *ngIf="fieldvalue">
+      <!-- <button type="button" class="btn btn-primary">Change</button> -->
+      <div class="card">
+        <img class="card-img-top" [src]="fieldvalue">
+      </div>
+    </div>
   </div>
   <form (ngSubmit)="onFormSubmit()" #vform="ngForm" class="form form-horizontal">
   <mat-card-content>

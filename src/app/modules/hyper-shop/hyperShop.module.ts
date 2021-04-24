@@ -27,8 +27,6 @@ import {
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatStepperModule } from '@angular/material/stepper';
-
-import { CmsFileUploaderModule } from 'ntk-cms-fileuploader';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 import { HyperShopConfigMainAdminComponent } from './config/mainAdmin/configMainAdmin.component';
 import { HyperShopConfigSiteComponent } from './config/site/configSite.component';
@@ -74,7 +72,6 @@ import { HyperShopContentViewComponent } from './content/view/view.component';
     MatIconModule,
     MatFormFieldModule,
     MatStepperModule,
-    CmsFileUploaderModule
   ],
   providers: [
     CoreEnumService,

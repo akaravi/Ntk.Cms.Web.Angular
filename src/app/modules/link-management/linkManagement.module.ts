@@ -25,8 +25,6 @@ import {
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatStepperModule } from '@angular/material/stepper';
-
-import { CmsFileUploaderModule } from 'ntk-cms-fileuploader';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 import { LinkManagementConfigSiteComponent } from './config/site/configSite.component';
 import { LinkManagementConfigMainAdminComponent } from './config/mainAdmin/configMainAdmin.component';
@@ -52,7 +50,6 @@ import { LinkManagementConfigMainAdminComponent } from './config/mainAdmin/confi
     MatIconModule,
     MatFormFieldModule,
     MatStepperModule,
-    CmsFileUploaderModule
   ],
   providers: [
     CoreEnumService,

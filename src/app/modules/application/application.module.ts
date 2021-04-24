@@ -44,7 +44,6 @@ import { ApplicationAppSelectorComponent } from './content/selector/selector.com
 import { ApplicationAppDownloadComponent } from './content/download/download.component';
 import { ApplicationAppUploadAppComponent } from './content/uploadApp/uploadApp.component';
 import { ApplicationAppUploadUpdateComponent } from './content/uploadUpdate/uploadUpdate.component';
-import { CmsFileUploaderModule } from 'ntk-cms-fileuploader';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 import { ApplicationConfigSiteComponent } from './config/site/configSite.component';
 import { ApplicationConfigMainAdminComponent } from './config/mainAdmin/configMainAdmin.component';
@@ -110,7 +109,6 @@ import { ApplicationMemberInfoSelectorComponent } from './memberInfo/selector/se
     MatIconModule,
     MatFormFieldModule,
     MatStepperModule,
-    CmsFileUploaderModule
   ],
   providers: [
     CoreEnumService,

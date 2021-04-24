@@ -23,7 +23,8 @@ export class ApplicationAppUploadUpdateComponent  implements OnInit {
   formInfo: FormInfoModel = new FormInfoModel();
   dataModel = new UploadApplictionDtoModel();
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
-
+  isHovering = false;
+  fieldvalue='';
   ngOnInit(): void {
     this.dataModel.AppVersion = this.dataItemModel.AppVersion;
     this.dataModel.LastBuildAppKey = this.dataItemModel.LastBuildAppKey;
@@ -79,7 +80,13 @@ export class ApplicationAppUploadUpdateComponent  implements OnInit {
   onFormCancel(): void {
     this.dialogRef.close({ dialogChangedDate: false });
   }
+  toggleHover(model: any): void {
+    this.isHovering = true;
+  }
+  onUpload(e) {
+    console.log(e);
 
+  }
   OnActionUploadSuccess(model: FilePreviewModel): void {
     // console.log(model);
     if (model.uploadResponse && model.uploadResponse.Item && model.uploadResponse.Item.FileKey) {
