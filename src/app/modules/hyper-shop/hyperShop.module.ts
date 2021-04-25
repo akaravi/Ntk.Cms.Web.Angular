@@ -10,15 +10,8 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { TagInputModule } from 'ngx-chips';
 import { CmsFileManagerModule } from 'ntk-cms-filemanager';
 import {
-  ApplicationAppService,
-  ApplicationIntroService,
-  ApplicationLogNotificationService,
-  ApplicationMemberInfoService,
-  ApplicationSourceService,
-  ApplicationThemeConfigService,
-  CoreAuthService,
+   CoreAuthService,
   CoreEnumService,
-  ApplicationEnumService,
   CoreModuleTagService,
   HyperShopConfigurationService,
   HyperShopCategoryService,

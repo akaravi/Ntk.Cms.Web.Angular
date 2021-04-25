@@ -22,6 +22,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import {
+  NodeInterface,
   TreeModel,
 } from 'ntk-cms-filemanager';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
@@ -155,6 +156,11 @@ export class CoreUserClaimTypeEditComponent implements OnInit {
         this.loading.display = false;
       }
     );
+  }
+  onActionFileSelected(model: NodeInterface): void {
+    this.dataModel.LinkMainImageId = model.id;
+    this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
+
   }
   onActionSelectApplication(model: ApplicationAppModel | null): void {
     if (!model || model.Id <= 0) {

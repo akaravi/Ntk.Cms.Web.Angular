@@ -10,12 +10,6 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { TagInputModule } from 'ngx-chips';
 import { CmsFileManagerModule } from 'ntk-cms-filemanager';
 import {
-  ApplicationAppService,
-  ApplicationIntroService,
-  ApplicationLogNotificationService,
-  ApplicationMemberInfoService,
-  ApplicationSourceService,
-  ApplicationThemeConfigService,
   CoreAuthService,
   CoreEnumService,
   ApplicationEnumService,
@@ -50,12 +44,7 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
     CmsConfirmationDialogService ,
     ApplicationEnumService,
     CoreModuleTagService,
-    ApplicationAppService,
-    ApplicationIntroService,
-    ApplicationSourceService,
-    ApplicationMemberInfoService,
-    ApplicationLogNotificationService,
-    ApplicationThemeConfigService,
+
   ]
 })
 export class UniversalMenuModule { }

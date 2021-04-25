@@ -14,18 +14,42 @@ const routes: Routes = [
         path: 'group',
         component: CoreUserClaimGroupListComponent
       },
+      /** */
       {
         path: 'groupdetail',
         component: CoreUserClaimGroupDetailListComponent
       },
+       {
+        path: 'groupdetail/LinkUserClaimTypeId/:LinkUserClaimTypeId',
+        component: CoreUserClaimGroupDetailListComponent
+      },
+       {
+        path: 'groupdetail/LinkUserClaimGroupId/:LinkUserClaimGroupId',
+        component: CoreUserClaimGroupDetailListComponent
+      },
+      /** */
       {
         path: 'type',
         component: CoreUserClaimTypeListComponent
       },
+      /** */
       {
         path: 'content',
         component: CoreUserClaimContentListComponent
       },
+      {
+        path: 'content/LinkUserClaimTypeId/:LinkUserClaimTypeId',
+        component: CoreUserClaimContentListComponent
+      },
+      {
+        path: 'content/LinkSiteId/:LinkSiteId',
+        component: CoreUserClaimContentListComponent
+      },
+      {
+        path: 'content/LinkUserId/:LinkUserId',
+        component: CoreUserClaimContentListComponent
+      },
+      /** */
     ]
   },
 ];

@@ -16,6 +16,7 @@ import {
   DataFieldInfoModel,
   CoreUserClaimGroupModel,
   CoreUserClaimTypeModel,
+  CoreUserClaimTypeService,
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -38,16 +39,21 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
 })
 export class CoreUserClaimContentListComponent implements OnInit, OnDestroy {
   requestLinkUserClaimTypeId = 0;
+  requestLinkSiteId = 0;
+  requestLinkUserId = 0;
   constructor(
     private coreUserClaimContentService: CoreUserClaimContentService,
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
     private cmsConfirmationDialogService: CmsConfirmationDialogService,
+    private coreUserClaimTypeService: CoreUserClaimTypeService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     public dialog: MatDialog) {
-    this.requestLinkUserClaimTypeId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkSiteId'));
+    this.requestLinkUserClaimTypeId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkUserClaimTypeId'));
+    this.requestLinkSiteId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkSiteId'));
+    this.requestLinkUserId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkUserId'));
 
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
@@ -61,7 +67,19 @@ export class CoreUserClaimContentListComponent implements OnInit, OnDestroy {
     if (this.requestLinkUserClaimTypeId > 0) {
       const fastfilter = new FilterDataModel();
       fastfilter.PropertyName = 'LinkUserClaimTypeId';
-      fastfilter.Value = this.categoryModelSelected.Id;
+      fastfilter.Value = this.requestLinkUserClaimTypeId;
+      this.filteModelContent.Filters.push(fastfilter);
+    }
+    if (this.requestLinkSiteId > 0) {
+      const fastfilter = new FilterDataModel();
+      fastfilter.PropertyName = 'LinkSiteId';
+      fastfilter.Value = this.requestLinkSiteId;
+      this.filteModelContent.Filters.push(fastfilter);
+    }
+    if (this.requestLinkUserId > 0) {
+      const fastfilter = new FilterDataModel();
+      fastfilter.PropertyName = 'LinkUserId';
+      fastfilter.Value = this.requestLinkUserId;
       this.filteModelContent.Filters.push(fastfilter);
     }
   }
@@ -83,16 +101,20 @@ export class CoreUserClaimContentListComponent implements OnInit, OnDestroy {
   tableSource: MatTableDataSource<CoreUserClaimContentModel> = new MatTableDataSource<CoreUserClaimContentModel>();
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
   categoryModelSelected: CoreUserClaimTypeModel = new CoreUserClaimTypeModel();
+  dataModelCoreUserClaimTypeResult: ErrorExceptionResult<CoreUserClaimTypeModel> = new ErrorExceptionResult<CoreUserClaimTypeModel>();
 
   tabledisplayedColumns: string[] = [
-    'MainImageSrc',
+    'LinkFileContentId',
     'Id',
     'RecordStatus',
     'Title',
-    'SubDomain',
-    'Domain',
-    'CreatedDate',
+    'LinkSiteId',
+    'LinkUserId',
+    'LinkUserClaimTypeId',
+    'IsApproved',
+     'CreatedDate',
     'UpdatedDate',
+    'ExpireDate',
     'Action'
   ];
 
@@ -108,6 +130,14 @@ export class CoreUserClaimContentListComponent implements OnInit, OnDestroy {
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
+    });
+    this.getUserClaimType();
+  }
+  getUserClaimType(): void {
+    const filter = new FilterModel();
+    filter.RowPerPage = 100;
+    this.coreUserClaimTypeService.ServiceGetAll(filter).subscribe((next) => {
+      this.dataModelCoreUserClaimTypeResult = next;
     });
   }
   ngOnDestroy(): void {
@@ -403,6 +433,6 @@ export class CoreUserClaimContentListComponent implements OnInit, OnDestroy {
     this.tableRowSelected = row;
   }
   onActionBackToParent(): void {
-    this.router.navigate(['/core/claim/type/']);
+    this.router.navigate(['/core/userclaim/type/']);
   }
 }

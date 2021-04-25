@@ -47,36 +47,19 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Title']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Title}} </mat-cell>
         </ng-container>
-        <!-- TitleML Column -->
-        <ng-container matColumnDef="TitleML">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['TitleML']?.FieldTitle}} </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.TitleML}} </mat-cell>
-        </ng-container>
-        <!-- LinkCmsSiteCategoryId Column -->
-        <ng-container matColumnDef="LinkCmsSiteCategoryId">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkCmsSiteCategoryId']?.FieldTitle}}
+        <!-- LinkSiteCategoryId Column -->
+        <ng-container matColumnDef="LinkSiteCategoryId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkSiteCategoryId']?.FieldTitle}}
           </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.LinkCmsSiteCategoryId | cmstitle : dataModelCoreSiteCategoryResult.ListItems}} </mat-cell>
+          <mat-cell *matCellDef="let row"> {{row.LinkSiteCategoryId | cmstitle : dataModelCoreSiteCategoryResult.ListItems}} </mat-cell>
         </ng-container>
-         <!-- LinkUserGroupId Column -->
-        <ng-container matColumnDef="LinkUserGroupId">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkUserGroupId']?.FieldTitle}}
+         <!-- LinkModuleId Column -->
+        <ng-container matColumnDef="LinkModuleId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkModuleId']?.FieldTitle}}
           </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.LinkUserGroupId | cmstitle : dataModelCoreUserGroupResult.ListItems}} </mat-cell>
+          <mat-cell *matCellDef="let row"> {{row.LinkModuleId | cmstitle : dataModelCoreModuleResult.ListItems}} </mat-cell>
         </ng-container>
-        <!-- CreatedDate Column -->
-        <ng-container matColumnDef="CreatedDate">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['CreatedDate']?.FieldTitle}}
-          </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.CreatedDate) }} </mat-cell>
-        </ng-container>
-        <!-- UpdatedDate Column -->
-        <ng-container matColumnDef="UpdatedDate">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['UpdatedDate']?.FieldTitle}}
-          </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.UpdatedDate) }} </mat-cell>
-        </ng-container>
-
+    
         <!-- Action Column -->
         <ng-container matColumnDef="Action">
           <mat-header-cell *matHeaderCellDef> ... </mat-header-cell>
@@ -95,11 +78,10 @@
                 <mat-icon>delete_forever</mat-icon>
                 <span>حذف</span>
               </button>
-              <button mat-menu-item (click)="onActionbuttonHeaderList(row)">
+              <button mat-menu-item (click)="onActionbuttonDetailList(row)">
                 <mat-icon>view_module</mat-icon>
-                <span>بسته ها</span>
+                <span>اجزاء</span>
               </button>
-
             </mat-menu>
           </mat-cell>
         </ng-container>

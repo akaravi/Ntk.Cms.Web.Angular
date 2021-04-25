@@ -1,5 +1,5 @@
 
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
@@ -15,6 +15,9 @@ import {
   EnumRecordStatus,
   DataFieldInfoModel,
   CoreUserClaimGroupModel,
+  CoreUserClaimGroupService,
+  CoreUserClaimTypeService,
+  CoreUserClaimTypeModel,
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -36,15 +39,22 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
   styleUrls: ['./list.component.scss']
 })
 export class CoreUserClaimGroupDetailListComponent implements OnInit, OnDestroy {
-  requestHeaderId = 0;
+  requestLinkUserClaimGroupId = 0;
+  requestLinkUserClaimTypeId = 0;
   constructor(
     private coreUserClaimGroupDetailService: CoreUserClaimGroupDetailService,
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
     private cmsConfirmationDialogService: CmsConfirmationDialogService,
+    private activatedRoute: ActivatedRoute,
+    private coreUserClaimTypeService: CoreUserClaimTypeService,
+    private coreUserClaimGroupService: CoreUserClaimGroupService,
     private router: Router,
     public dialog: MatDialog) {
+    this.requestLinkUserClaimTypeId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkUserClaimTypeId'));
+    this.requestLinkUserClaimGroupId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkUserClaimGroupId'));
+
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
@@ -54,6 +64,18 @@ export class CoreUserClaimGroupDetailListComponent implements OnInit, OnDestroy 
     /*filter Sort*/
     this.filteModelContent.SortColumn = 'Id';
     this.filteModelContent.SortType = EnumSortType.Descending;
+    if (this.requestLinkUserClaimTypeId > 0) {
+      const fastfilter = new FilterDataModel();
+      fastfilter.PropertyName = 'LinkUserClaimTypeId';
+      fastfilter.Value = this.requestLinkUserClaimTypeId;
+      this.filteModelContent.Filters.push(fastfilter);
+    }
+    if (this.requestLinkUserClaimGroupId > 0) {
+      const fastfilter = new FilterDataModel();
+      fastfilter.PropertyName = 'LinkUserClaimGroupId';
+      fastfilter.Value = this.requestLinkUserClaimGroupId;
+      this.filteModelContent.Filters.push(fastfilter);
+    }
   }
   comment: string;
   author: string;
@@ -73,16 +95,14 @@ export class CoreUserClaimGroupDetailListComponent implements OnInit, OnDestroy 
   tableSource: MatTableDataSource<CoreUserClaimGroupDetailModel> = new MatTableDataSource<CoreUserClaimGroupDetailModel>();
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
   categoryModelSelected: CoreUserClaimGroupModel = new CoreUserClaimGroupModel();
+  dataModelCoreUserClaimTypeResult: ErrorExceptionResult<CoreUserClaimTypeModel> = new ErrorExceptionResult<CoreUserClaimTypeModel>();
+  dataModelCoreUserClaimGroupResult: ErrorExceptionResult<CoreUserClaimGroupModel> = new ErrorExceptionResult<CoreUserClaimGroupModel>();
 
   tabledisplayedColumns: string[] = [
-    'MainImageSrc',
-    'Id',
     'RecordStatus',
-    'Title',
-    'SubDomain',
-    'Domain',
-    'CreatedDate',
-    'UpdatedDate',
+    'LinkUserClaimGroupId',
+    'LinkUserClaimTypeId',
+    'IsRequired',
     'Action'
   ];
 
@@ -98,6 +118,22 @@ export class CoreUserClaimGroupDetailListComponent implements OnInit, OnDestroy 
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
+    });
+    this.getUserClaimType();
+    this.getUserClaimGroup();
+  }
+  getUserClaimType(): void {
+    const filter = new FilterModel();
+    filter.RowPerPage = 100;
+    this.coreUserClaimTypeService.ServiceGetAll(filter).subscribe((next) => {
+      this.dataModelCoreUserClaimTypeResult = next;
+    });
+  }
+  getUserClaimGroup(): void {
+    const filter = new FilterModel();
+    filter.RowPerPage = 100;
+    this.coreUserClaimGroupService.ServiceGetAll(filter).subscribe((next) => {
+      this.dataModelCoreUserClaimGroupResult = next;
     });
   }
   ngOnDestroy(): void {
@@ -181,7 +217,10 @@ export class CoreUserClaimGroupDetailListComponent implements OnInit, OnDestroy 
       return;
     }
     const dialogRef = this.dialog.open(CoreUserClaimGroupDetailAddComponent, {
-      data: {}
+      data: {
+        LinkUserClaimGroupId: this.requestLinkUserClaimGroupId,
+        LinkUserClaimTypeId: this.requestLinkUserClaimTypeId,
+      }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.dialogChangedDate) {
@@ -320,48 +359,7 @@ export class CoreUserClaimGroupDetailListComponent implements OnInit, OnDestroy 
     );
 
   }
-  onActionbuttonModuleList(model: CoreUserClaimGroupDetailModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0) {
 
-      const message = 'ردیفی انتخاب نشده است';
-      this.cmsToastrService.typeErrorSelected(message);
-      return;
-    }
-    this.tableRowSelected = model;
-
-    if (
-      this.dataModelResult == null ||
-      this.dataModelResult.Access == null ||
-      !this.dataModelResult.Access.AccessDeleteRow
-    ) {
-      this.cmsToastrService.typeErrorSelected();
-      return;
-    }
-    this.router.navigate(['/core/sitecategorymodule/LinkCmsUserClaimGroupDetailId', this.tableRowSelected.Id]);
-
-
-  }
-  onActionbuttonSiteList(model: CoreUserClaimGroupDetailModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0) {
-
-      const message = 'ردیفی انتخاب نشده است';
-      this.cmsToastrService.typeErrorSelected(message);
-      return;
-    }
-    this.tableRowSelected = model;
-
-    if (
-      this.dataModelResult == null ||
-      this.dataModelResult.Access == null ||
-      !this.dataModelResult.Access.AccessDeleteRow
-    ) {
-      this.cmsToastrService.typeErrorSelected();
-      return;
-    }
-    this.router.navigate(['/core/site/list/LinkUserClaimGroupDetailId', this.tableRowSelected.Id]);
-
-
-  }
   onActionbuttonExport(): void {
     this.optionsExport.data.show = !this.optionsExport.data.show;
     this.optionsExport.childMethods.setExportFilterModel(this.filteModelContent);
@@ -392,5 +390,10 @@ export class CoreUserClaimGroupDetailListComponent implements OnInit, OnDestroy 
   onActionTableRowSelect(row: CoreUserClaimGroupDetailModel): void {
     this.tableRowSelected = row;
   }
-
+  onActionBackToParentType(): void {
+    this.router.navigate(['/core/userclaim/type/']);
+  }
+  onActionBackToParentGroup(): void {
+    this.router.navigate(['/core/userclaim/group/']);
+  }
 }

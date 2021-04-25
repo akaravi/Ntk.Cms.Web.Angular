@@ -3,10 +3,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
   BankPaymentPrivateSiteConfigModel,
-  ApplicationAppService,
   ApplicationSourceModel,
   BankPaymentPrivateSiteConfigService,
-  CoreAuthService,
   EnumSortType,
   ErrorExceptionResult,
   FilterDataModel,

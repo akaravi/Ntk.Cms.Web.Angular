@@ -17,7 +17,9 @@ import {
   CoreUserGroupService,
   CoreSiteCategoryService,
   CoreUserGroupModel,
-  CoreSiteCategoryModel
+  CoreSiteCategoryModel,
+  EnumModel,
+  CoreEnumService
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -47,6 +49,7 @@ export class CoreUserClaimTypeListComponent implements OnInit, OnDestroy {
     private cmsConfirmationDialogService: CmsConfirmationDialogService,
     private coreUserGroupService: CoreUserGroupService,
     private coreSiteCategoryService: CoreSiteCategoryService,
+    private coreEnumService: CoreEnumService,
     private router: Router,
     public dialog: MatDialog) {
     this.optionsSearch.parentMethods = {
@@ -78,17 +81,17 @@ export class CoreUserClaimTypeListComponent implements OnInit, OnDestroy {
   tableRowSelected: CoreUserClaimTypeModel = new CoreUserClaimTypeModel();
   tableSource: MatTableDataSource<CoreUserClaimTypeModel> = new MatTableDataSource<CoreUserClaimTypeModel>();
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+  dataModelEnumUserClaimKindsResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
 
 
   tabledisplayedColumns: string[] = [
+    'LinkMainImageIdSrc',
     'Id',
     'RecordStatus',
     'Title',
-    'TitleML',
-    'LinkUserGroupId',
-    'LinkCmsSiteCategoryId',
-    'CreatedDate',
-    'UpdatedDate',
+    'LinkModuleId',
+    'LinkSiteCategoryId',
+    'Kind',
     'Action'
   ];
 
@@ -107,6 +110,12 @@ export class CoreUserClaimTypeListComponent implements OnInit, OnDestroy {
     });
     this.getUserGroup();
     this.getSiteCategory();
+    this.getEnumUserClaimKinds();
+  }
+  getEnumUserClaimKinds(): void {
+    this.coreEnumService.ServiceEnumMenuPlaceType().subscribe((next) => {
+      this.dataModelEnumUserClaimKindsResult = next;
+    });
   }
   getUserGroup(): void {
     const filter = new FilterModel();
@@ -278,8 +287,7 @@ export class CoreUserClaimTypeListComponent implements OnInit, OnDestroy {
 
   }
 
-
-  onActionbuttonHeaderList(model: CoreUserClaimTypeModel = this.tableRowSelected): void {
+  onActionbuttonDetailList(model: CoreUserClaimTypeModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
       const message = 'ردیفی برای نمایش انتخاب نشده است';
       this.cmsToastrService.typeErrorSelected(message);
@@ -287,7 +295,7 @@ export class CoreUserClaimTypeListComponent implements OnInit, OnDestroy {
     }
     this.tableRowSelected = model;
 
-    this.router.navigate(['/core/modulesale/header/', this.tableRowSelected.Id]);
+    this.router.navigate(['/core/userclaim/groupdetail/LinkUserClaimTypeId', this.tableRowSelected.Id]);
   }
   onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;

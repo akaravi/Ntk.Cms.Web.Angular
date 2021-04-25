@@ -35,6 +35,7 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
 import { CoreUserClaimContentListComponent } from './content/list/list.component';
 import { CoreUserClaimContentAddComponent } from './content/add/add.component';
 import { CoreUserClaimContentEditComponent } from './content/edit/edit.component';
+import { CmsFileManagerModule } from 'ntk-cms-filemanager';
 
 @NgModule({
   declarations: [
@@ -108,6 +109,7 @@ import { CoreUserClaimContentEditComponent } from './content/edit/edit.component
     SharedModule.forRoot(),
     AngularEditorModule,
     TagInputModule,
+    CmsFileManagerModule,
   ],
   providers: [
     CoreEnumService,

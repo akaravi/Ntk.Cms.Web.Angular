@@ -17,7 +17,9 @@ import {
   CoreUserGroupService,
   CoreSiteCategoryService,
   CoreUserGroupModel,
-  CoreSiteCategoryModel
+  CoreSiteCategoryModel,
+  CoreModuleModel,
+  CoreModuleService
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -45,7 +47,7 @@ export class CoreUserClaimGroupListComponent implements OnInit, OnDestroy {
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
     private cmsConfirmationDialogService: CmsConfirmationDialogService,
-    private coreUserGroupService: CoreUserGroupService,
+    private coreModuleService: CoreModuleService,
     private coreSiteCategoryService: CoreSiteCategoryService,
     private router: Router,
     public dialog: MatDialog) {
@@ -67,7 +69,7 @@ export class CoreUserClaimGroupListComponent implements OnInit, OnDestroy {
 
   filteModelContent = new FilterModel();
   dataModelResult: ErrorExceptionResult<CoreUserClaimGroupModel> = new ErrorExceptionResult<CoreUserClaimGroupModel>();
-  dataModelCoreUserGroupResult: ErrorExceptionResult<CoreUserGroupModel> = new ErrorExceptionResult<CoreUserGroupModel>();
+  dataModelCoreModuleResult: ErrorExceptionResult<CoreModuleModel> = new ErrorExceptionResult<CoreModuleModel>();
   dataModelCoreSiteCategoryResult: ErrorExceptionResult<CoreSiteCategoryModel> = new ErrorExceptionResult<CoreSiteCategoryModel>();
   optionsSearch: ComponentOptionSearchModel = new ComponentOptionSearchModel();
   optionsStatist: ComponentOptionStatistModel = new ComponentOptionStatistModel();
@@ -84,11 +86,8 @@ export class CoreUserClaimGroupListComponent implements OnInit, OnDestroy {
     'Id',
     'RecordStatus',
     'Title',
-    'TitleML',
-    'LinkUserGroupId',
-    'LinkCmsSiteCategoryId',
-    'CreatedDate',
-    'UpdatedDate',
+    'LinkModuleId',
+    'LinkSiteCategoryId',
     'Action'
   ];
 
@@ -105,14 +104,14 @@ export class CoreUserClaimGroupListComponent implements OnInit, OnDestroy {
       this.DataGetAll();
       this.tokenInfo = next;
     });
-    this.getUserGroup();
+    this.getModule();
     this.getSiteCategory();
   }
-  getUserGroup(): void {
+  getModule(): void {
     const filter = new FilterModel();
     filter.RowPerPage = 100;
-    this.coreUserGroupService.ServiceGetAll(filter).subscribe((next) => {
-      this.dataModelCoreUserGroupResult = next;
+    this.coreModuleService.ServiceGetAll(filter).subscribe((next) => {
+      this.dataModelCoreModuleResult = next;
     });
   }
   getSiteCategory(): void {
@@ -279,15 +278,14 @@ export class CoreUserClaimGroupListComponent implements OnInit, OnDestroy {
   }
 
 
-  onActionbuttonHeaderList(model: CoreUserClaimGroupModel = this.tableRowSelected): void {
+  onActionbuttonDetailList(model: CoreUserClaimGroupModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
       const message = 'ردیفی برای نمایش انتخاب نشده است';
       this.cmsToastrService.typeErrorSelected(message);
       return;
     }
     this.tableRowSelected = model;
-
-    this.router.navigate(['/core/modulesale/header/', this.tableRowSelected.Id]);
+    this.router.navigate(['/core/userclaim/groupdetail/LinkUserClaimGroupId', this.tableRowSelected.Id]);
   }
   onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;
@@ -328,27 +326,7 @@ export class CoreUserClaimGroupListComponent implements OnInit, OnDestroy {
     );
 
   }
-  onActionbuttonModuleList(model: CoreUserClaimGroupModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0) {
 
-      const message = 'ردیفی انتخاب نشده است';
-      this.cmsToastrService.typeErrorSelected(message);
-      return;
-    }
-    this.tableRowSelected = model;
-
-    if (
-      this.dataModelResult == null ||
-      this.dataModelResult.Access == null ||
-      !this.dataModelResult.Access.AccessDeleteRow
-    ) {
-      this.cmsToastrService.typeErrorSelected();
-      return;
-    }
-    this.router.navigate(['/core/sitecategorymodule/LinkCmsUserClaimGroupId', this.tableRowSelected.Id]);
-
-
-  }
   onActionbuttonSiteList(model: CoreUserClaimGroupModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
 

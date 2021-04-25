@@ -1,8 +1,8 @@
 <div class="row">
-  <div *ngIf="requestHeaderId===0" class="col-xl-3">
+  <div *ngIf="requestLinkUserClaimGroupId===0" class="col-xl-3">
     <app-core-userclaimgroup-tree (optionSelect)="onActionSelectorSelect($event)"></app-core-userclaimgroup-tree>
   </div>
-  <div [ngClass]="(requestHeaderId===0)?'col-xl-9':'col-xl-12'">
+  <div [ngClass]="(requestLinkUserClaimGroupId===0)?'col-xl-9':'col-xl-12'">
     <div class="button-row">
       <button *ngIf="dataModelResult.Access.AccessAddRow " (click)="onActionbuttonNewRow()" type="button"
         class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">اضافه</button>
@@ -24,6 +24,10 @@
         </mat-slide-toggle>
       </a>
       <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">برسی مجدد</button>
+      <button (click)="onActionBackToParentType()" *ngIf="this.requestLinkUserClaimTypeId>0" type="button"
+        class="btn btn-warning BTN">بازگشت</button>
+      <button (click)="onActionBackToParentGroup()" *ngIf="this.requestLinkUserClaimGroupId>0" type="button"
+        class="btn btn-warning BTN">بازگشت</button>
       <app-cms-search-list [(options)]="optionsSearch"></app-cms-search-list>
       <app-cms-export-list [(options)]="optionsExport"></app-cms-export-list>
       <app-cms-statist-list [(options)]="optionsStatist"></app-cms-statist-list>
@@ -34,65 +38,31 @@
 
     <div class="example-container mat-elevation-z8">
       <mat-table [dataSource]="tableSource" matSort #tableSort="matSort" (matSortChange)="onTableSortData(tableSort)">
-        <!-- MainImageSrc Column -->
-        <ng-container matColumnDef="MainImageSrc">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> عکس </mat-header-cell>
-          <mat-cell *matCellDef="let row">
-            <img *ngIf="row?.MainImageSrc?.length>0" style="vertical-align:middle;" aria-hidden
-              src="{{row.MainImageSrc}}" height="40" width="40" />
-
-          </mat-cell>
-        </ng-container>
-        <!-- ID Column -->
-        <ng-container matColumnDef="Id">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Id']?.FieldTitle}} </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.Id}} </mat-cell>
-        </ng-container>
-        <!-- linkCreatedBySiteId Column -->
-        <ng-container matColumnDef="linkCreatedBySiteId">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['linkCreatedBySiteId']?.FieldTitle}}
-          </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.linkCreatedBySiteId}} </mat-cell>
-        </ng-container>
         <!-- RecordStatus Column -->
         <ng-container matColumnDef="RecordStatus">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['RecordStatus']?.FieldTitle}}
           </mat-header-cell>
           <mat-cell *matCellDef="let row"> <i [ngClass]="row.RecordStatus|statusClass"></i> </mat-cell>
         </ng-container>
-        <!-- Title Column -->
-        <ng-container matColumnDef="Title">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Title']?.FieldTitle}} </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.Title}} </mat-cell>
-        </ng-container>
-        <!-- SubDomain Column -->
-        <ng-container matColumnDef="SubDomain">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> SubDomain </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.SubDomain}} </mat-cell>
-        </ng-container>
-        <!-- Domain Column -->
-        <ng-container matColumnDef="Domain">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Domain </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.Domain}} </mat-cell>
-        </ng-container>
-        <!-- CreatedDate Column -->
-        <ng-container matColumnDef="CreatedDate">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['CreatedDate']?.FieldTitle}}
+        <!-- LinkUserClaimGroupId Column -->
+        <ng-container matColumnDef="LinkUserClaimGroupId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkUserClaimGroupId']?.FieldTitle}}
           </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.CreatedDate) }} </mat-cell>
+          <mat-cell *matCellDef="let row"> {{row.LinkUserClaimGroupId | cmstitle :
+            dataModelCoreUserClaimGroupResult.ListItems}} </mat-cell>
         </ng-container>
-        <!-- UpdatedDate Column -->
-        <ng-container matColumnDef="UpdatedDate">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['UpdatedDate']?.FieldTitle}}
+        <!-- LinkUserClaimTypeId Column -->
+        <ng-container matColumnDef="LinkUserClaimTypeId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkUserClaimTypeId']?.FieldTitle}}
           </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.UpdatedDate) }} </mat-cell>
+          <mat-cell *matCellDef="let row"> {{row.LinkUserClaimTypeId | cmstitle :
+            dataModelCoreUserClaimTypeResult.ListItems}} </mat-cell>
         </ng-container>
-        <!-- ExpireDate Column -->
-        <ng-container matColumnDef="ExpireDate">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['ExpireDate']?.FieldTitle}}
+        <!-- IsRequired Column -->
+        <ng-container matColumnDef="IsRequired">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['IsRequired']?.FieldTitle}}
           </mat-header-cell>
-          <mat-cell *matCellDef="let row" [ngStyle]="{'background':publicHelper.RowStyleExpireDate(row.ExpireDate) }">
-            {{ publicHelper.LocaleDate(row.ExpireDate) }} </mat-cell>
+          <mat-cell *matCellDef="let row"> <i [ngClass]="row.IsRequired | boolclass"></i></mat-cell>
         </ng-container>
         <!-- Action Column -->
         <ng-container matColumnDef="Action">
@@ -111,14 +81,6 @@
                 *ngIf="dataModelResult.Access.AccessDeleteRow">
                 <mat-icon>delete_forever</mat-icon>
                 <span>حذف</span>
-              </button>
-              <button mat-menu-item (click)="onActionbuttonModuleList(row)">
-                <mat-icon>view_module</mat-icon>
-                <span>ماژول ها</span>
-              </button>
-              <button mat-menu-item (click)="onActionbuttonSiteList(row)">
-                <mat-icon>view_module</mat-icon>
-                <span>سایت ها</span>
               </button>
             </mat-menu>
           </mat-cell>

@@ -36,13 +36,12 @@
 
     <div class="example-container mat-elevation-z8">
       <mat-table [dataSource]="tableSource" matSort #tableSort="matSort" (matSortChange)="onTableSortData(tableSort)">
-        <!-- MainImageSrc Column -->
-        <ng-container matColumnDef="MainImageSrc">
+        <!-- LinkFileContentId Column -->
+        <ng-container matColumnDef="LinkFileContentId">
           <mat-header-cell *matHeaderCellDef mat-sort-header> عکس </mat-header-cell>
           <mat-cell *matCellDef="let row">
-            <img *ngIf="row?.MainImageSrc?.length>0" style="vertical-align:middle;" aria-hidden
-              src="{{row.MainImageSrc}}" height="40" width="40" />
-
+            <img *ngIf="row?.LinkFileContentId?.length>0" style="vertical-align:middle;" aria-hidden
+              src="{{row.LinkFileContentId}}" height="40" width="40" />
           </mat-cell>
         </ng-container>
         <!-- ID Column -->
@@ -50,11 +49,23 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Id']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Id}} </mat-cell>
         </ng-container>
-        <!-- linkCreatedBySiteId Column -->
-        <ng-container matColumnDef="linkCreatedBySiteId">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['linkCreatedBySiteId']?.FieldTitle}}
+          <!-- Title Column -->
+          <ng-container matColumnDef="Title">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Title']?.FieldTitle}}
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.Title}} </mat-cell>
+          </ng-container>
+        <!-- LinkSiteId Column -->
+        <ng-container matColumnDef="LinkSiteId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkSiteId']?.FieldTitle}}
           </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.linkCreatedBySiteId}} </mat-cell>
+          <mat-cell *matCellDef="let row"> {{row.LinkSiteId}} </mat-cell>
+        </ng-container>
+        <!-- LinkUserId Column -->
+        <ng-container matColumnDef="LinkUserId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkUserId']?.FieldTitle}}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.LinkUserId}} </mat-cell>
         </ng-container>
         <!-- RecordStatus Column -->
         <ng-container matColumnDef="RecordStatus">
@@ -67,15 +78,17 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Title']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Title}} </mat-cell>
         </ng-container>
-        <!-- SubDomain Column -->
-        <ng-container matColumnDef="SubDomain">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> SubDomain </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.SubDomain}} </mat-cell>
+        <!-- LinkUserClaimTypeId Column -->
+        <ng-container matColumnDef="LinkUserClaimTypeId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkUserClaimTypeId']?.FieldTitle}}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">{{row.LinkUserClaimTypeId | cmstitle : dataModelCoreUserClaimTypeResult.ListItems}}</mat-cell>
         </ng-container>
-        <!-- Domain Column -->
-        <ng-container matColumnDef="Domain">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Domain </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.Domain}} </mat-cell>
+        <!-- IsApproved Column -->
+        <ng-container matColumnDef="IsApproved">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['IsApproved']?.FieldTitle}}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> <i [ngClass]="row.IsApproved | boolclass"></i></mat-cell>
         </ng-container>
         <!-- CreatedDate Column -->
         <ng-container matColumnDef="CreatedDate">
