@@ -21,7 +21,7 @@ import { CoreCpMainMenuTreeComponent } from './tree/tree.component';
 import { CoreModuleModule } from '../module/coreModule.module';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { IconPickerModule } from 'ngx-icon-picker';
-import { CoreUserGroupCmsModule } from '../userGroup/coreUserGroup.module';
+import { CoreUserGroupCmsModule } from '../user-group/coreUserGroup.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
 

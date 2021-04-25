@@ -1,8 +1,8 @@
 <div class="row">
-  <div *ngIf="requestHeaderId===0" class="col-xl-3">
-    <app-core-userclaimgroup-tree (optionSelect)="onActionSelectorSelect($event)"></app-core-userclaimgroup-tree>
+  <div *ngIf="requestLinkUserClaimTypeId===0" class="col-xl-3">
+    <app-core-userclaimtype-tree (optionSelect)="onActionSelectorSelect($event)"></app-core-userclaimtype-tree>
   </div>
-  <div [ngClass]="(requestHeaderId===0)?'col-xl-9':'col-xl-12'">
+  <div [ngClass]="(requestLinkUserClaimTypeId===0)?'col-xl-9':'col-xl-12'">
     <div class="button-row">
       <button *ngIf="dataModelResult.Access.AccessAddRow " (click)="onActionbuttonNewRow()" type="button"
         class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">اضافه</button>
@@ -24,6 +24,8 @@
         </mat-slide-toggle>
       </a>
       <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">برسی مجدد</button>
+      <button (click)="onActionBackToParent()" *ngIf="this.requestLinkUserClaimTypeId>0" type="button"
+        class="btn btn-warning BTN">بازگشت</button>
       <app-cms-search-list [(options)]="optionsSearch"></app-cms-search-list>
       <app-cms-export-list [(options)]="optionsExport"></app-cms-export-list>
       <app-cms-statist-list [(options)]="optionsStatist"></app-cms-statist-list>

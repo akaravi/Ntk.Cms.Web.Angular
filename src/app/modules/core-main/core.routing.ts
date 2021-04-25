@@ -33,7 +33,7 @@ const routes: Routes = [
       {
         path: 'usergroup',
         loadChildren: () =>
-          import('./userGroup/coreUserGroup.module').then((m) => m.CoreUserGroupCmsModule),
+          import('./user-group/coreUserGroup.module').then((m) => m.CoreUserGroupCmsModule),
       },
       {
         path: 'site',
@@ -43,32 +43,37 @@ const routes: Routes = [
       {
         path: 'sitecategory',
         loadChildren: () =>
-          import('./siteCategory/coreSiteCategory.module').then((m) => m.CoreSiteCategoryCmsModule),
+          import('./site-category/coreSiteCategory.module').then((m) => m.CoreSiteCategoryCmsModule),
       },
       {
         path: 'sitecategorymodule',
         loadChildren: () =>
-          import('./siteCategoryModule/coreSiteCategoryCmsModule.module').then((m) => m.CoreSiteCategoryCmsModuleModule),
+          import('./site-category-module/coreSiteCategoryCmsModule.module').then((m) => m.CoreSiteCategoryCmsModuleModule),
       },
       {
         path: 'sitedomainalias',
         loadChildren: () =>
-          import('./siteDomainAlias/coreSiteDomainAlias.module').then((m) => m.CoreSiteDomainAliasModule),
+          import('./site-domain-alias/coreSiteDomainAlias.module').then((m) => m.CoreSiteDomainAliasModule),
       },
       {
         path: 'cpmainmenu',
         loadChildren: () =>
-          import('./cpMainMenu/coreCpMainMenu.module').then((m) => m.CoreCpMainMenu),
+          import('./cp-main-menu/coreCpMainMenu.module').then((m) => m.CoreCpMainMenu),
       },
       {
         path: 'module',
         loadChildren: () =>
           import('./module/coreModule.module').then((m) => m.CoreModuleModule),
       },
-           {
+      {
         path: 'modulesale',
         loadChildren: () =>
           import('./module-sale/core-module-sale.module').then((m) => m.CoreModuleSaleModule),
+      },
+      {
+        path: 'userclaim',
+        loadChildren: () =>
+          import('./user-claim/core-user-claim.module').then((m) => m.CoreUserClaimModule),
       },
       {
         path: 'location',
@@ -80,7 +85,7 @@ const routes: Routes = [
         loadChildren: () =>
           import('./device/coreDevice.module').then((m) => m.CoreDeviceModule),
       },
-       {
+      {
         path: 'guide',
         loadChildren: () =>
           import('./guides/coreGuide.module').then((m) => m.CoreGuideCmsModule),

@@ -20,7 +20,7 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
 import { CoreSiteCategoryCmsModuleAddComponent } from './add/add.component';
 import { CoreSiteCategoryCmsModuleEditComponent } from './edit/edit.component';
 import { CoreModuleModule } from '../module/coreModule.module';
-import { CoreSiteCategoryCmsModule } from '../siteCategory/coreSiteCategory.module';
+import { CoreSiteCategoryCmsModule } from '../site-category/coreSiteCategory.module';
 
 
 @NgModule({

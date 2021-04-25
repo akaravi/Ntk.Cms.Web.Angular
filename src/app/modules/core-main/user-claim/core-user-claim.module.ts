@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import {
   CoreUserClaimGroupService,
   CoreUserClaimGroupDetailService,
-  CoreUserClaimService,
+  CoreUserClaimContentService,
   CoreUserClaimTypeService,
   CoreEnumService,
 } from 'ntk-cms-api';
@@ -32,6 +32,9 @@ import { CoreUserClaimGroupDetailSelectorComponent } from './group-detail/select
 import { CoreUserClaimGroupDetailTreeComponent } from './group-detail/tree/tree.component';
 import { CoreUserClaimGroupDetailListComponent } from './group-detail/list/list.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { CoreUserClaimContentListComponent } from './content/list/list.component';
+import { CoreUserClaimContentAddComponent } from './content/add/add.component';
+import { CoreUserClaimContentEditComponent } from './content/edit/edit.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +62,11 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
     CoreUserClaimGroupDetailSelectorComponent,
     CoreUserClaimGroupDetailTreeComponent,
     /** */
-
+    /** */
+    CoreUserClaimContentListComponent,
+    CoreUserClaimContentAddComponent,
+    CoreUserClaimContentEditComponent,
+    /** */
   ],
   exports: [
     CoreUserClaimComponent,
@@ -86,6 +93,11 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
     CoreUserClaimGroupDetailSelectorComponent,
     CoreUserClaimGroupDetailTreeComponent,
     /** */
+    /** */
+    CoreUserClaimContentListComponent,
+    CoreUserClaimContentAddComponent,
+    CoreUserClaimContentEditComponent,
+    /** */
   ],
   imports: [
     CommonModule,
@@ -100,7 +112,7 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
   providers: [
     CoreEnumService,
     /** */
-    CoreUserClaimService,
+    CoreUserClaimContentService,
     CoreUserClaimTypeService,
     CoreUserClaimGroupService,
     CoreUserClaimGroupDetailService,

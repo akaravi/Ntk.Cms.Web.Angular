@@ -26,8 +26,8 @@ import { CoreSiteListComponent } from './list/list.component';
 import { TreeviewModule } from 'ngx-treeview';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { TagInputModule } from 'ngx-chips';
-import { CoreSiteCategoryCmsModule } from '../siteCategory/coreSiteCategory.module';
-import { CoreSiteCategoryCmsModuleModule } from '../siteCategoryModule/coreSiteCategoryCmsModule.module';
+import { CoreSiteCategoryCmsModule } from '../site-category/coreSiteCategory.module';
+import { CoreSiteCategoryCmsModuleModule } from '../site-category-module/coreSiteCategoryCmsModule.module';
 import { CmsFileManagerModule } from 'ntk-cms-filemanager';
 import { CoreSiteModuleListComponent } from './moduleList/moduleList.component';
 import { CoreSiteModuleEditComponent } from './moduleEdit/moduleEdit.component';
@@ -38,7 +38,7 @@ import { CoreSiteUserListComponent } from './userList/userList.component';
 import { CoreSiteUserAddComponent } from './userAdd/userAdd.component';
 import { CoreSiteUserEditComponent } from './userEdit/userEdit.component';
 import { CoreUserModule } from '../user/coreUser.module';
-import { CoreUserGroupCmsModule } from '../userGroup/coreUserGroup.module';
+import { CoreUserGroupCmsModule } from '../user-group/coreUserGroup.module';
 
 
 

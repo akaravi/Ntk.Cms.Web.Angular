@@ -23,7 +23,7 @@ import { PoinModel } from 'src/app/core/models/pointModel';
 import { Map as leafletMap } from 'leaflet';
 import * as Leaflet from 'leaflet';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
-import { CoreSiteCategoryCmsModule } from '../../siteCategory/coreSiteCategory.module';
+import { CoreSiteCategoryCmsModule } from '../../site-category/coreSiteCategory.module';
 
 
 @Component({
