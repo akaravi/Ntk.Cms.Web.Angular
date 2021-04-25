@@ -39,6 +39,7 @@ import { CmsModuleSelectorComponent } from './cms-module-selector/cms-module-sel
 import { CmsSiteCategorySelectorComponent } from './cms-site-category-selector/cmsSiteCategorySelector.component';
 import { CmsUserGroupSelectorComponent } from './cms-user-group-selector/cmsUserGroupSelector.component';
 import { CmsTitlePipe } from '../core/pipe/title.pipe';
+import { CmsApplicationSelectorComponent } from './cms-application-selector/cms-application-selector.component';
 
 
 
@@ -72,6 +73,7 @@ import { CmsTitlePipe } from '../core/pipe/title.pipe';
     CmsStatistListComponent,
     CmsExportListComponent,
     CmsSiteSelectorComponent,
+    CmsApplicationSelectorComponent,
     CmsSiteCategorySelectorComponent,
     CmsUserSelectorComponent,
     CmsUserGroupSelectorComponent,
@@ -111,6 +113,7 @@ import { CmsTitlePipe } from '../core/pipe/title.pipe';
     CmsStatistListComponent,
     CmsExportListComponent,
     CmsSiteSelectorComponent,
+    CmsApplicationSelectorComponent,
     CmsSiteCategorySelectorComponent,
     CmsUserSelectorComponent,
     CmsUserGroupSelectorComponent,

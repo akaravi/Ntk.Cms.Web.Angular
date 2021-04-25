@@ -3,13 +3,11 @@ import {
   EnumModel,
   ErrorExceptionResult,
   FormInfoModel,
-  CoreSiteService,
-  CoreSiteModel,
-  CoreModuleSiteModel,
-  CoreModuleSiteService,
-  CoreModuleModel,
-  AccessModel,
+  CoreUserClaimGroupDetailService,
+  CoreUserClaimGroupDetailModel,
   DataFieldInfoModel,
+  CoreUserClaimGroupModel,
+  CoreUserClaimTypeModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -17,64 +15,78 @@ import {
   ViewChild,
   Inject,
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import {
   TreeModel,
-  NodeInterface,
 } from 'ntk-cms-filemanager';
-import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 @Component({
-  selector: 'app-core-site-module-add',
-  templateUrl: './moduleAdd.component.html',
-  styleUrls: ['./moduleAdd.component.scss'],
+  selector: 'app-core-userclaimgroupdetail-add',
+  templateUrl: './add.component.html',
+  styleUrls: ['./add.component.scss'],
 })
-export class CoreSiteModuleAddComponent implements OnInit {
+export class CoreUserClaimGroupDetailAddComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
-    private dialogRef: MatDialogRef<CoreSiteModuleAddComponent>,
+    private dialogRef: MatDialogRef<CoreUserClaimGroupDetailAddComponent>,
     public coreEnumService: CoreEnumService,
-    public coreSiteService: CoreModuleSiteService,
-    private cmsToastrService: CmsToastrService,
-    private publicHelper: PublicHelper,
+    public coreUserClaimGroupDetailService: CoreUserClaimGroupDetailService,
+    public publicHelper: PublicHelper,
+    private cmsToastrService: CmsToastrService
   ) {
-    if (data) {
-      this.requestLinkModuleId = +data.LinkModuleId || 0;
-      this.requestLinkSiteId = +data.LinkSiteId || 0;
-    }
-    if (this.requestLinkSiteId > 0) {
-      this.dataModel.LinkSiteId = this.requestLinkSiteId;
-    }
-    if (this.requestLinkModuleId > 0) {
-      this.dataModel.LinkModuleId = this.requestLinkModuleId;
-    }
+
+
+    this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
-  requestLinkSiteId = 0;
-  requestLinkModuleId = 0;
+  selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
 
-  dataAccessModel: AccessModel;
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
-
+  fileManagerTree: TreeModel;
+  appLanguage = 'fa';
 
   loading = new ProgressSpinnerModel();
-  dataModelResult: ErrorExceptionResult<CoreModuleSiteModel> = new ErrorExceptionResult<CoreModuleSiteModel>();
-  dataModel: CoreModuleSiteModel = new CoreModuleSiteModel();
+  dataModelResult: ErrorExceptionResult<CoreUserClaimGroupDetailModel> = new ErrorExceptionResult<CoreUserClaimGroupDetailModel>();
+  dataModel: CoreUserClaimGroupDetailModel = new CoreUserClaimGroupDetailModel();
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
 
   fileManagerOpenForm = false;
+
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
 
+
   ngOnInit(): void {
+
+    this.formInfo.FormTitle = 'اضافه کردن  ';
     this.getEnumRecordStatus();
+    this.DataGetAccess();
+  }
+
+  DataGetAccess(): void {
+    this.coreUserClaimGroupDetailService
+      .ServiceViewModel()
+      .subscribe(
+        async (next) => {
+          if (next.IsSuccess) {
+            // this.dataAccessModel = next.Access;
+            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+          } else {
+            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
+          }
+        },
+        (error) => {
+          this.cmsToastrService.typeErrorGetAccess(error);
+        }
+      );
   }
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
@@ -87,29 +99,12 @@ export class CoreSiteModuleAddComponent implements OnInit {
     }
   }
 
-  DataGetAccess(): void {
-    this.coreSiteService
-      .ServiceViewModel()
-      .subscribe(
-        async (next) => {
-          if (next.IsSuccess) {
-            this.dataAccessModel = next.Access;
-            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
-          } else {
-            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
-          }
-        },
-        (error) => {
-          this.cmsToastrService.typeErrorGetAccess(error);
-        }
-      );
-  }
 
   DataAddContent(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.coreSiteService.ServiceAdd(this.dataModel).subscribe(
+    this.coreUserClaimGroupDetailService.ServiceAdd(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormSubmitAllow = true;
         this.dataModelResult = next;
@@ -132,26 +127,34 @@ export class CoreSiteModuleAddComponent implements OnInit {
       }
     );
   }
+  onActionSelectClaimGroup(model: CoreUserClaimGroupModel | null): void {
+    if (!model || model.Id <= 0) {
+      this.cmsToastrService.toastr.error(
+        'دسته را مشخص کنید',
+        'گروه مدارک اطلاعات مشخص نیست'
+      );
+      return;
+    }
+    this.dataModel.LinkUserClaimGroupId = model.Id;
+  }
+  onActionSelectClaimType(model: CoreUserClaimTypeModel | null): void {
+    if (!model || model.Id <= 0) {
+      this.cmsToastrService.toastr.error(
+        'دسته را مشخص کنید',
+        'نوع مدارک اطلاعات مشخص نیست'
+      );
+      return;
+    }
+    this.dataModel.LinkUserClaimTypeId = model.Id;
+  }
+
   onFormSubmit(): void {
     if (!this.formGroup.valid) {
       return;
     }
     this.formInfo.FormSubmitAllow = false;
-    this.DataAddContent();
-  }
-  onActionSiteSelect(model: CoreSiteModel): void {
-    this.dataModel.LinkSiteId = null;
-    if (model && model.Id > 0) {
-      this.dataModel.LinkSiteId = model.Id;
-    }
-  }
-  onActionSelectorModuleSelect(model: CoreModuleModel): void {
-    if (!model || model.Id <= 0) {
-      const message = 'ماژول مشخص نیست';
-      this.cmsToastrService.typeErrorSelected(message);
-    }
-    this.dataModel.LinkModuleId = model.Id;
 
+    this.DataAddContent();
   }
   onFormCancel(): void {
     this.dialogRef.close({ dialogChangedDate: false });
