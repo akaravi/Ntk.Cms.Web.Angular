@@ -351,48 +351,8 @@ export class CoreModuleSaleItemListComponent implements OnInit, OnDestroy {
     );
 
   }
-  onActionbuttonModuleList(model: CoreModuleSaleItemModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0) {
-
-      const message = 'ردیفی انتخاب نشده است';
-      this.cmsToastrService.typeErrorSelected(message);
-      return;
-    }
-    this.tableRowSelected = model;
-
-    if (
-      this.dataModelResult == null ||
-      this.dataModelResult.Access == null ||
-      !this.dataModelResult.Access.AccessDeleteRow
-    ) {
-      this.cmsToastrService.typeErrorSelected();
-      return;
-    }
-    this.router.navigate(['/core/sitecategorymodule/LinkCmsModuleSaleItemId', this.tableRowSelected.Id]);
 
 
-  }
-  onActionbuttonSiteList(model: CoreModuleSaleItemModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0) {
-
-      const message = 'ردیفی انتخاب نشده است';
-      this.cmsToastrService.typeErrorSelected(message);
-      return;
-    }
-    this.tableRowSelected = model;
-
-    if (
-      this.dataModelResult == null ||
-      this.dataModelResult.Access == null ||
-      !this.dataModelResult.Access.AccessDeleteRow
-    ) {
-      this.cmsToastrService.typeErrorSelected();
-      return;
-    }
-    this.router.navigate(['/core/site/list/LinkModuleSaleItemId', this.tableRowSelected.Id]);
-
-
-  }
   onActionbuttonExport(): void {
     this.optionsExport.data.show = !this.optionsExport.data.show;
     this.optionsExport.childMethods.setExportFilterModel(this.filteModelContent);

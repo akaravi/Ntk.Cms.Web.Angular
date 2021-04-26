@@ -4,7 +4,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
   CoreUserModel,
-  CoreAuthService,
   EnumSortType,
   ErrorExceptionResult,
   FilterModel,
@@ -26,8 +25,6 @@ import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/bas
 import { MatSort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
-import { CoreUserEditComponent } from '../../user/edit/edit.component';
-import { CoreUserAddComponent } from '../../user/add/add.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
 import { CoreSiteUserAddComponent } from '../userAdd/userAdd.component';
 import { CoreSiteUserEditComponent } from '../userEdit/userEdit.component';
@@ -406,5 +403,11 @@ export class CoreSiteUserListComponent implements OnInit, OnDestroy {
   }
   onActionBackToParentSiteList(): void {
     this.router.navigate(['/core/site/']);
+  }
+  onActionBackToParentUserList(): void {
+    this.router.navigate(['/core/user/']);
+  }
+  onActionBackToParentUserGroupList(): void {
+    this.router.navigate(['/core/usergroup/']);
   }
 }

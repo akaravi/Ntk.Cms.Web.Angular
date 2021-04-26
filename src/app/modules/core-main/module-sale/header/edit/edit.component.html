@@ -44,28 +44,9 @@
         <mat-icon matSuffix *ngIf="dataModel.SalePrice && fieldsInfo['SalePrice']?.AccessEditField" matSuffix
           mat-icon-button aria-label="Clear" (click)="dataModel.SalePrice = null">close</mat-icon>
         <mat-icon *ngIf="fieldsInfo['SalePrice']?.AccessEditField" matSuffix>mode_edit</mat-icon>
-        <mat-hint align="start">{{ SalePrice.value.length }} / 100</mat-hint>
         <mat-error *ngIf="SalePrice.errors?.required">
           {{ fieldsInfo['SalePrice']?.FieldTitle }} is <strong>required</strong>
         </mat-error>
-      </mat-form-field>
-      <!-- FromDate Field -->
-      <mat-form-field class="example-full-width" *ngIf="fieldsInfo['FromDate']?.AccessWatchField">
-        <mat-label>{{fieldsInfo['FromDate']?.FieldTitle}}</mat-label>
-        <input matInput [matDatepicker]="FromDate" [(ngModel)]="dataModel.FromDate" name="dataModel.FromDate" />
-        <mat-icon matSuffix *ngIf="dataModel.FromDate && fieldsInfo['FromDate']?.AccessEditField" matSuffix
-          mat-icon-button aria-label="Clear" (click)="dataModel.FromDate = null">close</mat-icon>
-        <mat-datepicker-toggle matSuffix [for]="FromDate"></mat-datepicker-toggle>
-        <mat-datepicker touchUi #FromDate></mat-datepicker>
-      </mat-form-field>
-      <!-- ExpireDate Field -->
-      <mat-form-field class="example-full-width" *ngIf="fieldsInfo['ExpireDate']?.AccessWatchField">
-        <mat-label>{{fieldsInfo['ExpireDate']?.FieldTitle}}</mat-label>
-        <input matInput [matDatepicker]="ExpireDate" [(ngModel)]="dataModel.ExpireDate" name="dataModel.ExpireDate" />
-        <mat-icon matSuffix *ngIf="dataModel.ExpireDate && fieldsInfo['ExpireDate']?.AccessEditField" matSuffix
-          mat-icon-button aria-label="Clear" (click)="dataModel.ExpireDate = null">close</mat-icon>
-        <mat-datepicker-toggle matSuffix [for]="ExpireDate"></mat-datepicker-toggle>
-        <mat-datepicker touchUi #ExpireDate></mat-datepicker>
       </mat-form-field>
       <!-- HasDemo Field -->
       <div class="example-full-width">
@@ -74,6 +55,33 @@
           {{fieldsInfo['HasDemo']?.FieldTitle}}
         </mat-slide-toggle>
       </div>
+
+      <!-- FromDate Field -->
+      <mat-form-field class="example-full-width" *ngIf="fieldsInfo['FromDate']?.AccessWatchField">
+        <mat-label>{{fieldsInfo['FromDate']?.FieldTitle}}</mat-label>
+        <input matInput [matDatepicker]="FromDate" [(ngModel)]="dataModel.FromDate" name="dataModel.FromDate"
+          required />
+        <mat-icon matSuffix *ngIf="dataModel.FromDate && fieldsInfo['FromDate']?.AccessEditField" matSuffix
+          mat-icon-button aria-label="Clear" (click)="dataModel.FromDate = null">close</mat-icon>
+        <mat-datepicker-toggle matSuffix [for]="FromDate"></mat-datepicker-toggle>
+        <mat-datepicker touchUi #FromDate></mat-datepicker>
+        <mat-error *ngIf="Title.errors?.required">
+          {{fieldsInfo['FromDate']?.FieldTitle}} is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <!-- ExpireDate Field -->
+      <mat-form-field class="example-full-width" *ngIf="fieldsInfo['ExpireDate']?.AccessWatchField">
+        <mat-label>{{fieldsInfo['ExpireDate']?.FieldTitle}}</mat-label>
+        <input matInput [matDatepicker]="ExpireDate" [(ngModel)]="dataModel.ExpireDate" name="dataModel.ExpireDate"
+          required />
+        <mat-icon matSuffix *ngIf="dataModel.ExpireDate && fieldsInfo['ExpireDate']?.AccessEditField" matSuffix
+          mat-icon-button aria-label="Clear" (click)="dataModel.ExpireDate = null">close</mat-icon>
+        <mat-datepicker-toggle matSuffix [for]="ExpireDate"></mat-datepicker-toggle>
+        <mat-datepicker touchUi #ExpireDate></mat-datepicker>
+        <mat-error *ngIf="Title.errors?.required">
+          {{fieldsInfo['ExpireDate']?.FieldTitle}} is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
 
 
     </div>

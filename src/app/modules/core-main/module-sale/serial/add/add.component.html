@@ -44,6 +44,11 @@
         </mat-error>
       </mat-form-field>
 
+      <!-- LinkModuleSaleHeaderId Field -->
+      <app-core-modulesaleheader-selector (optionSelect)="onActionSelectHeader($event)"
+        [optionSelectForce]="this.dataModel.LinkModuleSaleHeaderId" [optionPlaceholder]="'دسته بندی'"
+        [disabled]="!fieldsInfo['LinkModuleSaleHeaderId']?.AccessEditField">
+      </app-core-modulesaleheader-selector>
       <!-- HasDemo Field -->
       <div class="example-full-width">
         <mat-slide-toggle [(ngModel)]="dataModel.HasDemo" *ngIf="fieldsInfo['HasDemo']?.AccessWatchField"
@@ -58,27 +63,6 @@
           {{fieldsInfo['HasUsed']?.FieldTitle}}
         </mat-slide-toggle>
       </div>
-      <!-- NumberOfRegistered Field -->
-      <mat-form-field class="example-full-width" *ngIf="fieldsInfo['NumberOfRegistered']?.AccessWatchField">
-        <mat-label>{{ fieldsInfo['NumberOfRegistered']?.FieldTitle }}</mat-label>
-        <input matInput [(ngModel)]="dataModel.NumberOfRegistered"
-          [disabled]="!fieldsInfo['NumberOfRegistered']?.AccessAddField" name="dataModel.NumberOfRegistered"
-          #NumberOfRegistered type="number" placeholder="0" required />
-        <mat-icon matSuffix *ngIf="dataModel.NumberOfRegistered && fieldsInfo['NumberOfRegistered']?.AccessAddField"
-          matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.NumberOfRegistered = null">close</mat-icon>
-        <mat-icon *ngIf="fieldsInfo['NumberOfRegistered']?.AccessAddField" matSuffix>mode_edit</mat-icon>
-        <mat-error *ngIf="NumberOfRegistered.errors?.required">
-          {{ fieldsInfo['NumberOfRegistered']?.FieldTitle }} is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-
-
-      <!-- LinkModuleSaleHeaderId Field -->
-      <app-core-modulesaleheader-selector (optionSelect)="onActionSelectHeader($event)"
-        [optionSelectForce]="this.dataModel.LinkModuleSaleHeaderId" [optionPlaceholder]="'دسته بندی'"
-        [disabled]="!fieldsInfo['LinkModuleSaleHeaderId']?.AccessEditField">
-      </app-core-modulesaleheader-selector>
-
       <!-- NumberOfMaxUse Field -->
       <mat-form-field class="example-full-width" *ngIf="fieldsInfo['NumberOfMaxUse']?.AccessWatchField">
         <mat-label>{{ fieldsInfo['NumberOfMaxUse']?.FieldTitle }}</mat-label>
@@ -103,13 +87,20 @@
         <mat-datepicker-toggle matSuffix [for]="MaxExpireToUse"></mat-datepicker-toggle>
         <mat-datepicker touchUi #MaxExpireToUse></mat-datepicker>
       </mat-form-field>
-      <!-- HasDemo Field -->
-      <div class="example-full-width">
-        <mat-slide-toggle [(ngModel)]="dataModel.HasDemo" *ngIf="fieldsInfo['HasDemo']?.AccessWatchField"
-          [disabled]="!fieldsInfo['HasDemo']?.AccessEditField" name="dataModel.HasDemo">
-          {{fieldsInfo['HasDemo']?.FieldTitle}}
-        </mat-slide-toggle>
-      </div>
+
+      <!-- NumberOfRegistered Field -->
+      <mat-form-field class="example-full-width" *ngIf="fieldsInfo['NumberOfRegistered']?.AccessWatchField">
+        <mat-label>{{ fieldsInfo['NumberOfRegistered']?.FieldTitle }}</mat-label>
+        <input matInput [(ngModel)]="dataModel.NumberOfRegistered"
+          [disabled]="!fieldsInfo['NumberOfRegistered']?.AccessAddField" name="dataModel.NumberOfRegistered"
+          #NumberOfRegistered type="number" placeholder="0" required />
+        <mat-icon matSuffix *ngIf="dataModel.NumberOfRegistered && fieldsInfo['NumberOfRegistered']?.AccessAddField"
+          matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.NumberOfRegistered = null">close</mat-icon>
+        <mat-icon *ngIf="fieldsInfo['NumberOfRegistered']?.AccessAddField" matSuffix>mode_edit</mat-icon>
+        <mat-error *ngIf="NumberOfRegistered.errors?.required">
+          {{ fieldsInfo['NumberOfRegistered']?.FieldTitle }} is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
     </div>
 
   </form>

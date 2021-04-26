@@ -3,8 +3,9 @@
     <div class="button-row">
       <button *ngIf="dataModelResult.Access.AccessAddRow " (click)="onActionbuttonNewRow()" type="button"
         class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">اضافه</button>
-      <button *ngIf="dataModelResult.Access.AccessEditRow && tableRowSelected.LinkSiteId>0" (click)="onActionbuttonEditRow()"
-        type="button" class="btn btn-warning ml-2" data-toggle="modal" data-target="#categoryModal">ویرایش</button>
+      <button *ngIf="dataModelResult.Access.AccessEditRow && tableRowSelected.LinkSiteId>0"
+        (click)="onActionbuttonEditRow()" type="button" class="btn btn-warning ml-2" data-toggle="modal"
+        data-target="#categoryModal">ویرایش</button>
       <button *ngIf="dataModelResult.Access.AccessDeleteRow && tableRowSelected.LinkSiteId>0"
         (click)="onActionbuttonDeleteRow()" type="button" class="btn btn-danger  ml-2">حذف</button>
 
@@ -22,6 +23,10 @@
       </a>
       <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">برسی مجدد</button>
       <button (click)="onActionBackToParentSiteList()" *ngIf="this.requestLinkSiteId>0" type="button"
+        class="btn btn-warning BTN">بازگشت</button>
+      <button (click)="onActionBackToParentUserList()" *ngIf="this.requestLinkUserId>0" type="button"
+        class="btn btn-warning BTN">بازگشت</button>
+      <button (click)="onActionBackToParentUserGroupList()" *ngIf="this.requestLinkUserGroupId>0" type="button"
         class="btn btn-warning BTN">بازگشت</button>
       <app-cms-search-list [(options)]="optionsSearch"></app-cms-search-list>
       <app-cms-export-list [(options)]="optionsExport"></app-cms-export-list>
@@ -54,7 +59,8 @@
 
         <!-- RecordStatus Column -->
         <ng-container matColumnDef="RecordStatus">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['RecordStatus']?.FieldTitle}} </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['RecordStatus']?.FieldTitle}}
+          </mat-header-cell>
           <mat-cell *matCellDef="let row"> <i [ngClass]="row.RecordStatus|statusClass"></i> </mat-cell>
         </ng-container>
         <!-- Username Column -->
@@ -102,19 +108,21 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header> Site Domain </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.virtual_CmsSite.Domain}} </mat-cell>
         </ng-container>
-              <!-- CompanyName Column -->
+        <!-- CompanyName Column -->
         <ng-container matColumnDef="virtual_CmsSite.SubDomain">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Site SubDomain </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.virtual_CmsSite.SubDomain}} </mat-cell>
         </ng-container>
         <!-- CreatedDate Column -->
         <ng-container matColumnDef="CreatedDate">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['CreatedDate']?.FieldTitle}} </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['CreatedDate']?.FieldTitle}}
+          </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.CreatedDate) }} </mat-cell>
         </ng-container>
         <!-- UpdatedDate Column -->
         <ng-container matColumnDef="UpdatedDate">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['UpdatedDate']?.FieldTitle}} </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['UpdatedDate']?.FieldTitle}}
+          </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.UpdatedDate) }} </mat-cell>
         </ng-container>
         <!-- Action Column -->
@@ -130,7 +138,8 @@
                 <mat-icon>mode_edit</mat-icon>
                 <span>ویرایش</span>
               </button>
-              <button mat-menu-item (click)="onActionbuttonDeleteRow(row)" *ngIf="dataModelResult.Access.AccessDeleteRow">
+              <button mat-menu-item (click)="onActionbuttonDeleteRow(row)"
+                *ngIf="dataModelResult.Access.AccessDeleteRow">
                 <mat-icon>delete_forever</mat-icon>
                 <span>حذف</span>
               </button>
@@ -151,7 +160,7 @@
         </ng-container>
         <mat-header-row *matHeaderRowDef="tabledisplayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: tabledisplayedColumns;" (click)="onActionTableRowSelect(row)"
-        [ngStyle]="{'background':( row.LinkSiteId === tableRowSelected.LinkSiteId  && row.LinkUserId===tableRowSelected.LinkUserId )? '#d3d3da' :'' }">
+          [ngStyle]="{'background':( row.LinkSiteId === tableRowSelected.LinkSiteId  && row.LinkUserId===tableRowSelected.LinkUserId )? '#d3d3da' :'' }">
 
         </mat-row>
       </mat-table>

@@ -58,10 +58,10 @@ export class CoreModuleSaleHeaderSelectorComponent implements OnInit {
   }
 
   displayFn(model?: CoreModuleSaleHeaderModel): string | undefined {
-    return model ? (model.Id + ' # ') : undefined;
+    return model ? (model.Id + ' # ' + model.Title) : undefined;
   }
   displayOption(model?: CoreModuleSaleHeaderModel): string | undefined {
-    return model ? (model.Id + ' # ') : undefined;
+    return model ? (model.Id + ' # ' + model.Title) : undefined;
   }
   async DataGetAll(text: string | number | any): Promise<CoreModuleSaleHeaderModel[]> {
     const filteModel = new FilterModel();

@@ -160,7 +160,26 @@ export class CoreModuleListComponent implements OnInit, OnDestroy {
   }
 
 
-  onActionbuttonNewRow(): void {
+  onActionbuttonReNewModule(): void {
+
+    if (
+      this.dataModelResult == null ||
+      this.dataModelResult.Access == null ||
+      !this.dataModelResult.Access.AccessAddRow
+    ) {
+      this.cmsToastrService.typeErrorAccessAdd();
+      return;
+    }
+    const dialogRef = this.dialog.open(CoreModuleAddComponent, {
+      data: {}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.dialogChangedDate) {
+        this.DataGetAll();
+      }
+    });
+  }
+   onActionbuttonNewRow(): void {
 
     if (
       this.dataModelResult == null ||

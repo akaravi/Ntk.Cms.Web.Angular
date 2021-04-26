@@ -39,7 +39,7 @@ import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 export class CoreSiteUserAddComponent implements OnInit {
   requestLinkSiteId = 0;
   requestLinkUserId = 0;
-requestLinkUserGroupId = 0;
+  requestLinkUserGroupId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
@@ -50,7 +50,7 @@ requestLinkUserGroupId = 0;
     private publicHelper: PublicHelper,
   ) {
     if (data) {
-      this.requestLinkUserId = +data.LinkModuleId || 0;
+      this.requestLinkUserId = +data.LinkUserId || 0;
       this.requestLinkSiteId = +data.LinkSiteId || 0;
       this.requestLinkUserGroupId = +data.LinkUserGroupId || 0;
     }
@@ -58,7 +58,7 @@ requestLinkUserGroupId = 0;
       this.dataModel.LinkSiteId = this.requestLinkSiteId;
     }
     if (this.requestLinkUserId > 0) {
-      this.dataModel.LinkSiteId = this.requestLinkUserId;
+      this.dataModel.LinkUserId = this.requestLinkUserId;
     }
     if (this.requestLinkUserGroupId > 0) {
       this.dataModel.LinkUserGroupId = this.requestLinkUserGroupId;
@@ -126,10 +126,10 @@ requestLinkUserGroupId = 0;
           this.cmsToastrService.typeSuccessAdd();
           this.dialogRef.close({ dialogChangedDate: true });
 
-              } else {
+        } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
-          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
         }
         this.loading.display = false;
       },

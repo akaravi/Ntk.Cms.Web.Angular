@@ -41,18 +41,7 @@
         [optionSelectForce]="this.dataModel.LinkModuleSaleHeader" [optionPlaceholder]="'دسته بندی'"
         [disabled]="!fieldsInfo['LinkModuleSaleHeader']?.AccessEditField">
       </app-core-modulesaleheader-selector>
-      <!-- SalePrice Field -->
-      <mat-form-field class="example-full-width" *ngIf="fieldsInfo['SalePrice']?.AccessWatchField">
-        <mat-label>{{ fieldsInfo['SalePrice']?.FieldTitle }}</mat-label>
-        <input matInput [(ngModel)]="dataModel.SalePrice" [disabled]="!fieldsInfo['SalePrice']?.AccessAddField"
-          name="dataModel.SalePrice" #SalePrice type="number" placeholder="0" required />
-        <mat-icon matSuffix *ngIf="dataModel.SalePrice && fieldsInfo['SalePrice']?.AccessAddField" matSuffix
-          mat-icon-button aria-label="Clear" (click)="dataModel.SalePrice = null">close</mat-icon>
-        <mat-icon *ngIf="fieldsInfo['SalePrice']?.AccessAddField" matSuffix>mode_edit</mat-icon>
-        <mat-error *ngIf="SalePrice.errors?.required">
-          {{ fieldsInfo['SalePrice']?.FieldTitle }} is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
+
       <!-- MonthLength Field -->
       <mat-form-field class="example-full-width" *ngIf="fieldsInfo['MonthLength']?.AccessWatchField">
         <mat-label>{{ fieldsInfo['MonthLength']?.FieldTitle }}</mat-label>
