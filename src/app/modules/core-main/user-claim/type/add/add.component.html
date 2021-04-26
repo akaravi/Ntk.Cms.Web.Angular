@@ -44,24 +44,6 @@
           Kind is <strong>required</strong>
         </mat-error>
       </mat-form-field>
-      <!-- LinkModuleId Field -->
-      <app-cms-module-selector (optionSelect)="onActionSelectModuleId($event)"
-        [optionSelectForce]="this.dataModel.LinkModuleId" [optionPlaceholder]="'ماژول'"
-        [disabled]="!fieldsInfo['LinkModuleId']?.AccessEditField">
-      </app-cms-module-selector>
-
-
-      <!-- LinkSiteCategoryId Field -->
-      <app-cms-sitecategory-selector (optionSelect)="onActionSelectSiteCategory($event)"
-        [optionSelectForce]="this.dataModel.LinkSiteCategoryId" [optionPlaceholder]="'دسته بندی سایت'"
-        [disabled]="!fieldsInfo['LinkSiteCategoryId']?.AccessEditField">
-      </app-cms-sitecategory-selector>
-
-      <!-- LinkApplicationId Field -->
-      <app-cms-application-selector (optionSelect)="onActionSelectApplication($event)"
-        [optionSelectForce]="this.dataModel.LinkApplicationId" [optionPlaceholder]="'اپلیکشن'"
-        [disabled]="!fieldsInfo['LinkApplicationId']?.AccessEditField">
-      </app-cms-application-selector>
 
       <!-- DismissOnEdit Field -->
       <div class="example-full-width">

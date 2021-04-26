@@ -1,16 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import {
   CaptchaModel,
   CoreAuthService,
-  AuthUserForgetPasswordModel,
-  AuthUserForgetPasswordEntryPinCodeModel,
   FormInfoModel,
   AuthUserSignInBySmsDtoModel
 } from 'ntk-cms-api';
-import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 

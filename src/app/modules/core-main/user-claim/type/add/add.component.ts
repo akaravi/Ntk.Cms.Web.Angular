@@ -142,28 +142,7 @@ export class CoreUserClaimTypeAddComponent implements OnInit {
     this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
 
   }
-  onActionSelectApplication(model: ApplicationAppModel | null): void {
-    if (!model || model.Id <= 0) {
-      this.dataModel.LinkApplicationId =null;
-      return;
-    }
-    this.dataModel.LinkApplicationId = model.Id;
-  }
-  onActionSelectSiteCategory(model: CoreSiteCategoryModel | null): void {
-    if (!model || model.Id <= 0) {
-      this.dataModel.LinkSiteCategoryId = null;
-      return;
-    }
-    this.dataModel.LinkSiteCategoryId = model.Id;
-  }
-  onActionSelectModuleId(model: CoreModuleModel | null): void {
-    if (!model || model.Id <= 0) {
-      const message = 'ماژول مشخص نیست';
-      this.cmsToastrService.typeErrorSelected(message);
-      return;
-    }
-    this.dataModel.LinkSiteCategoryId = model.Id;
-  }
+
   onFormSubmit(): void {
     if (!this.formGroup.valid) {
       return;

@@ -89,8 +89,6 @@ export class CoreUserClaimTypeListComponent implements OnInit, OnDestroy {
     'Id',
     'RecordStatus',
     'Title',
-    'LinkModuleId',
-    'LinkSiteCategoryId',
     'Kind',
     'Action'
   ];
@@ -108,29 +106,15 @@ export class CoreUserClaimTypeListComponent implements OnInit, OnDestroy {
       this.DataGetAll();
       this.tokenInfo = next;
     });
-    this.getUserGroup();
-    this.getSiteCategory();
     this.getEnumUserClaimKinds();
   }
   getEnumUserClaimKinds(): void {
-    this.coreEnumService.ServiceEnumMenuPlaceType().subscribe((next) => {
+    this.coreEnumService.ServiceEnumUserClaimKinds().subscribe((next) => {
       this.dataModelEnumUserClaimKindsResult = next;
     });
   }
-  getUserGroup(): void {
-    const filter = new FilterModel();
-    filter.RowPerPage = 100;
-    this.coreUserGroupService.ServiceGetAll(filter).subscribe((next) => {
-      this.dataModelCoreUserGroupResult = next;
-    });
-  }
-  getSiteCategory(): void {
-    const filter = new FilterModel();
-    filter.RowPerPage = 100;
-    this.coreSiteCategoryService.ServiceGetAll(filter).subscribe((next) => {
-      this.dataModelCoreSiteCategoryResult = next;
-    });
-  }
+
+
   ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }

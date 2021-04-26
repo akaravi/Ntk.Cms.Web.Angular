@@ -5,7 +5,7 @@ import { EnumModel } from 'ntk-cms-api';
 export class EnumsPipe implements PipeTransform {
   transform(value, args: EnumModel[]): any {
 
-    if (!value || !args || args.length === 0) {
+    if (!args || args.length === 0) {
       return '';
     }
     const find = args.find(x => x.Key === value || x.Value === value);

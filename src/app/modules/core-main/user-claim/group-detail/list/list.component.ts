@@ -231,7 +231,8 @@ export class CoreUserClaimGroupDetailListComponent implements OnInit, OnDestroy 
 
   onActionbuttonEditRow(model: CoreUserClaimGroupDetailModel = this.tableRowSelected): void {
 
-    if (!model || !model.Id || model.Id === 0) {
+    if (!model || !model.LinkUserClaimGroupId || model.LinkUserClaimGroupId === 0
+      || !model.LinkUserClaimTypeId || model.LinkUserClaimTypeId === 0) {
       this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
       return;
     }
@@ -245,7 +246,7 @@ export class CoreUserClaimGroupDetailListComponent implements OnInit, OnDestroy 
       return;
     }
     const dialogRef = this.dialog.open(CoreUserClaimGroupDetailEditComponent, {
-      data: { id: this.tableRowSelected.Id }
+      data: { model: this.tableRowSelected }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.dialogChangedDate) {
@@ -284,7 +285,7 @@ export class CoreUserClaimGroupDetailListComponent implements OnInit, OnDestroy 
       .then((confirmed) => {
         if (confirmed) {
           this.loading.display = true;
-          this.coreUserClaimGroupDetailService.ServiceDelete(this.tableRowSelected.Id).subscribe(
+          this.coreUserClaimGroupDetailService.ServiceDeleteEntity(this.tableRowSelected).subscribe(
             (next) => {
               if (next.IsSuccess) {
                 this.cmsToastrService.typeSuccessRemove();
@@ -310,16 +311,16 @@ export class CoreUserClaimGroupDetailListComponent implements OnInit, OnDestroy 
   }
 
 
-  onActionbuttonGoToUserClaimGroupDetailList(model: CoreUserClaimGroupDetailModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0) {
-      const message = 'ردیفی برای نمایش انتخاب نشده است';
-      this.cmsToastrService.typeErrorSelected(message);
-      return;
-    }
-    this.tableRowSelected = model;
+  // onActionbuttonGoToUserClaimGroupDetailList(model: CoreUserClaimGroupDetailModel = this.tableRowSelected): void {
+  //   if (!model || !model.Id || model.Id === 0) {
+  //     const message = 'ردیفی برای نمایش انتخاب نشده است';
+  //     this.cmsToastrService.typeErrorSelected(message);
+  //     return;
+  //   }
+  //   this.tableRowSelected = model;
 
-    this.router.navigate(['/core/siteUserClaimGroupDetail/', this.tableRowSelected.Id]);
-  }
+  //   this.router.navigate(['/core/siteUserClaimGroupDetail/', this.tableRowSelected.Id]);
+  // }
   onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;
     if (!this.optionsStatist.data.show) {

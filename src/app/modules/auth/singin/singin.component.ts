@@ -1,6 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subscription, Observable, interval } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthUserSignInModel, CaptchaModel, CoreAuthService, FormInfoModel } from 'ntk-cms-api';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
@@ -11,8 +10,17 @@ import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
   styleUrls: ['./singin.component.scss'],
 })
 export class AuthSingInComponent implements OnInit {
-  formInfo: FormInfoModel = new FormInfoModel();
 
+  constructor(
+    private cmsToastrService: CmsToastrService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private coreAuthService: CoreAuthService
+  ) {
+  }
+
+
+  formInfo: FormInfoModel = new FormInfoModel();
   dataModel: AuthUserSignInModel = new AuthUserSignInModel();
   captchaModel: CaptchaModel = new CaptchaModel();
   expireDate: string;
@@ -23,16 +31,6 @@ export class AuthSingInComponent implements OnInit {
   returnUrl: string;
   isLoading$: Observable<boolean>;
   loginType = 'email';
-  constructor(
-    private cmsToastrService: CmsToastrService,
-    private fb: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private coreAuthService: CoreAuthService
-  ) {
-
-  }
-
   ngOnInit(): void {
     this.onCaptchaOrder();
     // get return url from route parameters or default to '/'
@@ -40,8 +38,6 @@ export class AuthSingInComponent implements OnInit {
       this.route.snapshot.queryParams['returnUrl'.toString()] || '/';
 
   }
-
-
   onActionSubmit(): void {
     this.formInfo.ButtonSubmittedEnabled = false;
     this.hasError = false;

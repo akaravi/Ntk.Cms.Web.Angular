@@ -8,6 +8,8 @@ import {
   DataFieldInfoModel,
   CoreUserClaimTypeModel,
   CoreUserClaimGroupModel,
+  FilterModel,
+  FilterDataModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -31,7 +33,7 @@ import { PublicHelper } from 'src/app/core/helpers/publicHelper';
   styleUrls: ['./edit.component.scss'],
 })
 export class CoreUserClaimGroupDetailEditComponent implements OnInit {
-  requestId = 0;
+  requestModel = new CoreUserClaimGroupDetailModel();
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
@@ -42,7 +44,7 @@ export class CoreUserClaimGroupDetailEditComponent implements OnInit {
     private cmsToastrService: CmsToastrService
   ) {
     if (data) {
-      this.requestId = +data.id || 0;
+      this.requestModel = data.model;
     }
 
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
@@ -57,7 +59,7 @@ export class CoreUserClaimGroupDetailEditComponent implements OnInit {
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<CoreUserClaimGroupDetailModel> = new ErrorExceptionResult<CoreUserClaimGroupDetailModel>();
   dataModel: CoreUserClaimGroupDetailModel = new CoreUserClaimGroupDetailModel();
-    fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
@@ -66,7 +68,7 @@ export class CoreUserClaimGroupDetailEditComponent implements OnInit {
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
 
   ngOnInit(): void {
-    if (this.requestId > 0) {
+    if (this.requestModel && this.requestModel.LinkUserClaimTypeId > 0) {
       this.formInfo.FormTitle = 'ویرایش  ';
       this.DataGetOneContent();
     } else {
@@ -88,28 +90,35 @@ export class CoreUserClaimGroupDetailEditComponent implements OnInit {
     }
   }
   DataGetOneContent(): void {
-    if (this.requestId <= 0) {
-      this.cmsToastrService.typeErrorEditRowIsNull();
-      return;
-    }
 
     this.formInfo.FormAlert = 'در دریافت ارسال اطلاعات از سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
+
+    const filteModelContent = new FilterModel();
+    let fastfilter = new FilterDataModel();
+    fastfilter.PropertyName = 'LinkUserClaimGroupId';
+    fastfilter.Value = this.requestModel.LinkUserClaimGroupId;
+    filteModelContent.Filters.push(fastfilter);
+    /** */
+    fastfilter = new FilterDataModel();
+    fastfilter.PropertyName = 'LinkUserClaimTypeId';
+    fastfilter.Value = this.requestModel.LinkUserClaimTypeId;
+    filteModelContent.Filters.push(fastfilter);
+
     this.coreUserClaimGroupDetailService.setAccessLoad();
-    this.coreUserClaimGroupDetailService.ServiceGetOneById(this.requestId).subscribe(
+    this.coreUserClaimGroupDetailService.ServiceGetAll(filteModelContent).subscribe(
       (next) => {
         this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
-
-        this.dataModel = next.Item;
-        if (next.IsSuccess) {
-
-          this.formInfo.FormTitle = this.formInfo.FormTitle + ' ' + next.Item.Id;
+        if (next.IsSuccess && next.ListItems.length > 0) {
+          this.dataModel = next.ListItems[0];
+          this.formInfo.FormTitle = this.formInfo.FormTitle + ' ' +
+            this.dataModel.LinkUserClaimGroupId + '<-->' + this.dataModel.LinkUserClaimTypeId;
           this.formInfo.FormAlert = '';
-              } else {
+        } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
-          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
         }
         this.loading.display = false;
       },
@@ -133,10 +142,10 @@ export class CoreUserClaimGroupDetailEditComponent implements OnInit {
           this.cmsToastrService.typeSuccessEdit();
           this.dialogRef.close({ dialogChangedDate: true });
 
-              } else {
+        } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
-          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
         }
         this.loading.display = false;
       },

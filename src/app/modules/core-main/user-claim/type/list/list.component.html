@@ -55,25 +55,14 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Title']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Title}} </mat-cell>
         </ng-container>
-        <!-- LinkModuleId Column -->
-        <ng-container matColumnDef="LinkModuleId">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkModuleId']?.FieldTitle}} </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.LinkModuleId}} </mat-cell>
-        </ng-container>
-        <!-- LinkSiteCategoryId Column -->
-        <ng-container matColumnDef="LinkSiteCategoryId">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkSiteCategoryId']?.FieldTitle}}
-          </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.LinkSiteCategoryId | cmstitle :  dataModelCoreSiteCategoryResult.ListItems}} </mat-cell>
-        </ng-container>
-        <!-- Kind Column -->
+          <!-- Kind Column -->
         <ng-container matColumnDef="Kind">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Kind']?.FieldTitle}}
           </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Kind | enums : dataModelEnumUserClaimKindsResult.ListItems}}
           </mat-cell>
         </ng-container>
-        
+
 
         <!-- Action Column -->
         <ng-container matColumnDef="Action">
@@ -95,7 +84,7 @@
               </button>
               <button mat-menu-item (click)="onActionbuttonDetailList(row)">
                 <mat-icon>view_module</mat-icon>
-                <span>اجزاء</span>
+                <span>مواد استفاده</span>
               </button>
             </mat-menu>
           </mat-cell>

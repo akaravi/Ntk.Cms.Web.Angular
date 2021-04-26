@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-auth',
@@ -6,10 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./auth.component.scss']
 })
 export class AuthComponent implements OnInit {
-
+  constructor() {
+    this.appVersion = environment.appVersion;
+  }
+  appVersion = '';
   today: Date = new Date();
-
-  constructor() { }
 
   ngOnInit(): void {
   }

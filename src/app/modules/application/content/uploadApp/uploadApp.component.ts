@@ -23,12 +23,11 @@ export class ApplicationAppUploadAppComponent implements OnInit {
 
   }
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
-  optionApiPath = environment.cmsServerConfig.configRouteUploadFileContent;
   formInfo: FormInfoModel = new FormInfoModel();
   dataModel = new UploadApplictionDtoModel();
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
   isHovering = false;
-  fieldvalue='';
+  fieldvalue = '';
   ngOnInit(): void {
     this.dataModel.AppVersion = this.dataItemModel.AppVersion;
     this.dataModel.LastBuildAppKey = this.dataItemModel.LastBuildAppKey;
@@ -87,7 +86,7 @@ export class ApplicationAppUploadAppComponent implements OnInit {
   toggleHover(model: any): void {
     this.isHovering = true;
   }
-  onUpload(e) {
+  onUpload(e): void {
     console.log(e);
 
   }

@@ -34,6 +34,7 @@ import { PublicHelper } from 'src/app/core/helpers/publicHelper';
   styleUrls: ['./add.component.scss'],
 })
 export class CoreUserClaimContentAddComponent implements OnInit {
+  requestLinkUserClaimTypeId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
@@ -43,8 +44,12 @@ export class CoreUserClaimContentAddComponent implements OnInit {
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService
   ) {
-
-
+    if (data) {
+      this.requestLinkUserClaimTypeId = +data.LinkUserClaimTypeId || 0;
+    }
+    if (this.requestLinkUserClaimTypeId > 0) {
+      this.dataModel.LinkUserClaimTypeId = this.requestLinkUserClaimTypeId;
+    }
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];

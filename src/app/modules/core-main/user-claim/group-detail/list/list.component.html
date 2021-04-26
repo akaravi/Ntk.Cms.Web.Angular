@@ -6,9 +6,9 @@
     <div class="button-row">
       <button *ngIf="dataModelResult.Access.AccessAddRow " (click)="onActionbuttonNewRow()" type="button"
         class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">اضافه</button>
-      <button *ngIf="dataModelResult.Access.AccessEditRow && tableRowSelected.Id>0" (click)="onActionbuttonEditRow()"
+      <button *ngIf="dataModelResult.Access.AccessEditRow && tableRowSelected.LinkUserClaimGroupId>0" (click)="onActionbuttonEditRow()"
         type="button" class="btn btn-warning ml-2" data-toggle="modal" data-target="#categoryModal">ویرایش</button>
-      <button *ngIf="dataModelResult.Access.AccessDeleteRow && tableRowSelected.Id>0"
+      <button *ngIf="dataModelResult.Access.AccessDeleteRow && tableRowSelected.LinkUserClaimGroupId>0"
         (click)="onActionbuttonDeleteRow()" type="button" class="btn btn-danger  ml-2">حذف</button>
 
       <a class="btn btn-secondary btn-sm BTN">
@@ -87,7 +87,7 @@
         </ng-container>
         <mat-header-row *matHeaderRowDef="tabledisplayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: tabledisplayedColumns;" (click)="onActionTableRowSelect(row)"
-          [ngStyle]="{'background': row.Id === tableRowSelected.Id ? '#d3d3da' : '' }">
+          [ngStyle]="{'background': (row.LinkUserClaimGroupId === tableRowSelected.LinkUserClaimGroupId && row.LinkUserClaimTypeId === tableRowSelected.LinkUserClaimTypeId)? '#d3d3da' : '' }">
         </mat-row>
       </mat-table>
 

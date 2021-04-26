@@ -11,12 +11,13 @@ import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
   templateUrl: './uploadUpdate.component.html',
   styleUrls: ['./uploadUpdate.component.scss']
 })
-export class ApplicationAppUploadUpdateComponent  implements OnInit {
-  constructor(@Inject(MAT_DIALOG_DATA) public dataItemModel: ApplicationAppModel,
-              private dialogRef: MatDialogRef<ApplicationAppUploadUpdateComponent>,
-              private applicationAppService: ApplicationAppService,
-              private cmsToastrService: CmsToastrService,
-              private publicHelper: PublicHelper
+export class ApplicationAppUploadUpdateComponent implements OnInit {
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public dataItemModel: ApplicationAppModel,
+    private dialogRef: MatDialogRef<ApplicationAppUploadUpdateComponent>,
+    private applicationAppService: ApplicationAppService,
+    private cmsToastrService: CmsToastrService,
+    private publicHelper: PublicHelper
   ) {
   }
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
@@ -24,7 +25,7 @@ export class ApplicationAppUploadUpdateComponent  implements OnInit {
   dataModel = new UploadApplictionDtoModel();
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
   isHovering = false;
-  fieldvalue='';
+  fieldvalue = '';
   ngOnInit(): void {
     this.dataModel.AppVersion = this.dataItemModel.AppVersion;
     this.dataModel.LastBuildAppKey = this.dataItemModel.LastBuildAppKey;
@@ -83,7 +84,7 @@ export class ApplicationAppUploadUpdateComponent  implements OnInit {
   toggleHover(model: any): void {
     this.isHovering = true;
   }
-  onUpload(e) {
+  onUpload(e): void {
     console.log(e);
 
   }

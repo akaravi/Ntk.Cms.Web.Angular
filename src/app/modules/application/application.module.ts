@@ -53,6 +53,7 @@ import { ApplicationMemberInfoViewComponent } from './memberInfo/view/view.compo
 import { ApplicationLogNotificationViewComponent } from './notification/view/view.component';
 import { ApplicationLogNotificationActionSendComponent } from './notification/action-send/action-send.component';
 import { ApplicationMemberInfoSelectorComponent } from './memberInfo/selector/selector.component';
+import { CmsFileUploaderModule } from 'src/app/shared/cms-file-uploader/cms-file-uploader.module';
 
 @NgModule({
   declarations: [
@@ -109,6 +110,7 @@ import { ApplicationMemberInfoSelectorComponent } from './memberInfo/selector/se
     MatIconModule,
     MatFormFieldModule,
     MatStepperModule,
+    CmsFileUploaderModule,
   ],
   providers: [
     CoreEnumService,

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { CoreUserClaimContentCheckListComponent } from './content/check-list/check-list.component';
 import { CoreUserClaimContentListComponent } from './content/list/list.component';
 import { CoreUserClaimGroupDetailListComponent } from './group-detail/list/list.component';
 import { CoreUserClaimGroupListComponent } from './group/list/list.component';
@@ -48,6 +49,16 @@ const routes: Routes = [
       {
         path: 'content/LinkUserId/:LinkUserId',
         component: CoreUserClaimContentListComponent
+      },
+      /** */
+      /** */
+      {
+        path: 'checklist',
+        component: CoreUserClaimContentCheckListComponent
+      },
+      {
+        path: 'checklist/:LinkSiteId/:LinkUserId',
+        component: CoreUserClaimContentCheckListComponent
       },
       /** */
     ]

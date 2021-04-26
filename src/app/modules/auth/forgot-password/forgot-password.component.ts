@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import {
   CaptchaModel,
   CoreAuthService,
@@ -9,7 +7,6 @@ import {
   AuthUserForgetPasswordEntryPinCodeModel,
   FormInfoModel
 } from 'ntk-cms-api';
-import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 
@@ -35,7 +32,6 @@ export class AuthForgotPasswordComponent implements OnInit {
   // private fields
   forgetState = 'sms';
   constructor(
-    private fb: FormBuilder,
     private coreAuthService: CoreAuthService,
     private cmsToastrService: CmsToastrService,
     private router: Router

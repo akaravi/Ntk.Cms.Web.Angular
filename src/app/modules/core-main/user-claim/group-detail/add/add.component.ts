@@ -42,7 +42,6 @@ export class CoreUserClaimGroupDetailAddComponent implements OnInit {
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService
   ) {
-    debugger
     if (data) {
       this.requestLinkUserClaimGroupId = +data.LinkUserClaimGroupId || 0;
       this.requestLinkUserClaimTypeId = +data.LinkUserClaimTypeId || 0;
