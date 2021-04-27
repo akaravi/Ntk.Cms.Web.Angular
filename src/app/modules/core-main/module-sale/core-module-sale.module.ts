@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
- CoreModuleSaleHeaderGroupService,
- CoreModuleSaleHeaderService,
- CoreModuleSaleSerialService,
- CoreModuleSaleItemService,
- CoreModuleSaleInvoiceDetailService,
- CoreModuleSaleInvoiceService,
+  CoreModuleSaleHeaderGroupService,
+  CoreModuleSaleHeaderService,
+  CoreModuleSaleSerialService,
+  CoreModuleSaleItemService,
+  CoreModuleSaleInvoiceDetailService,
+  CoreModuleSaleInvoiceService,
 } from 'ntk-cms-api';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TreeviewModule } from 'ngx-treeview';
@@ -41,107 +41,113 @@ import { CoreModuleSaleInvoiceViewComponent } from './invoice/view/view.componen
 import { CoreModuleSaleInvoiceDetailViewComponent } from './invoice-detail/view/view.component';
 import { CoreModuleSaleHeaderGroupHeaderComponent } from './header-group/header/header.component';
 import { CoreModuleSaleHeaderHeaderComponent } from './header/header/header.component';
+import { CoreModuleSaleSerialCheckListComponent } from './serial/check-list/check-list.component';
+import { CoreModuleSaleSerialHeaderComponent } from './serial/header/header.component';
 
 @NgModule({
- declarations: [
-  CoreModuleSaleComponent,
-  /** */
-  CoreModuleSaleHeaderGroupListComponent,
-  CoreModuleSaleHeaderGroupAddComponent,
-  CoreModuleSaleHeaderGroupEditComponent,
-  CoreModuleSaleHeaderGroupSelectorComponent,
-  CoreModuleSaleHeaderGroupTreeComponent,
-  CoreModuleSaleHeaderGroupHeaderComponent,
-  /** */
-  /** */
-  CoreModuleSaleHeaderListComponent,
-  CoreModuleSaleHeaderAddComponent,
-  CoreModuleSaleHeaderEditComponent,
-  CoreModuleSaleHeaderSelectorComponent,
-  CoreModuleSaleHeaderTreeComponent,
-  CoreModuleSaleHeaderHeaderComponent,
-  /** */
-  /** */
-  CoreModuleSaleItemListComponent,
-  CoreModuleSaleItemAddComponent,
-  CoreModuleSaleItemEditComponent,
-  CoreModuleSaleItemSelectorComponent,
-  CoreModuleSaleItemTreeComponent,
-  /** */
-  /** */
-  CoreModuleSaleSerialListComponent,
-  CoreModuleSaleSerialAddComponent,
-  CoreModuleSaleSerialEditComponent,
-  CoreModuleSaleSerialSelectorComponent,
-  CoreModuleSaleSerialTreeComponent,
-  /** */
-  /** */
-  CoreModuleSaleInvoiceListComponent,
-  CoreModuleSaleInvoiceViewComponent,
-  /** */
-  /** */
-  CoreModuleSaleInvoiceDetailListComponent,
-  CoreModuleSaleInvoiceDetailViewComponent,
-  /** */
- ],
- exports: [
-  CoreModuleSaleComponent,
-  /** */
-  CoreModuleSaleHeaderGroupListComponent,
-  CoreModuleSaleHeaderGroupAddComponent,
-  CoreModuleSaleHeaderGroupEditComponent,
-  CoreModuleSaleHeaderGroupSelectorComponent,
-  CoreModuleSaleHeaderGroupTreeComponent,
-  /** */
-  /** */
-  CoreModuleSaleHeaderListComponent,
-  CoreModuleSaleHeaderAddComponent,
-  CoreModuleSaleHeaderEditComponent,
-  CoreModuleSaleHeaderSelectorComponent,
-  CoreModuleSaleHeaderTreeComponent,
-  /** */
-  /** */
-  CoreModuleSaleItemListComponent,
-  CoreModuleSaleItemAddComponent,
-  CoreModuleSaleItemEditComponent,
-  CoreModuleSaleItemSelectorComponent,
-  CoreModuleSaleItemTreeComponent,
-  /** */
-  /** */
-  CoreModuleSaleSerialListComponent,
-  CoreModuleSaleSerialAddComponent,
-  CoreModuleSaleSerialEditComponent,
-  CoreModuleSaleSerialSelectorComponent,
-  CoreModuleSaleSerialTreeComponent,
-  /** */
-  /** */
-  CoreModuleSaleInvoiceListComponent,
-  CoreModuleSaleInvoiceViewComponent,
-  /** */
-  /** */
-  CoreModuleSaleInvoiceDetailListComponent,
-  CoreModuleSaleInvoiceDetailViewComponent,
-  /** */
- ],
- imports: [
-  CommonModule,
-  FormsModule,
-  CoreModuleSaleRouting,
-  ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
-  TreeviewModule.forRoot(),
-  SharedModule.forRoot(),
-  AngularEditorModule,
-  TagInputModule,
- ],
- providers: [
-  CoreModuleSaleHeaderGroupService,
-  CoreModuleSaleSerialService,
-  CoreModuleSaleItemService,
-  CoreModuleSaleInvoiceDetailService,
-  CoreModuleSaleInvoiceService,
-  CoreModuleSaleHeaderGroupService,
-  CoreModuleSaleHeaderService,
- ]
+  declarations: [
+    CoreModuleSaleComponent,
+    /** */
+    CoreModuleSaleHeaderGroupListComponent,
+    CoreModuleSaleHeaderGroupAddComponent,
+    CoreModuleSaleHeaderGroupEditComponent,
+    CoreModuleSaleHeaderGroupSelectorComponent,
+    CoreModuleSaleHeaderGroupTreeComponent,
+    CoreModuleSaleHeaderGroupHeaderComponent,
+    /** */
+    /** */
+    CoreModuleSaleHeaderListComponent,
+    CoreModuleSaleHeaderAddComponent,
+    CoreModuleSaleHeaderEditComponent,
+    CoreModuleSaleHeaderSelectorComponent,
+    CoreModuleSaleHeaderTreeComponent,
+    CoreModuleSaleHeaderHeaderComponent,
+    /** */
+    /** */
+    CoreModuleSaleItemListComponent,
+    CoreModuleSaleItemAddComponent,
+    CoreModuleSaleItemEditComponent,
+    CoreModuleSaleItemSelectorComponent,
+    CoreModuleSaleItemTreeComponent,
+    /** */
+    /** */
+    CoreModuleSaleSerialListComponent,
+    CoreModuleSaleSerialAddComponent,
+    CoreModuleSaleSerialEditComponent,
+    CoreModuleSaleSerialSelectorComponent,
+    CoreModuleSaleSerialTreeComponent,
+    CoreModuleSaleSerialHeaderComponent,
+    CoreModuleSaleSerialCheckListComponent,
+    /** */
+    /** */
+    CoreModuleSaleInvoiceListComponent,
+    CoreModuleSaleInvoiceViewComponent,
+    /** */
+    /** */
+    CoreModuleSaleInvoiceDetailListComponent,
+    CoreModuleSaleInvoiceDetailViewComponent,
+    /** */
+  ],
+  exports: [
+    CoreModuleSaleComponent,
+    /** */
+    CoreModuleSaleHeaderGroupListComponent,
+    CoreModuleSaleHeaderGroupAddComponent,
+    CoreModuleSaleHeaderGroupEditComponent,
+    CoreModuleSaleHeaderGroupSelectorComponent,
+    CoreModuleSaleHeaderGroupTreeComponent,
+    /** */
+    /** */
+    CoreModuleSaleHeaderListComponent,
+    CoreModuleSaleHeaderAddComponent,
+    CoreModuleSaleHeaderEditComponent,
+    CoreModuleSaleHeaderSelectorComponent,
+    CoreModuleSaleHeaderTreeComponent,
+    /** */
+    /** */
+    CoreModuleSaleItemListComponent,
+    CoreModuleSaleItemAddComponent,
+    CoreModuleSaleItemEditComponent,
+    CoreModuleSaleItemSelectorComponent,
+    CoreModuleSaleItemTreeComponent,
+    /** */
+    /** */
+    CoreModuleSaleSerialListComponent,
+    CoreModuleSaleSerialAddComponent,
+    CoreModuleSaleSerialEditComponent,
+    CoreModuleSaleSerialSelectorComponent,
+    CoreModuleSaleSerialTreeComponent,
+    CoreModuleSaleSerialHeaderComponent,
+    CoreModuleSaleSerialCheckListComponent,
+    /** */
+    /** */
+    CoreModuleSaleInvoiceListComponent,
+    CoreModuleSaleInvoiceViewComponent,
+    /** */
+    /** */
+    CoreModuleSaleInvoiceDetailListComponent,
+    CoreModuleSaleInvoiceDetailViewComponent,
+    /** */
+  ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    CoreModuleSaleRouting,
+    ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
+    TreeviewModule.forRoot(),
+    SharedModule.forRoot(),
+    AngularEditorModule,
+    TagInputModule,
+  ],
+  providers: [
+    CoreModuleSaleHeaderGroupService,
+    CoreModuleSaleSerialService,
+    CoreModuleSaleItemService,
+    CoreModuleSaleInvoiceDetailService,
+    CoreModuleSaleInvoiceService,
+    CoreModuleSaleHeaderGroupService,
+    CoreModuleSaleHeaderService,
+  ]
 })
 export class CoreModuleSaleModule {
 }

@@ -5,6 +5,7 @@ import { CoreModuleSaleHeaderListComponent } from './header/list/list.component'
 import { CoreModuleSaleInvoiceDetailListComponent } from './invoice-detail/list/list.component';
 import { CoreModuleSaleInvoiceListComponent } from './invoice/list/list.component';
 import { CoreModuleSaleItemListComponent } from './Item/list/list.component';
+import { CoreModuleSaleSerialCheckListComponent } from './serial/check-list/check-list.component';
 import { CoreModuleSaleSerialListComponent } from './serial/list/list.component';
 
 const routes: Routes = [
@@ -46,6 +47,10 @@ const routes: Routes = [
       {
         path: 'serial',
         component: CoreModuleSaleSerialListComponent
+      },
+      {
+        path: 'serial/checklist',
+        component: CoreModuleSaleSerialCheckListComponent
       },
     ]
   },

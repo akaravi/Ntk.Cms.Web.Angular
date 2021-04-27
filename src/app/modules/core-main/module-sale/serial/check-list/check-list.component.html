@@ -1,26 +1,21 @@
 <div class="row">
   <div Class="col-xl-12">
     <div class="button-row">
-      <button *ngIf="dataModelResult.Access.AccessWatchRow && tableRowSelected?.Id?.length>0"
-        (click)="onActionbuttonViewRow()" type="button" class="btn btn-info ml-2" data-toggle="modal"
-        data-target="#categoryModal">مشاهده</button>
-      <button *ngIf="dataModelResult.Access.AccessDeleteRow && tableRowSelected.Id>0"
-        (click)="onActionbuttonDeleteRow()" type="button" class="btn btn-danger  ml-2">حذف</button>
-
-      <a class="btn btn-secondary btn-sm BTN">
-        <mat-slide-toggle [(ngModel)]="optionsSearch.data.show">پرس و جو ساز</mat-slide-toggle>
-      </a>
-
-      <a class="btn btn-success btn-sm BTN">
-        <mat-slide-toggle (click)="onActionbuttonStatist()">آمار
-        </mat-slide-toggle>
-      </a>
-      <a class="btn btn-info btn-sm BTN">
-        <mat-slide-toggle (click)="onActionbuttonExport()">خروجی فایل
-        </mat-slide-toggle>
-      </a>
-      <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">برسی مجدد</button>
-      <button (click)="onActionBackToParent()" *ngIf="this.requestLinkInvoiceId>0" type="button"
+      <!-- serialNumber Field -->
+      <mat-form-field class="example-full-width-1">
+        <mat-label>{{fieldsInfo['serialNumber']?.FieldTitle}}</mat-label>
+        <input matInput [(ngModel)]="dataModel.serialNumber" name="dataModel.serialNumber" #serialNumber type="text"
+          placeholder="Serial Number" minlength="3" maxlength="100" required />
+        <mat-icon matSuffix *ngIf="dataModel.serialNumber" matSuffix mat-icon-button aria-label="Clear"
+          (click)="dataModel.serialNumber = ''">close</mat-icon>
+        <mat-icon matSuffix>mode_edit</mat-icon>
+        <mat-hint align="end">{{ serialNumber.value.length }} / 100</mat-hint>
+        <mat-error *ngIf="serialNumber.errors?.required">
+          {{fieldsInfo['serialNumber']?.FieldTitle}} is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">برسی </button>
+      <button (click)="onActionBackToParent()" *ngIf="this.requestSerial &&this.requestSerial.length> 0" type="button"
         class="btn btn-warning BTN">بازگشت</button>
       <app-cms-search-list [(options)]="optionsSearch"></app-cms-search-list>
       <app-cms-export-list [(options)]="optionsExport"></app-cms-export-list>
@@ -31,13 +26,11 @@
     </app-progress-spinner>
 
     <div class="example-container mat-elevation-z8">
-      <mat-table [dataSource]="tableSource" matSort #tableSort="matSort" (matSortChange)="onTableSortData(tableSort)">
+      <app-core-modulesaleserial-header *ngIf="this.dataModelResult?.Item?.Id"
+        [optionId]="this.dataModelResult?.Item?.Id">
+      </app-core-modulesaleserial-header>
+      <mat-table [dataSource]="tableSource" matSort #tableSort="matSort">
 
-        <!-- ID Column -->
-        <ng-container matColumnDef="Id">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Id']?.FieldTitle}} </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.Id}} </mat-cell>
-        </ng-container>
         <!-- LinkModuleId Column -->
         <ng-container matColumnDef="LinkModuleId">
           <mat-header-cell *matHeaderCellDef mat-sort-header>{{fieldsInfo['LinkModuleId']?.FieldTitle}}
@@ -74,9 +67,6 @@
         </mat-row>
       </mat-table>
 
-      <mat-paginator #paginator [length]="(dataModelResult.TotalRowCount)"
-        [pageIndex]="(dataModelResult.CurrentPageNumber-1)" [pageSize]="dataModelResult.RowPerPage"
-        [pageSizeOptions]="[5, 10, 20, 100]" (page)="onTablePageingData($event)"></mat-paginator>
 
     </div>
 

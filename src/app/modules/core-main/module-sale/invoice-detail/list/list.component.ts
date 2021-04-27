@@ -47,7 +47,7 @@ export class CoreModuleSaleInvoiceDetailListComponent implements OnInit, OnDestr
     private coreModuleService: CoreModuleService,
     private router: Router,
     public dialog: MatDialog) {
-      this.requestLinkInvoiceId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkInvoiceId'));
+    this.requestLinkInvoiceId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkInvoiceId'));
 
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
@@ -86,14 +86,10 @@ export class CoreModuleSaleInvoiceDetailListComponent implements OnInit, OnDestr
 
   tabledisplayedColumns: string[] = [
     'Id',
-    'LinkSiteId',
-    'RecordStatus',
     'LinkModuleId',
-    'SubDomain',
-    'Domain',
-    'CreatedDate',
-    'UpdatedDate',
-    'Action'
+    'EnumCmsModuleSaleItemType',
+    'FromDate',
+    'ExpireDate',
   ];
 
 
