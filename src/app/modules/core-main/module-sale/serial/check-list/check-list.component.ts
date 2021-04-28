@@ -43,9 +43,6 @@ export class CoreModuleSaleSerialCheckListComponent implements OnInit, OnDestroy
     private router: Router,
     public dialog: MatDialog) {
     this.requestSerial = this.activatedRoute.snapshot.paramMap.get('Serial');
-
-
-
   }
   showBuy = false;
   comment: string;
