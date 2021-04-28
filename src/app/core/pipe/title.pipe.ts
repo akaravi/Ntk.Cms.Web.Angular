@@ -9,7 +9,7 @@ export class CmsTitlePipe implements PipeTransform {
     }
     const find = args.find(x => x.Id === value);
     if (!find) {
-      return '';
+      return value;
     }
     return find.Title;
   }

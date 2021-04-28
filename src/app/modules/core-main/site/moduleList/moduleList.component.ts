@@ -129,7 +129,7 @@ export class CoreSiteModuleListComponent implements OnInit, OnDestroy {
   getModuleList(): void {
     const filter = new FilterModel();
     filter.RowPerPage = 100;
-    this.coreModuleService.ServiceGetAll(filter).subscribe((next) => {
+    this.coreModuleService.ServiceGetAllModuleName(filter).subscribe((next) => {
       this.dataModelCoreModuleResult = next;
     });
   }
@@ -193,7 +193,9 @@ export class CoreSiteModuleListComponent implements OnInit, OnDestroy {
     this.DataGetAll();
   }
 
-
+  onActionbuttonReNewModule(): void {
+    this.router.navigate(['core/modulesale/serial/checklist/']);
+  }
   onActionbuttonNewRow(): void {
     if (
       this.dataModelResult == null ||

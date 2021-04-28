@@ -122,7 +122,7 @@ export class CoreModuleSaleItemListComponent implements OnInit, OnDestroy {
   getModuleList(): void {
     const filter = new FilterModel();
     filter.RowPerPage = 100;
-    this.coreModuleService.ServiceGetAll(filter).subscribe((next) => {
+    this.coreModuleService.ServiceGetAllModuleName(filter).subscribe((next) => {
       this.dataModelCoreModuleResult = next;
     });
   }

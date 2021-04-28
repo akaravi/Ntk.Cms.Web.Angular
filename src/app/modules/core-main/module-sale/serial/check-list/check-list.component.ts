@@ -55,6 +55,7 @@ export class CoreModuleSaleSerialCheckListComponent implements OnInit, OnDestroy
 
 
   }
+  showBuy = false;
   comment: string;
   author: string;
   dataSource: any;
@@ -62,9 +63,7 @@ export class CoreModuleSaleSerialCheckListComponent implements OnInit, OnDestroy
   tableContentSelected = [];
   dataModel: CoreModuleCheckSerialForSiteDtoModel = new CoreModuleCheckSerialForSiteDtoModel();
   dataModelResult: ErrorExceptionResult<CoreModuleSaleInvoiceDetailModel> = new ErrorExceptionResult<CoreModuleSaleInvoiceDetailModel>();
-  optionsSearch: ComponentOptionSearchModel = new ComponentOptionSearchModel();
-  optionsStatist: ComponentOptionStatistModel = new ComponentOptionStatistModel();
-  optionsExport: ComponentOptionExportModel = new ComponentOptionExportModel();
+  dataModelRegResult: ErrorExceptionResult<CoreModuleSaleSerialModel> = new ErrorExceptionResult<CoreModuleSaleSerialModel>();
   tokenInfo = new TokenInfoModel();
   loading = new ProgressSpinnerModel();
   tableRowsSelected: Array<CoreModuleSaleInvoiceDetailModel> = [];
@@ -89,12 +88,12 @@ export class CoreModuleSaleSerialCheckListComponent implements OnInit, OnDestroy
 
   ngOnInit(): void {
     if (this.requestSerial && this.requestSerial.length > 0) {
-      this.DataGetAll(this.requestSerial);
+      this.DataCheckUseSerialForSite(this.requestSerial);
     }
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       if (this.requestSerial && this.requestSerial.length > 0) {
-        this.DataGetAll(this.requestSerial);
+        this.DataCheckUseSerialForSite(this.requestSerial);
       }
       this.tokenInfo = next;
     });
@@ -105,7 +104,7 @@ export class CoreModuleSaleSerialCheckListComponent implements OnInit, OnDestroy
   getModuleList(): void {
     const filter = new FilterModel();
     filter.RowPerPage = 100;
-    this.coreModuleService.ServiceGetAll(filter).subscribe((next) => {
+    this.coreModuleService.ServiceGetAllModuleName(filter).subscribe((next) => {
       this.dataModelCoreModuleResult = next;
     });
   }
@@ -117,27 +116,51 @@ export class CoreModuleSaleSerialCheckListComponent implements OnInit, OnDestroy
   ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
-  DataGetAll(serial: string): void {
+  DataCheckUseSerialForSite(serial: string): void {
+    this.tableRowsSelected = [];
+    this.tableRowSelected = new CoreModuleSaleInvoiceDetailModel();
+    this.loading.display = true;
+    this.loading.Globally = false;
+    this.tableSource.data = [];
+    const model = new CoreModuleCheckSerialForSiteDtoModel();
+    model.serialNumber = serial;
+    this.showBuy = false;
+    this.coreModuleSaleSerialService.ServiceCheckUseSerialForSite(model).subscribe(
+      (next) => {
+        if (next.IsSuccess) {
+          this.showBuy = true;
+          this.dataModelResult = next;
+          this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+          this.tableSource.data = next.ListItems;
+
+        }
+        else {
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
+        }
+        this.loading.display = false;
+      },
+      (error) => {
+        this.cmsToastrService.typeError(error);
+
+        this.loading.display = false;
+      }
+    );
+  }
+  RegisterUseSerialForSite(model: CoreModuleCheckSerialForSiteDtoModel): void {
     this.tableRowsSelected = [];
     this.tableRowSelected = new CoreModuleSaleInvoiceDetailModel();
 
     this.loading.display = true;
     this.loading.Globally = false;
-
-    const model = new CoreModuleCheckSerialForSiteDtoModel();
-    model.serialNumber = serial;
-
-    this.coreModuleSaleSerialService.ServiceCheckUseSerialForSite(model).subscribe(
+    this.coreModuleSaleSerialService.ServiceRegisterUseSerialForSite(model).subscribe(
       (next) => {
         if (next.IsSuccess) {
-          this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+          this.dataModelRegResult = next;
+          this.cmsToastrService.typeSuccessMessage('سریال با موفقیت برای شما ثبت شد.');
 
-          this.dataModelResult = next;
-           this.tableSource.data = next.ListItems;
-
-          if (this.optionsSearch.childMethods) {
-            this.optionsSearch.childMethods.setAccess(next.Access);
-          }
+        }
+        else {
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
         }
         this.loading.display = false;
       },
@@ -153,11 +176,24 @@ export class CoreModuleSaleSerialCheckListComponent implements OnInit, OnDestroy
 
   onActionbuttonReload(): void {
     if (!this.dataModel || !this.dataModel.serialNumber || this.dataModel.serialNumber.length === 0) {
-      const message = 'مقادیر به درستی  وارد نشده است';
+      const message = 'مقدار سریال به درستی  وارد نشده است';
       this.cmsToastrService.typeErrorSelected(message);
       return;
     }
-    this.DataGetAll(this.dataModel.serialNumber);
+    this.DataCheckUseSerialForSite(this.dataModel.serialNumber);
+  }
+  onActionbuttonBuy(): void {
+    if (!this.dataModel || !this.dataModel.serialNumber || this.dataModel.serialNumber.length === 0) {
+      const message = 'مقدار سریال به درستی  وارد نشده است';
+      this.cmsToastrService.typeErrorSelected(message);
+      return;
+    }
+    if (!this.dataModel || !this.dataModel.pwdForUse || this.dataModel.pwdForUse.length === 0) {
+      const message = 'مقدار پسورد به درستی  وارد نشده است';
+      this.cmsToastrService.typeErrorSelected(message);
+      return;
+    }
+    this.RegisterUseSerialForSite(this.dataModel);
   }
 
   onActionTableRowSelect(row: CoreModuleSaleInvoiceDetailModel): void {

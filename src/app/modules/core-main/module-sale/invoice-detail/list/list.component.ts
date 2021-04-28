@@ -16,6 +16,8 @@ import {
   DataFieldInfoModel,
   CoreModuleModel,
   CoreModuleService,
+  EnumModel,
+  CoreEnumService,
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -45,6 +47,7 @@ export class CoreModuleSaleInvoiceDetailListComponent implements OnInit, OnDestr
     private cmsConfirmationDialogService: CmsConfirmationDialogService,
     private activatedRoute: ActivatedRoute,
     private coreModuleService: CoreModuleService,
+    private coreEnumService: CoreEnumService,
     private router: Router,
     public dialog: MatDialog) {
     this.requestLinkInvoiceId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkInvoiceId'));
@@ -83,6 +86,7 @@ export class CoreModuleSaleInvoiceDetailListComponent implements OnInit, OnDestr
   tableSource: MatTableDataSource<CoreModuleSaleInvoiceDetailModel> = new MatTableDataSource<CoreModuleSaleInvoiceDetailModel>();
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
   dataModelCoreModuleResult: ErrorExceptionResult<CoreModuleModel> = new ErrorExceptionResult<CoreModuleModel>();
+  dataModelEnumCmsModuleSaleItemTypeResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
 
   tabledisplayedColumns: string[] = [
     'Id',
@@ -105,13 +109,19 @@ export class CoreModuleSaleInvoiceDetailListComponent implements OnInit, OnDestr
       this.DataGetAll();
       this.tokenInfo = next;
     });
+    this.getEnumCmsModuleSaleItemType();
     this.getModuleList();
   }
   getModuleList(): void {
     const filter = new FilterModel();
     filter.RowPerPage = 100;
-    this.coreModuleService.ServiceGetAll(filter).subscribe((next) => {
+    this.coreModuleService.ServiceGetAllModuleName(filter).subscribe((next) => {
       this.dataModelCoreModuleResult = next;
+    });
+  }
+  getEnumCmsModuleSaleItemType(): void {
+    this.coreEnumService.ServiceEnumCmsModuleSaleItemType().subscribe((next) => {
+      this.dataModelEnumCmsModuleSaleItemTypeResult = next;
     });
   }
   ngOnDestroy(): void {

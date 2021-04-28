@@ -80,6 +80,7 @@ export class CoreModuleListComponent implements OnInit, OnDestroy {
     'ClassName',
     'CreatedDate',
     'UpdatedDate',
+    'ExpireDate',
     'Action'
   ];
 
@@ -160,26 +161,8 @@ export class CoreModuleListComponent implements OnInit, OnDestroy {
   }
 
 
-  onActionbuttonReNewModule(): void {
 
-    if (
-      this.dataModelResult == null ||
-      this.dataModelResult.Access == null ||
-      !this.dataModelResult.Access.AccessAddRow
-    ) {
-      this.cmsToastrService.typeErrorAccessAdd();
-      return;
-    }
-    const dialogRef = this.dialog.open(CoreModuleAddComponent, {
-      data: {}
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result && result.dialogChangedDate) {
-        this.DataGetAll();
-      }
-    });
-  }
-   onActionbuttonNewRow(): void {
+  onActionbuttonNewRow(): void {
 
     if (
       this.dataModelResult == null ||

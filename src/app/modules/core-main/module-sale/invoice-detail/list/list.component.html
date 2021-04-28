@@ -50,7 +50,7 @@
         <ng-container matColumnDef="EnumCmsModuleSaleItemType">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['EnumCmsModuleSaleItemType']?.FieldTitle}}
           </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.EnumCmsModuleSaleItemType}} </mat-cell>
+          <mat-cell *matCellDef="let row">{{row.EnumCmsModuleSaleItemType | enums : dataModelEnumCmsModuleSaleItemTypeResult.ListItems}}  </mat-cell>
         </ng-container>
 
 

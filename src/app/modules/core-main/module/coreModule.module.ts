@@ -15,7 +15,6 @@ import { CoreModuleListComponent } from './list/list.component';
 import { TreeviewModule } from 'ngx-treeview';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { TagInputModule } from 'ngx-chips';
-import { CoreModuleRenewComponent } from './renew/renew.component';
 
 
 @NgModule({
@@ -26,7 +25,6 @@ import { CoreModuleRenewComponent } from './renew/renew.component';
     CoreModuleEditComponent,
     CoreModuleSelectorComponent,
     CoreModuleTreeComponent,
-    CoreModuleRenewComponent,
   ],
   exports: [
     CoreModuleComponent,
@@ -35,7 +33,6 @@ import { CoreModuleRenewComponent } from './renew/renew.component';
     CoreModuleEditComponent,
     CoreModuleSelectorComponent,
     CoreModuleTreeComponent,
-    CoreModuleRenewComponent,
   ],
   imports: [
     CommonModule,

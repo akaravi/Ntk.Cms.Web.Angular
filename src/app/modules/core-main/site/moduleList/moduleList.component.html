@@ -23,6 +23,7 @@
         class="btn btn-warning BTN">بازگشت</button>
         <button (click)="onActionBackToParentModuleList()" *ngIf="this.requestLinkModuleId>0" type="button"
           class="btn btn-warning BTN">بازگشت</button>
+          <button (click)="onActionbuttonReNewModule()" type="button" class="btn btn-warning BTN">تمدید ماژول ها</button>
 
       <app-cms-search-list [(options)]="optionsSearch"></app-cms-search-list>
       <app-cms-export-list [(options)]="optionsExport"></app-cms-export-list>
