@@ -53,7 +53,7 @@ export class ApplicationAppEditComponent implements OnInit {
   dataModel = new ApplicationAppModel();
   dataModelResult: ErrorExceptionResult<ApplicationAppModel> = new ErrorExceptionResult<ApplicationAppModel>();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
-  dataModelEnumOsTypeResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
+  dataModelEnumLangResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
   fileManagerOpenFormAboutUsLinkImageId = false;
   fileManagerOpenFormLinkFileIdIcon = false;
@@ -77,6 +77,12 @@ export class ApplicationAppEditComponent implements OnInit {
     }
     this.DataGetOne(this.requestId);
     this.getEnumRecordStatus();
+    this.getEnumLang();
+  }
+  getEnumLang(): void {
+    this.coreEnumService.ServiceEnumLanguage().subscribe((res) => {
+      this.dataModelEnumLangResult = res;
+    });
   }
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&

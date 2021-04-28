@@ -23,6 +23,21 @@
               {{ fieldsInfo['RecordStatus']?.FieldTitle }} is <strong>required</strong>
             </mat-error>
           </mat-form-field>
+          <!-- Lang Field -->
+          <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Lang']?.AccessWatchField">
+            <mat-select placeholder="{{fieldsInfo['Lang']?.FieldTitle}}" [(ngModel)]="dataModel.Lang"
+              [disabled]="!fieldsInfo['Lang']?.AccessAddField" name="dataModel.Lang" #Lang="ngModel"
+              panelClass="Lang-{{ dataModel.Lang }}" required>
+              <mat-option *ngFor="
+                  let item of dataModelEnumLangResult.ListItems;
+                  index as i
+                " [value]="item.Value">{{ item.Description }}</mat-option>
+            </mat-select>
+            <mat-hint align="end">{{ 'Application.Source.Lang_hint' | translate }}</mat-hint>
+            <mat-error *ngIf="Lang.errors?.required">
+              {{ fieldsInfo['Lang']?.FieldTitle }} is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
           <!-- LinkSourceId Field -->
           <app-application-source-selector (optionSelect)="onActionSelectSource($event)"
             [optionSelectForce]="this.dataModel.LinkSourceId" [optionPlaceholder]="'سورس اپلیکیشن'"
@@ -32,8 +47,8 @@
           <app-application-themeconfig-selector (optionSelect)="onActionSelectTheme($event)"
             [optionSelectForce]="this.dataModel.LinkThemeConfigId"
             [optionSelectParentForce]="this.dataModel.LinkSourceId" [optionPlaceholder]="'قالب اپلیکیشن'"
-            [optionSelectFirstItem]="true"
-            [disabled]="!fieldsInfo['LinkThemeConfigId']?.AccessAddField"></app-application-themeconfig-selector>
+            [optionSelectFirstItem]="true" [disabled]="!fieldsInfo['LinkThemeConfigId']?.AccessAddField">
+          </app-application-themeconfig-selector>
 
           <!-- Title Field -->
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Title']?.AccessWatchField">

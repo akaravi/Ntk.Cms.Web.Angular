@@ -5,13 +5,10 @@ import { MatTableDataSource } from '@angular/material/table';
 import {
   CoreModuleSaleItemModel,
   CoreModuleSaleSerialService,
-  EnumSortType,
   ErrorExceptionResult,
   FilterModel,
   NtkCmsApiStoreService,
   TokenInfoModel,
-  FilterDataModel,
-  EnumRecordStatus,
   DataFieldInfoModel,
   CoreModuleSaleHeaderModel,
   CoreEnumService,
@@ -19,18 +16,13 @@ import {
   CoreModuleService,
   CoreModuleModel,
   CoreModuleCheckSerialForSiteDtoModel,
-  CoreModuleSaleSerialModel,
   CoreModuleSaleInvoiceDetailModel,
+  CoreModuleSaleInvoiceModel,
 } from 'ntk-cms-api';
-import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ComponentOptionExportModel } from 'src/app/core/cmsComponentModels/base/componentOptionExportModel';
-import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/base/componentOptionStatistModel';
-import { MatSort } from '@angular/material/sort';
-import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -63,7 +55,7 @@ export class CoreModuleSaleSerialCheckListComponent implements OnInit, OnDestroy
   tableContentSelected = [];
   dataModel: CoreModuleCheckSerialForSiteDtoModel = new CoreModuleCheckSerialForSiteDtoModel();
   dataModelResult: ErrorExceptionResult<CoreModuleSaleInvoiceDetailModel> = new ErrorExceptionResult<CoreModuleSaleInvoiceDetailModel>();
-  dataModelRegResult: ErrorExceptionResult<CoreModuleSaleSerialModel> = new ErrorExceptionResult<CoreModuleSaleSerialModel>();
+  dataModelRegResult: ErrorExceptionResult<CoreModuleSaleInvoiceModel> = new ErrorExceptionResult<CoreModuleSaleInvoiceModel>();
   tokenInfo = new TokenInfoModel();
   loading = new ProgressSpinnerModel();
   tableRowsSelected: Array<CoreModuleSaleInvoiceDetailModel> = [];
