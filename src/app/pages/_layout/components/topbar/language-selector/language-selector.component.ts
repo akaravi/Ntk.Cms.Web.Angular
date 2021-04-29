@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
+import { AuthRenewTokenModel, CoreAuthService, NtkCmsApiStoreService, TokenInfoModel } from 'ntk-cms-api';
+import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { TranslationService } from '../../../../../core/i18n/translation.service';
 
 interface LanguageFlag {
@@ -56,8 +59,20 @@ export class LanguageSelectorComponent implements OnInit {
   ];
   constructor(
     private translationService: TranslationService,
+    public coreAuthService: CoreAuthService,
+    private cmsApiStore: NtkCmsApiStoreService,
+    private cmsToastrService: CmsToastrService,
     private router: Router
-  ) { }
+  ) {
+    this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
+
+    this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((value) => {
+      this.tokenInfo = value;
+    });
+  }
+  cmsApiStoreSubscribe: Subscription;
+  tokenInfo: TokenInfoModel = new TokenInfoModel();
+
 
   ngOnInit(): void {
     this.setSelectedLanguage();
@@ -67,10 +82,43 @@ export class LanguageSelectorComponent implements OnInit {
         this.setSelectedLanguage();
       });
   }
-
+  ngOnDestroy(): void {
+    this.cmsApiStoreSubscribe.unsubscribe();
+  }
   setLanguageWithRefresh(lang): void {
     this.setLanguage(lang);
-    window.location.reload();
+    /** */
+    const authModel: AuthRenewTokenModel = new AuthRenewTokenModel();
+    authModel.UserAccessAdminAllowToProfessionalData = this.tokenInfo.UserAccessAdminAllowToProfessionalData;
+    authModel.UserAccessAdminAllowToAllData = this.tokenInfo.UserAccessAdminAllowToAllData;
+    authModel.UserId = this.tokenInfo.UserId;
+    authModel.SiteId = this.tokenInfo.SiteId;
+    authModel.Lang = lang;
+
+    const title = 'اطلاعات ';
+    const message = 'درخواست تغییر زبان به سرور ارسال شد';
+    this.cmsToastrService.toastr.info(message, title);
+    // this.loadingStatus = true;
+    this.coreAuthService.ServiceRenewToken(authModel).subscribe(
+      (next) => {
+        // this.loadingStatus = false;
+        if (next.IsSuccess) {
+          if (next.Item.Language === lang) {
+            this.cmsToastrService.toastr.success('دسترسی به زبان جدید تایید شد', title);
+            window.location.reload();
+          } else {
+            this.cmsToastrService.toastr.warning('دسترسی به زبان جدید تایید نشد', title);
+          }
+        } else {
+          this.cmsToastrService.typeErrorAccessChange(next.ErrorMessage);
+        }
+
+      },
+      (error) => {
+        this.cmsToastrService.typeErrorAccessChange(error);
+      }
+    );
+    /** */
   }
 
   setLanguage(lang): void {
@@ -82,6 +130,7 @@ export class LanguageSelectorComponent implements OnInit {
         language.active = false;
       }
     });
+
     this.translationService.setLanguage(lang);
   }
 
