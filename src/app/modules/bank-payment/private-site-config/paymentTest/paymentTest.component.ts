@@ -26,7 +26,6 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./paymentTest.component.scss'],
 })
 export class BankPaymentPrivateSiteConfigPaymentTestComponent implements OnInit {
-  requestLinkPrivateSiteConfigId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     @Inject(DOCUMENT) private document: any,
@@ -40,6 +39,7 @@ export class BankPaymentPrivateSiteConfigPaymentTestComponent implements OnInit 
     }
     this.dataModel.LastUrlAddressInUse = this.document.location.href;
   }
+  requestLinkPrivateSiteConfigId = 0;
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
   loading = new ProgressSpinnerModel();
   dataModelParentSelected: BankPaymentPrivateSiteConfigModel = new BankPaymentPrivateSiteConfigModel();
@@ -47,6 +47,7 @@ export class BankPaymentPrivateSiteConfigPaymentTestComponent implements OnInit 
   dataModelResult: ErrorExceptionResult<BankPaymentInjectPaymentGotoBankStep2LandingSitePageModel>
     = new ErrorExceptionResult<BankPaymentInjectPaymentGotoBankStep2LandingSitePageModel>();
   formInfo: FormInfoModel = new FormInfoModel();
+  dataModelResultGotoBank = false;
 
   ngOnInit(): void {
     if (this.requestLinkPrivateSiteConfigId <= 0) {
@@ -66,7 +67,6 @@ export class BankPaymentPrivateSiteConfigPaymentTestComponent implements OnInit 
       this.dataModel.BankPaymentPrivateId = model.Id;
     }
   }
-  dataModelResultGotoBank = false;
   onGotoBank(): void {
     if (this.dataModelResultGotoBank && this.dataModelResult.IsSuccess && this.dataModelResult.Item.UrlToPay.length > 0) {
       this.cmsToastrService.typeSuccessMessage('درحال انتقال به درگاه پرداخت');

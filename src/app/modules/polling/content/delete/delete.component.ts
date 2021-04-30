@@ -1,14 +1,18 @@
 import {
   Component,
   Inject,
-  Input,
   OnInit,
   ViewChild,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
-import { CoreEnumService, DataFieldInfoModel, ErrorExceptionResult, FormInfoModel, ItemState, PollingContentModel, PollingContentService } from 'ntk-cms-api';
+import {
+  DataFieldInfoModel,
+  ErrorExceptionResult,
+  FormInfoModel,
+  PollingContentModel,
+  PollingContentService
+} from 'ntk-cms-api';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';

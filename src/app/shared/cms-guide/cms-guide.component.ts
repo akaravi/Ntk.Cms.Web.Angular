@@ -27,7 +27,7 @@ export class CmsGuideComponent implements OnInit {
   ngOnInit(): void {
 
   }
-  onActionGuideClick(content) {
+  onActionGuideClick(content): void {
     if (this.Identity > 0) {
       this.coreGuideService.ServiceGetOneById(this.Identity).pipe(
         map(

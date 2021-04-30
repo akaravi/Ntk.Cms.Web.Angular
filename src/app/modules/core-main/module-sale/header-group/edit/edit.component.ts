@@ -57,7 +57,7 @@ export class CoreModuleSaleHeaderGroupEditComponent implements OnInit {
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<CoreModuleSaleHeaderGroupModel> = new ErrorExceptionResult<CoreModuleSaleHeaderGroupModel>();
   dataModel: CoreModuleSaleHeaderGroupModel = new CoreModuleSaleHeaderGroupModel();
-    fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
@@ -106,10 +106,10 @@ export class CoreModuleSaleHeaderGroupEditComponent implements OnInit {
 
           this.formInfo.FormTitle = this.formInfo.FormTitle + ' ' + next.Item.Title;
           this.formInfo.FormAlert = '';
-              } else {
+        } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
-          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
         }
         this.loading.display = false;
       },
@@ -133,10 +133,10 @@ export class CoreModuleSaleHeaderGroupEditComponent implements OnInit {
           this.cmsToastrService.typeSuccessEdit();
           this.dialogRef.close({ dialogChangedDate: true });
 
-              } else {
+        } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
-          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
         }
         this.loading.display = false;
       },
@@ -149,7 +149,7 @@ export class CoreModuleSaleHeaderGroupEditComponent implements OnInit {
   }
   onActionSelectUserGroup(model: CoreUserGroupModel | null): void {
     if (!model || model.Id <= 0) {
-      this.dataModel.LinkUserGroupId =null;
+      this.dataModel.LinkUserGroupId = null;
       return;
     }
     this.dataModel.LinkUserGroupId = model.Id;

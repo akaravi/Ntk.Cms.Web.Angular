@@ -129,7 +129,7 @@ export class CoreModuleSaleHeaderGroupAddComponent implements OnInit {
   }
   onActionSelectUserGroup(model: CoreUserGroupModel | null): void {
     if (!model || model.Id <= 0) {
-      this.dataModel.LinkUserGroupId =null;
+      this.dataModel.LinkUserGroupId = null;
       return;
     }
     this.dataModel.LinkUserGroupId = model.Id;

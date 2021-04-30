@@ -27,7 +27,7 @@ export class DynamicFormBuilderComponent implements OnInit {
 
   ngOnInit(): void {
     this.fields.forEach(x => {
-      if (x.type == 'checkbox') {
+      if (x.type === 'checkbox') {
         this.formGroup.addControl(x.name, new FormGroup({}));
         x.options.forEach(o => {
           (this.formGroup.get(x.name) as FormGroup).addControl(o.key, new FormControl(false));

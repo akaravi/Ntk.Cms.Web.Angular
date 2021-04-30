@@ -77,7 +77,7 @@ export class FormBuilderComponent implements OnInit {
   constructor() {
     this.form = new FormGroup({
       fields: new FormControl(JSON.stringify(this.fields))
-    })
+    });
     this.unsubcribe = this.form.valueChanges.subscribe((update) => {
       console.log(update);
       // this.fields = JSON.parse(update.fields);

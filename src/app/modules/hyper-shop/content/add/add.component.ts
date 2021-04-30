@@ -8,6 +8,7 @@ import {
   ErrorExceptionResult,
   FormInfoModel,
   HyperShopCategoryModel,
+  DataFieldInfoModel,
 } from 'ntk-cms-api';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
@@ -43,6 +44,8 @@ export class HyperShopContentAddComponent implements OnInit {
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
   fileManagerTree: TreeModel;
   appLanguage = 'fa';
@@ -67,6 +70,8 @@ export class HyperShopContentAddComponent implements OnInit {
 
     this.formInfo.FormTitle = 'ثبت محتوای جدید';
     this.getEnumRecordStatus();
+    this.DataGetAccess();
+
   }
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
@@ -77,6 +82,24 @@ export class HyperShopContentAddComponent implements OnInit {
       this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
       this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
     }
+  }
+
+  DataGetAccess(): void {
+    this.hyperShopContentService
+      .ServiceViewModel()
+      .subscribe(
+        async (next) => {
+          if (next.IsSuccess) {
+            // this.dataAccessModel = next.Access;
+            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+          } else {
+            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
+          }
+        },
+        (error) => {
+          this.cmsToastrService.typeErrorGetAccess(error);
+        }
+      );
   }
 
   DataAddContent(): void {
