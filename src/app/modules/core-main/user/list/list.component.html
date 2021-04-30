@@ -63,32 +63,32 @@
         </ng-container>
         <!-- Username Column -->
         <ng-container matColumnDef="Username">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> نام کاربری </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Username']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Username}} </mat-cell>
         </ng-container>
         <!-- Mobile Column -->
         <ng-container matColumnDef="Mobile">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Mobile </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Mobile']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Mobile}} </mat-cell>
         </ng-container>
         <!-- Email Column -->
         <ng-container matColumnDef="Email">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Email']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Email}} </mat-cell>
         </ng-container>
         <!-- Name Column -->
         <ng-container matColumnDef="Name">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Name']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Name}} </mat-cell>
         </ng-container>
         <!-- LastName Column -->
         <ng-container matColumnDef="LastName">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> LastName </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LastName']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.LastName}} </mat-cell>
         </ng-container>
         <!-- CompanyName Column -->
         <ng-container matColumnDef="CompanyName">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> CompanyName </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['CompanyName']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.CompanyName}} </mat-cell>
         </ng-container>
         <!-- CreatedDate Column -->

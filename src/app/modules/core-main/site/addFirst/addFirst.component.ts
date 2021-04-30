@@ -7,6 +7,7 @@ import {
   CoreSiteCategoryModel,
   CoreSiteCategoryService,
   CoreSiteService,
+  DataFieldInfoModel,
   DomainModel, ErrorExceptionResult,
   FilterModel,
   FormInfoModel
@@ -18,6 +19,7 @@ import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { MatStepper } from '@angular/material/stepper';
 import { FormGroup } from '@angular/forms';
+import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 
 @Component({
@@ -30,13 +32,16 @@ export class CoreSiteAddFirstComponent implements OnInit {
   constructor(
     private cmsToastrService: CmsToastrService,
     private coreSiteService: CoreSiteService,
+    private publicHelper: PublicHelper,
     private coreAuthService: CoreAuthService,
     private router: Router
   ) {
 
   }
-  loading = new ProgressSpinnerModel();
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
+  loading = new ProgressSpinnerModel();
 
   dataModel = new CoreSiteAddFirstSiteDtoModel();
   filterModel = new FilterModel();
@@ -51,6 +56,26 @@ export class CoreSiteAddFirstComponent implements OnInit {
   ngOnInit(): void {
     this.GetDomainList();
     this.onCaptchaOrder();
+    this.DataGetAccess();
+
+  }
+
+  DataGetAccess(): void {
+    this.coreSiteService
+      .ServiceViewModel()
+      .subscribe(
+        async (next) => {
+          if (next.IsSuccess) {
+            // this.dataAccessModel = next.Access;
+            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+          } else {
+            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
+          }
+        },
+        (error) => {
+          this.cmsToastrService.typeErrorGetAccess(error);
+        }
+      );
   }
 
   GetDomainList(): void {

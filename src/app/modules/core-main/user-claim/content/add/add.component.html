@@ -68,7 +68,7 @@
       <mat-form-field class="example-full-width">
         <mat-label>{{fieldsInfo['Description']?.FieldTitle}}</mat-label>
         <textarea matInput [(ngModel)]="dataModel.Description" name="dataModel.Description" #Description type="text"
-          placeholder="توضیحات" minlength="1" maxlength="500" required rows=5></textarea>
+          placeholder="{{fieldsInfo['Description']?.Title}}" minlength="1" maxlength="500" required rows=5></textarea>
         <mat-icon matSuffix *ngIf="dataModel.Description" matSuffix mat-icon-button aria-label="Clear"
           (click)="dataModel.Description = ''">close</mat-icon>
         <mat-icon matSuffix>mode_edit</mat-icon>
@@ -92,7 +92,7 @@
       <mat-form-field class="example-full-width">
         <mat-label>{{fieldsInfo['ApprovedResult']?.FieldTitle}}</mat-label>
         <textarea matInput [(ngModel)]="dataModel.ApprovedResult" name="dataModel.ApprovedResult" #ApprovedResult
-          type="text" placeholder="توضیحات" minlength="1" maxlength="500" required rows=5></textarea>
+          type="text" placeholder="{{fieldsInfo['Description']?.Title}}" minlength="1" maxlength="500" required rows=5></textarea>
         <mat-icon matSuffix *ngIf="dataModel.ApprovedResult" matSuffix mat-icon-button aria-label="Clear"
           (click)="dataModel.ApprovedResult = ''">close</mat-icon>
         <mat-icon matSuffix>mode_edit</mat-icon>

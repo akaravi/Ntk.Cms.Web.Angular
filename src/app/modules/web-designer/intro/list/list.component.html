@@ -57,7 +57,7 @@
         </ng-container>
         <!-- LinkPageId Column -->
         <ng-container matColumnDef="LinkPageId">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> شناسه صفحه </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkPageId']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.LinkPageId}} </mat-cell>
         </ng-container>
         <!-- RecordStatus Column -->

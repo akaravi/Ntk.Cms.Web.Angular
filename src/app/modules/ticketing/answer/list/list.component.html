@@ -31,7 +31,7 @@
 
     <app-progress-spinner [options]="loading">
     </app-progress-spinner>
-   
+
     <div class="example-container mat-elevation-z8">
 
 
@@ -67,7 +67,7 @@
         </ng-container>
         <!-- CreatedDate Column -->
         <ng-container matColumnDef="CreatedDate">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> تاریخ ایجاد </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['CreatedDate']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.CreatedDate) }} </mat-cell>
         </ng-container>
         <!-- UpdatedDate Column -->

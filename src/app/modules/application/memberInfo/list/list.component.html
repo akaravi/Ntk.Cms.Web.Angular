@@ -52,7 +52,7 @@
         </ng-container>
         <!-- LinkApplicationId Column -->
         <ng-container matColumnDef="LinkApplicationId">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> شناسه اپ </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkApplicationId']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.LinkApplicationId}} </mat-cell>
         </ng-container>
 

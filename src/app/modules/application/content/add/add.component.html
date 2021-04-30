@@ -112,7 +112,7 @@
             <mat-label>{{ fieldsInfo['AboutUsDescription']?.FieldAboutUsDescription }}</mat-label>
             <textarea matInput [(ngModel)]="dataModel.AboutUsDescription"
               [disabled]="!fieldsInfo['AboutUsDescription']?.AccessAddField" name="dataModel.AboutUsDescription"
-              #AboutUsDescription type="text" placeholder="توضیحات" row="5" minlength="0" maxlength="1000"></textarea>
+              #AboutUsDescription type="text" placeholder="{{fieldsInfo['Description']?.Title}}" row="5" minlength="0" maxlength="1000"></textarea>
             <mat-icon matSuffix *ngIf="dataModel.AboutUsDescription && fieldsInfo['AboutUsDescription']?.AccessAddField"
               matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.AboutUsDescription = ''">close</mat-icon>
             <mat-icon *ngIf="fieldsInfo['AboutUsDescription']?.AccessAddField" matSuffix>mode_edit</mat-icon>

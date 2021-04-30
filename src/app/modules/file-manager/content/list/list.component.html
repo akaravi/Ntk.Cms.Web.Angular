@@ -52,12 +52,12 @@
         </ng-container>
         <!-- FileName Column -->
         <ng-container matColumnDef="FileName">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> نام فایل </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['FileName']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.FileName}} </mat-cell>
         </ng-container>
         <!-- Extension Column -->
         <ng-container matColumnDef="Extension">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> پسوند </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Extension']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Extension}} </mat-cell>
         </ng-container>
         <!-- CreatedDate Column -->

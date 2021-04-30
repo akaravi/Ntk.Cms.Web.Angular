@@ -47,7 +47,7 @@
         </ng-container>
         <!-- linkCreatedBySiteId Column -->
         <ng-container matColumnDef="linkCreatedBySiteId">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> سایت والد </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['linkCreatedBySiteId']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.linkCreatedBySiteId}} </mat-cell>
         </ng-container>
         <!-- RecordStatus Column -->

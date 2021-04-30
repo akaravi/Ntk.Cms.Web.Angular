@@ -20,7 +20,7 @@
         <mat-form-field class="example-full-width">
           <mat-label>{{fieldsInfo['Description']?.Title}}</mat-label>
           <textarea matInput [(ngModel)]="dataModelResultCategory.Item.Description"
-            name="dataModelResultCategory.Item.Description" #Description type="text" placeholder="توضیحات" minlength="1"
+            name="dataModelResultCategory.Item.Description" #Description type="text" placeholder="{{fieldsInfo['Description']?.Title}}" minlength="1"
             maxlength="100" readonly required rows=5></textarea>
 
         </mat-form-field>

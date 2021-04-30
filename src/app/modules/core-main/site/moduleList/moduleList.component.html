@@ -3,8 +3,9 @@
     <div class="button-row">
       <button *ngIf="dataModelResult.Access.AccessAddRow " (click)="onActionbuttonNewRow()" type="button"
         class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">اضافه</button>
-      <button *ngIf="dataModelResult.Access.AccessEditRow && tableRowSelected.LinkSiteId" (click)="onActionbuttonEditRow()"
-        type="button" class="btn btn-warning ml-2" data-toggle="modal" data-target="#categoryModal">ویرایش</button>
+      <button *ngIf="dataModelResult.Access.AccessEditRow && tableRowSelected.LinkSiteId"
+        (click)="onActionbuttonEditRow()" type="button" class="btn btn-warning ml-2" data-toggle="modal"
+        data-target="#categoryModal">ویرایش</button>
       <button *ngIf="dataModelResult.Access.AccessDeleteRow && tableRowSelected.LinkSiteId>0"
         (click)="onActionbuttonDeleteRow()" type="button" class="btn btn-danger  ml-2">حذف</button>
       <a class="btn btn-secondary btn-sm BTN">
@@ -21,9 +22,9 @@
       <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">برسی مجدد</button>
       <button (click)="onActionBackToParent()" *ngIf="this.requestLinkSiteId>0" type="button"
         class="btn btn-warning BTN">بازگشت</button>
-        <button (click)="onActionBackToParentModuleList()" *ngIf="this.requestLinkModuleId>0" type="button"
-          class="btn btn-warning BTN">بازگشت</button>
-          <button (click)="onActionbuttonReNewModule()" type="button" class="btn btn-warning BTN">تمدید ماژول ها</button>
+      <button (click)="onActionBackToParentModuleList()" *ngIf="this.requestLinkModuleId>0" type="button"
+        class="btn btn-warning BTN">بازگشت</button>
+      <button (click)="onActionbuttonReNewModule()" type="button" class="btn btn-warning BTN">تمدید ماژول ها</button>
 
       <app-cms-search-list [(options)]="optionsSearch"></app-cms-search-list>
       <app-cms-export-list [(options)]="optionsExport"></app-cms-export-list>
@@ -46,7 +47,8 @@
         <ng-container matColumnDef="LinkModuleId">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkModuleId']?.FieldTitle}}
           </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.LinkModuleId  | cmstitle : dataModelCoreModuleResult.ListItems}} </mat-cell>
+          <mat-cell *matCellDef="let row"> {{row.LinkModuleId | cmstitle : dataModelCoreModuleResult.ListItems}}
+          </mat-cell>
         </ng-container>
         <!-- RecordStatus Column -->
         <ng-container matColumnDef="RecordStatus">
@@ -67,8 +69,7 @@
 
         <!-- HasBuyed Column -->
         <ng-container matColumnDef="HasBuyed">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['HasBuyed']?.FieldTitle}}
-          </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['HasBuyed']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"><i [ngClass]="row.HasBuyed|boolclass"></i> </mat-cell>
         </ng-container>
         <!-- CreatedDate Column -->
@@ -93,9 +94,8 @@
         <ng-container matColumnDef="ExpireDate">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['ExpireDate']?.FieldTitle}}
           </mat-header-cell>
-          <mat-cell *matCellDef="let row"
-          [ngStyle]="{'background':publicHelper.RowStyleExpireDate(row.ExpireDate) }"
-          > {{ publicHelper.LocaleDate(row.ExpireDate) }} </mat-cell>
+          <mat-cell *matCellDef="let row" [ngStyle]="{'background':publicHelper.RowStyleExpireDate(row.ExpireDate) }">
+            {{ publicHelper.LocaleDate(row.ExpireDate) }} </mat-cell>
         </ng-container>
 
         <!-- Action Column -->
@@ -111,15 +111,17 @@
                 <mat-icon>mode_edit</mat-icon>
                 <span>ویرایش</span>
               </button>
-              <button mat-menu-item (click)="onActionbuttonDeleteRow(row)" *ngIf="dataModelResult.Access.AccessDeleteRow">
+              <button mat-menu-item (click)="onActionbuttonDeleteRow(row)"
+                *ngIf="dataModelResult.Access.AccessDeleteRow">
                 <mat-icon>delete_forever</mat-icon>
                 <span>حذف</span>
               </button>
-              <button mat-menu-item (click)="onActionbuttonConfigSiteRow(row)" >
+              <button mat-menu-item (click)="onActionbuttonConfigSiteRow(row)">
                 <mat-icon>extension</mat-icon>
                 <span>تظیمات ماژول</span>
               </button>
-              <button mat-menu-item (click)="onActionbuttonConfigMainAdminRow(row)"  *ngIf="tokenInfo.UserAccessAdminAllowToProfessionalData">
+              <button mat-menu-item (click)="onActionbuttonConfigMainAdminRow(row)"
+                *ngIf="tokenInfo.UserAccessAdminAllowToProfessionalData">
                 <mat-icon>extension</mat-icon>
                 <span>تنظیمات مدیریتی</span>
               </button>
