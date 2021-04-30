@@ -75,7 +75,7 @@ export class BankPaymentPrivateSiteConfigSelectorComponent implements OnInit {
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
     const filters = new Array<FilterDataModel>();
-        let filter = new FilterDataModel();
+    let filter = new FilterDataModel();
     filter.PropertyName = 'Title';
     filter.Value = text;
     filter.SearchType = EnumFilterDataModelSearchTypes.Contains;

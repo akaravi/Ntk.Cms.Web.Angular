@@ -5,6 +5,7 @@ import {
   FormInfoModel,
   CoreLocationService,
   CoreLocationModel,
+  DataFieldInfoModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -51,6 +52,9 @@ export class CoreLocationAddComponent implements OnInit {
     }
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
 
   fileManagerTree: TreeModel;
@@ -60,7 +64,6 @@ export class CoreLocationAddComponent implements OnInit {
   dataModelResult: ErrorExceptionResult<CoreLocationModel> = new ErrorExceptionResult<CoreLocationModel>();
   dataModel: CoreLocationModel = new CoreLocationModel();
 
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
@@ -76,6 +79,8 @@ export class CoreLocationAddComponent implements OnInit {
     this.formInfo.FormTitle = 'اضافه کردن  ';
     this.getEnumRecordStatus();
     this.getEnumLocationType();
+    this.DataGetAccess();
+
   }
   getEnumLocationType(): void {
     this.coreEnumService.ServiceEnumLocationType().subscribe((next) => {
@@ -93,6 +98,24 @@ export class CoreLocationAddComponent implements OnInit {
     }
   }
 
+
+  DataGetAccess(): void {
+    this.coreLocationService
+      .ServiceViewModel()
+      .subscribe(
+        async (next) => {
+          if (next.IsSuccess) {
+            // this.dataAccessModel = next.Access;
+            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+          } else {
+            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
+          }
+        },
+        (error) => {
+          this.cmsToastrService.typeErrorGetAccess(error);
+        }
+      );
+  }
 
   DataAddContent(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';

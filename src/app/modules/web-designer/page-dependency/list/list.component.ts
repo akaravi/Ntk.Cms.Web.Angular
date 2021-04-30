@@ -56,6 +56,8 @@ export class WebDesignerMainPageDependencyListComponent implements OnInit, OnDes
     this.filteModelContent.SortColumn = 'LinkModuleId';
     this.filteModelContent.SortType = EnumSortType.Ascending;
   }
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   comment: string;
   author: string;
   dataSource: any;
@@ -63,7 +65,8 @@ export class WebDesignerMainPageDependencyListComponent implements OnInit, OnDes
   tableContentSelected = [];
 
   filteModelContent = new FilterModel();
-  dataModelResult: ErrorExceptionResult<WebDesignerMainPageDependencyModel> = new ErrorExceptionResult<WebDesignerMainPageDependencyModel>();
+  dataModelResult: ErrorExceptionResult<WebDesignerMainPageDependencyModel>
+    = new ErrorExceptionResult<WebDesignerMainPageDependencyModel>();
   optionsSearch: ComponentOptionSearchModel = new ComponentOptionSearchModel();
   optionsStatist: ComponentOptionStatistModel = new ComponentOptionStatistModel();
   optionsExport: ComponentOptionExportModel = new ComponentOptionExportModel();
@@ -72,7 +75,6 @@ export class WebDesignerMainPageDependencyListComponent implements OnInit, OnDes
   tableRowsSelected: Array<WebDesignerMainPageDependencyModel> = [];
   tableRowSelected: WebDesignerMainPageDependencyModel = new WebDesignerMainPageDependencyModel();
   tableSource: MatTableDataSource<WebDesignerMainPageDependencyModel> = new MatTableDataSource<WebDesignerMainPageDependencyModel>();
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
   dataModelCoreModuleResult: ErrorExceptionResult<CoreModuleModel> = new ErrorExceptionResult<CoreModuleModel>();
 
 

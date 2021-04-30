@@ -37,6 +37,7 @@ import { MatStepper } from '@angular/material/stepper';
   styleUrls: ['./edit.component.scss'],
 })
 export class CoreGuideEditComponent implements OnInit {
+  requestId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
@@ -51,19 +52,18 @@ export class CoreGuideEditComponent implements OnInit {
     }
 
   }
-  requestId = 0;
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
   appLanguage = 'fa';
 
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<CoreGuideModel> = new ErrorExceptionResult<CoreGuideModel>();
   dataModel: CoreGuideModel = new CoreGuideModel();
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   dataAccessModel: AccessModel;
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
   fileManagerOpenForm = false;
   storeSnapshot = this.cmsStoreService.getStateSnapshot();

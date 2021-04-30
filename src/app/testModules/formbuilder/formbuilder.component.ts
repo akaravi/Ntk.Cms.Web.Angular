@@ -8,7 +8,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class FormBuilderComponent implements OnInit {
   public form: FormGroup;
-  unsubcribe: any
+  unsubcribe: any;
 
   public fields: any[] = [
     {
@@ -83,21 +83,21 @@ export class FormBuilderComponent implements OnInit {
       // this.fields = JSON.parse(update.fields);
     });
   }
-  ngOnInit() {
+  ngOnInit(): void {
     // this.form = new FormGroup({});
 
   }
 
-  onUpload(e) {
+  onUpload(e): void {
     console.log(e);
 
   }
 
-  getFields() {
+  getFields(): any {
     return this.fields;
   }
 
-  ngDistroy() {
+  ngDistroy(): void {
     this.unsubcribe();
   }
 }

@@ -32,6 +32,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./list.component.scss']
 })
 export class TicketingDepartemenOperatorListComponent implements OnInit, OnDestroy {
+  requestDepartemenId = 0;
   constructor(
     private ticketingDepartemenOperatorService: TicketingDepartemenOperatorService,
     private activatedRoute: ActivatedRoute,
@@ -50,7 +51,8 @@ export class TicketingDepartemenOperatorListComponent implements OnInit, OnDestr
     this.filteModelContent.SortColumn = 'Id';
     this.filteModelContent.SortType = EnumSortType.Descending;
   }
-  requestDepartemenId = 0;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   comment: string;
   author: string;
   dataSource: any;
@@ -80,7 +82,6 @@ export class TicketingDepartemenOperatorListComponent implements OnInit, OnDestr
   ];
 
 
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
 
   expandedElement: TicketingDepartemenOperatorModel | null;

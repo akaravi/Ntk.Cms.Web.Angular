@@ -24,7 +24,7 @@ import { Subscription } from 'rxjs';
 
 
 @Component({
-  selector: 'app-LinkManagement-config-mainadmin',
+  selector: 'app-linkmanagement-config-mainadmin',
   templateUrl: './configMainAdmin.component.html',
   styleUrls: ['./configMainAdmin.component.scss']
 })

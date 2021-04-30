@@ -44,7 +44,7 @@ export class CoreTokenUserBadLoginViewComponent implements OnInit, OnDestroy {
     public publicHelper: PublicHelper,
   ) {
     if (data) {
-      this.requestId =  data.id+'';
+      this.requestId = data.id + '';
     }
   }
   @ViewChild('vform', { static: false }) formGroup: FormGroup;

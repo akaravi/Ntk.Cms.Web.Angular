@@ -42,10 +42,11 @@ export class CoreUserClaimGroupAddComponent implements OnInit {
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService
   ) {
-
-
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
 
   fileManagerTree: TreeModel;
@@ -54,9 +55,7 @@ export class CoreUserClaimGroupAddComponent implements OnInit {
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<CoreUserClaimGroupModel> = new ErrorExceptionResult<CoreUserClaimGroupModel>();
   dataModel: CoreUserClaimGroupModel = new CoreUserClaimGroupModel();
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
@@ -138,7 +137,7 @@ export class CoreUserClaimGroupAddComponent implements OnInit {
   }
   onActionSelectApplication(model: ApplicationAppModel | null): void {
     if (!model || model.Id <= 0) {
-      this.dataModel.LinkApplicationId =null;
+      this.dataModel.LinkApplicationId = null;
       return;
     }
     this.dataModel.LinkApplicationId = model.Id;

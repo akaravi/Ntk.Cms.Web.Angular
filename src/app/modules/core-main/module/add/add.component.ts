@@ -5,6 +5,7 @@ import {
   FormInfoModel,
   CoreModuleService,
   CoreModuleModel,
+  DataFieldInfoModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -45,6 +46,9 @@ export class CoreModuleAddComponent implements OnInit {
 
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
   fileManagerTree: TreeModel;
   appLanguage = 'fa';
@@ -52,16 +56,15 @@ export class CoreModuleAddComponent implements OnInit {
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<CoreModuleModel> = new ErrorExceptionResult<CoreModuleModel>();
   dataModel: CoreModuleModel = new CoreModuleModel();
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   fileManagerOpenForm = false;
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
 
   ngOnInit(): void {
-
     this.formInfo.FormTitle = 'اضافه کردن  ';
     this.getEnumRecordStatus();
+    this.DataGetAccess();
   }
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
@@ -72,6 +75,24 @@ export class CoreModuleAddComponent implements OnInit {
       this.storeSnapshot.EnumRecordStatus.ListItems.length > 0) {
       this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
     }
+  }
+
+  DataGetAccess(): void {
+    this.coreModuleService
+      .ServiceViewModel()
+      .subscribe(
+        async (next) => {
+          if (next.IsSuccess) {
+            // this.dataAccessModel = next.Access;
+            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+          } else {
+            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
+          }
+        },
+        (error) => {
+          this.cmsToastrService.typeErrorGetAccess(error);
+        }
+      );
   }
 
 

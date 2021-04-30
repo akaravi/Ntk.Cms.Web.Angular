@@ -1,11 +1,18 @@
 
-import { Component, OnInit, Input, ViewChild, Inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { CoreEnumService, ErrorExceptionResult, FilterModel, FormInfoModel, ArticleCategoryModel, ArticleCategoryService } from 'ntk-cms-api';
+import {
+  ErrorExceptionResult,
+  FilterModel,
+  FormInfoModel,
+  ArticleCategoryModel,
+  ArticleCategoryService,
+  DataFieldInfoModel
+} from 'ntk-cms-api';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
+import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 
 @Component({
@@ -18,7 +25,7 @@ export class ArticleCategoryDeleteComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<ArticleCategoryDeleteComponent>,
-    private activatedRoute: ActivatedRoute,
+    private publicHelper: PublicHelper,
     private articleCategoryService: ArticleCategoryService,
     private cmsToastrService: CmsToastrService
   ) {
@@ -28,11 +35,13 @@ export class ArticleCategoryDeleteComponent implements OnInit {
 
 
   }
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   loading = new ProgressSpinnerModel();
   dataModelResultCategory: ErrorExceptionResult<ArticleCategoryModel> = new ErrorExceptionResult<ArticleCategoryModel>();
   dataModelResultCategoryAllData: ErrorExceptionResult<ArticleCategoryModel> = new ErrorExceptionResult<ArticleCategoryModel>();
-    dataModel: any = {};
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  dataModel: any = {};
   formInfo: FormInfoModel = new FormInfoModel();
   ngOnInit(): void {
 
@@ -52,10 +61,13 @@ export class ArticleCategoryDeleteComponent implements OnInit {
     }
     this.formInfo.FormAlert = 'در حال لود اطلاعات';
     this.loading.display = true;
+    this.articleCategoryService.setAccessLoad();
     this.articleCategoryService
       .ServiceGetOneById(this.requestId)
       .subscribe(
         (next) => {
+          this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
           this.dataModelResultCategory = next;
           if (!next.IsSuccess) {
             this.formInfo.FormAlert = 'برروز خطا';

@@ -27,7 +27,8 @@ export class WebDesignerMainPageDependencySelectorComponent implements OnInit {
     public coreEnumService: CoreEnumService,
     public categoryService: WebDesignerMainPageDependencyService) {
   }
-  dataModelResult: ErrorExceptionResult<WebDesignerMainPageDependencyModel> = new ErrorExceptionResult<WebDesignerMainPageDependencyModel>();
+  dataModelResult: ErrorExceptionResult<WebDesignerMainPageDependencyModel>
+    = new ErrorExceptionResult<WebDesignerMainPageDependencyModel>();
   dataModelSelect: WebDesignerMainPageDependencyModel = new WebDesignerMainPageDependencyModel();
   loading = new ProgressSpinnerModel();
   formControl = new FormControl();

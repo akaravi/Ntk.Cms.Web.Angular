@@ -69,7 +69,7 @@ export class ApplicationAppSelectorComponent implements OnInit {
     const filteModel = new FilterModel();
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
-        let filter = new FilterDataModel();
+    let filter = new FilterDataModel();
     filter.PropertyName = 'Title';
     filter.Value = text;
     filter.SearchType = EnumFilterDataModelSearchTypes.Contains;

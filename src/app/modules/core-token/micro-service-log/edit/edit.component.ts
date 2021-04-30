@@ -48,26 +48,26 @@ export class CoreTokenMicroServiceLogEditComponent implements OnInit, OnDestroy 
     public coreTokenMicroServiceLogService: CoreTokenMicroServiceLogService,
     private cmsApiStore: NtkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
-    private coreUserService: CoreUserService,
     public publicHelper: PublicHelper,
   ) {
     if (data) {
       this.requestId = data.id;
     }
   }
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   tokenInfo = new TokenInfoModel();
 
 
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<CoreTokenMicroServiceLogModel> = new ErrorExceptionResult<CoreTokenMicroServiceLogModel>();
   dataModel: CoreTokenMicroServiceLogModel = new CoreTokenMicroServiceLogModel();
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   dataModelEnumManageUserAccessAreaTypesResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   dataModelEnumManageUserAccessControllerTypesResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
 
   fileManagerOpenForm = false;
@@ -127,8 +127,6 @@ export class CoreTokenMicroServiceLogEditComponent implements OnInit, OnDestroy 
     this.loading.display = true;
     /*َAccess Field*/
     this.coreTokenMicroServiceLogService.setAccessLoad();
-
-
     this.coreTokenMicroServiceLogService.ServiceGetOneById(this.requestId).subscribe(
       (next) => {
         /*َAccess Field*/

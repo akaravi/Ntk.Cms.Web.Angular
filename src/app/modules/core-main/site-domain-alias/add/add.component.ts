@@ -6,25 +6,20 @@ import {
   CoreSiteDomainAliasService,
   CoreSiteDomainAliasModel,
   CoreSiteModel,
+  DataFieldInfoModel,
 } from 'ntk-cms-api';
 import {
   Component,
   OnInit,
   ViewChild,
-  ChangeDetectorRef,
   Inject,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
-import {
-  TreeModel,
-  NodeInterface,
-} from 'ntk-cms-filemanager';
-import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
+import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 @Component({
   selector: 'app-core-site-domainalias-add',
@@ -39,6 +34,7 @@ export class CoreSiteDomainAliasAddComponent implements OnInit {
     private dialogRef: MatDialogRef<CoreSiteDomainAliasAddComponent>,
     public coreEnumService: CoreEnumService,
     public coreSiteDomainAliasService: CoreSiteDomainAliasService,
+    public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService
   ) {
 
@@ -49,13 +45,14 @@ export class CoreSiteDomainAliasAddComponent implements OnInit {
       this.dataModel.LinkCmsSiteId = this.requestId;
     }
   }
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
 
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<CoreSiteDomainAliasModel> = new ErrorExceptionResult<CoreSiteDomainAliasModel>();
   dataModel: CoreSiteDomainAliasModel = new CoreSiteDomainAliasModel();
 
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
@@ -63,9 +60,9 @@ export class CoreSiteDomainAliasAddComponent implements OnInit {
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
 
   ngOnInit(): void {
-
     this.formInfo.FormTitle = 'اضافه کردن  ';
     this.getEnumRecordStatus();
+    this.DataGetAccess();
   }
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
@@ -78,6 +75,23 @@ export class CoreSiteDomainAliasAddComponent implements OnInit {
     }
   }
 
+  DataGetAccess(): void {
+    this.coreSiteDomainAliasService
+      .ServiceViewModel()
+      .subscribe(
+        async (next) => {
+          if (next.IsSuccess) {
+            // this.dataAccessModel = next.Access;
+            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+          } else {
+            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
+          }
+        },
+        (error) => {
+          this.cmsToastrService.typeErrorGetAccess(error);
+        }
+      );
+  }
 
   DataAddContent(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';

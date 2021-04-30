@@ -82,6 +82,7 @@ export class BlogContentListComponent implements OnInit, OnDestroy {
 
 
   cmsApiStoreSubscribe: Subscription;
+  GetAllWithHierarchyCategoryId = false;
   ngOnInit(): void {
 
     this.DataGetAll();
@@ -279,7 +280,6 @@ export class BlogContentListComponent implements OnInit, OnDestroy {
     this.optionsExport.data.show = !this.optionsExport.data.show;
     this.optionsExport.childMethods.setExportFilterModel(this.filteModelContent);
   }
-  GetAllWithHierarchyCategoryId = false;
   onActionbuttonWithHierarchy(): void {
     this.GetAllWithHierarchyCategoryId = !this.GetAllWithHierarchyCategoryId;
     this.DataGetAll();

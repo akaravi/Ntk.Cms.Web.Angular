@@ -2,10 +2,11 @@
 import { Component, OnInit, Input, ViewChild, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup } from '@angular/forms';
-import { CoreEnumService, ErrorExceptionResult, FilterModel, FormInfoModel, NewsCategoryModel, NewsCategoryService } from 'ntk-cms-api';
+import { CoreEnumService, DataFieldInfoModel, ErrorExceptionResult, FilterModel, FormInfoModel, NewsCategoryModel, NewsCategoryService } from 'ntk-cms-api';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
+import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 
 @Component({
@@ -18,21 +19,21 @@ export class NewsCategoryDeleteComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<NewsCategoryDeleteComponent>,
-    private activatedRoute: ActivatedRoute,
+    private publicHelper: PublicHelper,
     private newsCategoryService: NewsCategoryService,
     private cmsToastrService: CmsToastrService
   ) {
     if (data) {
       this.requestId = +data.id || 0;
     }
-
-
   }
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   loading = new ProgressSpinnerModel();
   dataModelResultCategory: ErrorExceptionResult<NewsCategoryModel> = new ErrorExceptionResult<NewsCategoryModel>();
   dataModelResultCategoryAllData: ErrorExceptionResult<NewsCategoryModel> = new ErrorExceptionResult<NewsCategoryModel>();
     dataModel: any = {};
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
   formInfo: FormInfoModel = new FormInfoModel();
   ngOnInit(): void {
 
@@ -56,6 +57,7 @@ export class NewsCategoryDeleteComponent implements OnInit {
       .ServiceGetOneById(this.requestId)
       .subscribe(
         (next) => {
+          this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
           this.dataModelResultCategory = next;
           if (!next.IsSuccess) {
             this.formInfo.FormAlert = 'برروز خطا';

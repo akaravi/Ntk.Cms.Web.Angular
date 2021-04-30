@@ -56,12 +56,13 @@ export class BankPaymentPrivateSiteConfigAddComponent implements OnInit {
 
   }
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
   fileManagerTree: TreeModel;
   appLanguage = 'fa';
 
   dataAccessModel: AccessModel;
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
 
   loading = new ProgressSpinnerModel();
@@ -77,6 +78,7 @@ export class BankPaymentPrivateSiteConfigAddComponent implements OnInit {
 
   ngOnInit(): void {
     this.getEnumRecordStatus();
+    this.DataGetAccess();
   }
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&

@@ -31,6 +31,7 @@ import { PublicHelper } from 'src/app/core/helpers/publicHelper';
   styleUrls: ['./edit.component.scss'],
 })
 export class CoreDeviceEditComponent implements OnInit {
+  requestId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
@@ -47,7 +48,9 @@ export class CoreDeviceEditComponent implements OnInit {
 
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
-  requestId = 0;
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
 
   fileManagerTree: TreeModel;
@@ -56,7 +59,6 @@ export class CoreDeviceEditComponent implements OnInit {
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<CoreDeviceModel> = new ErrorExceptionResult<CoreDeviceModel>();
   dataModel: CoreDeviceModel = new CoreDeviceModel();
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
@@ -64,7 +66,6 @@ export class CoreDeviceEditComponent implements OnInit {
   dataModelEnumOperatingSystemTypeResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   fileManagerOpenForm = false;
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
 
   ngOnInit(): void {

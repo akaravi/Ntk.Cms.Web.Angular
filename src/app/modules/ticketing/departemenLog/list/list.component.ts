@@ -136,6 +136,7 @@ export class TicketingDepartemenLogListComponent implements OnInit, OnDestroy {
       fastfilter.Value = this.categoryModelSelected.Id;
       filterModel.Filters.push(fastfilter);
     }
+    this.ticketingDepartemenLogService.setAccessLoad();
     this.ticketingDepartemenLogService.ServiceGetAll(filterModel).subscribe(
       (next) => {
         this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);

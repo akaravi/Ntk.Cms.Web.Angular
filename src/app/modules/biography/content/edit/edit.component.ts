@@ -39,6 +39,7 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
   ]
 })
 export class BiographyContentEditComponent implements OnInit, AfterViewInit {
+  requestId = 0;
   constructor(
     private activatedRoute: ActivatedRoute,
     private cmsStoreService: CmsStoreService,
@@ -54,8 +55,9 @@ export class BiographyContentEditComponent implements OnInit, AfterViewInit {
   ) {
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
-  requestId = 0;
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   dataModel = new BiographyContentModel();
   dataModelResult: ErrorExceptionResult<BiographyContentModel> = new ErrorExceptionResult<BiographyContentModel>();
   dataContentTagModelResult: ErrorExceptionResult<BiographyContentTagModel> = new ErrorExceptionResult<BiographyContentTagModel>();
@@ -73,7 +75,6 @@ export class BiographyContentEditComponent implements OnInit, AfterViewInit {
   similarTabledataSource = new MatTableDataSource<BiographyContentModel>();
   otherInfoTabledataSource = new MatTableDataSource<BiographyContentOtherInfoModel>();
   dataAccessModel: AccessModel;
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
   loading = new ProgressSpinnerModel();
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
@@ -160,11 +161,12 @@ export class BiographyContentEditComponent implements OnInit, AfterViewInit {
     this.loading.display = true;
     /*َAccess Field*/
     this.biographyContentService.setAccessLoad();
-
     this.biographyContentService
       .ServiceGetOneById(this.requestId)
       .subscribe(
         async (next) => {
+          this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
           this.loading.display = false;
           this.dataModelResult = next;
           this.formInfo.FormSubmitAllow = true;
@@ -172,7 +174,6 @@ export class BiographyContentEditComponent implements OnInit, AfterViewInit {
           if (next.IsSuccess) {
             /*َAccess Field*/
             this.dataAccessModel = next.Access;
-            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
 
             this.dataModel = next.Item;
             const lat = this.dataModel.Geolocationlatitude;

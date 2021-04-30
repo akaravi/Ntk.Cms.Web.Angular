@@ -52,6 +52,7 @@ export class CoreCpMainMenuEditComponent implements OnInit {
 
   }
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
 
   appLanguage = 'fa';
@@ -64,7 +65,6 @@ export class CoreCpMainMenuEditComponent implements OnInit {
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   dataModelEnumMenuPlaceTypeResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   dataAccessModel: AccessModel;
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
   fileManagerOpenForm = false;
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
@@ -111,7 +111,6 @@ export class CoreCpMainMenuEditComponent implements OnInit {
     this.loading.display = true;
     /*َAccess Field*/
     this.coreCpMainMenuService.setAccessLoad();
-
     this.coreCpMainMenuService.ServiceGetOneById(this.requestId).subscribe(
       (next) => {
         /*َAccess Field*/

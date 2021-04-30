@@ -16,15 +16,10 @@ import {
   ViewChild,
   Inject,
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
-import {
-  TreeModel,
-  NodeInterface,
-} from 'ntk-cms-filemanager';
-import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
@@ -57,16 +52,16 @@ export class CoreSiteCategoryCmsModuleAddComponent implements OnInit {
       this.dataModel.LinkCmsModuleId = this.requestLinkCmsModuleId;
     }
   }
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
 
   dataAccessModel: AccessModel;
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
 
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<CoreSiteCategoryCmsModuleModel> = new ErrorExceptionResult<CoreSiteCategoryCmsModuleModel>();
   dataModel: CoreSiteCategoryCmsModuleModel = new CoreSiteCategoryCmsModuleModel();
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
@@ -76,6 +71,7 @@ export class CoreSiteCategoryCmsModuleAddComponent implements OnInit {
 
   ngOnInit(): void {
     this.getEnumRecordStatus();
+    this.DataGetAccess();
   }
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&

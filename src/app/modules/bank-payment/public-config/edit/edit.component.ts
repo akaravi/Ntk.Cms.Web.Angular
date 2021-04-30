@@ -6,6 +6,7 @@ import {
   BankPaymentPublicConfigService,
   BankPaymentPublicConfigModel,
   BankPaymentPublicConfigAliasJsonModel,
+  DataFieldInfoModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -30,6 +31,7 @@ import { PublicHelper } from 'src/app/core/helpers/publicHelper';
   styleUrls: ['./edit.component.scss'],
 })
 export class BankPaymentPublicConfigEditComponent implements OnInit {
+  requestId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
@@ -45,7 +47,9 @@ export class BankPaymentPublicConfigEditComponent implements OnInit {
 
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
-  requestId = 0;
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
 
   fileManagerTree: TreeModel;
@@ -54,7 +58,6 @@ export class BankPaymentPublicConfigEditComponent implements OnInit {
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<BankPaymentPublicConfigModel> = new ErrorExceptionResult<BankPaymentPublicConfigModel>();
   dataModel: BankPaymentPublicConfigAliasJsonModel = new BankPaymentPublicConfigAliasJsonModel();
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
@@ -93,8 +96,11 @@ export class BankPaymentPublicConfigEditComponent implements OnInit {
     this.formInfo.FormAlert = 'در دریافت ارسال اطلاعات از سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
+    this.bankPaymentPublicConfigService.setAccessLoad();
     this.bankPaymentPublicConfigService.ServiceGetOneWithJsonFormatter(this.requestId).subscribe(
       (next) => {
+        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
         this.dataModel = next.Item;
         if (next.IsSuccess) {
           this.formInfo.FormTitle = this.formInfo.FormTitle + ' ' + next.Item.Title;

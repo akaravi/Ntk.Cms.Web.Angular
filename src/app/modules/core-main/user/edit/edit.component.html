@@ -10,7 +10,7 @@
         <mat-step label="اطلاعات الزامی" state="main">
           <!-- RecordStatus Field -->
           <mat-form-field class="example-full-width">
-            <mat-select placeholder="وضعیت" [(ngModel)]="dataModel.RecordStatus" name="dataModel.RecordStatus"
+            <mat-select placeholder="{{fieldsInfo['RecordStatus']?.Title}}" [(ngModel)]="dataModel.RecordStatus" name="dataModel.RecordStatus"
               #RecordStatus="ngModel" panelClass="recordStatus-{{ dataModel.RecordStatus }}" required>
               <mat-option *ngFor="
                 let item of dataModelEnumRecordStatusResult.ListItems;

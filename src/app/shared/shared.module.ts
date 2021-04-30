@@ -29,8 +29,17 @@ import { PrettyjsonPipe } from '../core/pipe/prettyjson.pipe';
 import { CmsSiteSelectorComponent } from './cms-site-selector/cmsSiteSelector.component';
 import { CmsUserSelectorComponent } from './cms-user-selector/cmsUserSelector.component';
 import { CmsMemberSelectorComponent } from './cms-member-selector/cmsMemberSelector.component';
-import { ApplicationAppService, CoreGuideService, CoreSiteCategoryService, CoreSiteService, CoreUserGroupService, CoreUserService, MemberUserService } from 'ntk-cms-api';
-import { PasswordStrengthComponent } from './password-strength/password-strength.component'; import { CmsJsonListComponent } from './cmsJsonList/cmsJsonList.component';;
+import {
+  ApplicationAppService,
+  CoreGuideService,
+  CoreSiteCategoryService,
+  CoreSiteService,
+  CoreUserGroupService,
+  CoreUserService,
+  MemberUserService
+} from 'ntk-cms-api';
+import { PasswordStrengthComponent } from './password-strength/password-strength.component';
+import { CmsJsonListComponent } from './cmsJsonList/cmsJsonList.component';;
 import { CmsGuideComponent } from './cms-guide/cms-guide.component';
 import { TooltipGuideDirective } from '../core/directive/tooltip-guide.directive';
 import { TooltipDirective } from '../core/directive/tooltip.directive';;

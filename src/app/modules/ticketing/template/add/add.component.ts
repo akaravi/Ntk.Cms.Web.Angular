@@ -8,6 +8,7 @@ import {
   ErrorExceptionResult,
   FormInfoModel,
   TicketingDepartemenModel,
+  DataFieldInfoModel,
 } from 'ntk-cms-api';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
@@ -41,6 +42,8 @@ export class TicketingTemplateAddComponent implements OnInit {
     }
   }
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   formMatcher = new CmsFormsErrorStateMatcher();
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<TicketingTemplateModel> = new ErrorExceptionResult<TicketingTemplateModel>();
@@ -53,6 +56,7 @@ export class TicketingTemplateAddComponent implements OnInit {
   ngOnInit(): void {
     this.formInfo.FormTitle = 'ثبت محتوای جدید';
     this.getEnumRecordStatus();
+    this.DataGetAccess();
   }
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
@@ -65,6 +69,23 @@ export class TicketingTemplateAddComponent implements OnInit {
     }
   }
 
+  DataGetAccess(): void {
+    this.ticketingTemplateService
+      .ServiceViewModel()
+      .subscribe(
+        async (next) => {
+          if (next.IsSuccess) {
+            // this.dataAccessModel = next.Access;
+            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+          } else {
+            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
+          }
+        },
+        (error) => {
+          this.cmsToastrService.typeErrorGetAccess(error);
+        }
+      );
+  }
   DataAddContent(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';

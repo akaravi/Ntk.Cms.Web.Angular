@@ -5,6 +5,7 @@ import {
   FormInfoModel,
   BlogCommentService,
   BlogCommentModel,
+  DataFieldInfoModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -18,6 +19,7 @@ import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { ComponentActionEnum } from 'src/app/core/models/component-action-enum';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
+import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 
 @Component({
@@ -26,12 +28,16 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
   styleUrls: ['./edit.component.scss'],
 })
 export class BlogCommentEditComponent implements OnInit {
-  constructor(
+  requestId = 0;
+  requestParentId = 0;
+  requestContentId = 0;
+   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
     private dialogRef: MatDialogRef<BlogCommentEditComponent>,
     public coreEnumService: CoreEnumService,
     public blogCommentService: BlogCommentService,
+    public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService
   ) {
     if (data) {
@@ -44,16 +50,15 @@ export class BlogCommentEditComponent implements OnInit {
     }
 
   }
-  requestId = 0;
-  requestParentId = 0;
-  requestContentId = 0;
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
 
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<BlogCommentModel> = new ErrorExceptionResult<BlogCommentModel>();
   dataModel: BlogCommentModel = new BlogCommentModel();
 
   ComponentAction = ComponentActionEnum.none;
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
@@ -98,8 +103,11 @@ export class BlogCommentEditComponent implements OnInit {
     this.formInfo.FormAlert = 'در دریافت ارسال اطلاعات از سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
+    this.blogCommentService.setAccessLoad();
     this.blogCommentService.ServiceGetOneById(this.requestId).subscribe(
       (next) => {
+        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
         this.dataModel = next.Item;
         if (next.IsSuccess) {
           this.formInfo.FormAlert = '';

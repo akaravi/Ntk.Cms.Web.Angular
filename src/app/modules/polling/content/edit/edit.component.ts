@@ -146,7 +146,6 @@ export class PollingContentEditComponent implements OnInit, AfterViewInit {
     this.loading.display = true;
     /*َAccess Field*/
     this.pollingContentService.setAccessLoad();
-
     this.pollingContentService
       .ServiceGetOneById(this.requestId)
       .subscribe(

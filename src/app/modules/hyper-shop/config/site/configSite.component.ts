@@ -26,7 +26,7 @@ import { Subscription } from 'rxjs';
 
 
 @Component({
-  selector: 'app-HyperShop-config-site',
+  selector: 'app-hypershop-config-site',
   templateUrl: './configSite.component.html',
   styleUrls: ['./configSite.component.scss']
 })

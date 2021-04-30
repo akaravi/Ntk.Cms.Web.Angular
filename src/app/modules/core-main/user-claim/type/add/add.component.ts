@@ -43,10 +43,11 @@ export class CoreUserClaimTypeAddComponent implements OnInit {
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService
   ) {
-
-
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
 
   fileManagerTree: TreeModel;
@@ -55,9 +56,7 @@ export class CoreUserClaimTypeAddComponent implements OnInit {
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<CoreUserClaimTypeModel> = new ErrorExceptionResult<CoreUserClaimTypeModel>();
   dataModel: CoreUserClaimTypeModel = new CoreUserClaimTypeModel();
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();

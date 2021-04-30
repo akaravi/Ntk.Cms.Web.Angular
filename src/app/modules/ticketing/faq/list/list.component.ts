@@ -56,6 +56,8 @@ export class TicketingFaqListComponent implements OnInit, OnDestroy {
     this.filteModelContent.SortColumn = 'Id';
     this.filteModelContent.SortType = EnumSortType.Ascending;
   }
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   comment: string;
   author: string;
   dataSource: any;
@@ -79,7 +81,6 @@ export class TicketingFaqListComponent implements OnInit, OnDestroy {
     'Question',
     'Action'
   ];
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
   cmsApiStoreSubscribe: Subscription;
   ngOnInit(): void {
     this.requestDepartemenId = + Number(this.activatedRoute.snapshot.paramMap.get('DepartemenId'));

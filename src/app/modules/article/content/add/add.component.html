@@ -10,7 +10,7 @@
         <mat-step label="اطلاعات الزامی" state="main">
 
           <mat-form-field class="example-full-width">
-            <mat-select placeholder="وضعیت" [(ngModel)]="dataModel.RecordStatus" name="dataModel.RecordStatus"
+            <mat-select placeholder="{{fieldsInfo['RecordStatus']?.Title}}" [(ngModel)]="dataModel.RecordStatus" name="dataModel.RecordStatus"
               #RecordStatus="ngModel" panelClass="recordStatus-{{ dataModel.RecordStatus }}" required>
               <mat-option *ngFor="
                 let item of dataModelEnumRecordStatusResult.ListItems;
@@ -24,7 +24,7 @@
           </mat-form-field>
           <app-article-category-selector (optionSelect)="onActionSelectorSelect($event)"  [optionSelectForce]="dataModel.LinkCategoryId"  [optionPlaceholder]="'دسته بندی'" ></app-article-category-selector>
           <mat-form-field class="example-full-width">
-            <mat-label>عنوان</mat-label>
+            <mat-label>{{fieldsInfo['Title']?.Title}}</mat-label>
             <input matInput [(ngModel)]="dataModel.Title" name="dataModel.Title" #Title type="text" placeholder="عنوان"
               minlength="3" maxlength="100" required />
             <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
@@ -37,7 +37,7 @@
           </mat-form-field>
 
           <mat-form-field class="example-full-width">
-            <mat-label>توضیحات</mat-label>
+            <mat-label>{{fieldsInfo['Description']?.Title}}</mat-label>
             <textarea matInput [(ngModel)]="dataModel.Description" name="dataModel.Description" #Description type="text"
               placeholder="توضیحات" minlength="1" maxlength="500" required rows="5"></textarea>
             <mat-icon matSuffix *ngIf="dataModel.Description" matSuffix mat-icon-button aria-label="Clear"
@@ -198,7 +198,7 @@
           <p>سایر اطلاعات در رابطه با این محتوا در این قسمت اضافه کنید</p>
 
           <mat-form-field class="example-full-width">
-            <mat-label>عنوان</mat-label>
+            <mat-label>{{fieldsInfo['Title']?.Title}}</mat-label>
             <input matInput [(ngModel)]="contentOtherInfoSelected.Title" name="contentOtherInfoSelected.Title"
               #contentOtherInfoSelected_Title type="text"  placeholder="عنوان" minlength="3"
               maxlength="100" />

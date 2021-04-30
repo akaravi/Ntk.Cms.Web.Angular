@@ -5,6 +5,7 @@ import {
   FormInfoModel,
   WebDesignerMainMenuService,
   WebDesignerMainMenuModel,
+  DataFieldInfoModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -17,6 +18,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
+import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 @Component({
   selector: 'app-webdesigner-menu-add',
@@ -31,7 +33,8 @@ export class WebDesignerMainMenuAddComponent implements OnInit {
     private dialogRef: MatDialogRef<WebDesignerMainMenuAddComponent>,
     public coreEnumService: CoreEnumService,
     public webDesignerMainMenuService: WebDesignerMainMenuService,
-    private cmsToastrService: CmsToastrService
+    private cmsToastrService: CmsToastrService,
+    private publicHelper: PublicHelper
   ) {
     if (data) {
       this.requestParentId = data.parentId + '';
@@ -42,6 +45,8 @@ export class WebDesignerMainMenuAddComponent implements OnInit {
 
   }
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<WebDesignerMainMenuModel> = new ErrorExceptionResult<WebDesignerMainMenuModel>();
   dataModel: WebDesignerMainMenuModel = new WebDesignerMainMenuModel();
@@ -55,6 +60,7 @@ export class WebDesignerMainMenuAddComponent implements OnInit {
     this.formInfo.FormTitle = 'اضافه کردن  ';
     this.getEnumRecordStatus();
     this.getEnumMenuPlaceType();
+    this.DataGetAccess();
   }
   getEnumMenuPlaceType(): void {
     this.coreEnumService.ServiceEnumMenuPlaceType().subscribe((next) => {
@@ -72,6 +78,23 @@ export class WebDesignerMainMenuAddComponent implements OnInit {
     }
   }
 
+  DataGetAccess(): void {
+    this.webDesignerMainMenuService
+      .ServiceViewModel()
+      .subscribe(
+        async (next) => {
+          if (next.IsSuccess) {
+            // this.dataAccessModel = next.Access;
+            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+          } else {
+            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
+          }
+        },
+        (error) => {
+          this.cmsToastrService.typeErrorGetAccess(error);
+        }
+      );
+  }
   DataAddContent(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';

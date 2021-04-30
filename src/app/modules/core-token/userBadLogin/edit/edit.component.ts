@@ -48,25 +48,25 @@ export class CoreTokenUserBadLoginEditComponent implements OnInit, OnDestroy {
     public coreTokenUserBadLoginService: CoreTokenUserBadLoginService,
     private cmsApiStore: NtkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
-    private coreUserService: CoreUserService,
     public publicHelper: PublicHelper,
   ) {
     if (data) {
       this.requestId = data.id;
     }
   }
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   tokenInfo = new TokenInfoModel();
 
 
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<CoreTokenUserBadLoginModel> = new ErrorExceptionResult<CoreTokenUserBadLoginModel>();
   dataModel: CoreTokenUserBadLoginModel = new CoreTokenUserBadLoginModel();
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   dataModelEnumManageUserAccessAreaTypesResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
 
   fileManagerOpenForm = false;

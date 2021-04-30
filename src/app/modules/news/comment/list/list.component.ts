@@ -94,7 +94,6 @@ export class NewsCommentListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.requestContentId = + Number(this.activatedRoute.snapshot.paramMap.get('ContentId'));
-
     this.DataGetAll();
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((x) => x.ntkCmsAPiState.tokenInfo).subscribe((next) => {

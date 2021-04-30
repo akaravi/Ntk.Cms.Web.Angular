@@ -37,6 +37,7 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
   ]
 })
 export class PollingContentAddComponent implements OnInit, AfterViewInit {
+  requestCategoryId = 0;
   constructor(
     private activatedRoute: ActivatedRoute,
     private cmsStoreService: CmsStoreService,
@@ -51,11 +52,11 @@ export class PollingContentAddComponent implements OnInit, AfterViewInit {
   ) {
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
-  requestCategoryId = 0;
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   dataModel = new PollingContentModel();
   dataAccessModel: AccessModel;
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
   dataModelResult: ErrorExceptionResult<PollingContentModel> = new ErrorExceptionResult<PollingContentModel>();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   optionSelected: PollingOptionModel = new PollingOptionModel();

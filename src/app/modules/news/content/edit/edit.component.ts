@@ -161,7 +161,6 @@ export class NewsContentEditComponent implements OnInit, AfterViewInit {
     this.loading.display = true;
     /*َAccess Field*/
     this.newsContentService.setAccessLoad();
-
     this.newsContentService
       .ServiceGetOneById(this.requestId)
       .subscribe(

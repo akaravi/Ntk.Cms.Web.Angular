@@ -7,7 +7,7 @@
 
       <div>
         <mat-form-field class="example-full-width">
-          <mat-select placeholder="وضعیت" [(ngModel)]="dataModel.RecordStatus" name="dataModel.RecordStatus"
+          <mat-select placeholder="{{fieldsInfo['RecordStatus']?.Title}}" [(ngModel)]="dataModel.RecordStatus" name="dataModel.RecordStatus"
             #RecordStatus="ngModel" panelClass="recordStatus-{{ dataModel.RecordStatus }}" required>
             <mat-option *ngFor="
                   let item of dataModelEnumRecordStatusResult.ListItems;
@@ -20,7 +20,7 @@
           </mat-error>
         </mat-form-field>
         <mat-form-field class="example-full-width">
-          <mat-label>عنوان</mat-label>
+          <mat-label>{{fieldsInfo['Title']?.Title}}</mat-label>
           <input matInput [(ngModel)]="dataModel.Title" name="dataModel.Title" #Title type="text" placeholder="عنوان"
             minlength="3" maxlength="100" required />
           <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
@@ -33,7 +33,7 @@
         </mat-form-field>
 
         <mat-form-field class="example-full-width">
-          <mat-label>توضیحات</mat-label>
+          <mat-label>{{fieldsInfo['Description']?.Title}}</mat-label>
           <textarea matInput [(ngModel)]="dataModel.Description" name="dataModel.Description" #Description type="text"
             placeholder="توضیحات" minlength="1" maxlength="500" required rows=5></textarea>
           <mat-icon matSuffix *ngIf="dataModel.Description" matSuffix mat-icon-button aria-label="Clear"

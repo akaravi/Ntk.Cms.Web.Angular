@@ -8,6 +8,7 @@ import {
   ErrorExceptionResult,
   FormInfoModel,
   TicketingDepartemenModel,
+  DataFieldInfoModel,
 } from 'ntk-cms-api';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
@@ -24,6 +25,7 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
   styleUrls: ['./edit.component.scss']
 })
 export class TicketingFaqEditComponent implements OnInit {
+  requestId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
@@ -39,7 +41,9 @@ export class TicketingFaqEditComponent implements OnInit {
 
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
-  requestId = 0;
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
 
   fileManagerTree: TreeModel;
@@ -50,7 +54,7 @@ export class TicketingFaqEditComponent implements OnInit {
   dataModelResult: ErrorExceptionResult<TicketingFaqModel> = new ErrorExceptionResult<TicketingFaqModel>();
   dataModel: TicketingFaqModel = new TicketingFaqModel();
   dataFileModel = new Map<number, string>();
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
+
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
@@ -96,8 +100,11 @@ export class TicketingFaqEditComponent implements OnInit {
     this.formInfo.FormAlert = 'در دریافت ارسال اطلاعات از سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
+    this.ticketingFaqService.setAccessLoad();
     this.ticketingFaqService.ServiceGetOneById(this.requestId).subscribe(
       (next) => {
+        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
         this.dataModel = next.Item;
         if (next.IsSuccess) {
           this.formInfo.FormTitle = this.formInfo.FormTitle + ' ' + next.Item.Question;

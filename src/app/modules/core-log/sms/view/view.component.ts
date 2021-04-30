@@ -8,7 +8,6 @@ import {
   TokenInfoModel,
   NtkCmsApiStoreService,
   DataFieldInfoModel,
-  CoreUserService,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -40,11 +39,10 @@ export class CoreLogSmsViewComponent implements OnInit, OnDestroy {
     public coreLogSmsService: CoreLogSmsService,
     private cmsApiStore: NtkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
-    private coreUserService: CoreUserService,
     public publicHelper: PublicHelper,
   ) {
     if (data) {
-      this.requestId =  data.id+'';
+      this.requestId = data.id + '';
     }
   }
   @ViewChild('vform', { static: false }) formGroup: FormGroup;

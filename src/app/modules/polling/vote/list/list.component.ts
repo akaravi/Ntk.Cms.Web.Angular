@@ -118,6 +118,7 @@ export class PollingVoteListComponent implements OnInit, OnDestroy {
       filter.Value = this.requestContentId;
       filterModel.Filters.push(filter);
     }
+    this.pollingVoteService.setAccessLoad();
     this.pollingVoteService.ServiceGetAll(filterModel).subscribe(
       (next) => {
         this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);

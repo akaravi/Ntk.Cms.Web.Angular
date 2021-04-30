@@ -28,7 +28,7 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
   styleUrls: ['./add.component.scss']
 })
 export class TicketingTaskAddComponent implements OnInit {
-
+  requestLinkDepartemenId = 0;
   constructor(
     private activatedRoute: ActivatedRoute,
     private cmsStoreService: CmsStoreService,
@@ -39,13 +39,11 @@ export class TicketingTaskAddComponent implements OnInit {
     private router: Router) {
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
-  requestLinkDepartemenId = 0;
-
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
   loading = new ProgressSpinnerModel();
   formInfo: FormInfoModel = new FormInfoModel();
   dataAccessModel: AccessModel;
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
   dataModel = new TicketingTaskModel();
   dataModelResult: ErrorExceptionResult<TicketingTaskModel> = new ErrorExceptionResult<TicketingTaskModel>();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();

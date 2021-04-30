@@ -35,7 +35,9 @@ import { PublicHelper } from 'src/app/core/helpers/publicHelper';
   styleUrls: ['./moduleAdd.component.scss'],
 })
 export class CoreSiteModuleAddComponent implements OnInit {
-  constructor(
+  requestLinkSiteId = 0;
+  requestLinkModuleId = 0;
+    constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
     private dialogRef: MatDialogRef<CoreSiteModuleAddComponent>,
@@ -55,17 +57,16 @@ export class CoreSiteModuleAddComponent implements OnInit {
       this.dataModel.LinkModuleId = this.requestLinkModuleId;
     }
   }
-  requestLinkSiteId = 0;
-  requestLinkModuleId = 0;
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
 
   dataAccessModel: AccessModel;
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
 
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<CoreModuleSiteModel> = new ErrorExceptionResult<CoreModuleSiteModel>();
   dataModel: CoreModuleSiteModel = new CoreModuleSiteModel();
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
@@ -75,6 +76,7 @@ export class CoreSiteModuleAddComponent implements OnInit {
 
   ngOnInit(): void {
     this.getEnumRecordStatus();
+    this.DataGetAccess();
   }
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&

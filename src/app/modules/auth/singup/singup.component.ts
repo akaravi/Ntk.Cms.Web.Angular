@@ -42,18 +42,18 @@ export class AuthSingUpComponent implements OnInit, OnDestroy {
     this.hasError = false;
     this.dataModel.CaptchaKey = this.captchaModel.Key;
     this.coreAuthService.ServiceSignupUser(this.dataModel).subscribe((next) => {
-        if (next.IsSuccess) {
-          this.cmsToastrService.typeSuccessRegistery();
-          this.router.navigate(['/']);
-        } else {
-          this.cmsToastrService.typeErrorRegistery(next.ErrorMessage);
-          this.hasError = true;
-          this.onCaptchaOrder();
-        }
-      }, (error) => {
-        this.cmsToastrService.typeError(error);
+      if (next.IsSuccess) {
+        this.cmsToastrService.typeSuccessRegistery();
+        this.router.navigate(['/']);
+      } else {
+        this.cmsToastrService.typeErrorRegistery(next.ErrorMessage);
+        this.hasError = true;
         this.onCaptchaOrder();
-      });
+      }
+    }, (error) => {
+      this.cmsToastrService.typeError(error);
+      this.onCaptchaOrder();
+    });
   }
   onRoulaccespt(): void {
     const dialogRef = this.dialog.open(SingupRuleComponent);
@@ -62,7 +62,7 @@ export class AuthSingUpComponent implements OnInit, OnDestroy {
       this.Roulaccespt = result;
     });
   }
-  passwordValid(event):void {
+  passwordValid(event): void {
     this.passwordIsValid = event;
   }
   onCaptchaOrder(): void {

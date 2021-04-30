@@ -41,13 +41,14 @@ export class TicketingDepartemenLogEditComponent implements OnInit, OnDestroy {
     }
   }
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   tokenInfo = new TokenInfoModel();
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<TicketingDepartemenLogModel> = new ErrorExceptionResult<TicketingDepartemenLogModel>();
   dataModel: TicketingDepartemenLogModel = new TicketingDepartemenLogModel();
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
   fileManagerOpenForm = false;
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
   cmsApiStoreSubscribe: Subscription;
@@ -84,8 +85,10 @@ export class TicketingDepartemenLogEditComponent implements OnInit, OnDestroy {
     this.formInfo.FormAlert = 'در دریافت ارسال اطلاعات از سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
+    this.ticketingDepartemenLogService.setAccessLoad();
     this.ticketingDepartemenLogService.ServiceGetOneById(this.requestId).subscribe(
       (next) => {
+        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
         this.dataModel = next.Item;
         if (next.IsSuccess) {
           this.formInfo.FormTitle = this.formInfo.FormTitle + ' ' + next.Item.Id;

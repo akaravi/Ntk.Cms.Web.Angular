@@ -24,7 +24,7 @@ import { Subscription } from 'rxjs';
 
 
 @Component({
-  selector: 'app-HyperShop-config-mainadmin',
+  selector: 'app-hypershop-config-mainadmin',
   templateUrl: './configMainAdmin.component.html',
   styleUrls: ['./configMainAdmin.component.scss']
 })

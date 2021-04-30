@@ -44,7 +44,7 @@ export class CoreModuleSaleInvoiceDetailViewComponent implements OnInit, OnDestr
     public publicHelper: PublicHelper,
   ) {
     if (data) {
-      this.requestId =  +data.id|| 0;
+      this.requestId = +data.id || 0;
     }
   }
   @ViewChild('vform', { static: false }) formGroup: FormGroup;

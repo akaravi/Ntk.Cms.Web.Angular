@@ -64,16 +64,14 @@ export class CoreSiteUserAddComponent implements OnInit {
       this.dataModel.LinkUserGroupId = this.requestLinkUserGroupId;
     }
   }
-
-
-  dataAccessModel: AccessModel;
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
 
+  dataAccessModel: AccessModel;
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<CoreSiteUserModel> = new ErrorExceptionResult<CoreSiteUserModel>();
   dataModel: CoreSiteUserModel = new CoreSiteUserModel();
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
@@ -83,6 +81,7 @@ export class CoreSiteUserAddComponent implements OnInit {
 
   ngOnInit(): void {
     this.getEnumRecordStatus();
+    this.DataGetAccess();
   }
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&

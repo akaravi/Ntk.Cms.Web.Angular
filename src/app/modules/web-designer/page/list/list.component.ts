@@ -93,6 +93,8 @@ export class WebDesignerMainPageListComponent implements OnInit, OnDestroy {
       this.filteModelContent.Filters.push(filter);
     }
   }
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   comment: string;
   author: string;
   dataSource: any;
@@ -109,8 +111,8 @@ export class WebDesignerMainPageListComponent implements OnInit, OnDestroy {
   tableRowsSelected: Array<WebDesignerMainPageModel> = [];
   tableRowSelected: WebDesignerMainPageModel = new WebDesignerMainPageModel();
   tableSource: MatTableDataSource<WebDesignerMainPageModel> = new MatTableDataSource<WebDesignerMainPageModel>();
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
-  dataModelWebDesignerMainPageTemplateResult: ErrorExceptionResult<WebDesignerMainPageTemplateModel> = new ErrorExceptionResult<WebDesignerMainPageTemplateModel>();
+  dataModelWebDesignerMainPageTemplateResult: ErrorExceptionResult<WebDesignerMainPageTemplateModel>
+    = new ErrorExceptionResult<WebDesignerMainPageTemplateModel>();
 
 
   tabledisplayedColumns: string[] = [

@@ -39,6 +39,7 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
   ]
 })
 export class NewsContentAddComponent implements OnInit, AfterViewInit {
+  requestCategoryId = 0;
   constructor(
     private activatedRoute: ActivatedRoute,
     private cmsStoreService: CmsStoreService,
@@ -54,8 +55,9 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
 
   }
-  requestCategoryId = 0;
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   loading = new ProgressSpinnerModel();
   formInfo: FormInfoModel = new FormInfoModel();
   dataModel = new NewsContentModel();
@@ -69,7 +71,6 @@ export class NewsContentAddComponent implements OnInit, AfterViewInit {
   fileManagerOpenFormPodcast = false;
   fileManagerOpenFormMovie = false;
   dataAccessModel: AccessModel;
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
 
   fileManagerTree: TreeModel;

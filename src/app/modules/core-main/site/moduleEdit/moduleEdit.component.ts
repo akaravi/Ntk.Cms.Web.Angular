@@ -39,6 +39,8 @@ import { MatStepper } from '@angular/material/stepper';
   styleUrls: ['./moduleEdit.component.scss'],
 })
 export class CoreSiteModuleEditComponent implements OnInit {
+  requestLinkSiteId = 0;
+  requestLinkModuleId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
@@ -54,15 +56,15 @@ export class CoreSiteModuleEditComponent implements OnInit {
       this.requestLinkSiteId = +data.LinkSiteId || 0;
     }
   }
-  requestLinkSiteId = 0;
-  requestLinkModuleId = 0;
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
 
 
 
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<CoreModuleSiteModel> = new ErrorExceptionResult<CoreModuleSiteModel>();
   dataModel: CoreModuleSiteModel = new CoreModuleSiteModel();
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
@@ -70,7 +72,6 @@ export class CoreSiteModuleEditComponent implements OnInit {
   fileManagerOpenForm = false;
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
   dataAccessModel: AccessModel;
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
   ngOnInit(): void {
     if (this.requestLinkModuleId <= 0 || this.requestLinkSiteId <= 0) {

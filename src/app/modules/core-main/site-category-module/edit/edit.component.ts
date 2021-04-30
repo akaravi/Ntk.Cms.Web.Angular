@@ -57,6 +57,8 @@ export class CoreSiteCategoryCmsModuleEditComponent implements OnInit {
       this.requestLinkCmsModuleId = +data.LinkCmsModuleId || 0;
     }
   }
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
 
 
@@ -64,7 +66,6 @@ export class CoreSiteCategoryCmsModuleEditComponent implements OnInit {
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<CoreSiteCategoryCmsModuleModel> = new ErrorExceptionResult<CoreSiteCategoryCmsModuleModel>();
   dataModel: CoreSiteCategoryCmsModuleModel = new CoreSiteCategoryCmsModuleModel();
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
 
 
   formInfo: FormInfoModel = new FormInfoModel();
@@ -73,7 +74,6 @@ export class CoreSiteCategoryCmsModuleEditComponent implements OnInit {
   fileManagerOpenForm = false;
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
   dataAccessModel: AccessModel;
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
   ngOnInit(): void {
     if (this.requestLinkCmsSiteCategoryId <= 0 || this.requestLinkCmsModuleId <= 0) {

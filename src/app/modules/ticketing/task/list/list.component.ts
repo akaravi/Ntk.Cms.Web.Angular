@@ -36,6 +36,7 @@ import { TicketingTaskAddComponent } from '../add/add.component';
   styleUrls: ['./list.component.scss']
 })
 export class TicketingTaskListComponent implements OnInit, OnDestroy {
+  requestDepartemenId = 0;
   constructor(
     private ticketingTaskService: TicketingTaskService,
     private activatedRoute: ActivatedRoute,
@@ -55,7 +56,8 @@ export class TicketingTaskListComponent implements OnInit, OnDestroy {
     this.filteModelContent.SortColumn = 'Id';
     this.filteModelContent.SortType = EnumSortType.Descending;
   }
-  requestDepartemenId = 0;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   comment: string;
   author: string;
   dataSource: any;
@@ -82,7 +84,6 @@ export class TicketingTaskListComponent implements OnInit, OnDestroy {
     'UpdatedDate',
     'Action'
   ];
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
 
   cmsApiStoreSubscribe: Subscription;

@@ -53,12 +53,12 @@ export class WebDesignerMainPageAddComponent implements OnInit {
     }
   }
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
   keywordDataModel = [];
 
   fileManagerTree: TreeModel;
   appLanguage = 'fa';
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<WebDesignerMainPageModel> = new ErrorExceptionResult<WebDesignerMainPageModel>();

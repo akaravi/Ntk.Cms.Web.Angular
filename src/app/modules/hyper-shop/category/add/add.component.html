@@ -6,7 +6,7 @@
 
       <!-- Name Field -->
       <mat-form-field class="example-full-width">
-        <mat-label>عنوان</mat-label>
+        <mat-label>{{fieldsInfo['Title']?.Title}}</mat-label>
         <input matInput [(ngModel)]="dataModel.Name" name="dataModel.Name" #Name type="text" placeholder="عنوان"
           minlength="3" maxlength="100" required />
         <mat-icon matSuffix *ngIf="dataModel.Name" matSuffix mat-icon-button aria-label="Clear"

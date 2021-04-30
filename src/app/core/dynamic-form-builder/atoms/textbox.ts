@@ -13,8 +13,8 @@ import { FormControl } from '@angular/forms';
 export class TextBoxComponent {
   @Input() field: any = {};
   @Input() optionFormControl: FormControl;
-  get isValid() { return this.optionFormControl.valid; }
-  get isDirty() { return this.optionFormControl.dirty; }
+  get isValid(): any { return this.optionFormControl.valid; }
+  get isDirty(): any { return this.optionFormControl.dirty; }
 
   constructor() {
 

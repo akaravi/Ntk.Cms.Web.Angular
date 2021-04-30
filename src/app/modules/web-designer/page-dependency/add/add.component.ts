@@ -40,27 +40,23 @@ export class WebDesignerMainPageDependencyAddComponent implements OnInit {
     private cmsToastrService: CmsToastrService,
     public publicHelper: PublicHelper,
   ) {
-
-
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
 
   fileManagerTree: TreeModel;
   appLanguage = 'fa';
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
   loading = new ProgressSpinnerModel();
-  dataModelResult: ErrorExceptionResult<WebDesignerMainPageDependencyModel> = new ErrorExceptionResult<WebDesignerMainPageDependencyModel>();
+  dataModelResult: ErrorExceptionResult<WebDesignerMainPageDependencyModel>
+    = new ErrorExceptionResult<WebDesignerMainPageDependencyModel>();
   dataModel: WebDesignerMainPageDependencyModel = new WebDesignerMainPageDependencyModel();
-
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
-
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
-
   fileManagerOpenForm = false;
-
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
 
 
@@ -113,10 +109,10 @@ export class WebDesignerMainPageDependencyAddComponent implements OnInit {
           this.cmsToastrService.typeSuccessAdd();
           this.dialogRef.close({ dialogChangedDate: true });
 
-              } else {
+        } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
-          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
         }
         this.loading.display = false;
       },

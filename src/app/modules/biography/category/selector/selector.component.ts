@@ -94,7 +94,7 @@ export class BiographyCategorySelectorComponent implements OnInit {
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
     // this.loading.backdropEnabled = false;
-        let filter = new FilterDataModel();
+    let filter = new FilterDataModel();
     filter.PropertyName = 'Title';
     filter.Value = text;
     filter.SearchType = EnumFilterDataModelSearchTypes.Contains;

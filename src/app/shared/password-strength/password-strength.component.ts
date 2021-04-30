@@ -17,7 +17,7 @@ export class PasswordStrengthComponent implements OnChanges {
 
   private colors = ['darkred', 'orangered', 'orange', 'yellowgreen'];
 
-  private static checkStrength(p) {
+  private static checkStrength(p): any {
     let force = 0;
     const regex = /[$-/:-?{-~!"^_@`\[\]]/g;
 
@@ -78,7 +78,7 @@ export class PasswordStrengthComponent implements OnChanges {
   }
 
 
-  private getColor(s) {
+  private getColor(s): any {
     let idx = 0;
     if (s <= 10) {
         idx = 0;
@@ -97,7 +97,7 @@ export class PasswordStrengthComponent implements OnChanges {
     };
   }
 
-  private setBarColors(count, col) {
+  private setBarColors(count, col): any {
     for (let n = 0; n < count; n++) {
         this['bar' + n] = col;
     }

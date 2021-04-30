@@ -46,7 +46,8 @@ export class WebDesignerMainPageDependencyTreeComponent implements OnInit, OnDes
     this.onActionSelectForce(x);
   }
   dataModelSelect: WebDesignerMainPageDependencyModel = new WebDesignerMainPageDependencyModel();
-  dataModelResult: ErrorExceptionResult<WebDesignerMainPageDependencyModel> = new ErrorExceptionResult<WebDesignerMainPageDependencyModel>();
+  dataModelResult: ErrorExceptionResult<WebDesignerMainPageDependencyModel>
+    = new ErrorExceptionResult<WebDesignerMainPageDependencyModel>();
   filteModel = new FilterModel();
   loading = new ProgressSpinnerModel();
   treeControl = new NestedTreeControl<WebDesignerMainPageDependencyModel>(node => null);

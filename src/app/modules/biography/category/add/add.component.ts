@@ -6,6 +6,7 @@ import {
   BiographyCategoryService,
   BiographyCategoryModel,
   CmsStore,
+  DataFieldInfoModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -33,6 +34,7 @@ import { PublicHelper } from 'src/app/core/helpers/publicHelper';
   styleUrls: ['./add.component.scss'],
 })
 export class BiographyCategoryAddComponent implements OnInit {
+  requestParentId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<BiographyCategoryAddComponent>,
@@ -51,7 +53,9 @@ export class BiographyCategoryAddComponent implements OnInit {
     }
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
-  requestParentId = 0;
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
 
   fileManagerTree: TreeModel;
@@ -61,7 +65,6 @@ export class BiographyCategoryAddComponent implements OnInit {
   dataModelResult: ErrorExceptionResult<BiographyCategoryModel> = new ErrorExceptionResult<BiographyCategoryModel>();
   dataModel: BiographyCategoryModel = new BiographyCategoryModel();
 
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
@@ -76,10 +79,9 @@ export class BiographyCategoryAddComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.formInfo.FormTitle = 'ثبت دسته بندی جدید';
-
     this.getEnumRecordStatus();
+    this.DataGetAccess();
   }
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
@@ -93,6 +95,23 @@ export class BiographyCategoryAddComponent implements OnInit {
   }
 
 
+  DataGetAccess(): void {
+    this.biographyCategoryService
+      .ServiceViewModel()
+      .subscribe(
+        async (next) => {
+          if (next.IsSuccess) {
+            // this.dataAccessModel = next.Access;
+            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+          } else {
+            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
+          }
+        },
+        (error) => {
+          this.cmsToastrService.typeErrorGetAccess(error);
+        }
+      );
+  }
   DataAddContent(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
@@ -106,10 +125,10 @@ export class BiographyCategoryAddComponent implements OnInit {
           this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
           this.cmsToastrService.typeSuccessAdd();
           this.dialogRef.close({ dialogChangedDate: true });
-              } else {
+        } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
-          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
         }
         this.loading.display = false;
       },

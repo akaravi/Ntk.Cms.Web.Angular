@@ -48,7 +48,7 @@ export class CmsSearchListComponent implements OnInit {
   }
   setAccess(model: AccessModel): void {
     this.optionsData.data.Access = model;
-    if(!this.Filters || this.Filters.length==0){
+    if (!this.Filters || this.Filters.length === 0) {
       this.setFields();
     }
   }
@@ -166,7 +166,7 @@ export class CmsSearchListComponent implements OnInit {
   }
 
   onSubmit(): void {
-     this.getRules();
+    this.getRules();
     if (this.optionsData.parentMethods) {
       this.optionsData.parentMethods.onSubmit(this.Filters);
     }
@@ -179,7 +179,7 @@ export class CmsSearchListComponent implements OnInit {
   }
   onSetRules(): void {
 
-   }
+  }
   getSearchType(operator): number {
     switch (operator) {
       case 'equal':

@@ -5,6 +5,7 @@ import {
   FormInfoModel,
   PollingVoteService,
   PollingVoteModel,
+  DataFieldInfoModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -18,6 +19,7 @@ import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { ComponentActionEnum } from 'src/app/core/models/component-action-enum';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
+import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 
 @Component({
@@ -26,32 +28,33 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
   styleUrls: ['./edit.component.scss'],
 })
 export class PollingVoteEditComponent implements OnInit {
-  constructor(
+  requestId = 0;
+  requestParentId = 0;
+  requestContentId = 0;
+    constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
     private dialogRef: MatDialogRef<PollingVoteEditComponent>,
     public coreEnumService: CoreEnumService,
     public pollingVoteService: PollingVoteService,
-    private cmsToastrService: CmsToastrService
+    private cmsToastrService: CmsToastrService,
+    private publicHelper: PublicHelper
   ) {
     if (data) {
       this.requestId = +data.id || 0;
       this.requestParentId = +data.parentId || 0;
       this.requestContentId = +data.contentId || 0;
     }
-
-
   }
-  requestId = 0;
-  requestParentId = 0;
-  requestContentId = 0;
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
 
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<PollingVoteModel> = new ErrorExceptionResult<PollingVoteModel>();
   dataModel: PollingVoteModel = new PollingVoteModel();
 
   ComponentAction = ComponentActionEnum.none;
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
@@ -96,8 +99,11 @@ export class PollingVoteEditComponent implements OnInit {
     this.formInfo.FormAlert = 'در دریافت ارسال اطلاعات از سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
+    this.pollingVoteService.setAccessLoad();
     this.pollingVoteService.ServiceGetOneById(this.requestId).subscribe(
       (next) => {
+        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
         this.dataModel = next.Item;
         if (next.IsSuccess) {
           this.formInfo.FormAlert = '';

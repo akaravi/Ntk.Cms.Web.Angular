@@ -56,6 +56,8 @@ export class WebDesignerMainPageTemplateListComponent implements OnInit, OnDestr
     this.filteModelContent.SortColumn = 'Id';
     this.filteModelContent.SortType = EnumSortType.Descending;
   }
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   comment: string;
   author: string;
   dataSource: any;
@@ -72,7 +74,6 @@ export class WebDesignerMainPageTemplateListComponent implements OnInit, OnDestr
   tableRowsSelected: Array<WebDesignerMainPageTemplateModel> = [];
   tableRowSelected: WebDesignerMainPageTemplateModel = new WebDesignerMainPageTemplateModel();
   tableSource: MatTableDataSource<WebDesignerMainPageTemplateModel> = new MatTableDataSource<WebDesignerMainPageTemplateModel>();
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
   dataModelCoreModuleResult: ErrorExceptionResult<CoreModuleModel> = new ErrorExceptionResult<CoreModuleModel>();
 
 

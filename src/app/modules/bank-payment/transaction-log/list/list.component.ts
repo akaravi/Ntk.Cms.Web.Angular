@@ -184,7 +184,7 @@ export class BankPaymentTransactionLogListComponent implements OnInit, OnDestroy
 
 
   onActionbuttonViewRow(model: BankPaymentTransactionLogModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id<= 0) {
+    if (!model || !model.Id || model.Id <= 0) {
       this.cmsToastrService.typeErrorSelected('ردیفی انتخاب نشده است');
       return;
     }
@@ -208,7 +208,7 @@ export class BankPaymentTransactionLogListComponent implements OnInit, OnDestroy
 
 
   onActionbuttonDeleteRow(model: BankPaymentTransactionLogModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id<= 0) {
+    if (!model || !model.Id || model.Id <= 0) {
       const emessage = 'ردیفی برای حذف انتخاب نشده است';
       this.cmsToastrService.typeErrorSelected(emessage);
       return;
@@ -234,7 +234,7 @@ export class BankPaymentTransactionLogListComponent implements OnInit, OnDestroy
     // });
   }
   onActionbuttonNotifictionActionSend(model: BankPaymentTransactionLogModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id<= 0) {
+    if (!model || !model.Id || model.Id <= 0) {
       this.cmsToastrService.typeErrorSelected('ردیفی  انتخاب نشده است');
       return;
     }

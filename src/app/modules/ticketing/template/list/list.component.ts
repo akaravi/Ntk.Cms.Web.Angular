@@ -34,6 +34,7 @@ import { TicketingTemplateAddComponent } from '../add/add.component';
   styleUrls: ['./list.component.scss']
 })
 export class TicketingTemplateListComponent implements OnInit, OnDestroy {
+  requestDepartemenId = 0;
   constructor(
     private ticketingTemplateService: TicketingTemplateService,
     private activatedRoute: ActivatedRoute,
@@ -53,7 +54,8 @@ export class TicketingTemplateListComponent implements OnInit, OnDestroy {
     this.filteModelContent.SortColumn = 'Id';
     this.filteModelContent.SortType = EnumSortType.Descending;
   }
-  requestDepartemenId = 0;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   comment: string;
   author: string;
   dataSource: any;
@@ -78,7 +80,6 @@ export class TicketingTemplateListComponent implements OnInit, OnDestroy {
     'Title',
     'Action'
   ];
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
   cmsApiStoreSubscribe: Subscription;
 
 

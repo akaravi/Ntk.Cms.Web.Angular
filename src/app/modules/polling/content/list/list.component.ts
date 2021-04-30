@@ -100,15 +100,16 @@ export class PollingContentListComponent implements OnInit, OnDestroy {
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
-      /*filter CLone*/
-      const filterModel = JSON.parse(JSON.stringify(this.filteModelContent));
-      /*filter CLone*/
+    /*filter CLone*/
+    const filterModel = JSON.parse(JSON.stringify(this.filteModelContent));
+    /*filter CLone*/
     if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
       const filter = new FilterDataModel();
       filter.PropertyName = 'LinkCategoryId';
       filter.Value = this.categoryModelSelected.Id;
       filterModel.Filters.push(filter);
     }
+    this.pollingContentService.setAccessLoad();
     this.pollingContentService.ServiceGetAll(filterModel).subscribe(
       (next) => {
         this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
@@ -214,7 +215,7 @@ export class PollingContentListComponent implements OnInit, OnDestroy {
   onActionbuttonDeleteRow(model: PollingContentModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
       const emessage = 'ردیفی برای حذف انتخاب نشده است';
-      this.cmsToastrService.typeErrorSelected(emessage);      return;
+      this.cmsToastrService.typeErrorSelected(emessage); return;
     }
     this.tableRowSelected = model;
 

@@ -2,10 +2,11 @@
 import { Component, OnInit, Input, ViewChild, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup } from '@angular/forms';
-import { CoreEnumService, ErrorExceptionResult, FilterModel, FormInfoModel, BiographyCategoryModel, BiographyCategoryService } from 'ntk-cms-api';
+import { CoreEnumService, ErrorExceptionResult, FilterModel, FormInfoModel, BiographyCategoryModel, BiographyCategoryService, DataFieldInfoModel } from 'ntk-cms-api';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
+import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 
 @Component({
@@ -18,21 +19,21 @@ export class BiographyCategoryDeleteComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<BiographyCategoryDeleteComponent>,
-    private activatedRoute: ActivatedRoute,
+    private publicHelper: PublicHelper,
     private biographyCategoryService: BiographyCategoryService,
     private cmsToastrService: CmsToastrService
   ) {
     if (data) {
       this.requestId = +data.id || 0;
     }
-
-
   }
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   loading = new ProgressSpinnerModel();
   dataModelResultCategory: ErrorExceptionResult<BiographyCategoryModel> = new ErrorExceptionResult<BiographyCategoryModel>();
   dataModelResultCategoryAllData: ErrorExceptionResult<BiographyCategoryModel> = new ErrorExceptionResult<BiographyCategoryModel>();
-    dataModel: any = {};
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  dataModel: any = {};
   formInfo: FormInfoModel = new FormInfoModel();
   ngOnInit(): void {
 
@@ -52,10 +53,13 @@ export class BiographyCategoryDeleteComponent implements OnInit {
     }
     this.formInfo.FormAlert = 'در حال لود اطلاعات';
     this.loading.display = true;
+    this.biographyCategoryService.setAccessLoad();
     this.biographyCategoryService
       .ServiceGetOneById(this.requestId)
       .subscribe(
         (next) => {
+          this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
           this.dataModelResultCategory = next;
           if (!next.IsSuccess) {
             this.formInfo.FormAlert = 'برروز خطا';

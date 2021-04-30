@@ -56,6 +56,8 @@ export class WebDesignerMainMenuListComponent implements OnInit, OnDestroy {
     this.filteModelContent.SortColumn = 'ShowInMenuOrder';
     this.filteModelContent.SortType = EnumSortType.Ascending;
   }
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   comment: string;
   author: string;
   flag = false;
@@ -87,7 +89,6 @@ export class WebDesignerMainMenuListComponent implements OnInit, OnDestroy {
     'position'
   ];
 
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
   dataModelEnumMenuPlaceTypeResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
 
 

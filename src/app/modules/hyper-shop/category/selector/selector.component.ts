@@ -70,18 +70,18 @@ export class HyperShopCategorySelectorComponent implements OnInit {
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
     // this.loading.backdropEnabled = false;
-      let filter = new FilterDataModel();
-      filter.PropertyName = 'Name';
-      filter.Value = text;
-      filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
-      filteModel.Filters.push(filter);
-      /* */
-      filter = new FilterDataModel();
-      filter.PropertyName = 'Code';
-      filter.Value = text;
-      filter.SearchType = EnumFilterDataModelSearchTypes.Equal;
-      filter.ClauseType = EnumClauseType.Or;
-      filteModel.Filters.push(filter);
+    let filter = new FilterDataModel();
+    filter.PropertyName = 'Name';
+    filter.Value = text;
+    filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
+    filteModel.Filters.push(filter);
+    /* */
+    filter = new FilterDataModel();
+    filter.PropertyName = 'Code';
+    filter.Value = text;
+    filter.SearchType = EnumFilterDataModelSearchTypes.Equal;
+    filter.ClauseType = EnumClauseType.Or;
+    filteModel.Filters.push(filter);
 
     this.loading.Globally = false;
     this.loading.display = true;

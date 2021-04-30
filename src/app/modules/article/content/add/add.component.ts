@@ -39,6 +39,7 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
   ]
 })
 export class ArticleContentAddComponent implements OnInit, AfterViewInit {
+  requestCategoryId = 0;
   constructor(
     private activatedRoute: ActivatedRoute,
     private cmsStoreService: CmsStoreService,
@@ -53,11 +54,9 @@ export class ArticleContentAddComponent implements OnInit, AfterViewInit {
   ) {
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
-  requestCategoryId = 0;
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
   dataModel = new ArticleContentModel();
   dataModelResult: ErrorExceptionResult<ArticleContentModel> = new ErrorExceptionResult<ArticleContentModel>();
-  // datatagDataModelResult: ErrorExceptionResult<CoreModuleTagModel> = new ErrorExceptionResult<CoreModuleTagModel>();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   loading = new ProgressSpinnerModel();
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];

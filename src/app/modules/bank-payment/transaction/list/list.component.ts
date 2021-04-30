@@ -307,7 +307,7 @@ export class BankPaymentTransactionListComponent implements OnInit, OnDestroy {
     }
     this.tableRowSelected = model;
 
-    this.router.navigate(['/bankpayment/transactionlog/LinkTransactionId/',this.tableRowSelected.Id]);
+    this.router.navigate(['/bankpayment/transactionlog/LinkTransactionId/', this.tableRowSelected.Id]);
 
   }
   onActionbuttonGotoBank(model: BankPaymentTransactionModel = this.tableRowSelected): void {
@@ -317,7 +317,7 @@ export class BankPaymentTransactionListComponent implements OnInit, OnDestroy {
       return;
     }
     this.cmsToastrService.typeSuccessMessage('درحال انتقال به درگاه پرداخت');
-    this.document.location.href=this.bankPaymentTransactionService.ServiceGoToBank(model.Id);
+    this.document.location.href = this.bankPaymentTransactionService.ServiceGoToBank(model.Id);
   }
   onActionbuttonNotifictionActionSend(model: BankPaymentTransactionModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id <= 0) {

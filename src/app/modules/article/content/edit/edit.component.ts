@@ -40,6 +40,7 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
   ]
 })
 export class ArticleContentEditComponent implements OnInit, AfterViewInit {
+  requestId = 0;
   constructor(
     private activatedRoute: ActivatedRoute,
     private cmsStoreService: CmsStoreService,
@@ -55,8 +56,9 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
   ) {
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
-  requestId = 0;
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   dataModel = new ArticleContentModel();
   dataModelResult: ErrorExceptionResult<ArticleContentModel> = new ErrorExceptionResult<ArticleContentModel>();
   dataContentTagModelResult: ErrorExceptionResult<ArticleContentTagModel> = new ErrorExceptionResult<ArticleContentTagModel>();
@@ -73,7 +75,6 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
   similarTabledataSource = new MatTableDataSource<ArticleContentModel>();
   otherInfoTabledataSource = new MatTableDataSource<ArticleContentOtherInfoModel>();
   dataAccessModel: AccessModel;
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
   loading = new ProgressSpinnerModel();
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];

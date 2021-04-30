@@ -1,10 +1,11 @@
 import { Component, OnInit, Input, ViewChild, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup } from '@angular/forms';
-import { CoreEnumService, ErrorExceptionResult, FilterModel, FormInfoModel, TicketingDepartemenModel, TicketingDepartemenService } from 'ntk-cms-api';
+import { CoreEnumService, DataFieldInfoModel, ErrorExceptionResult, FilterModel, FormInfoModel, TicketingDepartemenModel, TicketingDepartemenService } from 'ntk-cms-api';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
+import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 
 @Component({
@@ -17,7 +18,7 @@ export class TicketingDepartemenDeleteComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<TicketingDepartemenDeleteComponent>,
-    private activatedRoute: ActivatedRoute,
+    private publicHelper: PublicHelper,
     private ticketingDepartemenService: TicketingDepartemenService,
     private cmsToastrService: CmsToastrService
   ) {
@@ -25,11 +26,13 @@ export class TicketingDepartemenDeleteComponent implements OnInit {
       this.requestId = +data.id || 0;
     }
   }
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   loading = new ProgressSpinnerModel();
   dataModelResultCategory: ErrorExceptionResult<TicketingDepartemenModel> = new ErrorExceptionResult<TicketingDepartemenModel>();
   dataModelResultCategoryAllData: ErrorExceptionResult<TicketingDepartemenModel> = new ErrorExceptionResult<TicketingDepartemenModel>();
   dataModel: any = {};
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
   formInfo: FormInfoModel = new FormInfoModel();
   ngOnInit(): void {
 
@@ -48,10 +51,13 @@ export class TicketingDepartemenDeleteComponent implements OnInit {
     }
     this.formInfo.FormAlert = 'در حال لود اطلاعات';
     this.loading.display = true;
+    this.ticketingDepartemenService.setAccessLoad();
     this.ticketingDepartemenService
       .ServiceGetOneById(this.requestId)
       .subscribe(
         (next) => {
+          this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
           this.dataModelResultCategory = next;
           if (!next.IsSuccess) {
             this.formInfo.FormAlert = 'برروز خطا';

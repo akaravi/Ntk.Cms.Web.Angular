@@ -26,7 +26,7 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 @Component({
-  selector: 'app-core-moduleSaleItem-add',
+  selector: 'app-core-modulesaleitem-add',
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.scss'],
 })

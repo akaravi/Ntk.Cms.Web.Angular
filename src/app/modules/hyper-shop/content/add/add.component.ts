@@ -35,7 +35,7 @@ export class HyperShopContentAddComponent implements OnInit {
     public publicHelper: PublicHelper,
   ) {
     if (data) {
-      this.requestParentId = data.parentId +'';
+      this.requestParentId = data.parentId + '';
     }
     if (this.requestParentId.length > 0) {
       this.dataModel.CategoryCode = this.requestParentId;
@@ -108,7 +108,7 @@ export class HyperShopContentAddComponent implements OnInit {
     );
   }
   onActionSelectorSelect(model: HyperShopCategoryModel | null): void {
-    if (!model || !model.Code||model.Code.length <= 0) {
+    if (!model || !model.Code || model.Code.length <= 0) {
       const message = 'دسته بندی اطلاعات مشخص نیست';
       this.cmsToastrService.typeErrorSelected(message);
       return;

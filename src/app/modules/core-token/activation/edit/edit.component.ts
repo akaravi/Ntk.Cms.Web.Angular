@@ -55,19 +55,20 @@ export class CoreTokenActivationEditComponent implements OnInit, OnDestroy {
       this.requestId = data.id;
     }
   }
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   tokenInfo = new TokenInfoModel();
 
 
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<CoreTokenActivationModel> = new ErrorExceptionResult<CoreTokenActivationModel>();
   dataModel: CoreTokenActivationModel = new CoreTokenActivationModel();
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   dataModelEnumManageUserAccessAreaTypesResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   dataModelEnumManageUserAccessControllerTypesResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
 
   fileManagerOpenForm = false;
@@ -127,8 +128,6 @@ export class CoreTokenActivationEditComponent implements OnInit, OnDestroy {
     this.loading.display = true;
     /*َAccess Field*/
     this.coreTokenActivationService.setAccessLoad();
-
-
     this.coreTokenActivationService.ServiceGetOneById(this.requestId).subscribe(
       (next) => {
         /*َAccess Field*/

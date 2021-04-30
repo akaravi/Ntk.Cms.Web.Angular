@@ -96,7 +96,7 @@ export class HyperShopCategoryTreeComponent implements OnInit, OnDestroy {
     this.optionSelect.emit(this.dataModelSelect);
   }
   onActionReload(): void {
-    if (this.dataModelSelect && this.dataModelSelect.Code&& this.dataModelSelect.Code.length > 0) {
+    if (this.dataModelSelect && this.dataModelSelect.Code && this.dataModelSelect.Code.length > 0) {
       this.onActionSelect(this.dataModelSelect);
     }
     else {
@@ -143,12 +143,12 @@ export class HyperShopCategoryTreeComponent implements OnInit, OnDestroy {
   onActionDelete(): void {
 
     let id = '';
-    if (this.dataModelSelect && this.dataModelSelect.Code&& this.dataModelSelect.Code.length > 0) {
+    if (this.dataModelSelect && this.dataModelSelect.Code && this.dataModelSelect.Code.length > 0) {
       id = this.dataModelSelect.Code;
     }
     if (id === '') {
-      const message = 'دسته بندی انتخاب نشده است';
-      this.cmsToastrService.typeErrorSelected(message);
+      const message1 = 'دسته بندی انتخاب نشده است';
+      this.cmsToastrService.typeErrorSelected(message1);
       return;
     }
 

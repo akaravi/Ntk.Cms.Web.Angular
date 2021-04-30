@@ -5,6 +5,7 @@ import {
   FormInfoModel,
   BankPaymentPublicConfigService,
   BankPaymentPublicConfigModel,
+  DataFieldInfoModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -42,6 +43,9 @@ export class BankPaymentPublicConfigAddComponent implements OnInit {
 
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
 
   fileManagerTree: TreeModel;
@@ -51,7 +55,6 @@ export class BankPaymentPublicConfigAddComponent implements OnInit {
   dataModelResult: ErrorExceptionResult<BankPaymentPublicConfigModel> = new ErrorExceptionResult<BankPaymentPublicConfigModel>();
   dataModel: BankPaymentPublicConfigModel = new BankPaymentPublicConfigModel();
 
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
@@ -84,6 +87,8 @@ export class BankPaymentPublicConfigAddComponent implements OnInit {
     this.loading.display = true;
     this.bankPaymentPublicConfigService.ServiceAdd(this.dataModel).subscribe(
       (next) => {
+        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
         this.formInfo.FormSubmitAllow = true;
         this.dataModelResult = next;
         if (next.IsSuccess) {

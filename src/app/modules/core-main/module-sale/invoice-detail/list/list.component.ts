@@ -33,7 +33,7 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDial
 import { CoreModuleSaleInvoiceDetailViewComponent } from '../view/view.component';
 
 @Component({
-  selector: 'app-core-moduleSaleInvoiceDetail-list',
+  selector: 'app-core-modulesaleinvoicedetail-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })

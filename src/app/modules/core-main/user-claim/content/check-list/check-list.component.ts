@@ -112,7 +112,7 @@ export class CoreUserClaimContentCheckListComponent implements OnInit, OnDestroy
     this.loading.display = true;
     this.loading.Globally = false;
 
-    if (this.requestLinkUserId > 0 && this.requestLinkSiteId>0) {
+    if (this.requestLinkUserId > 0 && this.requestLinkSiteId > 0) {
       /** */
       const model = new CoreUserClaimCheckDtoModel();
       model.UserId = this.requestLinkUserId;

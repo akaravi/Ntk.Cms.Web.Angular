@@ -8,9 +8,10 @@ import {
 import { FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { CoreEnumService, ErrorExceptionResult, FormInfoModel, ItemState, BlogContentModel, BlogContentService } from 'ntk-cms-api';
+import { CoreEnumService, ErrorExceptionResult, FormInfoModel, ItemState, BlogContentModel, BlogContentService, DataFieldInfoModel } from 'ntk-cms-api';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
+import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 @Component({
   selector: 'app-blog-content-delete',
@@ -22,7 +23,7 @@ export class BlogContentDeleteComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<BlogContentDeleteComponent>,
-    private activatedRoute: ActivatedRoute,
+    private publicHelper: PublicHelper,
     private blogContentService: BlogContentService,
     private cmsToastrService: CmsToastrService
   ) {
@@ -30,9 +31,11 @@ export class BlogContentDeleteComponent implements OnInit {
       this.requestId = +data.id || 0;
     }
   }
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   loading = new ProgressSpinnerModel();
   dataModelResultContent: ErrorExceptionResult<BlogContentModel> = new ErrorExceptionResult<BlogContentModel>();
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
   formInfo: FormInfoModel = new FormInfoModel();
   ngOnInit(): void {
     if (this.requestId <= 0) {
@@ -50,10 +53,13 @@ export class BlogContentDeleteComponent implements OnInit {
     }
     this.formInfo.FormAlert = 'در حال لود اطلاعات';
     this.loading.display = true;
+    this.blogContentService.setAccessLoad();
     this.blogContentService
       .ServiceGetOneById(this.requestId)
       .subscribe(
         (next) => {
+          this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
           this.dataModelResultContent = next;
           if (!next.IsSuccess) {
             this.formInfo.FormAlert = 'برروز خطا';

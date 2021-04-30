@@ -26,7 +26,7 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
   styleUrls: ['./edit.component.scss']
 })
 export class TicketingDepartemenOperatorEditComponent implements OnInit {
-
+  requestId = 0;
   constructor(
     private activatedRoute: ActivatedRoute,
     private cmsStoreService: CmsStoreService,
@@ -37,13 +37,12 @@ export class TicketingDepartemenOperatorEditComponent implements OnInit {
     private router: Router) {
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
-  requestId = 0;
-
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   loading = new ProgressSpinnerModel();
   formInfo: FormInfoModel = new FormInfoModel();
   dataAccessModel: AccessModel;
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
   dataModel = new TicketingDepartemenOperatorModel();
   dataModelResult: ErrorExceptionResult<TicketingDepartemenOperatorModel> = new ErrorExceptionResult<TicketingDepartemenOperatorModel>();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
@@ -96,7 +95,6 @@ export class TicketingDepartemenOperatorEditComponent implements OnInit {
     this.loading.display = true;
     /*َAccess Field*/
     this.ticketingDepartemenOperatorService.setAccessLoad();
-
     this.ticketingDepartemenOperatorService
       .ServiceGetOneById(requestId)
       .subscribe(

@@ -7,13 +7,13 @@
       <div class="form-group row">
 
         <mat-form-field class="example-full-width">
-          <mat-label>عنوان</mat-label>
+          <mat-label>{{fieldsInfo['Title']?.Title}}</mat-label>
           <input matInput [(ngModel)]="dataModelResultCategory.Item.Title" name="dataModelResultCategory.Item.Title"
             #Title type="text" placeholder="عنوان" minlength="3" maxlength="50" required readonly />
         </mat-form-field>
 
         <mat-form-field class="example-full-width">
-          <mat-label>توضیحات</mat-label>
+          <mat-label>{{fieldsInfo['Description']?.Title}}</mat-label>
           <textarea matInput [(ngModel)]="dataModelResultCategory.Item.Description"
             name="dataModelResultCategory.Item.Description" #Description type="text" placeholder="توضیحات" minlength="1"
             maxlength="100" readonly required rows=5></textarea>

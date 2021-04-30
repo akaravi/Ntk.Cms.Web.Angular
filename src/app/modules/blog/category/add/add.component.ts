@@ -6,6 +6,7 @@ import {
   BlogCategoryService,
   BlogCategoryModel,
   CmsStore,
+  DataFieldInfoModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -23,7 +24,6 @@ import {
   TreeModel,
   NodeInterface,
 } from 'ntk-cms-filemanager';
-import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
@@ -33,6 +33,7 @@ import { PublicHelper } from 'src/app/core/helpers/publicHelper';
   styleUrls: ['./add.component.scss'],
 })
 export class BlogCategoryAddComponent implements OnInit {
+  requestParentId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<BlogCategoryAddComponent>,
@@ -50,7 +51,9 @@ export class BlogCategoryAddComponent implements OnInit {
     }
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
-  requestParentId = 0;
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
 
   fileManagerTree: TreeModel;
@@ -60,7 +63,6 @@ export class BlogCategoryAddComponent implements OnInit {
   dataModelResult: ErrorExceptionResult<BlogCategoryModel> = new ErrorExceptionResult<BlogCategoryModel>();
   dataModel: BlogCategoryModel = new BlogCategoryModel();
 
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
@@ -79,6 +81,8 @@ export class BlogCategoryAddComponent implements OnInit {
     this.formInfo.FormTitle = 'ثبت دسته بندی جدید';
 
     this.getEnumRecordStatus();
+    this.DataGetAccess();
+
   }
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
@@ -92,6 +96,23 @@ export class BlogCategoryAddComponent implements OnInit {
   }
 
 
+  DataGetAccess(): void {
+    this.blogCategoryService
+      .ServiceViewModel()
+      .subscribe(
+        async (next) => {
+          if (next.IsSuccess) {
+            // this.dataAccessModel = next.Access;
+            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+          } else {
+            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
+          }
+        },
+        (error) => {
+          this.cmsToastrService.typeErrorGetAccess(error);
+        }
+      );
+  }
   DataAddContent(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';

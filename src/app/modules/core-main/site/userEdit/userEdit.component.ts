@@ -56,13 +56,14 @@ export class CoreSiteUserEditComponent implements OnInit {
       this.requestLinkUserGroupId = +data.LinkUserGroupId || 0;
     }
   }
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
 
 
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<CoreSiteUserModel> = new ErrorExceptionResult<CoreSiteUserModel>();
   dataModel: CoreSiteUserModel = new CoreSiteUserModel();
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
@@ -70,7 +71,6 @@ export class CoreSiteUserEditComponent implements OnInit {
   fileManagerOpenForm = false;
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
   dataAccessModel: AccessModel;
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
   ngOnInit(): void {
     if (this.requestLinkUserId <= 0 || this.requestLinkSiteId <= 0) {

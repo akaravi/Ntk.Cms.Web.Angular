@@ -35,7 +35,6 @@ import { TicketingAnswerAddComponent } from '../add/add.component';
 })
 export class TicketingAnswerListComponent implements OnInit, OnDestroy {
   requestLinkTicketId = 0;
-
   constructor(
     private ticketingAnswerService: TicketingAnswerService,
     private activatedRoute: ActivatedRoute,
@@ -55,6 +54,8 @@ export class TicketingAnswerListComponent implements OnInit, OnDestroy {
     this.filteModelContent.SortColumn = 'Id';
     this.filteModelContent.SortType = EnumSortType.Ascending;
   }
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   comment: string;
   author: string;
   dataSource: any;
@@ -83,7 +84,6 @@ export class TicketingAnswerListComponent implements OnInit, OnDestroy {
     'UpdatedDate',
     'Action'
   ];
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
 
   cmsApiStoreSubscribe: Subscription;
@@ -126,6 +126,7 @@ export class TicketingAnswerListComponent implements OnInit, OnDestroy {
       filter.Value = this.categoryModelSelected.Id;
       filterModel.Filters.push(filter);
     }
+    this.ticketingAnswerService.setAccessLoad();
     this.ticketingAnswerService.ServiceGetAll(filterModel).subscribe(
       (next) => {
         this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);

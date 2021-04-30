@@ -5,6 +5,7 @@ import {
   FormInfoModel,
   HyperShopCategoryService,
   HyperShopCategoryModel,
+  DataFieldInfoModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -41,13 +42,15 @@ export class HyperShopCategoryAddComponent implements OnInit {
   ) {
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
   fileManagerTree: TreeModel;
   appLanguage = 'fa';
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<HyperShopCategoryModel> = new ErrorExceptionResult<HyperShopCategoryModel>();
   dataModel: HyperShopCategoryModel = new HyperShopCategoryModel();
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   fileManagerOpenForm = false;
@@ -56,6 +59,8 @@ export class HyperShopCategoryAddComponent implements OnInit {
 
     this.formInfo.FormTitle = 'اضافه کردن  ';
     this.getEnumRecordStatus();
+    this.DataGetAccess();
+
   }
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
@@ -71,6 +76,24 @@ export class HyperShopCategoryAddComponent implements OnInit {
     this.dataModel.Image = model.id + '';
     // this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
   }
+
+DataGetAccess(): void {
+  this.hyperShopCategoryService
+    .ServiceViewModel()
+    .subscribe(
+      async (next) => {
+        if (next.IsSuccess) {
+          // this.dataAccessModel = next.Access;
+          this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+        } else {
+          this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
+        }
+      },
+      (error) => {
+        this.cmsToastrService.typeErrorGetAccess(error);
+      }
+    );
+}
   DataAddContent(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';

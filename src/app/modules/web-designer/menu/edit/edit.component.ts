@@ -44,11 +44,12 @@ export class WebDesignerMainMenuEditComponent implements OnInit {
     private cmsToastrService: CmsToastrService,
   ) {
     if (data) {
-      this.requestId = data.id +'';
+      this.requestId = data.id + '';
     }
 
   }
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
 
   appLanguage = 'fa';
@@ -61,7 +62,6 @@ export class WebDesignerMainMenuEditComponent implements OnInit {
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   dataModelEnumMenuPlaceTypeResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   dataAccessModel: AccessModel;
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
   fileManagerOpenForm = false;
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
@@ -103,7 +103,6 @@ export class WebDesignerMainMenuEditComponent implements OnInit {
     this.loading.display = true;
     /*َAccess Field*/
     this.webDesignerMainMenuService.setAccessLoad();
-
     this.webDesignerMainMenuService.ServiceGetOneById(this.requestId).subscribe(
       (next) => {
         /*َAccess Field*/

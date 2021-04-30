@@ -31,9 +31,10 @@ export class WebDesignerMainPageDependencyHeaderComponent implements OnInit {
   ) {
 
   }
-  @Input() optionId ='';
+  @Input() optionId = '';
   loading = new ProgressSpinnerModel();
-  dataModelResult: ErrorExceptionResult<WebDesignerMainPageDependencyModel> = new ErrorExceptionResult<WebDesignerMainPageDependencyModel>();
+  dataModelResult: ErrorExceptionResult<WebDesignerMainPageDependencyModel>
+    = new ErrorExceptionResult<WebDesignerMainPageDependencyModel>();
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();

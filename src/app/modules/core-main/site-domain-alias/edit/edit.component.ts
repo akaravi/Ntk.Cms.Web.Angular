@@ -6,6 +6,7 @@ import {
   CoreSiteDomainAliasService,
   CoreSiteDomainAliasModel,
   CoreSiteModel,
+  DataFieldInfoModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -23,6 +24,7 @@ import {
 } from 'ntk-cms-filemanager';
 import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
+import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 @Component({
   selector: 'app-core-site-domainalias-edit',
@@ -37,6 +39,7 @@ export class CoreSiteDomainAliasEditComponent implements OnInit {
     private dialogRef: MatDialogRef<CoreSiteDomainAliasEditComponent>,
     public coreEnumService: CoreEnumService,
     public coreSiteDomainAliasService: CoreSiteDomainAliasService,
+    public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService
   ) {
     if (data) {
@@ -44,12 +47,14 @@ export class CoreSiteDomainAliasEditComponent implements OnInit {
     }
 
   }
+  @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
 
 
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<CoreSiteDomainAliasModel> = new ErrorExceptionResult<CoreSiteDomainAliasModel>();
   dataModel: CoreSiteDomainAliasModel = new CoreSiteDomainAliasModel();
-  @ViewChild('vform', { static: false }) formGroup: FormGroup;
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
@@ -88,8 +93,11 @@ export class CoreSiteDomainAliasEditComponent implements OnInit {
     this.formInfo.FormAlert = 'در دریافت ارسال اطلاعات از سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
+    this.coreSiteDomainAliasService.setAccessLoad();
     this.coreSiteDomainAliasService.ServiceGetOneById(this.requestId).subscribe(
       (next) => {
+        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
         this.dataModel = next.Item;
         if (next.IsSuccess) {
           this.formInfo.FormTitle = this.formInfo.FormTitle + ' ' + next.Item.Domain;

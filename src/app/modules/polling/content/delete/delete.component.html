@@ -12,7 +12,7 @@
       <div class="form-group row">
 
         <mat-form-field class="example-full-width">
-          <mat-label>عنوان</mat-label>
+          <mat-label>{{fieldsInfo['Title']?.Title}}</mat-label>
           <input matInput [(ngModel)]="dataModelResultContent.Item.Title" name="dataModelResultContent.Item.Title"
             #Writer type="text" placeholder="عنوان" required readonly />
         </mat-form-field>

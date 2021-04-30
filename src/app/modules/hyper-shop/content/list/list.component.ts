@@ -90,7 +90,7 @@ export class HyperShopContentListComponent implements OnInit, OnDestroy {
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
   cmsApiStoreSubscribe: Subscription;
   ngOnInit(): void {
-    if (this.requestPareintId = this.activatedRoute.snapshot.paramMap.get('PareintId')) {
+    if (this.requestPareintId === this.activatedRoute.snapshot.paramMap.get('PareintId')) {
       this.requestPareintId = this.activatedRoute.snapshot.paramMap.get('PareintId');
     }
     if (this.requestPareintId.length > 0) {

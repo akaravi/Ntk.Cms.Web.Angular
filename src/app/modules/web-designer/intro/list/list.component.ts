@@ -51,6 +51,7 @@ export class WebDesignerMainIntroListComponent implements OnInit, OnDestroy {
     this.filteModelContent.SortColumn = 'Id';
     this.filteModelContent.SortType = EnumSortType.Descending;
   }
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
   comment: string;
   author: string;
   dataSource: any;
@@ -76,7 +77,6 @@ export class WebDesignerMainIntroListComponent implements OnInit, OnDestroy {
     'UpdatedDate',
     'Action'
   ];
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
   expandedElement: WebDesignerMainIntroModel | null;
   cmsApiStoreSubscribe: Subscription;
 

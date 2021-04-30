@@ -5,25 +5,20 @@ import {
   FormInfoModel,
   CoreCpMainMenuService,
   CoreCpMainMenuModel,
+  DataFieldInfoModel,
 } from 'ntk-cms-api';
 import {
   Component,
   OnInit,
   ViewChild,
-  ChangeDetectorRef,
   Inject,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
-import {
-  TreeModel,
-  NodeInterface,
-} from 'ntk-cms-filemanager';
-import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
+import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 @Component({
   selector: 'app-core-user-add',
@@ -38,6 +33,7 @@ export class CoreCpMainMenuAddComponent implements OnInit {
     private dialogRef: MatDialogRef<CoreCpMainMenuAddComponent>,
     public coreEnumService: CoreEnumService,
     public coreCpMainMenuService: CoreCpMainMenuService,
+    public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService
   ) {
     if (data) {
@@ -49,6 +45,8 @@ export class CoreCpMainMenuAddComponent implements OnInit {
 
   }
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<CoreCpMainMenuModel> = new ErrorExceptionResult<CoreCpMainMenuModel>();
   dataModel: CoreCpMainMenuModel = new CoreCpMainMenuModel();
@@ -62,6 +60,8 @@ export class CoreCpMainMenuAddComponent implements OnInit {
     this.formInfo.FormTitle = 'اضافه کردن  ';
     this.getEnumRecordStatus();
     this.getEnumMenuPlaceType();
+    this.DataGetAccess();
+
   }
   getEnumMenuPlaceType(): void {
     this.coreEnumService.ServiceEnumMenuPlaceType().subscribe((next) => {
@@ -79,6 +79,23 @@ export class CoreCpMainMenuAddComponent implements OnInit {
     }
   }
 
+  DataGetAccess(): void {
+    this.coreCpMainMenuService
+      .ServiceViewModel()
+      .subscribe(
+        async (next) => {
+          if (next.IsSuccess) {
+            // this.dataAccessModel = next.Access;
+            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+          } else {
+            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
+          }
+        },
+        (error) => {
+          this.cmsToastrService.typeErrorGetAccess(error);
+        }
+      );
+  }
   DataAddContent(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';

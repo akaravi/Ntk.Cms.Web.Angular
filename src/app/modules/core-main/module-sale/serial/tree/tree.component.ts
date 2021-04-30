@@ -28,7 +28,7 @@ import { CoreModuleSaleSerialAddComponent } from '../add/add.component';
 
 
 @Component({
-  selector: 'app-core-moduleSaleSerial-tree',
+  selector: 'app-core-modulesaleserial-tree',
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.scss'],
 })

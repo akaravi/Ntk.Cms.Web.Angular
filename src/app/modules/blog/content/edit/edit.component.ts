@@ -39,6 +39,7 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
   ]
 })
 export class BlogContentEditComponent implements OnInit, AfterViewInit {
+  requestId = 0;
   constructor(
     private activatedRoute: ActivatedRoute,
     private cmsStoreService: CmsStoreService,
@@ -54,8 +55,9 @@ export class BlogContentEditComponent implements OnInit, AfterViewInit {
   ) {
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
-  requestId = 0;
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   dataModel = new BlogContentModel();
   dataModelResult: ErrorExceptionResult<BlogContentModel> = new ErrorExceptionResult<BlogContentModel>();
   dataContentTagModelResult: ErrorExceptionResult<BlogContentTagModel> = new ErrorExceptionResult<BlogContentTagModel>();
@@ -71,7 +73,6 @@ export class BlogContentEditComponent implements OnInit, AfterViewInit {
   similarTabledataSource = new MatTableDataSource<BlogContentModel>();
   otherInfoTabledataSource = new MatTableDataSource<BlogContentOtherInfoModel>();
   dataAccessModel: AccessModel;
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
   loading = new ProgressSpinnerModel();
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
@@ -158,7 +159,6 @@ export class BlogContentEditComponent implements OnInit, AfterViewInit {
     this.loading.display = true;
     /*َAccess Field*/
     this.blogContentService.setAccessLoad();
-
     this.blogContentService
       .ServiceGetOneById(this.requestId)
       .subscribe(

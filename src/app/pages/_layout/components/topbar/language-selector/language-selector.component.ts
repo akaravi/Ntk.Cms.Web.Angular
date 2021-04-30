@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { AuthRenewTokenModel, CoreAuthService, NtkCmsApiStoreService, TokenInfoModel } from 'ntk-cms-api';
 import { Subscription } from 'rxjs';
@@ -18,7 +18,7 @@ interface LanguageFlag {
   templateUrl: './language-selector.component.html',
   styleUrls: ['./language-selector.component.scss'],
 })
-export class LanguageSelectorComponent implements OnInit {
+export class LanguageSelectorComponent implements OnInit, OnDestroy {
   language: LanguageFlag;
   languages: LanguageFlag[] = [
     {

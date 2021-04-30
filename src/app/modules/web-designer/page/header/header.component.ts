@@ -31,7 +31,7 @@ export class WebDesignerMainPageHeaderComponent implements OnInit {
   ) {
 
   }
-  @Input() optionId ='';
+  @Input() optionId = '';
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<WebDesignerMainPageModel> = new ErrorExceptionResult<WebDesignerMainPageModel>();
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
