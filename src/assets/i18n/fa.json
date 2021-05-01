@@ -1,5 +1,15 @@
 {
   "lang": "fa",
+  "ERRORMESSAGE": {
+    "TITLE": {
+      "typeSuccessAccessChange": "موفقیت",
+      "typeSuccessAddFirstSite": "موفقیت"
+    },
+    "MESSAGE": {
+      "typeSuccessAccessChange": "دسترسی با موفقیت تایید شد",
+      "typeSuccessAddFirstSite": "اولین سامانه شما با موفقیت ساخته شد"
+    }
+  },
   "TRANSLATOR": {
     "SELECT": "زبان خود را انتخاب کنید",
     "WELCOME": "خوش آمدید"

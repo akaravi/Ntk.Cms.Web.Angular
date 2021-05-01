@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { ErrorExceptionResultBase } from 'ntk-cms-api';
 
@@ -7,7 +8,10 @@ import { ErrorExceptionResultBase } from 'ntk-cms-api';
   providedIn: 'root'
 })
 export class CmsToastrService {
-  constructor(public toastr: ToastrService) {
+  constructor(
+    public toastr: ToastrService,
+    private translate: TranslateService,
+    ) {
 
   }
   private now(): string {
@@ -21,10 +25,12 @@ export class CmsToastrService {
   }
   // Success Type
   typeSuccessAccessChange(): void {
-    this.toastr.success('دسترسی با موفقیت تایید شد', this.now() + 'Success!');
+    // this.toastr.success('دسترسی با موفقیت تایید شد', this.now() + 'Success!');
+    this.toastr.success(this.translate.instant('ERRORMESSAGE.MESSAGE.typeSuccessAccessChange'), this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeSuccessAccessChange'));
   }
   typeSuccessAddFirstSite(): void {
-    this.toastr.success('با موفقیت  اولین سامانه شما اضافه شد', this.now() + 'Success!');
+    // this.toastr.success('با موفقیت  اولین سامانه شما اضافه شد', this.now() + 'Success!');
+    this.toastr.success(this.translate.instant('ERRORMESSAGE.MESSAGE.typeSuccessAddFirstSite'), this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeSuccessAddFirstSite'));
   }
   typeSuccessMessage(message: string): void {
     this.toastr.success(message, this.now() + 'Success!');
