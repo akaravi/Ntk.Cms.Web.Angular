@@ -5,7 +5,7 @@ import {
   OnInit,
   Input,
 } from '@angular/core';
-import { RuleSet, QueryBuilderFieldMap, Rule } from 'ngx-query-builder';
+import { RuleSet, QueryBuilderFieldMap, Rule } from 'ngx-ntk-query-builder';
 import { AccessModel, EnumClauseType, FilterDataModel } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 
