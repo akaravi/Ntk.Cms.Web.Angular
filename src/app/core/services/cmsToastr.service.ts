@@ -1,4 +1,3 @@
-import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
@@ -101,7 +100,7 @@ export class CmsToastrService {
     // let message = 'دستور ساخت اپ ثب شد';
     let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeSuccessAppBuild');
     if (str && str.length > 0) {
-      message = message + ' Message: ' + str;
+      message = message + ' ' + this.translate.instant('ERRORMESSAGE.TITLE.Message') + ': ' + str;
     }
     this.toastr.success(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeSuccessAppBuild'));
   }
@@ -115,7 +114,7 @@ export class CmsToastrService {
     let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeErrorInternetConnection');
 
     if (str && str.length > 0) {
-      message = message + ' error: ' + str;
+      message = message + ' ' + this.translate.instant('ERRORMESSAGE.TITLE.Error') + ': ' + str;
     }
     this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeErrorInternetConnection'));
   }
@@ -124,240 +123,298 @@ export class CmsToastrService {
     let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeErrorUserToken');
 
     if (str && str.length > 0) {
-      message = message + ' error: ' + str;
+      message = message + ' ' + this.translate.instant('ERRORMESSAGE.TITLE.Error') + ': ' + str;
     }
-    this.toastr.error(message, this.now() + 'Error!');
+    this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeErrorUserToken'));
   }
   typeErrorAccessChange(str: string = ''): void {
     // let message = 'دسترسی جدید تایید نشد';
     let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeErrorAccessChange');
 
     if (str && str.length > 0) {
-      message = message + ' error: ' + str;
+      message = message + ' ' + this.translate.instant('ERRORMESSAGE.TITLE.Error') + ': ' + str;
     }
-    this.toastr.error(message, this.now() + 'Error!');
+    this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeErrorAccessChange'));
   }
   typeErrorDeviceToken(str: string = ''): void {
-    let message = 'شناسه دستگاه شما مورد تایید نمی باشد.اطفا با پستبانی تماس بگیرید';
+    // let message = 'شناسه دستگاه شما مورد تایید نمی باشد.اطفا با پستبانی تماس بگیرید';
+    let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeErrorDeviceToken');
+
     if (str && str.length > 0) {
-      message = message + ' error: ' + str;
+      message = message + ' ' + this.translate.instant('ERRORMESSAGE.TITLE.Error') + ': ' + str;
     }
-    this.toastr.error(message, this.now() + 'Error!');
+    this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeErrorDeviceToken'));
   }
 
   typeErrorComponentAction(str: string = ''): void {
-    let message = 'نوع فعالیت در این صفحه مشخص نمی باشد';
+    // let message = 'نوع فعالیت در این صفحه مشخص نمی باشد';
+    let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeErrorComponentAction');
+
     if (str && str.length > 0) {
-      message = message + ' error: ' + str;
+      message = message + ' ' + this.translate.instant('ERRORMESSAGE.TITLE.Error') + ': ' + str;
     }
-    this.toastr.error(message, this.now() + 'Error!');
+    this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeErrorComponentAction'));
   }
 
   typeErrorFormInvalid(str: string = ''): void {
-    let message = 'مقادیر فرم مورد تایید نمی باشد';
+    // let message = 'مقادیر فرم مورد تایید نمی باشد';
+    let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeErrorFormInvalid');
+
     if (str && str.length > 0) {
-      message = message + ' error: ' + str;
+      message = message + ' ' + this.translate.instant('ERRORMESSAGE.TITLE.Error') + ': ' + str;
     }
-    this.toastr.error(message, this.now() + 'Error!');
+    this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeErrorFormInvalid'));
   }
   typeErrorGetAccess(str: string = ''): void {
-    let message = 'خطا در دریافت دسترسی های ';
+    // let message = 'خطا در دریافت دسترسی های ';
+    let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeErrorGetAccess');
+
     if (str && str.length > 0) {
-      message = message + ' error: ' + str;
+      message = message + ' ' + this.translate.instant('ERRORMESSAGE.TITLE.Error') + ': ' + str;
     }
-    this.toastr.error(message, this.now() + 'Error!');
+    this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeErrorGetAccess'));
   }
   typeErrorAccessAdd(str: string = ''): void {
-    let message = 'دسترسی اضافه کردن  ندارید';
+    // let message = 'دسترسی اضافه کردن  ندارید';
+    let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeErrorAccessAdd');
+
     if (str && str.length > 0) {
-      message = message + ' error: ' + str;
+      message = message + ' ' + this.translate.instant('ERRORMESSAGE.TITLE.Error') + ': ' + str;
     }
-    this.toastr.error(message, this.now() + 'Error!');
+    this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeErrorAccessAdd'));
   }
   typeErrorAccessWatch(str: string = ''): void {
-    let message = 'دسترسی مشاهده کردن ندارید';
+    // let message = 'دسترسی مشاهده کردن ندارید';
+    let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeErrorAccessWatch');
+
     if (str && str.length > 0) {
-      message = message + ' error: ' + str;
+      message = message + ' ' + this.translate.instant('ERRORMESSAGE.TITLE.Error') + ': ' + str;
     }
-    this.toastr.error(message, this.now() + 'Error!');
-  } typeErrorAccessEdit(str: string = ''): void {
-    let message = 'دسترسی ویرایش کردن ندارید';
+    this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeErrorAccessWatch'));
+  }
+  typeErrorAccessEdit(str: string = ''): void {
+    // let message = 'دسترسی ویرایش کردن ندارید';
+    let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeErrorAccessEdit');
+
     if (str && str.length > 0) {
-      message = message + ' error: ' + str;
+      message = message + ' ' + this.translate.instant('ERRORMESSAGE.TITLE.Error') + ': ' + str;
     }
-    this.toastr.error(message, this.now() + 'Error!');
+    this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeErrorAccessEdit'));
   }
   typeErrorAccessDelete(str: string = ''): void {
-    let message = 'دسترسی حذف کردن ندارید';
+    // let message = 'دسترسی حذف کردن ندارید';
+    let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeErrorAccessDelete');
+
     if (str && str.length > 0) {
-      message = message + ' error: ' + str;
+      message = message + ' ' + this.translate.instant('ERRORMESSAGE.TITLE.Error') + ': ' + str;
     }
-    this.toastr.error(message, this.now() + 'Error!');
+    this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeErrorAccessDelete'));
   }
   typeErrorGetOne(str: string = ''): void {
-    let message = 'خطا در دریافت ردیف ';
+    // let message = 'خطا در دریافت ردیف ';
+    let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeErrorGetOne');
+
     if (str && str.length > 0) {
-      message = message + ' error: ' + str;
+      message = message + ' ' + this.translate.instant('ERRORMESSAGE.TITLE.Error') + ': ' + str;
     }
-    this.toastr.error(message, this.now() + 'Error!');
+    this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeErrorGetOne'));
   }
 
   typeErrorGetAll(str: string = ''): void {
-    let message = 'خطا در دریافت لیست ';
+    // let message = 'خطا در دریافت لیست ';
+    let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeErrorGetAll');
+
     if (str && str.length > 0) {
-      message = message + ' error: ' + str;
+      message = message + ' ' + this.translate.instant('ERRORMESSAGE.TITLE.Error') + ': ' + str;
     }
-    this.toastr.error(message, this.now() + 'Error!');
+    this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeErrorGetAll'));
   }
 
   typeErrorAdd(str: string = ''): void {
-    let message = 'خطا در اضافه کردن';
+    // let message = 'خطا در اضافه کردن';
+    let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeErrorAdd');
+
     if (str && str.length > 0) {
-      message = message + ' error: ' + str;
+      message = message + ' ' + this.translate.instant('ERRORMESSAGE.TITLE.Error') + ': ' + str;
     }
-    this.toastr.error(message, this.now() + 'Error!');
+    this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeErrorAdd'));
   }
   typeErrorAddSimilar(str: string = ''): void {
-    let message = 'خطا در اضافه کردن مطالب مشابه';
+    // let message = 'خطا در اضافه کردن مطالب مشابه';
+    let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeErrorAddSimilar');
+
     if (str && str.length > 0) {
-      message = message + ' error: ' + str;
+      message = message + ' ' + this.translate.instant('ERRORMESSAGE.TITLE.Error') + ': ' + str;
     }
-    this.toastr.error(message, this.now() + 'Error!');
+    this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeErrorAddSimilar'));
   }
   typeErrorAddOtherInfo(str: string = ''): void {
-    let message = 'خطا در اضافه کردن سایر اطلاعات';
+    // let message = 'خطا در اضافه کردن سایر اطلاعات';
+    let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeErrorAddOtherInfo');
+
     if (str && str.length > 0) {
-      message = message + ' error: ' + str;
+      message = message + ' ' + this.translate.instant('ERRORMESSAGE.TITLE.Error') + ': ' + str;
     }
-    this.toastr.error(message, this.now() + 'Error!');
+    this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeErrorAddOtherInfo'));
   }
   typeErrorAddTag(str: string = ''): void {
-    let message = 'خطا در اضافه کردن تگها';
+    // let message = 'خطا در اضافه کردن تگها';
+    let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeErrorAddTag');
+
     if (str && str.length > 0) {
-      message = message + ' error: ' + str;
+      message = message + ' ' + this.translate.instant('ERRORMESSAGE.TITLE.Error') + ': ' + str;
     }
-    this.toastr.error(message, this.now() + 'Error!');
+    this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeErrorAddTag'));
   }
   typeErrorRemoveTag(str: string = ''): void {
-    let message = 'خطا در حذف کردن تگها';
+    // let message = 'خطا در حذف کردن تگها';
+    let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeErrorRemoveTag');
+
     if (str && str.length > 0) {
-      message = message + ' error: ' + str;
+      message = message + ' ' + this.translate.instant('ERRORMESSAGE.TITLE.Error') + ': ' + str;
     }
-    this.toastr.error(message, this.now() + 'Error!');
+    this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeErrorRemoveTag'));
   }
   typeErrorRemoveOtherInfo(str: string = ''): void {
-    let message = 'خطا در حذف کردن سایر اطلاعات';
+    // let message = 'خطا در حذف کردن سایر اطلاعات';
+    let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeErrorRemoveOtherInfo');
+
     if (str && str.length > 0) {
-      message = message + ' error: ' + str;
+      message = message + ' ' + this.translate.instant('ERRORMESSAGE.TITLE.Error') + ': ' + str;
     }
-    this.toastr.error(message, this.now() + 'Error!');
+    this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeErrorRemoveOtherInfo'));
   }
   typeErrorRemoveSimilar(str: string = ''): void {
-    let message = 'خطا در حذف کردن اطلاعات مشابه';
+    // let message = 'خطا در حذف کردن اطلاعات مشابه';
+    let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeErrorRemoveSimilar');
+
     if (str && str.length > 0) {
-      message = message + ' error: ' + str;
+      message = message + ' ' + this.translate.instant('ERRORMESSAGE.TITLE.Error') + ': ' + str;
     }
-    this.toastr.error(message, this.now() + 'Error!');
+    this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeErrorRemoveSimilar'));
   }
   typeErrorGetCpatcha(str: string = ''): void {
-    let message = 'خطا در ساخت عکس کپچا';
+    // let message = 'خطا در ساخت عکس کپچا';
+    let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeErrorGetCpatcha');
+
     if (str && str.length > 0) {
-      message = message + ' error: ' + str;
+      message = message + ' ' + this.translate.instant('ERRORMESSAGE.TITLE.Error') + ': ' + str;
     }
-    this.toastr.error(message, this.now() + 'Error!');
+    this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeErrorGetCpatcha'));
   }
   typeErrorAddDuplicate(str: string = ''): void {
-    let message = 'اطلاعات وارد شده تکراری است';
+    // let message = 'اطلاعات وارد شده تکراری است';
+    let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeErrorAddDuplicate');
+
     if (str && str.length > 0) {
-      message = message + ' error: ' + str;
+      message = message + ' ' + this.translate.instant('ERRORMESSAGE.TITLE.Error') + ': ' + str;
     }
-    this.toastr.error(message, this.now() + 'Error!');
+    this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeErrorAddDuplicate'));
   }
 
   typeErrorRemove(str: string = ''): void {
-    let message = 'خطا در حذف کردن';
+    // let message = 'خطا در حذف کردن';
+    let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeErrorRemove');
+
     if (str && str.length > 0) {
-      message = message + ' error: ' + str;
+      message = message + ' ' + this.translate.instant('ERRORMESSAGE.TITLE.Error') + ': ' + str;
     }
-    this.toastr.error(message, this.now() + 'Error!');
+    this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeErrorRemove'));
   }
 
   typeErrorEdit(str: string = ''): void {
-    let message = 'خطا در ویرایش کردن';
+    // let message = 'خطا در ویرایش کردن';
+    let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeErrorEdit');
+
     if (str && str.length > 0) {
-      message = message + ' error: ' + str;
+      message = message + ' ' + this.translate.instant('ERRORMESSAGE.TITLE.Error') + ': ' + str;
     }
-    this.toastr.error(message, this.now() + 'Error!');
+    this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeErrorEdit'));
   }
 
   typeErrorMove(str: string = ''): void {
-    let message = 'خطا در جابجا کردن';
+    // let message = 'خطا در جابجا کردن';
+    let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeErrorMove');
+
     if (str && str.length > 0) {
-      message = message + ' error: ' + str;
+      message = message + ' ' + this.translate.instant('ERRORMESSAGE.TITLE.Error') + ': ' + str;
     }
-    this.toastr.error(message, this.now() + 'Error!');
+    this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeErrorMove'));
   }
 
   typeErrorLogin(str: string = ''): void {
-    let message = 'در ورود به سامانه خطایی رخ داده است مجدد تلاش کنید';
+    let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeErrorLogin');
+
     if (str && str.length > 0) {
-      message = ' error: ' + str;
+      message = message + ' ' + this.translate.instant('ERRORMESSAGE.TITLE.Error') + ': ' + str;
     }
-    this.toastr.error(message, this.now() + 'برروز خطا در لاگین!');
+    this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeErrorLogin'));
   }
 
   typeErrorEditRowIsNull(str: string = ''): void {
-    let message = 'ردیف اطلاعات جهت ویرایش مشخص نیست';
+    // let message = 'ردیف اطلاعات جهت ویرایش مشخص نیست';
+    let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeErrorEditRowIsNull');
+
     if (str && str.length > 0) {
-      message = message + ' error: ' + str;
+      message = message + ' ' + this.translate.instant('ERRORMESSAGE.TITLE.Error') + ': ' + str;
     }
-    this.toastr.error(message, this.now() + 'Error!');
+    this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeErrorEditRowIsNull'));
   }
 
   typeErrorDeleteRowIsNull(str: string = ''): void {
-    let message = 'ردیف اطلاعات جهت حذف مشخص نیست';
+    // let message = 'ردیف اطلاعات جهت حذف مشخص نیست';
+    let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeErrorDeleteRowIsNull');
+
     if (str && str.length > 0) {
-      message = message + ' error: ' + str;
+      message = message + ' ' + this.translate.instant('ERRORMESSAGE.TITLE.Error') + ': ' + str;
     }
-    this.toastr.error(message, this.now() + 'Error!');
+    this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeErrorDeleteRowIsNull'));
   }
 
   typeErrorAddRowParentIsNull(str: string = ''): void {
-    let message = 'ردیف والد اطلاعات جهت ثبت مشخص نیست';
+    // let message = 'ردیف والد اطلاعات جهت ثبت مشخص نیست';
+    let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeErrorAddRowParentIsNull');
+
     if (str && str.length > 0) {
-      message = message + ' error: ' + str;
+      message = message + ' ' + this.translate.instant('ERRORMESSAGE.TITLE.Error') + ': ' + str;
     }
-    this.toastr.error(message, this.now() + 'Error!');
+    this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeErrorAddRowParentIsNull'));
   }
   typeErrorLogout(str: string = ''): void {
-    let message = 'برروز خطا در خارج شدن از حساب کاربری';
+    // let message = 'برروز خطا در خارج شدن از حساب کاربری';
+    let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeErrorLogout');
+
     if (str && str.length > 0) {
-      message = message + ' error: ' + str;
+      message = message + ' ' + this.translate.instant('ERRORMESSAGE.TITLE.Error') + ': ' + str;
     }
-    this.toastr.error(message, this.now() + 'Error!');
+    this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeErrorLogout'));
   }
   typeErrorRegistery(str: string = ''): void {
-    let message = 'برروز خطا در ایجاد حساب کاربری';
+    // let message = 'برروز خطا در ایجاد حساب کاربری';
+    let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeErrorRegistery');
+
     if (str && str.length > 0) {
-      message = message + ' error: ' + str;
+      message = message + ' ' + this.translate.instant('ERRORMESSAGE.TITLE.Error') + ': ' + str;
     }
-    this.toastr.error(message, this.now() + 'Error!');
+    this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeErrorRegistery'));
   }
   typeErrorSelected(str: string = ''): void {
-    let message = 'برروز خطا در انتخاب';
-    if (str && str.length > 0) {
-      message = message + ' error: ' + str;
-    }
-    this.toastr.error(message, this.now() + 'Error!');
-  }
-  typeErrorMessage(message: string): void {
+    // let message = 'برروز خطا در انتخاب';
+    let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeErrorSelected');
 
-    this.toastr.error(message, this.now() + 'Error!');
+    if (str && str.length > 0) {
+      message = message + ' ' + this.translate.instant('ERRORMESSAGE.TITLE.Error') + ': ' + str;
+    }
+    this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeErrorSelected'));
+  }
+  typeErrorMessage(message: string, title: string = 'Error!'): void {
+
+    this.toastr.error(message, this.now() + title);
   }
   typeError(model: any, str: string = ''): void {
-    let message = 'برروز خطا ' + ' ' + str;
+    let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeError') + ' ' + str;
     if (!model) {
-      this.toastr.error(message, this.now() + 'Error!');
+      this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeError'));
       return;
     }
     let errorExceptionResult: ErrorExceptionResultBase;
@@ -365,34 +422,36 @@ export class CmsToastrService {
       errorExceptionResult = model.error;
       if (errorExceptionResult) {
         if (errorExceptionResult.Status === 401) {
-          message = 'نیاز به ورود مجدد' + ' ' + str;
+          message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeError_login') + ' ' + str;
 
-          this.toastr.error(message, this.now() + 'Error!');
+          this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeError'));
           return;
         }
       }
     }
     if (model.errors) {
       console.log(model.errors);
-      message = 'View Console Log' + ' ' + str;
-      this.toastr.error(message, this.now() + 'Error!');
+      message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeError_viewConsoleLog') + ' ' + str;
+      this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeError'));
       return;
     } else if (model && model.ErrorMessage) {
 
       message = model.ErrorMessage + ' ' + str;
-      this.toastr.error(message, this.now() + 'Error!');
+      this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeError'));
     }
     message = (model.message) ? model.message : model.status ? `${model.status} - ${model.statusText}` : 'Server error';
-    this.toastr.error(message, this.now() + 'Error!');
+    this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeError'));
 
     return;
 
   }
   typeErrorForNotComplete(str: string = ''): void {
-    let message = 'فرم کامل نیست';
+    // let message = 'فرم کامل نیست';
+    let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeErrorForNotComplete');
+
     if (str && str.length > 0) {
-      message = message + ' error: ' + str;
+      message = message + ' ' + this.translate.instant('ERRORMESSAGE.TITLE.Error') + ': ' + str;
     }
-    this.toastr.error(message, this.now() + 'Error!');
+    this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeErrorForNotComplete'));
   }
 }
