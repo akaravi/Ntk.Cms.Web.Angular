@@ -55,7 +55,7 @@
         </ng-container>
         <!-- ClassName Column -->
         <ng-container matColumnDef="ClassName">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> ClassName </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['ClassName']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.ClassName}} </mat-cell>
         </ng-container>
 

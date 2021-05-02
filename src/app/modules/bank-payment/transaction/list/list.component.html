@@ -88,7 +88,7 @@
         </ng-container>
         <!-- CurrencyUnit Column -->
         <ng-container matColumnDef="CurrencyUnit">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> CurrencyUnit </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['CurrencyUnit']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.CurrencyUnit}} </mat-cell>
         </ng-container>
 

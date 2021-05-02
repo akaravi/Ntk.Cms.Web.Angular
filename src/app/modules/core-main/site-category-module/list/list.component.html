@@ -53,12 +53,12 @@
         </ng-container>
         <!-- virtual_CmsSiteCategory.Title Column -->
         <ng-container matColumnDef="virtual_CmsSiteCategory.Title">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>دسته بندی سایت </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{'TITLE.SITE_CATEGORY' | translate}}  </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.virtual_CmsSiteCategory.Title}} </mat-cell>
         </ng-container>
         <!-- virtual_CmsModule.Title Column -->
         <ng-container matColumnDef="virtual_CmsModule.Title">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> ماژول </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{'TITLE.MODULE' | translate}}  </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.virtual_CmsModule.Title}} </mat-cell>
         </ng-container>
 

@@ -6,27 +6,27 @@
 
     <!-- LinkCmsSiteCategoryId Column -->
     <ng-container matColumnDef="LinkCmsSiteCategoryId">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> شناسه نوع سامانه  </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkCmsSiteCategoryId']?.FieldTitle}} </mat-header-cell>
       <mat-cell *matCellDef="let row"> {{row.LinkCmsSiteCategoryId}} </mat-cell>
     </ng-container>
     <!-- LinkCmsModuleId Column -->
     <ng-container matColumnDef="LinkCmsModuleId">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>شناسه ماژول</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>{{fieldsInfo['LinkCmsModuleId']?.FieldTitle}}  </mat-header-cell>
       <mat-cell *matCellDef="let row"> {{row.LinkCmsModuleId}} </mat-cell>
     </ng-container>
     <!-- virtual_CmsSiteCategory.Title Column -->
     <ng-container matColumnDef="virtual_CmsSiteCategory.Title">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>نوع سامانه</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'TITLE.SITE_CATEGORY' | translate}} </mat-header-cell>
       <mat-cell *matCellDef="let row"> {{row.virtual_CmsSiteCategory.Title}} </mat-cell>
     </ng-container>
     <!-- virtual_CmsModule.Title Column -->
     <ng-container matColumnDef="virtual_CmsModule.Title">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>ماژول</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'TITLE.MODULE' | translate}} </mat-header-cell>
       <mat-cell *matCellDef="let row"> {{row.virtual_CmsModule.Title}} </mat-cell>
     </ng-container>
     <!-- virtual_CmsModule.Description Column -->
     <ng-container matColumnDef="virtual_CmsModule.Description">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>توضیحات</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'TITLE.DESCRIPTION' | translate}} </mat-header-cell>
       <mat-cell *matCellDef="let row"> {{row.virtual_CmsModule.Description}} </mat-cell>
     </ng-container>
 

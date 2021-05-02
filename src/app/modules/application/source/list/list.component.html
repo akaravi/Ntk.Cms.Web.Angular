@@ -64,23 +64,23 @@
         </ng-container>
         <!-- PackageName Column -->
         <ng-container matColumnDef="PackageName">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> PackageName </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['PackageName']?.FieldTitle}}  </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.PackageName}} </mat-cell>
         </ng-container>
 
         <!-- OsType Column -->
         <ng-container matColumnDef="OsType">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> OsType </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['OsType']?.FieldTitle}}  </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.OsType}} </mat-cell>
         </ng-container>
         <!-- ForceUpdate Column -->
         <ng-container matColumnDef="ForceUpdate">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> ForceUpdate </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['ForceUpdate']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row">  <i [ngClass]="row.ForceUpdate|boolclass"></i> </mat-cell>
         </ng-container>
         <!-- RecordStatus Column -->
         <ng-container matColumnDef="IsPublish">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> عمومی </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['IsPublish']?.FieldTitle}}  </mat-header-cell>
           <mat-cell *matCellDef="let row"> <i [ngClass]="row.IsPublish|boolclass"></i> </mat-cell>
         </ng-container>
         <!-- CreatedDate Column -->

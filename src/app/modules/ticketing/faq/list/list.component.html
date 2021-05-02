@@ -57,7 +57,7 @@
         </ng-container>
         <!-- Question Column -->
         <ng-container matColumnDef="Question">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> سوال </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header>  {{fieldsInfo['Question']?.FieldTitle}}  </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Question}} </mat-cell>
         </ng-container>
 

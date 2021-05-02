@@ -51,22 +51,22 @@
         </ng-container>
         <!-- TitleML Column -->
         <ng-container matColumnDef="TitleML">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> TitleML </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['TitleML']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.TitleML}} </mat-cell>
         </ng-container>
         <!-- TitleResourceLanguage Column -->
         <ng-container matColumnDef="TitleResourceLanguage">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> TitleResourceLanguage </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header>  {{fieldsInfo['TitleResourceLanguage']?.FieldTitle}}  </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.TitleResourceLanguage}} </mat-cell>
         </ng-container>
         <!-- UserType Column -->
         <ng-container matColumnDef="UserType">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> UserType </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['UserType']?.FieldTitle}}  </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.UserType}} </mat-cell>
         </ng-container>
         <!-- UserTypeTitle Column -->
         <ng-container matColumnDef="UserTypeTitle">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> UserTypeTitle </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['UserTypeTitle']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.UserTypeTitle}} </mat-cell>
         </ng-container>
 

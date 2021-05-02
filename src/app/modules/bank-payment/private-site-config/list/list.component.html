@@ -85,7 +85,7 @@
         </ng-container>
         <!-- MaxTransactionAmount Column -->
         <ng-container matColumnDef="MaxTransactionAmount">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> max </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['MaxTransactionAmount']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.MaxTransactionAmount}} </mat-cell>
         </ng-container>
         <!-- CreatedDate Column -->

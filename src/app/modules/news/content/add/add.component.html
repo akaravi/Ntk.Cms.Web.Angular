@@ -117,7 +117,7 @@
             </button>
           </div>
         </mat-step>
-        <mat-step label="فایل های پیوست" state="file">
+        <mat-step label="{{'TITLE.ATTACH_FILES' | translate}}" state="file">
           <p>فایل های پیوست</p>
           <!-- LinkMainImageIdSrc Field -->
           <div class="mb-3">
@@ -196,7 +196,7 @@
         </mat-step>
 
 
-        <mat-step label="سایر اطلاعات" state="otherinfo">
+        <mat-step label="{{'TITLE.OTHER_INFO' | translate}}" state="otherinfo">
           <p>سایر اطلاعات در رابطه با این محتوا در این قسمت اضافه کنید</p>
           <!-- Title Field -->
           <mat-form-field class="example-full-width">
@@ -242,12 +242,12 @@
             <mat-table [dataSource]="otherInfoTabledataSource">
               <!-- Title Column -->
               <ng-container matColumnDef="Title">
-                <mat-header-cell *matHeaderCellDef> عنوان </mat-header-cell>
+                <mat-header-cell *matHeaderCellDef>  {{fieldsInfo['Title']?.FieldTitle}}  </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.Title}} </mat-cell>
               </ng-container>
               <!-- TypeId Column -->
               <ng-container matColumnDef="TypeId">
-                <mat-header-cell *matHeaderCellDef> نوع </mat-header-cell>
+                <mat-header-cell *matHeaderCellDef>  {{fieldsInfo['TypeId']?.FieldTitle}}  </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.TypeId}} </mat-cell>
               </ng-container>
               <!-- Action Column -->

@@ -73,33 +73,33 @@
 
         <!-- Status Column -->
         <ng-container matColumnDef="Status">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Status']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> <i [ngClass]="row.Status | boolclass"></i>
           </mat-cell>
         </ng-container>
         <!-- Price Column -->
         <ng-container matColumnDef="Price">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Price </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Price']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Price}} </mat-cell>
         </ng-container>
         <!-- SalePrice Column -->
         <ng-container matColumnDef="SalePrice">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> SalePrice </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['SalePrice']?.FieldTitle}}  </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.SalePrice}} </mat-cell>
         </ng-container>
         <!-- Count Column -->
         <ng-container matColumnDef="Count">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Count </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Count']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Count}} </mat-cell>
         </ng-container>
           <!-- Unit Column -->
         <ng-container matColumnDef="Unit">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Unit </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Unit']?.FieldTitle}}  </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Unit}} </mat-cell>
         </ng-container>
         <!-- Discount Column -->
         <ng-container matColumnDef="Discount">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Discount </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header>  {{fieldsInfo['Discount']?.FieldTitle}}   </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Discount}} </mat-cell>
         </ng-container>
 

@@ -11,7 +11,7 @@ export class CmsToastrService {
   constructor(
     public toastr: ToastrService,
     private translate: TranslateService,
-    ) {
+  ) {
 
   }
   private now(): string {
@@ -37,80 +37,101 @@ export class CmsToastrService {
     this.toastr.success(message, this.now() + 'Success!');
   }
   typeSuccessAdd(): void {
-    this.toastr.success('با موفقیت اضافه شد', this.now() + 'Success!');
+    // this.toastr.success('با موفقیت اضافه شد', this.now() + 'Success!');
+    this.toastr.success(this.translate.instant('ERRORMESSAGE.MESSAGE.typeSuccessAdd'), this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeSuccessAdd'));
   }
   typeSuccessAddSimilar(): void {
-    this.toastr.success('با موفقیت مطالب مشابه اضافه شد', this.now() + 'Success!');
+    // this.toastr.success('با موفقیت مطالب مشابه اضافه شد', this.now() + 'Success!');
+    this.toastr.success(this.translate.instant('ERRORMESSAGE.MESSAGE.typeSuccessAddSimilar'), this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeSuccessAddSimilar'));
   }
   typeSuccessAddOtherInfo(): void {
-    this.toastr.success('با موفقیت سایر اطلاعات اضافه شد', this.now() + 'Success!');
+    // this.toastr.success('با موفقیت سایر اطلاعات اضافه شد', this.now() + 'Success!');
+    this.toastr.success(this.translate.instant('ERRORMESSAGE.MESSAGE.typeSuccessAddOtherInfo'), this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeSuccessAddOtherInfo'));
   }
   typeSuccessAddTag(): void {
-    this.toastr.success('با موفقیت تگ مشابه اضافه شد', this.now() + 'Success!');
+    // this.toastr.success('با موفقیت تگ مشابه اضافه شد', this.now() + 'Success!');
+    this.toastr.success(this.translate.instant('ERRORMESSAGE.MESSAGE.typeSuccessAddTag'), this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeSuccessAddTag'));
   }
   typeSuccessRemoveTag(): void {
-    this.toastr.success('با موفقیت تگ مشابه حذف شد', this.now() + 'Success!');
+    // this.toastr.success('با موفقیت تگ مشابه حذف شد', this.now() + 'Success!');
+    this.toastr.success(this.translate.instant('ERRORMESSAGE.MESSAGE.typeSuccessRemoveTag'), this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeSuccessRemoveTag'));
   }
   typeSuccessRemoveOtherInfo(): void {
-    this.toastr.success('با موفقیت سایر اطلاعات حذف شد', this.now() + 'Success!');
+    // this.toastr.success('با موفقیت سایر اطلاعات حذف شد', this.now() + 'Success!');
+    this.toastr.success(this.translate.instant('ERRORMESSAGE.MESSAGE.typeSuccessRemoveOtherInfo'), this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeSuccessRemoveOtherInfo'));
   }
   typeSuccessRemoveSimilar(): void {
-    this.toastr.success('با موفقیت سایر اطلاعات مشابه حذف شد', this.now() + 'Success!');
+    // this.toastr.success('با موفقیت سایر اطلاعات مشابه حذف شد', this.now() + 'Success!');
+    this.toastr.success(this.translate.instant('ERRORMESSAGE.MESSAGE.typeSuccessRemoveSimilar'), this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeSuccessRemoveSimilar'));
   }
   typeSuccessRemove(): void {
-    this.toastr.success('با موفقیت حذف شد', this.now() + 'Success!');
+    // this.toastr.success('با موفقیت حذف شد', this.now() + 'Success!');
+    this.toastr.success(this.translate.instant('ERRORMESSAGE.MESSAGE.typeSuccessRemove'), this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeSuccessRemove'));
   }
 
   typeSuccessEdit(): void {
-    this.toastr.success('با موفقیت ویرایش شد', this.now() + 'Success!');
+    // this.toastr.success('با موفقیت ویرایش شد', this.now() + 'Success!');
+    this.toastr.success(this.translate.instant('ERRORMESSAGE.MESSAGE.typeSuccessEdit'), this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeSuccessEdit'));
   }
   typeSuccessChangePassword(): void {
-    this.toastr.success('کلمه عبور شما با موفقیت ویرایش شد', this.now() + 'Success!');
+    // this.toastr.success('کلمه عبور شما با موفقیت ویرایش شد', this.now() + 'Success!');
+    this.toastr.success(this.translate.instant('ERRORMESSAGE.MESSAGE.typeSuccessChangePassword'), this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeSuccessChangePassword'));
   }
   typeSuccessMove(): void {
-    this.toastr.success('با موفقیت منتقل شد', this.now() + 'Success!');
+    // this.toastr.success('با موفقیت منتقل شد', this.now() + 'Success!');
+    this.toastr.success(this.translate.instant('ERRORMESSAGE.MESSAGE.typeSuccessMove'), this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeSuccessMove'));
   }
   typeSuccessLogin(): void {
-    this.toastr.success('با موفقیت به حساب کاربری خود وارد شدید', this.now() + 'Success!');
+    // this.toastr.success('با موفقیت به حساب کاربری خود وارد شدید', this.now() + 'Success!');
+    this.toastr.success(this.translate.instant('ERRORMESSAGE.MESSAGE.typeSuccessLogin'), this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeSuccessLogin'));
   }
   typeSuccessLogout(): void {
-    this.toastr.success('با موفقیت از حساب کاربری خود خارج شدید', this.now() + 'Success!');
+    // this.toastr.success('با موفقیت از حساب کاربری خود خارج شدید', this.now() + 'Success!');
+    this.toastr.success(this.translate.instant('ERRORMESSAGE.MESSAGE.typeSuccessLogout'), this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeSuccessLogout'));
   }
   typeSuccessRegistery(): void {
-    this.toastr.success('با موفقیت حساب کاربری شما ساخته شد', this.now() + 'Success!');
+    // this.toastr.success('با موفقیت حساب کاربری شما ساخته شد', this.now() + 'Success!');
+    this.toastr.success(this.translate.instant('ERRORMESSAGE.MESSAGE.typeSuccessRegistery'), this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeSuccessRegistery'));
   }
   typeSuccessSelected(): void {
-    this.toastr.success('با موفقیت انتخاب شد', this.now() + 'Success!');
+    // this.toastr.success('با موفقیت انتخاب شد', this.now() + 'Success!');
+    this.toastr.success(this.translate.instant('ERRORMESSAGE.MESSAGE.typeSuccessSelected'), this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeSuccessSelected'));
   }
   typeSuccessAppBuild(str: string): void {
-    let message = 'دستور ساخت اپ ثب شد';
-
+    // let message = 'دستور ساخت اپ ثب شد';
+    let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeSuccessAppBuild');
     if (str && str.length > 0) {
       message = message + ' Message: ' + str;
     }
-    this.toastr.success(message, this.now() + 'Success!');
+    this.toastr.success(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeSuccessAppBuild'));
   }
   typeSuccessAppUpload(): void {
-    this.toastr.success('با موفقیت آپلود شد', this.now() + 'Success!');
+    // this.toastr.success('با موفقیت آپلود شد', this.now() + 'Success!');
+    this.toastr.success(this.translate.instant('ERRORMESSAGE.MESSAGE.typeSuccessAppUpload'), this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeSuccessAppUpload'));
   }
   // error Type
   typeErrorInternetConnection(str: string = ''): void {
-    let message = 'خطا در اتصال به اینترنت.لطفا اتصال به اینترنت را بررسی کنید';
+    // let message = 'خطا در اتصال به اینترنت.لطفا اتصال به اینترنت را بررسی کنید';
+    let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeErrorInternetConnection');
+
     if (str && str.length > 0) {
       message = message + ' error: ' + str;
     }
-    this.toastr.error(message, this.now() + 'Error!');
+    this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeErrorInternetConnection'));
   }
-
   typeErrorUserToken(str: string = ''): void {
-    let message = 'حساب کاربری شما مورد تایید نمی باشد.لطفا مجدد وارد حساب کاربری شوید';
+    // let message = 'حساب کاربری شما مورد تایید نمی باشد.لطفا مجدد وارد حساب کاربری شوید';
+    let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeErrorUserToken');
+
     if (str && str.length > 0) {
       message = message + ' error: ' + str;
     }
     this.toastr.error(message, this.now() + 'Error!');
   }
   typeErrorAccessChange(str: string = ''): void {
-    let message = 'دسترسی جدید تایید نشد';
+    // let message = 'دسترسی جدید تایید نشد';
+    let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeErrorAccessChange');
+
     if (str && str.length > 0) {
       message = message + ' error: ' + str;
     }
@@ -159,7 +180,7 @@ export class CmsToastrService {
       message = message + ' error: ' + str;
     }
     this.toastr.error(message, this.now() + 'Error!');
-  }  typeErrorAccessEdit(str: string = ''): void {
+  } typeErrorAccessEdit(str: string = ''): void {
     let message = 'دسترسی ویرایش کردن ندارید';
     if (str && str.length > 0) {
       message = message + ' error: ' + str;
@@ -367,7 +388,6 @@ export class CmsToastrService {
     return;
 
   }
-
   typeErrorForNotComplete(str: string = ''): void {
     let message = 'فرم کامل نیست';
     if (str && str.length > 0) {

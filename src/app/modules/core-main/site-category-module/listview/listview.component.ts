@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import {
   CoreSiteCategoryCmsModuleModel,
   CoreSiteCategoryCmsModuleService,
+  DataFieldInfoModel,
   EnumSortType,
   ErrorExceptionResult,
   FilterDataModel,
@@ -36,6 +37,8 @@ export class CoreSiteCategoryCmsModuleListViewComponent implements OnInit, OnDes
     private cmsToastrService: CmsToastrService,
     ) {
   }
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   tableContentSelected = [];
   filteModelContent = new FilterModel();
   dataModelResult: ErrorExceptionResult<CoreSiteCategoryCmsModuleModel> = new ErrorExceptionResult<CoreSiteCategoryCmsModuleModel>();
@@ -86,6 +89,8 @@ export class CoreSiteCategoryCmsModuleListViewComponent implements OnInit, OnDes
     }
     this.coreSiteCategoryCmsModuleService.ServiceGetAll(filteModel).subscribe(
       (next) => {
+        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
         if (next.IsSuccess) {
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;

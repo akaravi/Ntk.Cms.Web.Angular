@@ -62,12 +62,12 @@
         </ng-container>
         <!-- SubDomain Column -->
         <ng-container matColumnDef="SubDomain">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> SubDomain </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['SubDomain']?.FieldTitle}}  </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.SubDomain}} </mat-cell>
         </ng-container>
         <!-- Domain Column -->
         <ng-container matColumnDef="Domain">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Domain </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Domain']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Domain}} </mat-cell>
         </ng-container>
         <!-- CreatedDate Column -->

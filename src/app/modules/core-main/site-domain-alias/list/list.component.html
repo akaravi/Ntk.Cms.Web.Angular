@@ -69,7 +69,7 @@
         </ng-container>
         <!-- Redirect Column -->
         <ng-container matColumnDef="Redirect">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Redirect </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Redirect']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Redirect}} </mat-cell>
         </ng-container>
         <!-- CreatedDate Column -->
