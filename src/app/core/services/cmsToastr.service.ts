@@ -21,7 +21,8 @@ export class CmsToastrService {
   }
   // typeOrderAction
   typeOrderActionLogout(): void {
-    this.toastr.success('درحال اجرای خروج از حساب کاربری.', this.now() + 'Info!');
+    // this.toastr.info('درحال اجرای خروج از حساب کاربری.', this.now() + 'Info!');
+    this.toastr.success(this.translate.instant('ERRORMESSAGE.MESSAGE.typeOrderActionLogout'), this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeOrderActionLogout'));
   }
   // Success Type
   typeSuccessAccessChange(): void {

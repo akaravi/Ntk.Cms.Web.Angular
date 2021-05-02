@@ -3,11 +3,11 @@
     <div class="button-row">
 
       <button *ngIf=" tableRowSelected.LinkTypeId>0" (click)="onActionbuttonEditRow()" type="button"
-        class="btn btn-warning ml-2" data-toggle="modal" data-target="#categoryModal">ویرایش</button>
+        class="btn btn-warning ml-2" data-toggle="modal" data-target="#categoryModal">{{'ACTION.EDIT' | translate}}</button>
 
-      <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">برسی مجدد</button>
+      <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">{{'ACTION.RELOAD' | translate}}</button>
       <button (click)="onActionBackToParent()" *ngIf="this.requestLinkUserId>0" type="button"
-        class="btn btn-warning BTN">بازگشت</button>
+        class="btn btn-warning BTN">{{'ACTION.BACK' | translate}}</button>
       <app-cms-search-list [(options)]="optionsSearch"></app-cms-search-list>
       <app-cms-export-list [(options)]="optionsExport"></app-cms-export-list>
       <app-cms-statist-list [(options)]="optionsStatist"></app-cms-statist-list>
@@ -60,7 +60,7 @@
             <mat-menu #actionMenu="matMenu">
               <button mat-menu-item (click)="onActionbuttonEditRow(row)">
                 <mat-icon>mode_edit</mat-icon>
-                <span>ویرایش</span>
+                <span>{{'ACTION.EDIT' | translate}}</span>
               </button>
             </mat-menu>
           </mat-cell>

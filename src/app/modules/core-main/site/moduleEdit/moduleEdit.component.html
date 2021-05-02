@@ -14,7 +14,7 @@
                 index as i
               " [value]="item.Value">{{ item.Description }}</mat-option>
             </mat-select>
-            <mat-hint align="end">انتخاب وضعیت این محتوا</mat-hint>
+            <mat-hint align="end">{{'TITLE.SELECT_STATUS' | translate}}</mat-hint>
             <mat-error *ngIf="RecordStatus.errors?.required">
               RecordStatus is <strong>required</strong>
             </mat-error>
@@ -39,7 +39,7 @@
 
           <div *ngIf="formInfo.FormSubmitAllow">
             <a class="btn btn-secondary btn-sm BTN">
-              <button (click)="onFormCancel()" type="button" class="btn btn-warning BTN">بازگشت</button>
+              <button (click)="onFormCancel()" type="button" class="btn btn-warning BTN">{{'ACTION.BACK' | translate}}</button>
             </a>
             <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-primary font-weight-bold text-uppercase px-9 py-4">
@@ -56,7 +56,7 @@
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
-              قبلی
+              {{'ACTION.BEFOR' | translate}}
             </button>
             <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-primary font-weight-bold text-uppercase px-9 py-4">
@@ -73,7 +73,7 @@
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
-              قبلی
+              {{'ACTION.BEFOR' | translate}}
             </button>
             <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-primary font-weight-bold text-uppercase px-9 py-4">
@@ -88,11 +88,11 @@
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
-              قبلی
+              {{'ACTION.BEFOR' | translate}}
             </button>
             <button type="submit" mat-button [disabled]="!vform.form.valid"
               class="btn btn-success font-weight-bold text-uppercase px-9 py-4">
-              ذخیره
+              {{'ACTION.SAVE' | translate}}
             </button>
 
           </div>

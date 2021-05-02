@@ -86,7 +86,7 @@
   </div>
   <div class="form-actions" *ngIf="formInfo.FormSubmitAllow">
     <button type="button" (click)="onFormCancel()" class="btn btn-raised btn-warning mr-1">
-      <i class="ft-x"></i> انصراف
+      <i class="ft-x"></i> {{'ACTION.CANCEL' | translate}}
     </button>
     <button type="submit" (click)="onFormSubmit()" class="btn btn-raised btn-primary" *ngIf="!dataModelResultGotoBank"
       [disabled]="!vform.valid">

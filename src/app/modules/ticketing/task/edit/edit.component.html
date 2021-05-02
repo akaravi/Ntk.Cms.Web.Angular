@@ -7,7 +7,7 @@
       </app-progress-spinner>
       <mat-horizontal-stepper *ngIf="!loading.display" (selectionChange)="onStepClick($event,stepper)" #stepper>
 
-        <mat-step label="اطلاعات الزامی" state="main">
+        <mat-step label="{{'TITLE.REQUIRED_INFORMATION' | translate}}" state="main">
 
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['RecordStatus']?.AccessWatchField">
             <mat-select placeholder="{{fieldsInfo['RecordStatus']?.FieldTitle}}" [(ngModel)]="dataModel.RecordStatus"
@@ -32,7 +32,7 @@
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['FullName']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['FullName']?.FieldFullName }}</mat-label>
             <input matInput [(ngModel)]="dataModel.FullName" [disabled]="!fieldsInfo['FullName']?.AccessAddField"
-              name="dataModel.FullName" #FullName type="text" placeholder="عنوان" minlength="3" maxlength="100"
+              name="dataModel.FullName" #FullName type="text" placeholder="{{fieldsInfo['Title']?.Title}}" minlength="3" maxlength="100"
               required />
             <mat-icon matSuffix *ngIf="dataModel.FullName && fieldsInfo['FullName']?.AccessAddField" matSuffix
               mat-icon-button aria-label="Clear" (click)="dataModel.FullName = ''">close</mat-icon>
@@ -47,7 +47,7 @@
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Title']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['Title']?.FieldTitle }}</mat-label>
             <input matInput [(ngModel)]="dataModel.Title" [disabled]="!fieldsInfo['Title']?.AccessAddField"
-              name="dataModel.Title" #Title type="text" placeholder="عنوان" minlength="3" maxlength="100" required />
+              name="dataModel.Title" #Title type="text" placeholder="{{fieldsInfo['Title']?.Title}}" minlength="3" maxlength="100" required />
             <mat-icon matSuffix *ngIf="dataModel.Title && fieldsInfo['Title']?.AccessAddField" matSuffix mat-icon-button
               aria-label="Clear" (click)="dataModel.Title = ''">close</mat-icon>
             <mat-icon *ngIf="fieldsInfo['Title']?.AccessAddField" matSuffix>mode_edit</mat-icon>
@@ -61,7 +61,7 @@
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['PhoneNo']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['PhoneNo']?.FieldPhoneNo }}</mat-label>
             <input matInput [(ngModel)]="dataModel.PhoneNo" [disabled]="!fieldsInfo['PhoneNo']?.AccessAddField"
-              name="dataModel.PhoneNo" #PhoneNo type="text" placeholder="عنوان" minlength="3" maxlength="100"
+              name="dataModel.PhoneNo" #PhoneNo type="text" placeholder="{{fieldsInfo['Title']?.Title}}" minlength="3" maxlength="100"
               required />
             <mat-icon matSuffix *ngIf="dataModel.PhoneNo && fieldsInfo['PhoneNo']?.AccessAddField" matSuffix
               mat-icon-button aria-label="Clear" (click)="dataModel.PhoneNo = ''">close</mat-icon>
@@ -76,7 +76,7 @@
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Email']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['Email']?.FieldEmail }}</mat-label>
             <input matInput [(ngModel)]="dataModel.Email" [disabled]="!fieldsInfo['Email']?.AccessAddField"
-              name="dataModel.Email" #Email type="text" placeholder="عنوان" minlength="3" maxlength="100" required />
+              name="dataModel.Email" #Email type="text" placeholder="{{fieldsInfo['Title']?.Title}}" minlength="3" maxlength="100" required />
             <mat-icon matSuffix *ngIf="dataModel.Email && fieldsInfo['Email']?.AccessAddField" matSuffix mat-icon-button
               aria-label="Clear" (click)="dataModel.Email = ''">close</mat-icon>
             <mat-icon *ngIf="fieldsInfo['Email']?.AccessAddField" matSuffix>mode_edit</mat-icon>
@@ -90,7 +90,7 @@
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Title']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['Title']?.FieldTitle }}</mat-label>
             <input matInput [(ngModel)]="dataModel.Title" [disabled]="!fieldsInfo['Title']?.AccessAddField"
-              name="dataModel.Title" #Title type="text" placeholder="عنوان" minlength="3" maxlength="100" required />
+              name="dataModel.Title" #Title type="text" placeholder="{{fieldsInfo['Title']?.Title}}" minlength="3" maxlength="100" required />
             <mat-icon matSuffix *ngIf="dataModel.Title && fieldsInfo['Title']?.AccessAddField" matSuffix mat-icon-button
               aria-label="Clear" (click)="dataModel.Title = ''">close</mat-icon>
             <mat-icon *ngIf="fieldsInfo['Title']?.AccessAddField" matSuffix>mode_edit</mat-icon>
@@ -103,7 +103,7 @@
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['HtmlBody']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['HtmlBody']?.FieldHtmlBody }}</mat-label>
             <textarea matInput [(ngModel)]="dataModel.HtmlBody" [disabled]="!fieldsInfo['HtmlBody']?.AccessAddField"
-              name="dataModel.HtmlBody" #HtmlBody type="text" placeholder="عنوان" row="5" minlength="0"
+              name="dataModel.HtmlBody" #HtmlBody type="text" placeholder="{{fieldsInfo['Title']?.Title}}" row="5" minlength="0"
               maxlength="1000"></textarea>
             <mat-icon matSuffix *ngIf="dataModel.HtmlBody && fieldsInfo['HtmlBody']?.AccessAddField" matSuffix
               mat-icon-button aria-label="Clear" (click)="dataModel.HtmlBody = ''">close</mat-icon>
@@ -134,7 +134,7 @@
             </button>
             <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
-              بعدی
+              {{'ACTION.NEXT' | translate}}
             </button>
           </div>
         </mat-step>
@@ -149,7 +149,7 @@
             <mat-label>{{ fieldsInfo['UserIpAddress']?.FieldUserIpAddress }}</mat-label>
             <input matInput [(ngModel)]="dataModel.UserIpAddress"
               [disabled]="!fieldsInfo['UserIpAddress']?.AccessAddField" name="dataModel.UserIpAddress" #UserIpAddress
-              type="text" placeholder="عنوان" minlength="0" maxlength="100" />
+              type="text" placeholder="{{fieldsInfo['Title']?.Title}}" minlength="0" maxlength="100" />
             <mat-icon matSuffix *ngIf="dataModel.UserIpAddress && fieldsInfo['UserIpAddress']?.AccessAddField" matSuffix
               mat-icon-button aria-label="Clear" (click)="dataModel.UserIpAddress = ''">close</mat-icon>
             <mat-icon *ngIf="fieldsInfo['UserIpAddress']?.AccessAddField" matSuffix>mode_edit</mat-icon>
@@ -162,7 +162,7 @@
             <mat-label>{{ fieldsInfo['DeviceInformation']?.FieldDeviceInformation }}</mat-label>
             <input matInput [(ngModel)]="dataModel.DeviceInformation"
               [disabled]="!fieldsInfo['DeviceInformation']?.AccessAddField" name="dataModel.DeviceInformation"
-              #DeviceInformation type="text" placeholder="عنوان" minlength="0" maxlength="100" />
+              #DeviceInformation type="text" placeholder="{{fieldsInfo['Title']?.Title}}" minlength="0" maxlength="100" />
             <mat-icon matSuffix *ngIf="dataModel.DeviceInformation && fieldsInfo['DeviceInformation']?.AccessAddField"
               matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.DeviceInformation = ''">close</mat-icon>
             <mat-icon *ngIf="fieldsInfo['DeviceInformation']?.AccessAddField" matSuffix>mode_edit</mat-icon>
@@ -175,11 +175,11 @@
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
-              قبلی
+              {{'ACTION.BEFOR' | translate}}
             </button>
             <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
-              بعدی
+              {{'ACTION.NEXT' | translate}}
             </button>
           </div>
         </mat-step>
@@ -200,11 +200,11 @@
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
-              قبلی
+              {{'ACTION.BEFOR' | translate}}
             </button>
             <button type="submit" mat-button [disabled]="!vform.form.valid"
               class="btn btn-success font-weight-bold text-uppercase px-9 py-4">
-              ذخیره
+              {{'ACTION.SAVE' | translate}}
             </button>
           </div>
         </mat-step>

@@ -7,7 +7,7 @@
       </app-progress-spinner>
       <mat-horizontal-stepper *ngIf="!loading.display" (selectionChange)="onStepClick($event,stepper)" #stepper>
 
-        <mat-step label="اطلاعات الزامی" state="main">
+        <mat-step label="{{'TITLE.REQUIRED_INFORMATION' | translate}}" state="main">
           <!-- RecordStatus Field -->
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['RecordStatus']?.AccessWatchField">
             <mat-select placeholder="{{fieldsInfo['RecordStatus']?.FieldTitle}}" [(ngModel)]="dataModel.RecordStatus"
@@ -40,13 +40,13 @@
           </mat-form-field>
           <!-- LinkSourceId Field -->
           <app-application-source-selector (optionSelect)="onActionSelectSource($event)"
-            [optionSelectForce]="this.dataModel.LinkSourceId" [optionPlaceholder]="'سورس اپلیکیشن'"
+            [optionSelectForce]="this.dataModel.LinkSourceId" [optionPlaceholder]="fieldsInfo['LinkSourceId']?.FieldTitle"
             [disabled]="!fieldsInfo['LinkSourceId']?.AccessAddField"></app-application-source-selector>
 
           <!-- LinkThemeConfigId Field -->
           <app-application-themeconfig-selector (optionSelect)="onActionSelectTheme($event)"
             [optionSelectForce]="this.dataModel.LinkThemeConfigId"
-            [optionSelectParentForce]="this.dataModel.LinkSourceId" [optionPlaceholder]="'قالب اپلیکیشن'"
+            [optionSelectParentForce]="this.dataModel.LinkThemeConfigId" [optionPlaceholder]="fieldsInfo['LinkThemeConfigId']?.FieldTitle"
             [optionSelectFirstItem]="true" [disabled]="!fieldsInfo['LinkThemeConfigId']?.AccessAddField">
           </app-application-themeconfig-selector>
 
@@ -54,7 +54,7 @@
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Title']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['Title']?.FieldTitle }}</mat-label>
             <input matInput [(ngModel)]="dataModel.Title" [disabled]="!fieldsInfo['Title']?.AccessAddField"
-              name="dataModel.Title" #Title type="text" placeholder="عنوان" minlength="3" maxlength="100" required />
+              name="dataModel.Title" #Title type="text" placeholder="{{fieldsInfo['Title']?.Title}}" minlength="3" maxlength="100" required />
             <mat-icon matSuffix *ngIf="dataModel.Title && fieldsInfo['Title']?.AccessAddField" matSuffix mat-icon-button
               aria-label="Clear" (click)="dataModel.Title = ''">close</mat-icon>
             <mat-icon *ngIf="fieldsInfo['Title']?.AccessAddField" matSuffix>mode_edit</mat-icon>
@@ -82,11 +82,11 @@
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button (click)="onActionBackToParent()"
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
-              بازگشت
+              {{'ACTION.BACK' | translate}}
             </button>
             <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
-              بعدی
+              {{'ACTION.NEXT' | translate}}
             </button>
 
           </div>
@@ -204,11 +204,11 @@
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
-              قبلی
+              {{'ACTION.BEFOR' | translate}}
             </button>
             <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
-              بعدی
+              {{'ACTION.NEXT' | translate}}
             </button>
           </div>
         </mat-step>
@@ -280,11 +280,11 @@
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
-              قبلی
+              {{'ACTION.BEFOR' | translate}}
             </button>
             <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
-              بعدی
+              {{'ACTION.NEXT' | translate}}
             </button>
           </div>
         </mat-step>
@@ -401,11 +401,11 @@
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
-              قبلی
+              {{'ACTION.BEFOR' | translate}}
             </button>
             <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
-              بعدی
+              {{'ACTION.NEXT' | translate}}
             </button>
           </div>
         </mat-step>
@@ -593,11 +593,11 @@
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
-              قبلی
+              {{'ACTION.BEFOR' | translate}}
             </button>
             <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
-              بعدی
+              {{'ACTION.NEXT' | translate}}
             </button>
           </div>
         </mat-step>
@@ -740,7 +740,7 @@
             <mat-label>{{fieldsInfo['LastBuildErrorMessage']?.FieldTitle}}</mat-label>
             <textarea matInput [(ngModel)]="dataModel.LastBuildErrorMessage"
               [disabled]="!fieldsInfo['LastBuildErrorMessage']?.AccessAddField" name="dataModel.LastBuildErrorMessage"
-              #LastBuildErrorMessage type="text" placeholder="عنوان" rows="5"></textarea>
+              #LastBuildErrorMessage type="text" placeholder="{{fieldsInfo['Title']?.Title}}" rows="5"></textarea>
             <mat-icon matSuffix *ngIf="dataModel.LastBuildErrorMessage" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.LastBuildErrorMessage = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
@@ -749,11 +749,11 @@
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
-              قبلی
+              {{'ACTION.BEFOR' | translate}}
             </button>
             <button type="submit" mat-button [disabled]="!vform.form.valid"
               class="btn btn-success font-weight-bold text-uppercase px-9 py-4">
-              ذخیره
+              {{'ACTION.SAVE' | translate}}
             </button>
           </div>
         </mat-step>

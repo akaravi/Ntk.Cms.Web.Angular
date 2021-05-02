@@ -12,7 +12,7 @@
                 index as i
               " [value]="item.Value">{{ item.Description }}</mat-option>
         </mat-select>
-        <mat-hint align="end">انتخاب وضعیت این محتوا</mat-hint>
+        <mat-hint align="end">{{'TITLE.SELECT_STATUS' | translate}}</mat-hint>
         <mat-error *ngIf="RecordStatus.errors?.required">
           RecordStatus is <strong>required</strong>
         </mat-error>
@@ -20,7 +20,7 @@
       <!-- Title Field -->
       <mat-form-field class="example-full-width">
         <mat-label>{{fieldsInfo['Title']?.Title}}</mat-label>
-        <input matInput [(ngModel)]="dataModel.Title" name="dataModel.Title" #Title type="text" placeholder="عنوان"
+        <input matInput [(ngModel)]="dataModel.Title" name="dataModel.Title" #Title type="text" placeholder="{{fieldsInfo['Title']?.Title}}"
           minlength="3" maxlength="100" required />
         <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
           (click)="dataModel.Title = ''">close</mat-icon>
@@ -60,10 +60,10 @@
   </div>
   <div class="form-actions" *ngIf="formInfo.FormSubmitAllow">
     <button type="button" (click)="onFormCancel()" class="btn btn-raised btn-warning mr-1">
-      <i class="ft-x"></i> انصراف
+      <i class="ft-x"></i> {{'ACTION.CANCEL' | translate}}
     </button>
     <button type="submit" (click)="onFormSubmit()" class="btn btn-raised btn-primary" [disabled]="!vform.form.valid">
-      <i class="fa fa-check-square-o"></i> ذخیره
+      <i class="fa fa-check-square-o"></i> {{'ACTION.SAVE' | translate}}
     </button>
   </div>
 </mat-dialog-actions>

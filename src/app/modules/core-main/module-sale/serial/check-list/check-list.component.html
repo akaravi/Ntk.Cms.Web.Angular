@@ -30,7 +30,7 @@
       </mat-form-field>
       <button (click)="onActionbuttonBuy()" type="button" class="btn btn-warning BTN" *ngIf="showBuy">خرید </button>
       <button (click)="onActionBackToParent()" *ngIf="this.requestSerial &&this.requestSerial.length> 0" type="button"
-        class="btn btn-warning BTN">بازگشت</button>
+        class="btn btn-warning BTN">{{'ACTION.BACK' | translate}}</button>
 
     </div>
 

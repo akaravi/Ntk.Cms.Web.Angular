@@ -6,7 +6,7 @@
     <app-progress-spinner [options]="loading"> </app-progress-spinner>
     <div *ngIf="!loading.display" class="form-body">
       <h4 class="form-section mb-8">
-        <i class="ft-user"></i> حذف ردیف اطلاعات
+        <i class="ft-user"></i> {{'TITLE.DELETE_ROW_DATA' | translate}}
       </h4>
 
       <div class="form-group row">
@@ -14,7 +14,7 @@
         <mat-form-field class="example-full-width">
           <mat-label>{{fieldsInfo['Title']?.Title}}</mat-label>
           <input matInput [(ngModel)]="dataModelResultContent.Item.Title" name="dataModelResultContent.Item.Title"
-            #Writer type="text" placeholder="عنوان" required readonly />
+            #Writer type="text" placeholder="{{fieldsInfo['Title']?.Title}}" required readonly />
         </mat-form-field>
 
         <mat-form-field class="example-full-width">
@@ -35,10 +35,10 @@
 
       <button type="button" (click)="onFormDelete()" [disabled]=" !formInfo.ButtonSubmittedEnabled"
         class="btn btn-raised btn-warning mr-1">
-        <i class="fa fa-check-square-o"></i> حذف
+        <i class="fa fa-check-square-o"></i> {{'ACTION.DELETE' | translate}}
       </button>
       <button type="button" (click)="onFormCancel()" class="btn btn-raised btn-warning mr-1">
-        <i class="ft-x"></i> انصراف
+        <i class="ft-x"></i> {{'ACTION.CANCEL' | translate}}
       </button>
     </div>
   </form>

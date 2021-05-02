@@ -7,7 +7,7 @@
       </app-progress-spinner>
       <mat-horizontal-stepper *ngIf="!loading.display" (selectionChange)="onStepClick($event,stepper)" #stepper>
 
-        <mat-step label="اطلاعات الزامی" state="main">
+        <mat-step label="{{'TITLE.REQUIRED_INFORMATION' | translate}}" state="main">
           <!-- RecordStatus Field -->
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['RecordStatus']?.AccessWatchField">
             <mat-select placeholder="{{fieldsInfo['RecordStatus']?.FieldTitle}}" [(ngModel)]="dataModel.RecordStatus"
@@ -55,7 +55,7 @@
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Title']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['Title']?.FieldTitle }}</mat-label>
             <input matInput [(ngModel)]="dataModel.Title" [disabled]="!fieldsInfo['Title']?.AccessAddField"
-              name="dataModel.Title" #Title type="text" placeholder="عنوان" minlength="3" maxlength="100" required />
+              name="dataModel.Title" #Title type="text" placeholder="{{fieldsInfo['Title']?.Title}}" minlength="3" maxlength="100" required />
             <mat-icon matSuffix *ngIf="dataModel.Title && fieldsInfo['Title']?.AccessAddField" matSuffix
               mat-icon-button aria-label="Clear" (click)="dataModel.Title = ''">close</mat-icon>
             <mat-icon *ngIf="fieldsInfo['Title']?.AccessAddField" matSuffix>mode_edit</mat-icon>
@@ -122,7 +122,7 @@
             </button>
             <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
-              بعدی
+              {{'ACTION.NEXT' | translate}}
             </button>
 
           </div>
@@ -204,7 +204,7 @@
             </button>
             <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
-              بعدی
+              {{'ACTION.NEXT' | translate}}
             </button>
 
           </div>
@@ -219,7 +219,7 @@
             <mat-label>{{ fieldsInfo['AboutUsTitle']?.FieldAboutUsTitle }}</mat-label>
             <input matInput [(ngModel)]="dataModel.AboutUsTitle"
               [disabled]="!fieldsInfo['AboutUsTitle']?.AccessAddField" name="dataModel.AboutUsTitle" #AboutUsTitle
-              type="text" placeholder="عنوان" minlength="0" maxlength="100" />
+              type="text" placeholder="{{fieldsInfo['Title']?.Title}}" minlength="0" maxlength="100" />
             <mat-icon matSuffix *ngIf="dataModel.AboutUsTitle && fieldsInfo['AboutUsTitle']?.AccessAddField" matSuffix
               mat-icon-button aria-label="Clear" (click)="dataModel.AboutUsTitle = ''">close</mat-icon>
             <mat-icon *ngIf="fieldsInfo['AboutUsTitle']?.AccessAddField" matSuffix>mode_edit</mat-icon>
@@ -316,11 +316,11 @@
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
-              قبلی
+              {{'ACTION.BEFOR' | translate}}
             </button>
             <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
-              بعدی
+              {{'ACTION.NEXT' | translate}}
             </button>
           </div>
         </mat-step>
@@ -376,11 +376,11 @@
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
-              قبلی
+              {{'ACTION.BEFOR' | translate}}
             </button>
             <button type="submit" mat-button [disabled]="!vform.form.valid"
               class="btn btn-success font-weight-bold text-uppercase px-9 py-4">
-              ذخیره
+              {{'ACTION.SAVE' | translate}}
             </button>
           </div>
         </mat-step>

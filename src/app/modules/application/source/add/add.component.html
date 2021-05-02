@@ -6,7 +6,7 @@
       <app-progress-spinner [options]="loading">
       </app-progress-spinner>
       <mat-horizontal-stepper *ngIf="!loading.display" (selectionChange)="onStepClick($event,stepper)" #stepper>
-        <mat-step label="اطلاعات الزامی" state="main">
+        <mat-step label="{{'TITLE.REQUIRED_INFORMATION' | translate}}" state="main">
           <div>
             کپی تنظیمات از محتوای :
             <br>
@@ -48,7 +48,7 @@
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Title']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['Title']?.FieldTitle }}</mat-label>
             <input matInput [(ngModel)]="dataModel.Title" [disabled]="!fieldsInfo['Title']?.AccessAddField"
-              name="dataModel.Title" #Title type="text" placeholder="عنوان" minlength="3" maxlength="100" required />
+              name="dataModel.Title" #Title type="text" placeholder="{{fieldsInfo['Title']?.Title}}" minlength="3" maxlength="100" required />
             <mat-icon matSuffix *ngIf="dataModel.Title && fieldsInfo['Title']?.AccessAddField" matSuffix mat-icon-button
               aria-label="Clear" (click)="dataModel.Title = ''">close</mat-icon>
             <mat-icon *ngIf="fieldsInfo['Title']?.AccessAddField" matSuffix>mode_edit</mat-icon>
@@ -61,7 +61,7 @@
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['ClassName']?.AccessWatchField">
             <mat-label>{{fieldsInfo['ClassName']?.FieldTitle}}</mat-label>
             <input matInput [(ngModel)]="dataModel.ClassName" [disabled]="!fieldsInfo['ClassName']?.AccessAddField"
-              name="dataModel.ClassName" #ClassName type="text" placeholder="عنوان" minlength="3" maxlength="100"
+              name="dataModel.ClassName" #ClassName type="text" placeholder="{{fieldsInfo['Title']?.Title}}" minlength="3" maxlength="100"
               required />
             <mat-icon matSuffix *ngIf="dataModel.ClassName && fieldsInfo['ClassName']?.AccessAddField" matSuffix
               mat-icon-button aria-label="Clear" (click)="dataModel.ClassName = ''">close</mat-icon>
@@ -75,7 +75,7 @@
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['PackageName']?.AccessWatchField">
             <mat-label>{{fieldsInfo['PackageName']?.FieldTitle}}</mat-label>
             <input matInput [(ngModel)]="dataModel.PackageName" [disabled]="!fieldsInfo['PackageName']?.AccessAddField"
-              name="dataModel.PackageName" #PackageName type="text" placeholder="عنوان" minlength="3" maxlength="100"
+              name="dataModel.PackageName" #PackageName type="text" placeholder="{{fieldsInfo['Title']?.Title}}" minlength="3" maxlength="100"
               required />
             <mat-icon matSuffix *ngIf="dataModel.PackageName && fieldsInfo['PackageName']?.AccessAddField" matSuffix
               mat-icon-button aria-label="Clear" (click)="dataModel.PackageName = ''">close</mat-icon>
@@ -118,11 +118,11 @@
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button (click)="onActionBackToParent()"
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
-              بازگشت
+              {{'ACTION.BACK' | translate}}
             </button>
             <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
-              بعدی
+              {{'ACTION.NEXT' | translate}}
             </button>
           </div>
         </mat-step>
@@ -174,7 +174,7 @@
             <mat-label>{{fieldsInfo['SourceNameGit']?.FieldTitle}}</mat-label>
             <input matInput [(ngModel)]="dataModel.SourceNameGit"
               [disabled]="!fieldsInfo['SourceNameGit']?.AccessAddField" name="dataModel.SourceNameGit" #SourceNameGit
-              type="text" placeholder="عنوان" minlength="0" maxlength="100" />
+              type="text" placeholder="{{fieldsInfo['Title']?.Title}}" minlength="0" maxlength="100" />
             <mat-icon matSuffix *ngIf="dataModel.SourceNameGit && fieldsInfo['SourceNameGit']?.AccessAddField" matSuffix
               mat-icon-button aria-label="Clear" (click)="dataModel.SourceNameGit = ''">close</mat-icon>
             <mat-icon *ngIf="fieldsInfo['SourceNameGit']?.AccessAddField" matSuffix>mode_edit</mat-icon>
@@ -186,7 +186,7 @@
             <mat-label>{{fieldsInfo['FireBaseServerKey']?.FieldTitle}}</mat-label>
             <textarea matInput [(ngModel)]="dataModel.FireBaseServerKey"
               [disabled]="!fieldsInfo['FireBaseServerKey']?.AccessAddField" name="dataModel.FireBaseServerKey"
-              #FireBaseServerKey type="text" placeholder="عنوان" rows="5"></textarea>
+              #FireBaseServerKey type="text" placeholder="{{fieldsInfo['Title']?.Title}}" rows="5"></textarea>
             <mat-icon matSuffix *ngIf="dataModel.FireBaseServerKey && fieldsInfo['FireBaseServerKey']?.AccessAddField"
               matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.FireBaseServerKey = ''">close</mat-icon>
             <mat-icon *ngIf="fieldsInfo['FireBaseServerKey']?.AccessAddField" matSuffix>mode_edit</mat-icon>
@@ -195,11 +195,11 @@
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
-              قبلی
+              {{'ACTION.BEFOR' | translate}}
             </button>
             <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
-              بعدی
+              {{'ACTION.NEXT' | translate}}
             </button>
           </div>
         </mat-step>
@@ -232,11 +232,11 @@
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
-              قبلی
+              {{'ACTION.BEFOR' | translate}}
             </button>
             <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
-              بعدی
+              {{'ACTION.NEXT' | translate}}
             </button>
           </div>
         </mat-step>
@@ -250,7 +250,7 @@
             <textarea matInput [(ngModel)]="dataModel.DefaultConfigBuilderAdminJsonValues"
               [disabled]="!fieldsInfo['DefaultConfigBuilderAdminJsonValues']?.AccessAddField"
               name="dataModel.DefaultConfigBuilderAdminJsonValues" #DefaultConfigBuilderAdminJsonValues type="text"
-              placeholder="عنوان" rows="5"></textarea>
+              placeholder="{{fieldsInfo['Title']?.Title}}" rows="5"></textarea>
             <mat-icon matSuffix *ngIf="dataModel.DefaultConfigBuilderAdminJsonValues" matSuffix mat-icon-button
               aria-label="Clear" (click)="dataModel.DefaultConfigBuilderAdminJsonValues = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
@@ -262,7 +262,7 @@
             <textarea matInput [(ngModel)]="dataModel.DefaultConfigRuntimeAdminJsonValues"
               [disabled]="!fieldsInfo['DefaultConfigRuntimeAdminJsonValues']?.AccessAddField"
               name="dataModel.DefaultConfigRuntimeAdminJsonValues" #DefaultConfigRuntimeAdminJsonValues type="text"
-              placeholder="عنوان" rows="5"></textarea>
+              placeholder="{{fieldsInfo['Title']?.Title}}" rows="5"></textarea>
             <mat-icon matSuffix *ngIf="dataModel.DefaultConfigRuntimeAdminJsonValues" matSuffix mat-icon-button
               aria-label="Clear" (click)="dataModel.DefaultConfigRuntimeAdminJsonValues = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
@@ -274,7 +274,7 @@
             <textarea matInput [(ngModel)]="dataModel.DefaultConfigBuilderSiteJsonValues"
               [disabled]="!fieldsInfo['DefaultConfigBuilderSiteJsonValues']?.AccessAddField"
               name="dataModel.DefaultConfigBuilderSiteJsonValues" #DefaultConfigBuilderSiteJsonValues type="text"
-              placeholder="عنوان" rows="5"></textarea>
+              placeholder="{{fieldsInfo['Title']?.Title}}" rows="5"></textarea>
             <mat-icon matSuffix *ngIf="dataModel.DefaultConfigBuilderSiteJsonValues" matSuffix mat-icon-button
               aria-label="Clear" (click)="dataModel.DefaultConfigBuilderSiteJsonValues = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
@@ -286,7 +286,7 @@
             <textarea matInput [(ngModel)]="dataModel.DefaultConfigRuntimeSiteJsonValues"
               [disabled]="!fieldsInfo['DefaultConfigRuntimeSiteJsonValues']?.AccessAddField"
               name="dataModel.DefaultConfigRuntimeSiteJsonValues" #DefaultConfigRuntimeSiteJsonValues type="text"
-              placeholder="عنوان" rows="5"></textarea>
+              placeholder="{{fieldsInfo['Title']?.Title}}" rows="5"></textarea>
             <mat-icon matSuffix *ngIf="dataModel.DefaultConfigRuntimeSiteJsonValues" matSuffix mat-icon-button
               aria-label="Clear" (click)="dataModel.DefaultConfigRuntimeSiteJsonValues = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
@@ -414,11 +414,11 @@
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
-              قبلی
+              {{'ACTION.BEFOR' | translate}}
             </button>
             <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
-              بعدی
+              {{'ACTION.NEXT' | translate}}
             </button>
           </div>
         </mat-step>
@@ -430,7 +430,7 @@
             <mat-label>{{fieldsInfo['LastSuccessfullyBuildDate']?.FieldTitle}}</mat-label>
             <textarea matInput [(ngModel)]="dataModel.LastSuccessfullyBuildDate"
               [disabled]="!fieldsInfo['LastSuccessfullyBuildDate']?.AccessAddField"
-              name="dataModel.LastSuccessfullyBuildDate" #LastSuccessfullyBuildDate type="text" placeholder="عنوان"
+              name="dataModel.LastSuccessfullyBuildDate" #LastSuccessfullyBuildDate type="text" placeholder="{{fieldsInfo['Title']?.Title}}"
               rows="5"></textarea>
             <mat-icon matSuffix *ngIf="dataModel.LastSuccessfullyBuildDate" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.LastSuccessfullyBuildDate = ''">close</mat-icon>
@@ -442,7 +442,7 @@
             <mat-label>{{fieldsInfo['LastBuildCommandDate']?.FieldTitle}}</mat-label>
             <textarea matInput [(ngModel)]="dataModel.LastBuildCommandDate"
               [disabled]="!fieldsInfo['LastBuildCommandDate']?.AccessAddField" name="dataModel.LastBuildCommandDate"
-              #LastBuildCommandDate type="text" placeholder="عنوان" rows="5"></textarea>
+              #LastBuildCommandDate type="text" placeholder="{{fieldsInfo['Title']?.Title}}" rows="5"></textarea>
             <mat-icon matSuffix *ngIf="dataModel.LastBuildCommandDate" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.LastBuildCommandDate = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
@@ -452,7 +452,7 @@
             <mat-label>{{fieldsInfo['LastBuildCommandBy']?.FieldTitle}}</mat-label>
             <textarea matInput [(ngModel)]="dataModel.LastBuildCommandBy"
               [disabled]="!fieldsInfo['LastBuildCommandBy']?.AccessAddField" name="dataModel.LastBuildCommandBy"
-              #LastBuildCommandBy type="text" placeholder="عنوان" rows="5"></textarea>
+              #LastBuildCommandBy type="text" placeholder="{{fieldsInfo['Title']?.Title}}" rows="5"></textarea>
             <mat-icon matSuffix *ngIf="dataModel.LastBuildCommandBy" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.LastBuildCommandBy = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
@@ -464,7 +464,7 @@
             <mat-label>{{fieldsInfo['LastBuildCommandDate']?.FieldTitle}}</mat-label>
             <textarea matInput [(ngModel)]="dataModel.LastBuildCommandDate"
               [disabled]="!fieldsInfo['LastBuildCommandDate']?.AccessAddField" name="dataModel.LastBuildCommandDate"
-              #LastBuildCommandDate type="text" placeholder="عنوان" rows="5"></textarea>
+              #LastBuildCommandDate type="text" placeholder="{{fieldsInfo['Title']?.Title}}" rows="5"></textarea>
             <mat-icon matSuffix *ngIf="dataModel.LastBuildCommandDate" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.LastBuildCommandDate = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
@@ -475,7 +475,7 @@
             <mat-label>{{fieldsInfo['LastBuildCommandBy']?.FieldTitle}}</mat-label>
             <textarea matInput [(ngModel)]="dataModel.LastBuildCommandBy"
               [disabled]="!fieldsInfo['LastBuildCommandBy']?.AccessAddField" name="dataModel.LastBuildCommandBy"
-              #LastBuildCommandBy type="text" placeholder="عنوان" rows="5"></textarea>
+              #LastBuildCommandBy type="text" placeholder="{{fieldsInfo['Title']?.Title}}" rows="5"></textarea>
             <mat-icon matSuffix *ngIf="dataModel.LastBuildCommandBy" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.LastBuildCommandBy = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
@@ -488,7 +488,7 @@
             <textarea matInput [(ngModel)]="dataModel.LastUnsuccessfullyBuildErrorDate"
               [disabled]="!fieldsInfo['LastUnsuccessfullyBuildErrorDate']?.AccessAddField"
               name="dataModel.LastUnsuccessfullyBuildErrorDate" #LastUnsuccessfullyBuildErrorDate type="text"
-              placeholder="عنوان" rows="5"></textarea>
+              placeholder="{{fieldsInfo['Title']?.Title}}" rows="5"></textarea>
             <mat-icon matSuffix *ngIf="dataModel.LastUnsuccessfullyBuildErrorDate" matSuffix mat-icon-button
               aria-label="Clear" (click)="dataModel.LastUnsuccessfullyBuildErrorDate = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
@@ -500,7 +500,7 @@
             <textarea matInput [(ngModel)]="dataModel.LastUnsuccessfullyBuildErrorMessage"
               [disabled]="!fieldsInfo['LastUnsuccessfullyBuildErrorMessage']?.AccessAddField"
               name="dataModel.LastUnsuccessfullyBuildErrorMessage" #LastUnsuccessfullyBuildErrorMessage type="text"
-              placeholder="عنوان" rows="5"></textarea>
+              placeholder="{{fieldsInfo['Title']?.Title}}" rows="5"></textarea>
             <mat-icon matSuffix *ngIf="dataModel.LastUnsuccessfullyBuildErrorMessage" matSuffix mat-icon-button
               aria-label="Clear" (click)="dataModel.LastUnsuccessfullyBuildErrorMessage = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
@@ -510,11 +510,11 @@
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
-              قبلی
+              {{'ACTION.BEFOR' | translate}}
             </button>
             <button type="submit" mat-button [disabled]="!vform.form.valid"
               class="btn btn-success font-weight-bold text-uppercase px-9 py-4">
-              ذخیره
+              {{'ACTION.SAVE' | translate}}
             </button>
           </div>
         </mat-step>

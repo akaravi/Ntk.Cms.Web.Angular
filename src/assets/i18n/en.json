@@ -3,6 +3,40 @@
   "TRANSLATOR": {
     "SELECT": "Select your language"
   },
+  "ERRORMESSAGE": {
+    "TITLE": {
+      "typeSuccessAccessChange": "موفقیت",
+      "typeSuccessAddFirstSite": "موفقیت",
+      "typeOrderActionLogout": "خروج از حساب"
+    },
+    "MESSAGE": {
+      "typeSuccessAccessChange": "دسترسی با موفقیت تایید شد",
+      "typeSuccessAddFirstSite": "اولین سامانه شما با موفقیت ساخته شد",
+      "typeOrderActionLogout": "درحال اجرای خروج از حساب کاربری."
+    }
+  },
+  "ACTION": {
+    "ADD": "Add",
+    "SAVE": "Save",
+    "CANCEL": "Cancel",
+    "DELETE": "Delete",
+    "EDIT": "edit",
+    "STATIST": "Statist",
+    "RELOAD": "Reload",
+    "SEARCH": "Search",
+    "EXPORTFILE": "Export File",
+    "NEXT": "Next",
+    "BACK": "Back",
+    "BEFOR": "Befor",
+    "VIEW": "View"
+  },
+  "TITLE": {
+    "SITE": "Site",
+    "REQUIRED_INFORMATION": "Required information",
+    "SELECT_STATUS": "Select Status Data",
+    "DELETE_ROW_DATA": "Delete Row Data",
+    "MOVE_DATA": "Move Data"
+  },
   "MENU": {
     "NEW": "new",
     "ACTIONS": "Actions",

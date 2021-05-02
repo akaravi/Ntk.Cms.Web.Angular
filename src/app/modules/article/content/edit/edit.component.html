@@ -7,7 +7,7 @@
       </app-progress-spinner>
       <mat-horizontal-stepper *ngIf="!loading.display" (selectionChange)="onStepClick($event,stepper)" #stepper>
 
-        <mat-step label="اطلاعات الزامی" state="main">
+        <mat-step label="{{'TITLE.REQUIRED_INFORMATION' | translate}}" state="main">
 
           <mat-form-field class="example-full-width">
             <mat-select placeholder="{{fieldsInfo['RecordStatus']?.Title}}" [(ngModel)]="dataModel.RecordStatus" name="dataModel.RecordStatus"
@@ -17,7 +17,7 @@
                 index as i
               " [value]="item.Value">{{ item.Description }}</mat-option>
             </mat-select>
-            <mat-hint align="end">انتخاب وضعیت این محتوا</mat-hint>
+            <mat-hint align="end">{{'TITLE.SELECT_STATUS' | translate}}</mat-hint>
             <mat-error *ngIf="RecordStatus.errors?.required">
               RecordStatus is <strong>required</strong>
             </mat-error>
@@ -27,7 +27,7 @@
           </app-article-category-selector>
           <mat-form-field class="example-full-width">
             <mat-label>{{fieldsInfo['Title']?.Title}}</mat-label>
-            <input matInput [(ngModel)]="dataModel.Title" name="dataModel.Title" #Title type="text" placeholder="عنوان"
+            <input matInput [(ngModel)]="dataModel.Title" name="dataModel.Title" #Title type="text" placeholder="{{fieldsInfo['Title']?.Title}}"
               minlength="3" maxlength="100" required />
             <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.Title = ''">close</mat-icon>
@@ -80,7 +80,7 @@
             </button>
             <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
-              بعدی
+              {{'ACTION.NEXT' | translate}}
             </button>
           </div>
         </mat-step>
@@ -111,11 +111,11 @@
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
-              قبلی
+              {{'ACTION.BEFOR' | translate}}
             </button>
             <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
-              بعدی
+              {{'ACTION.NEXT' | translate}}
             </button>
           </div>
         </mat-step>
@@ -186,11 +186,11 @@
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
-              قبلی
+              {{'ACTION.BEFOR' | translate}}
             </button>
             <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
-              بعدی
+              {{'ACTION.NEXT' | translate}}
             </button>
           </div>
         </mat-step>
@@ -200,7 +200,7 @@
           <mat-form-field class="example-full-width">
             <mat-label>{{fieldsInfo['Title']?.Title}}</mat-label>
             <input matInput [(ngModel)]="contentOtherInfoSelected.Title" name="contentOtherInfoSelected.Title"
-              #contentOtherInfoSelected_Title type="text" placeholder="عنوان" minlength="3" maxlength="100" />
+              #contentOtherInfoSelected_Title type="text" placeholder="{{fieldsInfo['Title']?.Title}}" minlength="3" maxlength="100" />
             <mat-icon matSuffix *ngIf="contentOtherInfoSelected.Title" matSuffix mat-icon-button aria-label="Clear"
               (click)="contentOtherInfoSelected.Title = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
@@ -257,7 +257,7 @@
               <ng-container matColumnDef="Action">
                 <mat-header-cell *matHeaderCellDef> ... </mat-header-cell>
                 <mat-cell *matCellDef="let row; let i = index" class='Action'>
-                  <small (click)="onActionContentOtherInfoEditFromLIst(i)">ویرایش</small>|
+                  <small (click)="onActionContentOtherInfoEditFromLIst(i)">{{'ACTION.EDIT' | translate}}</small>|
                   <small (click)="onActionContentOtherInfoRemoveFromLIst(i)">حذف</small>
                 </mat-cell>
               </ng-container>
@@ -298,11 +298,11 @@
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
-              قبلی
+              {{'ACTION.BEFOR' | translate}}
             </button>
             <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
-              بعدی
+              {{'ACTION.NEXT' | translate}}
             </button>
           </div>
         </mat-step>
@@ -368,11 +368,11 @@
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
-              قبلی
+              {{'ACTION.BEFOR' | translate}}
             </button>
             <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
-              بعدی
+              {{'ACTION.NEXT' | translate}}
             </button>
           </div>
         </mat-step>
@@ -383,11 +383,11 @@
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
-              قبلی
+              {{'ACTION.BEFOR' | translate}}
             </button>
             <button type="submit" mat-button [disabled]="!vform.form.valid"
               class="btn btn-success font-weight-bold text-uppercase px-9 py-4">
-              ذخیره
+              {{'ACTION.SAVE' | translate}}
             </button>
           </div>
         </mat-step>

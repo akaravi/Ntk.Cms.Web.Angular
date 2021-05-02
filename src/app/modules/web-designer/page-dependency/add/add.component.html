@@ -12,7 +12,7 @@
                 index as i
               " [value]="item.Value">{{ item.Description }}</mat-option>
         </mat-select>
-        <mat-hint align="end">انتخاب وضعیت این محتوا</mat-hint>
+        <mat-hint align="end">{{'TITLE.SELECT_STATUS' | translate}}</mat-hint>
         <mat-error *ngIf="RecordStatus.errors?.required">
           RecordStatus is <strong>required</strong>
         </mat-error>
@@ -22,7 +22,7 @@
       <!-- Title Field -->
       <mat-form-field class="example-full-width">
         <mat-label>{{fieldsInfo['Title']?.FieldTitle}}</mat-label>
-        <input matInput [(ngModel)]="dataModel.Title" name="dataModel.Title" #Title type="text" placeholder="عنوان"
+        <input matInput [(ngModel)]="dataModel.Title" name="dataModel.Title" #Title type="text" placeholder="{{fieldsInfo['Title']?.Title}}"
           minlength="3" maxlength="100" required [disabled]="!fieldsInfo['Title']?.AccessAddField"/>
         <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
           (click)="dataModel.Title = ''">close</mat-icon>
@@ -42,7 +42,7 @@
       <mat-form-field class="example-full-width">
         <mat-label>{{fieldsInfo['TitleResourceLanguage']?.FieldTitle}}</mat-label>
         <input matInput [(ngModel)]="dataModel.TitleResourceLanguage" name="dataModel.TitleResourceLanguage"
-          #TitleResourceLanguage type="text" placeholder="عنوان" minlength="3" maxlength="100" required [disabled]="!fieldsInfo['TitleResourceLanguage']?.AccessAddField"/>
+          #TitleResourceLanguage type="text" placeholder="{{fieldsInfo['Title']?.Title}}" minlength="3" maxlength="100" required [disabled]="!fieldsInfo['TitleResourceLanguage']?.AccessAddField"/>
         <mat-icon matSuffix *ngIf="dataModel.TitleResourceLanguage" matSuffix mat-icon-button aria-label="Clear"
           (click)="dataModel.TitleResourceLanguage = ''">close</mat-icon>
         <mat-icon matSuffix>mode_edit</mat-icon>
@@ -60,7 +60,7 @@
       <mat-form-field class="example-full-width">
         <mat-label>{{fieldsInfo['CmsModuleClassName']?.FieldTitle}}</mat-label>
         <input matInput [(ngModel)]="dataModel.CmsModuleClassName" name="dataModel.CmsModuleClassName"
-          #CmsModuleClassName type="text" placeholder="عنوان" minlength="3" maxlength="100" required [disabled]="!fieldsInfo['CmsModuleClassName']?.AccessAddField"/>
+          #CmsModuleClassName type="text" placeholder="{{fieldsInfo['Title']?.Title}}" minlength="3" maxlength="100" required [disabled]="!fieldsInfo['CmsModuleClassName']?.AccessAddField"/>
         <mat-icon matSuffix *ngIf="dataModel.CmsModuleClassName" matSuffix mat-icon-button aria-label="Clear"
           (click)="dataModel.CmsModuleClassName = ''">close</mat-icon>
         <mat-icon matSuffix>mode_edit</mat-icon>
@@ -73,7 +73,7 @@
       <mat-form-field class="example-full-width">
         <mat-label>{{fieldsInfo['ClassActionName']?.FieldTitle}}</mat-label>
         <input matInput [(ngModel)]="dataModel.ClassActionName" name="dataModel.ClassActionName" #ClassActionName
-          type="text" placeholder="عنوان" minlength="3" maxlength="100" required [disabled]="!fieldsInfo['ClassActionName']?.AccessAddField" />
+          type="text" placeholder="{{fieldsInfo['Title']?.Title}}" minlength="3" maxlength="100" required [disabled]="!fieldsInfo['ClassActionName']?.AccessAddField" />
         <mat-icon matSuffix *ngIf="dataModel.ClassActionName" matSuffix mat-icon-button aria-label="Clear"
           (click)="dataModel.ClassActionName = ''">close</mat-icon>
         <mat-icon matSuffix>mode_edit</mat-icon>
@@ -95,10 +95,10 @@
   </div>
   <div class="form-actions" *ngIf="formInfo.FormSubmitAllow">
     <button type="button" (click)="onFormCancel()" class="btn btn-raised btn-warning mr-1">
-      <i class="ft-x"></i> انصراف
+      <i class="ft-x"></i> {{'ACTION.CANCEL' | translate}}
     </button>
     <button type="submit" (click)="onFormSubmit()" class="btn btn-raised btn-primary" [disabled]="!vform.form.valid">
-      <i class="fa fa-check-square-o"></i> ذخیره
+      <i class="fa fa-check-square-o"></i> {{'ACTION.SAVE' | translate}}
     </button>
   </div>
 </mat-dialog-actions>
