@@ -32,6 +32,7 @@
   },
   "TITLE": {
     "SITE": "Site",
+    "PICTURE": "Picture",
     "REQUIRED_INFORMATION": "Required information",
     "SELECT_STATUS": "Select Status Data",
     "DELETE_ROW_DATA": "Delete Row Data",

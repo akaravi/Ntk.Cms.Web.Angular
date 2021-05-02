@@ -167,7 +167,7 @@
             <button (click)="onFormCancel()" type="button" class="btn btn-warning BTN">{{'ACTION.BACK' | translate}}</button>
           </a> <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
             class="btn btn-primary font-weight-bold text-uppercase px-9 py-4">
-            بعدی
+            {{'ACTION.NEXT' | translate}}
           </button>
         </div>
       </mat-step>
@@ -203,7 +203,7 @@
         <div *ngIf="formInfo.FormSubmitAllow">
           <button type="button" mat-button matStepperPrevious
             class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
-            قبلی
+            {{'ACTION.BEFOR' | translate}}
           </button>
           <button type="submit" mat-button [disabled]="!vform.form.valid"
             class="btn btn-success font-weight-bold text-uppercase px-9 py-4">

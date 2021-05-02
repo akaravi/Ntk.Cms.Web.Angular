@@ -33,6 +33,7 @@
   },
   "TITLE": {
     "SITE": "سایت",
+    "PICTURE": "عکس",
     "REQUIRED_INFORMATION": "اطلاعات الزامی",
     "SELECT_STATUS": "انتخاب وضعیت این محتوا",
     "DELETE_ROW_DATA": "حذف ردیف اطلاعات",

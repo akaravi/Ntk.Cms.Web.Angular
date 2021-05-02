@@ -295,7 +295,7 @@
             <mat-table [dataSource]="similarTabledataSource">
               <!-- LinkMainImageIdSrc Column -->
               <ng-container matColumnDef="LinkMainImageIdSrc">
-                <mat-header-cell *matHeaderCellDef> عکس </mat-header-cell>
+                <mat-header-cell *matHeaderCellDef> {{'TITLE.PICTURE' | translate}} </mat-header-cell>
                 <mat-cell *matCellDef="let row">
                   <img *ngIf="row?.LinkMainImageIdSrc?.length>0" style="vertical-align:middle;" aria-hidden
                     src="{{row.LinkMainImageIdSrc}}" height="40" width="40" />

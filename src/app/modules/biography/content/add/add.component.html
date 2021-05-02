@@ -74,7 +74,7 @@
        <div *ngIf="formInfo.FormSubmitAllow">
            <button type="button" mat-button  (click)="onActionBackToParent()"
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
-              بازگشت
+              {{'ACTION.BACK' | translate}}
             </button>
             <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
               class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
@@ -315,7 +315,7 @@
             <mat-table [dataSource]="similarTabledataSource">
               <!-- LinkMainImageIdSrc Column -->
               <ng-container matColumnDef="LinkMainImageIdSrc">
-                <mat-header-cell *matHeaderCellDef > عکس </mat-header-cell>
+                <mat-header-cell *matHeaderCellDef > {{'TITLE.PICTURE' | translate}} </mat-header-cell>
                 <mat-cell *matCellDef="let row">
                   <img *ngIf="row?.LinkMainImageIdSrc?.length>0" style="vertical-align:middle;" aria-hidden
                     src="{{row.LinkMainImageIdSrc}}" height="40" width="40" />

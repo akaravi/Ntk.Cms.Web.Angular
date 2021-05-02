@@ -38,7 +38,7 @@
       <mat-table [dataSource]="tableSource" matSort #tableSort="matSort" (matSortChange)="onTableSortData(tableSort)">
         <!-- LinkFileContentId Column -->
         <ng-container matColumnDef="LinkFileContentId">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> عکس </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{'TITLE.PICTURE' | translate}} </mat-header-cell>
           <mat-cell *matCellDef="let row">
             <img *ngIf="row?.LinkFileContentId?.length>0" style="vertical-align:middle;" aria-hidden
               src="{{row.LinkFileContentId}}" height="40" width="40" />
