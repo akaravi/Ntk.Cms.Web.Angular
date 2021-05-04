@@ -43,6 +43,9 @@ import { CoreModuleSaleHeaderGroupHeaderComponent } from './header-group/header/
 import { CoreModuleSaleHeaderHeaderComponent } from './header/header/header.component';
 import { CoreModuleSaleSerialCheckListComponent } from './serial/check-list/check-list.component';
 import { CoreModuleSaleSerialHeaderComponent } from './serial/header/header.component';
+import { CmsFileManagerModule } from 'ntk-cms-filemanager';
+import { CoreModuleSaleHeaderSaleListComponent } from './header/sale-list/sale-list.component';
+import { CoreModuleSaleItemListViewComponent } from './Item/listview/listview.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +65,7 @@ import { CoreModuleSaleSerialHeaderComponent } from './serial/header/header.comp
     CoreModuleSaleHeaderSelectorComponent,
     CoreModuleSaleHeaderTreeComponent,
     CoreModuleSaleHeaderHeaderComponent,
+    CoreModuleSaleHeaderSaleListComponent,
     /** */
     /** */
     CoreModuleSaleItemListComponent,
@@ -69,6 +73,7 @@ import { CoreModuleSaleSerialHeaderComponent } from './serial/header/header.comp
     CoreModuleSaleItemEditComponent,
     CoreModuleSaleItemSelectorComponent,
     CoreModuleSaleItemTreeComponent,
+    CoreModuleSaleItemListViewComponent,
     /** */
     /** */
     CoreModuleSaleSerialListComponent,
@@ -103,6 +108,7 @@ import { CoreModuleSaleSerialHeaderComponent } from './serial/header/header.comp
     CoreModuleSaleHeaderEditComponent,
     CoreModuleSaleHeaderSelectorComponent,
     CoreModuleSaleHeaderTreeComponent,
+    CoreModuleSaleHeaderSaleListComponent,
     /** */
     /** */
     CoreModuleSaleItemListComponent,
@@ -110,6 +116,7 @@ import { CoreModuleSaleSerialHeaderComponent } from './serial/header/header.comp
     CoreModuleSaleItemEditComponent,
     CoreModuleSaleItemSelectorComponent,
     CoreModuleSaleItemTreeComponent,
+    CoreModuleSaleItemListViewComponent,
     /** */
     /** */
     CoreModuleSaleSerialListComponent,
@@ -138,6 +145,7 @@ import { CoreModuleSaleSerialHeaderComponent } from './serial/header/header.comp
     SharedModule.forRoot(),
     AngularEditorModule,
     TagInputModule,
+    CmsFileManagerModule,
   ],
   providers: [
     CoreModuleSaleHeaderGroupService,

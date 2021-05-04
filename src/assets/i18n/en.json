@@ -133,7 +133,9 @@
     "NEXT": "Next",
     "BACK": "Back",
     "BEFOR": "Befor",
-    "VIEW": "View"
+    "VIEW": "View",
+    "BUY": "فروش",
+    "DETAIL": "جزییات"
   },
   "TITLE": {
     "SITE": "Site",

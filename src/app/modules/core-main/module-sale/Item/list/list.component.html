@@ -63,11 +63,6 @@
           </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.LinkModuleId | cmstitle : dataModelCoreModuleResult.ListItems}} </mat-cell>
         </ng-container>
-        <!-- SalePrice Column -->
-        <ng-container matColumnDef="SalePrice">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['SalePrice']?.FieldTitle}} </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.SalePrice}} </mat-cell>
-        </ng-container>
         <!-- MonthLength Column -->
         <ng-container matColumnDef="MonthLength">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['MonthLength']?.FieldTitle}}
