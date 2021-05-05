@@ -20,7 +20,7 @@ import {
   BankPaymentEnumService
 } from 'ntk-cms-api';
 
-import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
 import { BankPaymentConfigMainAdminComponent } from './config/mainAdmin/configMainAdmin.component';
 import { BankPaymentConfigSiteComponent } from './config/site/configSite.component';
 

@@ -27,7 +27,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
 import { BankPaymentPrivateSiteConfigAddComponent } from '../add/add.component';
 import { BankPaymentPrivateSiteConfigEditComponent } from '../edit/edit.component';
-import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
 import { BankPaymentPrivateSiteConfigPaymentTestComponent } from '../paymentTest/paymentTest.component';
 
 @Component({

@@ -31,7 +31,7 @@ import { CoreUserClaimGroupDetailEditComponent } from './group-detail/edit/edit.
 import { CoreUserClaimGroupDetailSelectorComponent } from './group-detail/selector/selector.component';
 import { CoreUserClaimGroupDetailTreeComponent } from './group-detail/tree/tree.component';
 import { CoreUserClaimGroupDetailListComponent } from './group-detail/list/list.component';
-import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
 import { CoreUserClaimContentListComponent } from './content/list/list.component';
 import { CoreUserClaimContentAddComponent } from './content/add/add.component';
 import { CoreUserClaimContentEditComponent } from './content/edit/edit.component';

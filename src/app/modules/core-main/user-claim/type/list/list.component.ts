@@ -33,7 +33,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
 import { CoreUserClaimTypeEditComponent } from '../edit/edit.component';
 import { CoreUserClaimTypeAddComponent } from '../add/add.component';
-import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
 
 @Component({
   selector: 'app-core-userclaimtype-list',

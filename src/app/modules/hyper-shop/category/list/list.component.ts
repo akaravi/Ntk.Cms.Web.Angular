@@ -27,7 +27,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
 import { HyperShopCategoryEditComponent } from '../edit/edit.component';
 import { HyperShopCategoryAddComponent } from '../add/add.component';
-import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
 
 @Component({
   selector: 'app-hypershop-category-list',

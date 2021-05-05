@@ -28,7 +28,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
 import { CoreUserEditComponent } from '../edit/edit.component';
 import { CoreUserAddComponent } from '../add/add.component';
-import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
 import { CoreUserChangePasswordComponent } from '../changePassword/changePassword.component';
 import { CoreUserViewComponent } from '../view/view.component';
 

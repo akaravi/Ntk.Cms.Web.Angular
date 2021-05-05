@@ -19,7 +19,7 @@ import {
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatStepperModule } from '@angular/material/stepper';
-import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
 import { LinkManagementConfigSiteComponent } from './config/site/configSite.component';
 import { LinkManagementConfigMainAdminComponent } from './config/mainAdmin/configMainAdmin.component';
 

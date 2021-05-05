@@ -32,7 +32,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
 import { CoreModuleSaleItemEditComponent } from '../edit/edit.component';
 import { CoreModuleSaleItemAddComponent } from '../add/add.component';
-import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
 
 @Component({
   selector: 'app-core-modulesaleitem-list',

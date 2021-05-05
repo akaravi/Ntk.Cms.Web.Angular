@@ -1,0 +1,43 @@
+<h2 mat-dialog-title>{{ formInfo.FormTitle }}</h2>
+<mat-dialog-content>
+
+  <app-cms-bankpayment-grid [optionMasterItem]="true" (optionSelect)="onActionSelectCalculate($event)">
+  </app-cms-bankpayment-grid>
+  <div *ngIf="viewCalculate">
+
+    <mat-form-field class="example-full-width">
+      <mat-label>{{ 'FeeTax' }}</mat-label>
+      <input matInput [(ngModel)]="dataModelCalculateResult.Item.FeeTax" type="number" disabled />
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <mat-label>{{ 'AmountPure' }}</mat-label>
+      <input matInput [(ngModel)]="dataModelCalculateResult.Item.AmountPure" type="number"  disabled/>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <mat-label>{{ 'FeeTransport' }}</mat-label>
+      <input matInput [(ngModel)]="dataModelCalculateResult.Item.FeeTransport" type="number" disabled />
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <mat-label>{{ 'Amount' }}</mat-label>
+      <input matInput [(ngModel)]="dataModelCalculateResult.Item.Amount" type="number" disabled />
+    </mat-form-field>
+  </div>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <div class="form-actions">
+    <small class="form-text text-muted">{{ formInfo.FormAlert }} </small>
+    <small class="form-text text-muted danger">{{ formInfo.FormError }}
+    </small>
+  </div>
+  <div class="form-actions" *ngIf="formInfo.FormSubmitAllow">
+    <button type="button" (click)="onFormCancel()" class="btn btn-raised btn-warning mr-1">
+      <i class="ft-x"></i> {{'ACTION.CANCEL' | translate}}
+    </button>
+
+    <button type="submit" (click)="onActionSelectBankPayment()" class="btn btn-raised btn-primary"
+      [disabled]="!viewCalculate">
+      <i class="fa fa-check-square-o"></i> {{'ACTION.PAYMENT' | translate}}
+    </button>
+  </div>
+</mat-dialog-actions>

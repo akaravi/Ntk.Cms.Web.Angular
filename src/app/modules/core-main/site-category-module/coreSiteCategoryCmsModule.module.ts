@@ -16,7 +16,7 @@ import { TagInputModule } from 'ngx-chips';
 import { CoreSiteCategoryCmsModuleComponent } from './coreSiteCategoryCmsModule.component';
 import { CoreSiteCategoryCmsModuleRouting } from './coreSiteCategoryCmsModule.routing';
 import { CoreSiteCategoryCmsModuleListViewComponent } from './listview/listview.component';
-import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
 import { CoreSiteCategoryCmsModuleAddComponent } from './add/add.component';
 import { CoreSiteCategoryCmsModuleEditComponent } from './edit/edit.component';
 import { CoreModuleModule } from '../module/coreModule.module';

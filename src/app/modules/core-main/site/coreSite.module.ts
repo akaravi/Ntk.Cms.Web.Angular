@@ -32,7 +32,7 @@ import { CmsFileManagerModule } from 'ntk-cms-filemanager';
 import { CoreSiteModuleListComponent } from './moduleList/moduleList.component';
 import { CoreSiteModuleEditComponent } from './moduleEdit/moduleEdit.component';
 import { CoreSiteModuleAddComponent } from './moduleAdd/moduleAdd.component';
-import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
 import { CoreModuleModule } from '../module/coreModule.module';
 import { CoreSiteUserListComponent } from './userList/userList.component';
 import { CoreSiteUserAddComponent } from './userAdd/userAdd.component';

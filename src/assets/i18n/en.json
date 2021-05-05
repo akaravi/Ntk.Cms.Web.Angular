@@ -134,8 +134,10 @@
     "BACK": "Back",
     "BEFOR": "Befor",
     "VIEW": "View",
-    "BUY": "فروش",
-    "DETAIL": "جزییات"
+    "BUY": "Buy",
+    "DETAIL": "Detail",
+    "SELECT": "Select",
+    "PAYMENT": "Peyment"
   },
   "TITLE": {
     "SITE": "Site",

@@ -31,7 +31,7 @@ import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { CoreSiteModuleEditComponent } from '../moduleEdit/moduleEdit.component';
 import { CoreSiteModuleAddComponent } from '../moduleAdd/moduleAdd.component';
-import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
 
 @Component({
   selector: 'app-core-site-module-list',

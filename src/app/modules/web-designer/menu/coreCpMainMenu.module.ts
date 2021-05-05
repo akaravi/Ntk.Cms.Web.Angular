@@ -11,7 +11,7 @@ import {
    CoreSiteUserService,
     CoreCpMainMenuService ,
     CoreCpMainMenuCmsUserGroupService} from 'ntk-cms-api';
-import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
 import { CoreCpMainMenuComponent } from './coreCpMainMenu.component';
 import { CoreCpMainMenuListComponent } from './list/list.component';
 import { CoreCpMainMenuAddComponent } from './add/add.component';

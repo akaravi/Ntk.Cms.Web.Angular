@@ -23,6 +23,7 @@ import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
+import { CoreModuleSaleHeaderSalePaymentComponent } from '../sale-payment/sale-payment.component';
 
 @Component({
   selector: 'app-core-modulesaleheader-sale-list',
@@ -106,7 +107,7 @@ export class CoreModuleSaleHeaderSaleListComponent implements OnInit, OnDestroy 
 
     this.showBuy = false;
     const model = new FilterModel();
-    this.coreModuleSaleHeaderService.ServiceGetAll(model).subscribe(
+    this.coreModuleSaleHeaderService.ServiceGetAllSale(model).subscribe(
       (next) => {
         if (next.IsSuccess) {
           this.showBuy = true;
@@ -133,6 +134,14 @@ export class CoreModuleSaleHeaderSaleListComponent implements OnInit, OnDestroy 
   onActionbuttonBuy(model: CoreModuleSaleHeaderModel): void {
     this.tableRowSelected = model;
 
+    const dialogRef = this.dialog.open(CoreModuleSaleHeaderSalePaymentComponent, {
+      data: { LinkHeaderId: model.Id }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.dialogChangedDate) {
+
+      }
+    });
   }
 
   onActionBackToParent(): void {

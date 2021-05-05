@@ -29,7 +29,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { CoreTokenUserEditComponent } from '../edit/edit.component';
-import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
 import { CoreTokenUserViewComponent } from '../view/view.component';
 
 @Component({

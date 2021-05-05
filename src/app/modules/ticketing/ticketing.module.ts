@@ -30,7 +30,7 @@ import { TicketingDepartemenDeleteComponent } from './departemen/delete/delete.c
 import { TicketingDepartemenEditComponent } from './departemen/edit/edit.component';
 import { TicketingFaqEditComponent } from './faq/edit/edit.component';
 import { TicketingFaqListComponent } from './faq/list/list.component';
-import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
 import { TicketingTaskListComponent } from './task/list/list.component';
 import { TicketingTaskEditComponent } from './task/edit/edit.component';
 import { TicketingDepartemenAddComponent } from './departemen/add/add.component';

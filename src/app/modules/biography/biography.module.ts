@@ -42,7 +42,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { BiographyContentSelectorComponent } from './content/selector/selector.component';
 import { BiographyContentDeleteComponent } from './content/delete/delete.component';
 import { BiographyCategoryAddComponent } from './category/add/add.component';
-import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
 import { BiographyConfigSiteComponent } from './config/site/configSite.component';
 import { BiographyConfigMainAdminComponent } from './config/mainAdmin/configMainAdmin.component';
 

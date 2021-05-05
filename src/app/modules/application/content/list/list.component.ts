@@ -28,7 +28,7 @@ import { ApplicationAppDownloadComponent } from '../download/download.component'
 import { ApplicationAppUploadAppComponent } from '../uploadApp/uploadApp.component';
 import { ApplicationAppUploadUpdateComponent } from '../uploadUpdate/uploadUpdate.component';
 import { Subscription } from 'rxjs';
-import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
 import { ApplicationLogNotificationActionSendComponent } from '../../notification/action-send/action-send.component';
 
 @Component({

@@ -28,7 +28,7 @@ import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { CoreSiteDomainAliasAddComponent } from '../add/add.component';
 import { CoreSiteDomainAliasEditComponent } from '../edit/edit.component';
-import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
 
 @Component({
   selector: 'app-core-site-domainalias-list',

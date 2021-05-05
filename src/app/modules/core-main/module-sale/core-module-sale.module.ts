@@ -46,6 +46,7 @@ import { CoreModuleSaleSerialHeaderComponent } from './serial/header/header.comp
 import { CmsFileManagerModule } from 'ntk-cms-filemanager';
 import { CoreModuleSaleHeaderSaleListComponent } from './header/sale-list/sale-list.component';
 import { CoreModuleSaleItemListViewComponent } from './Item/listview/listview.component';
+import { CoreModuleSaleHeaderSalePaymentComponent } from './header/sale-payment/sale-payment.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { CoreModuleSaleItemListViewComponent } from './Item/listview/listview.co
     CoreModuleSaleHeaderTreeComponent,
     CoreModuleSaleHeaderHeaderComponent,
     CoreModuleSaleHeaderSaleListComponent,
+    CoreModuleSaleHeaderSalePaymentComponent,
     /** */
     /** */
     CoreModuleSaleItemListComponent,
@@ -109,6 +111,7 @@ import { CoreModuleSaleItemListViewComponent } from './Item/listview/listview.co
     CoreModuleSaleHeaderSelectorComponent,
     CoreModuleSaleHeaderTreeComponent,
     CoreModuleSaleHeaderSaleListComponent,
+    CoreModuleSaleHeaderSalePaymentComponent,
     /** */
     /** */
     CoreModuleSaleItemListComponent,

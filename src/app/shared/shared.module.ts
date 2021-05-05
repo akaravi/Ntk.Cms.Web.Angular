@@ -29,6 +29,7 @@ import { CmsUserSelectorComponent } from './cms-user-selector/cmsUserSelector.co
 import { CmsMemberSelectorComponent } from './cms-member-selector/cmsMemberSelector.component';
 import {
   ApplicationAppService,
+  BankPaymentPrivateSiteConfigService,
   CoreGuideService,
   CoreSiteCategoryService,
   CoreSiteService,
@@ -47,6 +48,7 @@ import { CmsSiteCategorySelectorComponent } from './cms-site-category-selector/c
 import { CmsUserGroupSelectorComponent } from './cms-user-group-selector/cmsUserGroupSelector.component';
 import { CmsTitlePipe } from '../core/pipe/title.pipe';
 import { CmsApplicationSelectorComponent } from './cms-application-selector/cms-application-selector.component';
+import { CmsBankpaymentGridComponent } from './cms-bankpayment-grid/cms-bankpayment-grid.component';
 
 
 
@@ -95,6 +97,7 @@ import { CmsApplicationSelectorComponent } from './cms-application-selector/cms-
     CmsJsonListComponent,
     CmsGuideComponent,
     CmsFormBuilderPropertiesComponent,
+    CmsBankpaymentGridComponent,
     /** Directive */
     TooltipGuideDirective,
     TooltipDirective,
@@ -133,6 +136,7 @@ import { CmsApplicationSelectorComponent } from './cms-application-selector/cms-
     CmsJsonListComponent,
     CmsGuideComponent,
     CmsFormBuilderPropertiesComponent,
+    CmsBankpaymentGridComponent,
     /** Directive */
     TooltipGuideDirective,
     TooltipDirective,
@@ -147,7 +151,8 @@ import { CmsApplicationSelectorComponent } from './cms-application-selector/cms-
     CoreSiteService,
     CoreSiteCategoryService,
     CoreGuideService,
-    ApplicationAppService
+    ApplicationAppService,
+    BankPaymentPrivateSiteConfigService,
   ]
   /* No providers here! Since they’ll be already provided in AppModule. */
 })

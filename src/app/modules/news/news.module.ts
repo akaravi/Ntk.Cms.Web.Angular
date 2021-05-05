@@ -39,7 +39,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { NewsContentSelectorComponent } from './content/selector/selector.component';
 import { NewsContentDeleteComponent } from './content/delete/delete.component';
 import { NewsCategoryAddComponent } from './category/add/add.component';
-import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
 import { NewsConfigMainAdminComponent } from './config/mainAdmin/configMainAdmin.component';
 import { NewsConfigSiteComponent } from './config/site/configSite.component';
 

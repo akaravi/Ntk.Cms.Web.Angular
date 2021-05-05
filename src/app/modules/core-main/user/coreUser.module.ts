@@ -8,7 +8,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { TagInputModule } from 'ngx-chips';
 import { CmsFileManagerModule } from 'ntk-cms-filemanager';
 import { CoreEnumService, CoreSiteUserService, CoreUserGroupService, CoreUserService } from 'ntk-cms-api';
-import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
 import { CoreUserComponent } from './coreUser.component';
 import { CoreUserListComponent } from './list/list.component';
 import { CoreUserAddComponent } from './add/add.component';

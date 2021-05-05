@@ -42,7 +42,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { BlogContentSelectorComponent } from './content/selector/selector.component';
 import { BlogContentDeleteComponent } from './content/delete/delete.component';
 import { BlogCategoryAddComponent } from './category/add/add.component';
-import { CmsConfirmationDialogService } from 'src/app/shared/cmsConfirmationDialog/cmsConfirmationDialog.service';
+import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
 import { BlogConfigMainAdminComponent } from './config/mainAdmin/configMainAdmin.component';
 import { BlogConfigSiteComponent } from './config/site/configSite.component';
 
