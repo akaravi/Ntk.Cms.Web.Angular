@@ -81,6 +81,7 @@ export class CoreModuleSaleHeaderGroupListComponent implements OnInit, OnDestroy
 
 
   tabledisplayedColumns: string[] = [
+    'LinkMainImageIdSrc',
     'Id',
     'RecordStatus',
     'Title',

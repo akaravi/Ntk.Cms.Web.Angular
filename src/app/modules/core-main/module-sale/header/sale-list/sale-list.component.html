@@ -15,9 +15,7 @@
             <mat-card-title>{{item.Title}}</mat-card-title>
             <mat-card-subtitle>{{item.SalePrice }}</mat-card-subtitle>
           </mat-card-header>
-          <!-- src="{{item.LinkMainImageIdSrc}}" -->
-          <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-            alt="Photo of a Shiba Inu">
+          <img mat-card-image src="{{item.LinkMainImageIdSrc}}">
           <mat-card-content>
             <p>
               {{item.Description }}

@@ -84,6 +84,7 @@ export class CoreModuleSaleHeaderListComponent implements OnInit, OnDestroy {
   categoryModelSelected: CoreModuleSaleHeaderGroupModel = new CoreModuleSaleHeaderGroupModel();
 
   tabledisplayedColumns: string[] = [
+    'LinkMainImageIdSrc',
     'Id',
     'RecordStatus',
     'Title',

@@ -7,10 +7,10 @@ import { NgxQueryBuilderModule } from 'ngx-ntk-query-builder';
 import { TreeModule } from '@circlon/angular-tree-component';
 import { TruncatePipe } from '../core/pipe/truncate.pipe';
 import { PersianDate } from '../core/pipe/PersianDatePipe/persian-date.pipe';
-import { CmsSearchListComponent } from './cmsSearchList/cmsSearchList.component';
-import { CmsStatistListComponent } from './cmsStatistList/cmsStatistList.component';
-import { CmsExportListComponent } from './cmsExportList/cmsExportList.component';
-import { CmsMapComponent } from './cmsMap/cmsMap.Component';
+import { CmsSearchListComponent } from './cms-search-list/cmsSearchList.component';
+import { CmsStatistListComponent } from './cms-statist-list/cmsStatistList.component';
+import { CmsExportListComponent } from './cms-export-list/cmsExportList.component';
+import { CmsMapComponent } from './cms-map/cmsMap.Component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { TagAutocompleteComponent } from '../modules/core-module/tag/autocomplete/autocomplete.component';
 import { TagInputModule } from 'ngx-chips';
@@ -38,7 +38,7 @@ import {
   MemberUserService
 } from 'ntk-cms-api';
 import { PasswordStrengthComponent } from './password-strength/password-strength.component';
-import { CmsJsonListComponent } from './cmsJsonList/cmsJsonList.component';
+import { CmsJsonListComponent } from './cms-json-list/cmsJsonList.component';
 import { CmsGuideComponent } from './cms-guide/cms-guide.component';
 import { TooltipGuideDirective } from '../core/directive/tooltip-guide.directive';
 import { TooltipDirective } from '../core/directive/tooltip.directive';
