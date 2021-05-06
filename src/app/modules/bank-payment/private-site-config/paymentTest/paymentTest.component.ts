@@ -19,6 +19,7 @@ import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { DOCUMENT } from '@angular/common';
 import { map } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-bankpayment-privateconfig-paymenttest',
@@ -33,6 +34,7 @@ export class BankPaymentPrivateSiteConfigPaymentTestComponent implements OnInit 
     public coreEnumService: CoreEnumService,
     public bankPaymentPrivateSiteConfigService: BankPaymentPrivateSiteConfigService,
     private cmsToastrService: CmsToastrService,
+    private translate: TranslateService,
   ) {
     if (data) {
       this.requestLinkPrivateSiteConfigId = +data.LinkPrivateSiteConfigId || 0;
@@ -69,7 +71,8 @@ export class BankPaymentPrivateSiteConfigPaymentTestComponent implements OnInit 
   }
   onGotoBank(): void {
     if (this.dataModelResultGotoBank && this.dataModelResult.IsSuccess && this.dataModelResult.Item.UrlToPay.length > 0) {
-      this.cmsToastrService.typeSuccessMessage('درحال انتقال به درگاه پرداخت');
+      this.cmsToastrService.typeSuccessMessage(this.translate.instant('MESSAGE.Transferring_to_the_payment_gateway'));
+
       this.document.location.href = this.dataModelResult.Item.UrlToPay;
     }
   }
@@ -90,7 +93,9 @@ export class BankPaymentPrivateSiteConfigPaymentTestComponent implements OnInit 
         this.dataModelResult = next;
         if (next.IsSuccess) {
           this.formInfo.FormAlert = 'درخواست پرداخت با موفقیت ثبت شد';
-          this.cmsToastrService.typeSuccessMessage('درخواست پرداخت با موفقیت ثبت شد');
+
+          this.cmsToastrService.typeSuccessMessage(this.translate.instant('MESSAGE.Payment_request_was_successfully_registered'));
+
           this.dataModelResultGotoBank = true;
 
 

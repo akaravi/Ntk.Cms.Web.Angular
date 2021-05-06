@@ -21,6 +21,7 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { BankPaymentInjectPaymentGotoBankStep1CalculateModel } from 'ntk-cms-api/lib/models/dto/bankPayment/bankPaymentInjectPaymentGotoBankStep1CalculateModel';
 import { DOCUMENT } from '@angular/common';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-core-modulesaleheader-sale-payment',
@@ -35,6 +36,7 @@ export class CoreModuleSaleHeaderSalePaymentComponent implements OnInit {
     private dialogRef: MatDialogRef<CoreModuleSaleHeaderSalePaymentComponent>,
     public coreModuleSaleHeaderService: CoreModuleSaleHeaderService,
     private cmsToastrService: CmsToastrService,
+    private translate: TranslateService,
     private cmsStoreService: CmsStoreService,
     public publicHelper: PublicHelper,
   ) {
@@ -93,7 +95,7 @@ export class CoreModuleSaleHeaderSalePaymentComponent implements OnInit {
       (next) => {
         if (next.IsSuccess) {
           this.dataModelPaymentResult = next;
-            this.cmsToastrService.typeSuccessMessage('درحال انتقال به درگاه پرداخت');
+            this.cmsToastrService.typeSuccessMessage(this.translate.instant('MESSAGE.Transferring_to_the_payment_gateway'));
             this.document.location.href = this.dataModelPaymentResult.Item.UrlToPay;
         }
         else {

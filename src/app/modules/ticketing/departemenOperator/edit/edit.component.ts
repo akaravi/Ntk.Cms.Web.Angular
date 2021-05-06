@@ -171,14 +171,14 @@ export class TicketingDepartemenOperatorEditComponent implements OnInit {
 
   onActionSelectSource(model: ApplicationSourceModel | null): void {
     if (!model || model.Id <= 0) {
-      this.cmsToastrService.toastr.error(
+      this.cmsToastrService.typeErrorMessage(
         'سورس را مشخص کنید',
         'سورس اپلیکیشن اطلاعات مشخص نیست'
       );
       return;
     }
     if (this.dataModel.LinkDepartemenId !== model.Id) {
-      this.cmsToastrService.toastr.error(
+      this.cmsToastrService.typeErrorMessage(
         'سورس قابل تغییر نمی باشد',
         'سورس اپلیکیشن در حالت ویرایش قابل تغییر نمی باشد'
       );

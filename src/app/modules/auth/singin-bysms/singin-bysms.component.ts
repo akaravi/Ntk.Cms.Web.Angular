@@ -8,6 +8,7 @@ import {
 } from 'ntk-cms-api';
 import { Router } from '@angular/router';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
+import { TranslateService } from '@ngx-translate/core';
 
 enum ErrorStates {
   NotSubmitted,
@@ -31,6 +32,7 @@ export class AuthSingInBySmsComponent implements OnInit {
   constructor(
     private coreAuthService: CoreAuthService,
     private cmsToastrService: CmsToastrService,
+    private translate: TranslateService,
     private router: Router
   ) {
     this.RePassword = '';
@@ -52,7 +54,7 @@ export class AuthSingInBySmsComponent implements OnInit {
       .ServiceSigninUserBySMS(this.dataModelAuthUserSignInBySms)
       .subscribe((res) => {
         if (res.IsSuccess) {
-          this.cmsToastrService.typeSuccessMessage('کد ورود به همراه شما پیامک شد');
+          this.cmsToastrService.typeSuccessMessage(this.translate.instant('MESSAGE.The_login_code_was_texted_with_you'));
           this.forgetState = 'entrycode';
         }
         else {

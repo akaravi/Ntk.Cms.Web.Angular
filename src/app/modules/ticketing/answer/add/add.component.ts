@@ -153,7 +153,7 @@ export class TicketingAnswerAddComponent implements OnInit {
 
   onActionSelectSource(model: ApplicationSourceModel | null): void {
     if (!model || model.Id <= 0) {
-      this.cmsToastrService.toastr.error(
+      this.cmsToastrService.typeErrorMessage(
         'سورس را مشخص کنید',
         'سورس اپلیکیشن اطلاعات مشخص نیست'
       );

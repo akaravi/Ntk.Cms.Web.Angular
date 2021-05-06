@@ -140,7 +140,7 @@ export class CoreUserClaimGroupDetailAddComponent implements OnInit {
   }
   onActionSelectClaimGroup(model: CoreUserClaimGroupModel | null): void {
     if (!model || model.Id <= 0) {
-      this.cmsToastrService.toastr.error(
+      this.cmsToastrService.typeErrorMessage(
         'دسته را مشخص کنید',
         'گروه مدارک اطلاعات مشخص نیست'
       );
@@ -150,7 +150,7 @@ export class CoreUserClaimGroupDetailAddComponent implements OnInit {
   }
   onActionSelectClaimType(model: CoreUserClaimTypeModel | null): void {
     if (!model || model.Id <= 0) {
-      this.cmsToastrService.toastr.error(
+      this.cmsToastrService.typeErrorMessage(
         'دسته را مشخص کنید',
         'نوع مدارک اطلاعات مشخص نیست'
       );

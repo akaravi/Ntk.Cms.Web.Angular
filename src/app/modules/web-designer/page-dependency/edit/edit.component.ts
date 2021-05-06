@@ -144,7 +144,7 @@ export class WebDesignerMainPageDependencyEditComponent implements OnInit {
   }
   onActionSelectModule(model: CoreModuleModel | null): void {
     if (!model || model.Id <= 0) {
-      this.cmsToastrService.toastr.error(
+      this.cmsToastrService.typeErrorMessage(
         'ماژول را مشخص کنید',
         'ماژول اطلاعات مشخص نیست'
       );

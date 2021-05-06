@@ -122,7 +122,7 @@ export class ApplicationLogNotificationActionSendComponent implements OnInit {
   }
   onActionSelectApp(model: ApplicationAppModel | null): void {
     if (!model || model.Id <= 0) {
-      this.cmsToastrService.toastr.error(
+      this.cmsToastrService.typeErrorMessage(
         'اپلیکیشن را مشخص کنید',
         'اپلیکیشن اطلاعات مشخص نیست'
       );
@@ -132,7 +132,7 @@ export class ApplicationLogNotificationActionSendComponent implements OnInit {
   }
   onActionSelectMemberInfo(model: ApplicationMemberInfoModel | null): void {
     if (!model || !model.Id || model.Id.length === 0) {
-      this.cmsToastrService.toastr.error(
+      this.cmsToastrService.typeErrorMessage(
         'عضو اپلیکیشن را مشخص کنید',
         'عضو اپلیکیشن اطلاعات مشخص نیست'
       );
@@ -152,7 +152,7 @@ export class ApplicationLogNotificationActionSendComponent implements OnInit {
     }
 
     if ((this.LinkMemberId || this.LinkMemberId.length === 0) && this.dataModel.AppId <= 0) {
-      this.cmsToastrService.toastr.error(
+      this.cmsToastrService.typeErrorMessage(
         'گیرنده را مشخص کنید',
         'اپلیکیشن و یا کاربری جهت دریافت مشخص نشده است'
       );

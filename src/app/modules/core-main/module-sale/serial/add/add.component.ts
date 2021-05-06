@@ -134,7 +134,7 @@ export class CoreModuleSaleSerialAddComponent implements OnInit {
   }
   onActionSelectHeader(model: CoreModuleSaleHeaderModel | null): void {
     if (!model || model.Id <= 0) {
-      this.cmsToastrService.toastr.error(
+      this.cmsToastrService.typeErrorMessage(
         'هدر  را مشخص کنید',
         'هدر اطلاعات مشخص نیست'
       );

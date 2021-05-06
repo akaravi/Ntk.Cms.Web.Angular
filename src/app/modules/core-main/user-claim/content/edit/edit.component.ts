@@ -156,7 +156,7 @@ export class CoreUserClaimContentEditComponent implements OnInit {
   }
   onActionSelectUser(model: CoreUserModel | null): void {
     if (!model || model.Id <= 0) {
-      this.cmsToastrService.toastr.error(
+      this.cmsToastrService.typeErrorMessage(
         'کاربر را مشخص کنید',
         'کاربر  اطلاعات مشخص نیست'
       );
@@ -166,7 +166,7 @@ export class CoreUserClaimContentEditComponent implements OnInit {
   }
   onActionSelectSite(model: CoreSiteModel | null): void {
     if (!model || model.Id <= 0) {
-      this.cmsToastrService.toastr.error(
+      this.cmsToastrService.typeErrorMessage(
         'سایت را مشخص کنید',
         'سایت  اطلاعات مشخص نیست'
       );
@@ -177,7 +177,7 @@ export class CoreUserClaimContentEditComponent implements OnInit {
 
   onActionSelectClaimType(model: CoreUserClaimTypeModel | null): void {
     if (!model || model.Id <= 0) {
-      this.cmsToastrService.toastr.error(
+      this.cmsToastrService.typeErrorMessage(
         'دسته را مشخص کنید',
         'نوع مدارک اطلاعات مشخص نیست'
       );

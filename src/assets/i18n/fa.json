@@ -173,7 +173,19 @@
     "Module_not_found_for_editing":"ماژول جهت ویرایش یافت نشد",
     "Enter_the_previous_password":"پسورد قبلی را وارد کنید",
     "Enter_the_new_password":"پسورد جدید را وارد کنید",
-    "The_new_password_is_equivalent_to_a_duplicate":"پسورد جدید با تکرار مقایرت دارد"
+    "The_new_password_is_equivalent_to_a_duplicate":"پسورد جدید با تکرار مقایرت دارد",
+    "The_activation_code_was_texted_with_you":"کد فعال سازی به همراه شما پیامک شد",
+    "The_activation_code_was_emailed_to_you":"کد فعال سازی برای شما ایمیل شد",
+    "Your_password_was_changed_successfully":"کلمه عبور شما با موفقیت تغییر داده شد.",
+    "The_login_code_was_texted_with_you":"کد ورود به همراه شما پیامک شد",
+    "Transferring_to_the_payment_gateway":"درحال انتقال به درگاه پرداخت",
+    "Payment_request_was_successfully_registered":"درخواست پرداخت با موفقیت ثبت شد",
+    "The_series_was_successfully_registered_for_you":"سریال با موفقیت برای شما ثبت شد",
+    "Specify_the_source":"سورس را مشخص کنید",
+    "The_source_of_the_information_application_is_not_known":"سورس اپلیکیشن اطلاعات مشخص نیست",
+    "Specify_the_template":"قالب را مشخص کنید",
+"Information_application_format_is_not_clear":"قالب اپلیکیشن اطلاعات مشخص نیست"
+
 
   },
   "MENU": {

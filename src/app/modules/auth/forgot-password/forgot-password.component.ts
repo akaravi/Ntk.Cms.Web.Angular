@@ -9,6 +9,7 @@ import {
 } from 'ntk-cms-api';
 import { Router } from '@angular/router';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
+import { TranslateService } from '@ngx-translate/core';
 
 enum ErrorStates {
   NotSubmitted,
@@ -34,6 +35,7 @@ export class AuthForgotPasswordComponent implements OnInit {
   constructor(
     private coreAuthService: CoreAuthService,
     private cmsToastrService: CmsToastrService,
+    private translate: TranslateService,
     private router: Router
   ) {
     this.RePassword = '';
@@ -57,7 +59,7 @@ export class AuthForgotPasswordComponent implements OnInit {
       .ServiceForgetPassword(this.dataModelforgetPasswordBySms)
       .subscribe((res) => {
         if (res.IsSuccess) {
-          this.cmsToastrService.typeSuccessMessage('کد فعال سازی به همراه شما پیامک شد');
+          this.cmsToastrService.typeSuccessMessage(this.translate.instant('MESSAGE.The_activation_code_was_texted_with_you'));
           this.forgetState = 'entrycode';
         }
         else {
@@ -82,7 +84,8 @@ export class AuthForgotPasswordComponent implements OnInit {
       .ServiceForgetPassword(this.dataModelforgetPasswordByEmail)
       .subscribe((res) => {
         if (res.IsSuccess) {
-          this.cmsToastrService.typeSuccessMessage('کد فعال سازی برای شما ایمیل شد');
+          this.cmsToastrService.typeSuccessMessage(this.translate.instant('MESSAGE.The_activation_code_was_emailed_to_you'));
+
           this.forgetState = 'entrycode';
         }
         else {
@@ -105,7 +108,7 @@ export class AuthForgotPasswordComponent implements OnInit {
       .ServiceForgetPasswordEntryPinCode(this.dataModelforgetPasswordEntryPinCode)
       .subscribe((res) => {
         if (res.IsSuccess) {
-          this.cmsToastrService.typeSuccessMessage('کلمه عبور شما با موفقیت تغییر داده شد.');
+          this.cmsToastrService.typeSuccessMessage(this.translate.instant('MESSAGE.Your_password_was_changed_successfully'));
           this.router.navigate(['/']);
         }
         else {

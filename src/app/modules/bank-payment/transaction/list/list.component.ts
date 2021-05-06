@@ -31,6 +31,7 @@ import { BankPaymentTransactionViewComponent } from '../view/view.component';
 import { BankPaymentTransactionEditComponent } from '../edit/edit.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
 import { DOCUMENT } from '@angular/common';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -48,6 +49,7 @@ export class BankPaymentTransactionListComponent implements OnInit, OnDestroy {
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
+    private translate: TranslateService,
     private bankPaymentEnumService: BankPaymentEnumService,
     private cmsConfirmationDialogService: CmsConfirmationDialogService,
     private router: Router,
@@ -316,7 +318,7 @@ export class BankPaymentTransactionListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorSelected(emessage);
       return;
     }
-    this.cmsToastrService.typeSuccessMessage('درحال انتقال به درگاه پرداخت');
+    this.cmsToastrService.typeSuccessMessage(this.translate.instant('MESSAGE.Transferring_to_the_payment_gateway'));
     this.document.location.href = this.bankPaymentTransactionService.ServiceGoToBank(model.Id);
   }
   onActionbuttonNotifictionActionSend(model: BankPaymentTransactionModel = this.tableRowSelected): void {

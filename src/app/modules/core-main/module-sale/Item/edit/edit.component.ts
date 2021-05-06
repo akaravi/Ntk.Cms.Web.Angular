@@ -157,7 +157,7 @@ export class CoreModuleSaleItemEditComponent implements OnInit {
   }
   onActionSelectModule(model: CoreModuleModel | null): void {
     if (!model || model.Id <= 0) {
-      this.cmsToastrService.toastr.error(
+      this.cmsToastrService.typeErrorMessage(
         'ماژول را مشخص کنید',
         'ماژول اطلاعات مشخص نیست'
       );
@@ -167,7 +167,7 @@ export class CoreModuleSaleItemEditComponent implements OnInit {
   }
   onActionSelectHeader(model: CoreModuleSaleHeaderModel | null): void {
     if (!model || model.Id <= 0) {
-      this.cmsToastrService.toastr.error(
+      this.cmsToastrService.typeErrorMessage(
         'هدر  را مشخص کنید',
         'هدر اطلاعات مشخص نیست'
       );

@@ -24,6 +24,7 @@ import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-core-modulesaleserial-check-list',
@@ -37,6 +38,7 @@ export class CoreModuleSaleSerialCheckListComponent implements OnInit, OnDestroy
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
+    private translate: TranslateService,
     public coreEnumService: CoreEnumService,
     private activatedRoute: ActivatedRoute,
     private coreModuleService: CoreModuleService,
@@ -145,7 +147,7 @@ export class CoreModuleSaleSerialCheckListComponent implements OnInit, OnDestroy
       (next) => {
         if (next.IsSuccess) {
           this.dataModelRegResult = next;
-          this.cmsToastrService.typeSuccessMessage('سریال با موفقیت برای شما ثبت شد.');
+          this.cmsToastrService.typeSuccessMessage(this.translate.instant('MESSAGE.The_series_was_successfully_registered_for_you'));
 
         }
         else {

@@ -165,7 +165,7 @@ export class WebDesignerMainPageEditComponent implements OnInit {
   }
   onActionSelectDependency(model: WebDesignerMainPageDependencyModel | null): void {
     if (!model || model.Id?.length <= 0) {
-      this.cmsToastrService.toastr.error(
+      this.cmsToastrService.typeErrorMessage(
         'محل نمایش را مشخص کنید',
         'صفحه نمایش  اطلاعات مشخص نیست'
       );
@@ -175,7 +175,7 @@ export class WebDesignerMainPageEditComponent implements OnInit {
   }
   onActionSelectTemplate(model: WebDesignerMainPageTemplateModel | null): void {
     if (!model || model.Id?.length <= 0) {
-      this.cmsToastrService.toastr.error(
+      this.cmsToastrService.typeErrorMessage(
         'قالب را مشخص کنید',
         'قالب صفحه مشخص نیست'
       );

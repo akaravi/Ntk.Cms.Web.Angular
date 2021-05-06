@@ -139,7 +139,7 @@ export class CoreModuleSaleHeaderAddComponent implements OnInit {
   }
   onActionSelectHeaderGroup(model: CoreModuleSaleHeaderGroupModel | null): void {
     if (!model || model.Id <= 0) {
-      this.cmsToastrService.toastr.error(
+      this.cmsToastrService.typeErrorMessage(
         'دسته بندی را مشخص کنید',
         'دسته بندی اطلاعات مشخص نیست'
       );
