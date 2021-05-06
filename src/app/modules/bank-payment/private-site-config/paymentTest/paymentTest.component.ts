@@ -106,7 +106,7 @@ export class BankPaymentPrivateSiteConfigPaymentTestComponent implements OnInit 
           this.cmsToastrService.typeError(error);
           this.loading.display = false;
         }
-      )).toPromise()
+      )).toPromise();
   }
   onFormCancel(): void {
     this.dialogRef.close({ dialogChangedDate: false });

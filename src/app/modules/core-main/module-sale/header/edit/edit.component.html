@@ -49,6 +49,18 @@
           {{ fieldsInfo['SalePrice']?.FieldTitle }} is <strong>required</strong>
         </mat-error>
       </mat-form-field>
+      <!-- AllowReuseDay Field -->
+      <mat-form-field class="example-full-width" *ngIf="fieldsInfo['AllowReuseDay']?.AccessWatchField">
+        <mat-label>{{ fieldsInfo['AllowReuseDay']?.FieldTitle }}</mat-label>
+        <input matInput [(ngModel)]="dataModel.AllowReuseDay" [disabled]="!fieldsInfo['AllowReuseDay']?.AccessEditField"
+          name="dataModel.AllowReuseDay" #AllowReuseDay type="number" placeholder="0" required />
+        <mat-icon matSuffix *ngIf="dataModel.AllowReuseDay && fieldsInfo['AllowReuseDay']?.AccessEditField" matSuffix
+          mat-icon-button aria-label="Clear" (click)="dataModel.AllowReuseDay = null">close</mat-icon>
+        <mat-icon *ngIf="fieldsInfo['AllowReuseDay']?.AccessEditField" matSuffix>mode_edit</mat-icon>
+        <mat-error *ngIf="AllowReuseDay.errors?.required">
+          {{ fieldsInfo['AllowReuseDay']?.FieldTitle }} is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
       <!-- HasDemo Field -->
       <div class="example-full-width">
         <mat-slide-toggle [(ngModel)]="dataModel.HasDemo" *ngIf="fieldsInfo['HasDemo']?.AccessWatchField"

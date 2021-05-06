@@ -46,8 +46,10 @@ export class CoreModuleSaleHeaderSalePaymentComponent implements OnInit {
       this.dialogRef.close({ dialogChangedDate: false });
       return;
     }
+
     this.dataModelCalculate.LinkHeaderId = this.requestLinkHeaderId;
     this.dataModelPayment.LinkHeaderId = this.requestLinkHeaderId ;
+    this.dataModelPayment.LastUrlAddressInUse = this.document.location.href;
   }
   viewCalculate = false;
   loading = new ProgressSpinnerModel();

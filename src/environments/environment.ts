@@ -5,15 +5,15 @@ import { EnumDeviceType, EnumOperatingSystemType } from 'ntk-cms-api';
 export const environment = {
   production: false,
   developing: false,
-  appVersion: '14000207',
+  appVersion: '00217',
   USERDATA_KEY: 'authf649fc9a5f55',
   isMockEnabled: true,
   apiUrl: 'api',
   leafletUrl: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   cmsServerConfig: {
     configApiRetry: 1,
-    // configApiServerPath: 'https://apicms.ir/api/v1/',
-    configApiServerPath: 'http://localhost:2390/api/v1/',
+    configApiServerPath: 'https://apicms.ir/api/v1/',
+    // configApiServerPath: 'http://localhost:2390/api/v1/',
     configMvcServerPath: 'https://oco.ir',
     configCpanelImages: '/cpanelv1/images/',
     configPathFileByIdAndName: 'https://oco.ir/files/',
