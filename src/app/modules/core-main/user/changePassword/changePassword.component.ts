@@ -35,6 +35,7 @@ import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { MatStepper } from '@angular/material/stepper';
 import { Subscription } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-core-user-changepassword',
@@ -51,6 +52,7 @@ export class CoreUserChangePasswordComponent implements OnInit, OnDestroy {
     public coreEnumService: CoreEnumService,
     public coreAuthService: CoreAuthService,
     private cmsToastrService: CmsToastrService,
+    private translate: TranslateService,
     public publicHelper: PublicHelper,
   ) {
     if (data) {
@@ -130,16 +132,22 @@ export class CoreUserChangePasswordComponent implements OnInit, OnDestroy {
       }
     } else {
       if (!this.dataModel.OldPassword || this.dataModel.OldPassword.length === 0) {
-        this.cmsToastrService.typeErrorMessage('پسورد قبلی را وارد کنید');
+        this.cmsToastrService.typeErrorMessage(this.translate.instant('MESSAGE.Enter_the_previous_password'));
+
         return;
       }
     }
     if (!this.dataModel.NewPassword || this.dataModel.NewPassword.length === 0) {
-      this.cmsToastrService.typeErrorMessage('پسورد جدید را وارد کنید');
+      this.cmsToastrService.typeErrorMessage(this.translate.instant('MESSAGE.Enter_the_new_password'));
+
+
+
       return;
     }
     if (this.dataModel.NewPassword !== this.NewPasswordRepeat) {
-      this.cmsToastrService.typeErrorMessage('پسورد جدید با تکرار مقایرت دارد');
+      this.cmsToastrService.typeErrorMessage(this.translate.instant('MESSAGE.The_new_password_is_equivalent_to_a_duplicate'));
+
+
       return;
     }
     this.formInfo.FormSubmitAllow = false;

@@ -159,10 +159,22 @@
     "SELECT_STATUS": "انتخاب وضعیت این محتوا",
     "DELETE_ROW_DATA": "حذف ردیف اطلاعات",
     "MOVE_DATA": "جابجایی اطلاعات",
-    "DESCRIPTION": "توضیحات",
+    "DESCRIPTION": "توضیحات"
+  },
+  "MESSAGE":{
     "Specify_the_source_code_of_the_program": "سورس کد برنامه مشخص  کنید",
     "Specify_the_application_format": "قالب  برنامه مشخص  کنید",
-    "No_row_selected_for_editing": "ردیفی برای ویرایش انتخاب نشده است"
+    "No_row_selected_for_editing": "ردیفی برای ویرایش انتخاب نشده است",
+    "As_the_system_is_not_selected":"عنوان سامانه انتخاب نشد است",
+    "System_type_not_selected":"نوع سامانه انتخاب نشد است",
+    "System_domain_not_selected":"دامنه سامانه انتخاب نشد است",
+    "System_parent_domain_not_selected":" دامنه والد سامانه انتخاب نشد است",
+    "The_content_of_Kapjas_photo_was_not_entered":" محتوای عکس کپجا وارد نشد است",
+    "Module_not_found_for_editing":"ماژول جهت ویرایش یافت نشد",
+    "Enter_the_previous_password":"پسورد قبلی را وارد کنید",
+    "Enter_the_new_password":"پسورد جدید را وارد کنید",
+    "The_new_password_is_equivalent_to_a_duplicate":"پسورد جدید با تکرار مقایرت دارد"
+
   },
   "MENU": {
     "NEW": "جدید",

@@ -20,6 +20,7 @@ import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { MatStepper } from '@angular/material/stepper';
 import { FormGroup } from '@angular/forms';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -32,6 +33,7 @@ export class CoreSiteAddFirstComponent implements OnInit {
   constructor(
     private cmsToastrService: CmsToastrService,
     private coreSiteService: CoreSiteService,
+    private translate: TranslateService,
     private publicHelper: PublicHelper,
     private coreAuthService: CoreAuthService,
     private router: Router
@@ -120,23 +122,30 @@ export class CoreSiteAddFirstComponent implements OnInit {
   onFormSubmit(): void {
     this.dataModel.CaptchaKey = this.captchaModel.Key;
     if (this.dataModel.LinkSiteCategoryId <= 0) {
-      this.cmsToastrService.typeErrorMessage('نوع سامانه انتخاب نشد است');
+      this.cmsToastrService.typeErrorMessage(this.translate.instant('MESSAGE.System_type_not_selected'));
       return;
     }
     if (!this.dataModel.Title || this.dataModel.Title.length === 0) {
-      this.cmsToastrService.typeErrorMessage('عنوان سامانه انتخاب نشد است');
+      this.cmsToastrService.typeErrorMessage(this.translate.instant('MESSAGE.As_the_system_is_not_selected'));
+
       return;
     }
     if (!this.dataModel.Domain || this.dataModel.Domain.length === 0) {
-      this.cmsToastrService.typeErrorMessage('دامنه سامانه انتخاب نشد است');
+
+      this.cmsToastrService.typeErrorMessage(this.translate.instant('MESSAGE.System_domain_not_selected'));
+
       return;
     }
     if (!this.dataModel.SubDomain || this.dataModel.SubDomain.length === 0) {
-      this.cmsToastrService.typeErrorMessage(' دامنه والد سامانه انتخاب نشد است');
+      this.cmsToastrService.typeErrorMessage(this.translate.instant('MESSAGE.System_parent_domain_not_selected'));
+
+
       return;
     }
     if (!this.dataModel.CaptchaText || this.dataModel.CaptchaText.length === 0) {
-      this.cmsToastrService.typeErrorMessage(' محتوای عکس کپجا وارد نشد است');
+      this.cmsToastrService.typeErrorMessage(this.translate.instant('MESSAGE.The_content_of_Kapjas_photo_was_not_entered'));
+
+
       return;
     }
     this.formInfo.FormSubmitAllow = false;
@@ -196,7 +205,8 @@ export class CoreSiteAddFirstComponent implements OnInit {
         }, 10);
       }
       if (!this.dataModel.LinkSiteCategoryId || this.dataModel.LinkSiteCategoryId <= 0) {
-        this.cmsToastrService.typeErrorMessage('نوع سامانه انتخاب نشده است');
+
+        this.cmsToastrService.typeErrorMessage(this.translate.instant('MESSAGE.System_type_not_selected'));
         setTimeout(() => {
           stepper.selectedIndex = event.previouslySelectedIndex;
           // stepper.previous();

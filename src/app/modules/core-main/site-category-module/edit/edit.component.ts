@@ -33,6 +33,7 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { MatStepper } from '@angular/material/stepper';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-core-sitecategorycmsmodule-edit',
@@ -49,6 +50,7 @@ export class CoreSiteCategoryCmsModuleEditComponent implements OnInit {
     public coreEnumService: CoreEnumService,
     public coreSiteCategoryCmsModuleService: CoreSiteCategoryCmsModuleService,
     private cmsToastrService: CmsToastrService,
+    private translate: TranslateService,
     private publicHelper: PublicHelper,
 
   ) {
@@ -133,7 +135,7 @@ export class CoreSiteCategoryCmsModuleEditComponent implements OnInit {
             this.formInfo.FormAlert = '';
           }
           else {
-            this.cmsToastrService.typeErrorMessage('ماژول جهت ویرایش یافت نشد');
+            this.cmsToastrService.typeErrorMessage(this.translate.instant('MESSAGE.Module_not_found_for_editing'));
           }
         } else {
           this.formInfo.FormAlert = 'برروز خطا';

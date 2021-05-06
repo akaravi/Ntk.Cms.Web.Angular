@@ -248,7 +248,7 @@ export class ApplicationAppListComponent implements OnInit, OnDestroy {
   onActionbuttonEditRow(mode: ApplicationAppModel = this.tableRowSelected): void {
     if (!mode || !mode.Id || mode.Id === 0) {
 
-      this.cmsToastrService.typeErrorSelected(this.translate.instant('TITLE.No_row_selected_for_editing'));
+      this.cmsToastrService.typeErrorSelected(this.translate.instant('MESSAGE.No_row_selected_for_editing'));
       return;
     }
     this.tableRowSelected = mode;

@@ -103,12 +103,12 @@ export class ApplicationAppEditComponent implements OnInit {
       return;
     }
     if (this.dataModel.LinkSourceId <= 0) {
-      this.cmsToastrService.typeErrorAdd(this.translate.instant('TITLE.Specify_the_source_code_of_the_program'));
+      this.cmsToastrService.typeErrorAdd(this.translate.instant('MESSAGE.Specify_the_source_code_of_the_program'));
 
       return;
     }
     if (this.dataModel.LinkThemeConfigId <= 0) {
-      this.cmsToastrService.typeErrorAdd(this.translate.instant('TITLE.Specify_the_application_format'));
+      this.cmsToastrService.typeErrorAdd(this.translate.instant('MESSAGE.Specify_the_application_format'));
       return;
     }
     this.DataEditContent();
