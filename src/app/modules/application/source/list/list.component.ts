@@ -188,7 +188,7 @@ export class ApplicationSourceListComponent implements OnInit, OnDestroy {
   onActionbuttonEditRow(model: ApplicationSourceModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;
@@ -250,7 +250,7 @@ export class ApplicationSourceListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonApplicationList(model: ApplicationSourceModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;
@@ -259,7 +259,7 @@ export class ApplicationSourceListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonThemeList(model: ApplicationSourceModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;

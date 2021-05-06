@@ -59,9 +59,11 @@
       "typeErrorLogout": "بروز خطا",
       "typeErrorRegistery": "بروز خطا",
       "typeErrorSelected": "بروز خطا",
+      "typeErrorSelectedRow": "بروز خطا",
       "typeErrorLogin": "'بروز خطا در لاگین!",
       "typeError": "خطا  !",
-      "typeOrderActionLogout": "خروج از حساب"
+      "typeOrderActionLogout": "خروج از حساب",
+      "typePleaseLogInAgaint": "نیاز به ورود مجدد"
     },
     "MESSAGE": {
       "typeSuccessAccessChange": "دسترسی با موفقیت تایید شد",
@@ -115,11 +117,15 @@
       "typeErrorLogout": "بروز خطا در خارج شدن از حساب کاربری",
       "typeErrorRegistery": "بروز خطا در ایجاد حساب کاربری",
       "typeErrorSelected": "بروز خطا در انتخاب",
+      "typeErrorSelectedRow": "ردیفی انتخاب نشده است",
       "typeErrorLogin": "در ورود به سامانه خطایی رخ داده است مجدد تلاش کنید",
       "typeError": "بروز خطا",
       "typeError_login": "نیاز به ورود مجدد",
       "typeError_viewConsoleLog": "لاگ را در کنسول مرورگر مشاهده کنید",
-      "typeOrderActionLogout": "درحال اجرای خروج از حساب کاربری."
+      "typeOrderActionLogout": "درحال اجرای خروج از حساب کاربری.",
+      "typePleaseLogInAgaint": "لطفا مجددا وارد حساب کاربری خود شوید."
+
+
     }
   },
   "ACTION": {
@@ -153,7 +159,10 @@
     "SELECT_STATUS": "انتخاب وضعیت این محتوا",
     "DELETE_ROW_DATA": "حذف ردیف اطلاعات",
     "MOVE_DATA": "جابجایی اطلاعات",
-    "DESCRIPTION": "توضیحات"
+    "DESCRIPTION": "توضیحات",
+    "Specify_the_source_code_of_the_program": "سورس کد برنامه مشخص  کنید",
+    "Specify_the_application_format": "قالب  برنامه مشخص  کنید",
+    "No_row_selected_for_editing": "ردیفی برای ویرایش انتخاب نشده است"
   },
   "MENU": {
     "NEW": "جدید",

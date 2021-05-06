@@ -24,6 +24,7 @@ import { PoinModel } from 'src/app/core/models/pointModel';
 import { Map as leafletMap } from 'leaflet';
 import * as Leaflet from 'leaflet';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-aplication-intro-add',
@@ -40,6 +41,7 @@ export class ApplicationAppAddComponent implements OnInit {
     public applicationEnumService: ApplicationEnumService,
     private applicationAppService: ApplicationAppService,
     private cmsToastrService: CmsToastrService,
+    private translate: TranslateService,
     private router: Router) {
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
@@ -102,12 +104,12 @@ export class ApplicationAppAddComponent implements OnInit {
       return;
     }
     if (this.dataModel.LinkSourceId <= 0) {
-      this.cmsToastrService.typeErrorAdd('سورس کد برنامه مشخص  کنید');
+      this.cmsToastrService.typeErrorAdd(this.translate.instant('TITLE.Specify_the_source_code_of_the_program'));
 
       return;
     }
     if (this.dataModel.LinkThemeConfigId <= 0) {
-      this.cmsToastrService.typeErrorAdd('قالب  برنامه مشخص  کنید');
+      this.cmsToastrService.typeErrorAdd(this.translate.instant('TITLE.Specify_the_application_format'));
       return;
     }
     this.DataAddContent();

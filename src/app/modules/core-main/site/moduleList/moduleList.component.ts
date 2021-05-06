@@ -222,11 +222,11 @@ export class CoreSiteModuleListComponent implements OnInit, OnDestroy {
   onActionbuttonEditRow(model: CoreModuleSiteModel = this.tableRowSelected): void {
 
     if (!model || !model.LinkModuleId || model.LinkModuleId === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     if (!model || !model.LinkSiteId || model.LinkSiteId === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;

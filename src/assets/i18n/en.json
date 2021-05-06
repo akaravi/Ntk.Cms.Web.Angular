@@ -57,9 +57,11 @@
       "typeErrorLogout": "An error occurred",
       "typeErrorRegistery": "An error occurred",
       "typeErrorSelected": "An error occurred",
+      "typeErrorSelectedRow": "An error occurred",
       "typeErrorLogin": "Login error!",
       "typeError": "Error !",
-      "typeOrderActionLogout": "Logout"
+      "typeOrderActionLogout": "Logout",
+      "typePleaseLogInAgaint": "Need to re-enter"
     },
     "MESSAGE": {
       "typeSuccessAccessChange": "Access verified successfully",
@@ -113,11 +115,13 @@
       "typeErrorLogout": "Error logging out of the account",
       "typeErrorRegistery": "Error creating account",
       "typeErrorSelected": "Error in selection",
+      "typeErrorSelectedRow": "No row selected",
       "typeErrorLogin": "An error occurred while logging in. Please try again",
       "typeError": "An error occurred",
       "typeError_login": "Need to re-enter",
       "typeError_viewConsoleLog": "View Console Log",
-      "typeOrderActionLogout": "Running out of the account."
+      "typeOrderActionLogout": "Running out of the account.",
+      "typePleaseLogInAgaint": "Please log in again"
     }
   },
   "ACTION": {
@@ -151,7 +155,10 @@
     "SELECT_STATUS": "Select Status Data",
     "DELETE_ROW_DATA": "Delete Row Data",
     "MOVE_DATA": "Move Data",
-    "DESCRIPTION": "Description"
+    "DESCRIPTION": "Description",
+    "Specify_the_source_code_of_the_program": "Specify the source code of the program",
+    "Specify_the_application_format": "Specify the application format",
+    "No_row_selected_for_editing": "No row selected for editing"
   },
   "MENU": {
     "NEW": "new",

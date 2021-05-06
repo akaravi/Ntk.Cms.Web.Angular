@@ -202,7 +202,7 @@ export class TicketingDepartemenLogListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonEditRow(mode: TicketingDepartemenLogModel = this.tableRowSelected): void {
     if (!mode || !mode.Id || mode.Id === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = mode;
@@ -229,7 +229,7 @@ export class TicketingDepartemenLogListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonDeleteRow(mode: TicketingDepartemenLogModel = this.tableRowSelected): void {
     if (mode == null || !mode.Id || mode.Id === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = mode;

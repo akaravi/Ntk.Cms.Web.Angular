@@ -248,7 +248,7 @@ export class BlogCommentListComponent implements OnInit, OnDestroy {
 
   onActionbuttonEditRow(model: BlogContentModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;

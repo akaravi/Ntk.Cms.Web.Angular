@@ -197,7 +197,7 @@ export class BiographyContentListComponent implements OnInit, OnDestroy {
 
   onActionbuttonEditRow(model: BiographyContentModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;
@@ -310,7 +310,7 @@ export class BiographyContentListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonComment(model: BiographyContentModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.router.navigate(['/biography/comment/', model.Id]);

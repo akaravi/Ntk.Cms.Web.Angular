@@ -204,7 +204,7 @@ export class CoreLogErrorListComponent implements OnInit, OnDestroy {
   onActionbuttonEditRow(model: CoreLogErrorModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id.length === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;
@@ -321,7 +321,7 @@ export class CoreLogErrorListComponent implements OnInit, OnDestroy {
   onActionbuttonViewUserRow(model: CoreLogErrorModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id.length === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;
@@ -335,7 +335,7 @@ export class CoreLogErrorListComponent implements OnInit, OnDestroy {
   onActionbuttonViewMemberRow(model: CoreLogErrorModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id.length === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;

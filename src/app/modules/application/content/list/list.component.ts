@@ -30,6 +30,7 @@ import { ApplicationAppUploadUpdateComponent } from '../uploadUpdate/uploadUpdat
 import { Subscription } from 'rxjs';
 import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
 import { ApplicationLogNotificationActionSendComponent } from '../../notification/action-send/action-send.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-application-app-list',
@@ -45,6 +46,7 @@ export class ApplicationAppListComponent implements OnInit, OnDestroy {
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
+    private translate: TranslateService,
     private router: Router,
     private cmsConfirmationDialogService: CmsConfirmationDialogService,
     public dialog: MatDialog) {
@@ -245,7 +247,8 @@ export class ApplicationAppListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonEditRow(mode: ApplicationAppModel = this.tableRowSelected): void {
     if (!mode || !mode.Id || mode.Id === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+
+      this.cmsToastrService.typeErrorSelected(this.translate.instant('TITLE.No_row_selected_for_editing'));
       return;
     }
     this.tableRowSelected = mode;
@@ -472,7 +475,7 @@ export class ApplicationAppListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonNotifictionActionSend(model: ApplicationAppModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی  انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelected();
       return;
     }
     this.tableRowSelected = model;

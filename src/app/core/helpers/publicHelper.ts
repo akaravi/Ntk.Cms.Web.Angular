@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { TranslateService } from '@ngx-translate/core';
 import { AccessModel, DataFieldInfoModel, ErrorExceptionResultBase } from 'ntk-cms-api';
 import { TreeModel } from 'ntk-cms-filemanager';
 import { environment } from 'src/environments/environment';
@@ -12,7 +13,9 @@ import { CmsToastrService } from '../services/cmsToastr.service';
 export class PublicHelper {
   constructor(
     private router: Router,
-    private cmsToastrService: CmsToastrService
+    private cmsToastrService: CmsToastrService,
+    private translate: TranslateService,
+
   ) { }
   editorConfig: AngularEditorConfig = {
     editable: true,
@@ -71,9 +74,9 @@ export class PublicHelper {
       errorExceptionResult = model.error;
       if (errorExceptionResult) {
         if (errorExceptionResult.Status === 401) {
-          this.cmsToastrService.toastr.warning(
-            'لطفا مجددا وارد حساب کاربری خود شوید',
-            'نیاز به ورود مجدد'
+          this.cmsToastrService.typeErrorMessage(
+            this.translate.instant('ERRORMESSAGE.MESSAGE.typePleaseLogInAgaint'),
+            this.translate.instant('ERRORMESSAGE.TITLE.typePleaseLogInAgaint')
           );
           this.router.navigate([environment.cmsUiConfig.Pathlogin]);
           return;

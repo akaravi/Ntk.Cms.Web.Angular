@@ -200,7 +200,7 @@ export class CoreSiteCategoryCmsModuleListComponent implements OnInit, OnDestroy
   onActionbuttonEditRow(model: CoreSiteCategoryCmsModuleModel = this.tableRowSelected): void {
     if (!model || !model.LinkCmsModuleId || model.LinkCmsModuleId === 0 ||
       !model.LinkCmsSiteCategoryId || model.LinkCmsSiteCategoryId === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;

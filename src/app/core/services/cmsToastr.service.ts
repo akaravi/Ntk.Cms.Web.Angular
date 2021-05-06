@@ -407,6 +407,15 @@ export class CmsToastrService {
     }
     this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeErrorSelected'));
   }
+  typeErrorSelectedRow(str: string = ''): void {
+    // let message = 'برروز خطا در انتخاب';
+    let message = this.translate.instant('ERRORMESSAGE.MESSAGE.typeErrorSelectedRow');
+
+    if (str && str.length > 0) {
+      message = message + ' ' + this.translate.instant('ERRORMESSAGE.TITLE.Error') + ': ' + str;
+    }
+    this.toastr.error(message, this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeErrorSelectedRow'));
+  }
   typeErrorMessage(message: string, title: string = 'Error!'): void {
 
     this.toastr.error(message, this.now() + title);

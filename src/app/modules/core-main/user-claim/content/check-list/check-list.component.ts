@@ -182,7 +182,7 @@ export class CoreUserClaimContentCheckListComponent implements OnInit, OnDestroy
 
   onActionbuttonEditRow(model: CoreUserClaimCheckModel = this.tableRowSelected): void {
     if (!model || !model.LinkTypeId || model.LinkTypeId === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;

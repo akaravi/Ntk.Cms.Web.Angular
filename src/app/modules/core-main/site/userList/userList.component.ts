@@ -232,7 +232,7 @@ export class CoreSiteUserListComponent implements OnInit, OnDestroy {
   onActionbuttonEditRow(model: CoreSiteUserModel = this.tableRowSelected): void {
 
     if (!model || !model.LinkUserId || model.LinkUserId === 0 || !model.LinkSiteId || model.LinkSiteId === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;
@@ -395,7 +395,7 @@ export class CoreSiteUserListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonSiteList(model: CoreSiteUserModel = this.tableRowSelected): void {
     if (!model || !model.LinkUserId || model.LinkUserId === 0 || !model.LinkSiteId || model.LinkSiteId === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;

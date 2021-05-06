@@ -181,7 +181,7 @@ export class HyperShopCategoryListComponent implements OnInit, OnDestroy {
   onActionbuttonEditRow(model: HyperShopCategoryModel = this.tableRowSelected): void {
 
     if (!model || !model.Code || model.Code.length === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;

@@ -227,7 +227,7 @@ export class CoreTokenUserListComponent implements OnInit, OnDestroy {
   onActionbuttonViewRow(model: CoreTokenUserModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id.length === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی  انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;
@@ -251,7 +251,7 @@ export class CoreTokenUserListComponent implements OnInit, OnDestroy {
   onActionbuttonEditRow(model: CoreTokenUserModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id.length === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;
@@ -368,7 +368,7 @@ export class CoreTokenUserListComponent implements OnInit, OnDestroy {
   onActionbuttonViewUserRow(model: CoreTokenUserModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id.length === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;
@@ -382,7 +382,7 @@ export class CoreTokenUserListComponent implements OnInit, OnDestroy {
   onActionbuttonViewMemberRow(model: CoreTokenUserModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id.length === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;
@@ -396,7 +396,7 @@ export class CoreTokenUserListComponent implements OnInit, OnDestroy {
   onActionbuttonViewSiteRow(model: CoreTokenUserModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id.length === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;
@@ -409,7 +409,7 @@ export class CoreTokenUserListComponent implements OnInit, OnDestroy {
   onActionbuttonViewDeviceRow(model: CoreTokenUserModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id.length === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;

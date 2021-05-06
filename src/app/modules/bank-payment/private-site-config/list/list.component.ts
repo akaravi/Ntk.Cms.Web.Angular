@@ -231,7 +231,7 @@ export class BankPaymentPrivateSiteConfigListComponent implements OnInit, OnDest
   }
   onActionbuttonEditRow(model: BankPaymentPrivateSiteConfigModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;
@@ -340,7 +340,7 @@ export class BankPaymentPrivateSiteConfigListComponent implements OnInit, OnDest
   }
   onActionbuttonTransactionList(model: BankPaymentPrivateSiteConfigModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی  انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;

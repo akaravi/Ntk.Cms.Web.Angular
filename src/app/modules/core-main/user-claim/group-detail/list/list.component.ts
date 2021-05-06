@@ -233,7 +233,7 @@ export class CoreUserClaimGroupDetailListComponent implements OnInit, OnDestroy 
 
     if (!model || !model.LinkUserClaimGroupId || model.LinkUserClaimGroupId === 0
       || !model.LinkUserClaimTypeId || model.LinkUserClaimTypeId === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;
@@ -311,16 +311,6 @@ export class CoreUserClaimGroupDetailListComponent implements OnInit, OnDestroy 
   }
 
 
-  // onActionbuttonGoToUserClaimGroupDetailList(model: CoreUserClaimGroupDetailModel = this.tableRowSelected): void {
-  //   if (!model || !model.Id || model.Id === 0) {
-  //     const message = 'ردیفی برای نمایش انتخاب نشده است';
-  //     this.cmsToastrService.typeErrorSelected(message);
-  //     return;
-  //   }
-  //   this.tableRowSelected = model;
-
-  //   this.router.navigate(['/core/siteUserClaimGroupDetail/', this.tableRowSelected.Id]);
-  // }
   onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;
     if (!this.optionsStatist.data.show) {

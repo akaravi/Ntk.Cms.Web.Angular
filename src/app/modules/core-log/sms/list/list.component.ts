@@ -219,7 +219,7 @@ export class CoreLogSmsListComponent implements OnInit, OnDestroy {
   onActionbuttonViewRow(model: CoreLogSmsModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id.length === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی  انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;
@@ -243,7 +243,7 @@ export class CoreLogSmsListComponent implements OnInit, OnDestroy {
   onActionbuttonEditRow(model: CoreLogSmsModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id.length === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;
@@ -360,7 +360,7 @@ export class CoreLogSmsListComponent implements OnInit, OnDestroy {
   onActionbuttonViewUserRow(model: CoreLogSmsModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id.length === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;
@@ -374,7 +374,7 @@ export class CoreLogSmsListComponent implements OnInit, OnDestroy {
   onActionbuttonViewMemberRow(model: CoreLogSmsModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id.length === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;
@@ -388,7 +388,7 @@ export class CoreLogSmsListComponent implements OnInit, OnDestroy {
   onActionbuttonViewSiteRow(model: CoreLogSmsModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id.length === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;

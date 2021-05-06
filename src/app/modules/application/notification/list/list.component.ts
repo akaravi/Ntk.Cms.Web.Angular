@@ -205,7 +205,7 @@ export class ApplicationLogNotificationListComponent implements OnInit, OnDestro
 
   onActionbuttonViewRow(model: ApplicationLogNotificationModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id.length === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelected();
       return;
     }
     if (
@@ -257,7 +257,7 @@ export class ApplicationLogNotificationListComponent implements OnInit, OnDestro
 
   onActionbuttonEditRow(model: ApplicationLogNotificationModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id.length === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;
@@ -308,7 +308,7 @@ export class ApplicationLogNotificationListComponent implements OnInit, OnDestro
   }
   onActionbuttonNotifictionActionSend(model: ApplicationLogNotificationModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id.length === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی  انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelected();
       return;
     }
     this.tableRowSelected = model;

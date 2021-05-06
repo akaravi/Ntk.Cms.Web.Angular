@@ -211,7 +211,7 @@ export class CoreUserListComponent implements OnInit, OnDestroy {
   onActionbuttonViewRow(model: CoreUserModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;
@@ -235,7 +235,7 @@ export class CoreUserListComponent implements OnInit, OnDestroy {
   onActionbuttonEditRow(model: CoreUserModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;
@@ -252,7 +252,7 @@ export class CoreUserListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonChangePassword(model: CoreUserModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;
@@ -418,7 +418,7 @@ export class CoreUserListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonSiteList(model: CoreUserModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;
@@ -427,7 +427,7 @@ export class CoreUserListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonSiteByGroupList(model: CoreUserModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;

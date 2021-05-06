@@ -222,7 +222,7 @@ export class TicketingTemplateListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonEditRow(mode: TicketingTemplateModel = this.tableRowSelected): void {
     if (!mode || !mode.Id || mode.Id === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = mode;

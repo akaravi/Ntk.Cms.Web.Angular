@@ -226,7 +226,7 @@ export class CoreTokenMicroServiceListComponent implements OnInit, OnDestroy {
   onActionbuttonViewRow(model: CoreTokenMicroServiceModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id.length === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی  انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;
@@ -251,7 +251,7 @@ export class CoreTokenMicroServiceListComponent implements OnInit, OnDestroy {
   onActionbuttonEditRow(model: CoreTokenMicroServiceModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id.length === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;
@@ -368,7 +368,7 @@ export class CoreTokenMicroServiceListComponent implements OnInit, OnDestroy {
   onActionbuttonViewUserRow(model: CoreTokenMicroServiceModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id.length === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;
@@ -383,7 +383,7 @@ export class CoreTokenMicroServiceListComponent implements OnInit, OnDestroy {
   onActionbuttonViewSiteRow(model: CoreTokenMicroServiceModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id.length === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;

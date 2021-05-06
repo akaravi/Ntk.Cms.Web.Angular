@@ -233,7 +233,7 @@ export class WebDesignerMainMenuListComponent implements OnInit, OnDestroy {
   onActionbuttonEditRow(model: WebDesignerMainMenuModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id.length === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;

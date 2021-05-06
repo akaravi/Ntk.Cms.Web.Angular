@@ -199,7 +199,7 @@ export class ApplicationMemberInfoListComponent implements OnInit, OnDestroy {
 
   onActionbuttonViewRow(model: ApplicationMemberInfoModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id.length === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;
@@ -225,7 +225,7 @@ export class ApplicationMemberInfoListComponent implements OnInit, OnDestroy {
   onActionbuttonEditRow(model: ApplicationMemberInfoModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id.length === 0) {
 
-      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;
@@ -302,7 +302,7 @@ export class ApplicationMemberInfoListComponent implements OnInit, OnDestroy {
   onActionbuttonNotifictionList(model: ApplicationMemberInfoModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id.length === 0) {
 
-      this.cmsToastrService.typeErrorSelected('ردیفی  انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;
@@ -319,7 +319,7 @@ export class ApplicationMemberInfoListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonNotifictionActionSend(model: ApplicationMemberInfoModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id.length === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی  انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     if (!model.NotificationId || model.NotificationId.length === 0) {

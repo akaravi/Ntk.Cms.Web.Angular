@@ -204,7 +204,7 @@ export class CoreModuleSaleHeaderListComponent implements OnInit, OnDestroy {
   onActionbuttonEditRow(model: CoreModuleSaleHeaderModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;

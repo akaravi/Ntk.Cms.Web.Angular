@@ -133,7 +133,7 @@ export class CoreSiteCategoryCmsModuleEditComponent implements OnInit {
             this.formInfo.FormAlert = '';
           }
           else {
-            this.cmsToastrService.typeError('ماژول جهت ویرایش یافت نشد');
+            this.cmsToastrService.typeErrorMessage('ماژول جهت ویرایش یافت نشد');
           }
         } else {
           this.formInfo.FormAlert = 'برروز خطا';

@@ -56,16 +56,5 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         return throwError(error);
       }));
 
-
-    // catchError(error => {
-    //   if (error.status === 0) {
-    //     this.cmsToastrService.typeErrorInternetConnection();
-    //   }
-    //   if (error.status === 401) {
-    //     this.cmsToastrService.typeErrorUserToken();
-    //     this.router.navigate(['auth/singin']);
-    //   }
-    //   return throwError(error);
-    // }));
   }
 }

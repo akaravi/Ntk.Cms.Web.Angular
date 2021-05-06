@@ -226,7 +226,7 @@ export class HyperShopContentListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonViewRow(mode: HyperShopContentModel = this.tableRowSelected): void {
     if (!mode || !mode.Code || mode.Code.length === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = mode;
@@ -251,7 +251,7 @@ export class HyperShopContentListComponent implements OnInit, OnDestroy {
   }
   onActionbuttonEditRow(mode: HyperShopContentModel = this.tableRowSelected): void {
     if (!mode || !mode.Code || mode.Code.length === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = mode;

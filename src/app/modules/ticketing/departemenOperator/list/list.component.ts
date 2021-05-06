@@ -230,7 +230,7 @@ export class TicketingDepartemenOperatorListComponent implements OnInit, OnDestr
   }
   onActionbuttonEditRow(mode: TicketingDepartemenOperatorModel = this.tableRowSelected): void {
     if (!mode || !mode.Id || mode.Id === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = mode;
@@ -257,7 +257,7 @@ export class TicketingDepartemenOperatorListComponent implements OnInit, OnDestr
   }
   onActionbuttonDeleteRow(mode: TicketingDepartemenOperatorModel = this.tableRowSelected): void {
     if (mode == null || !mode.Id || mode.Id === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی برای ویرایش انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = mode;

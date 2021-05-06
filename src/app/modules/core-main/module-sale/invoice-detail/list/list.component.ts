@@ -191,7 +191,7 @@ export class CoreModuleSaleInvoiceDetailListComponent implements OnInit, OnDestr
   onActionbuttonViewRow(model: CoreModuleSaleInvoiceDetailModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id === 0) {
-      this.cmsToastrService.typeErrorSelected('ردیفی  انتخاب نشده است');
+      this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
     this.tableRowSelected = model;
