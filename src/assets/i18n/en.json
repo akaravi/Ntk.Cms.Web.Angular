@@ -124,7 +124,6 @@
       "typePleaseLogInAgaint": "Please log in again"
     }
   },
-
   "ACTION": {
     "ADD": "Add",
     "SAVE": "Save",
@@ -156,36 +155,38 @@
     "SELECT_STATUS": "Select Status Data",
     "DELETE_ROW_DATA": "Delete Row Data",
     "MOVE_DATA": "Move Data",
-    "DESCRIPTION": "Description"
+    "DESCRIPTION": "Description",
+    "Default_module_settings": "Default module settings",
+    "Settings_that_are_used_in_the_first_assignment_of_the_module_to_the_site": "Settings that are used in the first assignment of the module to the site",
+    "Default_access": "Default access",
+    "Default_website_access_to_this_module": "Default website access to this module",
+    "System_management_settings": "System management settings",
+    "The_whole_system_management_settings_for_this_module": "The whole system management settings for this module"
   },
-  "MESSAGE":{
+  "MESSAGE": {
     "Specify_the_source_code_of_the_program": "Specify the source code of the program",
     "Specify_the_application_format": "Specify the application format",
     "No_row_selected_for_editing": "No row selected for editing",
-    "System_type_not_selected":"System type not selected",
-    "As_the_system_is_not_selected":"As the system is not selected",
-    "System_domain_not_selected":"System domain not selected",
-    "System_parent_domain_not_selected":"System parent domain not selected",
-    "The_content_of_Kapjas_photo_was_not_entered":"The content of Kapja's photo was not entered",
-    "Module_not_found_for_editing":"Module not found for editing",
-    "Enter_the_previous_password":"Enter the previous password",
-    "Enter_the_new_password":"Enter the new password",
-    "The_new_password_is_equivalent_to_a_duplicate":"The new password is equivalent to a duplicate",
-    "The_activation_code_was_texted_with_you":"The activation code was texted with you",
-    "The_activation_code_was_emailed_to_you":"The activation code was emailed to you",
-    "Your_password_was_changed_successfully":"Your password was changed successfully.",
-    "The_login_code_was_texted_with_you":"The login code was texted with you",
-    "Transferring_to_the_payment_gateway":"Transferring to the payment gateway",
-    "Payment_request_was_successfully_registered":"Payment request was successfully registered",
-    "The_series_was_successfully_registered_for_you":"The series was successfully registered for you",
-    "Specify_the_source":"Specify the source",
-    "The_source_of_the_information_application_is_not_known":"The source of the information application is not known",
-    "Specify_the_template":"Specify the template",
-    "Information_application_format_is_not_clear":"Information application format is not clear"
-
-
-
-
+    "System_type_not_selected": "System type not selected",
+    "As_the_system_is_not_selected": "As the system is not selected",
+    "System_domain_not_selected": "System domain not selected",
+    "System_parent_domain_not_selected": "System parent domain not selected",
+    "The_content_of_Kapjas_photo_was_not_entered": "The content of Kapja's photo was not entered",
+    "Module_not_found_for_editing": "Module not found for editing",
+    "Enter_the_previous_password": "Enter the previous password",
+    "Enter_the_new_password": "Enter the new password",
+    "The_new_password_is_equivalent_to_a_duplicate": "The new password is equivalent to a duplicate",
+    "The_activation_code_was_texted_with_you": "The activation code was texted with you",
+    "The_activation_code_was_emailed_to_you": "The activation code was emailed to you",
+    "Your_password_was_changed_successfully": "Your password was changed successfully.",
+    "The_login_code_was_texted_with_you": "The login code was texted with you",
+    "Transferring_to_the_payment_gateway": "Transferring to the payment gateway",
+    "Payment_request_was_successfully_registered": "Payment request was successfully registered",
+    "The_series_was_successfully_registered_for_you": "The series was successfully registered for you",
+    "Specify_the_source": "Specify the source",
+    "The_source_of_the_information_application_is_not_known": "The source of the information application is not known",
+    "Specify_the_template": "Specify the template",
+    "Information_application_format_is_not_clear": "Information application format is not clear"
   },
   "MENU": {
     "NEW": "new",

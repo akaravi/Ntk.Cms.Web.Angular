@@ -7,8 +7,8 @@
       </app-progress-spinner>
       <mat-horizontal-stepper *ngIf="!loading.display" (selectionChange)="onStepClick($event,stepper)" #stepper>
 
-        <mat-step label="تنظیمات پیش فرض ماژول" state="main" *ngIf="tokenInfo.UserAccessAdminAllowToProfessionalData">
-          <p>تنظیمات که در اولین واگذاری ماژول به سایت به کارگیری می شود </p>
+        <mat-step label="{{'TITLE.Default_module_settings'|translate}}" state="main" *ngIf="tokenInfo.UserAccessAdminAllowToProfessionalData">
+          <p>{{'TITLE.Settings_that_are_used_in_the_first_assignment_of_the_module_to_the_site' |translate}}</p>
           <!-- StatusRenderUser Field -->
           <div class="example-full-width">
             <mat-slide-toggle [(ngModel)]="dataConfigSiteValuesDefaultModel.StatusRenderUser"
@@ -34,8 +34,8 @@
             </button>
           </div>
         </mat-step>
-        <mat-step label="دسترسی پیش فرض" state="main" *ngIf="tokenInfo.UserAccessAdminAllowToProfessionalData">
-          <p>دسترسی های پیش فرض این وب سایت به این ماژول</p>
+        <mat-step label="{{'TITLE.Default_access'|translate}}" state="main" *ngIf="tokenInfo.UserAccessAdminAllowToProfessionalData">
+          <p>{{'TITLE.Default_website_access_to_this_module'|translate}}</p>
 
           <!-- MainDataContentRowCount Field -->
           <mat-form-field class="example-full-width">
@@ -84,8 +84,9 @@
             </button>
           </div>
         </mat-step>
-        <mat-step label="تنظیمات مدیریت سامانه" state="main">
-          <p>تنظیمات مدیریت کل سامانه نسبت به این ماژول</p>
+
+        <mat-step label="{{'TITLE.System_management_settings'|translate}}" state="main">
+          <p>{{'TITLE.The_whole_system_management_settings_for_this_module'|translate}}</p>
 
           <!-- AccessBuy Field -->
           <div class="example-full-width">
