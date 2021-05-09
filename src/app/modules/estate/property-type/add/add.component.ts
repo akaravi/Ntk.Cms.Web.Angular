@@ -6,6 +6,7 @@ import {
   EstatePropertyTypeService,
   EstatePropertyTypeModel,
   DataFieldInfoModel,
+  CoreLocationModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -73,27 +74,27 @@ export class EstatePropertyTypeAddComponent implements OnInit {
     }
   }
   onActionFileSelected(model: NodeInterface): void {
-    this.dataModel.LinkMainImageId = model.id ;
+    this.dataModel.LinkMainImageId = model.id;
     this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
   }
 
-DataGetAccess(): void {
-  this.estatePropertyTypeService
-    .ServiceViewModel()
-    .subscribe(
-      async (next) => {
-        if (next.IsSuccess) {
-          // this.dataAccessModel = next.Access;
-          this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
-        } else {
-          this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
+  DataGetAccess(): void {
+    this.estatePropertyTypeService
+      .ServiceViewModel()
+      .subscribe(
+        async (next) => {
+          if (next.IsSuccess) {
+            // this.dataAccessModel = next.Access;
+            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+          } else {
+            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
+          }
+        },
+        (error) => {
+          this.cmsToastrService.typeErrorGetAccess(error);
         }
-      },
-      (error) => {
-        this.cmsToastrService.typeErrorGetAccess(error);
-      }
-    );
-}
+      );
+  }
   DataAddContent(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
@@ -119,6 +120,12 @@ DataGetAccess(): void {
         this.loading.display = false;
       }
     );
+  }
+  onActionSelectorLocation(model: CoreLocationModel | null): void {
+    this.dataModel.LinkLocationId = null;
+    if (model && model.Id > 0) {
+      this.dataModel.LinkLocationId = model.Id;
+    }
   }
   onFormSubmit(): void {
     if (!this.formGroup.valid) {

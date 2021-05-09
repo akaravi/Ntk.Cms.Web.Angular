@@ -60,7 +60,7 @@ export class HyperShopCategoryEditComponent implements OnInit {
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
   ngOnInit(): void {
     this.formInfo.FormTitle = 'ویرایش  ';
-    if (this.requestId || this.requestId.length === 0) {
+    if (!this.requestId || this.requestId.length === 0) {
       this.cmsToastrService.typeErrorComponentAction();
       this.dialogRef.close({ dialogChangedDate: false });
       return;

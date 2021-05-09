@@ -6,6 +6,7 @@ import {
   EstatePropertyTypeService,
   EstatePropertyTypeModel,
   DataFieldInfoModel,
+  CoreLocationModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -60,7 +61,7 @@ export class EstatePropertyTypeEditComponent implements OnInit {
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
   ngOnInit(): void {
     this.formInfo.FormTitle = 'ویرایش  ';
-    if (this.requestId || this.requestId.length === 0) {
+    if (!this.requestId || this.requestId.length === 0) {
       this.cmsToastrService.typeErrorComponentAction();
       this.dialogRef.close({ dialogChangedDate: false });
       return;
@@ -134,6 +135,12 @@ export class EstatePropertyTypeEditComponent implements OnInit {
         this.loading.display = false;
       }
     );
+  }
+  onActionSelectorLocation(model: CoreLocationModel | null): void {
+    this.dataModel.LinkLocationId = null;
+    if (model && model.Id > 0) {
+      this.dataModel.LinkLocationId = model.Id;
+    }
   }
   onFormSubmit(): void {
     if (!this.formGroup.valid) {

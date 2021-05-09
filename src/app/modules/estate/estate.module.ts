@@ -10,12 +10,24 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { TagInputModule } from 'ngx-chips';
 import { CmsFileManagerModule } from 'ntk-cms-filemanager';
 import {
-   CoreAuthService,
+  CoreAuthService,
   CoreEnumService,
   CoreModuleTagService,
   EstateConfigurationService,
   EstatePropertyTypeService,
-  EstatePropertyService
+  EstatePropertyService,
+  EstateContractTypeService,
+  EstatePropertyDetailGroupService,
+  EstateAccountAgencyService,
+  EstateAccountAgencyTypeUserService,
+  EstateAccountUserService,
+  EstateEnumService,
+  EstatePropertyAccountTypeUserService,
+  EstatePropertyHistoryService,
+  EstatePropertyShareAgencyService,
+  EstatePropertyShareAgentService,
+  EstatePropertyShareSiteService,
+  EstateContractService
 } from 'ntk-cms-api';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -31,6 +43,17 @@ import { EstatePropertyTypeTreeComponent } from './property-type/tree/tree.compo
 import { EstatePropertyAddComponent } from './Property/add/add.component';
 import { EstatePropertyEditComponent } from './Property/edit/edit.component';
 import { EstatePropertyListComponent } from './Property/list/list.component';
+import { EstateContractTypeAddComponent } from './contract-type/add/add.component';
+import { EstateContractTypeEditComponent } from './contract-type/edit/edit.component';
+import { EstateContractTypeListComponent } from './contract-type/list/list.component';
+import { EstateContractTypeSelectorComponent } from './contract-type/selector/selector.component';
+import { EstateContractTypeTreeComponent } from './contract-type/tree/tree.component';
+import { EstatePropertyDetailGroupAddComponent } from './property-detail-group/add/add.component';
+import { EstatePropertyDetailGroupEditComponent } from './property-detail-group/edit/edit.component';
+import { EstatePropertyDetailGroupListComponent } from './property-detail-group/list/list.component';
+import { EstatePropertyDetailGroupSelectorComponent } from './property-detail-group/selector/selector.component';
+import { EstatePropertyDetailGroupTreeComponent } from './property-detail-group/tree/tree.component';
+import { IconPickerModule } from 'ngx-icon-picker';
 
 @NgModule({
   declarations: [
@@ -49,6 +72,18 @@ import { EstatePropertyListComponent } from './Property/list/list.component';
     EstatePropertyAddComponent,
     EstatePropertyEditComponent,
     EstatePropertyListComponent,
+    /* */
+    EstateContractTypeAddComponent,
+    EstateContractTypeEditComponent,
+    EstateContractTypeListComponent,
+    EstateContractTypeSelectorComponent,
+    EstateContractTypeTreeComponent,
+    /* */
+    EstatePropertyDetailGroupAddComponent,
+    EstatePropertyDetailGroupEditComponent,
+    EstatePropertyDetailGroupListComponent,
+    EstatePropertyDetailGroupSelectorComponent,
+    EstatePropertyDetailGroupTreeComponent,
   ],
   imports: [
     CommonModule,
@@ -63,6 +98,7 @@ import { EstatePropertyListComponent } from './Property/list/list.component';
     MatIconModule,
     MatFormFieldModule,
     MatStepperModule,
+    IconPickerModule,
   ],
   providers: [
     CoreEnumService,
@@ -70,10 +106,26 @@ import { EstatePropertyListComponent } from './Property/list/list.component';
     /*Config*/
     EstateConfigurationService,
     /*Config*/
-    EstatePropertyTypeService,
+    /** */
+    EstateAccountAgencyService,
+    EstateAccountAgencyTypeUserService,
+    EstateAccountUserService,
+    EstateContractService,
+    EstateContractTypeService,
+    EstateEnumService,
     EstatePropertyService,
+    EstatePropertyAccountTypeUserService,
+    EstatePropertyDetailGroupService,
+    EstatePropertyHistoryService,
+    EstatePropertyShareAgencyService,
+    EstatePropertyShareAgentService,
+    EstatePropertyShareSiteService,
+    EstatePropertyTypeService,
+    /** */
     CmsConfirmationDialogService,
     CoreModuleTagService,
+
+
 
   ]
 })

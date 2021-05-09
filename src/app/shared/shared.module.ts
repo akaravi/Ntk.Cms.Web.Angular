@@ -30,7 +30,9 @@ import { CmsMemberSelectorComponent } from './cms-member-selector/cmsMemberSelec
 import {
   ApplicationAppService,
   BankPaymentPrivateSiteConfigService,
+  CoreCurrencyService,
   CoreGuideService,
+  CoreLocationService,
   CoreSiteCategoryService,
   CoreSiteService,
   CoreUserGroupService,
@@ -50,6 +52,7 @@ import { CmsTitlePipe } from '../core/pipe/title.pipe';
 import { CmsApplicationSelectorComponent } from './cms-application-selector/cms-application-selector.component';
 import { CmsBankpaymentGridComponent } from './cms-bankpayment-grid/cms-bankpayment-grid.component';
 import { CmsCurrencySelectorComponent } from './cms-currency-selector/cms-currency-selector.component';
+import { CmsLocationSelectorComponent } from './cms-location-selector/cms-location-selector.component';
 
 
 
@@ -84,6 +87,7 @@ import { CmsCurrencySelectorComponent } from './cms-currency-selector/cms-curren
     CmsExportListComponent,
     CmsSiteSelectorComponent,
     CmsCurrencySelectorComponent,
+    CmsLocationSelectorComponent,
     CmsApplicationSelectorComponent,
     CmsSiteCategorySelectorComponent,
     CmsUserSelectorComponent,
@@ -126,6 +130,7 @@ import { CmsCurrencySelectorComponent } from './cms-currency-selector/cms-curren
     CmsExportListComponent,
     CmsSiteSelectorComponent,
     CmsCurrencySelectorComponent,
+    CmsLocationSelectorComponent,
     CmsApplicationSelectorComponent,
     CmsSiteCategorySelectorComponent,
     CmsUserSelectorComponent,
@@ -154,6 +159,8 @@ import { CmsCurrencySelectorComponent } from './cms-currency-selector/cms-curren
     CoreSiteService,
     CoreSiteCategoryService,
     CoreGuideService,
+    CoreCurrencyService,
+    CoreLocationService,
     ApplicationAppService,
     BankPaymentPrivateSiteConfigService,
   ]

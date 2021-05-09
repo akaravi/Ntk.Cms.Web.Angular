@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
-  EstatePropertyTypeModel,
-  EstatePropertyTypeService,
+  EstateContractTypeModel,
+  EstateContractTypeService,
   CoreAuthService,
   EnumSortType,
   ErrorExceptionResult,
@@ -25,8 +25,8 @@ import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/bas
 import { MatSort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
-import { EstatePropertyTypeEditComponent } from '../edit/edit.component';
-import { EstatePropertyTypeAddComponent } from '../add/add.component';
+import { EstateContractTypeEditComponent } from '../edit/edit.component';
+import { EstateContractTypeAddComponent } from '../add/add.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
 
 @Component({
@@ -34,9 +34,9 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-di
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class EstatePropertyTypeListComponent implements OnInit, OnDestroy {
+export class EstateContractTypeListComponent implements OnInit, OnDestroy {
   constructor(
-    private estatePropertyTypeService: EstatePropertyTypeService,
+    private estateContractTypeService: EstateContractTypeService,
     private cmsConfirmationDialogService: CmsConfirmationDialogService,
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
@@ -60,21 +60,22 @@ export class EstatePropertyTypeListComponent implements OnInit, OnDestroy {
   tableContentSelected = [];
 
   filteModelContent = new FilterModel();
-  dataModelResult: ErrorExceptionResult<EstatePropertyTypeModel> = new ErrorExceptionResult<EstatePropertyTypeModel>();
+  dataModelResult: ErrorExceptionResult<EstateContractTypeModel> = new ErrorExceptionResult<EstateContractTypeModel>();
   optionsSearch: ComponentOptionSearchModel = new ComponentOptionSearchModel();
   optionsStatist: ComponentOptionStatistModel = new ComponentOptionStatistModel();
   optionsExport: ComponentOptionExportModel = new ComponentOptionExportModel();
   tokenInfo = new TokenInfoModel();
   loading = new ProgressSpinnerModel();
-  tableRowsSelected: Array<EstatePropertyTypeModel> = [];
-  tableRowSelected: EstatePropertyTypeModel = new EstatePropertyTypeModel();
-  tableSource: MatTableDataSource<EstatePropertyTypeModel> = new MatTableDataSource<EstatePropertyTypeModel>();
+  tableRowsSelected: Array<EstateContractTypeModel> = [];
+  tableRowSelected: EstateContractTypeModel = new EstateContractTypeModel();
+  tableSource: MatTableDataSource<EstateContractTypeModel> = new MatTableDataSource<EstateContractTypeModel>();
 
 
   tabledisplayedColumns: string[] = [
-    'LinkMainImageIdSrc',
     'Title',
-    'Description',
+    'HasSalePrice',
+    'HasRentPrice',
+    'HasDepositPrice',
     'Action'
   ];
 
@@ -82,7 +83,7 @@ export class EstatePropertyTypeListComponent implements OnInit, OnDestroy {
 
 
 
-  expandedElement: EstatePropertyTypeModel | null;
+  expandedElement: EstateContractTypeModel | null;
   cmsApiStoreSubscribe: Subscription;
 
   ngOnInit(): void {
@@ -99,7 +100,7 @@ export class EstatePropertyTypeListComponent implements OnInit, OnDestroy {
   }
   DataGetAll(): void {
     this.tableRowsSelected = [];
-    this.tableRowSelected = new EstatePropertyTypeModel();
+    this.tableRowSelected = new EstateContractTypeModel();
 
     this.loading.display = true;
     this.loading.Globally = false;
@@ -107,7 +108,7 @@ export class EstatePropertyTypeListComponent implements OnInit, OnDestroy {
     /*filter CLone*/
     const filterModel = JSON.parse(JSON.stringify(this.filteModelContent));
     /*filter CLone*/
-    this.estatePropertyTypeService.ServiceGetAll(filterModel).subscribe(
+    this.estateContractTypeService.ServiceGetAll(filterModel).subscribe(
       (next) => {
         this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
         if (next.IsSuccess) {
@@ -166,7 +167,7 @@ export class EstatePropertyTypeListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessAdd();
       return;
     }
-    const dialogRef = this.dialog.open(EstatePropertyTypeAddComponent, {
+    const dialogRef = this.dialog.open(EstateContractTypeAddComponent, {
       data: {}
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -176,7 +177,7 @@ export class EstatePropertyTypeListComponent implements OnInit, OnDestroy {
     });
   }
 
-  onActionbuttonEditRow(model: EstatePropertyTypeModel = this.tableRowSelected): void {
+  onActionbuttonEditRow(model: EstateContractTypeModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id.length === 0) {
       this.cmsToastrService.typeErrorSelectedRow();
@@ -191,7 +192,7 @@ export class EstatePropertyTypeListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessEdit();
       return;
     }
-    const dialogRef = this.dialog.open(EstatePropertyTypeEditComponent, {
+    const dialogRef = this.dialog.open(EstateContractTypeEditComponent, {
       data: { id: this.tableRowSelected.Id }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -200,7 +201,7 @@ export class EstatePropertyTypeListComponent implements OnInit, OnDestroy {
       }
     });
   }
-  onActionbuttonDeleteRow(model: EstatePropertyTypeModel = this.tableRowSelected): void {
+  onActionbuttonDeleteRow(model: EstateContractTypeModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id.length === 0) {
       const emessage = 'ردیفی برای حذف انتخاب نشده است';
       this.cmsToastrService.typeErrorSelected(emessage);
@@ -223,7 +224,7 @@ export class EstatePropertyTypeListComponent implements OnInit, OnDestroy {
       .then((confirmed) => {
         if (confirmed) {
           this.loading.display = true;
-          this.estatePropertyTypeService.ServiceDelete(this.tableRowSelected.Id).subscribe(
+          this.estateContractTypeService.ServiceDelete(this.tableRowSelected.Id).subscribe(
             (next) => {
               if (next.IsSuccess) {
                 this.cmsToastrService.typeSuccessRemove();
@@ -247,7 +248,7 @@ export class EstatePropertyTypeListComponent implements OnInit, OnDestroy {
       );
 
   }
-  onActionbuttonContentList(model: EstatePropertyTypeModel = this.tableRowSelected): void {
+  onActionbuttonContentList(model: EstateContractTypeModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id.length === 0) {
       const message = 'ردیفی برای نمایش انتخاب نشده است';
       this.cmsToastrService.typeErrorSelected(message);
@@ -266,7 +267,7 @@ export class EstatePropertyTypeListComponent implements OnInit, OnDestroy {
     const statist = new Map<string, number>();
     statist.set('Active', 0);
     statist.set('All', 0);
-    this.estatePropertyTypeService.ServiceGetCount(this.filteModelContent).subscribe(
+    this.estateContractTypeService.ServiceGetCount(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('All', next.TotalRowCount);
@@ -283,7 +284,7 @@ export class EstatePropertyTypeListComponent implements OnInit, OnDestroy {
     fastfilter.PropertyName = 'RecordStatus';
     fastfilter.Value = EnumRecordStatus.Available;
     filterStatist1.Filters.push(fastfilter);
-    this.estatePropertyTypeService.ServiceGetCount(filterStatist1).subscribe(
+    this.estateContractTypeService.ServiceGetCount(filterStatist1).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('Active', next.TotalRowCount);
@@ -304,7 +305,7 @@ export class EstatePropertyTypeListComponent implements OnInit, OnDestroy {
   onSubmitOptionExport(model: FilterModel): void {
     const exportlist = new Map<string, string>();
     exportlist.set('Download', 'loading ... ');
-    this.estatePropertyTypeService.ServiceExportFile(model).subscribe(
+    this.estateContractTypeService.ServiceExportFile(model).subscribe(
       (next) => {
         if (next.IsSuccess) {
           exportlist.set('Download', next.LinkFile);
@@ -324,7 +325,7 @@ export class EstatePropertyTypeListComponent implements OnInit, OnDestroy {
     this.filteModelContent.Filters = model;
     this.DataGetAll();
   }
-  onActionTableRowSelect(row: EstatePropertyTypeModel): void {
+  onActionTableRowSelect(row: EstateContractTypeModel): void {
     this.tableRowSelected = row;
   }
 

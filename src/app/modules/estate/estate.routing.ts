@@ -5,6 +5,8 @@ import { EstateConfigMainAdminComponent } from './config/mainAdmin/configMainAdm
 import { EstateConfigSiteComponent } from './config/site/configSite.component';
 import { EstatePropertyListComponent } from './Property/list/list.component';
 import { EstateComponent } from './estate.component';
+import { EstateContractTypeListComponent } from './contract-type/list/list.component';
+import { EstatePropertyDetailGroupListComponent } from './property-detail-group/list/list.component';
 
 const routes: Routes = [
   {
@@ -26,13 +28,23 @@ const routes: Routes = [
       },
       /*Config*/
       {
-        path: 'category',
+        path: 'property-type',
         component: EstatePropertyTypeListComponent
+      },
+      /**/
+      {
+        path: 'contract-type',
+        component: EstateContractTypeListComponent
       },
       /**/
       {
         path: 'content',
         component: EstatePropertyListComponent
+      },
+      /**/
+      {
+        path: 'property-detail-group',
+        component: EstatePropertyDetailGroupListComponent
       },
       {
         path: 'content/PareintId/:PareintId',
