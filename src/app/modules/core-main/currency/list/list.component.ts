@@ -80,7 +80,6 @@ export class CoreCurrencyListComponent implements OnInit, OnDestroy {
     'Symbol',
     'ExchangeBuyRatio',
     'ExchangeSaleRatio',
-    'MasterCurrency',
     'UpdatedDate',
     'Action'
   ];
