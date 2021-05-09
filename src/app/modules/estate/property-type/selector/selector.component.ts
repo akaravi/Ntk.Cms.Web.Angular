@@ -1,43 +1,45 @@
 import { Component, OnInit, Input, EventEmitter } from '@angular/core';
 import {
   CoreEnumService,
+  EnumClauseType,
+  EnumFilterDataModelSearchTypes,
   ErrorExceptionResult,
   FilterDataModel,
   FilterModel,
-  CoreCurrencyModel,
-  CoreCurrencyService,
-  EnumFilterDataModelSearchTypes,
-  EnumClauseType
+  EstatePropertyTypeModel,
+  EstatePropertyTypeService
 } from 'ntk-cms-api';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { Output } from '@angular/core';
 
 
 @Component({
-  selector: 'app-cms-currency-selector',
-  templateUrl: './cms-currency-selector.component.html',
-  styleUrls: ['./cms-currency-selector.component.scss']
+  selector: 'app-estate-propertytype-selector',
+  templateUrl: './selector.component.html',
+  styleUrls: ['./selector.component.scss']
 })
-export class CmsCurrencySelectorComponent implements OnInit {
+export class EstatePropertyTypeSelectorComponent implements OnInit {
 
   constructor(
     public coreEnumService: CoreEnumService,
-    public categoryService: CoreCurrencyService) {
+    public categoryService: EstatePropertyTypeService) {
+
+
   }
-  dataModelResult: ErrorExceptionResult<CoreCurrencyModel> = new ErrorExceptionResult<CoreCurrencyModel>();
-  dataModelSelect: CoreCurrencyModel = new CoreCurrencyModel();
+  dataModelResult: ErrorExceptionResult<EstatePropertyTypeModel> = new ErrorExceptionResult<EstatePropertyTypeModel>();
+  dataModelSelect: EstatePropertyTypeModel = new EstatePropertyTypeModel();
   loading = new ProgressSpinnerModel();
   formControl = new FormControl();
-  filteredOptions: Observable<CoreCurrencyModel[]>;
+  filteredOptions: Observable<EstatePropertyTypeModel[]>;
   @Input() disabled = new EventEmitter<boolean>();
   @Input() optionSelectFirstItem = false;
   @Input() optionPlaceholder = new EventEmitter<string>();
-  @Output() optionSelect = new EventEmitter<CoreCurrencyModel>();
+  @Output() optionSelect = new EventEmitter<EstatePropertyTypeModel>();
   @Input() optionReload = () => this.onActionReload();
-  @Input() set optionSelectForce(x: number | CoreCurrencyModel) {
+  @Input() set optionSelectForce(x: string | EstatePropertyTypeModel) {
     this.onActionSelectForce(x);
   }
 
@@ -49,53 +51,38 @@ export class CmsCurrencySelectorComponent implements OnInit {
         distinctUntilChanged(),
         switchMap(val => {
           if (typeof val === 'string' || typeof val === 'number') {
-            return this.DataGetAll(val);
+            return this.DataGetAll(val || '');
           }
-          return this.DataGetAll('');
+          return [];
         }),
         // tap(() => this.myControl.setValue(this.options[0]))
       );
   }
 
-  displayFn(model?: CoreCurrencyModel): string | undefined {
-    return model ? (model.Title ) : undefined;
+  displayFn(model?: EstatePropertyTypeModel): string | undefined {
+    return model ? model.Title + ' # ' + model.Id : undefined;
   }
-  displayOption(model?: CoreCurrencyModel): string | undefined {
-    return model ? (model.Title ) : undefined;
+  displayOption(model?: EstatePropertyTypeModel): string | undefined {
+    return model ? model.Title + ' # ' + model.Id : undefined;
   }
-  async DataGetAll(text: string | number | any): Promise<CoreCurrencyModel[]> {
+  async DataGetAll(text: string | number | any): Promise<EstatePropertyTypeModel[]> {
     const filteModel = new FilterModel();
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
     // this.loading.backdropEnabled = false;
-    if (text && text.length > 0) {
-      let filter = new FilterDataModel();
-      /*Filters */
-      filter = new FilterDataModel();
-      filter.PropertyName = 'Symbol';
-      filter.Value = text;
-      filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
-      filter.ClauseType = EnumClauseType.Or;
-      filteModel.Filters.push(filter);
-      /*Filters */
-      filter = new FilterDataModel();
-      filter.PropertyName = 'Title';
-      filter.Value = text;
-      filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
-      filter.ClauseType = EnumClauseType.Or;
-      filteModel.Filters.push(filter);
+    let filter = new FilterDataModel();
+    filter.PropertyName = 'Name';
+    filter.Value = text;
+    filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
+    filteModel.Filters.push(filter);
+    /* */
+    filter = new FilterDataModel();
+    filter.PropertyName = 'Id';
+    filter.Value = text;
+    filter.SearchType = EnumFilterDataModelSearchTypes.Equal;
+    filter.ClauseType = EnumClauseType.Or;
+    filteModel.Filters.push(filter);
 
-      if (text && typeof +text === 'number' && +text > 0) {
-        /*Filters */
-        filter = new FilterDataModel();
-        filter.PropertyName = 'Id';
-        filter.Value = text;
-        filter.SearchType = EnumFilterDataModelSearchTypes.Equal;
-        filter.ClauseType = EnumClauseType.Or;
-        filteModel.Filters.push(filter);
-
-      }
-    }
     this.loading.Globally = false;
     this.loading.display = true;
     return await this.categoryService.ServiceGetAll(filteModel)
@@ -104,7 +91,7 @@ export class CmsCurrencySelectorComponent implements OnInit {
           this.dataModelResult = response;
           /*select First Item */
           if (this.optionSelectFirstItem &&
-            (!this.dataModelSelect || !this.dataModelSelect.Id || this.dataModelSelect.Id <= 0) &&
+            (!this.dataModelSelect || !this.dataModelSelect.Id || this.dataModelSelect.Id.length === 0) &&
             this.dataModelResult.ListItems.length > 0) {
             this.optionSelectFirstItem = false;
             setTimeout(() => { this.formControl.setValue(this.dataModelResult.ListItems[0]); }, 1000);
@@ -114,7 +101,7 @@ export class CmsCurrencySelectorComponent implements OnInit {
         })
       ).toPromise();
   }
-  onActionSelect(model: CoreCurrencyModel): void {
+  onActionSelect(model: EstatePropertyTypeModel): void {
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
   }
@@ -122,7 +109,8 @@ export class CmsCurrencySelectorComponent implements OnInit {
     this.formControl.setValue(null);
     this.optionSelect.emit(null);
   }
-  push(newvalue: CoreCurrencyModel): Observable<CoreCurrencyModel[]> {
+
+  push(newvalue: EstatePropertyTypeModel): Observable<EstatePropertyTypeModel[]> {
     return this.filteredOptions.pipe(map(items => {
       if (items.find(x => x.Id === newvalue.Id)) {
         return items;
@@ -132,7 +120,7 @@ export class CmsCurrencySelectorComponent implements OnInit {
     }));
 
   }
-  onActionSelectForce(id: number | CoreCurrencyModel): void {
+  onActionSelectForce(id: string | EstatePropertyTypeModel): void {
     if (typeof id === 'number' && id > 0) {
       if (this.dataModelSelect && this.dataModelSelect.Id === id) {
         return;
@@ -153,9 +141,9 @@ export class CmsCurrencySelectorComponent implements OnInit {
       });
       return;
     }
-    if (typeof id === typeof CoreCurrencyModel) {
-      this.filteredOptions = this.push((id as CoreCurrencyModel));
-      this.dataModelSelect = (id as CoreCurrencyModel);
+    if (typeof id === typeof EstatePropertyTypeModel) {
+      this.filteredOptions = this.push((id as EstatePropertyTypeModel));
+      this.dataModelSelect = (id as EstatePropertyTypeModel);
       this.formControl.setValue(id);
       return;
     }
@@ -166,8 +154,8 @@ export class CmsCurrencySelectorComponent implements OnInit {
     // if (this.dataModelSelect && this.dataModelSelect.Id > 0) {
     //   this.onActionSelect(null);
     // }
-    this.dataModelSelect = new CoreCurrencyModel();
-    // this.optionsData.Select = new CoreCurrencyModel();
+    this.dataModelSelect = new EstatePropertyTypeModel();
+    // this.optionsData.Select = new EstatePropertyTypeModel();
     this.DataGetAll(null);
   }
 }

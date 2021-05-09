@@ -115,6 +115,11 @@ const routes: Routes = [
           import('../modules/web-designer/webDesigner.module').then(m => m.WebDesignerModule)
       },
       {
+        path: 'estate',
+        loadChildren: () =>
+          import('../modules/estate/estate.module').then(m => m.EstateModule)
+      },
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',
