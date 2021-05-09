@@ -3,6 +3,7 @@
   <form (ngSubmit)="onFormSubmit()" #vform="ngForm" class="form form-horizontal">
     <app-progress-spinner [options]="loading"> </app-progress-spinner>
     <div *ngIf="!loading.display" class="form-body">
+
       <!-- RecordStatus Field -->
       <mat-form-field class="example-full-width">
         <mat-select placeholder="{{fieldsInfo['RecordStatus']?.Title}}" [(ngModel)]="dataModel.RecordStatus"
@@ -18,65 +19,70 @@
           RecordStatus is <strong>required</strong>
         </mat-error>
       </mat-form-field>
-      <!-- RecordStatus Field -->
+      <!-- Title Field -->
       <mat-form-field class="example-full-width">
         <mat-label>{{fieldsInfo['Title']?.Title}}</mat-label>
         <input matInput [(ngModel)]="dataModel.Title" name="dataModel.Title" #Title type="text"
-          placeholder="{{fieldsInfo['Title']?.Title}}" minlength="3" maxlength="100" required />
+          placeholder="{{fieldsInfo['Title']?.Title}}" minlength="3" maxlength="20" required />
         <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
           (click)="dataModel.Title = ''">close</mat-icon>
         <mat-icon matSuffix>mode_edit</mat-icon>
-        <mat-hint align="end">{{ Title.value.length }} / 100</mat-hint>
+        <mat-hint align="end">{{ Title.value.length }} / 20</mat-hint>
         <mat-error *ngIf="Title.errors?.required">
           Title is <strong>required</strong>
         </mat-error>
       </mat-form-field>
-      <!-- ClassName Field -->
+      <!-- Symbol Field -->
       <mat-form-field class="example-full-width">
-        <mat-label>ClassName</mat-label>
-        <input matInput [(ngModel)]="dataModel.ClassName" name="dataModel.ClassName" #ClassName type="text"
-          placeholder="ClassName" minlength="3" maxlength="100" required />
-        <mat-icon matSuffix *ngIf="dataModel.ClassName" matSuffix mat-icon-button aria-label="Clear"
-          (click)="dataModel.ClassName = ''">close</mat-icon>
+        <mat-label>{{fieldsInfo['Symbol']?.Title}}</mat-label>
+        <input matInput [(ngModel)]="dataModel.Symbol" name="dataModel.Symbol" #Symbol type="text"
+          placeholder="{{fieldsInfo['Symbol']?.Title}}" minlength="1" maxlength="20" required />
+        <mat-icon matSuffix *ngIf="dataModel.Symbol" matSuffix mat-icon-button aria-label="Clear"
+          (click)="dataModel.Symbol = ''">close</mat-icon>
         <mat-icon matSuffix>mode_edit</mat-icon>
-        <mat-hint align="end">{{ ClassName.value.length }} / 100</mat-hint>
-        <mat-error *ngIf="ClassName.errors?.required">
-          ClassName is <strong>required</strong>
+        <mat-hint align="end">{{ Symbol.value.length }} / 20</mat-hint>
+        <mat-error *ngIf="Symbol.errors?.required">
+          Symbol is <strong>required</strong>
         </mat-error>
       </mat-form-field>
-      <!-- LinkCurrencyId Field -->
-      <app-cms-currency-selector (optionSelect)="onActionSelectCurrency($event)"
-        [disabled]="!fieldsInfo['LinkCurrencyId'].AccessEditField" [optionSelectForce]="dataModel.LinkCurrencyId"
-        [optionPlaceholder]="'واحد مالی'">
-      </app-cms-currency-selector>
-
-      <!-- Memo Field -->
+      <!-- ExchangeBuyRatio Field -->
       <mat-form-field class="example-full-width">
-        <mat-label>{{fieldsInfo['Description']?.Title}}</mat-label>
-        <textarea matInput [(ngModel)]="dataModel.Memo" name="dataModel.Memo" #Memo type="text"
-          placeholder="{{fieldsInfo['Description']?.Title}}" minlength="1" maxlength="500" required rows=5></textarea>
-        <mat-icon matSuffix *ngIf="dataModel.Memo" matSuffix mat-icon-button aria-label="Clear"
-          (click)="dataModel.Memo = ''">close</mat-icon>
+        <mat-label>{{fieldsInfo['ExchangeBuyRatio']?.Title}}</mat-label>
+        <input matInput [(ngModel)]="dataModel.ExchangeBuyRatio" name="dataModel.ExchangeBuyRatio" #ExchangeBuyRatio
+          type="number" placeholder="{{fieldsInfo['ExchangeBuyRatio']?.Title}}" required  step="0.001" />
+        <mat-icon matSuffix *ngIf="dataModel.ExchangeBuyRatio" matSuffix mat-icon-button aria-label="Clear"
+          (click)="dataModel.ExchangeBuyRatio = 1">close</mat-icon>
         <mat-icon matSuffix>mode_edit</mat-icon>
-        <mat-hint align="end">{{ Memo.value.length }} / 500</mat-hint>
-        <mat-error *ngIf="Memo.errors?.required">
-          Memo is <strong>required</strong>
+        <mat-error *ngIf="ExchangeBuyRatio.errors?.required">
+          ExchangeBuyRatio is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <!-- ExchangeSaleRatio Field -->
+      <mat-form-field class="example-full-width">
+        <mat-label>{{fieldsInfo['ExchangeSaleRatio']?.Title}}</mat-label>
+        <input matInput [(ngModel)]="dataModel.ExchangeSaleRatio" name="dataModel.ExchangeSaleRatio" #ExchangeSaleRatio
+          type="number" placeholder="{{fieldsInfo['ExchangeSaleRatio']?.Title}}" required step="0.001"/>
+        <mat-icon matSuffix *ngIf="dataModel.ExchangeSaleRatio" matSuffix mat-icon-button aria-label="Clear"
+          (click)="dataModel.ExchangeSaleRatio = 1">close</mat-icon>
+        <mat-icon matSuffix>mode_edit</mat-icon>
+        <mat-error *ngIf="ExchangeSaleRatio.errors?.required">
+          ExchangeSaleRatio is <strong>required</strong>
         </mat-error>
       </mat-form-field>
 
-      <!-- LinkModuleFileLogoId Field -->
+      <!-- LinkMainImageId Field -->
       <div class="mb-3">
-        <img *ngIf="dataModel?.LinkModuleFileLogoIdSrc?.length>0" style="vertical-align:middle;" aria-hidden
-          src="{{dataModel.LinkModuleFileLogoIdSrc}}" height="50" width="50" />
+        <img *ngIf="dataModel?.LinkMainImageIdSrc?.length>0" style="vertical-align:middle;" aria-hidden
+          src="{{dataModel.LinkMainImageIdSrc}}" height="50" width="50" />
       </div>
       <div class="mb-9">
         <mat-form-field class="example-full-width">
           <mat-label (click)="fileManagerOpenForm = true">فایل آیکن
           </mat-label>
-          <input matInput [(ngModel)]="dataModel.LinkModuleFileLogoId" name="dataModel.LinkModuleFileLogoId"
-            #LinkModuleFileLogoId type="text" placeholder="شناسه فایل اصلی" (click)="fileManagerOpenForm = true" />
-          <mat-icon matSuffix *ngIf="dataModel.LinkModuleFileLogoId " matSuffix mat-icon-button aria-label="Clear"
-            (click)="dataModel.LinkModuleFileLogoId = null">close</mat-icon>
+          <input matInput [(ngModel)]="dataModel.LinkMainImageId" name="dataModel.LinkMainImageId" #LinkMainImageId
+            type="text" placeholder="شناسه فایل اصلی" (click)="fileManagerOpenForm = true" />
+          <mat-icon matSuffix *ngIf="dataModel.LinkMainImageId " matSuffix mat-icon-button aria-label="Clear"
+            (click)="dataModel.LinkMainImageId = null">close</mat-icon>
           <mat-icon matSuffix (click)="fileManagerOpenForm = true">mode_edit</mat-icon>
         </mat-form-field>
         <cms-file-manager (itemSelected)="onActionFileSelected($event)" [language]="appLanguage" [isPopup]="true"
@@ -85,7 +91,6 @@
       </div>
 
     </div>
-
   </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">

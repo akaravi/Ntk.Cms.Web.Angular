@@ -17,7 +17,8 @@ import {
   BankPaymentPrivateSiteConfigService,
   BankPaymentTransactionService,
   BankPaymentTransactionLogService,
-  BankPaymentEnumService
+  BankPaymentEnumService,
+  CoreCurrencyService
 } from 'ntk-cms-api';
 
 import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
@@ -89,6 +90,7 @@ import { BankPaymentPublicConfigHeaderComponent } from './public-config/header/h
   providers: [
     CoreEnumService,
     CoreAuthService,
+    CoreCurrencyService,
     /*Config*/
     BankPaymentConfigurationService,
     /*Config*/

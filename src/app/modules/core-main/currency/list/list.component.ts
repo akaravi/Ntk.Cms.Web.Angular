@@ -1,21 +1,19 @@
-import { ActivatedRoute, Router } from '@angular/router';
+
+import { Router } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
-  BankPaymentPrivateSiteConfigModel,
-  ApplicationSourceModel,
-  BankPaymentPrivateSiteConfigService,
+  CoreCurrencyModel,
+  CoreCurrencyService,
+  CoreAuthService,
   EnumSortType,
   ErrorExceptionResult,
-  FilterDataModel,
   FilterModel,
-  TokenInfoModel,
   NtkCmsApiStoreService,
+  TokenInfoModel,
+  FilterDataModel,
   EnumRecordStatus,
-  DataFieldInfoModel,
-  CoreCpMainMenuService,
-  CoreCurrencyService,
-  CoreCurrencyModel
+  DataFieldInfoModel
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -27,21 +25,18 @@ import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/bas
 import { MatSort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
-import { BankPaymentPrivateSiteConfigAddComponent } from '../add/add.component';
-import { BankPaymentPrivateSiteConfigEditComponent } from '../edit/edit.component';
+import { CoreCurrencyEditComponent } from '../edit/edit.component';
+import { CoreCurrencyAddComponent } from '../add/add.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
-import { BankPaymentPrivateSiteConfigPaymentTestComponent } from '../paymentTest/paymentTest.component';
 
 @Component({
-  selector: 'app-bankpayment-privateconfig-list',
+  selector: 'app-core-currency-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class BankPaymentPrivateSiteConfigListComponent implements OnInit, OnDestroy {
-  requestLinkPublicConfigId = 0;
+export class CoreCurrencyListComponent implements OnInit, OnDestroy {
   constructor(
-    private bankPaymentPrivateSiteConfigService: BankPaymentPrivateSiteConfigService,
-    private activatedRoute: ActivatedRoute,
+    private coreCurrencyService: CoreCurrencyService,
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
@@ -63,41 +58,40 @@ export class BankPaymentPrivateSiteConfigListComponent implements OnInit, OnDest
   dataSource: any;
   flag = false;
   tableContentSelected = [];
+
   filteModelContent = new FilterModel();
-  dataModelResult: ErrorExceptionResult<BankPaymentPrivateSiteConfigModel> = new ErrorExceptionResult<BankPaymentPrivateSiteConfigModel>();
+  dataModelResult: ErrorExceptionResult<CoreCurrencyModel> = new ErrorExceptionResult<CoreCurrencyModel>();
   optionsSearch: ComponentOptionSearchModel = new ComponentOptionSearchModel();
   optionsStatist: ComponentOptionStatistModel = new ComponentOptionStatistModel();
   optionsExport: ComponentOptionExportModel = new ComponentOptionExportModel();
   tokenInfo = new TokenInfoModel();
   loading = new ProgressSpinnerModel();
-  tableRowsSelected: Array<BankPaymentPrivateSiteConfigModel> = [];
-  tableRowSelected: BankPaymentPrivateSiteConfigModel = new BankPaymentPrivateSiteConfigModel();
-  tableSource: MatTableDataSource<BankPaymentPrivateSiteConfigModel> = new MatTableDataSource<BankPaymentPrivateSiteConfigModel>();
-  categoryModelSelected: ApplicationSourceModel;
+  tableRowsSelected: Array<CoreCurrencyModel> = [];
+  tableRowSelected: CoreCurrencyModel = new CoreCurrencyModel();
+  tableSource: MatTableDataSource<CoreCurrencyModel> = new MatTableDataSource<CoreCurrencyModel>();
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
-  expandedElement: BankPaymentPrivateSiteConfigModel | null;
-  cmsApiStoreSubscribe: Subscription;
+
+
   tabledisplayedColumns: string[] = [
     'LinkMainImageIdSrc',
     'Id',
     'RecordStatus',
     'Title',
-    'LinkPublicConfigId',
-    'MinTransactionAmount',
-    'MaxTransactionAmount',
-    'CreatedDate',
+    'Symbol',
+    'ExchangeBuyRatio',
+    'ExchangeSaleRatio',
+    'MasterCurrency',
     'UpdatedDate',
     'Action'
   ];
 
+
+
+  expandedElement: CoreCurrencyModel | null;
+  cmsApiStoreSubscribe: Subscription;
+
   ngOnInit(): void {
-    this.requestLinkPublicConfigId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkPublicConfigId'));
-    const filter = new FilterDataModel();
-    if (this.requestLinkPublicConfigId > 0) {
-      filter.PropertyName = 'LinkPublicConfigId';
-      filter.Value = this.requestLinkPublicConfigId;
-      this.filteModelContent.Filters.push(filter);
-    }
+    this.filteModelContent.SortColumn = 'Title';
     this.DataGetAll();
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
@@ -105,13 +99,12 @@ export class BankPaymentPrivateSiteConfigListComponent implements OnInit, OnDest
       this.tokenInfo = next;
     });
   }
-
   ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
   DataGetAll(): void {
     this.tableRowsSelected = [];
-    this.tableRowSelected = new BankPaymentPrivateSiteConfigModel();
+    this.tableRowSelected = new CoreCurrencyModel();
 
     this.loading.display = true;
     this.loading.Globally = false;
@@ -119,39 +112,14 @@ export class BankPaymentPrivateSiteConfigListComponent implements OnInit, OnDest
     /*filter CLone*/
     const filterModel = JSON.parse(JSON.stringify(this.filteModelContent));
     /*filter CLone*/
-    const filter = new FilterDataModel();
-
-    if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
-      filter.PropertyName = 'LinkPublicConfigId';
-      filter.Value = this.categoryModelSelected.Id;
-      filterModel.Filters.push(filter);
-    }
-    this.bankPaymentPrivateSiteConfigService.ServiceGetAll(filterModel).subscribe(
+    this.coreCurrencyService.ServiceGetAll(filterModel).subscribe(
       (next) => {
-        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
-
-
         if (next.IsSuccess) {
+          this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;
-          if (this.tokenInfo.UserAccessAdminAllowToAllData) {
-            this.tabledisplayedColumns = this.publicHelper.listAddIfNotExist(
-              this.tabledisplayedColumns,
-              'LinkSiteId',
-              0
-            );
-          } else {
-            this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
-              this.tabledisplayedColumns,
-              'LinkSiteId'
-            );
-          }
-          if (this.requestLinkPublicConfigId === 0) {
-            this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
-              this.tabledisplayedColumns,
-              'LinkPublicConfigId'
-            );
-          }
+
           if (this.optionsSearch.childMethods) {
             this.optionsSearch.childMethods.setAccess(next.Access);
           }
@@ -195,18 +163,7 @@ export class BankPaymentPrivateSiteConfigListComponent implements OnInit, OnDest
 
 
   onActionbuttonNewRow(): void {
-    let ApplicationId = 0;
-    if (this.requestLinkPublicConfigId > 0) {
-      ApplicationId = this.requestLinkPublicConfigId;
-    }
-    if (this.categoryModelSelected && this.categoryModelSelected.Id && this.categoryModelSelected.Id > 0) {
-      ApplicationId = this.categoryModelSelected.Id;
-    }
-    if (ApplicationId <= 0) {
-      const message = 'سورسی انتخاب نشده است';
-      this.cmsToastrService.typeErrorSelected(message);
-      return;
-    }
+
     if (
       this.dataModelResult == null ||
       this.dataModelResult.Access == null ||
@@ -215,24 +172,18 @@ export class BankPaymentPrivateSiteConfigListComponent implements OnInit, OnDest
       this.cmsToastrService.typeErrorAccessAdd();
       return;
     }
-    const dialogRef = this.dialog.open(BankPaymentPrivateSiteConfigAddComponent, {
-      data: { contentId: ApplicationId }
+    const dialogRef = this.dialog.open(CoreCurrencyAddComponent, {
+      data: {}
     });
     dialogRef.afterClosed().subscribe(result => {
-      // console.log(`Dialog result: ${result}`);
       if (result && result.dialogChangedDate) {
         this.DataGetAll();
       }
     });
   }
 
-  onActionSelectorSelect(model: ApplicationSourceModel | null): void {
-    this.filteModelContent = new FilterModel();
-    this.categoryModelSelected = model;
+  onActionbuttonEditRow(model: CoreCurrencyModel = this.tableRowSelected): void {
 
-    this.DataGetAll();
-  }
-  onActionbuttonEditRow(model: BankPaymentPrivateSiteConfigModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
       this.cmsToastrService.typeErrorSelectedRow();
       return;
@@ -246,18 +197,25 @@ export class BankPaymentPrivateSiteConfigListComponent implements OnInit, OnDest
       this.cmsToastrService.typeErrorAccessEdit();
       return;
     }
-
-    const dialogRef = this.dialog.open(BankPaymentPrivateSiteConfigEditComponent, {
+    const dialogRef = this.dialog.open(CoreCurrencyEditComponent, {
       data: { id: this.tableRowSelected.Id }
     });
     dialogRef.afterClosed().subscribe(result => {
-      // console.log(`Dialog result: ${result}`);
       if (result && result.dialogChangedDate) {
         this.DataGetAll();
       }
     });
   }
-  onActionbuttonDeleteRow(model: BankPaymentPrivateSiteConfigModel = this.tableRowSelected): void {
+  onActionbuttonLog(model: CoreCurrencyModel = this.tableRowSelected): void {
+
+    if (!model || !model.Id || model.Id === 0) {
+      this.cmsToastrService.typeErrorSelectedRow();
+      return;
+    }
+    this.tableRowSelected = model;
+    this.router.navigate(['/corelog/currency/',model.Id]);
+  }
+  onActionbuttonDeleteRow(model: CoreCurrencyModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {
       const emessage = 'ردیفی برای حذف انتخاب نشده است';
       this.cmsToastrService.typeErrorSelected(emessage);
@@ -273,13 +231,15 @@ export class BankPaymentPrivateSiteConfigListComponent implements OnInit, OnDest
       this.cmsToastrService.typeErrorAccessDelete();
       return;
     }
+
+
     const title = 'لطفا تایید کنید...';
     const message = 'آیا مایل به حدف این محتوا می باشید ' + '?' + '<br> ( ' + this.tableRowSelected.Title + ' ) ';
     this.cmsConfirmationDialogService.confirm(title, message)
       .then((confirmed) => {
         if (confirmed) {
           this.loading.display = true;
-          this.bankPaymentPrivateSiteConfigService.ServiceDelete(this.tableRowSelected.Id).subscribe(
+          this.coreCurrencyService.ServiceDelete(this.tableRowSelected.Id).subscribe(
             (next) => {
               if (next.IsSuccess) {
                 this.cmsToastrService.typeSuccessRemove();
@@ -301,6 +261,18 @@ export class BankPaymentPrivateSiteConfigListComponent implements OnInit, OnDest
         // console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)')
       }
       );
+
+  }
+
+
+  onActionbuttonUserList(model: CoreCurrencyModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id === 0) {
+      const message = 'ردیفی برای نمایش انتخاب نشده است';
+      this.cmsToastrService.typeErrorSelected(message);
+      return;
+    }
+    this.tableRowSelected = model;
+    this.router.navigate(['/core/site/userlist/LinkCurrencyId/', this.tableRowSelected.Id]);
   }
   onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;
@@ -310,7 +282,7 @@ export class BankPaymentPrivateSiteConfigListComponent implements OnInit, OnDest
     const statist = new Map<string, number>();
     statist.set('Active', 0);
     statist.set('All', 0);
-    this.bankPaymentPrivateSiteConfigService.ServiceGetCount(this.filteModelContent).subscribe(
+    this.coreCurrencyService.ServiceGetCount(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('All', next.TotalRowCount);
@@ -327,7 +299,7 @@ export class BankPaymentPrivateSiteConfigListComponent implements OnInit, OnDest
     fastfilter.PropertyName = 'RecordStatus';
     fastfilter.Value = EnumRecordStatus.Available;
     filterStatist1.Filters.push(fastfilter);
-    this.bankPaymentPrivateSiteConfigService.ServiceGetCount(filterStatist1).subscribe(
+    this.coreCurrencyService.ServiceGetCount(filterStatist1).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('Active', next.TotalRowCount);
@@ -341,43 +313,6 @@ export class BankPaymentPrivateSiteConfigListComponent implements OnInit, OnDest
     );
 
   }
-  onActionbuttonTransactionList(model: BankPaymentPrivateSiteConfigModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0) {
-      this.cmsToastrService.typeErrorSelectedRow();
-      return;
-    }
-    this.tableRowSelected = model;
-
-    this.router.navigate(['/bankpayment/transaction/LinkPrivateSiteConfigId', this.tableRowSelected.Id]);
-  }
-  onActionbuttonTestPayment(model: BankPaymentPrivateSiteConfigModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0) {
-
-      const message = 'ردیفی انتخاب نشده است';
-      this.cmsToastrService.typeErrorSelected(message);
-      return;
-    }
-    this.tableRowSelected = model;
-
-    if (
-      this.dataModelResult == null ||
-      this.dataModelResult.Access == null ||
-      !this.dataModelResult.Access.AccessWatchRow
-    ) {
-      this.cmsToastrService.typeErrorSelected();
-      return;
-    }
-    const dialogRef = this.dialog.open(BankPaymentPrivateSiteConfigPaymentTestComponent, {
-      data: { LinkPrivateSiteConfigId: this.tableRowSelected.Id }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      // console.log(`Dialog result: ${result}`);
-      if (result && result.dialogChangedDate) {
-        this.DataGetAll();
-      }
-    });
-  }
-
   onActionbuttonExport(): void {
     this.optionsExport.data.show = !this.optionsExport.data.show;
     this.optionsExport.childMethods.setExportFilterModel(this.filteModelContent);
@@ -385,7 +320,7 @@ export class BankPaymentPrivateSiteConfigListComponent implements OnInit, OnDest
   onSubmitOptionExport(model: FilterModel): void {
     const exportlist = new Map<string, string>();
     exportlist.set('Download', 'loading ... ');
-    this.bankPaymentPrivateSiteConfigService.ServiceExportFile(model).subscribe(
+    this.coreCurrencyService.ServiceExportFile(model).subscribe(
       (next) => {
         if (next.IsSuccess) {
           exportlist.set('Download', next.LinkFile);
@@ -405,10 +340,8 @@ export class BankPaymentPrivateSiteConfigListComponent implements OnInit, OnDest
     this.filteModelContent.Filters = model;
     this.DataGetAll();
   }
-  onActionTableRowSelect(row: BankPaymentPrivateSiteConfigModel): void {
+  onActionTableRowSelect(row: CoreCurrencyModel): void {
     this.tableRowSelected = row;
   }
-  onActionBackToParent(): void {
-    this.router.navigate(['/bankpayment/publicconfig/']);
-  }
+
 }

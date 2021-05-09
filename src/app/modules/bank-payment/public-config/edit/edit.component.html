@@ -43,32 +43,11 @@
           ClassName is <strong>required</strong>
         </mat-error>
       </mat-form-field>
-      <!-- CurrencyUnit Field -->
-      <mat-form-field class="example-full-width">
-        <mat-label>CurrencyUnit</mat-label>
-        <input matInput [(ngModel)]="dataModel.CurrencyUnit" name="dataModel.CurrencyUnit" #CurrencyUnit type="text"
-          placeholder="CurrencyUnit" minlength="3" maxlength="100" required />
-        <mat-icon matSuffix *ngIf="dataModel.CurrencyUnit" matSuffix mat-icon-button aria-label="Clear"
-          (click)="dataModel.CurrencyUnit = ''">close</mat-icon>
-        <mat-icon matSuffix>mode_edit</mat-icon>
-        <mat-hint align="end">{{ CurrencyUnit.value.length }} / 100</mat-hint>
-        <mat-error *ngIf="CurrencyUnit.errors?.required">
-          CurrencyUnit is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-      <!-- CurrencyUnit Field -->
-      <mat-form-field class="example-full-width">
-        <mat-label>CurrencyUnit</mat-label>
-        <input matInput [(ngModel)]="dataModel.CurrencyUnit" name="dataModel.CurrencyUnit" #CurrencyUnit type="text"
-          placeholder="CurrencyUnit" minlength="3" maxlength="100" required />
-        <mat-icon matSuffix *ngIf="dataModel.CurrencyUnit" matSuffix mat-icon-button aria-label="Clear"
-          (click)="dataModel.CurrencyUnit = ''">close</mat-icon>
-        <mat-icon matSuffix>mode_edit</mat-icon>
-        <mat-hint align="end">{{ CurrencyUnit.value.length }} / 100</mat-hint>
-        <mat-error *ngIf="CurrencyUnit.errors?.required">
-          CurrencyUnit is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
+        <!-- LinkCurrencyId Field -->
+        <app-cms-currency-selector (optionSelect)="onActionSelectCurrency($event)"
+        [disabled]="!fieldsInfo['LinkCurrencyId'].AccessEditField" [optionSelectForce]="dataModel.LinkCurrencyId"
+        [optionPlaceholder]="'واحد مالی'">
+      </app-cms-currency-selector>
       <!-- Memo Field -->
       <mat-form-field class="example-full-width">
         <mat-label>{{fieldsInfo['Description']?.Title}}</mat-label>

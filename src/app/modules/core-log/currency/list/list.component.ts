@@ -1,53 +1,61 @@
+
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
-  BankPaymentPrivateSiteConfigModel,
-  ApplicationSourceModel,
-  BankPaymentPrivateSiteConfigService,
+  CoreSiteModel,
+  CoreSiteService,
   EnumSortType,
   ErrorExceptionResult,
-  FilterDataModel,
   FilterModel,
-  TokenInfoModel,
   NtkCmsApiStoreService,
+  TokenInfoModel,
+  FilterDataModel,
   EnumRecordStatus,
+  CoreLogCurrencyService,
+  CoreLogCurrencyModel,
   DataFieldInfoModel,
-  CoreCpMainMenuService,
-  CoreCurrencyService,
-  CoreCurrencyModel
+  EnumModel,
+  CoreEnumService
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
-import { MatDialog } from '@angular/material/dialog';
 import { ComponentOptionExportModel } from 'src/app/core/cmsComponentModels/base/componentOptionExportModel';
 import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/base/componentOptionStatistModel';
 import { MatSort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
-import { BankPaymentPrivateSiteConfigAddComponent } from '../add/add.component';
-import { BankPaymentPrivateSiteConfigEditComponent } from '../edit/edit.component';
+import { MatDialog } from '@angular/material/dialog';
 import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
-import { BankPaymentPrivateSiteConfigPaymentTestComponent } from '../paymentTest/paymentTest.component';
+import { CoreLogCurrencyViewComponent } from '../view/view.component';
 
 @Component({
-  selector: 'app-bankpayment-privateconfig-list',
+  selector: 'app-corelog-user-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class BankPaymentPrivateSiteConfigListComponent implements OnInit, OnDestroy {
-  requestLinkPublicConfigId = 0;
+export class CoreLogCurrencyListComponent implements OnInit, OnDestroy {
+  requestLinkCurrencyId = 0;
   constructor(
-    private bankPaymentPrivateSiteConfigService: BankPaymentPrivateSiteConfigService,
-    private activatedRoute: ActivatedRoute,
+    private coreEnumService: CoreEnumService,
+    private coreLogCurrencyService: CoreLogCurrencyService,
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
     private cmsConfirmationDialogService: CmsConfirmationDialogService,
+    private activatedRoute: ActivatedRoute,
+    public dialog: MatDialog,
     private router: Router,
-    public dialog: MatDialog) {
+  ) {
+    this.requestLinkCurrencyId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkCurrencyId'));
+    if (this.requestLinkCurrencyId > 0) {
+      const filter = new FilterDataModel();
+      filter.PropertyName = 'MainId';
+      filter.Value = this.requestLinkCurrencyId;
+      this.filteModelContent.Filters.push(filter);
+    }
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
@@ -55,7 +63,7 @@ export class BankPaymentPrivateSiteConfigListComponent implements OnInit, OnDest
       onSubmit: (model) => this.onSubmitOptionExport(model),
     };
     /*filter Sort*/
-    this.filteModelContent.SortColumn = 'Id';
+    this.filteModelContent.SortColumn = 'CreatedDate';
     this.filteModelContent.SortType = EnumSortType.Descending;
   }
   comment: string;
@@ -63,41 +71,41 @@ export class BankPaymentPrivateSiteConfigListComponent implements OnInit, OnDest
   dataSource: any;
   flag = false;
   tableContentSelected = [];
+
   filteModelContent = new FilterModel();
-  dataModelResult: ErrorExceptionResult<BankPaymentPrivateSiteConfigModel> = new ErrorExceptionResult<BankPaymentPrivateSiteConfigModel>();
+  dataModelResult: ErrorExceptionResult<CoreLogCurrencyModel> = new ErrorExceptionResult<CoreLogCurrencyModel>();
   optionsSearch: ComponentOptionSearchModel = new ComponentOptionSearchModel();
   optionsStatist: ComponentOptionStatistModel = new ComponentOptionStatistModel();
   optionsExport: ComponentOptionExportModel = new ComponentOptionExportModel();
   tokenInfo = new TokenInfoModel();
   loading = new ProgressSpinnerModel();
-  tableRowsSelected: Array<BankPaymentPrivateSiteConfigModel> = [];
-  tableRowSelected: BankPaymentPrivateSiteConfigModel = new BankPaymentPrivateSiteConfigModel();
-  tableSource: MatTableDataSource<BankPaymentPrivateSiteConfigModel> = new MatTableDataSource<BankPaymentPrivateSiteConfigModel>();
-  categoryModelSelected: ApplicationSourceModel;
-  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
-  expandedElement: BankPaymentPrivateSiteConfigModel | null;
-  cmsApiStoreSubscribe: Subscription;
+  tableRowsSelected: Array<CoreLogCurrencyModel> = [];
+  tableRowSelected: CoreLogCurrencyModel = new CoreLogCurrencyModel();
+  tableSource: MatTableDataSource<CoreLogCurrencyModel> = new MatTableDataSource<CoreLogCurrencyModel>();
+
+
   tabledisplayedColumns: string[] = [
-    'LinkMainImageIdSrc',
     'Id',
+    'MainId',
     'RecordStatus',
     'Title',
-    'LinkPublicConfigId',
-    'MinTransactionAmount',
-    'MaxTransactionAmount',
+    'Symbol',
+    'ExchangeBuyRatio',
+    'ExchangeSaleRatio',
+    'MasterCurrency',
     'CreatedDate',
-    'UpdatedDate',
     'Action'
   ];
+  fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
+
+
+  expandedElement: CoreSiteModel | null;
+  cmsApiStoreSubscribe: Subscription;
 
   ngOnInit(): void {
-    this.requestLinkPublicConfigId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkPublicConfigId'));
-    const filter = new FilterDataModel();
-    if (this.requestLinkPublicConfigId > 0) {
-      filter.PropertyName = 'LinkPublicConfigId';
-      filter.Value = this.requestLinkPublicConfigId;
-      this.filteModelContent.Filters.push(filter);
-    }
+    this.filteModelContent.SortColumn = 'Id';
+    this.filteModelContent.SortType = EnumSortType.Descending;
     this.DataGetAll();
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
@@ -106,12 +114,14 @@ export class BankPaymentPrivateSiteConfigListComponent implements OnInit, OnDest
     });
   }
 
+
+
   ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
   DataGetAll(): void {
     this.tableRowsSelected = [];
-    this.tableRowSelected = new BankPaymentPrivateSiteConfigModel();
+    this.tableRowSelected = new CoreLogCurrencyModel();
 
     this.loading.display = true;
     this.loading.Globally = false;
@@ -119,39 +129,14 @@ export class BankPaymentPrivateSiteConfigListComponent implements OnInit, OnDest
     /*filter CLone*/
     const filterModel = JSON.parse(JSON.stringify(this.filteModelContent));
     /*filter CLone*/
-    const filter = new FilterDataModel();
-
-    if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
-      filter.PropertyName = 'LinkPublicConfigId';
-      filter.Value = this.categoryModelSelected.Id;
-      filterModel.Filters.push(filter);
-    }
-    this.bankPaymentPrivateSiteConfigService.ServiceGetAll(filterModel).subscribe(
+    this.coreLogCurrencyService.ServiceGetAll(filterModel).subscribe(
       (next) => {
-        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
-
-
         if (next.IsSuccess) {
+          this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;
-          if (this.tokenInfo.UserAccessAdminAllowToAllData) {
-            this.tabledisplayedColumns = this.publicHelper.listAddIfNotExist(
-              this.tabledisplayedColumns,
-              'LinkSiteId',
-              0
-            );
-          } else {
-            this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
-              this.tabledisplayedColumns,
-              'LinkSiteId'
-            );
-          }
-          if (this.requestLinkPublicConfigId === 0) {
-            this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
-              this.tabledisplayedColumns,
-              'LinkPublicConfigId'
-            );
-          }
+
           if (this.optionsSearch.childMethods) {
             this.optionsSearch.childMethods.setAccess(next.Access);
           }
@@ -194,46 +179,10 @@ export class BankPaymentPrivateSiteConfigListComponent implements OnInit, OnDest
   }
 
 
-  onActionbuttonNewRow(): void {
-    let ApplicationId = 0;
-    if (this.requestLinkPublicConfigId > 0) {
-      ApplicationId = this.requestLinkPublicConfigId;
-    }
-    if (this.categoryModelSelected && this.categoryModelSelected.Id && this.categoryModelSelected.Id > 0) {
-      ApplicationId = this.categoryModelSelected.Id;
-    }
-    if (ApplicationId <= 0) {
-      const message = 'سورسی انتخاب نشده است';
-      this.cmsToastrService.typeErrorSelected(message);
-      return;
-    }
-    if (
-      this.dataModelResult == null ||
-      this.dataModelResult.Access == null ||
-      !this.dataModelResult.Access.AccessAddRow
-    ) {
-      this.cmsToastrService.typeErrorAccessAdd();
-      return;
-    }
-    const dialogRef = this.dialog.open(BankPaymentPrivateSiteConfigAddComponent, {
-      data: { contentId: ApplicationId }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      // console.log(`Dialog result: ${result}`);
-      if (result && result.dialogChangedDate) {
-        this.DataGetAll();
-      }
-    });
-  }
 
-  onActionSelectorSelect(model: ApplicationSourceModel | null): void {
-    this.filteModelContent = new FilterModel();
-    this.categoryModelSelected = model;
+  onActionbuttonViewRow(model: CoreLogCurrencyModel = this.tableRowSelected): void {
 
-    this.DataGetAll();
-  }
-  onActionbuttonEditRow(model: BankPaymentPrivateSiteConfigModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0) {
+    if (!model || !model.Id || model.Id.length === 0) {
       this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
@@ -241,24 +190,23 @@ export class BankPaymentPrivateSiteConfigListComponent implements OnInit, OnDest
     if (
       this.dataModelResult == null ||
       this.dataModelResult.Access == null ||
-      !this.dataModelResult.Access.AccessEditRow
+      !this.dataModelResult.Access.AccessWatchRow
     ) {
-      this.cmsToastrService.typeErrorAccessEdit();
+      this.cmsToastrService.typeErrorAccessWatch();
       return;
     }
-
-    const dialogRef = this.dialog.open(BankPaymentPrivateSiteConfigEditComponent, {
+    const dialogRef = this.dialog.open(CoreLogCurrencyViewComponent, {
       data: { id: this.tableRowSelected.Id }
     });
     dialogRef.afterClosed().subscribe(result => {
-      // console.log(`Dialog result: ${result}`);
       if (result && result.dialogChangedDate) {
-        this.DataGetAll();
+        // this.DataGetAll();
       }
     });
   }
-  onActionbuttonDeleteRow(model: BankPaymentPrivateSiteConfigModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0) {
+
+  onActionbuttonDeleteRow(model: CoreLogCurrencyModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id.length === 0) {
       const emessage = 'ردیفی برای حذف انتخاب نشده است';
       this.cmsToastrService.typeErrorSelected(emessage);
       return;
@@ -273,13 +221,16 @@ export class BankPaymentPrivateSiteConfigListComponent implements OnInit, OnDest
       this.cmsToastrService.typeErrorAccessDelete();
       return;
     }
+
+
     const title = 'لطفا تایید کنید...';
-    const message = 'آیا مایل به حدف این محتوا می باشید ' + '?' + '<br> ( ' + this.tableRowSelected.Title + ' ) ';
+    const message = 'آیا مایل به حدف این محتوا می باشید ' + '?' +
+      '<br> ( ' + this.tableRowSelected.Id + ' ) ';
     this.cmsConfirmationDialogService.confirm(title, message)
       .then((confirmed) => {
         if (confirmed) {
           this.loading.display = true;
-          this.bankPaymentPrivateSiteConfigService.ServiceDelete(this.tableRowSelected.Id).subscribe(
+          this.coreLogCurrencyService.ServiceDelete(this.tableRowSelected.Id).subscribe(
             (next) => {
               if (next.IsSuccess) {
                 this.cmsToastrService.typeSuccessRemove();
@@ -301,7 +252,12 @@ export class BankPaymentPrivateSiteConfigListComponent implements OnInit, OnDest
         // console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)')
       }
       );
+
   }
+
+
+
+
   onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;
     if (!this.optionsStatist.data.show) {
@@ -310,7 +266,7 @@ export class BankPaymentPrivateSiteConfigListComponent implements OnInit, OnDest
     const statist = new Map<string, number>();
     statist.set('Active', 0);
     statist.set('All', 0);
-    this.bankPaymentPrivateSiteConfigService.ServiceGetCount(this.filteModelContent).subscribe(
+    this.coreLogCurrencyService.ServiceGetCount(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('All', next.TotalRowCount);
@@ -327,7 +283,7 @@ export class BankPaymentPrivateSiteConfigListComponent implements OnInit, OnDest
     fastfilter.PropertyName = 'RecordStatus';
     fastfilter.Value = EnumRecordStatus.Available;
     filterStatist1.Filters.push(fastfilter);
-    this.bankPaymentPrivateSiteConfigService.ServiceGetCount(filterStatist1).subscribe(
+    this.coreLogCurrencyService.ServiceGetCount(filterStatist1).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('Active', next.TotalRowCount);
@@ -341,42 +297,7 @@ export class BankPaymentPrivateSiteConfigListComponent implements OnInit, OnDest
     );
 
   }
-  onActionbuttonTransactionList(model: BankPaymentPrivateSiteConfigModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0) {
-      this.cmsToastrService.typeErrorSelectedRow();
-      return;
-    }
-    this.tableRowSelected = model;
 
-    this.router.navigate(['/bankpayment/transaction/LinkPrivateSiteConfigId', this.tableRowSelected.Id]);
-  }
-  onActionbuttonTestPayment(model: BankPaymentPrivateSiteConfigModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id === 0) {
-
-      const message = 'ردیفی انتخاب نشده است';
-      this.cmsToastrService.typeErrorSelected(message);
-      return;
-    }
-    this.tableRowSelected = model;
-
-    if (
-      this.dataModelResult == null ||
-      this.dataModelResult.Access == null ||
-      !this.dataModelResult.Access.AccessWatchRow
-    ) {
-      this.cmsToastrService.typeErrorSelected();
-      return;
-    }
-    const dialogRef = this.dialog.open(BankPaymentPrivateSiteConfigPaymentTestComponent, {
-      data: { LinkPrivateSiteConfigId: this.tableRowSelected.Id }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      // console.log(`Dialog result: ${result}`);
-      if (result && result.dialogChangedDate) {
-        this.DataGetAll();
-      }
-    });
-  }
 
   onActionbuttonExport(): void {
     this.optionsExport.data.show = !this.optionsExport.data.show;
@@ -385,7 +306,7 @@ export class BankPaymentPrivateSiteConfigListComponent implements OnInit, OnDest
   onSubmitOptionExport(model: FilterModel): void {
     const exportlist = new Map<string, string>();
     exportlist.set('Download', 'loading ... ');
-    this.bankPaymentPrivateSiteConfigService.ServiceExportFile(model).subscribe(
+    this.coreLogCurrencyService.ServiceExportFile(model).subscribe(
       (next) => {
         if (next.IsSuccess) {
           exportlist.set('Download', next.LinkFile);
@@ -405,10 +326,10 @@ export class BankPaymentPrivateSiteConfigListComponent implements OnInit, OnDest
     this.filteModelContent.Filters = model;
     this.DataGetAll();
   }
-  onActionTableRowSelect(row: BankPaymentPrivateSiteConfigModel): void {
+  onActionTableRowSelect(row: CoreLogCurrencyModel): void {
     this.tableRowSelected = row;
   }
   onActionBackToParent(): void {
-    this.router.navigate(['/bankpayment/publicconfig/']);
+    this.router.navigate(['/core/currency/']);
   }
 }

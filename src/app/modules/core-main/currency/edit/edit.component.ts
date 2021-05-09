@@ -3,11 +3,9 @@ import {
   EnumModel,
   ErrorExceptionResult,
   FormInfoModel,
-  BankPaymentPublicConfigService,
-  BankPaymentPublicConfigModel,
-  BankPaymentPublicConfigAliasJsonModel,
-  DataFieldInfoModel,
+  CoreCurrencyService,
   CoreCurrencyModel,
+  DataFieldInfoModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -27,18 +25,18 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 @Component({
-  selector: 'app-bankpayment-publicconfig-edit',
+  selector: 'app-core-currency-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.scss'],
 })
-export class BankPaymentPublicConfigEditComponent implements OnInit {
+export class CoreCurrencyEditComponent implements OnInit {
   requestId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
-    private dialogRef: MatDialogRef<BankPaymentPublicConfigEditComponent>,
+    private dialogRef: MatDialogRef<CoreCurrencyEditComponent>,
     public coreEnumService: CoreEnumService,
-    public bankPaymentPublicConfigService: BankPaymentPublicConfigService,
+    public coreCurrencyService: CoreCurrencyService,
     private cmsToastrService: CmsToastrService,
     public publicHelper: PublicHelper,
   ) {
@@ -57,8 +55,8 @@ export class BankPaymentPublicConfigEditComponent implements OnInit {
   appLanguage = 'fa';
 
   loading = new ProgressSpinnerModel();
-  dataModelResult: ErrorExceptionResult<BankPaymentPublicConfigModel> = new ErrorExceptionResult<BankPaymentPublicConfigModel>();
-  dataModel: BankPaymentPublicConfigAliasJsonModel = new BankPaymentPublicConfigAliasJsonModel();
+  dataModelResult: ErrorExceptionResult<CoreCurrencyModel> = new ErrorExceptionResult<CoreCurrencyModel>();
+  dataModel: CoreCurrencyModel = new CoreCurrencyModel();
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
@@ -97,19 +95,18 @@ export class BankPaymentPublicConfigEditComponent implements OnInit {
     this.formInfo.FormAlert = 'در دریافت ارسال اطلاعات از سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.bankPaymentPublicConfigService.setAccessLoad();
-    this.bankPaymentPublicConfigService.ServiceGetOneWithJsonFormatter(this.requestId).subscribe(
+    this.coreCurrencyService.setAccessLoad();
+    this.coreCurrencyService.ServiceGetOneById(this.requestId).subscribe(
       (next) => {
         this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
-
         this.dataModel = next.Item;
         if (next.IsSuccess) {
           this.formInfo.FormTitle = this.formInfo.FormTitle + ' ' + next.Item.Title;
           this.formInfo.FormAlert = '';
-              } else {
+        } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
-          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
         }
         this.loading.display = false;
       },
@@ -124,7 +121,7 @@ export class BankPaymentPublicConfigEditComponent implements OnInit {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.bankPaymentPublicConfigService.ServiceEdit(this.dataModel).subscribe(
+    this.coreCurrencyService.ServiceEdit(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormSubmitAllow = true;
         this.dataModelResult = next;
@@ -133,10 +130,10 @@ export class BankPaymentPublicConfigEditComponent implements OnInit {
           this.cmsToastrService.typeSuccessEdit();
           this.dialogRef.close({ dialogChangedDate: true });
 
-              } else {
+        } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
-          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
         }
         this.loading.display = false;
       },
@@ -148,15 +145,9 @@ export class BankPaymentPublicConfigEditComponent implements OnInit {
     );
   }
   onActionFileSelected(model: NodeInterface): void {
-    this.dataModel.LinkModuleFileLogoId = model.id;
-    this.dataModel.LinkModuleFileLogoIdSrc = model.downloadLinksrc;
-  }
-  onActionSelectCurrency(model: CoreCurrencyModel): void {
-    if (!model || model.Id <= 0) {
-      this.cmsToastrService.typeErrorSelected();
-      return;
-    }
-    this.dataModel.LinkCurrencyId = model.Id;
+    this.dataModel.LinkMainImageId = model.id;
+    this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
+
   }
   onFormSubmit(): void {
     if (!this.formGroup.valid) {

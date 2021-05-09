@@ -9,6 +9,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { CmsFileManagerModule } from 'ntk-cms-filemanager';
 import { TagInputModule } from 'ngx-chips';
 import {
+  CoreLogCurrencyService,
   CoreLogErrorService,
   CoreLogSmsService,
 } from 'ntk-cms-api';
@@ -17,6 +18,8 @@ import { CoreLogErrorEditComponent } from './error/edit/edit.component';
 import { CoreLogErrorListComponent } from './error/list/list.component';
 import { CoreLogSmsEditComponent } from './sms/edit/edit.component';
 import { CoreLogSmsViewComponent } from './sms/view/view.component';
+import { CoreLogCurrencyListComponent } from './currency/list/list.component';
+import { CoreLogCurrencyViewComponent } from './currency/view/view.component';
 
 
 
@@ -34,23 +37,34 @@ import { CoreLogSmsViewComponent } from './sms/view/view.component';
   ],
   declarations: [
     CoreLogComponent,
+    /** */
     CoreLogSmsListComponent,
     CoreLogSmsEditComponent,
+    CoreLogSmsViewComponent,
+    /** */
     CoreLogErrorListComponent,
     CoreLogErrorEditComponent,
-    CoreLogSmsViewComponent,
+    /** */
+    CoreLogCurrencyListComponent,
+    CoreLogCurrencyViewComponent,
   ],
   exports: [
     CoreLogComponent,
+    /** */
     CoreLogSmsListComponent,
     CoreLogSmsEditComponent,
+    CoreLogSmsViewComponent,
+    /** */
     CoreLogErrorListComponent,
     CoreLogErrorEditComponent,
-    CoreLogSmsViewComponent,
+    /** */
+    CoreLogCurrencyListComponent,
+    CoreLogCurrencyViewComponent,
   ],
   providers: [
     CoreLogErrorService,
     CoreLogSmsService,
+    CoreLogCurrencyService,
   ]
 })
 export class CoreLogModule { }

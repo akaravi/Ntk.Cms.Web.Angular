@@ -13,7 +13,9 @@ import {
   TokenInfoModel,
   FilterDataModel,
   EnumRecordStatus,
-  DataFieldInfoModel
+  DataFieldInfoModel,
+  CoreCurrencyService,
+  CoreCurrencyModel
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -41,6 +43,7 @@ export class BankPaymentPublicConfigListComponent implements OnInit, OnDestroy {
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
     private cmsConfirmationDialogService: CmsConfirmationDialogService,
+    private coreCurrencyService: CoreCurrencyService,
     private router: Router,
     public dialog: MatDialog) {
     this.optionsSearch.parentMethods = {
@@ -61,6 +64,8 @@ export class BankPaymentPublicConfigListComponent implements OnInit, OnDestroy {
 
   filteModelContent = new FilterModel();
   dataModelResult: ErrorExceptionResult<BankPaymentPublicConfigModel> = new ErrorExceptionResult<BankPaymentPublicConfigModel>();
+  dataModelCoreCurrencyResult: ErrorExceptionResult<CoreCurrencyModel> = new ErrorExceptionResult<CoreCurrencyModel>();
+
   optionsSearch: ComponentOptionSearchModel = new ComponentOptionSearchModel();
   optionsStatist: ComponentOptionStatistModel = new ComponentOptionStatistModel();
   optionsExport: ComponentOptionExportModel = new ComponentOptionExportModel();
@@ -78,7 +83,7 @@ export class BankPaymentPublicConfigListComponent implements OnInit, OnDestroy {
     'RecordStatus',
     'Title',
     'ClassName',
-    'CurrencyUnit',
+    'LinkCurrencyId',
     'UpdatedDate',
     'Action'
   ];
@@ -95,6 +100,14 @@ export class BankPaymentPublicConfigListComponent implements OnInit, OnDestroy {
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
+    });
+    this.getCurrency();
+  }
+  getCurrency(): void {
+    const filter = new FilterModel();
+    filter.RowPerPage = 100;
+    this.coreCurrencyService.ServiceGetAll(filter).subscribe((next) => {
+      this.dataModelCoreCurrencyResult = next;
     });
   }
   ngOnDestroy(): void {

@@ -141,7 +141,8 @@
     "BUY": "Buy",
     "DETAIL": "Detail",
     "SELECT": "Select",
-    "PAYMENT": "Peyment"
+    "PAYMENT": "Peyment",
+    "LOG": "log"
   },
   "TITLE": {
     "SITE": "Site",

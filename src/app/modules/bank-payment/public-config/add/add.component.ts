@@ -6,6 +6,7 @@ import {
   BankPaymentPublicConfigService,
   BankPaymentPublicConfigModel,
   DataFieldInfoModel,
+  CoreCurrencyModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -113,6 +114,13 @@ export class BankPaymentPublicConfigAddComponent implements OnInit {
   onActionFileSelected(model: NodeInterface): void {
     this.dataModel.LinkModuleFileLogoId = model.id;
     this.dataModel.LinkModuleFileLogoIdSrc = model.downloadLinksrc;
+  }
+  onActionSelectCurrency(model: CoreCurrencyModel): void {
+    if (!model || model.Id <= 0) {
+      this.cmsToastrService.typeErrorSelected();
+      return;
+    }
+    this.dataModel.LinkCurrencyId = model.Id;
   }
   onFormSubmit(): void {
     if (!this.formGroup.valid) {

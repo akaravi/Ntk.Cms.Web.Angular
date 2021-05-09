@@ -3,11 +3,9 @@ import {
   EnumModel,
   ErrorExceptionResult,
   FormInfoModel,
-  BankPaymentPublicConfigService,
-  BankPaymentPublicConfigModel,
-  BankPaymentPublicConfigAliasJsonModel,
-  DataFieldInfoModel,
+  CoreCurrencyService,
   CoreCurrencyModel,
+  DataFieldInfoModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -20,32 +18,27 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import {
-  NodeInterface,
   TreeModel,
+  NodeInterface,
 } from 'ntk-cms-filemanager';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 @Component({
-  selector: 'app-bankpayment-publicconfig-edit',
-  templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.scss'],
+  selector: 'app-core-currency-add',
+  templateUrl: './add.component.html',
+  styleUrls: ['./add.component.scss'],
 })
-export class BankPaymentPublicConfigEditComponent implements OnInit {
-  requestId = 0;
+export class CoreCurrencyAddComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
-    private dialogRef: MatDialogRef<BankPaymentPublicConfigEditComponent>,
+    private dialogRef: MatDialogRef<CoreCurrencyAddComponent>,
     public coreEnumService: CoreEnumService,
-    public bankPaymentPublicConfigService: BankPaymentPublicConfigService,
+    public coreCurrencyService: CoreCurrencyService,
     private cmsToastrService: CmsToastrService,
     public publicHelper: PublicHelper,
   ) {
-    if (data) {
-      this.requestId = +data.id || 0;
-    }
-
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
@@ -57,26 +50,24 @@ export class BankPaymentPublicConfigEditComponent implements OnInit {
   appLanguage = 'fa';
 
   loading = new ProgressSpinnerModel();
-  dataModelResult: ErrorExceptionResult<BankPaymentPublicConfigModel> = new ErrorExceptionResult<BankPaymentPublicConfigModel>();
-  dataModel: BankPaymentPublicConfigAliasJsonModel = new BankPaymentPublicConfigAliasJsonModel();
+  dataModelResult: ErrorExceptionResult<CoreCurrencyModel> = new ErrorExceptionResult<CoreCurrencyModel>();
+  dataModel: CoreCurrencyModel = new CoreCurrencyModel();
+
 
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
 
   fileManagerOpenForm = false;
+
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
 
-  ngOnInit(): void {
-    if (this.requestId > 0) {
-      this.formInfo.FormTitle = 'ویرایش  ';
-      this.DataGetOneContent();
-    } else {
-      this.cmsToastrService.typeErrorComponentAction();
-      this.dialogRef.close({ dialogChangedDate: false });
-      return;
-    }
 
+  ngOnInit(): void {
+
+    this.formInfo.FormTitle = 'اضافه کردن  ';
     this.getEnumRecordStatus();
+    this.DataGetAccess();
+
   }
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
@@ -88,49 +79,36 @@ export class BankPaymentPublicConfigEditComponent implements OnInit {
       this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
     }
   }
-  DataGetOneContent(): void {
-    if (this.requestId <= 0) {
-      this.cmsToastrService.typeErrorEditRowIsNull();
-      return;
-    }
 
-    this.formInfo.FormAlert = 'در دریافت ارسال اطلاعات از سرور';
-    this.formInfo.FormError = '';
-    this.loading.display = true;
-    this.bankPaymentPublicConfigService.setAccessLoad();
-    this.bankPaymentPublicConfigService.ServiceGetOneWithJsonFormatter(this.requestId).subscribe(
-      (next) => {
-        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
 
-        this.dataModel = next.Item;
-        if (next.IsSuccess) {
-          this.formInfo.FormTitle = this.formInfo.FormTitle + ' ' + next.Item.Title;
-          this.formInfo.FormAlert = '';
-              } else {
-          this.formInfo.FormAlert = 'برروز خطا';
-          this.formInfo.FormError = next.ErrorMessage;
-          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
+  DataGetAccess(): void {
+    this.coreCurrencyService
+      .ServiceViewModel()
+      .subscribe(
+        async (next) => {
+          if (next.IsSuccess) {
+            // this.dataAccessModel = next.Access;
+            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+          } else {
+            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
+          }
+        },
+        (error) => {
+          this.cmsToastrService.typeErrorGetAccess(error);
         }
-        this.loading.display = false;
-      },
-      (error) => {
-        this.cmsToastrService.typeError(error);
-        this.loading.display = false;
-      }
-    );
+      );
   }
-
-  DataEditContent(): void {
+  DataAddContent(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.bankPaymentPublicConfigService.ServiceEdit(this.dataModel).subscribe(
+    this.coreCurrencyService.ServiceAdd(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormSubmitAllow = true;
         this.dataModelResult = next;
         if (next.IsSuccess) {
           this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
-          this.cmsToastrService.typeSuccessEdit();
+          this.cmsToastrService.typeSuccessAdd();
           this.dialogRef.close({ dialogChangedDate: true });
 
               } else {
@@ -148,22 +126,19 @@ export class BankPaymentPublicConfigEditComponent implements OnInit {
     );
   }
   onActionFileSelected(model: NodeInterface): void {
-    this.dataModel.LinkModuleFileLogoId = model.id;
-    this.dataModel.LinkModuleFileLogoIdSrc = model.downloadLinksrc;
-  }
-  onActionSelectCurrency(model: CoreCurrencyModel): void {
-    if (!model || model.Id <= 0) {
-      this.cmsToastrService.typeErrorSelected();
-      return;
-    }
-    this.dataModel.LinkCurrencyId = model.Id;
+    this.dataModel.LinkMainImageId = model.id;
+    this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
+
   }
   onFormSubmit(): void {
     if (!this.formGroup.valid) {
       return;
     }
     this.formInfo.FormSubmitAllow = false;
-    this.DataEditContent();
+
+    this.DataAddContent();
+
+
   }
   onFormCancel(): void {
     this.dialogRef.close({ dialogChangedDate: false });

@@ -35,6 +35,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('./user-group/coreUserGroup.module').then((m) => m.CoreUserGroupCmsModule),
       },
+       {
+        path: 'currency',
+        loadChildren: () =>
+          import('./currency/coreCurrency.module').then((m) => m.CoreCurrencyCmsModule),
+      },
       {
         path: 'site',
         loadChildren: () =>

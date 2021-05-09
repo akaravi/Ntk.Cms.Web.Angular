@@ -49,6 +49,7 @@ import { CmsUserGroupSelectorComponent } from './cms-user-group-selector/cmsUser
 import { CmsTitlePipe } from '../core/pipe/title.pipe';
 import { CmsApplicationSelectorComponent } from './cms-application-selector/cms-application-selector.component';
 import { CmsBankpaymentGridComponent } from './cms-bankpayment-grid/cms-bankpayment-grid.component';
+import { CmsCurrencySelectorComponent } from './cms-currency-selector/cms-currency-selector.component';
 
 
 
@@ -82,6 +83,7 @@ import { CmsBankpaymentGridComponent } from './cms-bankpayment-grid/cms-bankpaym
     CmsStatistListComponent,
     CmsExportListComponent,
     CmsSiteSelectorComponent,
+    CmsCurrencySelectorComponent,
     CmsApplicationSelectorComponent,
     CmsSiteCategorySelectorComponent,
     CmsUserSelectorComponent,
@@ -123,6 +125,7 @@ import { CmsBankpaymentGridComponent } from './cms-bankpayment-grid/cms-bankpaym
     CmsStatistListComponent,
     CmsExportListComponent,
     CmsSiteSelectorComponent,
+    CmsCurrencySelectorComponent,
     CmsApplicationSelectorComponent,
     CmsSiteCategorySelectorComponent,
     CmsUserSelectorComponent,
