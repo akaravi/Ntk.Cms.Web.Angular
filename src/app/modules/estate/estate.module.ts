@@ -54,6 +54,24 @@ import { EstatePropertyDetailGroupListComponent } from './property-detail-group/
 import { EstatePropertyDetailGroupSelectorComponent } from './property-detail-group/selector/selector.component';
 import { EstatePropertyDetailGroupTreeComponent } from './property-detail-group/tree/tree.component';
 import { IconPickerModule } from 'ngx-icon-picker';
+import { EstateAccountAgencyAddComponent } from './account-agency/add/add.component';
+import { EstateAccountAgencyEditComponent } from './account-agency/edit/edit.component';
+import { EstateAccountAgencyListComponent } from './account-agency/list/list.component';
+import { EstateAccountAgencySelectorComponent } from './account-agency/selector/selector.component';
+import { EstateAccountAgencyTreeComponent } from './account-agency/tree/tree.component';
+import { EstateAccountAgencyTypeUserAddComponent } from './account-agency-typeuser/add/add.component';
+import { EstateAccountAgencyTypeUserEditComponent } from './account-agency-typeuser/edit/edit.component';
+import { EstateAccountAgencyTypeUserListComponent } from './account-agency-typeuser/list/list.component';
+import { EstateAccountAgencyTypeUserSelectorComponent } from './account-agency-typeuser/selector/selector.component';
+import { EstatePropertySelectorComponent } from './Property/selector/selector.component';
+import { EstateAccountUserAddComponent } from './account-user/add/add.component';
+import { EstateAccountUserEditComponent } from './account-user/edit/edit.component';
+import { EstateAccountUserListComponent } from './account-user/list/list.component';
+import { EstateAccountUserSelectorComponent } from './account-user/selector/selector.component';
+import { EstateAccountUserTreeComponent } from './account-user/tree/tree.component';
+import { EstatePropertyHistoryAddComponent } from './property-history/add/add.component';
+import { EstatePropertyHistoryEditComponent } from './property-history/edit/edit.component';
+import { EstatePropertyHistoryListComponent } from './property-history/list/list.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +90,11 @@ import { IconPickerModule } from 'ngx-icon-picker';
     EstatePropertyAddComponent,
     EstatePropertyEditComponent,
     EstatePropertyListComponent,
+    EstatePropertySelectorComponent,
+    /* */
+    EstatePropertyHistoryAddComponent,
+    EstatePropertyHistoryEditComponent,
+    EstatePropertyHistoryListComponent,
     /* */
     EstateContractTypeAddComponent,
     EstateContractTypeEditComponent,
@@ -84,6 +107,24 @@ import { IconPickerModule } from 'ngx-icon-picker';
     EstatePropertyDetailGroupListComponent,
     EstatePropertyDetailGroupSelectorComponent,
     EstatePropertyDetailGroupTreeComponent,
+    /* */
+    EstateAccountUserAddComponent,
+    EstateAccountUserEditComponent,
+    EstateAccountUserListComponent,
+    EstateAccountUserSelectorComponent,
+    EstateAccountUserTreeComponent,
+    /* */
+    EstateAccountAgencyAddComponent,
+    EstateAccountAgencyEditComponent,
+    EstateAccountAgencyListComponent,
+    EstateAccountAgencySelectorComponent,
+    EstateAccountAgencyTreeComponent,
+    /* */
+    EstateAccountAgencyTypeUserAddComponent,
+    EstateAccountAgencyTypeUserEditComponent,
+    EstateAccountAgencyTypeUserListComponent,
+    EstateAccountAgencyTypeUserSelectorComponent,
+    /* */
   ],
   imports: [
     CommonModule,
@@ -124,8 +165,6 @@ import { IconPickerModule } from 'ngx-icon-picker';
     /** */
     CmsConfirmationDialogService,
     CoreModuleTagService,
-
-
 
   ]
 })
