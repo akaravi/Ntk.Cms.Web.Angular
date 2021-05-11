@@ -121,7 +121,7 @@ export class EstatePropertySelectorComponent implements OnInit {
 
   }
   onActionSelectForce(id: string | EstatePropertyModel): void {
-    if (typeof id === 'number' && id > 0) {
+    if (typeof id === 'string' && id.length > 0) {
       if (this.dataModelSelect && this.dataModelSelect.Id === id) {
         return;
       }

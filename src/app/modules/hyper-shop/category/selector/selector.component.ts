@@ -121,7 +121,7 @@ export class HyperShopCategorySelectorComponent implements OnInit {
 
   }
   onActionSelectForce(id: string | HyperShopCategoryModel): void {
-    if (typeof id === 'number' && id > 0) {
+    if (typeof id === 'string' && id.length > 0) {
       if (this.dataModelSelect && this.dataModelSelect.Code === id) {
         return;
       }

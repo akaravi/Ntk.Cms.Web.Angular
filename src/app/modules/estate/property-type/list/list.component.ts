@@ -247,7 +247,7 @@ export class EstatePropertyTypeListComponent implements OnInit, OnDestroy {
       );
 
   }
-  onActionbuttonContentList(model: EstatePropertyTypeModel = this.tableRowSelected): void {
+  onActionbuttonContentDetailList(model: EstatePropertyTypeModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id.length === 0) {
       const message = 'ردیفی برای نمایش انتخاب نشده است';
       this.cmsToastrService.typeErrorSelected(message);
@@ -255,7 +255,7 @@ export class EstatePropertyTypeListComponent implements OnInit, OnDestroy {
     }
     this.tableRowSelected = model;
 
-    this.router.navigate(['/hypershop/content/PareintId/', this.tableRowSelected.Id]);
+    this.router.navigate(['/estate/property-detail/LinkPropertyTypeId/', this.tableRowSelected.Id]);
   }
 
   onActionbuttonStatist(): void {

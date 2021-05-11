@@ -6,8 +6,8 @@ import {
   ErrorExceptionResult,
   FilterDataModel,
   FilterModel,
-  EstateAccountAgencyModel,
-  EstateAccountAgencyService
+  EstatePropertyDetailModel,
+  EstatePropertyDetailService
 } from 'ntk-cms-api';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -17,29 +17,29 @@ import { Output } from '@angular/core';
 
 
 @Component({
-  selector: 'app-estate-accountagency-selector',
+  selector: 'app-estate-Detail-selector',
   templateUrl: './selector.component.html',
   styleUrls: ['./selector.component.scss']
 })
-export class EstateAccountAgencySelectorComponent implements OnInit {
+export class EstatePropertyDetailSelectorComponent implements OnInit {
 
   constructor(
     public coreEnumService: CoreEnumService,
-    public categoryService: EstateAccountAgencyService) {
+    public categoryService: EstatePropertyDetailService) {
 
 
   }
-  dataModelResult: ErrorExceptionResult<EstateAccountAgencyModel> = new ErrorExceptionResult<EstateAccountAgencyModel>();
-  dataModelSelect: EstateAccountAgencyModel = new EstateAccountAgencyModel();
+  dataModelResult: ErrorExceptionResult<EstatePropertyDetailModel> = new ErrorExceptionResult<EstatePropertyDetailModel>();
+  dataModelSelect: EstatePropertyDetailModel = new EstatePropertyDetailModel();
   loading = new ProgressSpinnerModel();
   formControl = new FormControl();
-  filteredOptions: Observable<EstateAccountAgencyModel[]>;
+  filteredOptions: Observable<EstatePropertyDetailModel[]>;
   @Input() disabled = new EventEmitter<boolean>();
   @Input() optionSelectFirstItem = false;
   @Input() optionPlaceholder = new EventEmitter<string>();
-  @Output() optionSelect = new EventEmitter<EstateAccountAgencyModel>();
+  @Output() optionSelect = new EventEmitter<EstatePropertyDetailModel>();
   @Input() optionReload = () => this.onActionReload();
-  @Input() set optionSelectForce(x: string | EstateAccountAgencyModel) {
+  @Input() set optionSelectForce(x: string | EstatePropertyDetailModel) {
     this.onActionSelectForce(x);
   }
 
@@ -59,30 +59,31 @@ export class EstateAccountAgencySelectorComponent implements OnInit {
       );
   }
 
-  displayFn(model?: EstateAccountAgencyModel): string | undefined {
+  displayFn(model?: EstatePropertyDetailModel): string | undefined {
     return model ? model.Title + ' # ' + model.Id : undefined;
   }
-  displayOption(model?: EstateAccountAgencyModel): string | undefined {
+  displayOption(model?: EstatePropertyDetailModel): string | undefined {
     return model ? model.Title + ' # ' + model.Id : undefined;
   }
-  async DataGetAll(text: string | number | any): Promise<EstateAccountAgencyModel[]> {
+  async DataGetAll(text: string | number | any): Promise<EstatePropertyDetailModel[]> {
     const filteModel = new FilterModel();
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
     // this.loading.backdropEnabled = false;
-    let filter = new FilterDataModel();
-    filter.PropertyName = 'Name';
-    filter.Value = text;
-    filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
-    filteModel.Filters.push(filter);
-    /* */
-    filter = new FilterDataModel();
-    filter.PropertyName = 'Id';
-    filter.Value = text;
-    filter.SearchType = EnumFilterDataModelSearchTypes.Equal;
-    filter.ClauseType = EnumClauseType.Or;
-    filteModel.Filters.push(filter);
-
+    if (typeof text === 'string' && text.length > 0) {
+      let filter = new FilterDataModel();
+      filter.PropertyName = 'Name';
+      filter.Value = text;
+      filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
+      filteModel.Filters.push(filter);
+      /* */
+      filter = new FilterDataModel();
+      filter.PropertyName = 'Id';
+      filter.Value = text;
+      filter.SearchType = EnumFilterDataModelSearchTypes.Equal;
+      filter.ClauseType = EnumClauseType.Or;
+      filteModel.Filters.push(filter);
+    }
     this.loading.Globally = false;
     this.loading.display = true;
     return await this.categoryService.ServiceGetAll(filteModel)
@@ -101,7 +102,7 @@ export class EstateAccountAgencySelectorComponent implements OnInit {
         })
       ).toPromise();
   }
-  onActionSelect(model: EstateAccountAgencyModel): void {
+  onActionSelect(model: EstatePropertyDetailModel): void {
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
   }
@@ -110,7 +111,7 @@ export class EstateAccountAgencySelectorComponent implements OnInit {
     this.optionSelect.emit(null);
   }
 
-  push(newvalue: EstateAccountAgencyModel): Observable<EstateAccountAgencyModel[]> {
+  push(newvalue: EstatePropertyDetailModel): Observable<EstatePropertyDetailModel[]> {
     return this.filteredOptions.pipe(map(items => {
       if (items.find(x => x.Id === newvalue.Id)) {
         return items;
@@ -120,7 +121,7 @@ export class EstateAccountAgencySelectorComponent implements OnInit {
     }));
 
   }
-  onActionSelectForce(id: string | EstateAccountAgencyModel): void {
+  onActionSelectForce(id: string | EstatePropertyDetailModel): void {
     if (typeof id === 'string' && id.length > 0) {
       if (this.dataModelSelect && this.dataModelSelect.Id === id) {
         return;
@@ -141,9 +142,9 @@ export class EstateAccountAgencySelectorComponent implements OnInit {
       });
       return;
     }
-    if (typeof id === typeof EstateAccountAgencyModel) {
-      this.filteredOptions = this.push((id as EstateAccountAgencyModel));
-      this.dataModelSelect = (id as EstateAccountAgencyModel);
+    if (typeof id === typeof EstatePropertyDetailModel) {
+      this.filteredOptions = this.push((id as EstatePropertyDetailModel));
+      this.dataModelSelect = (id as EstatePropertyDetailModel);
       this.formControl.setValue(id);
       return;
     }
@@ -154,8 +155,8 @@ export class EstateAccountAgencySelectorComponent implements OnInit {
     // if (this.dataModelSelect && this.dataModelSelect.Id > 0) {
     //   this.onActionSelect(null);
     // }
-    this.dataModelSelect = new EstateAccountAgencyModel();
-    // this.optionsData.Select = new EstateAccountAgencyModel();
+    this.dataModelSelect = new EstatePropertyDetailModel();
+    // this.optionsData.Select = new EstatePropertyDetailModel();
     this.DataGetAll(null);
   }
 }

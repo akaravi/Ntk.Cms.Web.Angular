@@ -27,7 +27,8 @@ import {
   EstatePropertyShareAgencyService,
   EstatePropertyShareAgentService,
   EstatePropertyShareSiteService,
-  EstateContractService
+  EstateContractService,
+  EstatePropertyDetailService
 } from 'ntk-cms-api';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -72,6 +73,11 @@ import { EstateAccountUserTreeComponent } from './account-user/tree/tree.compone
 import { EstatePropertyHistoryAddComponent } from './property-history/add/add.component';
 import { EstatePropertyHistoryEditComponent } from './property-history/edit/edit.component';
 import { EstatePropertyHistoryListComponent } from './property-history/list/list.component';
+import { EstatePropertyDetailAddComponent } from './property-detail/add/add.component';
+import { EstatePropertyDetailEditComponent } from './property-detail/edit/edit.component';
+import { EstatePropertyDetailListComponent } from './property-detail/list/list.component';
+import { EstatePropertyDetailSelectorComponent } from './property-detail/selector/selector.component';
+import { EstatePropertyDetailTreeComponent } from './property-detail/tree/tree.component';
 
 @NgModule({
   declarations: [
@@ -107,6 +113,12 @@ import { EstatePropertyHistoryListComponent } from './property-history/list/list
     EstatePropertyDetailGroupListComponent,
     EstatePropertyDetailGroupSelectorComponent,
     EstatePropertyDetailGroupTreeComponent,
+    /* */
+    EstatePropertyDetailAddComponent,
+    EstatePropertyDetailEditComponent,
+    EstatePropertyDetailListComponent,
+    EstatePropertyDetailSelectorComponent,
+    EstatePropertyDetailTreeComponent,
     /* */
     EstateAccountUserAddComponent,
     EstateAccountUserEditComponent,
@@ -157,6 +169,7 @@ import { EstatePropertyHistoryListComponent } from './property-history/list/list
     EstatePropertyService,
     EstatePropertyAccountTypeUserService,
     EstatePropertyDetailGroupService,
+    EstatePropertyDetailService,
     EstatePropertyHistoryService,
     EstatePropertyShareAgencyService,
     EstatePropertyShareAgentService,

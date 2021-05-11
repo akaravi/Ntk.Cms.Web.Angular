@@ -1,20 +1,22 @@
+
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
-  TicketingDepartemenLogModel,
-  TicketingDepartemenLogService,
-  ApplicationSourceModel,
+  EstatePropertyDetailModel,
+  EstatePropertyDetailService,
   CoreAuthService,
   EnumSortType,
   ErrorExceptionResult,
-  FilterDataModel,
   FilterModel,
   NtkCmsApiStoreService,
   TokenInfoModel,
   EnumRecordStatus,
+  FilterDataModel,
   DataFieldInfoModel,
-  EnumClauseType
+  EstatePropertyTypeService,
+  EstatePropertyTypeModel,
+  EstatePropertyDetailGroupModel
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -26,25 +28,28 @@ import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/bas
 import { MatSort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
+import { EstatePropertyDetailEditComponent } from '../edit/edit.component';
+import { EstatePropertyDetailAddComponent } from '../add/add.component';
+import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
 
 @Component({
-  selector: 'app-application-app-list',
+  selector: 'app-hypershop-category-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class TicketingDepartemenLogListComponent implements OnInit, OnDestroy {
-  requestDepartemenId = 0;
-  requestOperatorId = 0;
+export class EstatePropertyDetailListComponent implements OnInit, OnDestroy {
+  requestLinkPropertyTypeId = '';
   constructor(
-    private ticketingDepartemenLogService: TicketingDepartemenLogService,
-    private activatedRoute: ActivatedRoute,
+    private estatePropertyDetailService: EstatePropertyDetailService,
+    private estatePropertyTypeService: EstatePropertyTypeService,
+    private cmsConfirmationDialogService: CmsConfirmationDialogService,
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
+    private activatedRoute: ActivatedRoute,
     private cmsToastrService: CmsToastrService,
     private router: Router,
     public dialog: MatDialog) {
-    this.requestDepartemenId = + Number(this.activatedRoute.snapshot.paramMap.get('DepartemenId'));
-    this.requestOperatorId = + Number(this.activatedRoute.snapshot.paramMap.get('OperatorId'));
+    this.requestLinkPropertyTypeId = this.activatedRoute.snapshot.paramMap.get('LinkPropertyTypeId');
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
@@ -52,10 +57,15 @@ export class TicketingDepartemenLogListComponent implements OnInit, OnDestroy {
       onSubmit: (model) => this.onSubmitOptionExport(model),
     };
     /*filter Sort*/
-    this.filteModelContent.SortColumn = 'CreatedDate';
+    this.filteModelContent.SortColumn = 'Id';
     this.filteModelContent.SortType = EnumSortType.Descending;
+    const filter = new FilterDataModel();
+    if (this.requestLinkPropertyTypeId.length > 0) {
+      filter.PropertyName = 'LinkPropertyTypeId';
+      filter.Value = this.requestLinkPropertyTypeId;
+      this.filteModelContent.Filters.push(filter);
+    }
   }
-
   comment: string;
   author: string;
   dataSource: any;
@@ -63,67 +73,56 @@ export class TicketingDepartemenLogListComponent implements OnInit, OnDestroy {
   tableContentSelected = [];
 
   filteModelContent = new FilterModel();
-  dataModelResult: ErrorExceptionResult<TicketingDepartemenLogModel> = new ErrorExceptionResult<TicketingDepartemenLogModel>();
+  dataModelResult: ErrorExceptionResult<EstatePropertyDetailModel> = new ErrorExceptionResult<EstatePropertyDetailModel>();
+  dataModelEstatePropertyTypeResult: ErrorExceptionResult<EstatePropertyTypeModel> = new ErrorExceptionResult<EstatePropertyTypeModel>();
   optionsSearch: ComponentOptionSearchModel = new ComponentOptionSearchModel();
   optionsStatist: ComponentOptionStatistModel = new ComponentOptionStatistModel();
   optionsExport: ComponentOptionExportModel = new ComponentOptionExportModel();
   tokenInfo = new TokenInfoModel();
   loading = new ProgressSpinnerModel();
-  tableRowsSelected: Array<TicketingDepartemenLogModel> = [];
-  tableRowSelected: TicketingDepartemenLogModel = new TicketingDepartemenLogModel();
-  tableSource: MatTableDataSource<TicketingDepartemenLogModel> = new MatTableDataSource<TicketingDepartemenLogModel>();
-  categoryModelSelected: ApplicationSourceModel;
+  tableRowsSelected: Array<EstatePropertyDetailModel> = [];
+  tableRowSelected: EstatePropertyDetailModel = new EstatePropertyDetailModel();
+  tableSource: MatTableDataSource<EstatePropertyDetailModel> = new MatTableDataSource<EstatePropertyDetailModel>();
+  categoryModelSelected: EstatePropertyDetailGroupModel;
 
   tabledisplayedColumns: string[] = [
-    'Id',
-    'RecordStatus',
+    'IconFont',
     'Title',
-    'LinkSourceId',
-    'CreatedDate',
-    'UpdatedDate',
+    'ShowInFormOrder',
+    'LinkPropertyTypeId',
     'Action'
   ];
+
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
-  expandedElement: TicketingDepartemenLogModel | null;
+
+
+
+  expandedElement: EstatePropertyDetailModel | null;
   cmsApiStoreSubscribe: Subscription;
 
   ngOnInit(): void {
-
+    this.filteModelContent.SortColumn = 'Title';
     this.DataGetAll();
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((next) => {
       this.DataGetAll();
       this.tokenInfo = next;
     });
-    let filter = new FilterDataModel();
-    if (this.requestOperatorId > 0) {
-      filter.PropertyName = 'LinkFromOperatorId';
-      filter.Value = this.requestOperatorId;
-      this.filteModelContent.Filters.push(filter);
-    }
-
-    if (this.requestDepartemenId > 0) {
-      filter = new FilterDataModel();
-      filter.PropertyName = 'LinkFromTicketingDepartemenId';
-      filter.Value = this.requestDepartemenId;
-      filter.ClauseType = EnumClauseType.Or;
-      this.filteModelContent.Filters.push(filter);
-      /*filter*/
-      filter = new FilterDataModel();
-      filter.PropertyName = 'LinkToTicketingDepartemenId';
-      filter.Value = this.requestDepartemenId;
-      filter.ClauseType = EnumClauseType.Or;
-      this.filteModelContent.Filters.push(filter);
-    }
-
+    this.getPropertyType();
+  }
+  getPropertyType(): void {
+    const filter = new FilterModel();
+    filter.RowPerPage = 100;
+    this.estatePropertyTypeService.ServiceGetAll(filter).subscribe((next) => {
+      this.dataModelEstatePropertyTypeResult = next;
+    });
   }
   ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
-
   DataGetAll(): void {
     this.tableRowsSelected = [];
-    this.tableRowSelected = new TicketingDepartemenLogModel();
+    this.tableRowSelected = new EstatePropertyDetailModel();
 
     this.loading.display = true;
     this.loading.Globally = false;
@@ -131,30 +130,22 @@ export class TicketingDepartemenLogListComponent implements OnInit, OnDestroy {
     /*filter CLone*/
     const filterModel = JSON.parse(JSON.stringify(this.filteModelContent));
     /*filter CLone*/
-    if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
+    if (this.categoryModelSelected && this.categoryModelSelected.Id.length > 0) {
       const fastfilter = new FilterDataModel();
-      fastfilter.PropertyName = 'LinkFromTicketingDepartemenId';
+      fastfilter.PropertyName = 'LinkPropertyDetailGroupId';
       fastfilter.Value = this.categoryModelSelected.Id;
       filterModel.Filters.push(fastfilter);
     }
-    this.ticketingDepartemenLogService.setAccessLoad();
-    this.ticketingDepartemenLogService.ServiceGetAll(filterModel).subscribe(
+    this.estatePropertyDetailService.ServiceGetAll(filterModel).subscribe(
       (next) => {
         this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
-
-
         if (next.IsSuccess) {
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;
 
-
           if (this.optionsSearch.childMethods) {
             this.optionsSearch.childMethods.setAccess(next.Access);
           }
-        }
-        else {
-          this.cmsToastrService.typeErrorGetAll(next.ErrorMessage);
-
         }
         this.loading.display = false;
       },
@@ -193,20 +184,40 @@ export class TicketingDepartemenLogListComponent implements OnInit, OnDestroy {
     this.DataGetAll();
   }
 
-
-
-  onActionSelectorSelect(model: ApplicationSourceModel | null): void {
+  onActionSelectorSelect(model: EstatePropertyDetailGroupModel | null): void {
     this.filteModelContent = new FilterModel();
     this.categoryModelSelected = model;
 
     this.DataGetAll();
   }
-  onActionbuttonEditRow(mode: TicketingDepartemenLogModel = this.tableRowSelected): void {
-    if (!mode || !mode.Id || mode.Id === 0) {
+
+  onActionbuttonNewRow(): void {
+
+    if (
+      this.dataModelResult == null ||
+      this.dataModelResult.Access == null ||
+      !this.dataModelResult.Access.AccessAddRow
+    ) {
+      this.cmsToastrService.typeErrorAccessAdd();
+      return;
+    }
+    const dialogRef = this.dialog.open(EstatePropertyDetailAddComponent, {
+      data: {}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.dialogChangedDate) {
+        this.DataGetAll();
+      }
+    });
+  }
+
+  onActionbuttonEditRow(model: EstatePropertyDetailModel = this.tableRowSelected): void {
+
+    if (!model || !model.Id || model.Id.length === 0) {
       this.cmsToastrService.typeErrorSelectedRow();
       return;
     }
-    this.tableRowSelected = mode;
+    this.tableRowSelected = model;
     if (
       this.dataModelResult == null ||
       this.dataModelResult.Access == null ||
@@ -215,25 +226,23 @@ export class TicketingDepartemenLogListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessEdit();
       return;
     }
-
-    // const dialogRef = this.dialog.open(NewsCommentEditComponent, {
-    //   data: { id: this.tableRowSelected.Id }
-    // });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   // console.log(`Dialog result: ${result}`);
-    //   if (result && result.dialogChangedDate) {
-    //     this.DataGetAll();
-    //   }
-    // });
-    this.router.navigate(['/application/app/edit/', this.tableRowSelected.Id]);
-
+    const dialogRef = this.dialog.open(EstatePropertyDetailEditComponent, {
+      data: { id: this.tableRowSelected.Id }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.dialogChangedDate) {
+        this.DataGetAll();
+      }
+    });
   }
-  onActionbuttonDeleteRow(mode: TicketingDepartemenLogModel = this.tableRowSelected): void {
-    if (mode == null || !mode.Id || mode.Id === 0) {
-      this.cmsToastrService.typeErrorSelectedRow();
+  onActionbuttonDeleteRow(model: EstatePropertyDetailModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id.length === 0) {
+      const emessage = 'ردیفی برای حذف انتخاب نشده است';
+      this.cmsToastrService.typeErrorSelected(emessage);
       return;
     }
-    this.tableRowSelected = mode;
+    this.tableRowSelected = model;
+
     if (
       this.dataModelResult == null ||
       this.dataModelResult.Access == null ||
@@ -242,18 +251,48 @@ export class TicketingDepartemenLogListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessDelete();
       return;
     }
-    // const dialogRef = this.dialog.open(NewsCommentDeleteComponent, {
-    //   data: { id: this.tableRowSelected.Id }
-    // });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   // console.log(`Dialog result: ${result}`);
-    //   if (result && result.dialogChangedDate) {
-    //     this.DataGetAll();
-    //   }
-    // });
-    this.router.navigate(['/application/app/delete/', this.tableRowSelected.Id]);
+
+    const title = 'لطفا تایید کنید...';
+    const message = 'آیا مایل به حدف این محتوا می باشید ' + '?' + '<br> ( ' + this.tableRowSelected.Title + ' ) ';
+    this.cmsConfirmationDialogService.confirm(title, message)
+      .then((confirmed) => {
+        if (confirmed) {
+          this.loading.display = true;
+          this.estatePropertyDetailService.ServiceDelete(this.tableRowSelected.Id).subscribe(
+            (next) => {
+              if (next.IsSuccess) {
+                this.cmsToastrService.typeSuccessRemove();
+                this.DataGetAll();
+              } else {
+                this.cmsToastrService.typeErrorRemove();
+              }
+              this.loading.display = false;
+            },
+            (error) => {
+              this.cmsToastrService.typeError(error);
+              this.loading.display = false;
+            }
+          );
+        }
+      }
+      )
+      .catch(() => {
+        // console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)')
+      }
+      );
 
   }
+  onActionbuttonContentList(model: EstatePropertyDetailModel = this.tableRowSelected): void {
+    if (!model || !model.Id || model.Id.length === 0) {
+      const message = 'ردیفی برای نمایش انتخاب نشده است';
+      this.cmsToastrService.typeErrorSelected(message);
+      return;
+    }
+    this.tableRowSelected = model;
+
+    this.router.navigate(['/hypershop/content/PareintId/', this.tableRowSelected.Id]);
+  }
+
   onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;
     if (!this.optionsStatist.data.show) {
@@ -262,7 +301,7 @@ export class TicketingDepartemenLogListComponent implements OnInit, OnDestroy {
     const statist = new Map<string, number>();
     statist.set('Active', 0);
     statist.set('All', 0);
-    this.ticketingDepartemenLogService.ServiceGetCount(this.filteModelContent).subscribe(
+    this.estatePropertyDetailService.ServiceGetCount(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('All', next.TotalRowCount);
@@ -279,7 +318,7 @@ export class TicketingDepartemenLogListComponent implements OnInit, OnDestroy {
     fastfilter.PropertyName = 'RecordStatus';
     fastfilter.Value = EnumRecordStatus.Available;
     filterStatist1.Filters.push(fastfilter);
-    this.ticketingDepartemenLogService.ServiceGetCount(filterStatist1).subscribe(
+    this.estatePropertyDetailService.ServiceGetCount(filterStatist1).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('Active', next.TotalRowCount);
@@ -300,7 +339,7 @@ export class TicketingDepartemenLogListComponent implements OnInit, OnDestroy {
   onSubmitOptionExport(model: FilterModel): void {
     const exportlist = new Map<string, string>();
     exportlist.set('Download', 'loading ... ');
-    this.ticketingDepartemenLogService.ServiceExportFile(model).subscribe(
+    this.estatePropertyDetailService.ServiceExportFile(model).subscribe(
       (next) => {
         if (next.IsSuccess) {
           exportlist.set('Download', next.LinkFile);
@@ -320,11 +359,8 @@ export class TicketingDepartemenLogListComponent implements OnInit, OnDestroy {
     this.filteModelContent.Filters = model;
     this.DataGetAll();
   }
-  onActionTableRowSelect(row: TicketingDepartemenLogModel): void {
+  onActionTableRowSelect(row: EstatePropertyDetailModel): void {
     this.tableRowSelected = row;
-  }
-  onActionBackToParent(): void {
-    this.router.navigate(['/application/app/']);
   }
 
 }

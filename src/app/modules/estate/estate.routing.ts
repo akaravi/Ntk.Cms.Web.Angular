@@ -7,6 +7,7 @@ import { EstatePropertyListComponent } from './Property/list/list.component';
 import { EstateComponent } from './estate.component';
 import { EstateContractTypeListComponent } from './contract-type/list/list.component';
 import { EstatePropertyDetailGroupListComponent } from './property-detail-group/list/list.component';
+import { EstatePropertyDetailListComponent } from './property-detail/list/list.component';
 
 const routes: Routes = [
   {
@@ -46,6 +47,16 @@ const routes: Routes = [
         path: 'property-detail-group',
         component: EstatePropertyDetailGroupListComponent
       },
+      /**/
+      {
+        path: 'property-detail',
+        component: EstatePropertyDetailListComponent
+      },
+      {
+        path: 'property-detail/LinkPropertyTypeId/:LinkPropertyTypeId',
+        component: EstatePropertyDetailListComponent
+      },
+      /** */
       {
         path: 'content/PareintId/:PareintId',
         component: EstatePropertyListComponent
