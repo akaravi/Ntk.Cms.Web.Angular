@@ -20,7 +20,7 @@
       </mat-form-field>
       <!-- LinkPublicConfigId Field -->
       <app-bankpayment-publicconfig-selector (optionSelect)="onActionSelectSource($event)"
-        [disabled]="!fieldsInfo['LinkPublicConfigId'].AccessEditField"
+        [disabled]="!fieldsInfo['LinkPublicConfigId']?.AccessEditField"
         [optionSelectForce]="dataModel.LinkPublicConfigId" [optionPlaceholder]="'نوع حساب'">
       </app-bankpayment-publicconfig-selector>
       <!-- Title Field -->

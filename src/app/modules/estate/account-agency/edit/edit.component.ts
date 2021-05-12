@@ -14,6 +14,7 @@ import {
   OnInit,
   ViewChild,
   Inject,
+  OnDestroy,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -25,13 +26,17 @@ import {
 } from 'ntk-cms-filemanager';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
+import * as Leaflet from 'leaflet';
+import { Map as leafletMap } from 'leaflet';
+import { PoinModel } from 'src/app/core/models/pointModel';
+
 
 @Component({
   selector: 'app-estate-accountagency-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.scss'],
 })
-export class EstateAccountAgencyEditComponent implements OnInit {
+export class EstateAccountAgencyEditComponent implements OnInit  {
   requestId = '';
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -60,6 +65,14 @@ export class EstateAccountAgencyEditComponent implements OnInit {
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   fileManagerOpenForm = false;
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
+
+  /** map */
+  viewMap = false;
+  private mapModel: leafletMap;
+  mapMarker: any;
+  private mapMarkerPoints: Array<PoinModel> = [];
+  mapOptonCenter = {};
+
   ngOnInit(): void {
     this.formInfo.FormTitle = 'ویرایش  ';
     if (!this.requestId || this.requestId.length === 0) {
@@ -70,6 +83,7 @@ export class EstateAccountAgencyEditComponent implements OnInit {
     this.DataGetOneContent();
     this.getEnumRecordStatus();
   }
+
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
       this.storeSnapshot.EnumRecordStatus &&
@@ -90,11 +104,15 @@ export class EstateAccountAgencyEditComponent implements OnInit {
     this.estateAccountAgencyService.ServiceGetOneById(this.requestId).subscribe(
       (next) => {
         this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
-
         this.dataModel = next.Item;
         if (next.IsSuccess) {
           this.formInfo.FormTitle = this.formInfo.FormTitle + ' ' + next.Item.Title;
           this.formInfo.FormAlert = '';
+          const lat = this.dataModel.Geolocationlatitude;
+          const lon = this.dataModel.Geolocationlongitude;
+          if (lat > 0 && lon > 0) {
+            this.mapMarkerPoints.push({ lat, lon });
+          }
         } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
@@ -133,6 +151,39 @@ export class EstateAccountAgencyEditComponent implements OnInit {
         this.loading.display = false;
       }
     );
+  }
+  receiveMap(model: leafletMap): void {
+    this.mapModel = model;
+
+    if (this.mapMarkerPoints && this.mapMarkerPoints.length > 0) {
+      this.mapMarkerPoints.forEach(item => {
+        this.mapMarker = Leaflet.marker([item.lat, item.lon]).addTo(this.mapModel);
+      });
+      this.mapOptonCenter = this.mapMarkerPoints[0];
+      this.mapMarkerPoints = [];
+    }
+
+    this.mapModel.on('click', (e) => {
+      // @ts-ignore
+      const lat = e.latlng.lat;
+      // @ts-ignore
+      const lon = e.latlng.lng;
+      if (this.mapMarker !== undefined) {
+        this.mapModel.removeLayer(this.mapMarker);
+      }
+      if (lat === this.dataModel.Geolocationlatitude && lon === this.dataModel.Geolocationlongitude) {
+        this.dataModel.Geolocationlatitude = null;
+        this.dataModel.Geolocationlongitude = null;
+        return;
+      }
+      this.mapMarker = Leaflet.marker([lat, lon]).addTo(this.mapModel);
+      this.dataModel.Geolocationlatitude = lat;
+      this.dataModel.Geolocationlongitude = lon;
+    });
+
+  }
+
+  receiveZoom(zoom: number): void {
   }
   onActionFileSelected(model: NodeInterface): void {
     this.dataModel.LinkMainImageId = model.id;

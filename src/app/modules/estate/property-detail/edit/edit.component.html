@@ -21,6 +21,10 @@
       <app-estate-propertytype-selector (optionSelect)="onActionSelectorSelect($event)"
         [optionSelectForce]="dataModel.LinkPropertyTypeId" [optionPlaceholder]="'دسته بندی'">
       </app-estate-propertytype-selector>
+      <!-- LinkPropertyDetailGroupId Field -->
+      <app-estate-propertydetailgroup-selector (optionSelect)="onActionSelectorSelectDetailGroup($event)"
+        [optionSelectForce]="dataModel.LinkPropertyDetailGroupId" [optionPlaceholder]="'دسته بندی'">
+      </app-estate-propertydetailgroup-selector>
       <!-- IconFont Field -->
       <mat-form-field class="example-full-width" *ngIf="fieldsInfo['IconFont']?.AccessWatchField">
         <mat-label> {{fieldsInfo['IconFont']?.FieldTitle}}</mat-label>
@@ -46,7 +50,107 @@
           (click)="dataModel.ShowInFormOrder = 1">close</mat-icon>
         <mat-icon matSuffix>mode_edit</mat-icon>
       </mat-form-field>
-
+      <!-- InputDataType Field -->
+      <mat-form-field class="example-full-width">
+        <mat-select placeholder="نوع" [(ngModel)]="dataModel.InputDataType" name="dataModel.InputDataType"
+          #InputDataType="ngModel" panelClass="InputDataType-{{ dataModel.InputDataType }}">
+          <mat-option *ngFor="
+                      let item of dataModelEnumInputDataTypeResult.ListItems;
+                      index as i
+                    " [value]="item.Value">{{ item.Description }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <!-- Unit Field -->
+      <mat-form-field class="example-full-width">
+        <mat-label>{{fieldsInfo['Unit']?.Title}}</mat-label>
+        <input matInput [(ngModel)]="dataModel.Unit" name="dataModel.Unit" #Unit type="text"
+          placeholder="{{fieldsInfo['Unit']?.Title}}" minlength="1" maxlength="64" required />
+        <mat-icon matSuffix *ngIf="dataModel.Unit" matSuffix mat-icon-button aria-label="Clear"
+          (click)="dataModel.Unit = ''">close</mat-icon>
+        <mat-icon matSuffix>mode_edit</mat-icon>
+        <mat-hint align="end">{{ Unit.value.length }} / 64</mat-hint>
+        <mat-error *ngIf="Unit.errors?.required">
+          Unit is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <!-- ConfigValueIntValueMin Field -->
+      <mat-form-field class="example-full-width">
+        <mat-label>{{fieldsInfo['ConfigValueIntValueMin']?.Title}}</mat-label>
+        <input matInput [(ngModel)]="dataModel.ConfigValueIntValueMin" name="dataModel.ConfigValueIntValueMin"
+          #ConfigValueIntValueMin type="number" placeholder="{{fieldsInfo['ConfigValueIntValueMin']?.Title}}" />
+        <mat-icon matSuffix *ngIf="dataModel.ConfigValueIntValueMin" matSuffix mat-icon-button aria-label="Clear"
+          (click)="dataModel.ConfigValueIntValueMin = 0">close</mat-icon>
+        <mat-icon matSuffix>mode_edit</mat-icon>
+      </mat-form-field>
+      <!-- ConfigValueIntValueMax Field -->
+      <mat-form-field class="example-full-width">
+        <mat-label>{{fieldsInfo['ConfigValueIntValueMax']?.Title}}</mat-label>
+        <input matInput [(ngModel)]="dataModel.ConfigValueIntValueMax" name="dataModel.ConfigValueIntValueMax"
+          #ConfigValueIntValueMax type="number" placeholder="{{fieldsInfo['ConfigValueIntValueMax']?.Title}}" />
+        <mat-icon matSuffix *ngIf="dataModel.ConfigValueIntValueMax" matSuffix mat-icon-button aria-label="Clear"
+          (click)="dataModel.ConfigValueIntValueMax = 0">close</mat-icon>
+        <mat-icon matSuffix>mode_edit</mat-icon>
+      </mat-form-field>
+      <!-- InvisibleForEndUser Field -->
+      <div class="example-full-width">
+        <mat-slide-toggle [(ngModel)]="dataModel.InvisibleForEndUser"
+          *ngIf="fieldsInfo['InvisibleForEndUser']?.AccessWatchField"
+          [disabled]="!fieldsInfo['InvisibleForEndUser']?.AccessEditField" name="dataModel.InvisibleForEndUser">
+          {{fieldsInfo['InvisibleForEndUser']?.FieldTitle}}
+        </mat-slide-toggle>
+      </div>
+      <!-- InvisibleForSubmiter Field -->
+      <div class="example-full-width">
+        <mat-slide-toggle [(ngModel)]="dataModel.InvisibleForSubmiter"
+          *ngIf="fieldsInfo['InvisibleForSubmiter']?.AccessWatchField"
+          [disabled]="!fieldsInfo['InvisibleForSubmiter']?.AccessEditField" name="dataModel.InvisibleForSubmiter">
+          {{fieldsInfo['InvisibleForSubmiter']?.FieldTitle}}
+        </mat-slide-toggle>
+      </div>
+      <!-- Required Field -->
+      <div class="example-full-width">
+        <mat-slide-toggle [(ngModel)]="dataModel.Required" *ngIf="fieldsInfo['Required']?.AccessWatchField"
+          [disabled]="!fieldsInfo['Required']?.AccessEditField" name="dataModel.Required">
+          {{fieldsInfo['Required']?.FieldTitle}}
+        </mat-slide-toggle>
+      </div>
+      <!-- IsHistoryable Field -->
+      <div class="example-full-width">
+        <mat-slide-toggle [(ngModel)]="dataModel.IsHistoryable" *ngIf="fieldsInfo['IsHistoryable']?.AccessWatchField"
+          [disabled]="!fieldsInfo['IsHistoryable']?.AccessEditField" name="dataModel.IsHistoryable">
+          {{fieldsInfo['IsHistoryable']?.FieldTitle}}
+        </mat-slide-toggle>
+      </div>
+      <!-- ConfigValueForceUseDefaultValue Field -->
+      <div class="example-full-width">
+        <mat-slide-toggle [(ngModel)]="dataModel.ConfigValueForceUseDefaultValue"
+          *ngIf="fieldsInfo['ConfigValueForceUseDefaultValue']?.AccessWatchField"
+          [disabled]="!fieldsInfo['ConfigValueForceUseDefaultValue']?.AccessEditField"
+          name="dataModel.ConfigValueForceUseDefaultValue">
+          {{fieldsInfo['ConfigValueForceUseDefaultValue']?.FieldTitle}}
+        </mat-slide-toggle>
+      </div>
+      <!-- ConfigValueMultipleChoice Field -->
+      <div class="example-full-width">
+        <mat-slide-toggle [(ngModel)]="dataModel.ConfigValueMultipleChoice"
+          *ngIf="fieldsInfo['ConfigValueMultipleChoice']?.AccessWatchField"
+          [disabled]="!fieldsInfo['ConfigValueMultipleChoice']?.AccessEditField"
+          name="dataModel.ConfigValueMultipleChoice">
+          {{fieldsInfo['ConfigValueMultipleChoice']?.FieldTitle}}
+        </mat-slide-toggle>
+      </div>
+    <!-- ConfigValueDefaultValue Field -->
+    <mat-form-field class="example-full-width">
+      <mat-label>{{fieldsInfo['ConfigValueDefaultValue']?.Title}}</mat-label>
+      <input matInput [(ngModel)]="dataModel.ConfigValueDefaultValue" name="dataModel.ConfigValueDefaultValue" #ConfigValueDefaultValue type="text"
+        placeholder="{{fieldsInfo['ConfigValueDefaultValue']?.Title}}"  />
+      <mat-icon matSuffix *ngIf="dataModel.ConfigValueDefaultValue" matSuffix mat-icon-button aria-label="Clear"
+        (click)="dataModel.ConfigValueDefaultValue = null">close</mat-icon>
+      <mat-icon matSuffix>mode_edit</mat-icon>
+      <mat-error *ngIf="ConfigValueDefaultValue.errors?.required">
+        ConfigValueDefaultValue is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
     </div>
   </form>
 </mat-dialog-content>

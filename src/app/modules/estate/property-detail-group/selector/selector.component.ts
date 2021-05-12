@@ -17,7 +17,7 @@ import { Output } from '@angular/core';
 
 
 @Component({
-  selector: 'app-estate-DetailGroup-selector',
+  selector: 'app-estate-propertydetailgroup-selector',
   templateUrl: './selector.component.html',
   styleUrls: ['./selector.component.scss']
 })

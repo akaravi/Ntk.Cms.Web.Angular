@@ -33,6 +33,7 @@ import { PublicHelper } from 'src/app/core/helpers/publicHelper';
   styleUrls: ['./add.component.scss'],
 })
 export class EstatePropertyDetailGroupAddComponent implements OnInit {
+  requestLinkPropertyTypeId = '';
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
@@ -43,6 +44,12 @@ export class EstatePropertyDetailGroupAddComponent implements OnInit {
     public publicHelper: PublicHelper,
   ) {
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
+    if (data) {
+      this.requestLinkPropertyTypeId = data.LinkPropertyTypeId;
+    }
+    if (this.requestLinkPropertyTypeId.length > 0) {
+      this.dataModel.LinkPropertyTypeId = this.requestLinkPropertyTypeId;
+    }
   }
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();

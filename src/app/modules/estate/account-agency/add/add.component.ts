@@ -26,6 +26,9 @@ import {
 import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
+import * as Leaflet from 'leaflet';
+import { Map as leafletMap } from 'leaflet';
+
 
 @Component({
   selector: 'app-estate-accountagency-add',
@@ -57,12 +60,16 @@ export class EstateAccountAgencyAddComponent implements OnInit {
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   fileManagerOpenForm = false;
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
-  ngOnInit(): void {
+  /** map */
+  viewMap = false;
+  private mapModel: leafletMap;
+  mapMarker: any;
 
+
+  ngOnInit(): void {
     this.formInfo.FormTitle = 'اضافه کردن  ';
     this.getEnumRecordStatus();
     this.DataGetAccess();
-
   }
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
@@ -117,6 +124,30 @@ export class EstateAccountAgencyAddComponent implements OnInit {
         this.loading.display = false;
       }
     );
+  }
+  receiveMap(model: leafletMap): void {
+    this.mapModel = model;
+    this.mapModel.on('click', (e) => {
+      // @ts-ignore
+      const lat = e.latlng.lat;
+      // @ts-ignore
+      const lon = e.latlng.lng;
+      if (this.mapMarker !== undefined) {
+        this.mapModel.removeLayer(this.mapMarker);
+      }
+      if (lat === this.dataModel.Geolocationlatitude && lon === this.dataModel.Geolocationlongitude) {
+        this.dataModel.Geolocationlatitude = null;
+        this.dataModel.Geolocationlongitude = null;
+        return;
+      }
+      this.mapMarker = Leaflet.marker([lat, lon]).addTo(this.mapModel);
+      this.dataModel.Geolocationlatitude = lat;
+      this.dataModel.Geolocationlongitude = lon;
+    });
+
+  }
+
+  receiveZoom(zoom: number): void {
   }
   onActionFileSelected(model: NodeInterface): void {
     this.dataModel.LinkMainImageId = model.id;

@@ -20,7 +20,7 @@
       </mat-form-field>
       <!-- LinkSourceId Field -->
       <app-application-source-selector (optionSelect)="onActionSelectSource($event)"
-        [disabled]="!fieldsInfo['LinkSourceId'].AccessEditField" [optionSelectForce]="dataModel.LinkSourceId"
+        [disabled]="!fieldsInfo['LinkSourceId']?.AccessEditField" [optionSelectForce]="dataModel.LinkSourceId"
         [optionPlaceholder]="'سورس اپلیکیشن'">
       </app-application-source-selector>
       <!-- Title Field -->

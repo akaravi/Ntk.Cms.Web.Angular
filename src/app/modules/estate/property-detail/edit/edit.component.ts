@@ -8,6 +8,8 @@ import {
   DataFieldInfoModel,
   CoreLocationModel,
   EstatePropertyTypeModel,
+  EstatePropertyDetailGroupModel,
+  EstateEnumService,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -39,6 +41,7 @@ export class EstatePropertyDetailEditComponent implements OnInit {
     private dialogRef: MatDialogRef<EstatePropertyDetailEditComponent>,
     public coreEnumService: CoreEnumService,
     public estatePropertyDetailService: EstatePropertyDetailService,
+    private estateEnumService: EstateEnumService,
     private cmsToastrService: CmsToastrService,
     public publicHelper: PublicHelper,
   ) {
@@ -58,6 +61,8 @@ export class EstatePropertyDetailEditComponent implements OnInit {
   dataModel: EstatePropertyDetailModel = new EstatePropertyDetailModel();
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
+  dataModelEnumInputDataTypeResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
+
   fileManagerOpenForm = false;
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
   ngOnInit(): void {
@@ -69,6 +74,12 @@ export class EstatePropertyDetailEditComponent implements OnInit {
     }
     this.DataGetOneContent();
     this.getEnumRecordStatus();
+    this.getEnumInputDataType();
+  }
+  getEnumInputDataType(): void {
+    this.estateEnumService.ServiceEnumInputDataType().subscribe((next) => {
+      this.dataModelEnumInputDataTypeResult = next;
+    });
   }
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
@@ -141,6 +152,14 @@ export class EstatePropertyDetailEditComponent implements OnInit {
       return;
     }
     this.dataModel.LinkPropertyTypeId = model.Id;
+  }
+  onActionSelectorSelectDetailGroup(model: EstatePropertyDetailGroupModel | null): void {
+    if (!model || !model.Id || model.Id.length <= 0) {
+      const message = 'دسته بندی اطلاعات مشخص نیست';
+      this.cmsToastrService.typeErrorSelected(message);
+      return;
+    }
+    this.dataModel.LinkPropertyDetailGroupId = model.Id;
   }
   onIconPickerSelect(model: any): void {
     this.dataModel.IconFont = model;

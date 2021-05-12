@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import * as Leaflet from 'leaflet';
+import { Map as leafletMap } from 'leaflet';
 import { FormGroup } from '@angular/forms';
 import {
   CoreEnumService,
@@ -23,13 +24,13 @@ import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { NodeInterface, TreeModel } from 'ntk-cms-filemanager';
-import { Map as leafletMap } from 'leaflet';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { MatStepper } from '@angular/material/stepper';
 import { MatTableDataSource } from '@angular/material/table';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
+import { PoinModel } from 'src/app/core/models/pointModel';
 
 
 @Component({
@@ -63,7 +64,6 @@ export class ArticleContentAddComponent implements OnInit, AfterViewInit {
   selectFileTypePodcast = ['mp3'];
   selectFileTypeMovie = ['mp4'];
   formInfo: FormInfoModel = new FormInfoModel();
-  mapMarker: any;
   fileManagerOpenForm = false;
   fileManagerOpenFormPodcast = false;
   fileManagerOpenFormMovie = false;
@@ -83,12 +83,14 @@ export class ArticleContentAddComponent implements OnInit, AfterViewInit {
   similarTabledisplayedColumns = ['LinkMainImageIdSrc', 'Id', 'RecordStatus', 'Title', 'Action'];
   similarTabledataSource = new MatTableDataSource<ArticleContentModel>();
   otherInfoTabledataSource = new MatTableDataSource<ArticleContentOtherInfoModel>();
-
   appLanguage = 'fa';
 
+  /** map */
   viewMap = false;
   private mapModel: leafletMap;
-
+  mapMarker: any;
+  private mapMarkerPoints: Array<PoinModel> = [];
+  mapOptonCenter = {};
 
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
   ngOnInit(): void {

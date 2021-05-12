@@ -1,11 +1,13 @@
 <div class="row">
   <div class="col-xl-3">
-    <app-estate-detailgroup-tree (optionSelect)="onActionSelectorSelect($event)"></app-estate-detailgroup-tree>
+    <app-estate-detailgroup-tree (optionSelect)="onActionSelectorSelect($event)"
+      [optionLinkPropertyTypeId]="requestLinkPropertyTypeId"></app-estate-detailgroup-tree>
   </div>
   <div class="col-xl-9">
     <div class="button-row">
-      <button *ngIf="dataModelResult.Access.AccessAddRow " (click)="onActionbuttonNewRow()" type="button"
-        class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">{{'ACTION.ADD' |
+      <button *ngIf="dataModelResult.Access.AccessAddRow && categoryModelSelected?.Id.length>0 "
+        (click)="onActionbuttonNewRow()" type="button" class="btn btn-primary" id="openModalButton" data-toggle="modal"
+        data-target="#categoryModal">{{'ACTION.ADD' |
         translate}}</button>
       <button *ngIf="dataModelResult.Access.AccessEditRow && tableRowSelected.Id &&  tableRowSelected.Id.length>0"
         (click)="onActionbuttonEditRow()" type="button" class="btn btn-warning ml-2" data-toggle="modal"
@@ -45,10 +47,11 @@
         </ng-container>
         <!-- IconFont Column -->
         <ng-container matColumnDef="IconFont">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['IconFont']?.FieldTitle}}
-          </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.IconFont}} </mat-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['IconFont']?.FieldTitle}} </mat-header-cell>
+          <mat-cell *matCellDef="let row"><i [ngClass]="row.IconFont" [style.color]="row.Color" aria-hidden="true"></i>
+          </mat-cell>
         </ng-container>
+
         <!-- Title Column -->
         <ng-container matColumnDef="Title">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Title']?.FieldTitle}}
@@ -66,7 +69,15 @@
         <ng-container matColumnDef="LinkPropertyTypeId">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkPropertyTypeId']?.FieldTitle}}
           </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.LinkPropertyTypeId| cmstitle: dataModelEstatePropertyTypeResult.ListItems}} </mat-cell>
+          <mat-cell *matCellDef="let row"> {{row.LinkPropertyTypeId| cmstitle:
+            dataModelEstatePropertyTypeResult.ListItems}} </mat-cell>
+        </ng-container>
+         <!-- LinkPropertyDetailGroupId Column -->
+        <ng-container matColumnDef="LinkPropertyDetailGroupId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkPropertyDetailGroupId']?.FieldTitle}}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.LinkPropertyDetailGroupId| cmstitle:
+            dataModelEstatePropertyDetailGroupResult.ListItems}} </mat-cell>
         </ng-container>
 
 

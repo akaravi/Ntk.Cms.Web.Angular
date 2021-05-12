@@ -8,6 +8,8 @@ import { EstateComponent } from './estate.component';
 import { EstateContractTypeListComponent } from './contract-type/list/list.component';
 import { EstatePropertyDetailGroupListComponent } from './property-detail-group/list/list.component';
 import { EstatePropertyDetailListComponent } from './property-detail/list/list.component';
+import { EstateAccountAgencyListComponent } from './account-agency/list/list.component';
+import { EstateAccountUserListComponent } from './account-user/list/list.component';
 
 const routes: Routes = [
   {
@@ -31,6 +33,15 @@ const routes: Routes = [
       {
         path: 'property-type',
         component: EstatePropertyTypeListComponent
+      },
+      /**/
+        {
+        path: 'account-agency',
+        component: EstateAccountAgencyListComponent
+      },
+      /**/    {
+        path: 'account-user',
+        component: EstateAccountUserListComponent
       },
       /**/
       {

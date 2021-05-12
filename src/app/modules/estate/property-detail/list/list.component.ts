@@ -16,7 +16,8 @@ import {
   DataFieldInfoModel,
   EstatePropertyTypeService,
   EstatePropertyTypeModel,
-  EstatePropertyDetailGroupModel
+  EstatePropertyDetailGroupModel,
+  EstatePropertyDetailGroupService
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -41,6 +42,7 @@ export class EstatePropertyDetailListComponent implements OnInit, OnDestroy {
   requestLinkPropertyTypeId = '';
   constructor(
     private estatePropertyDetailService: EstatePropertyDetailService,
+    private estatePropertyDetailGroupService: EstatePropertyDetailGroupService,
     private estatePropertyTypeService: EstatePropertyTypeService,
     private cmsConfirmationDialogService: CmsConfirmationDialogService,
     private cmsApiStore: NtkCmsApiStoreService,
@@ -75,6 +77,7 @@ export class EstatePropertyDetailListComponent implements OnInit, OnDestroy {
   filteModelContent = new FilterModel();
   dataModelResult: ErrorExceptionResult<EstatePropertyDetailModel> = new ErrorExceptionResult<EstatePropertyDetailModel>();
   dataModelEstatePropertyTypeResult: ErrorExceptionResult<EstatePropertyTypeModel> = new ErrorExceptionResult<EstatePropertyTypeModel>();
+  dataModelEstatePropertyDetailGroupResult: ErrorExceptionResult<EstatePropertyDetailGroupModel> = new ErrorExceptionResult<EstatePropertyDetailGroupModel>();
   optionsSearch: ComponentOptionSearchModel = new ComponentOptionSearchModel();
   optionsStatist: ComponentOptionStatistModel = new ComponentOptionStatistModel();
   optionsExport: ComponentOptionExportModel = new ComponentOptionExportModel();
@@ -90,6 +93,7 @@ export class EstatePropertyDetailListComponent implements OnInit, OnDestroy {
     'Title',
     'ShowInFormOrder',
     'LinkPropertyTypeId',
+    'LinkPropertyDetailGroupId',
     'Action'
   ];
 
@@ -109,12 +113,20 @@ export class EstatePropertyDetailListComponent implements OnInit, OnDestroy {
       this.tokenInfo = next;
     });
     this.getPropertyType();
+    this.getPropertyDetailGroup();
   }
   getPropertyType(): void {
     const filter = new FilterModel();
     filter.RowPerPage = 100;
     this.estatePropertyTypeService.ServiceGetAll(filter).subscribe((next) => {
       this.dataModelEstatePropertyTypeResult = next;
+    });
+  }
+   getPropertyDetailGroup(): void {
+    const filter = new FilterModel();
+    filter.RowPerPage = 100;
+    this.estatePropertyDetailGroupService.ServiceGetAll(filter).subscribe((next) => {
+      this.dataModelEstatePropertyDetailGroupResult = next;
     });
   }
   ngOnDestroy(): void {
@@ -202,7 +214,10 @@ export class EstatePropertyDetailListComponent implements OnInit, OnDestroy {
       return;
     }
     const dialogRef = this.dialog.open(EstatePropertyDetailAddComponent, {
-      data: {}
+      data: {
+        LinkPropertyTypeId: this.requestLinkPropertyTypeId,
+        LinkPropertyDetailGroupId: this.categoryModelSelected.Id
+      }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.dialogChangedDate) {

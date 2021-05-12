@@ -18,6 +18,7 @@ import {
   EstatePropertyDetailGroupModel,
   EstatePropertyDetailGroupService,
   NtkCmsApiStoreService,
+  FilterDataModel,
 } from 'ntk-cms-api';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
@@ -35,6 +36,7 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-di
   styleUrls: ['./tree.component.scss'],
 })
 export class EstatePropertyDetailGroupTreeComponent implements OnInit, OnDestroy {
+  requestLinkPropertyTypeId = '';
   constructor(
     private cmsApiStore: NtkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
@@ -55,8 +57,18 @@ export class EstatePropertyDetailGroupTreeComponent implements OnInit, OnDestroy
   dataSource = new MatTreeNestedDataSource<EstatePropertyDetailGroupModel>();
   @Output() optionSelect = new EventEmitter<EstatePropertyDetailGroupModel>();
   cmsApiStoreSubscribe: Subscription;
-  @Input() optionReload = () => this.onActionReload();
 
+  @Input() set optionLinkPropertyTypeId(id: string) {
+    this.requestLinkPropertyTypeId = id;
+    this.filteModel = new FilterModel();
+    if (id.length > 0) {
+      const filter = new FilterDataModel();
+      filter.PropertyName = 'LinkPropertyTypeId';
+      filter.Value = id;
+      this.filteModel.Filters.push(filter);
+    }
+  }
+  @Input() optionReload = () => this.onActionReload();
   hasChild = (_: number, node: EstatePropertyDetailGroupModel) => false;
 
 
@@ -111,7 +123,7 @@ export class EstatePropertyDetailGroupTreeComponent implements OnInit, OnDestroy
 
   onActionAdd(): void {
     const dialogRef = this.dialog.open(EstatePropertyDetailGroupAddComponent, {
-      data: {}
+      data: { LinkPropertyTypeId: this.requestLinkPropertyTypeId }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.dialogChangedDate) {

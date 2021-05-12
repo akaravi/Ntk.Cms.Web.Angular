@@ -30,6 +30,7 @@ export class CmsMapComponent implements OnInit, OnDestroy {
   }
   public map: Map;
   public zoom: number;
+  destroy = false;
 
   constructor() {
   }
@@ -50,16 +51,19 @@ export class CmsMapComponent implements OnInit, OnDestroy {
     });
     L.Marker.prototype.options.icon = iconDefault;
   }
-
   ngOnDestroy(): void {
-    // this.map.clearAllEventListeners();
-
-    // this.map.remove();
+    if (this.map) {
+      this.map.clearAllEventListeners();
+      // this.map.remove();
+      this.destroy = true;
+    }
   }
 
   onMapReady(map: Map): void {
     setTimeout(() => {
-      map.invalidateSize();
+      if (this.map && !this.destroy) {
+        map.invalidateSize();
+      }
     }, 500);
     this.map = map;
     this.map$.emit(map);

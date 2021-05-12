@@ -8,6 +8,7 @@ import {
   DataFieldInfoModel,
   CoreLocationModel,
   EstatePropertyTypeModel,
+  EstatePropertyDetailGroupModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -33,6 +34,8 @@ import { PublicHelper } from 'src/app/core/helpers/publicHelper';
   styleUrls: ['./add.component.scss'],
 })
 export class EstatePropertyDetailAddComponent implements OnInit {
+  requestLinkPropertyTypeId = '';
+  requestLinkPropertyDetailGroupId = '';
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
@@ -42,6 +45,16 @@ export class EstatePropertyDetailAddComponent implements OnInit {
     private cmsToastrService: CmsToastrService,
     public publicHelper: PublicHelper,
   ) {
+    if (data) {
+      this.requestLinkPropertyTypeId = data.LinkPropertyTypeId;
+      this.requestLinkPropertyDetailGroupId = data.LinkPropertyDetailGroupId;
+    }
+    if (this.requestLinkPropertyTypeId && this.requestLinkPropertyTypeId.length > 0) {
+      this.dataModel.LinkPropertyTypeId = this.requestLinkPropertyTypeId;
+    }
+    if (this.requestLinkPropertyDetailGroupId && this.requestLinkPropertyDetailGroupId.length > 0) {
+      this.dataModel.LinkPropertyDetailGroupId = this.requestLinkPropertyDetailGroupId;
+    }
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
@@ -125,6 +138,14 @@ export class EstatePropertyDetailAddComponent implements OnInit {
       return;
     }
     this.dataModel.LinkPropertyTypeId = model.Id;
+  }
+  onActionSelectorSelectDetailGroup(model: EstatePropertyDetailGroupModel | null): void {
+    if (!model || !model.Id || model.Id.length <= 0) {
+      const message = 'دسته بندی اطلاعات مشخص نیست';
+      this.cmsToastrService.typeErrorSelected(message);
+      return;
+    }
+    this.dataModel.LinkPropertyDetailGroupId = model.Id;
   }
   onIconPickerSelect(model: any): void {
     this.dataModel.IconFont = model;

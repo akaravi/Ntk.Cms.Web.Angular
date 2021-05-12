@@ -81,7 +81,7 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
   selectFileTypePodcast = ['mp3'];
   selectFileTypeMovie = ['mp4'];
   formInfo: FormInfoModel = new FormInfoModel();
-  mapMarker: any;
+
   fileManagerOpenForm = false;
   fileManagerOpenFormPodcast = false;
   fileManagerOpenFormMovie = false;
@@ -93,8 +93,10 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
 
   appLanguage = 'fa';
 
+  /** map */
   viewMap = false;
   private mapModel: leafletMap;
+  mapMarker: any;
   private mapMarkerPoints: Array<PoinModel> = [];
   mapOptonCenter = {};
 

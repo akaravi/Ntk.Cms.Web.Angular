@@ -26,6 +26,9 @@ import {
 import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
+import * as Leaflet from 'leaflet';
+import { Map as leafletMap } from 'leaflet';
+import { PoinModel } from 'src/app/core/models/pointModel';
 
 @Component({
   selector: 'app-estate-accountuser-add',
@@ -57,6 +60,14 @@ export class EstateAccountUserAddComponent implements OnInit {
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   fileManagerOpenForm = false;
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
+
+  /** map */
+  viewMap = false;
+  private mapModel: leafletMap;
+  mapMarker: any;
+  private mapMarkerPoints: Array<PoinModel> = [];
+  mapOptonCenter = {};
+
   ngOnInit(): void {
 
     this.formInfo.FormTitle = 'اضافه کردن  ';
@@ -118,11 +129,49 @@ export class EstateAccountUserAddComponent implements OnInit {
       }
     );
   }
+  receiveMap(model: leafletMap): void {
+    this.mapModel = model;
 
+    if (this.mapMarkerPoints && this.mapMarkerPoints.length > 0) {
+      this.mapMarkerPoints.forEach(item => {
+        this.mapMarker = Leaflet.marker([item.lat, item.lon]).addTo(this.mapModel);
+      });
+      this.mapOptonCenter = this.mapMarkerPoints[0];
+      this.mapMarkerPoints = [];
+    }
+
+    this.mapModel.on('click', (e) => {
+      // @ts-ignore
+      const lat = e.latlng.lat;
+      // @ts-ignore
+      const lon = e.latlng.lng;
+      if (this.mapMarker !== undefined) {
+        this.mapModel.removeLayer(this.mapMarker);
+      }
+      if (lat === this.dataModel.Geolocationlatitude && lon === this.dataModel.Geolocationlongitude) {
+        this.dataModel.Geolocationlatitude = null;
+        this.dataModel.Geolocationlongitude = null;
+        return;
+      }
+      this.mapMarker = Leaflet.marker([lat, lon]).addTo(this.mapModel);
+      this.dataModel.Geolocationlatitude = lat;
+      this.dataModel.Geolocationlongitude = lon;
+    });
+
+  }
+
+  receiveZoom(zoom: number): void {
+  }
   onActionSelectorUser(model: CoreUserModel | null): void {
     this.dataModel.LinkCmsUserId = null;
     if (model && model.Id > 0) {
       this.dataModel.LinkCmsUserId = model.Id;
+    }
+  }
+  onActionSelectorLocation(model: CoreLocationModel | null): void {
+    this.dataModel.LinkLocationId = null;
+    if (model && model.Id > 0) {
+      this.dataModel.LinkLocationId = model.Id;
     }
   }
   onFormSubmit(): void {
