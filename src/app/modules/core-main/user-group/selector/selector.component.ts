@@ -58,10 +58,10 @@ export class CoreUserGroupSelectorComponent implements OnInit {
   }
 
   displayFn(model?: CoreUserGroupModel): string | undefined {
-    return model ? (model.Title + ' # ' + model.Id) : undefined;
+    return model ? (model.Title ) : undefined;
   }
   displayOption(model?: CoreUserGroupModel): string | undefined {
-    return model ? (model.Title + ' # ' + model.Id) : undefined;
+    return model ? (model.Title ) : undefined;
   }
   async DataGetAll(text: string | number | any): Promise<CoreUserGroupModel[]> {
     const filteModel = new FilterModel();

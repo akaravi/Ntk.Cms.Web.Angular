@@ -6,8 +6,8 @@
 
       <!-- Name Field -->
       <mat-form-field class="example-full-width">
-        <mat-label>{{fieldsInfo['Title']?.Title}}</mat-label>
-        <input matInput [(ngModel)]="dataModel.Name" name="dataModel.Name" #Name type="text" placeholder="{{fieldsInfo['Title']?.Title}}"
+        <mat-label>{{fieldsInfo['Title']?.FieldTitle}}</mat-label>
+        <input matInput [(ngModel)]="dataModel.Name" name="dataModel.Name" #Name type="text" placeholder="{{fieldsInfo['Title']?.FieldTitle}}"
           minlength="3" maxlength="100" required />
         <mat-icon matSuffix *ngIf="dataModel.Name" matSuffix mat-icon-button aria-label="Clear"
           (click)="dataModel.Name = ''">close</mat-icon>

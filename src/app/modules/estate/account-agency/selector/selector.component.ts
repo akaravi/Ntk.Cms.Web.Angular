@@ -60,10 +60,10 @@ export class EstateAccountAgencySelectorComponent implements OnInit {
   }
 
   displayFn(model?: EstateAccountAgencyModel): string | undefined {
-    return model ? model.Title + ' # ' + model.Id : undefined;
+    return model ? model.Title  : undefined;
   }
   displayOption(model?: EstateAccountAgencyModel): string | undefined {
-    return model ? model.Title + ' # ' + model.Id : undefined;
+    return model ? model.Title  : undefined;
   }
   async DataGetAll(text: string | number | any): Promise<EstateAccountAgencyModel[]> {
     const filteModel = new FilterModel();

@@ -58,10 +58,10 @@ export class CmsApplicationSelectorComponent implements OnInit {
   }
 
   displayFn(model?: ApplicationAppModel): string | undefined {
-    return model ? (model.Title + ' # ' + model.Id) : undefined;
+    return model ? (model.Title ) : undefined;
   }
   displayOption(model?: ApplicationAppModel): string | undefined {
-    return model ? (model.Title + ' # ' + model.Id) : undefined;
+    return model ? (model.Title ) : undefined;
   }
   async DataGetAll(text: string | number | any): Promise<ApplicationAppModel[]> {
     const filteModel = new FilterModel();

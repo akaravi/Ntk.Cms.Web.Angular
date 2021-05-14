@@ -60,10 +60,10 @@ export class ApplicationMemberInfoSelectorComponent implements OnInit {
   }
 
   displayFn(model?: ApplicationMemberInfoModel): string | undefined {
-    return model ? model.DeviceId + ' # ' + model.Id + ' # APP:' + model.LinkApplicationId : undefined;
+    return model ? model.DeviceId  + ' # APP:' + model.LinkApplicationId : undefined;
   }
   displayOption(model?: ApplicationMemberInfoModel): string | undefined {
-    return model ? model.DeviceId + ' # ' + model.Id + ' # APP:' + model.LinkApplicationId : undefined;
+    return model ? model.DeviceId  + ' # APP:' + model.LinkApplicationId : undefined;
   }
   async DataGetAll(text: string | number | any): Promise<ApplicationMemberInfoModel[]> {
     const filteModel = new FilterModel();

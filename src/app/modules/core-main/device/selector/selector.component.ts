@@ -58,10 +58,10 @@ export class CoreDeviceSelectorComponent implements OnInit {
   }
 
   displayFn(model?: CoreDeviceModel): string | undefined {
-    return model ? (model.PackageName + ' # ' + model.Id) : undefined;
+    return model ? (model.PackageName ) : undefined;
   }
   displayOption(model?: CoreDeviceModel): string | undefined {
-    return model ? (model.PackageName + ' # ' + model.Id) : undefined;
+    return model ? (model.PackageName ) : undefined;
   }
   async DataGetAll(text: string | number | any): Promise<CoreDeviceModel[]> {
     const filteModel = new FilterModel();

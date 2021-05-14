@@ -58,10 +58,10 @@ export class WebDesignerMainMenuSelectorComponent implements OnInit {
   }
 
   displayFn(model?: WebDesignerMainMenuModel): string | undefined {
-    return model ? (model.Title + ' # ' + model.Id) : undefined;
+    return model ? (model.Title ) : undefined;
   }
   displayOption(model?: WebDesignerMainMenuModel): string | undefined {
-    return model ? (model.Title + ' # ' + model.Id) : undefined;
+    return model ? (model.Title ) : undefined;
   }
   async DataGetAll(text: string | number | any): Promise<WebDesignerMainMenuModel[]> {
     const filteModel = new FilterModel();

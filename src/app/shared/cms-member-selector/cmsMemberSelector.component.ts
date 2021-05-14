@@ -58,10 +58,10 @@ export class CmsMemberSelectorComponent implements OnInit {
   }
 
   displayFn(model?: MemberUserModel): string | undefined {
-    return model ? (model.firstName + ' # ' + model.lastName + ' # ' + model.email + ' # ' + model.Id) : undefined;
+    return model ? (model.firstName + ' # ' + model.lastName + ' # ' + model.email ) : undefined;
   }
   displayOption(model?: MemberUserModel): string | undefined {
-    return model ? (model.firstName + ' # ' + model.lastName + ' # ' + model.email + ' # ' + model.Id) : undefined;
+    return model ? (model.firstName + ' # ' + model.lastName + ' # ' + model.email ) : undefined;
   }
   async DataGetAll(text: string | number | any): Promise<MemberUserModel[]> {
     const filteModel = new FilterModel();

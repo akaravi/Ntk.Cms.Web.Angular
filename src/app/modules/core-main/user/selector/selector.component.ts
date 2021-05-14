@@ -60,10 +60,10 @@ export class CoreUserSelectorComponent implements OnInit {
   }
 
   displayFn(model?: CoreUserModel): string | undefined {
-    return model ? (model.Username + ' # ' + model.Name + ' # ' + model.LastName + ' # ' + model.Id) : undefined;
+    return model ? (model.Username + ' # ' + model.Name + ' # ' + model.LastName ) : undefined;
   }
   displayOption(model?: CoreUserModel): string | undefined {
-    return model ? (model.Username + ' # ' + model.Name + ' # ' + model.LastName + ' # ' + model.Id) : undefined;
+    return model ? (model.Username + ' # ' + model.Name + ' # ' + model.LastName ) : undefined;
   }
   async DataGetAll(text: string | number | any): Promise<CoreUserModel[]> {
     const filteModel = new FilterModel();

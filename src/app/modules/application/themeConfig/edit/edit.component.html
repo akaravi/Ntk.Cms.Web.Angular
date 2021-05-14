@@ -27,7 +27,7 @@
       <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Title']?.AccessWatchField">
         <mat-label>{{ fieldsInfo['Title']?.FieldTitle }}</mat-label>
         <input matInput [(ngModel)]="dataModel.Title" [disabled]="!fieldsInfo['Title']?.AccessEditField"
-          name="dataModel.Title" #Title type="text" placeholder="{{fieldsInfo['Title']?.Title}}" minlength="3" maxlength="100" required />
+          name="dataModel.Title" #Title type="text" placeholder="{{fieldsInfo['Title']?.FieldTitle}}" minlength="3" maxlength="100" required />
         <mat-icon matSuffix *ngIf="dataModel.Title && fieldsInfo['Title']?.AccessEditField" matSuffix mat-icon-button
           aria-label="Clear" (click)="dataModel.Title = ''">close</mat-icon>
         <mat-icon *ngIf="fieldsInfo['Title']?.AccessEditField" matSuffix>mode_edit</mat-icon>

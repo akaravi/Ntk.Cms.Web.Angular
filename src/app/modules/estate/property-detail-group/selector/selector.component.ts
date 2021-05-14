@@ -60,10 +60,10 @@ export class EstatePropertyDetailGroupSelectorComponent implements OnInit {
   }
 
   displayFn(model?: EstatePropertyDetailGroupModel): string | undefined {
-    return model ? model.Title + ' # ' + model.Id : undefined;
+    return model ? model.Title  : undefined;
   }
   displayOption(model?: EstatePropertyDetailGroupModel): string | undefined {
-    return model ? model.Title + ' # ' + model.Id : undefined;
+    return model ? model.Title  : undefined;
   }
   async DataGetAll(text: string | number | any): Promise<EstatePropertyDetailGroupModel[]> {
     const filteModel = new FilterModel();

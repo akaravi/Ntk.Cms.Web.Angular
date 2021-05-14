@@ -60,10 +60,10 @@ export class EstateAccountUserSelectorComponent implements OnInit {
   }
 
   displayFn(model?: EstateAccountUserModel): string | undefined {
-    return model ? model.Title + ' # ' + model.Id : undefined;
+    return model ? model.Title  : undefined;
   }
   displayOption(model?: EstateAccountUserModel): string | undefined {
-    return model ? model.Title + ' # ' + model.Id : undefined;
+    return model ? model.Title  : undefined;
   }
   async DataGetAll(text: string | number | any): Promise<EstateAccountUserModel[]> {
     const filteModel = new FilterModel();

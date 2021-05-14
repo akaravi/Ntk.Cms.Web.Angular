@@ -58,10 +58,10 @@ export class CmsModuleSelectorComponent implements OnInit {
   }
 
   displayFn(model?: CoreModuleModel): string | undefined {
-    return model ? (model.Title + ' # ' + model.ClassName + ' # ' + model.Id) : undefined;
+    return model ? (model.Title + ' # ' + model.ClassName ) : undefined;
   }
   displayOption(model?: CoreModuleModel): string | undefined {
-    return model ? (model.Title + ' # ' + model.ClassName + ' # ' + model.Id) : undefined;
+    return model ? (model.Title + ' # ' + model.ClassName ) : undefined;
   }
   async DataGetAll(text: string | number | any): Promise<CoreModuleModel[]> {
     const filteModel = new FilterModel();

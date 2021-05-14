@@ -10,9 +10,9 @@
       </app-hypershop-category-selector>
       <!-- Name Field -->
       <mat-form-field class="example-full-width">
-        <mat-label>{{fieldsInfo['Title']?.Title}}</mat-label>
+        <mat-label>{{fieldsInfo['Title']?.FieldTitle}}</mat-label>
         <input matInput [(ngModel)]="dataModel.Name" name="dataModel.Name" #Name type="text"
-          placeholder="{{fieldsInfo['Title']?.Title}}" minlength="3" maxlength="500" required />
+          placeholder="{{fieldsInfo['Title']?.FieldTitle}}" minlength="3" maxlength="500" required />
         <mat-icon matSuffix *ngIf="dataModel.Name" matSuffix mat-icon-button aria-label="Clear"
           (click)="dataModel.Name = ''">close</mat-icon>
         <mat-icon matSuffix>mode_edit</mat-icon>

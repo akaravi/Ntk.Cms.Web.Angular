@@ -60,10 +60,10 @@ export class EstatePropertyTypeSelectorComponent implements OnInit {
   }
 
   displayFn(model?: EstatePropertyTypeModel): string | undefined {
-    return model ? model.Title + ' # ' + model.Id : undefined;
+    return model ? model.Title  : undefined;
   }
   displayOption(model?: EstatePropertyTypeModel): string | undefined {
-    return model ? model.Title + ' # ' + model.Id : undefined;
+    return model ? model.Title  : undefined;
   }
   async DataGetAll(text: string | number | any): Promise<EstatePropertyTypeModel[]> {
     const filteModel = new FilterModel();

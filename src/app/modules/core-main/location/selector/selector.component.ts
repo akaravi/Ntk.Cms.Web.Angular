@@ -58,10 +58,10 @@ export class CoreLocationSelectorComponent implements OnInit {
   }
 
   displayFn(model?: CoreLocationModel): string | undefined {
-    return model ? (model.Title + ' # ' + model.Id) : undefined;
+    return model ? (model.Title ) : undefined;
   }
   displayOption(model?: CoreLocationModel): string | undefined {
-    return model ? (model.Title + ' # ' + model.Id) : undefined;
+    return model ? (model.Title ) : undefined;
   }
   async DataGetAll(text: string | number | any): Promise<CoreLocationModel[]> {
     const filteModel = new FilterModel();

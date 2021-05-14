@@ -58,10 +58,10 @@ export class CoreCurrencySelectorComponent implements OnInit {
   }
 
   displayFn(model?: CoreCurrencyModel): string | undefined {
-    return model ? (model.Title + ' # ' + model.Id) : undefined;
+    return model ? (model.Title ) : undefined;
   }
   displayOption(model?: CoreCurrencyModel): string | undefined {
-    return model ? (model.Title + ' # ' + model.Id) : undefined;
+    return model ? (model.Title ) : undefined;
   }
   async DataGetAll(text: string | number | any): Promise<CoreCurrencyModel[]> {
     const filteModel = new FilterModel();

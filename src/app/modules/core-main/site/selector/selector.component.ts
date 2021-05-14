@@ -59,10 +59,10 @@ export class CoreSiteSelectorComponent implements OnInit {
   }
 
   displayFn(model?: CoreSiteModel): string | undefined {
-    return model ? (model.Title + ' # ' + model.Id) : undefined;
+    return model ? (model.Title ) : undefined;
   }
   displayOption(model?: CoreSiteModel): string | undefined {
-    return model ? (model.Title + ' # ' + model.Id) : undefined;
+    return model ? (model.Title ) : undefined;
   }
   async DataGetAll(text: string | number | any): Promise<CoreSiteModel[]> {
     const filteModel = new FilterModel();

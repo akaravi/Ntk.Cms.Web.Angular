@@ -58,10 +58,10 @@ export class CoreGuideSelectorComponent implements OnInit {
   }
 
   displayFn(model?: CoreGuideModel): string | undefined {
-    return model ? (model.Title + ' # ' + model.Id) : undefined;
+    return model ? (model.Title ) : undefined;
   }
   displayOption(model?: CoreGuideModel): string | undefined {
-    return model ? (model.Title + ' # ' + model.Id) : undefined;
+    return model ? (model.Title ) : undefined;
   }
   async DataGetAll(text: string | number | any): Promise<CoreGuideModel[]> {
     const filteModel = new FilterModel();

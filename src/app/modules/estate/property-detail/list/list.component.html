@@ -30,6 +30,9 @@
       </a>
       <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">{{'ACTION.RELOAD' |
         translate}}</button>
+      <button (click)="onActionBackToParent()" *ngIf="requestLinkPropertyTypeId?.length>0" type="button"
+        class="btn btn-warning BTN">{{'ACTION.BACK' | translate}}</button>
+
       <app-cms-search-list [(options)]="optionsSearch"></app-cms-search-list>
       <app-cms-export-list [(options)]="optionsExport"></app-cms-export-list>
       <app-cms-statist-list [(options)]="optionsStatist"></app-cms-statist-list>
@@ -72,7 +75,7 @@
           <mat-cell *matCellDef="let row"> {{row.LinkPropertyTypeId| cmstitle:
             dataModelEstatePropertyTypeResult.ListItems}} </mat-cell>
         </ng-container>
-         <!-- LinkPropertyDetailGroupId Column -->
+        <!-- LinkPropertyDetailGroupId Column -->
         <ng-container matColumnDef="LinkPropertyDetailGroupId">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkPropertyDetailGroupId']?.FieldTitle}}
           </mat-header-cell>

@@ -32,7 +32,7 @@
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Title']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['Title']?.FieldTitle }}</mat-label>
             <input matInput [(ngModel)]="dataModel.Title" [disabled]="!fieldsInfo['Title']?.AccessEditField"
-              name="dataModel.Title" #Title type="text" placeholder="{{fieldsInfo['Title']?.Title}}" minlength="3" maxlength="100" required />
+              name="dataModel.Title" #Title type="text" placeholder="{{fieldsInfo['Title']?.FieldTitle}}" minlength="3" maxlength="100" required />
             <mat-icon matSuffix *ngIf="dataModel.Title && fieldsInfo['Title']?.AccessEditField" matSuffix
               mat-icon-button aria-label="Clear" (click)="dataModel.Title = ''">close</mat-icon>
             <mat-icon *ngIf="fieldsInfo['Title']?.AccessEditField" matSuffix>mode_edit</mat-icon>
@@ -46,7 +46,7 @@
             <mat-label>{{ fieldsInfo['Description']?.FieldDescription }}</mat-label>
             <textarea matInput [(ngModel)]="dataModel.Description"
               [disabled]="!fieldsInfo['Description']?.AccessEditField" name="dataModel.Description" #Description
-              type="text" placeholder="{{fieldsInfo['Description']?.Title}}" row="10" minlength="3" maxlength="100" required></textarea>
+              type="text" placeholder="{{fieldsInfo['Description']?.FieldTitle}}" row="10" minlength="3" maxlength="100" required></textarea>
             <mat-icon matSuffix *ngIf="dataModel.Description && fieldsInfo['Description']?.AccessEditField" matSuffix
               mat-icon-button aria-label="Clear" (click)="dataModel.Description = ''">close</mat-icon>
             <mat-icon *ngIf="fieldsInfo['Description']?.AccessEditField" matSuffix>mode_edit</mat-icon>

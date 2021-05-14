@@ -6,9 +6,9 @@
 
       <!-- Title Field -->
       <mat-form-field class="example-full-width">
-        <mat-label>{{fieldsInfo['Title']?.Title}}</mat-label>
+        <mat-label>{{fieldsInfo['Title']?.FieldTitle}}</mat-label>
         <input matInput [(ngModel)]="dataModel.Title" name="dataModel.Title" #Title type="text"
-          placeholder="{{fieldsInfo['Title']?.Title}}" minlength="3" maxlength="100" required />
+          placeholder="{{fieldsInfo['Title']?.FieldTitle}}" minlength="3" maxlength="100" required />
         <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
           (click)="dataModel.Title = ''">close</mat-icon>
         <mat-icon matSuffix>mode_edit</mat-icon>

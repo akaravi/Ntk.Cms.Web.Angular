@@ -377,5 +377,7 @@ export class EstatePropertyDetailListComponent implements OnInit, OnDestroy {
   onActionTableRowSelect(row: EstatePropertyDetailModel): void {
     this.tableRowSelected = row;
   }
-
+  onActionBackToParent(): void {
+    this.router.navigate(['/estate/property-type/']);
+  }
 }

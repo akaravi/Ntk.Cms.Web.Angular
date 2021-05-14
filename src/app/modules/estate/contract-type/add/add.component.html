@@ -6,9 +6,9 @@
 
       <!-- Title Field -->
       <mat-form-field class="example-full-width">
-        <mat-label>{{fieldsInfo['Title']?.Title}}</mat-label>
+        <mat-label>{{fieldsInfo['Title']?.FieldTitle}}</mat-label>
         <input matInput [(ngModel)]="dataModel.Title" name="dataModel.Title" #Title type="text"
-          placeholder="{{fieldsInfo['Title']?.Title}}" minlength="3" maxlength="100" required />
+          placeholder="{{fieldsInfo['Title']?.FieldTitle}}" minlength="3" maxlength="100" required />
         <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
           (click)="dataModel.Title = ''">close</mat-icon>
         <mat-icon matSuffix>mode_edit</mat-icon>
@@ -27,9 +27,9 @@
       </div>
       <!-- UnitSalePrice Field -->
       <mat-form-field class="example-full-width">
-        <mat-label>{{fieldsInfo['UnitSalePrice']?.Title}}</mat-label>
+        <mat-label>{{fieldsInfo['UnitSalePrice']?.FieldTitle}}</mat-label>
         <input matInput [(ngModel)]="dataModel.UnitSalePrice" name="dataModel.UnitSalePrice" #UnitSalePrice type="text"
-          placeholder="{{fieldsInfo['UnitSalePrice']?.Title}}" minlength="1" maxlength="100" required />
+          placeholder="{{fieldsInfo['UnitSalePrice']?.FieldTitle}}" minlength="1" maxlength="100" required />
         <mat-icon matSuffix *ngIf="dataModel.UnitSalePrice" matSuffix mat-icon-button aria-label="Clear"
           (click)="dataModel.UnitSalePrice = ''">close</mat-icon>
         <mat-icon matSuffix>mode_edit</mat-icon>
@@ -69,9 +69,9 @@
       </div>
       <!-- UnitRentPrice Field -->
       <mat-form-field class="example-full-width">
-        <mat-label>{{fieldsInfo['UnitRentPrice']?.Title}}</mat-label>
+        <mat-label>{{fieldsInfo['UnitRentPrice']?.FieldTitle}}</mat-label>
         <input matInput [(ngModel)]="dataModel.UnitRentPrice" name="dataModel.UnitRentPrice" #UnitRentPrice type="text"
-          placeholder="{{fieldsInfo['UnitRentPrice']?.Title}}" minlength="1" maxlength="100" required />
+          placeholder="{{fieldsInfo['UnitRentPrice']?.FieldTitle}}" minlength="1" maxlength="100" required />
         <mat-icon matSuffix *ngIf="dataModel.UnitRentPrice" matSuffix mat-icon-button aria-label="Clear"
           (click)="dataModel.UnitRentPrice = ''">close</mat-icon>
         <mat-icon matSuffix>mode_edit</mat-icon>
@@ -112,9 +112,9 @@
       </div>
       <!-- UnitDepositPrice Field -->
       <mat-form-field class="example-full-width">
-        <mat-label>{{fieldsInfo['UnitDepositPrice']?.Title}}</mat-label>
+        <mat-label>{{fieldsInfo['UnitDepositPrice']?.FieldTitle}}</mat-label>
         <input matInput [(ngModel)]="dataModel.UnitDepositPrice" name="dataModel.UnitDepositPrice" #UnitDepositPrice
-          type="text" placeholder="{{fieldsInfo['UnitDepositPrice']?.Title}}" minlength="1" maxlength="100" required />
+          type="text" placeholder="{{fieldsInfo['UnitDepositPrice']?.FieldTitle}}" minlength="1" maxlength="100" required />
         <mat-icon matSuffix *ngIf="dataModel.UnitDepositPrice" matSuffix mat-icon-button aria-label="Clear"
           (click)="dataModel.UnitDepositPrice = ''">close</mat-icon>
         <mat-icon matSuffix>mode_edit</mat-icon>

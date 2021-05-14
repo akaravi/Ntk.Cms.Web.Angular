@@ -7,7 +7,7 @@
 
       <div class="form-group row">
         <mat-form-field class="example-full-width">
-          <mat-select placeholder="{{fieldsInfo['RecordStatus']?.Title}}" [(ngModel)]="dataModel.RecordStatus" name="dataModel.RecordStatus"
+          <mat-select placeholder="{{fieldsInfo['RecordStatus']?.FieldTitle}}" [(ngModel)]="dataModel.RecordStatus" name="dataModel.RecordStatus"
             #RecordStatus="ngModel" panelClass="recordStatus-{{ dataModel.RecordStatus }}" required>
             <mat-option *ngFor="
                   let item of dataModelEnumRecordStatusResult.ListItems;
@@ -21,7 +21,7 @@
         </mat-form-field>
         <mat-form-field class="example-full-width">
           <mat-label>نویسنده</mat-label>
-          <input matInput [(ngModel)]="dataModel.Writer" name="dataModel.Writer" #Writer type="text" placeholder="{{fieldsInfo['Title']?.Title}}"
+          <input matInput [(ngModel)]="dataModel.Writer" name="dataModel.Writer" #Writer type="text" placeholder="{{fieldsInfo['Title']?.FieldTitle}}"
             minlength="3" maxlength="100" required />
           <mat-icon matSuffix *ngIf="dataModel.Writer" matSuffix mat-icon-button aria-label="Clear"
             (click)="dataModel.Writer = ''">close</mat-icon>

@@ -5,7 +5,7 @@
     <div *ngIf="!loading.display" class="form-body">
       <!-- RecordStatus Field -->
       <mat-form-field class="example-full-width">
-        <mat-select placeholder="{{fieldsInfo['RecordStatus']?.Title}}" [(ngModel)]="dataModel.RecordStatus" name="dataModel.RecordStatus"
+        <mat-select placeholder="{{fieldsInfo['RecordStatus']?.FieldTitle}}" [(ngModel)]="dataModel.RecordStatus" name="dataModel.RecordStatus"
           #RecordStatus="ngModel" panelClass="recordStatus-{{ dataModel.RecordStatus }}" required>
           <mat-option *ngFor="
                 let item of dataModelEnumRecordStatusResult.ListItems;
@@ -22,7 +22,7 @@
       <!-- Title Field -->
       <mat-form-field class="example-full-width">
         <mat-label>{{fieldsInfo['Title']?.FieldTitle}}</mat-label>
-        <input matInput [(ngModel)]="dataModel.Title" name="dataModel.Title" #Title type="text" placeholder="{{fieldsInfo['Title']?.Title}}"
+        <input matInput [(ngModel)]="dataModel.Title" name="dataModel.Title" #Title type="text" placeholder="{{fieldsInfo['Title']?.FieldTitle}}"
           minlength="3" maxlength="100" required [disabled]="!fieldsInfo['Title']?.AccessAddField"/>
         <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
           (click)="dataModel.Title = ''">close</mat-icon>
@@ -42,7 +42,7 @@
       <mat-form-field class="example-full-width">
         <mat-label>{{fieldsInfo['TitleResourceLanguage']?.FieldTitle}}</mat-label>
         <input matInput [(ngModel)]="dataModel.TitleResourceLanguage" name="dataModel.TitleResourceLanguage"
-          #TitleResourceLanguage type="text" placeholder="{{fieldsInfo['Title']?.Title}}" minlength="3" maxlength="100" required [disabled]="!fieldsInfo['TitleResourceLanguage']?.AccessAddField"/>
+          #TitleResourceLanguage type="text" placeholder="{{fieldsInfo['Title']?.FieldTitle}}" minlength="3" maxlength="100" required [disabled]="!fieldsInfo['TitleResourceLanguage']?.AccessAddField"/>
         <mat-icon matSuffix *ngIf="dataModel.TitleResourceLanguage" matSuffix mat-icon-button aria-label="Clear"
           (click)="dataModel.TitleResourceLanguage = ''">close</mat-icon>
         <mat-icon matSuffix>mode_edit</mat-icon>
@@ -60,7 +60,7 @@
       <mat-form-field class="example-full-width">
         <mat-label>{{fieldsInfo['CmsModuleClassName']?.FieldTitle}}</mat-label>
         <input matInput [(ngModel)]="dataModel.CmsModuleClassName" name="dataModel.CmsModuleClassName"
-          #CmsModuleClassName type="text" placeholder="{{fieldsInfo['Title']?.Title}}" minlength="3" maxlength="100" required [disabled]="!fieldsInfo['CmsModuleClassName']?.AccessAddField"/>
+          #CmsModuleClassName type="text" placeholder="{{fieldsInfo['Title']?.FieldTitle}}" minlength="3" maxlength="100" required [disabled]="!fieldsInfo['CmsModuleClassName']?.AccessAddField"/>
         <mat-icon matSuffix *ngIf="dataModel.CmsModuleClassName" matSuffix mat-icon-button aria-label="Clear"
           (click)="dataModel.CmsModuleClassName = ''">close</mat-icon>
         <mat-icon matSuffix>mode_edit</mat-icon>
@@ -73,7 +73,7 @@
       <mat-form-field class="example-full-width">
         <mat-label>{{fieldsInfo['ClassActionName']?.FieldTitle}}</mat-label>
         <input matInput [(ngModel)]="dataModel.ClassActionName" name="dataModel.ClassActionName" #ClassActionName
-          type="text" placeholder="{{fieldsInfo['Title']?.Title}}" minlength="3" maxlength="100" required [disabled]="!fieldsInfo['ClassActionName']?.AccessAddField" />
+          type="text" placeholder="{{fieldsInfo['Title']?.FieldTitle}}" minlength="3" maxlength="100" required [disabled]="!fieldsInfo['ClassActionName']?.AccessAddField" />
         <mat-icon matSuffix *ngIf="dataModel.ClassActionName" matSuffix mat-icon-button aria-label="Clear"
           (click)="dataModel.ClassActionName = ''">close</mat-icon>
         <mat-icon matSuffix>mode_edit</mat-icon>

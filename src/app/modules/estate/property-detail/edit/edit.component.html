@@ -6,9 +6,9 @@
 
       <!-- Title Field -->
       <mat-form-field class="example-full-width">
-        <mat-label>{{fieldsInfo['Title']?.Title}}</mat-label>
+        <mat-label>{{fieldsInfo['Title']?.FieldTitle}}</mat-label>
         <input matInput [(ngModel)]="dataModel.Title" name="dataModel.Title" #Title type="text"
-          placeholder="{{fieldsInfo['Title']?.Title}}" minlength="3" maxlength="100" required />
+          placeholder="{{fieldsInfo['Title']?.FieldTitle}}" minlength="3" maxlength="100" required />
         <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
           (click)="dataModel.Title = ''">close</mat-icon>
         <mat-icon matSuffix>mode_edit</mat-icon>
@@ -62,9 +62,9 @@
       </mat-form-field>
       <!-- Unit Field -->
       <mat-form-field class="example-full-width">
-        <mat-label>{{fieldsInfo['Unit']?.Title}}</mat-label>
+        <mat-label>{{fieldsInfo['Unit']?.FieldTitle}}</mat-label>
         <input matInput [(ngModel)]="dataModel.Unit" name="dataModel.Unit" #Unit type="text"
-          placeholder="{{fieldsInfo['Unit']?.Title}}" minlength="1" maxlength="64" required />
+          placeholder="{{fieldsInfo['Unit']?.FieldTitle}}" minlength="1" maxlength="64" required />
         <mat-icon matSuffix *ngIf="dataModel.Unit" matSuffix mat-icon-button aria-label="Clear"
           (click)="dataModel.Unit = ''">close</mat-icon>
         <mat-icon matSuffix>mode_edit</mat-icon>
@@ -73,20 +73,21 @@
           Unit is <strong>required</strong>
         </mat-error>
       </mat-form-field>
+
       <!-- ConfigValueIntValueMin Field -->
       <mat-form-field class="example-full-width">
-        <mat-label>{{fieldsInfo['ConfigValueIntValueMin']?.Title}}</mat-label>
+        <mat-label>{{fieldsInfo['ConfigValueIntValueMin']?.FieldTitle}}</mat-label>
         <input matInput [(ngModel)]="dataModel.ConfigValueIntValueMin" name="dataModel.ConfigValueIntValueMin"
-          #ConfigValueIntValueMin type="number" placeholder="{{fieldsInfo['ConfigValueIntValueMin']?.Title}}" />
+          #ConfigValueIntValueMin type="number" placeholder="{{fieldsInfo['ConfigValueIntValueMin']?.FieldTitle}}" />
         <mat-icon matSuffix *ngIf="dataModel.ConfigValueIntValueMin" matSuffix mat-icon-button aria-label="Clear"
           (click)="dataModel.ConfigValueIntValueMin = 0">close</mat-icon>
         <mat-icon matSuffix>mode_edit</mat-icon>
       </mat-form-field>
       <!-- ConfigValueIntValueMax Field -->
       <mat-form-field class="example-full-width">
-        <mat-label>{{fieldsInfo['ConfigValueIntValueMax']?.Title}}</mat-label>
+        <mat-label>{{fieldsInfo['ConfigValueIntValueMax']?.FieldTitle}}</mat-label>
         <input matInput [(ngModel)]="dataModel.ConfigValueIntValueMax" name="dataModel.ConfigValueIntValueMax"
-          #ConfigValueIntValueMax type="number" placeholder="{{fieldsInfo['ConfigValueIntValueMax']?.Title}}" />
+          #ConfigValueIntValueMax type="number" placeholder="{{fieldsInfo['ConfigValueIntValueMax']?.FieldTitle}}" />
         <mat-icon matSuffix *ngIf="dataModel.ConfigValueIntValueMax" matSuffix mat-icon-button aria-label="Clear"
           (click)="dataModel.ConfigValueIntValueMax = 0">close</mat-icon>
         <mat-icon matSuffix>mode_edit</mat-icon>
@@ -141,9 +142,9 @@
       </div>
     <!-- ConfigValueDefaultValue Field -->
     <mat-form-field class="example-full-width">
-      <mat-label>{{fieldsInfo['ConfigValueDefaultValue']?.Title}}</mat-label>
+      <mat-label>{{fieldsInfo['ConfigValueDefaultValue']?.FieldTitle}}</mat-label>
       <input matInput [(ngModel)]="dataModel.ConfigValueDefaultValue" name="dataModel.ConfigValueDefaultValue" #ConfigValueDefaultValue type="text"
-        placeholder="{{fieldsInfo['ConfigValueDefaultValue']?.Title}}"  />
+        placeholder="{{fieldsInfo['ConfigValueDefaultValue']?.FieldTitle}}"  />
       <mat-icon matSuffix *ngIf="dataModel.ConfigValueDefaultValue" matSuffix mat-icon-button aria-label="Clear"
         (click)="dataModel.ConfigValueDefaultValue = null">close</mat-icon>
       <mat-icon matSuffix>mode_edit</mat-icon>
