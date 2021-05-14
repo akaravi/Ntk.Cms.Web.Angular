@@ -17,7 +17,9 @@ import {
   EstatePropertyTypeService,
   EstatePropertyTypeModel,
   EstatePropertyDetailGroupModel,
-  EstatePropertyDetailGroupService
+  EstatePropertyDetailGroupService,
+  EnumActionGoStep,
+  EditStepDtoModel
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -32,6 +34,7 @@ import { Subscription } from 'rxjs';
 import { EstatePropertyDetailEditComponent } from '../edit/edit.component';
 import { EstatePropertyDetailAddComponent } from '../add/add.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-hypershop-category-list',
@@ -91,6 +94,7 @@ export class EstatePropertyDetailListComponent implements OnInit, OnDestroy {
   tabledisplayedColumns: string[] = [
     'IconFont',
     'Title',
+    'Unit',
     'ShowInFormOrder',
     'LinkPropertyTypeId',
     'LinkPropertyDetailGroupId',
@@ -195,7 +199,30 @@ export class EstatePropertyDetailListComponent implements OnInit, OnDestroy {
     this.filteModelContent.RowPerPage = event.pageSize;
     this.DataGetAll();
   }
+  onTableDropRow(event: CdkDragDrop<EstatePropertyDetailModel[]>): void {
+    const previousIndex = this.tableSource.data.findIndex(row => row === event.item.data);
+    const model = new EditStepDtoModel<string>();
+    model.Id = this.tableSource.data[previousIndex].Id;
+    model.CenterId = this.tableSource.data[event.currentIndex].Id;
+    if (previousIndex > event.currentIndex) {
+      model.ActionGo = EnumActionGoStep.GoUp;
+    }
+    else {
+      model.ActionGo = EnumActionGoStep.GoDown;
+    }
+    this.estatePropertyDetailService.ServiceEditStep(model).subscribe(
+      (next) => {
+        if (next.IsSuccess) {
+          moveItemInArray(this.tableSource.data, previousIndex, event.currentIndex);
+          this.tableSource.data = this.tableSource.data.slice();
+        }
+      },
+      (error) => {
+        this.cmsToastrService.typeError(error);
 
+      }
+    );
+  }
   onActionSelectorSelect(model: EstatePropertyDetailGroupModel | null): void {
     this.filteModelContent = new FilterModel();
     this.categoryModelSelected = model;

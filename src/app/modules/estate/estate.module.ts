@@ -78,6 +78,7 @@ import { EstatePropertyDetailEditComponent } from './property-detail/edit/edit.c
 import { EstatePropertyDetailListComponent } from './property-detail/list/list.component';
 import { EstatePropertyDetailSelectorComponent } from './property-detail/selector/selector.component';
 import { EstatePropertyDetailTreeComponent } from './property-detail/tree/tree.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -152,6 +153,7 @@ import { EstatePropertyDetailTreeComponent } from './property-detail/tree/tree.c
     MatFormFieldModule,
     MatStepperModule,
     IconPickerModule,
+    DragDropModule,
   ],
   providers: [
     CoreEnumService,

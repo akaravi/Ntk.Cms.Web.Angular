@@ -9,6 +9,7 @@ import {
   CoreLocationModel,
   EstatePropertyTypeModel,
   EstatePropertyDetailGroupModel,
+  EstateEnumService,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -43,6 +44,7 @@ export class EstatePropertyDetailAddComponent implements OnInit {
     public coreEnumService: CoreEnumService,
     public estatePropertyDetailService: EstatePropertyDetailService,
     private cmsToastrService: CmsToastrService,
+    private estateEnumService: EstateEnumService,
     public publicHelper: PublicHelper,
   ) {
     if (data) {
@@ -70,12 +72,20 @@ export class EstatePropertyDetailAddComponent implements OnInit {
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   fileManagerOpenForm = false;
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
+  dataModelEnumInputDataTypeResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
+  keywordDataModel = [];
+
   ngOnInit(): void {
 
     this.formInfo.FormTitle = 'اضافه کردن  ';
     this.getEnumRecordStatus();
     this.DataGetAccess();
-
+    this.getEnumInputDataType();
+  }
+  getEnumInputDataType(): void {
+    this.estateEnumService.ServiceEnumInputDataType().subscribe((next) => {
+      this.dataModelEnumInputDataTypeResult = next;
+    });
   }
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
@@ -155,6 +165,12 @@ export class EstatePropertyDetailAddComponent implements OnInit {
       return;
     }
     this.formInfo.FormSubmitAllow = false;
+    if (this.keywordDataModel && this.keywordDataModel.length > 0) {
+      const listKeyword = this.keywordDataModel.map(x => x.display);
+      if (listKeyword && listKeyword.length > 0) {
+        this.dataModel.ConfigValueDefaultValueJson = listKeyword.join(',');
+      }
+    }
     this.DataAddContent();
   }
   onFormCancel(): void {

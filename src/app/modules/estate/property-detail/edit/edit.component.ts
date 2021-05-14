@@ -62,6 +62,7 @@ export class EstatePropertyDetailEditComponent implements OnInit {
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   dataModelEnumInputDataTypeResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
+  keywordDataModel = [];
 
   fileManagerOpenForm = false;
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
@@ -104,6 +105,8 @@ export class EstatePropertyDetailEditComponent implements OnInit {
 
         this.dataModel = next.Item;
         if (next.IsSuccess) {
+          this.dataModel.ConfigValueDefaultValueJson = this.dataModel.ConfigValueDefaultValueJson + '';
+          this.keywordDataModel = this.dataModel.ConfigValueDefaultValueJson.split(',');
           this.formInfo.FormTitle = this.formInfo.FormTitle + ' ' + next.Item.Title;
           this.formInfo.FormAlert = '';
         } else {
@@ -164,9 +167,16 @@ export class EstatePropertyDetailEditComponent implements OnInit {
   onIconPickerSelect(model: any): void {
     this.dataModel.IconFont = model;
   }
+
   onFormSubmit(): void {
     if (!this.formGroup.valid) {
       return;
+    }
+    if (this.keywordDataModel && this.keywordDataModel.length > 0) {
+      const listKeyword = this.keywordDataModel.map(x => x.display);
+      if (listKeyword && listKeyword.length > 0) {
+        this.dataModel.ConfigValueDefaultValueJson = listKeyword.join(',');
+      }
     }
     this.formInfo.FormSubmitAllow = false;
     this.DataEditContent();
