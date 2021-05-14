@@ -1,18 +1,20 @@
 <div class="row">
-  <div *ngIf="requestPareintId.length===0" class="col-xl-3">
+  <div *ngIf="requestLinkPropertyTypeId?.length===0" class="col-xl-3">
     <app-estate-propertytype-tree (optionSelect)="onActionSelectorSelect($event)"></app-estate-propertytype-tree>
   </div>
-  <div [ngClass]="(requestPareintId.length===0)?'col-xl-9':'col-xl-12'">
+  <div [ngClass]="(requestLinkPropertyTypeId?.length===0)?'col-xl-9':'col-xl-12'">
     <div class="button-row">
       <button *ngIf="dataModelResult.Access.AccessAddRow " (click)="onActionbuttonNewRow()" type="button"
-        class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">{{'ACTION.ADD' | translate}}</button>
+        class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">{{'ACTION.ADD' |
+        translate}}</button>
       <button
-        *ngIf="dataModelResult.Access.AccessEditRow && (tableRowSelected?.Id?.length>0 || requestPareintId.length>0)"
+        *ngIf="dataModelResult.Access.AccessEditRow && (tableRowSelected?.Id?.length>0 || requestLinkPropertyTypeId?.length>0)"
         (click)="onActionbuttonEditRow()" type="button" class="btn btn-warning ml-2" data-toggle="modal"
         data-target="#categoryModal">{{'ACTION.EDIT' | translate}}</button>
       <button
-        *ngIf="dataModelResult.Access.AccessDeleteRow && (tableRowSelected?.Id?.length>0 || requestPareintId.length>0)"
-        (click)="onActionbuttonDeleteRow()" type="button" class="btn btn-danger  ml-2">{{'ACTION.DELETE' | translate}}</button>
+        *ngIf="dataModelResult.Access.AccessDeleteRow && (tableRowSelected?.Id?.length>0 || requestLinkPropertyTypeId?.length>0)"
+        (click)="onActionbuttonDeleteRow()" type="button" class="btn btn-danger  ml-2">{{'ACTION.DELETE' |
+        translate}}</button>
 
       <a class="btn btn-secondary btn-sm BTN">
         <mat-slide-toggle [(ngModel)]="optionsSearch.data.show">{{'ACTION.SEARCH' | translate}}</mat-slide-toggle>
@@ -26,8 +28,9 @@
         <mat-slide-toggle (click)="onActionbuttonExport()">{{'ACTION.EXPORTFILE' | translate}}
         </mat-slide-toggle>
       </a>
-      <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">{{'ACTION.RELOAD' | translate}}</button>
-      <button (click)="onActionBackToParent()" *ngIf="requestPareintId.length>0" type="button"
+      <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">{{'ACTION.RELOAD' |
+        translate}}</button>
+      <button (click)="onActionBackToParent()" *ngIf="requestLinkPropertyTypeId?.length>0" type="button"
         class="btn btn-warning BTN">{{'ACTION.BACK' | translate}}</button>
       <app-cms-search-list [(options)]="optionsSearch"></app-cms-search-list>
       <app-cms-export-list [(options)]="optionsExport"></app-cms-export-list>
@@ -38,74 +41,63 @@
     <app-progress-spinner [options]="loading">
     </app-progress-spinner>
 
+
     <div class="example-container mat-elevation-z8">
       <mat-table [dataSource]="tableSource" matSort #tableSort="matSort" (matSortChange)="onTableSortData(tableSort)">
-        <!-- Image Column -->
-        <ng-container matColumnDef="Image">
+        <!-- LinkMainImageIdSrc Column -->
+        <ng-container matColumnDef="LinkMainImageIdSrc">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{'TITLE.PICTURE' | translate}} </mat-header-cell>
           <mat-cell *matCellDef="let row">
-            <img *ngIf="row?.Image?.length>0" style="vertical-align:middle;" aria-hidden src="{{row.Image}}" height="40"
-              width="40" />
+            <img *ngIf="row?.LinkMainImageIdSrc?.length>0" style="vertical-align:middle;" aria-hidden
+              src="{{row.LinkMainImageIdSrc}}" height="40" width="40" />
 
           </mat-cell>
         </ng-container>
-        <!-- Id Column -->
+        <!-- ID Column -->
         <ng-container matColumnDef="Id">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Id']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Id}} </mat-cell>
         </ng-container>
-        <!-- Category Column -->
-        <ng-container matColumnDef="Category">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Category']?.FieldTitle}}
+        <!-- LinkSiteId Column -->
+        <ng-container matColumnDef="LinkSiteId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkSiteId']?.FieldTitle}}
           </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.Category}} </mat-cell>
+          <mat-cell *matCellDef="let row"> {{row.LinkSiteId}} </mat-cell>
         </ng-container>
-
-        <!-- Name Column -->
-        <ng-container matColumnDef="Name">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Name']?.FieldTitle}} </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.Name}} </mat-cell>
+        <!-- RecordStatus Column -->
+        <ng-container matColumnDef="RecordStatus">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['RecordStatus']?.FieldTitle}}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> <i [ngClass]="row.RecordStatus|statusClass"></i> </mat-cell>
         </ng-container>
-
-
-        <!-- Status Column -->
-        <ng-container matColumnDef="Status">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Status']?.FieldTitle}} </mat-header-cell>
-          <mat-cell *matCellDef="let row"> <i [ngClass]="row.Status | boolclass"></i>
-          </mat-cell>
+        <!-- Title Column -->
+        <ng-container matColumnDef="Title">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Title']?.FieldTitle}} </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.Title}} </mat-cell>
         </ng-container>
-        <!-- Price Column -->
-        <ng-container matColumnDef="Price">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Price']?.FieldTitle}} </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.Price}} </mat-cell>
+        <!-- ScoreClick Column -->
+        <ng-container matColumnDef="ScoreClick">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['ScoreClick']?.FieldTitle}}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.ScoreClick}} </mat-cell>
         </ng-container>
-        <!-- SalePrice Column -->
-        <ng-container matColumnDef="SalePrice">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['SalePrice']?.FieldTitle}}  </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.SalePrice}} </mat-cell>
+        <!-- CreatedDate Column -->
+        <ng-container matColumnDef="CreatedDate">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['CreatedDate']?.FieldTitle}}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.CreatedDate) }} </mat-cell>
         </ng-container>
-        <!-- Count Column -->
-        <ng-container matColumnDef="Count">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Count']?.FieldTitle}} </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.Count}} </mat-cell>
+        <!-- UpdatedDate Column -->
+        <ng-container matColumnDef="UpdatedDate">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['UpdatedDate']?.FieldTitle}}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ publicHelper.LocaleDate(row.UpdatedDate) }} </mat-cell>
         </ng-container>
-          <!-- Unit Column -->
-        <ng-container matColumnDef="Unit">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Unit']?.FieldTitle}}  </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.Unit}} </mat-cell>
-        </ng-container>
-        <!-- Discount Column -->
-        <ng-container matColumnDef="Discount">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>  {{fieldsInfo['Discount']?.FieldTitle}}   </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.Discount}} </mat-cell>
-        </ng-container>
-
         <!-- Action Column -->
         <ng-container matColumnDef="Action">
           <mat-header-cell *matHeaderCellDef> ... </mat-header-cell>
-          <mat-cell *matCellDef="let row" class=' Action'>
+          <mat-cell *matCellDef="let row" class='Action'>
             <!-- Action Menu -->
-
             <button mat-icon-button [matMenuTriggerFor]="actionMenu" aria-label="Action Menu">
               <mat-icon>more_vert</mat-icon>
             </button>
@@ -119,6 +111,7 @@
                 <mat-icon>delete_forever</mat-icon>
                 <span>{{'ACTION.DELETE' | translate}}</span>
               </button>
+
             </mat-menu>
           </mat-cell>
         </ng-container>
@@ -131,8 +124,6 @@
       <mat-paginator #paginator [length]="(dataModelResult.TotalRowCount)"
         [pageIndex]="(dataModelResult.CurrentPageNumber-1)" [pageSize]="dataModelResult.RowPerPage"
         [pageSizeOptions]="[5, 10, 20, 100]" (page)="onTablePageingData($event)"></mat-paginator>
-
     </div>
-
   </div>
 </div>

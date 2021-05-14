@@ -36,7 +36,7 @@ import { EstatePropertyAddComponent } from '../add/add.component';
   styleUrls: ['./list.component.scss']
 })
 export class EstatePropertyListComponent implements OnInit, OnDestroy {
-  requestPareintId = '';
+  requestLinkPropertyTypeId = '';
   constructor(
     private estatePropertyService: EstatePropertyService,
     private activatedRoute: ActivatedRoute,
@@ -46,6 +46,8 @@ export class EstatePropertyListComponent implements OnInit, OnDestroy {
     private cmsConfirmationDialogService: CmsConfirmationDialogService,
     private router: Router,
     public dialog: MatDialog) {
+    this.requestLinkPropertyTypeId = this.activatedRoute.snapshot.paramMap.get('LinkPropertyTypeId');
+
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
@@ -55,6 +57,12 @@ export class EstatePropertyListComponent implements OnInit, OnDestroy {
     /*filter Sort*/
     this.filteModelProperty.SortColumn = 'Id';
     this.filteModelProperty.SortType = EnumSortType.Ascending;
+    if (this.requestLinkPropertyTypeId  && this.requestLinkPropertyTypeId.length > 0) {
+      const filter = new FilterDataModel();
+      filter.PropertyName = 'LinkPropertyTypeId';
+      filter.Value = this.requestLinkPropertyTypeId;
+      this.filteModelProperty.Filters.push(filter);
+    }
   }
   comment: string;
   author: string;
@@ -74,30 +82,21 @@ export class EstatePropertyListComponent implements OnInit, OnDestroy {
   tableSource: MatTableDataSource<EstatePropertyModel> = new MatTableDataSource<EstatePropertyModel>();
   categoryModelSelected: EstatePropertyTypeModel;
   tabledisplayedColumns: string[] = [
-    'Image',
-    'Status',
+    'LinkMainImageIdSrc',
     'Id',
-    'PropertyType',
-    'Name',
-    'Count',
-    'Unit',
-    'Price',
-    'SalePrice',
-
+    'RecordStatus',
+    'LinkSiteId',
+    'Title',
+    'ScoreClick',
+    'CreatedDate',
+    'UpdatedDate',
     'Action'
   ];
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
   cmsApiStoreSubscribe: Subscription;
   ngOnInit(): void {
-    if (this.requestPareintId === this.activatedRoute.snapshot.paramMap.get('PareintId')) {
-      this.requestPareintId = this.activatedRoute.snapshot.paramMap.get('PareintId');
-    }
-    if (this.requestPareintId.length > 0) {
-      const filter = new FilterDataModel();
-      filter.PropertyName = 'PropertyTypeId';
-      filter.Value = this.requestPareintId;
-      this.filteModelProperty.Filters.push(filter);
-    }
+
+
 
     this.DataGetAll();
     this.tokenInfo = this.cmsApiStore.getStateSnapshot().ntkCmsAPiState.tokenInfo;
@@ -123,7 +122,7 @@ export class EstatePropertyListComponent implements OnInit, OnDestroy {
     /*filter CLone*/
     if (this.categoryModelSelected && this.categoryModelSelected.Id && this.categoryModelSelected.Id.length > 0) {
       const filter = new FilterDataModel();
-      filter.PropertyName = 'PropertyTypeId';
+      filter.PropertyName = 'LinkPropertyTypeId';
       filter.Value = this.categoryModelSelected.Id;
       filterModel.Filters.push(filter);
     }
@@ -136,7 +135,18 @@ export class EstatePropertyListComponent implements OnInit, OnDestroy {
         if (next.IsSuccess) {
           this.dataModelResult = next;
           this.tableSource.data = next.ListItems;
-
+          if (this.tokenInfo.UserAccessAdminAllowToAllData) {
+            this.tabledisplayedColumns = this.publicHelper.listAddIfNotExist(
+              this.tabledisplayedColumns,
+              'LinkSiteId',
+              0
+            );
+          } else {
+            this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
+              this.tabledisplayedColumns,
+              'LinkSiteId'
+            );
+          }
           if (this.optionsSearch.childMethods) {
             this.optionsSearch.childMethods.setAccess(next.Access);
           }
@@ -186,8 +196,8 @@ export class EstatePropertyListComponent implements OnInit, OnDestroy {
   onActionbuttonNewRow(): void {
     if (this.categoryModelSelected == null &&
       (this.categoryModelSelected && this.categoryModelSelected.Id && this.categoryModelSelected.Id.length === 0) && (
-        this.requestPareintId == null ||
-        this.requestPareintId.length === 0)
+        this.requestLinkPropertyTypeId == null ||
+        this.requestLinkPropertyTypeId.length === 0)
     ) {
       const message = 'محتوا انتخاب نشده است';
       this.cmsToastrService.typeErrorSelected(message);
@@ -202,7 +212,7 @@ export class EstatePropertyListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessAdd();
       return;
     }
-    let parentId: string = this.requestPareintId;
+    let parentId: string = this.requestLinkPropertyTypeId;
     if (this.categoryModelSelected && this.categoryModelSelected.Id.length > 0) {
       parentId = this.categoryModelSelected.Id;
     }

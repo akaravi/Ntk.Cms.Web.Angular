@@ -149,7 +149,7 @@ export class EstatePropertyDetailAddComponent implements OnInit {
     }
     this.dataModel.LinkPropertyTypeId = model.Id;
   }
-  onActionSelectorSelectDetailGroup(model: EstatePropertyDetailGroupModel | null): void {
+  onActionSelectorDetailGroup(model: EstatePropertyDetailGroupModel | null): void {
     if (!model || !model.Id || model.Id.length <= 0) {
       const message = 'دسته بندی اطلاعات مشخص نیست';
       this.cmsToastrService.typeErrorSelected(message);

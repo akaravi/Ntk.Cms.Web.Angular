@@ -31,11 +31,20 @@ const routes: Routes = [
       },
       /*Config*/
       {
+        path: 'property',
+        component: EstatePropertyListComponent
+      },
+      {
+        path: 'property/LinkPropertyTypeId/:LinkPropertyTypeId',
+        component: EstatePropertyListComponent
+      },
+      /**/
+      {
         path: 'property-type',
         component: EstatePropertyTypeListComponent
       },
       /**/
-        {
+      {
         path: 'account-agency',
         component: EstateAccountAgencyListComponent
       },
@@ -47,11 +56,6 @@ const routes: Routes = [
       {
         path: 'contract-type',
         component: EstateContractTypeListComponent
-      },
-      /**/
-      {
-        path: 'content',
-        component: EstatePropertyListComponent
       },
       /**/
       {
@@ -68,11 +72,7 @@ const routes: Routes = [
         component: EstatePropertyDetailListComponent
       },
       /** */
-      {
-        path: 'content/PareintId/:PareintId',
-        component: EstatePropertyListComponent
-      },
-      /**/
+
     ]
   },
 ];

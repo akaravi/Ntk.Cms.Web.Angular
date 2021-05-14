@@ -22,7 +22,7 @@
         [optionSelectForce]="dataModel.LinkPropertyTypeId" [optionPlaceholder]="'دسته بندی'">
       </app-estate-propertytype-selector>
       <!-- LinkPropertyDetailGroupId Field -->
-      <app-estate-propertydetailgroup-selector (optionSelect)="onActionSelectorSelectDetailGroup($event)"
+      <app-estate-propertydetailgroup-selector (optionSelect)="onActionSelectorDetailGroup($event)"
         [optionSelectForce]="dataModel.LinkPropertyDetailGroupId" [optionPlaceholder]="'دسته بندی'">
       </app-estate-propertydetailgroup-selector>
       <!-- IconFont Field -->
@@ -31,7 +31,7 @@
         <input matInput [(ngModel)]="dataModel.IconFont" name="dataModel.IconFont" #IconFont
           [iconPicker]="dataModel.IconFont" [ipIconPack]="['fa']" [ipPosition]="'top'"
           (iconPickerSelect)="onIconPickerSelect($event)" type="text"
-          [disabled]="!fieldsInfo['IconFont']?.AccessEditField" placeholder="{{fieldsInfo['IconFont']?.FieldTitle}}" />
+          [disabled]="!fieldsInfo['IconFont']?.AccessAddField" placeholder="{{fieldsInfo['IconFont']?.FieldTitle}}" />
         <span class="input-group-addon"><i [ngClass]="dataModel.IconFont"></i></span>
         <mat-icon>{{dataModel.IconFont}}</mat-icon>
         <mat-icon matSuffix *ngIf="dataModel.IconFont" matSuffix mat-icon-button aria-label="Clear"
@@ -44,7 +44,7 @@
       <mat-form-field class="example-full-width" *ngIf="fieldsInfo['ShowInFormOrder']?.AccessWatchField">
         <mat-label> {{fieldsInfo['ShowInFormOrder']?.FieldTitle}}</mat-label>
         <input matInput [(ngModel)]="dataModel.ShowInFormOrder" name="dataModel.ShowInFormOrder" #ShowInFormOrder
-          type="number" [disabled]="!fieldsInfo['ShowInFormOrder']?.AccessEditField"
+          type="number" [disabled]="!fieldsInfo['ShowInFormOrder']?.AccessAddField"
           placeholder="{{fieldsInfo['ShowInFormOrder']?.FieldTitle}}" />
         <mat-icon matSuffix *ngIf="dataModel.ShowInFormOrder" matSuffix mat-icon-button aria-label="Clear"
           (click)="dataModel.ShowInFormOrder = 1">close</mat-icon>
@@ -94,7 +94,7 @@
       <div class="example-full-width">
         <mat-slide-toggle [(ngModel)]="dataModel.InvisibleForEndUser"
           *ngIf="fieldsInfo['InvisibleForEndUser']?.AccessWatchField"
-          [disabled]="!fieldsInfo['InvisibleForEndUser']?.AccessEditField" name="dataModel.InvisibleForEndUser">
+          [disabled]="!fieldsInfo['InvisibleForEndUser']?.AccessAddField" name="dataModel.InvisibleForEndUser">
           {{fieldsInfo['InvisibleForEndUser']?.FieldTitle}}
         </mat-slide-toggle>
       </div>
@@ -102,21 +102,21 @@
       <div class="example-full-width">
         <mat-slide-toggle [(ngModel)]="dataModel.InvisibleForSubmiter"
           *ngIf="fieldsInfo['InvisibleForSubmiter']?.AccessWatchField"
-          [disabled]="!fieldsInfo['InvisibleForSubmiter']?.AccessEditField" name="dataModel.InvisibleForSubmiter">
+          [disabled]="!fieldsInfo['InvisibleForSubmiter']?.AccessAddField" name="dataModel.InvisibleForSubmiter">
           {{fieldsInfo['InvisibleForSubmiter']?.FieldTitle}}
         </mat-slide-toggle>
       </div>
       <!-- Required Field -->
       <div class="example-full-width">
         <mat-slide-toggle [(ngModel)]="dataModel.Required" *ngIf="fieldsInfo['Required']?.AccessWatchField"
-          [disabled]="!fieldsInfo['Required']?.AccessEditField" name="dataModel.Required">
+          [disabled]="!fieldsInfo['Required']?.AccessAddField" name="dataModel.Required">
           {{fieldsInfo['Required']?.FieldTitle}}
         </mat-slide-toggle>
       </div>
       <!-- IsHistoryable Field -->
       <div class="example-full-width">
         <mat-slide-toggle [(ngModel)]="dataModel.IsHistoryable" *ngIf="fieldsInfo['IsHistoryable']?.AccessWatchField"
-          [disabled]="!fieldsInfo['IsHistoryable']?.AccessEditField" name="dataModel.IsHistoryable">
+          [disabled]="!fieldsInfo['IsHistoryable']?.AccessAddField" name="dataModel.IsHistoryable">
           {{fieldsInfo['IsHistoryable']?.FieldTitle}}
         </mat-slide-toggle>
       </div>
@@ -124,7 +124,7 @@
       <div class="example-full-width">
         <mat-slide-toggle [(ngModel)]="dataModel.ConfigValueMultipleChoice"
           *ngIf="fieldsInfo['ConfigValueMultipleChoice']?.AccessWatchField"
-          [disabled]="!fieldsInfo['ConfigValueMultipleChoice']?.AccessEditField"
+          [disabled]="!fieldsInfo['ConfigValueMultipleChoice']?.AccessAddField"
           name="dataModel.ConfigValueMultipleChoice">
           {{fieldsInfo['ConfigValueMultipleChoice']?.FieldTitle}}
         </mat-slide-toggle>
@@ -133,7 +133,7 @@
       <div class="example-full-width">
         <mat-slide-toggle [(ngModel)]="dataModel.ConfigValueForceUseDefaultValue"
           *ngIf="dataModel.ConfigValueMultipleChoice && fieldsInfo['ConfigValueForceUseDefaultValue']?.AccessWatchField"
-          [disabled]="!fieldsInfo['ConfigValueForceUseDefaultValue']?.AccessEditField"
+          [disabled]="!fieldsInfo['ConfigValueForceUseDefaultValue']?.AccessAddField"
           name="dataModel.ConfigValueForceUseDefaultValue">
           {{fieldsInfo['ConfigValueForceUseDefaultValue']?.FieldTitle}}
         </mat-slide-toggle>
