@@ -1,7 +1,16 @@
 
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { FormGroup } from '@angular/forms';
-import { DataFieldInfoModel, ErrorExceptionResult, FilterModel, FormInfoModel, NewsCategoryModel, NewsCategoryService } from 'ntk-cms-api';
+import {
+  CoreEnumService,
+  DataFieldInfoModel,
+  ErrorExceptionResult,
+  FilterModel,
+  FormInfoModel,
+  DonateTargetCategoryModel,
+  DonateTargetCategoryService
+} from 'ntk-cms-api';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
@@ -9,17 +18,17 @@ import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 
 @Component({
-  selector: 'app-news-category-delete',
+  selector: 'app-donate-targetcategory-delete',
   templateUrl: './delete.component.html',
   styleUrls: ['./delete.component.scss']
 })
-export class NewsCategoryDeleteComponent implements OnInit {
+export class DonateTargetCategoryDeleteComponent implements OnInit {
   requestId = 0;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialogRef: MatDialogRef<NewsCategoryDeleteComponent>,
+    private dialogRef: MatDialogRef<DonateTargetCategoryDeleteComponent>,
     private publicHelper: PublicHelper,
-    private newsCategoryService: NewsCategoryService,
+    private donateTargetCategoryService: DonateTargetCategoryService,
     private cmsToastrService: CmsToastrService
   ) {
     if (data) {
@@ -30,9 +39,9 @@ export class NewsCategoryDeleteComponent implements OnInit {
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
   loading = new ProgressSpinnerModel();
-  dataModelResultCategory: ErrorExceptionResult<NewsCategoryModel> = new ErrorExceptionResult<NewsCategoryModel>();
-  dataModelResultCategoryAllData: ErrorExceptionResult<NewsCategoryModel> = new ErrorExceptionResult<NewsCategoryModel>();
-    dataModel: any = {};
+  dataModelResultCategory: ErrorExceptionResult<DonateTargetCategoryModel> = new ErrorExceptionResult<DonateTargetCategoryModel>();
+  dataModelResultCategoryAllData: ErrorExceptionResult<DonateTargetCategoryModel> = new ErrorExceptionResult<DonateTargetCategoryModel>();
+  dataModel: any = {};
   formInfo: FormInfoModel = new FormInfoModel();
   ngOnInit(): void {
 
@@ -52,7 +61,7 @@ export class NewsCategoryDeleteComponent implements OnInit {
     }
     this.formInfo.FormAlert = 'در حال لود اطلاعات';
     this.loading.display = true;
-    this.newsCategoryService
+    this.donateTargetCategoryService
       .ServiceGetOneById(this.requestId)
       .subscribe(
         (next) => {
@@ -82,7 +91,7 @@ export class NewsCategoryDeleteComponent implements OnInit {
     const filterModel: FilterModel = new FilterModel();
     filterModel.RowPerPage = 100;
     this.loading.display = true;
-    this.newsCategoryService
+    this.donateTargetCategoryService
       .ServiceGetAll(filterModel)
       .subscribe(
         (next) => {
@@ -124,7 +133,7 @@ export class NewsCategoryDeleteComponent implements OnInit {
 
     this.formInfo.ButtonSubmittedEnabled = false;
     this.loading.display = true;
-    this.newsCategoryService
+    this.donateTargetCategoryService
       .ServiceMove(this.requestId, this.dataModel.NewCatId)
       .subscribe(
         (next) => {
@@ -158,7 +167,7 @@ export class NewsCategoryDeleteComponent implements OnInit {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.ButtonSubmittedEnabled = false;
     this.loading.display = true;
-    this.newsCategoryService
+    this.donateTargetCategoryService
       .ServiceDelete(this.requestId)
       .subscribe(
         (next) => {
@@ -186,7 +195,7 @@ export class NewsCategoryDeleteComponent implements OnInit {
       );
 
   }
-  onFormChangeNewCatId(model: NewsCategoryModel): void {
+  onFormChangeNewCatId(model: DonateTargetCategoryModel): void {
     this.formInfo.FormAlert = '';
     if (this.requestId === 0 || !model || model.Id <= 0) {
       this.cmsToastrService.typeErrorDeleteRowIsNull();

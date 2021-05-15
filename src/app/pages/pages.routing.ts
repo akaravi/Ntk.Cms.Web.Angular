@@ -120,6 +120,11 @@ const routes: Routes = [
           import('../modules/estate/estate.module').then(m => m.EstateModule)
       },
       {
+        path: 'donate',
+        loadChildren: () =>
+          import('../modules/donate/donate.module').then(m => m.DonateModule)
+      },
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',
