@@ -60,29 +60,30 @@ export class EstateContractTypeSelectorComponent implements OnInit {
   }
 
   displayFn(model?: EstateContractTypeModel): string | undefined {
-    return model ? model.Title  : undefined;
+    return model ? model.Title : undefined;
   }
   displayOption(model?: EstateContractTypeModel): string | undefined {
-    return model ? model.Title  : undefined;
+    return model ? model.Title : undefined;
   }
-  async DataGetAll(text: string | number | any): Promise<EstateContractTypeModel[]> {
+  async DataGetAll(text: string | any): Promise<EstateContractTypeModel[]> {
     const filteModel = new FilterModel();
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
     // this.loading.backdropEnabled = false;
     let filter = new FilterDataModel();
-    filter.PropertyName = 'Name';
-    filter.Value = text;
-    filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
-    filteModel.Filters.push(filter);
-    /* */
-    filter = new FilterDataModel();
-    filter.PropertyName = 'Id';
-    filter.Value = text;
-    filter.SearchType = EnumFilterDataModelSearchTypes.Equal;
-    filter.ClauseType = EnumClauseType.Or;
-    filteModel.Filters.push(filter);
-
+    if (text && text.length > 0) {
+      filter.PropertyName = 'Title';
+      filter.Value = text;
+      filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
+      filteModel.Filters.push(filter);
+      /* */
+      filter = new FilterDataModel();
+      filter.PropertyName = 'Id';
+      filter.Value = text;
+      filter.SearchType = EnumFilterDataModelSearchTypes.Equal;
+      filter.ClauseType = EnumClauseType.Or;
+      filteModel.Filters.push(filter);
+    }
     this.loading.Globally = false;
     this.loading.display = true;
     return await this.categoryService.ServiceGetAll(filteModel)

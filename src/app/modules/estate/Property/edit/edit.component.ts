@@ -23,6 +23,7 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 import * as Leaflet from 'leaflet';
 import { Map as leafletMap } from 'leaflet';
 import { PoinModel } from 'src/app/core/models/pointModel';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -33,17 +34,18 @@ import { PoinModel } from 'src/app/core/models/pointModel';
 export class EstatePropertyEditComponent implements OnInit {
   requestId = '';
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    // @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
-    private dialogRef: MatDialogRef<EstatePropertyEditComponent>,
+    // private dialogRef: MatDialogRef<EstatePropertyEditComponent>,
+    private activatedRoute: ActivatedRoute,
     public coreEnumService: CoreEnumService,
     public estatePropertyService: EstatePropertyService,
     private cmsToastrService: CmsToastrService,
+    private router: Router,
     public publicHelper: PublicHelper,
   ) {
-    if (data) {
-      this.requestId = data.id + '';
-    }
+    this.requestId = this.activatedRoute.snapshot.paramMap.get('id');
+
 
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
@@ -87,7 +89,8 @@ export class EstatePropertyEditComponent implements OnInit {
     this.formInfo.FormTitle = 'ویرایش  ';
     if (this.requestId.length <= 0) {
       this.cmsToastrService.typeErrorComponentAction();
-      this.dialogRef.close({ dialogChangedDate: false });
+      // this.dialogRef.close({ dialogChangedDate: false });
+      this.router.navigate(['/estate/property']);
       return;
     }
     this.DataGetOneProperty();
@@ -150,7 +153,8 @@ export class EstatePropertyEditComponent implements OnInit {
         if (next.IsSuccess) {
           this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
           this.cmsToastrService.typeSuccessEdit();
-          this.dialogRef.close({ dialogChangedDate: true });
+          // this.dialogRef.close({ dialogChangedDate: true });
+          this.router.navigate(['/estate/property']);
 
         } else {
           this.formInfo.FormAlert = 'برروز خطا';
@@ -242,6 +246,7 @@ export class EstatePropertyEditComponent implements OnInit {
 
   }
   onFormCancel(): void {
-    this.dialogRef.close({ dialogChangedDate: false });
+    // this.dialogRef.close({ dialogChangedDate: false });
+    this.router.navigate(['/estate/property']);
   }
 }

@@ -10,6 +10,7 @@ import { EstatePropertyDetailGroupListComponent } from './property-detail-group/
 import { EstatePropertyDetailListComponent } from './property-detail/list/list.component';
 import { EstateAccountAgencyListComponent } from './account-agency/list/list.component';
 import { EstateAccountUserListComponent } from './account-user/list/list.component';
+import { EstatePropertyAddComponent } from './Property/add/add.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,14 @@ const routes: Routes = [
       {
         path: 'property/LinkPropertyTypeId/:LinkPropertyTypeId',
         component: EstatePropertyListComponent
+      },
+      {
+        path: 'property/add',
+        component: EstatePropertyAddComponent
+      },
+      {
+        path: 'property/add/LinkPropertyTypeId/:LinkPropertyTypeId',
+        component: EstatePropertyAddComponent
       },
       /**/
       {

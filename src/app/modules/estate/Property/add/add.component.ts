@@ -12,6 +12,8 @@ import {
   EstateAccountUserModel,
   CoreUserModel,
   CoreLocationModel,
+  EstateContractTypeModel,
+  EstateContractModel,
 } from 'ntk-cms-api';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
@@ -25,7 +27,8 @@ import { Map as leafletMap } from 'leaflet';
 import { PoinModel } from 'src/app/core/models/pointModel';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { MatStepper } from '@angular/material/stepper';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-ticketing-faq-add',
@@ -33,22 +36,22 @@ import { Router } from '@angular/router';
   styleUrls: ['./add.component.scss']
 })
 export class EstatePropertyAddComponent implements OnInit {
-  requestParentId = '';
+  requestLinkPropertyTypeId = '';
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    // @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
-    private dialogRef: MatDialogRef<EstatePropertyAddComponent>,
+    // private dialogRef: MatDialogRef<EstatePropertyAddComponent>,
+    private activatedRoute: ActivatedRoute,
     public coreEnumService: CoreEnumService,
     public estatePropertyService: EstatePropertyService,
     private cmsToastrService: CmsToastrService,
     private router: Router,
     public publicHelper: PublicHelper,
   ) {
-    if (data) {
-      this.requestParentId = data.parentId + '';
-    }
-    if (this.requestParentId.length > 0) {
-      // this.dataModel.PropertyTypeCode = this.requestParentId;
+    this.requestLinkPropertyTypeId = this.activatedRoute.snapshot.paramMap.get('LinkPropertyTypeId');
+
+    if (this.requestLinkPropertyTypeId && this.requestLinkPropertyTypeId.length > 0) {
+      this.dataModel.LinkPropertyTypeId = this.requestLinkPropertyTypeId;
     }
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
@@ -131,8 +134,8 @@ export class EstatePropertyAddComponent implements OnInit {
         if (next.IsSuccess) {
           this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
           this.cmsToastrService.typeSuccessAdd();
-          this.dialogRef.close({ dialogChangedDate: true });
-
+          // this.dialogRef.close({ dialogChangedDate: true });
+          this.router.navigate(['/estate/property']);
         } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
@@ -211,6 +214,26 @@ export class EstatePropertyAddComponent implements OnInit {
     }
     this.dataModel.LinkEstateUserId = 0;
   }
+  contractTypeSelected: EstateContractTypeModel;
+  contractSelected: EstateContractModel;
+  contractDataModel = new EstateContractModel();
+  optionActionTitle = 'اضافه به لیست';
+  loadingOption = new ProgressSpinnerModel();
+  optionTabledataSource = new MatTableDataSource<EstateContractModel>();
+  optionTabledisplayedColumns = ['LinkEstateContractTypeId', 'Option', 'OptionAnswer', 'IsCorrectAnswer', 'NumberOfVotes', 'ScoreOfVotes', 'Action'];
+
+  onActionSelectorContractType(model: EstateContractTypeModel | null): void {
+    this.contractTypeSelected = null;
+    if (!model || !model.Id || model.Id.length <= 0) {
+      const message = 'نوع معامله ملک مشخص نیست';
+      this.cmsToastrService.typeErrorSelected(message);
+      return;
+    }
+    this.contractTypeSelected = model;
+    this.contractDataModel = new EstateContractModel();
+    this.contractDataModel.ContractType = this.contractTypeSelected;
+    this.contractDataModel.LinkEstateContractTypeId = this.contractTypeSelected.Id;
+  }
   onFormSubmit(): void {
     if (!this.formGroup.valid) {
       return;
@@ -221,8 +244,47 @@ export class EstatePropertyAddComponent implements OnInit {
 
   }
   onFormCancel(): void {
-    this.dialogRef.close({ dialogChangedDate: false });
+    // this.dialogRef.close({ dialogChangedDate: false });
+    this.router.navigate(['/estate/property']);
+
   }
+
+  onActionOptionAddToList(): void {
+    debugger
+    if (!this.contractTypeSelected || this.contractTypeSelected.Id.length === 0) {
+      return;
+    }
+    if (!this.dataModel.Contracts) {
+      this.dataModel.Contracts = [];
+    }
+    this.dataModel.Contracts.push(this.contractDataModel);
+    this.contractSelected = new EstateContractModel();
+  }
+  onActionOptionRemoveFromList(index: number): void {
+    debugger
+    if (index < 0) {
+      return;
+    }
+    if (!this.dataModel.Contracts || this.dataModel.Contracts.length === 0) {
+      return;
+    }
+    this.contractSelected = this.dataModel.Contracts[index];
+    this.dataModel.Contracts = this.dataModel.Contracts.splice(index, 1);
+    this.contractSelected = new EstateContractModel();
+  }
+  onActionOptionEditFromList(index: number): void {
+    debugger
+    if (index < 0) {
+      return;
+    }
+    if (!this.dataModel.Contracts || this.dataModel.Contracts.length === 0) {
+      return;
+    }
+    this.contractSelected = this.dataModel.Contracts[index];
+    this.dataModel.Contracts = this.dataModel.Contracts.splice(index, 1);
+    this.optionActionTitle = 'ویرایش';
+  }
+
   onActionFileSelectedLinkMainImageId(model: NodeInterface): void {
     this.dataModel.LinkMainImageId = model.id;
     this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
@@ -239,6 +301,6 @@ export class EstatePropertyAddComponent implements OnInit {
     }
   }
   onActionBackToParent(): void {
-    this.router.navigate(['/esate/property-type/']);
+    this.router.navigate(['/estate/property/']);
   }
 }

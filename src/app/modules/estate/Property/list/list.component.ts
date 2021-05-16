@@ -57,7 +57,7 @@ export class EstatePropertyListComponent implements OnInit, OnDestroy {
     /*filter Sort*/
     this.filteModelProperty.SortColumn = 'Id';
     this.filteModelProperty.SortType = EnumSortType.Ascending;
-    if (this.requestLinkPropertyTypeId  && this.requestLinkPropertyTypeId.length > 0) {
+    if (this.requestLinkPropertyTypeId && this.requestLinkPropertyTypeId.length > 0) {
       const filter = new FilterDataModel();
       filter.PropertyName = 'LinkPropertyTypeId';
       filter.Value = this.requestLinkPropertyTypeId;
@@ -216,15 +216,11 @@ export class EstatePropertyListComponent implements OnInit, OnDestroy {
     if (this.categoryModelSelected && this.categoryModelSelected.Id.length > 0) {
       parentId = this.categoryModelSelected.Id;
     }
-    const dialogRef = this.dialog.open(EstatePropertyAddComponent, {
-      data: { parentId }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      // console.log(`Dialog result: ${result}`);
-      if (result && result.dialogChangedDate) {
-        this.DataGetAll();
-      }
-    });
+    if (parentId && parentId.length > 0) {
+      this.router.navigate(['/estate/property/add/LinkPropertyTypeId', parentId]);
+    } else {
+      this.router.navigate(['/estate/property/add']);
+    }
   }
 
   onActionSelectorSelect(model: EstatePropertyTypeModel | null): void {
