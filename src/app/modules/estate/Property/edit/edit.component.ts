@@ -224,8 +224,8 @@ export class EstatePropertyEditComponent implements OnInit {
     }
     this.dataModel.LinkLocationId = model.Id;
   }
-   onActionSelectorEstateUser(model: EstateAccountUserModel | null): void {
-    this.dataModel.LinkEstateUserId=null;
+  onActionSelectorEstateUser(model: EstateAccountUserModel | null): void {
+    this.dataModel.LinkEstateUserId = null;
     if (!model || !model.Id || model.Id.length <= 0) {
       return;
     }

@@ -1,118 +1,90 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import * as Leaflet from 'leaflet';
-import { FormGroup } from '@angular/forms';
 import {
   CoreEnumService,
   EnumModel,
   ErrorExceptionResult,
-  FilterModel,
   FormInfoModel,
-  DonateTargetModel,
   DonateTargetService,
-  FilterDataModel,
-  PollingCategoryModel,
+  DonateTargetModel,
   DataFieldInfoModel,
-  AccessModel,
-  PollingOptionModel,
-  PollingOptionService,
+  DonateTargetCategoryModel,
 } from 'ntk-cms-api';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ChangeDetectorRef,
+  Inject,
+} from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
-import { NodeInterface, TreeModel } from 'ntk-cms-filemanager';
-import { Map as leafletMap } from 'leaflet';
-
-
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
-import { StepperSelectionEvent } from '@angular/cdk/stepper';
-import { MatStepper } from '@angular/material/stepper';
-import { MatTableDataSource } from '@angular/material/table';
-import { PoinModel } from 'src/app/core/models/pointModel';
-import { PublicHelper } from 'src/app/core/helpers/publicHelper';
+import {
+  TreeModel,
+  NodeInterface,
+} from 'ntk-cms-filemanager';
+import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
+import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 @Component({
-  selector: 'app-polling-content-edit',
+  selector: 'app-donate-target-edit',
   templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.scss'
-  ]
+  styleUrls: ['./edit.component.scss'],
 })
-export class DonateTargetEditComponent implements OnInit, AfterViewInit {
+export class DonateTargetEditComponent implements OnInit {
+  requestId = 0;
   constructor(
-    private activatedRoute: ActivatedRoute,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
+    private dialogRef: MatDialogRef<DonateTargetEditComponent>,
     public coreEnumService: CoreEnumService,
-    public publicHelper: PublicHelper,
-    private donateTargetService: DonateTargetService,
-    private pollingOptionService: PollingOptionService,
-
+    public donateTargetService: DonateTargetService,
     private cmsToastrService: CmsToastrService,
-    private router: Router,
-
+    public publicHelper: PublicHelper,
   ) {
+    if (data) {
+      this.requestId = +data.id || 0;
+    }
+
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
-  requestId = 0;
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
-  dataModel = new DonateTargetModel();
-  dataAccessModel: AccessModel;
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
-  dataModelResult: ErrorExceptionResult<DonateTargetModel> = new ErrorExceptionResult<DonateTargetModel>();
-  dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
-  optionSelected: PollingOptionModel = new PollingOptionModel();
-  optionDataModel = new Array<PollingOptionModel>();
-  optionTabledataSource = new MatTableDataSource<PollingOptionModel>();
-  dataOptionModelResult: ErrorExceptionResult<PollingOptionModel> = new ErrorExceptionResult<PollingOptionModel>();
-  optionActionTitle = 'اضافه به لیست';
-  optionActionButtomEnable = true;
-  optionTabledisplayedColumns = ['Id', 'Option', 'OptionAnswer', 'IsCorrectAnswer', 'NumberOfVotes', 'ScoreOfVotes', 'Action'];
 
-
-  loading = new ProgressSpinnerModel();
-  loadingOption = new ProgressSpinnerModel();
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
-  selectFileTypePodcast = ['mp3'];
-  selectFileTypeMovie = ['mp4'];
-  formInfo: FormInfoModel = new FormInfoModel();
-  fileManagerOpenForm = false;
-  fileManagerOpenFormPodcast = false;
-  fileManagerOpenFormMovie = false;
+
   fileManagerTree: TreeModel;
-  tagIdsData: number[];
-
-
   appLanguage = 'fa';
 
-  viewMap = false;
-  mapMarker: any;
-  private mapModel: leafletMap;
-  private mapMarkerPoints: Array<PoinModel> = [];
-  mapOptonCenter = {};
+  loading = new ProgressSpinnerModel();
+  dataModelResult: ErrorExceptionResult<DonateTargetModel> = new ErrorExceptionResult<DonateTargetModel>();
+  dataModel: DonateTargetModel = new DonateTargetModel();
+
+  formInfo: FormInfoModel = new FormInfoModel();
+  dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
+
+  fileManagerOpenForm = false;
 
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
-  ngOnInit(): void {
-    this.requestId = + Number(this.activatedRoute.snapshot.paramMap.get('Id'));
-    if (this.requestId === 0) {
-      this.cmsToastrService.typeErrorEditRowIsNull();
-      return;
-    }
-    this.DataGetOne();
-    this.getEnumRecordStatus();
-  }
-  ngAfterViewInit(): void {
-
-  }
-  onActionFileSelectedLinkMainImageId(model: NodeInterface): void {
+  onActionFileSelected(model: NodeInterface): void {
     this.dataModel.LinkMainImageId = model.id;
     this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
+
   }
-  // onActionFileSelectedLinkFilePodcastId(model: NodeInterface): void {
-  //   this.dataModel.LinkFilePodcastId = model.id;
-  //   this.dataModel.LinkFilePodcastIdSrc = model.downloadLinksrc;
-  // }
-  // onActionFileSelectedLinkFileMovieId(model: NodeInterface): void {
-  //   this.dataModel.LinkFileMovieId = model.id;
-  //   this.dataModel.LinkFileMovieIdSrc = model.downloadLinksrc;
-  // }
+
+  ngOnInit(): void {
+    if (this.requestId > 0) {
+      this.formInfo.FormTitle = 'ویرایش  دسته بندی';
+      this.DataGetOneContent();
+    } else {
+      this.cmsToastrService.typeErrorComponentAction();
+      this.dialogRef.close({ dialogChangedDate: false });
+      return;
+    }
+    this.getEnumRecordStatus();
+  }
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
       this.storeSnapshot.EnumRecordStatus &&
@@ -124,152 +96,66 @@ export class DonateTargetEditComponent implements OnInit, AfterViewInit {
     }
   }
 
-
-  onFormSubmit(): void {
+  DataGetOneContent(): void {
     if (this.requestId <= 0) {
       this.cmsToastrService.typeErrorEditRowIsNull();
       return;
     }
-    if (!this.formGroup.valid) {
-      this.cmsToastrService.typeErrorFormInvalid();
-      return;
-    }
 
-
-    this.DataEditContent();
-  }
-
-  DataGetOne(): void {
-    this.formInfo.FormSubmitAllow = false;
-    this.formInfo.FormAlert = 'در حال دریافت اطلاعات از سرور';
+    this.formInfo.FormAlert = 'در دریافت ارسال اطلاعات از سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    /*َAccess Field*/
     this.donateTargetService.setAccessLoad();
-    this.donateTargetService
-      .ServiceGetOneById(this.requestId)
-      .subscribe(
-        async (next) => {
+    this.donateTargetService.ServiceGetOneById(this.requestId).subscribe(
+      (next) => {
+        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
 
-          /*َAccess Field*/
-          this.dataAccessModel = next.Access;
-          this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
-
-          this.loading.display = false;
-          this.dataModelResult = next;
-          this.formInfo.FormSubmitAllow = true;
-
-          if (next.IsSuccess) {
-            this.dataModel = next.Item;
-            // const lat = this.dataModel.Geolocationlatitude;
-            // const lon = this.dataModel.Geolocationlongitude;
-            // if (lat > 0 && lon > 0) {
-            //   this.mapMarkerPoints.push({ lat, lon });
-            // }
-            this.DataOptionGetAll();
-            // this.DataOtherInfoGetAll();
-            // this.DataSimilarGetAllIds();
-            this.loading.display = false;
-          } else {
-            this.cmsToastrService.typeErrorGetOne(next.ErrorMessage);
-          }
-        },
-        (error) => {
-          this.loading.display = false;
-          this.formInfo.FormSubmitAllow = true;
-          this.cmsToastrService.typeErrorGetOne(error);
+        this.dataModel = next.Item;
+        if (next.IsSuccess) {
+          this.formInfo.FormTitle = this.formInfo.FormTitle + ' ' + next.Item.Title;
+          this.formInfo.FormAlert = '';
+              } else {
+          this.formInfo.FormAlert = 'برروز خطا';
+          this.formInfo.FormError = next.ErrorMessage;
+          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
         }
-      );
+        this.loading.display = false;
+      },
+      (error) => {
+        this.cmsToastrService.typeError(error);
+        this.loading.display = false;
+      }
+    );
   }
-  DataOptionGetAll(): void {
-    this.formInfo.FormSubmitAllow = false;
-    this.formInfo.FormAlert = 'در حال دریافت گزینه ها از سرور';
-    this.formInfo.FormError = '';
-    this.loadingOption.display = true;
 
-
-    const filteModel = new FilterModel();
-
-    const filter = new FilterDataModel();
-    filter.PropertyName = 'LinkDonateTargetId';
-    filter.Value = this.dataModelResult.Item.Id;
-    filteModel.Filters.push(filter);
-    this.pollingOptionService
-      .ServiceGetAll(filteModel)
-      .subscribe(
-        async (next) => {
-          this.loadingOption.display = false;
-          this.formInfo.FormSubmitAllow = true;
-          this.dataOptionModelResult = next;
-          if (next.IsSuccess) {
-            this.optionDataModel = next.ListItems;
-            this.optionTabledataSource.data = next.ListItems;
-          } else {
-            this.cmsToastrService.typeErrorGetAll(next.ErrorMessage);
-          }
-        },
-        (error) => {
-          this.loadingOption.display = false;
-          this.formInfo.FormSubmitAllow = true;
-          this.cmsToastrService.typeErrorGetAll(error);
-        }
-      );
-  }
   DataEditContent(): void {
-    this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
+    this.donateTargetService.ServiceEdit(this.dataModel).subscribe(
+      (next) => {
+        this.formInfo.FormSubmitAllow = true;
+        this.dataModelResult = next;
+        if (next.IsSuccess) {
+          this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
+          this.cmsToastrService.typeSuccessEdit();
+          this.dialogRef.close({ dialogChangedDate: true });
 
-    this.donateTargetService
-      .ServiceEdit(this.dataModel)
-      .subscribe(
-        async (next) => {
-          this.loading.display = false;
-          this.formInfo.FormSubmitAllow = true;
-          this.dataModelResult = next;
-          if (next.IsSuccess) {
-
-            this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
-            this.cmsToastrService.typeSuccessAdd();
-            this.loading.display = false;
-            setTimeout(() => this.router.navigate(['/polling/content']), 1000);
-          } else {
-            this.cmsToastrService.typeErrorAdd(next.ErrorMessage);
-          }
-        },
-        (error) => {
-          this.loading.display = false;
-          this.formInfo.FormSubmitAllow = true;
-          this.cmsToastrService.typeErrorAdd(error);
+              } else {
+          this.formInfo.FormAlert = 'برروز خطا';
+          this.formInfo.FormError = next.ErrorMessage;
+          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
         }
-      );
+        this.loading.display = false;
+      },
+      (error) => {
+        this.formInfo.FormSubmitAllow = true;
+        this.cmsToastrService.typeError(error);
+        this.loading.display = false;
+      }
+    );
   }
-  // async DataActionAfterAddContentSuccessfullOption(model: DonateTargetModel): Promise<any> {
-  //   const dataListAdd = new Array<PollingOptionModel>();
-  //   const dataListDelete = new Array<PollingOptionModel>();
-  //   if (this.optionDataModel) {
-  //     this.optionDataModel.forEach(item => {
-  //       const row = new PollingOptionModel();
-  //       row.LinkDonateTargetId = model.Id;
-  //       if (!this.dataOptionModelResult.ListItems || !item.Id || !this.dataOptionModelResult.ListItems.find(x => x.Id === item.Id)) {
-  //         dataListAdd.push(row);
-  //       }
-  //     });
-  //   }
-  //   if (this.dataOptionModelResult.ListItems) {
-  //     this.dataOptionModelResult.ListItems.forEach(item => {
-  //       if (!this.optionDataModel || !this.optionDataModel.find(x => x.Id === item.Id)) {
-  //         dataListDelete.push(item);
-  //       }
-  //     });
-  //   }
-  //   if (dataListAdd && dataListAdd.length > 0) {
-  //   }
-  //   if (dataListDelete && dataListDelete.length > 0) {
-  //   }
-  // }
-  onActionSelectorSelect(model: PollingCategoryModel | null): void {
+  onActionSelectorSelect(model: DonateTargetCategoryModel | null): void {
     if (!model || model.Id <= 0) {
       const message = 'دسته بندی اطلاعات مشخص نیست';
       this.cmsToastrService.typeErrorSelected(message);
@@ -278,24 +164,16 @@ export class DonateTargetEditComponent implements OnInit, AfterViewInit {
     this.dataModel.LinkTargetCategoryId = model.Id;
   }
 
-
-
-
-
-  onStepClick(event: StepperSelectionEvent, stepper: MatStepper): void {
-    if (event.previouslySelectedIndex < event.selectedIndex) {
-      if (!this.formGroup.valid) {
-        this.cmsToastrService.typeErrorFormInvalid();
-        setTimeout(() => {
-          stepper.selectedIndex = event.previouslySelectedIndex;
-          // stepper.previous();
-        }, 10);
-      }
+  onFormSubmit(): void {
+    if (!this.formGroup.valid) {
+      return;
     }
-  }
-  onActionBackToParent(): void {
-    this.router.navigate(['/polling/content/']);
-  }
+    this.formInfo.FormSubmitAllow = false;
+    this.DataEditContent();
 
 
+  }
+  onFormCancel(): void {
+    this.dialogRef.close({ dialogChangedDate: false });
+  }
 }

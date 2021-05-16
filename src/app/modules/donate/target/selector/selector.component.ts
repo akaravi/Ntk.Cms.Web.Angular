@@ -17,37 +17,11 @@ import { Output } from '@angular/core';
 
 
 @Component({
-  selector: 'app-donate-targetcategory-selector',
+  selector: 'app-donate-target-selector',
   templateUrl: './selector.component.html',
   styleUrls: ['./selector.component.scss']
 })
 export class DonateTargetSelectorComponent implements OnInit {
-
-  // public optionsData: ComponentOptionSelectorModel<DonateTargetModel> = new ComponentOptionSelectorModel<DonateTargetModel>();
-  // @Output()
-  // // tslint:disable-next-line: max-line-length
-  // tslint:disable-next-line: max-line-length
-  // optionsChange: EventEmitter<ComponentOptionSelectorModel<DonateTargetModel>> = new EventEmitter<ComponentOptionSelectorModel<DonateTargetModel>>();
-  // @Input() set options(model: ComponentOptionSelectorModel<DonateTargetModel>) {
-  //   if (!model) {
-  //     model = new ComponentOptionSelectorModel<DonateTargetModel>();
-  //   }
-  //   this.optionsData = model;
-  //   this.optionsData.childMethods = {
-  //     ActionReload: () => this.onActionReload(),
-  //     ActionSelectForce: (id) => this.onActionSelectForce(id),
-  //   };
-  //   this.optionsChange.emit(model);
-  // }
-  // get options(): ComponentOptionSelectorModel<DonateTargetModel> {
-  //   this.optionsData.childMethods = {
-  //     ActionReload: () => this.onActionReload(),
-  //     ActionSelectForce: (id) => this.onActionSelectForce(id),
-  //   };
-  //   this.optionsChange.emit(this.optionsData);
-  //   return this.optionsData;
-  // }
-
   constructor(
     public coreEnumService: CoreEnumService,
     public categoryService: DonateTargetService) {
@@ -129,13 +103,7 @@ export class DonateTargetSelectorComponent implements OnInit {
   onActionSelect(model: DonateTargetModel): void {
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
-    // this.optionsData.Select = this.dataModelSelect;
-    // if (this.optionsData) {
-    //   this.optionsData.data.Select = this.dataModelSelect;
-    //   if (this.optionsData.parentMethods && this.optionsData.parentMethods.onActionSelect) {
-    //     this.optionsData.parentMethods.onActionSelect(this.dataModelSelect);
-    //   }
-    // }
+
   }
   onActionSelectClear(): void{
     this.formControl.setValue(null);

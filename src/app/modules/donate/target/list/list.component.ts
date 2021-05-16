@@ -17,7 +17,7 @@ import {
 } from 'ntk-cms-api';
 import { PublicHelper } from '../../../../core/helpers/publicHelper';
 import { CmsToastrService } from '../../../../core/services/cmsToastr.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ProgressSpinnerModel } from '../../../../core/models/progressSpinnerModel';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/base/componentOptionStatistModel';
@@ -27,6 +27,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DonateTargetDeleteComponent } from '../delete/delete.component';
 import { Observable, Subscription } from 'rxjs';
+import { DonateTargetAddComponent } from '../add/add.component';
+import { DonateTargetEditComponent } from '../edit/edit.component';
 
 @Component({
   selector: 'app-polling-content-list',
@@ -194,7 +196,20 @@ export class DonateTargetListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessAdd();
       return;
     }
-    this.router.navigate(['/polling/content/add', this.categoryModelSelected.Id]);
+
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = { parentId: this.categoryModelSelected.Id };
+
+
+    const dialogRef = this.dialog.open(DonateTargetAddComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log(`Dialog result: ${result}`);
+      if (result && result.dialogChangedDate) {
+        this.DataGetAll();
+      }
+    });
   }
 
   onActionbuttonEditRow(model: DonateTargetModel = this.tableRowSelected): void {
@@ -211,7 +226,20 @@ export class DonateTargetListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessEdit();
       return;
     }
-    this.router.navigate(['/polling/content/edit', this.tableRowSelected.Id]);
+    // this.router.navigate(['/polling/content/edit', this.tableRowSelected.Id]);
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = { id: this.tableRowSelected.Id };
+
+
+    const dialogRef = this.dialog.open(DonateTargetEditComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log(`Dialog result: ${result}`);
+      if (result && result.dialogChangedDate) {
+        this.DataGetAll();
+      }
+    });
   }
   onActionbuttonDeleteRow(model: DonateTargetModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id === 0) {

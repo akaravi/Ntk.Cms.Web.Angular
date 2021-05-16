@@ -22,32 +22,6 @@ import { Output } from '@angular/core';
   styleUrls: ['./selector.component.scss']
 })
 export class BlogCategorySelectorComponent implements OnInit {
-
-  // public optionsData: ComponentOptionSelectorModel<BlogCategoryModel> = new ComponentOptionSelectorModel<BlogCategoryModel>();
-  // @Output()
-  // // tslint:disable-next-line: max-line-length
-  // tslint:disable-next-line: max-line-length
-  // optionsChange: EventEmitter<ComponentOptionSelectorModel<BlogCategoryModel>> = new EventEmitter<ComponentOptionSelectorModel<BlogCategoryModel>>();
-  // @Input() set options(model: ComponentOptionSelectorModel<BlogCategoryModel>) {
-  //   if (!model) {
-  //     model = new ComponentOptionSelectorModel<BlogCategoryModel>();
-  //   }
-  //   this.optionsData = model;
-  //   this.optionsData.childMethods = {
-  //     ActionReload: () => this.onActionReload(),
-  //     ActionSelectForce: (id) => this.onActionSelectForce(id),
-  //   };
-  //   this.optionsChange.emit(model);
-  // }
-  // get options(): ComponentOptionSelectorModel<BlogCategoryModel> {
-  //   this.optionsData.childMethods = {
-  //     ActionReload: () => this.onActionReload(),
-  //     ActionSelectForce: (id) => this.onActionSelectForce(id),
-  //   };
-  //   this.optionsChange.emit(this.optionsData);
-  //   return this.optionsData;
-  // }
-
   constructor(
     public coreEnumService: CoreEnumService,
     public categoryService: BlogCategoryService) {
@@ -129,13 +103,7 @@ export class BlogCategorySelectorComponent implements OnInit {
   onActionSelect(model: BlogCategoryModel): void {
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
-    // this.optionsData.Select = this.dataModelSelect;
-    // if (this.optionsData) {
-    //   this.optionsData.data.Select = this.dataModelSelect;
-    //   if (this.optionsData.parentMethods && this.optionsData.parentMethods.onActionSelect) {
-    //     this.optionsData.parentMethods.onActionSelect(this.dataModelSelect);
-    //   }
-    // }
+
   }
   onActionSelectClear(): void{
     this.formControl.setValue(null);

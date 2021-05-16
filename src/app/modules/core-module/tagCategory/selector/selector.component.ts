@@ -104,13 +104,7 @@ export class CoreModuleTagCategorySelectorComponent implements OnInit {
   onActionSelect(model: CoreModuleTagCategoryModel): void {
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
-    // this.optionsData.Select = this.dataModelSelect;
-    // if (this.optionsData) {
-    //   this.optionsData.data.Select = this.dataModelSelect;
-    //   if (this.optionsData.parentMethods && this.optionsData.parentMethods.onActionSelect) {
-    //     this.optionsData.parentMethods.onActionSelect(this.dataModelSelect);
-    //   }
-    // }
+
   }
   onActionSelectClear(): void{
     this.formControl.setValue(null);

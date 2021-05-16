@@ -23,6 +23,9 @@ import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import * as Leaflet from 'leaflet';
 import { Map as leafletMap } from 'leaflet';
 import { PoinModel } from 'src/app/core/models/pointModel';
+import { StepperSelectionEvent } from '@angular/cdk/stepper';
+import { MatStepper } from '@angular/material/stepper';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ticketing-faq-add',
@@ -38,6 +41,7 @@ export class EstatePropertyAddComponent implements OnInit {
     public coreEnumService: CoreEnumService,
     public estatePropertyService: EstatePropertyService,
     private cmsToastrService: CmsToastrService,
+    private router: Router,
     public publicHelper: PublicHelper,
   ) {
     if (data) {
@@ -200,8 +204,8 @@ export class EstatePropertyAddComponent implements OnInit {
     }
     this.dataModel.LinkLocationId = model.Id;
   }
-   onActionSelectorEstateUser(model: EstateAccountUserModel | null): void {
-    this.dataModel.LinkEstateUserId=null;
+  onActionSelectorEstateUser(model: EstateAccountUserModel | null): void {
+    this.dataModel.LinkEstateUserId = null;
     if (!model || !model.Id || model.Id.length <= 0) {
       return;
     }
@@ -218,5 +222,23 @@ export class EstatePropertyAddComponent implements OnInit {
   }
   onFormCancel(): void {
     this.dialogRef.close({ dialogChangedDate: false });
+  }
+  onActionFileSelectedLinkMainImageId(model: NodeInterface): void {
+    this.dataModel.LinkMainImageId = model.id;
+    this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
+  }
+  onStepClick(event: StepperSelectionEvent, stepper: MatStepper): void {
+    if (event.previouslySelectedIndex < event.selectedIndex) {
+      if (!this.formGroup.valid) {
+        this.cmsToastrService.typeErrorFormInvalid();
+        setTimeout(() => {
+          stepper.selectedIndex = event.previouslySelectedIndex;
+          // stepper.previous();
+        }, 10);
+      }
+    }
+  }
+  onActionBackToParent(): void {
+    this.router.navigate(['/esate/property-type/']);
   }
 }

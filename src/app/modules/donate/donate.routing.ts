@@ -25,7 +25,7 @@ const routes: Routes = [
       },
       /*Config*/
       {
-        path: 'traget',
+        path: 'target',
         component: DonateTargetListComponent
       },
       // {

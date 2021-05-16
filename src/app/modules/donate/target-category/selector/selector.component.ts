@@ -22,32 +22,6 @@ import { Output } from '@angular/core';
   styleUrls: ['./selector.component.scss']
 })
 export class DonateTargetCategorySelectorComponent implements OnInit {
-
-  // public optionsData: ComponentOptionSelectorModel<DonateTargetCategoryModel> = new ComponentOptionSelectorModel<DonateTargetCategoryModel>();
-  // @Output()
-  // // tslint:disable-next-line: max-line-length
-  // tslint:disable-next-line: max-line-length
-  // optionsChange: EventEmitter<ComponentOptionSelectorModel<DonateTargetCategoryModel>> = new EventEmitter<ComponentOptionSelectorModel<DonateTargetCategoryModel>>();
-  // @Input() set options(model: ComponentOptionSelectorModel<DonateTargetCategoryModel>) {
-  //   if (!model) {
-  //     model = new ComponentOptionSelectorModel<DonateTargetCategoryModel>();
-  //   }
-  //   this.optionsData = model;
-  //   this.optionsData.childMethods = {
-  //     ActionReload: () => this.onActionReload(),
-  //     ActionSelectForce: (id) => this.onActionSelectForce(id),
-  //   };
-  //   this.optionsChange.emit(model);
-  // }
-  // get options(): ComponentOptionSelectorModel<DonateTargetCategoryModel> {
-  //   this.optionsData.childMethods = {
-  //     ActionReload: () => this.onActionReload(),
-  //     ActionSelectForce: (id) => this.onActionSelectForce(id),
-  //   };
-  //   this.optionsChange.emit(this.optionsData);
-  //   return this.optionsData;
-  // }
-
   constructor(
     public coreEnumService: CoreEnumService,
     public categoryService: DonateTargetCategoryService) {
@@ -129,13 +103,7 @@ export class DonateTargetCategorySelectorComponent implements OnInit {
   onActionSelect(model: DonateTargetCategoryModel): void {
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
-    // this.optionsData.Select = this.dataModelSelect;
-    // if (this.optionsData) {
-    //   this.optionsData.data.Select = this.dataModelSelect;
-    //   if (this.optionsData.parentMethods && this.optionsData.parentMethods.onActionSelect) {
-    //     this.optionsData.parentMethods.onActionSelect(this.dataModelSelect);
-    //   }
-    // }
+
   }
   onActionSelectClear(): void{
     this.formControl.setValue(null);
