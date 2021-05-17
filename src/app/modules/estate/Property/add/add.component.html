@@ -111,32 +111,35 @@
             <!-- SalePrice Field -->
             <mat-form-field class="example-full-width" *ngIf="contractTypeSelected.HasSalePrice">
               <mat-label>Sale Price</mat-label>
-              <input matInput [(ngModel)]="contractDataModel.SalePrice" name="contractDataModel.SalePrice" #CurrentClickCount
-                type="number" placeholder="0" />
-              <mat-icon matSuffix matSuffix mat-icon-button aria-label="Clear" (click)="contractDataModel.SalePrice = 0">
+              <input matInput [(ngModel)]="contractDataModel.SalePrice" name="contractDataModel.SalePrice"
+                #CurrentClickCount type="number" placeholder="0" />
+              <mat-icon matSuffix matSuffix mat-icon-button aria-label="Clear"
+                (click)="contractDataModel.SalePrice = 0">
                 close</mat-icon>
               <mat-icon matSuffix>mode_edit</mat-icon>
-              <mat-label>{{contractTypeSelected.UnitSalePrice}}</mat-label>
+              <mat-label> ( {{contractTypeSelected.UnitSalePrice}} ) </mat-label>
             </mat-form-field>
             <!-- RentPrice Field -->
             <mat-form-field class="example-full-width" *ngIf="contractTypeSelected.HasRentPrice">
               <mat-label>Rent Price</mat-label>
-              <input matInput [(ngModel)]="contractDataModel.RentPrice" name="contractDataModel.RentPrice" #CurrentClickCount
-                type="number" placeholder="0" />
-              <mat-icon matSuffix matSuffix mat-icon-button aria-label="Clear" (click)="contractDataModel.RentPrice = 0">
+              <input matInput [(ngModel)]="contractDataModel.RentPrice" name="contractDataModel.RentPrice"
+                #CurrentClickCount type="number" placeholder="0" />
+              <mat-icon matSuffix matSuffix mat-icon-button aria-label="Clear"
+                (click)="contractDataModel.RentPrice = 0">
                 close</mat-icon>
               <mat-icon matSuffix>mode_edit</mat-icon>
-              <mat-label>{{contractTypeSelected.UnitRentPrice}}</mat-label>
+              <mat-label> ( {{contractTypeSelected.UnitRentPrice}} ) </mat-label>
             </mat-form-field>
             <!-- DepositPrice Field -->
             <mat-form-field class="example-full-width" *ngIf="contractTypeSelected.HasDepositPrice">
               <mat-label>Rent Price</mat-label>
               <input matInput [(ngModel)]="contractDataModel.DepositPrice" name="contractDataModel.DepositPrice"
                 #CurrentClickCount type="number" placeholder="0" />
-              <mat-icon matSuffix matSuffix mat-icon-button aria-label="Clear" (click)="contractDataModel.DepositPrice = 0">
+              <mat-icon matSuffix matSuffix mat-icon-button aria-label="Clear"
+                (click)="contractDataModel.DepositPrice = 0">
                 close</mat-icon>
               <mat-icon matSuffix>mode_edit</mat-icon>
-              <mat-label>{{contractTypeSelected.UnitDepositPrice}}</mat-label>
+              <mat-label> ( {{contractTypeSelected.UnitDepositPrice}} ) </mat-label>
             </mat-form-field>
 
           </div>
@@ -153,34 +156,25 @@
             <mat-table [dataSource]="optionTabledataSource">
               <!-- LinkEstateContractTypeId Column -->
               <ng-container matColumnDef="LinkEstateContractTypeId">
-                <mat-header-cell *matHeaderCellDef> شناسه </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.LinkEstateContractTypeId}} </mat-cell>
+                <mat-header-cell *matHeaderCellDef> Contract </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.LinkEstateContractTypeId | cmstitle: dataModelEstateContractTypeResult.ListItems}} </mat-cell>
               </ng-container>
-              <!-- Option Column -->
-              <ng-container matColumnDef="Option">
-                <mat-header-cell *matHeaderCellDef> گزینه </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.Option}} </mat-cell>
+              <!-- SalePrice Column -->
+              <ng-container matColumnDef="SalePrice">
+                <mat-header-cell *matHeaderCellDef> Sale Price </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.SalePrice | number}} ( {{row.ContractType.UnitSalePrice}} ) </mat-cell>
               </ng-container>
-              <!-- OptionAnswer Column -->
-              <ng-container matColumnDef="OptionAnswer">
-                <mat-header-cell *matHeaderCellDef> پاسخ </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.OptionAnswer}} </mat-cell>
+              <!-- RentPrice Column -->
+              <ng-container matColumnDef="RentPrice">
+                <mat-header-cell *matHeaderCellDef> Rent Price </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.RentPrice| number}}  ( {{row.ContractType.UnitRentPrice}} ) </mat-cell>
               </ng-container>
-              <!-- IsCorrectAnswer Column -->
-              <ng-container matColumnDef="IsCorrectAnswer">
-                <mat-header-cell *matHeaderCellDef> IsCorrectAnswer </mat-header-cell>
-                <mat-cell *matCellDef="let row"><i [ngClass]="row.IsCorrectAnswer|boolclass"></i> </mat-cell>
+              <!-- DepositPrice Column -->
+              <ng-container matColumnDef="DepositPrice">
+                <mat-header-cell *matHeaderCellDef> Deposit Price </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.DepositPrice| number}} ( {{row.ContractType.UnitDepositPrice}} ) </mat-cell>
               </ng-container>
-              <!-- IsCorrectAnswer Column -->
-              <ng-container matColumnDef="NumberOfVotes">
-                <mat-header-cell *matHeaderCellDef> NumberOfVotes </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.NumberOfVotes}} </mat-cell>
-              </ng-container>
-              <!-- ScoreOfVotes Column -->
-              <ng-container matColumnDef="ScoreOfVotes">
-                <mat-header-cell *matHeaderCellDef> ScoreOfVotes </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.ScoreOfVotes}} </mat-cell>
-              </ng-container>
+
               <!-- Action Column -->
               <ng-container matColumnDef="Action">
                 <mat-header-cell *matHeaderCellDef> ... </mat-header-cell>
@@ -191,7 +185,7 @@
               </ng-container>
               <mat-header-row *matHeaderRowDef="optionTabledisplayedColumns"></mat-header-row>
               <mat-row *matRowDef="let row; columns: optionTabledisplayedColumns;"
-                [ngStyle]="{'background': row.LinkEstateContractTypeId === contractTypeSelected.Id ? '#d3d3da' : '' }">
+                [ngStyle]="{'background': row.Id === this.contractSelected.Id ? '#d3d3da' : '' }">
               </mat-row>
             </mat-table>
           </div>

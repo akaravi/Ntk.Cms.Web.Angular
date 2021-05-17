@@ -14,6 +14,7 @@ import {
   CoreLocationModel,
   EstateContractTypeModel,
   EstateContractModel,
+  EstateContractTypeService,
 } from 'ntk-cms-api';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
@@ -31,7 +32,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
-  selector: 'app-ticketing-faq-add',
+  selector: 'app-estate-property-add',
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.scss']
 })
@@ -43,6 +44,7 @@ export class EstatePropertyAddComponent implements OnInit {
     // private dialogRef: MatDialogRef<EstatePropertyAddComponent>,
     private activatedRoute: ActivatedRoute,
     public coreEnumService: CoreEnumService,
+    public estateContractTypeService: EstateContractTypeService,
     public estatePropertyService: EstatePropertyService,
     private cmsToastrService: CmsToastrService,
     private router: Router,
@@ -64,12 +66,20 @@ export class EstatePropertyAddComponent implements OnInit {
   formMatcher = new CmsFormsErrorStateMatcher();
   loading = new ProgressSpinnerModel();
   dataModelResult: ErrorExceptionResult<EstatePropertyModel> = new ErrorExceptionResult<EstatePropertyModel>();
+  dataModelEstateContractTypeResult: ErrorExceptionResult<EstateContractTypeModel> = new ErrorExceptionResult<EstateContractTypeModel>();
   dataModel: EstatePropertyModel = new EstatePropertyModel();
   dataFileModel = new Map<number, string>();
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   fileManagerOpenForm = false;
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
+  contractTypeSelected: EstateContractTypeModel;
+  contractSelected: EstateContractModel;
+  contractDataModel = new EstateContractModel();
+  optionActionTitle = 'اضافه به لیست';
+  loadingOption = new ProgressSpinnerModel();
+  optionTabledataSource = new MatTableDataSource<EstateContractModel>();
+  optionTabledisplayedColumns = ['LinkEstateContractTypeId', 'SalePrice', 'RentPrice', 'DepositPrice', 'Action'];
 
   /** map */
   viewMap = false;
@@ -91,7 +101,12 @@ export class EstatePropertyAddComponent implements OnInit {
     this.formInfo.FormTitle = 'ثبت محتوای جدید';
     this.getEnumRecordStatus();
     this.DataGetAccess();
-
+    this.getEstateContractType();
+  }
+  getEstateContractType(): void {
+    this.estateContractTypeService.ServiceGetAll(null).subscribe((next) => {
+      this.dataModelEstateContractTypeResult = next;
+    });
   }
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
@@ -214,13 +229,7 @@ export class EstatePropertyAddComponent implements OnInit {
     }
     this.dataModel.LinkEstateUserId = 0;
   }
-  contractTypeSelected: EstateContractTypeModel;
-  contractSelected: EstateContractModel;
-  contractDataModel = new EstateContractModel();
-  optionActionTitle = 'اضافه به لیست';
-  loadingOption = new ProgressSpinnerModel();
-  optionTabledataSource = new MatTableDataSource<EstateContractModel>();
-  optionTabledisplayedColumns = ['LinkEstateContractTypeId', 'Option', 'OptionAnswer', 'IsCorrectAnswer', 'NumberOfVotes', 'ScoreOfVotes', 'Action'];
+
 
   onActionSelectorContractType(model: EstateContractTypeModel | null): void {
     this.contractTypeSelected = null;
@@ -250,7 +259,7 @@ export class EstatePropertyAddComponent implements OnInit {
   }
 
   onActionOptionAddToList(): void {
-    debugger
+
     if (!this.contractTypeSelected || this.contractTypeSelected.Id.length === 0) {
       return;
     }
@@ -259,9 +268,10 @@ export class EstatePropertyAddComponent implements OnInit {
     }
     this.dataModel.Contracts.push(this.contractDataModel);
     this.contractSelected = new EstateContractModel();
+    this.optionTabledataSource.data = this.dataModel.Contracts;
   }
   onActionOptionRemoveFromList(index: number): void {
-    debugger
+
     if (index < 0) {
       return;
     }
@@ -271,9 +281,10 @@ export class EstatePropertyAddComponent implements OnInit {
     this.contractSelected = this.dataModel.Contracts[index];
     this.dataModel.Contracts = this.dataModel.Contracts.splice(index, 1);
     this.contractSelected = new EstateContractModel();
+    this.optionTabledataSource.data = this.dataModel.Contracts;
   }
   onActionOptionEditFromList(index: number): void {
-    debugger
+
     if (index < 0) {
       return;
     }
@@ -283,6 +294,7 @@ export class EstatePropertyAddComponent implements OnInit {
     this.contractSelected = this.dataModel.Contracts[index];
     this.dataModel.Contracts = this.dataModel.Contracts.splice(index, 1);
     this.optionActionTitle = 'ویرایش';
+    this.optionTabledataSource.data = this.dataModel.Contracts;
   }
 
   onActionFileSelectedLinkMainImageId(model: NodeInterface): void {

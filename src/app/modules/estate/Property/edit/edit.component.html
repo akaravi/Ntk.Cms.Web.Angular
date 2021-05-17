@@ -1,105 +1,389 @@
-<h2 mat-dialog-title>{{ formInfo.FormTitle }}</h2>
-<mat-dialog-content>
-  <form (ngSubmit)="onFormSubmit()" #vform="ngForm" class="form form-horizontal">
-    <app-progress-spinner [options]="loading"> </app-progress-spinner>
-    <div *ngIf="!loading.display" class="form-body">
+<div class="d-flex flex-column-fluid">
+  <!--begin::Container-->
+  <div class="container">
+    <form (ngSubmit)="onFormSubmit()" #vform="ngForm"
+      class="form mt-0 mt-lg-10 fv-plugins-bootstrap fv-plugins-framework">
+      <app-progress-spinner [options]="loading">
+      </app-progress-spinner>
+      <mat-horizontal-stepper *ngIf="!loading.display" (selectionChange)="onStepClick($event,stepper)" #stepper>
 
-      <!-- Title Field -->
-      <mat-form-field class="example-full-width">
-        <mat-label>{{fieldsInfo['Title']?.FieldTitle}}</mat-label>
-        <input matInput [(ngModel)]="dataModel.Title" name="dataModel.Title" #Title type="text"
-          placeholder="{{fieldsInfo['Title']?.FieldTitle}}" minlength="3" maxlength="100" required />
-        <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
-          (click)="dataModel.Title = ''">close</mat-icon>
-        <mat-icon matSuffix>mode_edit</mat-icon>
-        <mat-hint align="end">{{ Title.value.length }} / 100</mat-hint>
-        <mat-error *ngIf="Title.errors?.required">
-          Title is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-      <!-- LinkPropertyTypeId Field -->
-      <app-estate-propertytype-selector (optionSelect)="onActionSelectorSelect($event)" [disabled]="!fieldsInfo['LinkPropertyTypeId']?.AccessEditField"
-      [optionSelectForce]="dataModel.LinkPropertyTypeId" [optionPlaceholder]="'نوع ملک'">
-    </app-estate-propertytype-selector>
-    <!-- LinkEstateUserId Field -->
-    <app-estate-accountuser-selector (optionSelect)="onActionSelectorEstateUser($event)" [disabled]="!fieldsInfo['LinkEstateUserId']?.AccessEditField"
-      [optionSelectForce]="dataModel.LinkEstateUserId" [optionPlaceholder]="'پرسنل املاک'">
-    </app-estate-accountuser-selector>
-    <!-- LinkCmsUserId Field -->
-    <app-cms-user-selector (optionSelect)="onActionSelectorCmsUser($event)" [disabled]="!fieldsInfo['LinkCmsUserId']?.AccessEditField"
-      [optionSelectForce]="dataModel.LinkCmsUserId" [optionPlaceholder]="'مالک ملک'">
-    </app-cms-user-selector>
-    <!-- LinkLocationId Field -->
-    <app-cms-location-selector (optionSelect)="onActionSelectorLocation($event)" [disabled]="!fieldsInfo['LinkLocationId']?.AccessEditField"
-      [optionSelectForce]="dataModel.LinkLocationId" [optionPlaceholder]="'منطقه'">
-    </app-cms-location-selector>
-      <!-- Description Field -->
-      <mat-form-field class="example-full-width">
-        <mat-label>{{fieldsInfo['Description']?.FieldTitle}}</mat-label>
-        <textarea matInput [(ngModel)]="dataModel.Description" name="dataModel.Description" #Description type="text"
-          placeholder="{{fieldsInfo['Description']?.FieldTitle}}" minlength="1" maxlength="500" required
-          rows=5></textarea>
-        <mat-icon matSuffix *ngIf="dataModel.Description" matSuffix mat-icon-button aria-label="Clear"
-          (click)="dataModel.Description = ''">close</mat-icon>
-        <mat-icon matSuffix>mode_edit</mat-icon>
-        <mat-hint align="end">{{ Description.value.length }} / 500</mat-hint>
-        <mat-error *ngIf="Description.errors?.required">
-          Description is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-      <!-- LinkMainImageId Field -->
-      <div class="mb-3">
-        <img *ngIf="dataModel?.LinkMainImageIdSrc?.length>0" style="vertical-align:middle;" aria-hidden
-          src="{{dataModel.LinkMainImageIdSrc}}" height="50" width="50" />
-      </div>
-      <div class="mb-9">
-        <mat-form-field class="example-full-width">
-          <mat-label (click)="fileManagerOpenForm = true">عکس
-          </mat-label>
-          <input matInput [(ngModel)]="dataModel.LinkMainImageId" name="dataModel.LinkMainImageId" #LinkMainImageId
-            type="text" placeholder="شناسه فایل اصلی" (click)="fileManagerOpenForm = true" />
-          <mat-icon matSuffix *ngIf="dataModel.LinkMainImageId " matSuffix mat-icon-button aria-label="Clear"
-            (click)="dataModel.LinkMainImageId = null">close</mat-icon>
-          <mat-icon matSuffix (click)="fileManagerOpenForm = true">mode_edit</mat-icon>
-        </mat-form-field>
-        <cms-file-manager (itemSelected)="onActionFileSelected($event)" [language]="appLanguage" [isPopup]="true"
-          [(openForm)]="fileManagerOpenForm" [tree]="fileManagerTree" [openFilemanagerButtonLabelKey]="'select'"
-          [selectFileType]="selectFileTypeMainImage" [openFilemanagerButtonView]="false"></cms-file-manager>
-      </div>
-      <!-- Address Field -->
-      <mat-form-field class="example-full-width">
-        <mat-label>{{fieldsInfo['Address']?.FieldTitle}}</mat-label>
-        <textarea matInput [(ngModel)]="dataModel.Address" name="dataModel.Address" #Address type="text"
-          placeholder="{{fieldsInfo['Address']?.FieldTitle}}" minlength="1" maxlength="500" required rows=5
-          [disabled]="!fieldsInfo['Address']?.AccessEditField"></textarea>
-        <mat-icon matSuffix *ngIf="dataModel.Address" matSuffix mat-icon-button aria-label="Clear"
-          (click)="dataModel.Address = ''">close</mat-icon>
-        <mat-icon matSuffix>mode_edit</mat-icon>
-        <mat-hint align="end">{{ Address.value.length }} / 500</mat-hint>
-        <mat-error *ngIf="Address.errors?.required">
-          Address is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-      <p>روی نقشه کلیک کنید تا موقیت مکانی مشخص گردد</p>
-      <app-cms-map (map$)="receiveMap($event)" (zoom$)="receiveZoom($event)" id='main-map'></app-cms-map>
+        <mat-step label="{{'TITLE.REQUIRED_INFORMATION' | translate}}" state="main">
+
+          <!-- RecordStatus Field -->
+          <mat-form-field class="example-full-width">
+            <mat-select placeholder="{{fieldsInfo['RecordStatus']?.FieldTitle}}" [(ngModel)]="dataModel.RecordStatus"
+              name="dataModel.RecordStatus" #RecordStatus="ngModel"
+              panelClass="recordStatus-{{ dataModel.RecordStatus }}" required>
+              <mat-option *ngFor="
+                  let item of dataModelEnumRecordStatusResult.ListItems;
+                  index as i
+                " [value]="item.Value">{{ item.Description }}</mat-option>
+            </mat-select>
+            <mat-hint align="end">{{'TITLE.SELECT_STATUS' | translate}}</mat-hint>
+            <mat-error *ngIf="RecordStatus.errors?.required">
+              RecordStatus is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+          <!-- Title Field -->
+          <mat-form-field class="example-full-width">
+            <mat-label>{{fieldsInfo['Title']?.FieldTitle}}</mat-label>
+            <input matInput [(ngModel)]="dataModel.Title" name="dataModel.Title" #Title type="text"
+              placeholder="{{fieldsInfo['Title']?.FieldTitle}}" minlength="3" maxlength="100" required />
+            <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
+              (click)="dataModel.Title = ''">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
+            <mat-hint align="end">{{ Title.value.length }} / 100</mat-hint>
+            <mat-error *ngIf="Title.errors?.required">
+              Title is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+          <!-- LinkPropertyTypeId Field -->
+          <app-estate-propertytype-selector (optionSelect)="onActionSelectorSelect($event)"
+            [disabled]="!fieldsInfo['LinkPropertyTypeId']?.AccessEditField"
+            [optionSelectForce]="dataModel.LinkPropertyTypeId" [optionPlaceholder]="'نوع ملک'">
+          </app-estate-propertytype-selector>
+          <!-- LinkEstateUserId Field -->
+          <app-estate-accountuser-selector (optionSelect)="onActionSelectorEstateUser($event)"
+            [disabled]="!fieldsInfo['LinkEstateUserId']?.AccessEditField"
+            [optionSelectForce]="dataModel.LinkEstateUserId" [optionPlaceholder]="'پرسنل املاک'">
+          </app-estate-accountuser-selector>
+          <!-- LinkCmsUserId Field -->
+          <app-cms-user-selector (optionSelect)="onActionSelectorCmsUser($event)"
+            [disabled]="!fieldsInfo['LinkCmsUserId']?.AccessEditField" [optionSelectForce]="dataModel.LinkCmsUserId"
+            [optionPlaceholder]="'مالک ملک'">
+          </app-cms-user-selector>
+          <!-- LinkLocationId Field -->
+          <app-cms-location-selector (optionSelect)="onActionSelectorLocation($event)"
+            [disabled]="!fieldsInfo['LinkLocationId']?.AccessEditField" [optionSelectForce]="dataModel.LinkLocationId"
+            [optionPlaceholder]="'منطقه'">
+          </app-cms-location-selector>
+          <!-- Description Field -->
+          <mat-form-field class="example-full-width">
+            <mat-label>{{fieldsInfo['Description']?.FieldTitle}}</mat-label>
+            <textarea matInput [(ngModel)]="dataModel.Description" name="dataModel.Description" #Description type="text"
+              placeholder="{{fieldsInfo['Description']?.FieldTitle}}" minlength="1" maxlength="500" required
+              rows=5></textarea>
+            <mat-icon matSuffix *ngIf="dataModel.Description" matSuffix mat-icon-button aria-label="Clear"
+              (click)="dataModel.Description = ''">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
+            <mat-hint align="end">{{ Description.value.length }} / 500</mat-hint>
+            <mat-error *ngIf="Description.errors?.required">
+              Description is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
 
 
+          <div *ngIf="formInfo.FormSubmitAllow">
+            <button type="button" mat-button (click)="onActionBackToParent()"
+              class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
+              {{'ACTION.BACK' | translate}}
+            </button>
+            <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
+              class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
+              {{'ACTION.NEXT' | translate}}
+            </button>
+          </div>
+        </mat-step>
 
-    </div>
-  </form>
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-  <div class="form-actions">
-    <small class="form-text text-muted">{{ formInfo.FormAlert }} </small>
-    <small class="form-text text-muted danger">{{ formInfo.FormError }}
-    </small>
+        <mat-step label="جزئیات" state="seo">
+          <p>جزئیات ملک نسبت به نوع ملک</p>
+          <mat-accordion class="example-headers-align">
+            <mat-expansion-panel *ngFor="let itemGroup of dataModel.PropertyDetailGroups; index as i"
+              [expanded]="step === i" (opened)="setStep(i)" hideToggle>
+
+
+              <!-- value-->
+              <ng-container *ngFor="let itemDetail of itemGroup.PropertyDetails">
+                <ng-container [ngSwitch]="itemDetail.InputDataType">
+                  <!-- ngSwitchCase-->
+                  <mat-form-field *ngSwitchCase="0">0
+                    <mat-label style="color:'{{itemDetail.IconColor}}';">{{itemDetail.Title}}</mat-label>
+                    <input matInput type="text">
+                  </mat-form-field>
+                  <!-- ngSwitchCase-->
+                  <mat-form-field *ngSwitchCase="1">1
+                    <mat-label style="color:'{{itemDetail.IconColor}}';">{{itemDetail.Title}}</mat-label>
+                    <input matInput type="number">
+                  </mat-form-field>
+                  <!-- ngSwitchCase-->
+                  <div *ngSwitchCase="2" class="example-full-width">2
+                    <!-- <mat-slide-toggle [(ngModel)]="dataModel.ShowInMenu" *ngIf="fieldsInfo['ShowInMenu']?.AccessWatchField" -->
+                    <mat-slide-toggle *ngIf="fieldsInfo['ShowInMenu']?.AccessWatchField" name="dataModel.ShowInMenu">
+                      {{itemDetail.Title}}
+                    </mat-slide-toggle>
+                  </div>
+                  <!-- ngSwitchCase-->
+                  <mat-form-field *ngSwitchCase="3">3
+                    <mat-label style="color:'{{itemDetail.IconColor}}';">{{itemDetail.Title}}</mat-label>
+                    <input matInput type="number">
+                  </mat-form-field>
+                  <!-- ngSwitchCase-->
+                  <mat-form-field *ngSwitchCase="4">4
+                    <mat-label style="color:'{{itemDetail.IconColor}}';">{{itemDetail.Title}}</mat-label>
+                    <input matInput type="number">
+                  </mat-form-field>
+                  <!-- ngSwitchCase-->
+                  <mat-form-field *ngSwitchCase="5">5
+                    <mat-label style="color:'{{itemDetail.IconColor}}';">{{itemDetail.Title}}</mat-label>
+                    <textarea matInput rows="5"></textarea>
+                  </mat-form-field>
+                  <!-- ngSwitchCase-->
+                  <div *ngSwitchDefault>output2</div>
+                </ng-container>
+              </ng-container>
+              <mat-action-row>
+                <button mat-button type="button" color="warn" *ngIf="i>0" (click)="prevStep()">Previous</button>
+                <button mat-button type="button" color="primary" *ngIf="(i+1)<dataModel.PropertyDetailGroups.length"
+                  (click)="nextStep()">Next</button>
+                <button mat-button type="button" color="primary" *ngIf="(i+1)==dataModel.PropertyDetailGroups.length"
+                  (click)="nextStep()">End</button>
+
+              </mat-action-row>
+            </mat-expansion-panel>
+            <!--
+            <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Destination
+                </mat-panel-title>
+                <mat-panel-description>
+                  Type the country name
+                  <mat-icon>map</mat-icon>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+
+              <mat-form-field>
+                <mat-label>Country</mat-label>
+                <input matInput>
+              </mat-form-field>
+
+              <mat-action-row>
+                <button mat-button color="warn" (click)="prevStep()">Previous</button>
+                <button mat-button color="primary" (click)="nextStep()">Next</button>
+              </mat-action-row>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Day of the trip
+                </mat-panel-title>
+                <mat-panel-description>
+                  Inform the date you wish to travel
+                  <mat-icon>date_range</mat-icon>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+
+              <mat-form-field>
+                <mat-label>Date</mat-label>
+                <input matInput [matDatepicker]="picker" (focus)="picker.open()" readonly>
+              </mat-form-field>
+              <mat-datepicker #picker></mat-datepicker>
+
+              <mat-action-row>
+                <button mat-button color="warn" (click)="prevStep()">Previous</button>
+                <button mat-button color="primary" (click)="nextStep()">End</button>
+              </mat-action-row>
+            </mat-expansion-panel> -->
+
+          </mat-accordion>
+          <div *ngIf="formInfo.FormSubmitAllow">
+            <button type="button" mat-button matStepperPrevious
+              class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
+              {{'ACTION.BEFOR' | translate}}
+            </button>
+            <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
+              class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
+              {{'ACTION.NEXT' | translate}}
+            </button>
+          </div>
+        </mat-step>
+        <mat-step label="معامله" state="seo">
+          <p>نوع معامله این ملک را مشخص کنید</p>
+          <app-estate-contracttype-selector (optionSelect)="onActionSelectorContractType($event)" [disabled]="false"
+            [optionPlaceholder]="'نوع معامله'">
+          </app-estate-contracttype-selector>
+          <div *ngIf="contractTypeSelected && contractTypeSelected.Id.length>0">
+
+
+            <!-- SalePrice Field -->
+            <mat-form-field class="example-full-width" *ngIf="contractTypeSelected.HasSalePrice">
+              <mat-label>Sale Price</mat-label>
+              <input matInput [(ngModel)]="contractDataModel.SalePrice" name="contractDataModel.SalePrice"
+                #CurrentClickCount type="number" placeholder="0" />
+              <mat-icon matSuffix matSuffix mat-icon-button aria-label="Clear"
+                (click)="contractDataModel.SalePrice = 0">
+                close</mat-icon>
+              <mat-icon matSuffix>mode_edit</mat-icon>
+              <mat-label> ( {{contractTypeSelected.UnitSalePrice}} ) </mat-label>
+            </mat-form-field>
+            <!-- RentPrice Field -->
+            <mat-form-field class="example-full-width" *ngIf="contractTypeSelected.HasRentPrice">
+              <mat-label>Rent Price</mat-label>
+              <input matInput [(ngModel)]="contractDataModel.RentPrice" name="contractDataModel.RentPrice"
+                #CurrentClickCount type="number" placeholder="0" />
+              <mat-icon matSuffix matSuffix mat-icon-button aria-label="Clear"
+                (click)="contractDataModel.RentPrice = 0">
+                close</mat-icon>
+              <mat-icon matSuffix>mode_edit</mat-icon>
+              <mat-label> ( {{contractTypeSelected.UnitRentPrice}} ) </mat-label>
+            </mat-form-field>
+            <!-- DepositPrice Field -->
+            <mat-form-field class="example-full-width" *ngIf="contractTypeSelected.HasDepositPrice">
+              <mat-label>Rent Price</mat-label>
+              <input matInput [(ngModel)]="contractDataModel.DepositPrice" name="contractDataModel.DepositPrice"
+                #CurrentClickCount type="number" placeholder="0" />
+              <mat-icon matSuffix matSuffix mat-icon-button aria-label="Clear"
+                (click)="contractDataModel.DepositPrice = 0">
+                close</mat-icon>
+              <mat-icon matSuffix>mode_edit</mat-icon>
+              <mat-label> ( {{contractTypeSelected.UnitDepositPrice}} ) </mat-label>
+            </mat-form-field>
+
+          </div>
+
+          <button (click)="onActionOptionAddToList()" type="button" mat-button
+            class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
+            {{optionActionTitle}} ...
+          </button>
+          <p>لیست سایر اطلاعات</p>
+          <app-progress-spinner [options]="loadingOption">
+          </app-progress-spinner>
+          <!-- TABLE  -->
+          <div class="example-container mat-elevation-z8" *ngIf="!loadingOption.display">
+            <mat-table [dataSource]="optionTabledataSource">
+              <!-- LinkEstateContractTypeId Column -->
+              <ng-container matColumnDef="LinkEstateContractTypeId">
+                <mat-header-cell *matHeaderCellDef> Contract </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.LinkEstateContractTypeId | cmstitle:
+                  dataModelEstateContractTypeResult.ListItems}} </mat-cell>
+              </ng-container>
+              <!-- SalePrice Column -->
+              <ng-container matColumnDef="SalePrice">
+                <mat-header-cell *matHeaderCellDef> Sale Price </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.SalePrice | number}} ( {{row.ContractType.UnitSalePrice}} )
+                </mat-cell>
+              </ng-container>
+              <!-- RentPrice Column -->
+              <ng-container matColumnDef="RentPrice">
+                <mat-header-cell *matHeaderCellDef> Rent Price </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.RentPrice| number}} ( {{row.ContractType.UnitRentPrice}} )
+                </mat-cell>
+              </ng-container>
+              <!-- DepositPrice Column -->
+              <ng-container matColumnDef="DepositPrice">
+                <mat-header-cell *matHeaderCellDef> Deposit Price </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.DepositPrice| number}} ( {{row.ContractType.UnitDepositPrice}} )
+                </mat-cell>
+              </ng-container>
+
+              <!-- Action Column -->
+              <ng-container matColumnDef="Action">
+                <mat-header-cell *matHeaderCellDef> ... </mat-header-cell>
+                <mat-cell *matCellDef="let row; let i = index" class='Action'>
+                  <small (click)="onActionOptionEditFromList(i)">{{'ACTION.EDIT' | translate}}</small>|
+                  <small (click)="onActionOptionRemoveFromList(i)">حذف</small>
+                </mat-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="optionTabledisplayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: optionTabledisplayedColumns;"
+                [ngStyle]="{'background': row.Id === this.contractSelected?.Id ? '#d3d3da' : '' }">
+              </mat-row>
+            </mat-table>
+          </div>
+          <!-- TABLE  -->
+          <div *ngIf="formInfo.FormSubmitAllow">
+            <button type="button" mat-button matStepperPrevious
+              class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
+              {{'ACTION.BEFOR' | translate}}
+            </button>
+            <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
+              class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
+              {{'ACTION.NEXT' | translate}}
+            </button>
+          </div>
+        </mat-step>
+        <mat-step label="{{'TITLE.ATTACH_FILES' | translate}}" state="file">
+          <p>Socialize with each other.</p>
+          <div class="mb-3">
+            <img *ngIf="dataModel?.LinkMainImageIdSrc?.length>0" style="vertical-align:middle;" aria-hidden
+              src="{{dataModel.LinkMainImageIdSrc}}" height="50" width="50" />
+          </div>
+          <div class="mb-9">
+            <mat-form-field class="example-full-width">
+
+              <mat-label (click)="fileManagerOpenForm = true">عکس اصلی</mat-label>
+              <input matInput [(ngModel)]="dataModel.LinkMainImageId" name="dataModel.LinkMainImageId" #LinkMainImageId
+                type="text" placeholder="شناسه فایل اصلی" (click)="fileManagerOpenForm = true" />
+              <mat-icon matSuffix *ngIf="dataModel.LinkMainImageId" matSuffix mat-icon-button aria-label="Clear"
+                (click)="dataModel.LinkMainImageId = null">close</mat-icon>
+              <mat-icon matSuffix (click)="fileManagerOpenForm = true">mode_edit</mat-icon>
+            </mat-form-field>
+
+            <cms-file-manager (itemSelected)="onActionFileSelectedLinkMainImageId($event)" [language]="appLanguage"
+              [isPopup]="true" [(openForm)]="fileManagerOpenForm" [tree]="fileManagerTree"
+              [openFilemanagerButtonLabelKey]="'select'" [selectFileType]="selectFileTypeMainImage"
+              [openFilemanagerButtonView]="false"></cms-file-manager>
+          </div>
+
+
+          <div *ngIf="formInfo.FormSubmitAllow">
+            <button type="button" mat-button matStepperPrevious
+              class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
+              {{'ACTION.BEFOR' | translate}}
+            </button>
+            <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
+              class="btn btn-outline-primary font-weight-bold text-uppercase px-9 py-4">
+              {{'ACTION.NEXT' | translate}}
+            </button>
+          </div>
+        </mat-step>
+
+        <mat-step label="موقعیت مکانی" state="loaction">
+          <!-- Address Field -->
+          <mat-form-field class="example-full-width">
+            <mat-label>{{fieldsInfo['Address']?.FieldTitle}}</mat-label>
+            <textarea matInput [(ngModel)]="dataModel.Address" name="dataModel.Address" #Address type="text"
+              placeholder="{{fieldsInfo['Address']?.FieldTitle}}" minlength="1" maxlength="500" rows=5
+              [disabled]="!fieldsInfo['Address']?.AccessEditField"></textarea>
+            <mat-icon matSuffix *ngIf="dataModel.Address" matSuffix mat-icon-button aria-label="Clear"
+              (click)="dataModel.Address = ''">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
+            <mat-hint align="end">{{ Address.value.length }} / 500</mat-hint>
+
+          </mat-form-field>
+          <p>روی نقشه کلیک کنید تا موقیت مکانی مشخص گردد</p>
+          <app-cms-map (map$)="receiveMap($event)" (zoom$)="receiveZoom($event)" id='main-map'></app-cms-map>
+          <div *ngIf="formInfo.FormSubmitAllow">
+            <button type="button" mat-button matStepperPrevious
+              class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
+              {{'ACTION.BEFOR' | translate}}
+            </button>
+            <button type="submit" mat-button [disabled]="!vform.form.valid"
+              class="btn btn-success font-weight-bold text-uppercase px-9 py-4">
+              {{'ACTION.SAVE' | translate}}
+            </button>
+          </div>
+        </mat-step>
+
+        <!-- Icon overrides. -->
+        <ng-template matStepperIcon="main">
+          <mat-icon>call_end</mat-icon>
+        </ng-template>
+        <ng-template matStepperIcon="seo">
+          <mat-icon>call_end</mat-icon>
+        </ng-template>
+        <ng-template matStepperIcon="file">
+          <mat-icon>forum</mat-icon>
+        </ng-template>
+        <ng-template matStepperIcon="loaction">
+          <mat-icon>forum</mat-icon>
+        </ng-template>
+
+      </mat-horizontal-stepper>
+
+    </form>
+
   </div>
-  <div class="form-actions" *ngIf="formInfo.FormSubmitAllow">
-    <button type="button" (click)="onFormCancel()" class="btn btn-raised btn-warning mr-1">
-      <i class="ft-x"></i> {{'ACTION.CANCEL' | translate}}
-    </button>
-    <button type="submit" (click)="onFormSubmit()" class="btn btn-raised btn-primary" [disabled]="!vform.form.valid">
-      <i class="fa fa-check-square-o"></i> {{'ACTION.SAVE' | translate}}
-    </button>
-  </div>
-</mat-dialog-actions>
+  <!--end::Container-->
+</div>

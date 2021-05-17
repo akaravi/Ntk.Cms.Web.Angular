@@ -79,6 +79,8 @@ import { EstatePropertyDetailListComponent } from './property-detail/list/list.c
 import { EstatePropertyDetailSelectorComponent } from './property-detail/selector/selector.component';
 import { EstatePropertyDetailTreeComponent } from './property-detail/tree/tree.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ColorPickerModule } from 'ngx-color-picker';
+import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
   declarations: [
@@ -154,6 +156,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatStepperModule,
     IconPickerModule,
     DragDropModule,
+    ColorPickerModule,
+
   ],
   providers: [
     CoreEnumService,

@@ -244,16 +244,17 @@ export class EstatePropertyListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessEdit();
       return;
     }
+    this.router.navigate(['/estate/property/edit', this.tableRowSelected.Id]);
 
-    const dialogRef = this.dialog.open(EstatePropertyEditComponent, {
-      data: { id: this.tableRowSelected.Id }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      // console.log(`Dialog result: ${result}`);
-      if (result && result.dialogChangedDate) {
-        this.DataGetAll();
-      }
-    });
+    // const dialogRef = this.dialog.open(EstatePropertyEditComponent, {
+    //   data: { id: this.tableRowSelected.Id }
+    // });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   // console.log(`Dialog result: ${result}`);
+    //   if (result && result.dialogChangedDate) {
+    //     this.DataGetAll();
+    //   }
+    // });
   }
   onActionbuttonDeleteRow(mode: EstatePropertyModel = this.tableRowSelected): void {
     if (mode == null || !mode.Id || mode.Id.length === 0) {

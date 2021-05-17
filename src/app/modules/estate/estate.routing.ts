@@ -11,6 +11,7 @@ import { EstatePropertyDetailListComponent } from './property-detail/list/list.c
 import { EstateAccountAgencyListComponent } from './account-agency/list/list.component';
 import { EstateAccountUserListComponent } from './account-user/list/list.component';
 import { EstatePropertyAddComponent } from './Property/add/add.component';
+import { EstatePropertyEditComponent } from './Property/edit/edit.component';
 
 const routes: Routes = [
   {
@@ -46,6 +47,10 @@ const routes: Routes = [
       {
         path: 'property/add/LinkPropertyTypeId/:LinkPropertyTypeId',
         component: EstatePropertyAddComponent
+      },
+      {
+        path: 'property/edit/:id',
+        component: EstatePropertyEditComponent
       },
       /**/
       {
