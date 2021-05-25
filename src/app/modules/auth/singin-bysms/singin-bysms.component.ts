@@ -9,6 +9,7 @@ import {
 import { Router } from '@angular/router';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { TranslateService } from '@ngx-translate/core';
+import { TranslationService } from 'src/app/core/i18n/translation.service';
 
 enum ErrorStates {
   NotSubmitted,
@@ -33,7 +34,8 @@ export class AuthSingInBySmsComponent implements OnInit {
     private coreAuthService: CoreAuthService,
     private cmsToastrService: CmsToastrService,
     private translate: TranslateService,
-    private router: Router
+    private router: Router,
+    private translationService: TranslationService,
   ) {
     this.RePassword = '';
   }
@@ -50,6 +52,8 @@ export class AuthSingInBySmsComponent implements OnInit {
     this.formInfo.ButtonSubmittedEnabled = false;
     this.errorState = ErrorStates.NotSubmitted;
     this.dataModelAuthUserSignInBySms.CaptchaKey = this.captchaModel.Key;
+    this.dataModelAuthUserSignInBySms.lang=this.translationService.getSelectedLanguage();
+
     this.coreAuthService
       .ServiceSigninUserBySMS(this.dataModelAuthUserSignInBySms)
       .subscribe((res) => {
@@ -74,6 +78,8 @@ export class AuthSingInBySmsComponent implements OnInit {
     this.formInfo.ButtonSubmittedEnabled = false;
     this.errorState = ErrorStates.NotSubmitted;
     this.dataModelAuthUserSignInBySms.CaptchaKey = this.captchaModel.Key;
+    this.dataModelAuthUserSignInBySms.lang=this.translationService.getSelectedLanguage();
+
     this.coreAuthService
       .ServiceSigninUserBySMS(this.dataModelAuthUserSignInBySms)
       .subscribe((res) => {

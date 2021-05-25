@@ -14,6 +14,7 @@ import {
   FormInfoModel
 } from 'ntk-cms-api';
 import { CmsToastrService } from '../../../../core/services/cmsToastr.service';
+import { TranslationService } from 'src/app/core/i18n/translation.service';
 
 
 @Component({
@@ -29,6 +30,7 @@ export class CoreSiteSelectionComponent implements OnInit {
 
   constructor(
     private coreAuthService: CoreAuthService,
+    private translationService: TranslationService,
     private coreSiteService: CoreSiteService,
     private cmsToastrService: CmsToastrService,
     private router: Router,
@@ -69,6 +71,7 @@ export class CoreSiteSelectionComponent implements OnInit {
     let authModel: AuthRenewTokenModel;
     authModel = new AuthRenewTokenModel();
     authModel.SiteId = id;
+    authModel.Lang= this.translationService.getSelectedLanguage()
     this.subManager.add(
       this.coreAuthService.ServiceRenewToken(authModel).subscribe(
         (res) => {

@@ -69,13 +69,14 @@ export class AppComponent implements OnInit, OnDestroy {
         AppSourceVer: '',
         Country: '',
         DeviceBrand: '',
-        Language: '',
+        Language: this.translationService.getSelectedLanguage(),
         LocationLat: '',
         LocationLong: '',
         SimCard: '',
         NotificationId: ''
 
       };
+      this.translationService.setLanguage(this.translationService.getSelectedLanguage());
       this.coreAuthService.ServiceGetTokenDevice(model).toPromise();
     }
     this.unsubscribe.push(routerSubscription);

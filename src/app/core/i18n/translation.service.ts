@@ -41,8 +41,8 @@ export class TranslationService {
     this.translate.addLangs(this.langIds);
   }
 
-  setLanguage(lang): void {
-    if (lang) {
+  setLanguage(lang: string): void {
+    if (lang && lang!=='None') {
       this.translate.use(this.translate.getDefaultLang());
       this.translate.use(lang);
       localStorage.setItem(LOCALIZATION_LOCAL_STORAGE_KEY, lang);

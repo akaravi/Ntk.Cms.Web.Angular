@@ -68,6 +68,7 @@ export class LanguageSelectorComponent implements OnInit, OnDestroy {
 
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((value) => {
       this.tokenInfo = value;
+        this.setLanguage(value.Language);
     });
   }
   cmsApiStoreSubscribe: Subscription;
