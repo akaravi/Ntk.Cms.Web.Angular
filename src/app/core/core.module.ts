@@ -4,8 +4,15 @@ import { FirstLetterPipe } from './pipe/first-letter.pipe';
 import { SafePipe } from './pipe/safe.pipe';
 
 @NgModule({
-  declarations: [FirstLetterPipe, SafePipe],
+  declarations: [
+    FirstLetterPipe,
+    SafePipe,
+  ],
   imports: [CommonModule],
-  exports: [FirstLetterPipe, SafePipe],
+  exports: [
+    FirstLetterPipe,
+    SafePipe,
+  ]
+  ,
 })
-export class CoreModule {}
+export class CoreModule { }

@@ -233,13 +233,13 @@ export class EstatePropertyEditComponent implements OnInit {
     });
 
   }
-  setValueToggle(i , e){
-    if(e.checked){
-        this.propertyDetails[i]  = 'true'
-   }else{
-        this.propertyDetails[i]  = 'false'
-   }
-}
+  setValueToggle(i, e) {
+    if (e.checked) {
+      this.propertyDetails[i] = 'true'
+    } else {
+      this.propertyDetails[i] = 'false'
+    }
+  }
   receiveZoom(zoom: number): void {
   }
   onActionSelectorSelect(model: EstatePropertyTypeModel | null): void {
@@ -293,7 +293,7 @@ export class EstatePropertyEditComponent implements OnInit {
       return;
     }
     this.formInfo.FormSubmitAllow = false;
-    this.dataModel.PropertyDetailValues=[];
+    this.dataModel.PropertyDetailValues = [];
     //** Save Value */
     this.dataModel.PropertyDetailGroups.forEach(itemGroup => {
       itemGroup.PropertyDetails.forEach(element => {

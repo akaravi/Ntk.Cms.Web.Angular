@@ -55,6 +55,12 @@ import { CmsCurrencySelectorComponent } from './cms-currency-selector/cms-curren
 import { CmsLocationSelectorComponent } from './cms-location-selector/cms-location-selector.component';
 import { ValueArrayPipe } from '../core/pipe/valueArray.pipe';
 import { ValueBooleanPipe } from '../core/pipe/valueBoolean.pipe';
+import { StringComponent } from '../core/dynamic-input-builder/string/string.component';
+import { IntComponent } from '../core/dynamic-input-builder/int/int.component';
+import { BooleanComponent } from '../core/dynamic-input-builder/boolean/boolean.component';
+import { FloatComponent } from '../core/dynamic-input-builder/float/float.component';
+import { DateComponent } from '../core/dynamic-input-builder/date/date.component';
+import { TextAreaComponent } from '../core/dynamic-input-builder/text-area/text-area.component';
 
 
 
@@ -108,6 +114,13 @@ import { ValueBooleanPipe } from '../core/pipe/valueBoolean.pipe';
     CmsGuideComponent,
     CmsFormBuilderPropertiesComponent,
     CmsBankpaymentGridComponent,
+    /**input */
+    StringComponent,
+    IntComponent,
+    BooleanComponent,
+    FloatComponent,
+    DateComponent,
+    TextAreaComponent,
     /** Directive */
     TooltipGuideDirective,
     TooltipDirective,
@@ -151,6 +164,13 @@ import { ValueBooleanPipe } from '../core/pipe/valueBoolean.pipe';
     CmsGuideComponent,
     CmsFormBuilderPropertiesComponent,
     CmsBankpaymentGridComponent,
+    /**input */
+    StringComponent,
+    IntComponent,
+    BooleanComponent,
+    FloatComponent,
+    DateComponent,
+    TextAreaComponent,
     /** Directive */
     TooltipGuideDirective,
     TooltipDirective,
