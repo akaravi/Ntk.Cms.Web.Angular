@@ -16,6 +16,7 @@ import {
   EstateContractModel,
   EstateContractTypeService,
   EnumInputDataType,
+  EstatePropertyDetailValueModel,
 } from 'ntk-cms-api';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
@@ -80,6 +81,7 @@ export class EstatePropertyEditComponent implements OnInit {
   optionTabledataSource = new MatTableDataSource<EstateContractModel>();
   optionTabledisplayedColumns = ['LinkEstateContractTypeId', 'SalePrice', 'RentPrice', 'DepositPrice', 'Action'];
 
+  propertyDetails: Map<string, string> = new Map<string, string>();
   /** map */
   viewMap = false;
   private mapModel: leafletMap;
@@ -136,6 +138,19 @@ export class EstatePropertyEditComponent implements OnInit {
         this.dataModel = next.Item;
         if (next.IsSuccess) {
           this.optionTabledataSource.data = this.dataModel.Contracts;
+          //** load Value */
+          this.dataModel.PropertyDetailGroups.forEach(itemGroup => {
+            itemGroup.PropertyDetails.forEach(element => {
+              this.propertyDetails[element.Id] = 0;
+              if (this.dataModel.PropertyDetailValues) {
+                const value = this.dataModel.PropertyDetailValues.find(x => x.PropertyDetail.Id == element.Id)
+                if (value) {
+                  this.propertyDetails[element.Id] = value.Value;
+                }
+              }
+            });
+          });
+          //** load Value */
 
           const lat = this.dataModel.Geolocationlatitude;
           const lon = this.dataModel.Geolocationlongitude;
@@ -172,7 +187,7 @@ export class EstatePropertyEditComponent implements OnInit {
           this.formInfo.FormAlert = 'ثبت با موفقیت انجام شد';
           this.cmsToastrService.typeSuccessEdit();
           // this.dialogRef.close({ dialogChangedDate: true });
-          this.router.navigate(['/estate/property']);
+          // this.router.navigate(['/estate/property']);
 
         } else {
           this.formInfo.FormAlert = 'برروز خطا';
@@ -218,7 +233,13 @@ export class EstatePropertyEditComponent implements OnInit {
     });
 
   }
-
+  setValueToggle(i , e){
+    if(e.checked){
+        this.propertyDetails[i]  = 'true'
+   }else{
+        this.propertyDetails[i]  = 'false'
+   }
+}
   receiveZoom(zoom: number): void {
   }
   onActionSelectorSelect(model: EstatePropertyTypeModel | null): void {
@@ -272,7 +293,17 @@ export class EstatePropertyEditComponent implements OnInit {
       return;
     }
     this.formInfo.FormSubmitAllow = false;
-
+    this.dataModel.PropertyDetailValues=[];
+    //** Save Value */
+    this.dataModel.PropertyDetailGroups.forEach(itemGroup => {
+      itemGroup.PropertyDetails.forEach(element => {
+        const value = new EstatePropertyDetailValueModel();
+        value.LinkPropertyDetailId = element.Id;
+        value.Value = this.propertyDetails[element.Id];
+        this.dataModel.PropertyDetailValues.push(value);
+      });
+    });
+    //** Save Value */
     this.DataEdit();
 
   }

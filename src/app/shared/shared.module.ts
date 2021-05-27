@@ -53,6 +53,8 @@ import { CmsApplicationSelectorComponent } from './cms-application-selector/cms-
 import { CmsBankpaymentGridComponent } from './cms-bankpayment-grid/cms-bankpayment-grid.component';
 import { CmsCurrencySelectorComponent } from './cms-currency-selector/cms-currency-selector.component';
 import { CmsLocationSelectorComponent } from './cms-location-selector/cms-location-selector.component';
+import { ValueArrayPipe } from '../core/pipe/valueArray.pipe';
+import { ValueBooleanPipe } from '../core/pipe/valueBoolean.pipe';
 
 
 
@@ -82,6 +84,8 @@ import { CmsLocationSelectorComponent } from './cms-location-selector/cms-locati
     PrettyjsonPipe,
     RecordStatusClassPipe,
     BoolStatusClassPipe,
+    ValueArrayPipe,
+    ValueBooleanPipe,
     CmsSearchListComponent,
     CmsStatistListComponent,
     CmsExportListComponent,
@@ -123,6 +127,8 @@ import { CmsLocationSelectorComponent } from './cms-location-selector/cms-locati
     PrettyjsonPipe,
     RecordStatusClassPipe,
     BoolStatusClassPipe,
+    ValueArrayPipe,
+    ValueBooleanPipe,
     PersianDate,
     PersianDateFull,
     CmsSearchListComponent,

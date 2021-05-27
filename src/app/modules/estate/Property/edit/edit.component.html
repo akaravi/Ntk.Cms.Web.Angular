@@ -88,47 +88,77 @@
         <mat-step label="جزئیات" state="seo">
           <p>جزئیات ملک نسبت به نوع ملک</p>
           <mat-accordion class="example-headers-align">
-            <mat-expansion-panel *ngFor="let itemGroup of dataModel.PropertyDetailGroups; index as i"
+            <mat-expansion-panel *ngFor="let itemGroup of dataModel.PropertyDetailGroups ; index as i"
               [expanded]="step === i" (opened)="setStep(i)" hideToggle>
-
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{itemGroup.Title}}
+                </mat-panel-title>
+                <mat-panel-description>
+                  {{itemGroup.Description}}
+                  <mat-icon>{{itemGroup.IconFont}}</mat-icon>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
 
               <!-- value-->
               <ng-container *ngFor="let itemDetail of itemGroup.PropertyDetails">
                 <ng-container [ngSwitch]="itemDetail.InputDataType">
                   <!-- ngSwitchCase-->
-                  <mat-form-field *ngSwitchCase="0">0
-                    <mat-label style="color:'{{itemDetail.IconColor}}';">{{itemDetail.Title}}</mat-label>
-                    <input matInput type="text">
-                  </mat-form-field>
+                  <div *ngSwitchCase="0" class="example-full-width">
+                    <mat-form-field>
+                      <mat-label style="color:'{{itemDetail.IconColor}}';">{{itemDetail.Title}}</mat-label>
+                      <input matInput type="text" [(ngModel)]="propertyDetails[itemDetail.Id]"
+                        [ngModelOptions]="{standalone: true}">
+                    </mat-form-field>
+                  </div>
                   <!-- ngSwitchCase-->
-                  <mat-form-field *ngSwitchCase="1">1
-                    <mat-label style="color:'{{itemDetail.IconColor}}';">{{itemDetail.Title}}</mat-label>
-                    <input matInput type="number">
-                  </mat-form-field>
+                  <div *ngSwitchCase="1" class="example-full-width">
+                    <mat-form-field>1
+                      <mat-label style="color:'{{itemDetail.IconColor}}';">{{itemDetail.Title}}</mat-label>
+                      <input matInput type="number" [(ngModel)]="propertyDetails[itemDetail.Id]"
+                        [ngModelOptions]="{standalone: true}">
+                    </mat-form-field>
+                  </div>
                   <!-- ngSwitchCase-->
-                  <div *ngSwitchCase="2" class="example-full-width">2
+                  <div *ngSwitchCase="2" class="example-full-width">
                     <!-- <mat-slide-toggle [(ngModel)]="dataModel.ShowInMenu" *ngIf="fieldsInfo['ShowInMenu']?.AccessWatchField" -->
-                    <mat-slide-toggle *ngIf="fieldsInfo['ShowInMenu']?.AccessWatchField" name="dataModel.ShowInMenu">
+                    <mat-slide-toggle [checked]="propertyDetails[itemDetail.Id] === 'true' ? true : false"
+                      (change)="setValueToggle( itemDetail.Id , $event )">
                       {{itemDetail.Title}}
                     </mat-slide-toggle>
                   </div>
                   <!-- ngSwitchCase-->
-                  <mat-form-field *ngSwitchCase="3">3
-                    <mat-label style="color:'{{itemDetail.IconColor}}';">{{itemDetail.Title}}</mat-label>
-                    <input matInput type="number">
-                  </mat-form-field>
+                  <div *ngSwitchCase="3" class="example-full-width">
+                    <mat-form-field>3
+                      <mat-label style="color:'{{itemDetail.IconColor}}';">{{itemDetail.Title}}</mat-label>
+                      <input matInput type="number" [(ngModel)]="propertyDetails[itemDetail.Id]"
+                        [ngModelOptions]="{standalone: true}">
+                    </mat-form-field>
+                  </div>
                   <!-- ngSwitchCase-->
-                  <mat-form-field *ngSwitchCase="4">4
-                    <mat-label style="color:'{{itemDetail.IconColor}}';">{{itemDetail.Title}}</mat-label>
-                    <input matInput type="number">
-                  </mat-form-field>
+                  <div *ngSwitchCase="4" class="example-full-width">
+                    <mat-form-field>4
+                      <mat-label style="color:'{{itemDetail.IconColor}}';">{{itemDetail.Title}}</mat-label>
+                      <input matInput type="number" [(ngModel)]="propertyDetails[itemDetail.Id]"
+                        [ngModelOptions]="{standalone: true}">
+                    </mat-form-field>
+                  </div>
                   <!-- ngSwitchCase-->
-                  <mat-form-field *ngSwitchCase="5">5
-                    <mat-label style="color:'{{itemDetail.IconColor}}';">{{itemDetail.Title}}</mat-label>
-                    <textarea matInput rows="5"></textarea>
-                  </mat-form-field>
+                  <div *ngSwitchCase="5" class="example-full-width">
+                    <mat-form-field>5
+                      <mat-label style="color:'{{itemDetail.IconColor}}';">{{itemDetail.Title}}</mat-label>
+                      <textarea matInput rows="5" [(ngModel)]="propertyDetails[itemDetail.Id]"
+                        [ngModelOptions]="{standalone: true}"></textarea>
+                    </mat-form-field>
+                  </div>
                   <!-- ngSwitchCase-->
-                  <div *ngSwitchDefault>output2</div>
+                  <div *ngSwitchDefault>
+                    <mat-form-field *ngSwitchCase="0">0
+                      <mat-label style="color:'{{itemDetail.IconColor}}';">{{itemDetail.Title}}</mat-label>
+                      <input matInput type="text" [(ngModel)]="propertyDetails[itemDetail.Id]"
+                        [ngModelOptions]="{standalone: true}">
+                    </mat-form-field>
+                  </div>
                 </ng-container>
               </ng-container>
               <mat-action-row>
@@ -140,6 +170,7 @@
 
               </mat-action-row>
             </mat-expansion-panel>
+            <br>
             <!--
             <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
               <mat-expansion-panel-header>
