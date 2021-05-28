@@ -3,13 +3,10 @@ import {
   EnumModel,
   ErrorExceptionResult,
   FormInfoModel,
-  EstatePropertyDetailService,
-  EstatePropertyDetailModel,
+  EstatePropertyTypeUsageService,
+  EstatePropertyTypeUsageModel,
   DataFieldInfoModel,
   CoreLocationModel,
-  EstatePropertyTypeLanduseModel,
-  EstatePropertyDetailGroupModel,
-  EstateEnumService,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -29,19 +26,18 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 @Component({
-  selector: 'app-ticketing-departemen-edit',
+  selector: 'app-estate-propertytypeusage-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.scss'],
 })
-export class EstatePropertyDetailEditComponent implements OnInit {
+export class EstatePropertyTypeUsageEditComponent implements OnInit {
   requestId = '';
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
-    private dialogRef: MatDialogRef<EstatePropertyDetailEditComponent>,
+    private dialogRef: MatDialogRef<EstatePropertyTypeUsageEditComponent>,
     public coreEnumService: CoreEnumService,
-    public estatePropertyDetailService: EstatePropertyDetailService,
-    private estateEnumService: EstateEnumService,
+    public estatePropertyTypeUsageService: EstatePropertyTypeUsageService,
     private cmsToastrService: CmsToastrService,
     public publicHelper: PublicHelper,
   ) {
@@ -57,13 +53,10 @@ export class EstatePropertyDetailEditComponent implements OnInit {
   fileManagerTree: TreeModel;
   appLanguage = 'fa';
   loading = new ProgressSpinnerModel();
-  dataModelResult: ErrorExceptionResult<EstatePropertyDetailModel> = new ErrorExceptionResult<EstatePropertyDetailModel>();
-  dataModel: EstatePropertyDetailModel = new EstatePropertyDetailModel();
+  dataModelResult: ErrorExceptionResult<EstatePropertyTypeUsageModel> = new ErrorExceptionResult<EstatePropertyTypeUsageModel>();
+  dataModel: EstatePropertyTypeUsageModel = new EstatePropertyTypeUsageModel();
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
-  dataModelEnumInputDataTypeResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
-  keywordDataModel = [];
-
   fileManagerOpenForm = false;
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
   ngOnInit(): void {
@@ -75,12 +68,6 @@ export class EstatePropertyDetailEditComponent implements OnInit {
     }
     this.DataGetOneContent();
     this.getEnumRecordStatus();
-    this.getEnumInputDataType();
-  }
-  getEnumInputDataType(): void {
-    this.estateEnumService.ServiceEnumInputDataType().subscribe((next) => {
-      this.dataModelEnumInputDataTypeResult = next;
-    });
   }
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
@@ -92,21 +79,22 @@ export class EstatePropertyDetailEditComponent implements OnInit {
       this.dataModelEnumRecordStatusResult = this.storeSnapshot.EnumRecordStatus;
     }
   }
-
+  onActionFileSelected(model: NodeInterface): void {
+    this.dataModel.LinkMainImageId = model.id ;
+    this.dataModel.LinkMainImageIdSrc = model.downloadLinksrc;
+  }
   DataGetOneContent(): void {
 
     this.formInfo.FormAlert = 'در دریافت ارسال اطلاعات از سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.estatePropertyDetailService.setAccessLoad();
-    this.estatePropertyDetailService.ServiceGetOneById(this.requestId).subscribe(
+    this.estatePropertyTypeUsageService.setAccessLoad();
+    this.estatePropertyTypeUsageService.ServiceGetOneById(this.requestId).subscribe(
       (next) => {
         this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
 
         this.dataModel = next.Item;
         if (next.IsSuccess) {
-          this.dataModel.ConfigValueDefaultValueJson = this.dataModel.ConfigValueDefaultValueJson + '';
-          this.keywordDataModel = this.dataModel.ConfigValueDefaultValueJson.split(',');
           this.formInfo.FormTitle = this.formInfo.FormTitle + ' ' + next.Item.Title;
           this.formInfo.FormAlert = '';
         } else {
@@ -126,7 +114,7 @@ export class EstatePropertyDetailEditComponent implements OnInit {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.estatePropertyDetailService.ServiceEdit(this.dataModel).subscribe(
+    this.estatePropertyTypeUsageService.ServiceEdit(this.dataModel).subscribe(
       (next) => {
         this.dataModelResult = next;
         if (next.IsSuccess) {
@@ -148,35 +136,12 @@ export class EstatePropertyDetailEditComponent implements OnInit {
       }
     );
   }
-  onActionSelectorSelect(model: EstatePropertyTypeLanduseModel | null): void {
-    if (!model || !model.Id || model.Id.length <= 0) {
-      const message = 'دسته بندی اطلاعات مشخص نیست';
-      this.cmsToastrService.typeErrorSelected(message);
-      return;
-    }
-    this.dataModel.LinkPropertyTypeLanduseId = model.Id;
-  }
-  onActionSelectorDetailGroup(model: EstatePropertyDetailGroupModel | null): void {
-    if (!model || !model.Id || model.Id.length <= 0) {
-      const message = 'دسته بندی اطلاعات مشخص نیست';
-      this.cmsToastrService.typeErrorSelected(message);
-      return;
-    }
-    this.dataModel.LinkPropertyDetailGroupId = model.Id;
-  }
   onIconPickerSelect(model: any): void {
     this.dataModel.IconFont = model;
   }
-
   onFormSubmit(): void {
     if (!this.formGroup.valid) {
       return;
-    }
-    if (this.keywordDataModel && this.keywordDataModel.length > 0) {
-      const listKeyword = this.keywordDataModel.map(x => x.display);
-      if (listKeyword && listKeyword.length > 0) {
-        this.dataModel.ConfigValueDefaultValueJson = listKeyword.join(',');
-      }
     }
     this.formInfo.FormSubmitAllow = false;
     this.DataEditContent();

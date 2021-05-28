@@ -17,17 +17,16 @@
           Title is <strong>required</strong>
         </mat-error>
       </mat-form-field>
-      <!-- LinkPropertyTypeLanduseId Field -->
-      <app-estate-propertytypelanduse-selector (optionSelect)="onActionSelectorSelect($event)"
-        [optionSelectForce]="dataModel.LinkPropertyTypeLanduseId" [optionPlaceholder]="'دسته بندی'">
-      </app-estate-propertytypelanduse-selector>
+
+
+
       <!-- IconFont Field -->
       <mat-form-field class="example-full-width" *ngIf="fieldsInfo['IconFont']?.AccessWatchField">
         <mat-label> {{fieldsInfo['IconFont']?.FieldTitle}}</mat-label>
         <input matInput [(ngModel)]="dataModel.IconFont" name="dataModel.IconFont" #IconFont
           [iconPicker]="dataModel.IconFont" [ipIconPack]="['fa']" [ipPosition]="'top'"
           (iconPickerSelect)="onIconPickerSelect($event)" type="text"
-          [disabled]="!fieldsInfo['IconFont']?.AccessEditField" placeholder="{{fieldsInfo['IconFont']?.FieldTitle}}" />
+          [disabled]="!fieldsInfo['IconFont']?.AccessAddField" placeholder="{{fieldsInfo['IconFont']?.FieldTitle}}" />
         <span class="input-group-addon"><i [ngClass]="dataModel.IconFont"></i></span>
         <mat-icon>{{dataModel.IconFont}}</mat-icon>
         <mat-icon matSuffix *ngIf="dataModel.IconFont" matSuffix mat-icon-button aria-label="Clear"
@@ -39,21 +38,10 @@
         <mat-label> {{fieldsInfo['IconColor']?.FieldTitle}}</mat-label>
         <input matInput [(ngModel)]="dataModel.IconColor" name="dataModel.IconColor" #IconColor
           [value]="dataModel.IconColor" [style.background]="dataModel.IconColor" [(colorPicker)]="dataModel.IconColor"
-          type="text" [disabled]="!fieldsInfo['IconColor']?.AccessEditField"
+          type="text" [disabled]="!fieldsInfo['IconColor']?.AccessAddField"
           placeholder="{{fieldsInfo['IconColor']?.FieldTitle}}" />
         <mat-icon matSuffix *ngIf="dataModel.IconColor" matSuffix mat-icon-button aria-label="Clear"
           (click)="dataModel.IconColor = ''">close</mat-icon>
-        <mat-icon matSuffix>mode_edit</mat-icon>
-      </mat-form-field>
-
-      <!-- ShowInFormOrder Field -->
-      <mat-form-field class="example-full-width" *ngIf="fieldsInfo['ShowInFormOrder']?.AccessWatchField">
-        <mat-label> {{fieldsInfo['ShowInFormOrder']?.FieldTitle}}</mat-label>
-        <input matInput [(ngModel)]="dataModel.ShowInFormOrder" name="dataModel.ShowInFormOrder" #ShowInFormOrder
-          type="number" [disabled]="!fieldsInfo['ShowInFormOrder']?.AccessEditField"
-          placeholder="{{fieldsInfo['ShowInFormOrder']?.FieldTitle}}" />
-        <mat-icon matSuffix *ngIf="dataModel.ShowInFormOrder" matSuffix mat-icon-button aria-label="Clear"
-          (click)="dataModel.ShowInFormOrder = 1">close</mat-icon>
         <mat-icon matSuffix>mode_edit</mat-icon>
       </mat-form-field>
       <!-- Description Field -->
@@ -70,6 +58,26 @@
           Description is <strong>required</strong>
         </mat-error>
       </mat-form-field>
+      <!-- LinkMainImageId Field -->
+      <div class="mb-3">
+        <img *ngIf="dataModel?.LinkMainImageIdSrc?.length>0" style="vertical-align:middle;" aria-hidden
+          src="{{dataModel.LinkMainImageIdSrc}}" height="50" width="50" />
+      </div>
+      <div class="mb-9">
+        <mat-form-field class="example-full-width">
+          <mat-label (click)="fileManagerOpenForm = true">عکس
+          </mat-label>
+          <input matInput [(ngModel)]="dataModel.LinkMainImageId" name="dataModel.LinkMainImageId" #LinkMainImageId
+            type="text" placeholder="شناسه فایل اصلی" (click)="fileManagerOpenForm = true" />
+          <mat-icon matSuffix *ngIf="dataModel.LinkMainImageId " matSuffix mat-icon-button aria-label="Clear"
+            (click)="dataModel.LinkMainImageId = null">close</mat-icon>
+          <mat-icon matSuffix (click)="fileManagerOpenForm = true">mode_edit</mat-icon>
+        </mat-form-field>
+        <cms-file-manager (itemSelected)="onActionFileSelected($event)" [language]="appLanguage" [isPopup]="true"
+          [(openForm)]="fileManagerOpenForm" [tree]="fileManagerTree" [openFilemanagerButtonLabelKey]="'select'"
+          [selectFileType]="selectFileTypeMainImage" [openFilemanagerButtonView]="false"></cms-file-manager>
+      </div>
+
     </div>
   </form>
 </mat-dialog-content>

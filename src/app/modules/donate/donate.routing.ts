@@ -29,7 +29,7 @@ const routes: Routes = [
         component: DonateTargetListComponent
       },
       // {
-      //   path: 'property/LinkPropertyTypeId/:LinkPropertyTypeId',
+      //   path: 'property/LinkPropertyTypeLanduseId/:LinkPropertyTypeLanduseId',
       //   component: DonatePropertyListComponent
       // },
       // /**/
@@ -62,7 +62,7 @@ const routes: Routes = [
       //   component: DonatePropertyDetailListComponent
       // },
       // {
-      //   path: 'property-detail/LinkPropertyTypeId/:LinkPropertyTypeId',
+      //   path: 'property-detail/LinkPropertyTypeLanduseId/:LinkPropertyTypeLanduseId',
       //   component: DonatePropertyDetailListComponent
       // },
       // /** */

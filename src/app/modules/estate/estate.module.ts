@@ -14,7 +14,7 @@ import {
   CoreEnumService,
   CoreModuleTagService,
   EstateConfigurationService,
-  EstatePropertyTypeService,
+  EstatePropertyTypeLanduseService,
   EstatePropertyService,
   EstateContractTypeService,
   EstatePropertyDetailGroupService,
@@ -28,7 +28,8 @@ import {
   EstatePropertyShareAgentService,
   EstatePropertyShareSiteService,
   EstateContractService,
-  EstatePropertyDetailService
+  EstatePropertyDetailService,
+  EstatePropertyTypeUsageService
 } from 'ntk-cms-api';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -36,11 +37,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
 import { EstateConfigMainAdminComponent } from './config/mainAdmin/configMainAdmin.component';
 import { EstateConfigSiteComponent } from './config/site/configSite.component';
-import { EstatePropertyTypeAddComponent } from './property-type/add/add.component';
-import { EstatePropertyTypeEditComponent } from './property-type/edit/edit.component';
-import { EstatePropertyTypeListComponent } from './property-type/list/list.component';
-import { EstatePropertyTypeSelectorComponent } from './property-type/selector/selector.component';
-import { EstatePropertyTypeTreeComponent } from './property-type/tree/tree.component';
+
 import { EstatePropertyAddComponent } from './Property/add/add.component';
 import { EstatePropertyEditComponent } from './Property/edit/edit.component';
 import { EstatePropertyListComponent } from './Property/list/list.component';
@@ -81,6 +78,16 @@ import { EstatePropertyDetailTreeComponent } from './property-detail/tree/tree.c
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { BrowserModule } from '@angular/platform-browser';
+import { EstatePropertyTypeLanduseAddComponent } from './property-type-landuse/add/add.component';
+import { EstatePropertyTypeLanduseEditComponent } from './property-type-landuse/edit/edit.component';
+import { EstatePropertyTypeLanduseListComponent } from './property-type-landuse/list/list.component';
+import { EstatePropertyTypeLanduseSelectorComponent } from './property-type-landuse/selector/selector.component';
+import { EstatePropertyTypeLanduseTreeComponent } from './property-type-landuse/tree/tree.component';
+import { EstatePropertyTypeUsageAddComponent } from './property-type-usage/add/add.component';
+import { EstatePropertyTypeUsageEditComponent } from './property-type-usage/edit/edit.component';
+import { EstatePropertyTypeUsageListComponent } from './property-type-usage/list/list.component';
+import { EstatePropertyTypeUsageSelectorComponent } from './property-type-usage/selector/selector.component';
+import { EstatePropertyTypeUsageTreeComponent } from './property-type-usage/tree/tree.component';
 
 @NgModule({
   declarations: [
@@ -90,11 +97,17 @@ import { BrowserModule } from '@angular/platform-browser';
     EstateConfigSiteComponent,
     /*Config*/
     /* */
-    EstatePropertyTypeAddComponent,
-    EstatePropertyTypeEditComponent,
-    EstatePropertyTypeListComponent,
-    EstatePropertyTypeSelectorComponent,
-    EstatePropertyTypeTreeComponent,
+    EstatePropertyTypeLanduseAddComponent,
+    EstatePropertyTypeLanduseEditComponent,
+    EstatePropertyTypeLanduseListComponent,
+    EstatePropertyTypeLanduseSelectorComponent,
+    EstatePropertyTypeLanduseTreeComponent,
+    /* */
+    EstatePropertyTypeUsageAddComponent,
+    EstatePropertyTypeUsageEditComponent,
+    EstatePropertyTypeUsageListComponent,
+    EstatePropertyTypeUsageSelectorComponent,
+    EstatePropertyTypeUsageTreeComponent,
     /* */
     EstatePropertyAddComponent,
     EstatePropertyEditComponent,
@@ -180,7 +193,8 @@ import { BrowserModule } from '@angular/platform-browser';
     EstatePropertyShareAgencyService,
     EstatePropertyShareAgentService,
     EstatePropertyShareSiteService,
-    EstatePropertyTypeService,
+    EstatePropertyTypeLanduseService,
+    EstatePropertyTypeUsageService,
     /** */
     CmsConfirmationDialogService,
     CoreModuleTagService,

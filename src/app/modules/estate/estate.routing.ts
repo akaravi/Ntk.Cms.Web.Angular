@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { EstatePropertyTypeListComponent } from './property-type/list/list.component';
 import { EstateConfigMainAdminComponent } from './config/mainAdmin/configMainAdmin.component';
 import { EstateConfigSiteComponent } from './config/site/configSite.component';
 import { EstatePropertyListComponent } from './Property/list/list.component';
@@ -12,6 +11,8 @@ import { EstateAccountAgencyListComponent } from './account-agency/list/list.com
 import { EstateAccountUserListComponent } from './account-user/list/list.component';
 import { EstatePropertyAddComponent } from './Property/add/add.component';
 import { EstatePropertyEditComponent } from './Property/edit/edit.component';
+import { EstatePropertyTypeLanduseListComponent } from './property-type-landuse/list/list.component';
+import { EstatePropertyTypeUsageListComponent } from './property-type-usage/list/list.component';
 
 const routes: Routes = [
   {
@@ -37,7 +38,7 @@ const routes: Routes = [
         component: EstatePropertyListComponent
       },
       {
-        path: 'property/LinkPropertyTypeId/:LinkPropertyTypeId',
+        path: 'property/LinkPropertyTypeLanduseId/:LinkPropertyTypeLanduseId',
         component: EstatePropertyListComponent
       },
       {
@@ -45,7 +46,7 @@ const routes: Routes = [
         component: EstatePropertyAddComponent
       },
       {
-        path: 'property/add/LinkPropertyTypeId/:LinkPropertyTypeId',
+        path: 'property/add/LinkPropertyTypeLanduseId/:LinkPropertyTypeLanduseId',
         component: EstatePropertyAddComponent
       },
       {
@@ -54,8 +55,12 @@ const routes: Routes = [
       },
       /**/
       {
-        path: 'property-type',
-        component: EstatePropertyTypeListComponent
+        path: 'property-type-usage',
+        component: EstatePropertyTypeUsageListComponent
+      },
+      {
+        path: 'property-type-landuse',
+        component: EstatePropertyTypeLanduseListComponent
       },
       /**/
       {
@@ -82,7 +87,7 @@ const routes: Routes = [
         component: EstatePropertyDetailListComponent
       },
       {
-        path: 'property-detail/LinkPropertyTypeId/:LinkPropertyTypeId',
+        path: 'property-detail/LinkPropertyTypeLanduseId/:LinkPropertyTypeLanduseId',
         component: EstatePropertyDetailListComponent
       },
       /** */

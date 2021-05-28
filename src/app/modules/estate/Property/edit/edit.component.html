@@ -37,11 +37,16 @@
               Title is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-          <!-- LinkPropertyTypeId Field -->
-          <app-estate-propertytype-selector (optionSelect)="onActionSelectorSelect($event)"
-            [disabled]="!fieldsInfo['LinkPropertyTypeId']?.AccessEditField"
-            [optionSelectForce]="dataModel.LinkPropertyTypeId" [optionPlaceholder]="'نوع ملک'">
-          </app-estate-propertytype-selector>
+      <!-- LinkPropertyTypeUsageId Field -->
+      <app-estate-propertytypeusage-selector (optionSelect)="onActionSelectorSelectUsage($event)"
+      [disabled]="!fieldsInfo['LinkPropertyTypeUsageId']?.AccessAddField"
+      [optionSelectForce]="dataModel.LinkPropertyTypeUsageId" [optionPlaceholder]="'نوع کاربری'">
+    </app-estate-propertytypeusage-selector>
+    <!-- LinkPropertyTypeLanduseId Field -->
+    <app-estate-propertytypelanduse-selector (optionSelect)="onActionSelectorSelectLanduse($event)"
+      [disabled]="!fieldsInfo['LinkPropertyTypeLanduseId']?.AccessAddField"
+      [optionSelectForce]="dataModel.LinkPropertyTypeLanduseId" [optionPlaceholder]="'نوع ملک'">
+    </app-estate-propertytypelanduse-selector>
           <!-- LinkEstateUserId Field -->
           <app-estate-accountuser-selector (optionSelect)="onActionSelectorEstateUser($event)"
             [disabled]="!fieldsInfo['LinkEstateUserId']?.AccessEditField"
@@ -148,7 +153,7 @@
               </mat-action-row>
             </mat-expansion-panel>
             <br>
-           
+
           </mat-accordion>
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious

@@ -15,8 +15,8 @@ import {
   CoreEnumService,
   ErrorExceptionResult,
   FilterModel,
-  EstatePropertyTypeModel,
-  EstatePropertyTypeService,
+  EstatePropertyTypeUsageModel,
+  EstatePropertyTypeUsageService,
   NtkCmsApiStoreService,
 } from 'ntk-cms-api';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
@@ -24,40 +24,40 @@ import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { EstatePropertyTypeEditComponent } from '../edit/edit.component';
-import { EstatePropertyTypeAddComponent } from '../add/add.component';
+import { EstatePropertyTypeUsageEditComponent } from '../edit/edit.component';
+import { EstatePropertyTypeUsageAddComponent } from '../add/add.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
 
 
 @Component({
-  selector: 'app-estate-propertytype-tree',
+  selector: 'app-estate-propertytypeusage-tree',
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.scss'],
 })
-export class EstatePropertyTypeTreeComponent implements OnInit, OnDestroy {
+export class EstatePropertyTypeUsageTreeComponent implements OnInit, OnDestroy {
   constructor(
     private cmsApiStore: NtkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
     public coreEnumService: CoreEnumService,
-    public categoryService: EstatePropertyTypeService,
+    public categoryService: EstatePropertyTypeUsageService,
     private cmsConfirmationDialogService: CmsConfirmationDialogService,
     public dialog: MatDialog
   ) {
   }
-  @Input() set optionSelectForce(x: number | EstatePropertyTypeModel) {
+  @Input() set optionSelectForce(x: number | EstatePropertyTypeUsageModel) {
     this.onActionSelectForce(x);
   }
-  dataModelSelect: EstatePropertyTypeModel = new EstatePropertyTypeModel();
-  dataModelResult: ErrorExceptionResult<EstatePropertyTypeModel> = new ErrorExceptionResult<EstatePropertyTypeModel>();
+  dataModelSelect: EstatePropertyTypeUsageModel = new EstatePropertyTypeUsageModel();
+  dataModelResult: ErrorExceptionResult<EstatePropertyTypeUsageModel> = new ErrorExceptionResult<EstatePropertyTypeUsageModel>();
   filteModel = new FilterModel();
   loading = new ProgressSpinnerModel();
-  treeControl = new NestedTreeControl<EstatePropertyTypeModel>(node => null);
-  dataSource = new MatTreeNestedDataSource<EstatePropertyTypeModel>();
-  @Output() optionSelect = new EventEmitter<EstatePropertyTypeModel>();
+  treeControl = new NestedTreeControl<EstatePropertyTypeUsageModel>(node => null);
+  dataSource = new MatTreeNestedDataSource<EstatePropertyTypeUsageModel>();
+  @Output() optionSelect = new EventEmitter<EstatePropertyTypeUsageModel>();
   cmsApiStoreSubscribe: Subscription;
   @Input() optionReload = () => this.onActionReload();
 
-  hasChild = (_: number, node: EstatePropertyTypeModel) => false;
+  hasChild = (_: number, node: EstatePropertyTypeUsageModel) => false;
 
 
   ngOnInit(): void {
@@ -91,7 +91,7 @@ export class EstatePropertyTypeTreeComponent implements OnInit, OnDestroy {
       }
     );
   }
-  onActionSelect(model: EstatePropertyTypeModel): void {
+  onActionSelect(model: EstatePropertyTypeUsageModel): void {
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
   }
@@ -102,15 +102,15 @@ export class EstatePropertyTypeTreeComponent implements OnInit, OnDestroy {
     else {
       this.onActionSelect(null);
     }
-    this.dataModelSelect = new EstatePropertyTypeModel();
+    this.dataModelSelect = new EstatePropertyTypeUsageModel();
     this.DataGetAll();
   }
-  onActionSelectForce(id: number | EstatePropertyTypeModel): void {
+  onActionSelectForce(id: number | EstatePropertyTypeUsageModel): void {
 
   }
 
   onActionAdd(): void {
-    const dialogRef = this.dialog.open(EstatePropertyTypeAddComponent, {
+    const dialogRef = this.dialog.open(EstatePropertyTypeUsageAddComponent, {
       data: {}
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -130,7 +130,7 @@ export class EstatePropertyTypeTreeComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorSelected(message);
       return;
     }
-    const dialogRef = this.dialog.open(EstatePropertyTypeEditComponent, {
+    const dialogRef = this.dialog.open(EstatePropertyTypeUsageEditComponent, {
       data: { id }
     });
     dialogRef.afterClosed().subscribe(result => {

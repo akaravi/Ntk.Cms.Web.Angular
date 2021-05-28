@@ -14,8 +14,8 @@ import {
   EnumRecordStatus,
   FilterDataModel,
   DataFieldInfoModel,
-  EstatePropertyTypeService,
-  EstatePropertyTypeModel,
+  EstatePropertyTypeLanduseService,
+  EstatePropertyTypeLanduseModel,
   EstatePropertyDetailGroupModel,
   EstatePropertyDetailGroupService,
   EnumActionGoStep,
@@ -42,11 +42,11 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
   styleUrls: ['./list.component.scss']
 })
 export class EstatePropertyDetailListComponent implements OnInit, OnDestroy {
-  requestLinkPropertyTypeId = '';
+  requestLinkPropertyTypeLanduseId = '';
   constructor(
     private estatePropertyDetailService: EstatePropertyDetailService,
     private estatePropertyDetailGroupService: EstatePropertyDetailGroupService,
-    private estatePropertyTypeService: EstatePropertyTypeService,
+    private estatePropertyTypeLanduseService: EstatePropertyTypeLanduseService,
     private cmsConfirmationDialogService: CmsConfirmationDialogService,
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
@@ -54,7 +54,7 @@ export class EstatePropertyDetailListComponent implements OnInit, OnDestroy {
     private cmsToastrService: CmsToastrService,
     private router: Router,
     public dialog: MatDialog) {
-    this.requestLinkPropertyTypeId = this.activatedRoute.snapshot.paramMap.get('LinkPropertyTypeId');
+    this.requestLinkPropertyTypeLanduseId = this.activatedRoute.snapshot.paramMap.get('LinkPropertyTypeLanduseId');
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
@@ -65,9 +65,9 @@ export class EstatePropertyDetailListComponent implements OnInit, OnDestroy {
     this.filteModelContent.SortColumn = 'Id';
     this.filteModelContent.SortType = EnumSortType.Descending;
     const filter = new FilterDataModel();
-    if (this.requestLinkPropertyTypeId.length > 0) {
-      filter.PropertyName = 'LinkPropertyTypeId';
-      filter.Value = this.requestLinkPropertyTypeId;
+    if (this.requestLinkPropertyTypeLanduseId.length > 0) {
+      filter.PropertyName = 'LinkPropertyTypeLanduseId';
+      filter.Value = this.requestLinkPropertyTypeLanduseId;
       this.filteModelContent.Filters.push(filter);
     }
   }
@@ -79,7 +79,7 @@ export class EstatePropertyDetailListComponent implements OnInit, OnDestroy {
 
   filteModelContent = new FilterModel();
   dataModelResult: ErrorExceptionResult<EstatePropertyDetailModel> = new ErrorExceptionResult<EstatePropertyDetailModel>();
-  dataModelEstatePropertyTypeResult: ErrorExceptionResult<EstatePropertyTypeModel> = new ErrorExceptionResult<EstatePropertyTypeModel>();
+  dataModelEstatePropertyTypeLanduseResult: ErrorExceptionResult<EstatePropertyTypeLanduseModel> = new ErrorExceptionResult<EstatePropertyTypeLanduseModel>();
   dataModelEstatePropertyDetailGroupResult: ErrorExceptionResult<EstatePropertyDetailGroupModel> = new ErrorExceptionResult<EstatePropertyDetailGroupModel>();
   optionsSearch: ComponentOptionSearchModel = new ComponentOptionSearchModel();
   optionsStatist: ComponentOptionStatistModel = new ComponentOptionStatistModel();
@@ -96,7 +96,7 @@ export class EstatePropertyDetailListComponent implements OnInit, OnDestroy {
     'Title',
     'Unit',
     'ShowInFormOrder',
-    'LinkPropertyTypeId',
+    'LinkPropertyTypeLanduseId',
     'LinkPropertyDetailGroupId',
     'Action'
   ];
@@ -122,8 +122,8 @@ export class EstatePropertyDetailListComponent implements OnInit, OnDestroy {
   getPropertyType(): void {
     const filter = new FilterModel();
     filter.RowPerPage = 100;
-    this.estatePropertyTypeService.ServiceGetAll(filter).subscribe((next) => {
-      this.dataModelEstatePropertyTypeResult = next;
+    this.estatePropertyTypeLanduseService.ServiceGetAll(filter).subscribe((next) => {
+      this.dataModelEstatePropertyTypeLanduseResult = next;
     });
   }
    getPropertyDetailGroup(): void {
@@ -242,7 +242,7 @@ export class EstatePropertyDetailListComponent implements OnInit, OnDestroy {
     }
     const dialogRef = this.dialog.open(EstatePropertyDetailAddComponent, {
       data: {
-        LinkPropertyTypeId: this.requestLinkPropertyTypeId,
+        LinkPropertyTypeLanduseId: this.requestLinkPropertyTypeLanduseId,
         LinkPropertyDetailGroupId: this.categoryModelSelected.Id
       }
     });

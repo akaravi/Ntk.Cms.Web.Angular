@@ -7,7 +7,7 @@ import {
   EnumModel,
   ErrorExceptionResult,
   FormInfoModel,
-  EstatePropertyTypeModel,
+  EstatePropertyTypeLanduseModel,
   DataFieldInfoModel,
   EstateAccountUserModel,
   CoreUserModel,
@@ -15,6 +15,7 @@ import {
   EstateContractTypeModel,
   EstateContractModel,
   EstateContractTypeService,
+  EstatePropertyTypeUsageModel,
 } from 'ntk-cms-api';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
@@ -37,7 +38,8 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./add.component.scss']
 })
 export class EstatePropertyAddComponent implements OnInit {
-  requestLinkPropertyTypeId = '';
+  requestLinkPropertyTypeLanduseId = '';
+  requestLinkPropertyTypeUsageId = '';
   constructor(
     // @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
@@ -50,10 +52,15 @@ export class EstatePropertyAddComponent implements OnInit {
     private router: Router,
     public publicHelper: PublicHelper,
   ) {
-    this.requestLinkPropertyTypeId = this.activatedRoute.snapshot.paramMap.get('LinkPropertyTypeId');
+    this.requestLinkPropertyTypeLanduseId = this.activatedRoute.snapshot.paramMap.get('LinkPropertyTypeLanduseId');
 
-    if (this.requestLinkPropertyTypeId && this.requestLinkPropertyTypeId.length > 0) {
-      this.dataModel.LinkPropertyTypeId = this.requestLinkPropertyTypeId;
+    if (this.requestLinkPropertyTypeLanduseId && this.requestLinkPropertyTypeLanduseId.length > 0) {
+      this.dataModel.LinkPropertyTypeLanduseId = this.requestLinkPropertyTypeLanduseId;
+    }
+    this.requestLinkPropertyTypeUsageId = this.activatedRoute.snapshot.paramMap.get('LinkPropertyTypeUsageId');
+
+    if (this.requestLinkPropertyTypeUsageId && this.requestLinkPropertyTypeUsageId.length > 0) {
+      this.dataModel.LinkPropertyTypeUsageId = this.requestLinkPropertyTypeUsageId;
     }
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
@@ -198,13 +205,21 @@ export class EstatePropertyAddComponent implements OnInit {
 
   receiveZoom(zoom: number): void {
   }
-  onActionSelectorSelect(model: EstatePropertyTypeModel | null): void {
+  onActionSelectorSelectUsage(model: EstatePropertyTypeUsageModel | null): void {
     if (!model || !model.Id || model.Id.length <= 0) {
       const message = 'دسته بندی اطلاعات مشخص نیست';
       this.cmsToastrService.typeErrorSelected(message);
       return;
     }
-    this.dataModel.LinkPropertyTypeId = model.Id;
+    this.dataModel.LinkPropertyTypeUsageId = model.Id;
+  }
+  onActionSelectorSelectLanduse(model: EstatePropertyTypeLanduseModel | null): void {
+    if (!model || !model.Id || model.Id.length <= 0) {
+      const message = 'دسته بندی اطلاعات مشخص نیست';
+      this.cmsToastrService.typeErrorSelected(message);
+      return;
+    }
+    this.dataModel.LinkPropertyTypeLanduseId = model.Id;
   }
   onActionSelectorCmsUser(model: CoreUserModel | null): void {
     if (!model || !model.Id || model.Id <= 0) {

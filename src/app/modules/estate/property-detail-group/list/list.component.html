@@ -60,11 +60,11 @@
           </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.ShowInFormOrder}} </mat-cell>
         </ng-container>
-        <!-- LinkPropertyTypeId Column -->
-        <ng-container matColumnDef="LinkPropertyTypeId">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkPropertyTypeId']?.FieldTitle}}
+        <!-- LinkPropertyTypeLanduseId Column -->
+        <ng-container matColumnDef="LinkPropertyTypeLanduseId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkPropertyTypeLanduseId']?.FieldTitle}}
           </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.LinkPropertyTypeId| cmstitle: dataModelEstatePropertyTypeResult.ListItems}} </mat-cell>
+          <mat-cell *matCellDef="let row"> {{row.LinkPropertyTypeLanduseId| cmstitle: dataModelEstatePropertyTypeLanduseResult.ListItems}} </mat-cell>
         </ng-container>
 
 

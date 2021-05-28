@@ -7,7 +7,7 @@ import {
   EstatePropertyDetailGroupModel,
   DataFieldInfoModel,
   CoreLocationModel,
-  EstatePropertyTypeModel,
+  EstatePropertyTypeLanduseModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -33,7 +33,7 @@ import { PublicHelper } from 'src/app/core/helpers/publicHelper';
   styleUrls: ['./add.component.scss'],
 })
 export class EstatePropertyDetailGroupAddComponent implements OnInit {
-  requestLinkPropertyTypeId = '';
+  requestLinkPropertyTypeLanduseId = '';
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
@@ -45,10 +45,10 @@ export class EstatePropertyDetailGroupAddComponent implements OnInit {
   ) {
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
     if (data) {
-      this.requestLinkPropertyTypeId = data.LinkPropertyTypeId;
+      this.requestLinkPropertyTypeLanduseId = data.LinkPropertyTypeLanduseId;
     }
-    if (this.requestLinkPropertyTypeId.length > 0) {
-      this.dataModel.LinkPropertyTypeId = this.requestLinkPropertyTypeId;
+    if (this.requestLinkPropertyTypeLanduseId.length > 0) {
+      this.dataModel.LinkPropertyTypeLanduseId = this.requestLinkPropertyTypeLanduseId;
     }
   }
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
@@ -125,13 +125,13 @@ export class EstatePropertyDetailGroupAddComponent implements OnInit {
       }
     );
   }
-  onActionSelectorSelect(model: EstatePropertyTypeModel | null): void {
+  onActionSelectorSelect(model: EstatePropertyTypeLanduseModel | null): void {
     if (!model || !model.Id || model.Id.length <= 0) {
       const message = 'دسته بندی اطلاعات مشخص نیست';
       this.cmsToastrService.typeErrorSelected(message);
       return;
     }
-    this.dataModel.LinkPropertyTypeId = model.Id;
+    this.dataModel.LinkPropertyTypeLanduseId = model.Id;
   }
   onIconPickerSelect(model: any): void {
     this.dataModel.IconFont = model;

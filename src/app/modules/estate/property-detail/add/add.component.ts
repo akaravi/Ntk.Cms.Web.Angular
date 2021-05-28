@@ -7,7 +7,7 @@ import {
   EstatePropertyDetailModel,
   DataFieldInfoModel,
   CoreLocationModel,
-  EstatePropertyTypeModel,
+  EstatePropertyTypeLanduseModel,
   EstatePropertyDetailGroupModel,
   EstateEnumService,
 } from 'ntk-cms-api';
@@ -35,7 +35,7 @@ import { PublicHelper } from 'src/app/core/helpers/publicHelper';
   styleUrls: ['./add.component.scss'],
 })
 export class EstatePropertyDetailAddComponent implements OnInit {
-  requestLinkPropertyTypeId = '';
+  requestLinkPropertyTypeLanduseId = '';
   requestLinkPropertyDetailGroupId = '';
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -48,11 +48,11 @@ export class EstatePropertyDetailAddComponent implements OnInit {
     public publicHelper: PublicHelper,
   ) {
     if (data) {
-      this.requestLinkPropertyTypeId = data.LinkPropertyTypeId;
+      this.requestLinkPropertyTypeLanduseId = data.LinkPropertyTypeLanduseId;
       this.requestLinkPropertyDetailGroupId = data.LinkPropertyDetailGroupId;
     }
-    if (this.requestLinkPropertyTypeId && this.requestLinkPropertyTypeId.length > 0) {
-      this.dataModel.LinkPropertyTypeId = this.requestLinkPropertyTypeId;
+    if (this.requestLinkPropertyTypeLanduseId && this.requestLinkPropertyTypeLanduseId.length > 0) {
+      this.dataModel.LinkPropertyTypeLanduseId = this.requestLinkPropertyTypeLanduseId;
     }
     if (this.requestLinkPropertyDetailGroupId && this.requestLinkPropertyDetailGroupId.length > 0) {
       this.dataModel.LinkPropertyDetailGroupId = this.requestLinkPropertyDetailGroupId;
@@ -141,13 +141,13 @@ export class EstatePropertyDetailAddComponent implements OnInit {
       }
     );
   }
-  onActionSelectorSelect(model: EstatePropertyTypeModel | null): void {
+  onActionSelectorSelect(model: EstatePropertyTypeLanduseModel | null): void {
     if (!model || !model.Id || model.Id.length <= 0) {
       const message = 'دسته بندی اطلاعات مشخص نیست';
       this.cmsToastrService.typeErrorSelected(message);
       return;
     }
-    this.dataModel.LinkPropertyTypeId = model.Id;
+    this.dataModel.LinkPropertyTypeLanduseId = model.Id;
   }
   onActionSelectorDetailGroup(model: EstatePropertyDetailGroupModel | null): void {
     if (!model || !model.Id || model.Id.length <= 0) {

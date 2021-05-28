@@ -37,11 +37,16 @@
               Title is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-          <!-- LinkPropertyTypeId Field -->
-          <app-estate-propertytype-selector (optionSelect)="onActionSelectorSelect($event)"
-            [disabled]="!fieldsInfo['LinkPropertyTypeId']?.AccessAddField"
-            [optionSelectForce]="dataModel.LinkPropertyTypeId" [optionPlaceholder]="'نوع ملک'">
-          </app-estate-propertytype-selector>
+          <!-- LinkPropertyTypeUsageId Field -->
+          <app-estate-propertytypeusage-selector (optionSelect)="onActionSelectorSelectUsage($event)"
+            [disabled]="!fieldsInfo['LinkPropertyTypeUsageId']?.AccessAddField"
+            [optionSelectForce]="dataModel.LinkPropertyTypeUsageId" [optionPlaceholder]="'نوع کاربری'">
+          </app-estate-propertytypeusage-selector>
+          <!-- LinkPropertyTypeLanduseId Field -->
+          <app-estate-propertytypelanduse-selector (optionSelect)="onActionSelectorSelectLanduse($event)"
+            [disabled]="!fieldsInfo['LinkPropertyTypeLanduseId']?.AccessAddField"
+            [optionSelectForce]="dataModel.LinkPropertyTypeLanduseId" [optionPlaceholder]="'نوع ملک'">
+          </app-estate-propertytypelanduse-selector>
           <!-- LinkEstateUserId Field -->
           <app-estate-accountuser-selector (optionSelect)="onActionSelectorEstateUser($event)"
             [disabled]="!fieldsInfo['LinkEstateUserId']?.AccessAddField"
@@ -157,22 +162,26 @@
               <!-- LinkEstateContractTypeId Column -->
               <ng-container matColumnDef="LinkEstateContractTypeId">
                 <mat-header-cell *matHeaderCellDef> Contract </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.LinkEstateContractTypeId | cmstitle: dataModelEstateContractTypeResult.ListItems}} </mat-cell>
+                <mat-cell *matCellDef="let row"> {{row.LinkEstateContractTypeId | cmstitle:
+                  dataModelEstateContractTypeResult.ListItems}} </mat-cell>
               </ng-container>
               <!-- SalePrice Column -->
               <ng-container matColumnDef="SalePrice">
                 <mat-header-cell *matHeaderCellDef> Sale Price </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.SalePrice | number}} ( {{row.ContractType.UnitSalePrice}} ) </mat-cell>
+                <mat-cell *matCellDef="let row"> {{row.SalePrice | number}} ( {{row.ContractType.UnitSalePrice}} )
+                </mat-cell>
               </ng-container>
               <!-- RentPrice Column -->
               <ng-container matColumnDef="RentPrice">
                 <mat-header-cell *matHeaderCellDef> Rent Price </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.RentPrice| number}}  ( {{row.ContractType.UnitRentPrice}} ) </mat-cell>
+                <mat-cell *matCellDef="let row"> {{row.RentPrice| number}} ( {{row.ContractType.UnitRentPrice}} )
+                </mat-cell>
               </ng-container>
               <!-- DepositPrice Column -->
               <ng-container matColumnDef="DepositPrice">
                 <mat-header-cell *matHeaderCellDef> Deposit Price </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.DepositPrice| number}} ( {{row.ContractType.UnitDepositPrice}} ) </mat-cell>
+                <mat-cell *matCellDef="let row"> {{row.DepositPrice| number}} ( {{row.ContractType.UnitDepositPrice}} )
+                </mat-cell>
               </ng-container>
 
               <!-- Action Column -->

@@ -7,7 +7,7 @@ import {
   EstatePropertyDetailGroupModel,
   DataFieldInfoModel,
   CoreLocationModel,
-  EstatePropertyTypeModel,
+  EstatePropertyTypeLanduseModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -134,13 +134,13 @@ export class EstatePropertyDetailGroupEditComponent implements OnInit {
       }
     );
   }
-  onActionSelectorSelect(model: EstatePropertyTypeModel | null): void {
+  onActionSelectorSelect(model: EstatePropertyTypeLanduseModel | null): void {
     if (!model || !model.Id || model.Id.length <= 0) {
       const message = 'دسته بندی اطلاعات مشخص نیست';
       this.cmsToastrService.typeErrorSelected(message);
       return;
     }
-    this.dataModel.LinkPropertyTypeId = model.Id;
+    this.dataModel.LinkPropertyTypeLanduseId = model.Id;
   }
   onIconPickerSelect(model: any): void {
     this.dataModel.IconFont = model;

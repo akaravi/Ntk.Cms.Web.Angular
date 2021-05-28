@@ -3,8 +3,8 @@ import {
   EnumModel,
   ErrorExceptionResult,
   FormInfoModel,
-  EstatePropertyTypeService,
-  EstatePropertyTypeModel,
+  EstatePropertyTypeLanduseService,
+  EstatePropertyTypeLanduseModel,
   DataFieldInfoModel,
   CoreLocationModel,
 } from 'ntk-cms-api';
@@ -27,17 +27,17 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 @Component({
-  selector: 'app-ticketing-departemen-add',
+  selector: 'app-estate-propertytypelanduse-add',
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.scss'],
 })
-export class EstatePropertyTypeAddComponent implements OnInit {
+export class EstatePropertyTypeLanduseAddComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
-    private dialogRef: MatDialogRef<EstatePropertyTypeAddComponent>,
+    private dialogRef: MatDialogRef<EstatePropertyTypeLanduseAddComponent>,
     public coreEnumService: CoreEnumService,
-    public estatePropertyTypeService: EstatePropertyTypeService,
+    public estatePropertyTypeLanduseService: EstatePropertyTypeLanduseService,
     private cmsToastrService: CmsToastrService,
     public publicHelper: PublicHelper,
   ) {
@@ -50,8 +50,8 @@ export class EstatePropertyTypeAddComponent implements OnInit {
   fileManagerTree: TreeModel;
   appLanguage = 'fa';
   loading = new ProgressSpinnerModel();
-  dataModelResult: ErrorExceptionResult<EstatePropertyTypeModel> = new ErrorExceptionResult<EstatePropertyTypeModel>();
-  dataModel: EstatePropertyTypeModel = new EstatePropertyTypeModel();
+  dataModelResult: ErrorExceptionResult<EstatePropertyTypeLanduseModel> = new ErrorExceptionResult<EstatePropertyTypeLanduseModel>();
+  dataModel: EstatePropertyTypeLanduseModel = new EstatePropertyTypeLanduseModel();
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   fileManagerOpenForm = false;
@@ -79,7 +79,7 @@ export class EstatePropertyTypeAddComponent implements OnInit {
   }
 
   DataGetAccess(): void {
-    this.estatePropertyTypeService
+    this.estatePropertyTypeLanduseService
       .ServiceViewModel()
       .subscribe(
         async (next) => {
@@ -99,7 +99,7 @@ export class EstatePropertyTypeAddComponent implements OnInit {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.estatePropertyTypeService.ServiceAdd(this.dataModel).subscribe(
+    this.estatePropertyTypeLanduseService.ServiceAdd(this.dataModel).subscribe(
       (next) => {
         this.dataModelResult = next;
         if (next.IsSuccess) {
@@ -121,11 +121,8 @@ export class EstatePropertyTypeAddComponent implements OnInit {
       }
     );
   }
-  onActionSelectorLocation(model: CoreLocationModel | null): void {
-    this.dataModel.LinkLocationId = null;
-    if (model && model.Id > 0) {
-      this.dataModel.LinkLocationId = model.Id;
-    }
+  onIconPickerSelect(model: any): void {
+    this.dataModel.IconFont = model;
   }
   onFormSubmit(): void {
     if (!this.formGroup.valid) {

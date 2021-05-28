@@ -15,61 +15,49 @@ import {
   CoreEnumService,
   ErrorExceptionResult,
   FilterModel,
-  EstatePropertyDetailGroupModel,
-  EstatePropertyDetailGroupService,
+  EstatePropertyTypeLanduseModel,
+  EstatePropertyTypeLanduseService,
   NtkCmsApiStoreService,
-  FilterDataModel,
 } from 'ntk-cms-api';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { EstatePropertyDetailGroupEditComponent } from '../edit/edit.component';
-import { EstatePropertyDetailGroupAddComponent } from '../add/add.component';
+import { EstatePropertyTypeLanduseEditComponent } from '../edit/edit.component';
+import { EstatePropertyTypeLanduseAddComponent } from '../add/add.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
 
 
 @Component({
-  selector: 'app-estate-detailgroup-tree',
+  selector: 'app-estate-propertytypelanduse-tree',
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.scss'],
 })
-export class EstatePropertyDetailGroupTreeComponent implements OnInit, OnDestroy {
-  requestLinkPropertyTypeLanduseId = '';
+export class EstatePropertyTypeLanduseTreeComponent implements OnInit, OnDestroy {
   constructor(
     private cmsApiStore: NtkCmsApiStoreService,
     private cmsToastrService: CmsToastrService,
     public coreEnumService: CoreEnumService,
-    public categoryService: EstatePropertyDetailGroupService,
+    public categoryService: EstatePropertyTypeLanduseService,
     private cmsConfirmationDialogService: CmsConfirmationDialogService,
     public dialog: MatDialog
   ) {
   }
-  @Input() set optionSelectForce(x: number | EstatePropertyDetailGroupModel) {
+  @Input() set optionSelectForce(x: number | EstatePropertyTypeLanduseModel) {
     this.onActionSelectForce(x);
   }
-  dataModelSelect: EstatePropertyDetailGroupModel = new EstatePropertyDetailGroupModel();
-  dataModelResult: ErrorExceptionResult<EstatePropertyDetailGroupModel> = new ErrorExceptionResult<EstatePropertyDetailGroupModel>();
+  dataModelSelect: EstatePropertyTypeLanduseModel = new EstatePropertyTypeLanduseModel();
+  dataModelResult: ErrorExceptionResult<EstatePropertyTypeLanduseModel> = new ErrorExceptionResult<EstatePropertyTypeLanduseModel>();
   filteModel = new FilterModel();
   loading = new ProgressSpinnerModel();
-  treeControl = new NestedTreeControl<EstatePropertyDetailGroupModel>(node => null);
-  dataSource = new MatTreeNestedDataSource<EstatePropertyDetailGroupModel>();
-  @Output() optionSelect = new EventEmitter<EstatePropertyDetailGroupModel>();
+  treeControl = new NestedTreeControl<EstatePropertyTypeLanduseModel>(node => null);
+  dataSource = new MatTreeNestedDataSource<EstatePropertyTypeLanduseModel>();
+  @Output() optionSelect = new EventEmitter<EstatePropertyTypeLanduseModel>();
   cmsApiStoreSubscribe: Subscription;
-
-  @Input() set optionLinkPropertyTypeLanduseId(id: string) {
-    this.requestLinkPropertyTypeLanduseId = id;
-    this.filteModel = new FilterModel();
-    if (id.length > 0) {
-      const filter = new FilterDataModel();
-      filter.PropertyName = 'LinkPropertyTypeLanduseId';
-      filter.Value = id;
-      this.filteModel.Filters.push(filter);
-    }
-  }
   @Input() optionReload = () => this.onActionReload();
-  hasChild = (_: number, node: EstatePropertyDetailGroupModel) => false;
+
+  hasChild = (_: number, node: EstatePropertyTypeLanduseModel) => false;
 
 
   ngOnInit(): void {
@@ -103,7 +91,7 @@ export class EstatePropertyDetailGroupTreeComponent implements OnInit, OnDestroy
       }
     );
   }
-  onActionSelect(model: EstatePropertyDetailGroupModel): void {
+  onActionSelect(model: EstatePropertyTypeLanduseModel): void {
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
   }
@@ -114,16 +102,16 @@ export class EstatePropertyDetailGroupTreeComponent implements OnInit, OnDestroy
     else {
       this.onActionSelect(null);
     }
-    this.dataModelSelect = new EstatePropertyDetailGroupModel();
+    this.dataModelSelect = new EstatePropertyTypeLanduseModel();
     this.DataGetAll();
   }
-  onActionSelectForce(id: number | EstatePropertyDetailGroupModel): void {
+  onActionSelectForce(id: number | EstatePropertyTypeLanduseModel): void {
 
   }
 
   onActionAdd(): void {
-    const dialogRef = this.dialog.open(EstatePropertyDetailGroupAddComponent, {
-      data: { LinkPropertyTypeLanduseId: this.requestLinkPropertyTypeLanduseId }
+    const dialogRef = this.dialog.open(EstatePropertyTypeLanduseAddComponent, {
+      data: {}
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.dialogChangedDate) {
@@ -142,7 +130,7 @@ export class EstatePropertyDetailGroupTreeComponent implements OnInit, OnDestroy
       this.cmsToastrService.typeErrorSelected(message);
       return;
     }
-    const dialogRef = this.dialog.open(EstatePropertyDetailGroupEditComponent, {
+    const dialogRef = this.dialog.open(EstatePropertyTypeLanduseEditComponent, {
       data: { id }
     });
     dialogRef.afterClosed().subscribe(result => {

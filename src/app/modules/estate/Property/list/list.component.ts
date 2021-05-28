@@ -12,7 +12,7 @@ import {
   FilterModel,
   NtkCmsApiStoreService,
   TokenInfoModel,
-  EstatePropertyTypeModel,
+  EstatePropertyTypeLanduseModel,
   EnumRecordStatus,
   DataFieldInfoModel
 } from 'ntk-cms-api';
@@ -36,7 +36,7 @@ import { EstatePropertyAddComponent } from '../add/add.component';
   styleUrls: ['./list.component.scss']
 })
 export class EstatePropertyListComponent implements OnInit, OnDestroy {
-  requestLinkPropertyTypeId = '';
+  requestLinkPropertyTypeLanduseId = '';
   constructor(
     private estatePropertyService: EstatePropertyService,
     private activatedRoute: ActivatedRoute,
@@ -46,7 +46,7 @@ export class EstatePropertyListComponent implements OnInit, OnDestroy {
     private cmsConfirmationDialogService: CmsConfirmationDialogService,
     private router: Router,
     public dialog: MatDialog) {
-    this.requestLinkPropertyTypeId = this.activatedRoute.snapshot.paramMap.get('LinkPropertyTypeId');
+    this.requestLinkPropertyTypeLanduseId = this.activatedRoute.snapshot.paramMap.get('LinkPropertyTypeLanduseId');
 
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
@@ -57,10 +57,10 @@ export class EstatePropertyListComponent implements OnInit, OnDestroy {
     /*filter Sort*/
     this.filteModelProperty.SortColumn = 'Id';
     this.filteModelProperty.SortType = EnumSortType.Ascending;
-    if (this.requestLinkPropertyTypeId && this.requestLinkPropertyTypeId.length > 0) {
+    if (this.requestLinkPropertyTypeLanduseId && this.requestLinkPropertyTypeLanduseId.length > 0) {
       const filter = new FilterDataModel();
-      filter.PropertyName = 'LinkPropertyTypeId';
-      filter.Value = this.requestLinkPropertyTypeId;
+      filter.PropertyName = 'LinkPropertyTypeLanduseId';
+      filter.Value = this.requestLinkPropertyTypeLanduseId;
       this.filteModelProperty.Filters.push(filter);
     }
   }
@@ -80,7 +80,7 @@ export class EstatePropertyListComponent implements OnInit, OnDestroy {
   tableRowsSelected: Array<EstatePropertyModel> = [];
   tableRowSelected: EstatePropertyModel = new EstatePropertyModel();
   tableSource: MatTableDataSource<EstatePropertyModel> = new MatTableDataSource<EstatePropertyModel>();
-  categoryModelSelected: EstatePropertyTypeModel;
+  categoryModelSelected: EstatePropertyTypeLanduseModel;
   tabledisplayedColumns: string[] = [
     'LinkMainImageIdSrc',
     'Id',
@@ -122,7 +122,7 @@ export class EstatePropertyListComponent implements OnInit, OnDestroy {
     /*filter CLone*/
     if (this.categoryModelSelected && this.categoryModelSelected.Id && this.categoryModelSelected.Id.length > 0) {
       const filter = new FilterDataModel();
-      filter.PropertyName = 'LinkPropertyTypeId';
+      filter.PropertyName = 'LinkPropertyTypeLanduseId';
       filter.Value = this.categoryModelSelected.Id;
       filterModel.Filters.push(filter);
     }
@@ -196,8 +196,8 @@ export class EstatePropertyListComponent implements OnInit, OnDestroy {
   onActionbuttonNewRow(): void {
     if (this.categoryModelSelected == null &&
       (this.categoryModelSelected && this.categoryModelSelected.Id && this.categoryModelSelected.Id.length === 0) && (
-        this.requestLinkPropertyTypeId == null ||
-        this.requestLinkPropertyTypeId.length === 0)
+        this.requestLinkPropertyTypeLanduseId == null ||
+        this.requestLinkPropertyTypeLanduseId.length === 0)
     ) {
       const message = 'محتوا انتخاب نشده است';
       this.cmsToastrService.typeErrorSelected(message);
@@ -212,18 +212,18 @@ export class EstatePropertyListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessAdd();
       return;
     }
-    let parentId: string = this.requestLinkPropertyTypeId;
+    let parentId: string = this.requestLinkPropertyTypeLanduseId;
     if (this.categoryModelSelected && this.categoryModelSelected.Id.length > 0) {
       parentId = this.categoryModelSelected.Id;
     }
     if (parentId && parentId.length > 0) {
-      this.router.navigate(['/estate/property/add/LinkPropertyTypeId', parentId]);
+      this.router.navigate(['/estate/property/add/LinkPropertyTypeLanduseId', parentId]);
     } else {
       this.router.navigate(['/estate/property/add']);
     }
   }
 
-  onActionSelectorSelect(model: EstatePropertyTypeModel | null): void {
+  onActionSelectorSelect(model: EstatePropertyTypeLanduseModel | null): void {
     this.filteModelProperty = new FilterModel();
     this.categoryModelSelected = model;
 

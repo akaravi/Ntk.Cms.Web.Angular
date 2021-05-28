@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
-  EstatePropertyDetailGroupModel,
-  EstatePropertyDetailGroupService,
+  EstatePropertyTypeUsageModel,
+  EstatePropertyTypeUsageService,
   CoreAuthService,
   EnumSortType,
   ErrorExceptionResult,
@@ -13,11 +13,7 @@ import {
   TokenInfoModel,
   EnumRecordStatus,
   FilterDataModel,
-  DataFieldInfoModel,
-  EstatePropertyTypeLanduseService,
-  EstatePropertyTypeLanduseModel,
-  EditStepDtoModel,
-  EnumActionGoStep
+  DataFieldInfoModel
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -29,20 +25,18 @@ import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/bas
 import { MatSort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
-import { EstatePropertyDetailGroupEditComponent } from '../edit/edit.component';
-import { EstatePropertyDetailGroupAddComponent } from '../add/add.component';
+import { EstatePropertyTypeUsageEditComponent } from '../edit/edit.component';
+import { EstatePropertyTypeUsageAddComponent } from '../add/add.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
-  selector: 'app-hypershop-category-list',
+  selector: 'app-hstate-propertytypeusage-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class EstatePropertyDetailGroupListComponent implements OnInit, OnDestroy {
+export class EstatePropertyTypeUsageListComponent implements OnInit, OnDestroy {
   constructor(
-    private estatePropertyDetailGroupService: EstatePropertyDetailGroupService,
-    private estatePropertyTypeLanduseService: EstatePropertyTypeLanduseService,
+    private estatePropertyTypeUsageService: EstatePropertyTypeUsageService,
     private cmsConfirmationDialogService: CmsConfirmationDialogService,
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
@@ -66,23 +60,21 @@ export class EstatePropertyDetailGroupListComponent implements OnInit, OnDestroy
   tableContentSelected = [];
 
   filteModelContent = new FilterModel();
-  dataModelResult: ErrorExceptionResult<EstatePropertyDetailGroupModel> = new ErrorExceptionResult<EstatePropertyDetailGroupModel>();
-  dataModelEstatePropertyTypeLanduseResult: ErrorExceptionResult<EstatePropertyTypeLanduseModel> = new ErrorExceptionResult<EstatePropertyTypeLanduseModel>();
+  dataModelResult: ErrorExceptionResult<EstatePropertyTypeUsageModel> = new ErrorExceptionResult<EstatePropertyTypeUsageModel>();
   optionsSearch: ComponentOptionSearchModel = new ComponentOptionSearchModel();
   optionsStatist: ComponentOptionStatistModel = new ComponentOptionStatistModel();
   optionsExport: ComponentOptionExportModel = new ComponentOptionExportModel();
   tokenInfo = new TokenInfoModel();
   loading = new ProgressSpinnerModel();
-  tableRowsSelected: Array<EstatePropertyDetailGroupModel> = [];
-  tableRowSelected: EstatePropertyDetailGroupModel = new EstatePropertyDetailGroupModel();
-  tableSource: MatTableDataSource<EstatePropertyDetailGroupModel> = new MatTableDataSource<EstatePropertyDetailGroupModel>();
+  tableRowsSelected: Array<EstatePropertyTypeUsageModel> = [];
+  tableRowSelected: EstatePropertyTypeUsageModel = new EstatePropertyTypeUsageModel();
+  tableSource: MatTableDataSource<EstatePropertyTypeUsageModel> = new MatTableDataSource<EstatePropertyTypeUsageModel>();
 
 
   tabledisplayedColumns: string[] = [
-    'IconFont',
+    'LinkMainImageIdSrc',
     'Title',
-    'ShowInFormOrder',
-    'LinkPropertyTypeLanduseId',
+    'Description',
     'Action'
   ];
 
@@ -90,7 +82,7 @@ export class EstatePropertyDetailGroupListComponent implements OnInit, OnDestroy
 
 
 
-  expandedElement: EstatePropertyDetailGroupModel | null;
+  expandedElement: EstatePropertyTypeUsageModel | null;
   cmsApiStoreSubscribe: Subscription;
 
   ngOnInit(): void {
@@ -101,21 +93,13 @@ export class EstatePropertyDetailGroupListComponent implements OnInit, OnDestroy
       this.DataGetAll();
       this.tokenInfo = next;
     });
-    this.getPropertyType();
-  }
-  getPropertyType(): void {
-    const filter = new FilterModel();
-    filter.RowPerPage = 100;
-    this.estatePropertyTypeLanduseService.ServiceGetAll(filter).subscribe((next) => {
-      this.dataModelEstatePropertyTypeLanduseResult = next;
-    });
   }
   ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
   DataGetAll(): void {
     this.tableRowsSelected = [];
-    this.tableRowSelected = new EstatePropertyDetailGroupModel();
+    this.tableRowSelected = new EstatePropertyTypeUsageModel();
 
     this.loading.display = true;
     this.loading.Globally = false;
@@ -123,7 +107,7 @@ export class EstatePropertyDetailGroupListComponent implements OnInit, OnDestroy
     /*filter CLone*/
     const filterModel = JSON.parse(JSON.stringify(this.filteModelContent));
     /*filter CLone*/
-    this.estatePropertyDetailGroupService.ServiceGetAll(filterModel).subscribe(
+    this.estatePropertyTypeUsageService.ServiceGetAll(filterModel).subscribe(
       (next) => {
         this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
         if (next.IsSuccess) {
@@ -171,30 +155,7 @@ export class EstatePropertyDetailGroupListComponent implements OnInit, OnDestroy
     this.DataGetAll();
   }
 
-  onTableDropRow(event: CdkDragDrop<EstatePropertyDetailGroupModel[]>): void {
-    const previousIndex = this.tableSource.data.findIndex(row => row === event.item.data);
-    const model = new EditStepDtoModel<string>();
-    model.Id = this.tableSource.data[previousIndex].Id;
-    model.CenterId = this.tableSource.data[event.currentIndex].Id;
-    if (previousIndex > event.currentIndex) {
-      model.ActionGo = EnumActionGoStep.GoUp;
-    }
-    else {
-      model.ActionGo = EnumActionGoStep.GoDown;
-    }
-    this.estatePropertyDetailGroupService.ServiceEditStep(model).subscribe(
-      (next) => {
-        if (next.IsSuccess) {
-          moveItemInArray(this.tableSource.data, previousIndex, event.currentIndex);
-          this.tableSource.data = this.tableSource.data.slice();
-        }
-      },
-      (error) => {
-        this.cmsToastrService.typeError(error);
 
-      }
-    );
-  }
   onActionbuttonNewRow(): void {
 
     if (
@@ -205,7 +166,7 @@ export class EstatePropertyDetailGroupListComponent implements OnInit, OnDestroy
       this.cmsToastrService.typeErrorAccessAdd();
       return;
     }
-    const dialogRef = this.dialog.open(EstatePropertyDetailGroupAddComponent, {
+    const dialogRef = this.dialog.open(EstatePropertyTypeUsageAddComponent, {
       data: {}
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -215,7 +176,7 @@ export class EstatePropertyDetailGroupListComponent implements OnInit, OnDestroy
     });
   }
 
-  onActionbuttonEditRow(model: EstatePropertyDetailGroupModel = this.tableRowSelected): void {
+  onActionbuttonEditRow(model: EstatePropertyTypeUsageModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id.length === 0) {
       this.cmsToastrService.typeErrorSelectedRow();
@@ -230,7 +191,7 @@ export class EstatePropertyDetailGroupListComponent implements OnInit, OnDestroy
       this.cmsToastrService.typeErrorAccessEdit();
       return;
     }
-    const dialogRef = this.dialog.open(EstatePropertyDetailGroupEditComponent, {
+    const dialogRef = this.dialog.open(EstatePropertyTypeUsageEditComponent, {
       data: { id: this.tableRowSelected.Id }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -239,7 +200,7 @@ export class EstatePropertyDetailGroupListComponent implements OnInit, OnDestroy
       }
     });
   }
-  onActionbuttonDeleteRow(model: EstatePropertyDetailGroupModel = this.tableRowSelected): void {
+  onActionbuttonDeleteRow(model: EstatePropertyTypeUsageModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id.length === 0) {
       const emessage = 'ردیفی برای حذف انتخاب نشده است';
       this.cmsToastrService.typeErrorSelected(emessage);
@@ -262,7 +223,7 @@ export class EstatePropertyDetailGroupListComponent implements OnInit, OnDestroy
       .then((confirmed) => {
         if (confirmed) {
           this.loading.display = true;
-          this.estatePropertyDetailGroupService.ServiceDelete(this.tableRowSelected.Id).subscribe(
+          this.estatePropertyTypeUsageService.ServiceDelete(this.tableRowSelected.Id).subscribe(
             (next) => {
               if (next.IsSuccess) {
                 this.cmsToastrService.typeSuccessRemove();
@@ -286,7 +247,7 @@ export class EstatePropertyDetailGroupListComponent implements OnInit, OnDestroy
       );
 
   }
-  onActionbuttonContentList(model: EstatePropertyDetailGroupModel = this.tableRowSelected): void {
+  onActionbuttonContentDetailList(model: EstatePropertyTypeUsageModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id.length === 0) {
       const message = 'ردیفی برای نمایش انتخاب نشده است';
       this.cmsToastrService.typeErrorSelected(message);
@@ -294,7 +255,7 @@ export class EstatePropertyDetailGroupListComponent implements OnInit, OnDestroy
     }
     this.tableRowSelected = model;
 
-    this.router.navigate(['/hypershop/content/PareintId/', this.tableRowSelected.Id]);
+    this.router.navigate(['/estate/property-detail/LinkPropertyTypeLanduseId/', this.tableRowSelected.Id]);
   }
 
   onActionbuttonStatist(): void {
@@ -305,7 +266,7 @@ export class EstatePropertyDetailGroupListComponent implements OnInit, OnDestroy
     const statist = new Map<string, number>();
     statist.set('Active', 0);
     statist.set('All', 0);
-    this.estatePropertyDetailGroupService.ServiceGetCount(this.filteModelContent).subscribe(
+    this.estatePropertyTypeUsageService.ServiceGetCount(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('All', next.TotalRowCount);
@@ -322,7 +283,7 @@ export class EstatePropertyDetailGroupListComponent implements OnInit, OnDestroy
     fastfilter.PropertyName = 'RecordStatus';
     fastfilter.Value = EnumRecordStatus.Available;
     filterStatist1.Filters.push(fastfilter);
-    this.estatePropertyDetailGroupService.ServiceGetCount(filterStatist1).subscribe(
+    this.estatePropertyTypeUsageService.ServiceGetCount(filterStatist1).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('Active', next.TotalRowCount);
@@ -343,7 +304,7 @@ export class EstatePropertyDetailGroupListComponent implements OnInit, OnDestroy
   onSubmitOptionExport(model: FilterModel): void {
     const exportlist = new Map<string, string>();
     exportlist.set('Download', 'loading ... ');
-    this.estatePropertyDetailGroupService.ServiceExportFile(model).subscribe(
+    this.estatePropertyTypeUsageService.ServiceExportFile(model).subscribe(
       (next) => {
         if (next.IsSuccess) {
           exportlist.set('Download', next.LinkFile);
@@ -363,7 +324,7 @@ export class EstatePropertyDetailGroupListComponent implements OnInit, OnDestroy
     this.filteModelContent.Filters = model;
     this.DataGetAll();
   }
-  onActionTableRowSelect(row: EstatePropertyDetailGroupModel): void {
+  onActionTableRowSelect(row: EstatePropertyTypeUsageModel): void {
     this.tableRowSelected = row;
   }
 

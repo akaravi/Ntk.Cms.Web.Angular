@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
-  EstatePropertyTypeModel,
-  EstatePropertyTypeService,
+  EstatePropertyTypeLanduseModel,
+  EstatePropertyTypeLanduseService,
   CoreAuthService,
   EnumSortType,
   ErrorExceptionResult,
@@ -25,18 +25,18 @@ import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/bas
 import { MatSort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
-import { EstatePropertyTypeEditComponent } from '../edit/edit.component';
-import { EstatePropertyTypeAddComponent } from '../add/add.component';
+import { EstatePropertyTypeLanduseEditComponent } from '../edit/edit.component';
+import { EstatePropertyTypeLanduseAddComponent } from '../add/add.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
 
 @Component({
-  selector: 'app-hypershop-category-list',
+  selector: 'app-estate-propertytypelanduse-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class EstatePropertyTypeListComponent implements OnInit, OnDestroy {
+export class EstatePropertyTypeLanduseListComponent implements OnInit, OnDestroy {
   constructor(
-    private estatePropertyTypeService: EstatePropertyTypeService,
+    private estatePropertyTypeLanduseService: EstatePropertyTypeLanduseService,
     private cmsConfirmationDialogService: CmsConfirmationDialogService,
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
@@ -60,15 +60,15 @@ export class EstatePropertyTypeListComponent implements OnInit, OnDestroy {
   tableContentSelected = [];
 
   filteModelContent = new FilterModel();
-  dataModelResult: ErrorExceptionResult<EstatePropertyTypeModel> = new ErrorExceptionResult<EstatePropertyTypeModel>();
+  dataModelResult: ErrorExceptionResult<EstatePropertyTypeLanduseModel> = new ErrorExceptionResult<EstatePropertyTypeLanduseModel>();
   optionsSearch: ComponentOptionSearchModel = new ComponentOptionSearchModel();
   optionsStatist: ComponentOptionStatistModel = new ComponentOptionStatistModel();
   optionsExport: ComponentOptionExportModel = new ComponentOptionExportModel();
   tokenInfo = new TokenInfoModel();
   loading = new ProgressSpinnerModel();
-  tableRowsSelected: Array<EstatePropertyTypeModel> = [];
-  tableRowSelected: EstatePropertyTypeModel = new EstatePropertyTypeModel();
-  tableSource: MatTableDataSource<EstatePropertyTypeModel> = new MatTableDataSource<EstatePropertyTypeModel>();
+  tableRowsSelected: Array<EstatePropertyTypeLanduseModel> = [];
+  tableRowSelected: EstatePropertyTypeLanduseModel = new EstatePropertyTypeLanduseModel();
+  tableSource: MatTableDataSource<EstatePropertyTypeLanduseModel> = new MatTableDataSource<EstatePropertyTypeLanduseModel>();
 
 
   tabledisplayedColumns: string[] = [
@@ -82,7 +82,7 @@ export class EstatePropertyTypeListComponent implements OnInit, OnDestroy {
 
 
 
-  expandedElement: EstatePropertyTypeModel | null;
+  expandedElement: EstatePropertyTypeLanduseModel | null;
   cmsApiStoreSubscribe: Subscription;
 
   ngOnInit(): void {
@@ -99,7 +99,7 @@ export class EstatePropertyTypeListComponent implements OnInit, OnDestroy {
   }
   DataGetAll(): void {
     this.tableRowsSelected = [];
-    this.tableRowSelected = new EstatePropertyTypeModel();
+    this.tableRowSelected = new EstatePropertyTypeLanduseModel();
 
     this.loading.display = true;
     this.loading.Globally = false;
@@ -107,7 +107,7 @@ export class EstatePropertyTypeListComponent implements OnInit, OnDestroy {
     /*filter CLone*/
     const filterModel = JSON.parse(JSON.stringify(this.filteModelContent));
     /*filter CLone*/
-    this.estatePropertyTypeService.ServiceGetAll(filterModel).subscribe(
+    this.estatePropertyTypeLanduseService.ServiceGetAll(filterModel).subscribe(
       (next) => {
         this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
         if (next.IsSuccess) {
@@ -166,7 +166,7 @@ export class EstatePropertyTypeListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessAdd();
       return;
     }
-    const dialogRef = this.dialog.open(EstatePropertyTypeAddComponent, {
+    const dialogRef = this.dialog.open(EstatePropertyTypeLanduseAddComponent, {
       data: {}
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -176,7 +176,7 @@ export class EstatePropertyTypeListComponent implements OnInit, OnDestroy {
     });
   }
 
-  onActionbuttonEditRow(model: EstatePropertyTypeModel = this.tableRowSelected): void {
+  onActionbuttonEditRow(model: EstatePropertyTypeLanduseModel = this.tableRowSelected): void {
 
     if (!model || !model.Id || model.Id.length === 0) {
       this.cmsToastrService.typeErrorSelectedRow();
@@ -191,7 +191,7 @@ export class EstatePropertyTypeListComponent implements OnInit, OnDestroy {
       this.cmsToastrService.typeErrorAccessEdit();
       return;
     }
-    const dialogRef = this.dialog.open(EstatePropertyTypeEditComponent, {
+    const dialogRef = this.dialog.open(EstatePropertyTypeLanduseEditComponent, {
       data: { id: this.tableRowSelected.Id }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -200,7 +200,7 @@ export class EstatePropertyTypeListComponent implements OnInit, OnDestroy {
       }
     });
   }
-  onActionbuttonDeleteRow(model: EstatePropertyTypeModel = this.tableRowSelected): void {
+  onActionbuttonDeleteRow(model: EstatePropertyTypeLanduseModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id.length === 0) {
       const emessage = 'ردیفی برای حذف انتخاب نشده است';
       this.cmsToastrService.typeErrorSelected(emessage);
@@ -223,7 +223,7 @@ export class EstatePropertyTypeListComponent implements OnInit, OnDestroy {
       .then((confirmed) => {
         if (confirmed) {
           this.loading.display = true;
-          this.estatePropertyTypeService.ServiceDelete(this.tableRowSelected.Id).subscribe(
+          this.estatePropertyTypeLanduseService.ServiceDelete(this.tableRowSelected.Id).subscribe(
             (next) => {
               if (next.IsSuccess) {
                 this.cmsToastrService.typeSuccessRemove();
@@ -247,7 +247,7 @@ export class EstatePropertyTypeListComponent implements OnInit, OnDestroy {
       );
 
   }
-  onActionbuttonContentDetailList(model: EstatePropertyTypeModel = this.tableRowSelected): void {
+  onActionbuttonContentDetailList(model: EstatePropertyTypeLanduseModel = this.tableRowSelected): void {
     if (!model || !model.Id || model.Id.length === 0) {
       const message = 'ردیفی برای نمایش انتخاب نشده است';
       this.cmsToastrService.typeErrorSelected(message);
@@ -255,7 +255,7 @@ export class EstatePropertyTypeListComponent implements OnInit, OnDestroy {
     }
     this.tableRowSelected = model;
 
-    this.router.navigate(['/estate/property-detail/LinkPropertyTypeId/', this.tableRowSelected.Id]);
+    this.router.navigate(['/estate/property-detail/LinkPropertyTypeLanduseId/', this.tableRowSelected.Id]);
   }
 
   onActionbuttonStatist(): void {
@@ -266,7 +266,7 @@ export class EstatePropertyTypeListComponent implements OnInit, OnDestroy {
     const statist = new Map<string, number>();
     statist.set('Active', 0);
     statist.set('All', 0);
-    this.estatePropertyTypeService.ServiceGetCount(this.filteModelContent).subscribe(
+    this.estatePropertyTypeLanduseService.ServiceGetCount(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('All', next.TotalRowCount);
@@ -283,7 +283,7 @@ export class EstatePropertyTypeListComponent implements OnInit, OnDestroy {
     fastfilter.PropertyName = 'RecordStatus';
     fastfilter.Value = EnumRecordStatus.Available;
     filterStatist1.Filters.push(fastfilter);
-    this.estatePropertyTypeService.ServiceGetCount(filterStatist1).subscribe(
+    this.estatePropertyTypeLanduseService.ServiceGetCount(filterStatist1).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('Active', next.TotalRowCount);
@@ -304,7 +304,7 @@ export class EstatePropertyTypeListComponent implements OnInit, OnDestroy {
   onSubmitOptionExport(model: FilterModel): void {
     const exportlist = new Map<string, string>();
     exportlist.set('Download', 'loading ... ');
-    this.estatePropertyTypeService.ServiceExportFile(model).subscribe(
+    this.estatePropertyTypeLanduseService.ServiceExportFile(model).subscribe(
       (next) => {
         if (next.IsSuccess) {
           exportlist.set('Download', next.LinkFile);
@@ -324,7 +324,7 @@ export class EstatePropertyTypeListComponent implements OnInit, OnDestroy {
     this.filteModelContent.Filters = model;
     this.DataGetAll();
   }
-  onActionTableRowSelect(row: EstatePropertyTypeModel): void {
+  onActionTableRowSelect(row: EstatePropertyTypeLanduseModel): void {
     this.tableRowSelected = row;
   }
 

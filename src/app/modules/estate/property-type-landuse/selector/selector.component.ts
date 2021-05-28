@@ -6,8 +6,8 @@ import {
   ErrorExceptionResult,
   FilterDataModel,
   FilterModel,
-  EstatePropertyTypeModel,
-  EstatePropertyTypeService
+  EstatePropertyTypeLanduseModel,
+  EstatePropertyTypeLanduseService
 } from 'ntk-cms-api';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -17,29 +17,29 @@ import { Output } from '@angular/core';
 
 
 @Component({
-  selector: 'app-estate-propertytype-selector',
+  selector: 'app-estate-propertytypelanduse-selector',
   templateUrl: './selector.component.html',
   styleUrls: ['./selector.component.scss']
 })
-export class EstatePropertyTypeSelectorComponent implements OnInit {
+export class EstatePropertyTypeLanduseSelectorComponent implements OnInit {
 
   constructor(
     public coreEnumService: CoreEnumService,
-    public categoryService: EstatePropertyTypeService) {
+    public categoryService: EstatePropertyTypeLanduseService) {
 
 
   }
-  dataModelResult: ErrorExceptionResult<EstatePropertyTypeModel> = new ErrorExceptionResult<EstatePropertyTypeModel>();
-  dataModelSelect: EstatePropertyTypeModel = new EstatePropertyTypeModel();
+  dataModelResult: ErrorExceptionResult<EstatePropertyTypeLanduseModel> = new ErrorExceptionResult<EstatePropertyTypeLanduseModel>();
+  dataModelSelect: EstatePropertyTypeLanduseModel = new EstatePropertyTypeLanduseModel();
   loading = new ProgressSpinnerModel();
   formControl = new FormControl();
-  filteredOptions: Observable<EstatePropertyTypeModel[]>;
+  filteredOptions: Observable<EstatePropertyTypeLanduseModel[]>;
   @Input() disabled = new EventEmitter<boolean>();
   @Input() optionSelectFirstItem = false;
   @Input() optionPlaceholder = new EventEmitter<string>();
-  @Output() optionSelect = new EventEmitter<EstatePropertyTypeModel>();
+  @Output() optionSelect = new EventEmitter<EstatePropertyTypeLanduseModel>();
   @Input() optionReload = () => this.onActionReload();
-  @Input() set optionSelectForce(x: string | EstatePropertyTypeModel) {
+  @Input() set optionSelectForce(x: string | EstatePropertyTypeLanduseModel) {
     this.onActionSelectForce(x);
   }
 
@@ -59,13 +59,13 @@ export class EstatePropertyTypeSelectorComponent implements OnInit {
       );
   }
 
-  displayFn(model?: EstatePropertyTypeModel): string | undefined {
+  displayFn(model?: EstatePropertyTypeLanduseModel): string | undefined {
     return model ? model.Title  : undefined;
   }
-  displayOption(model?: EstatePropertyTypeModel): string | undefined {
+  displayOption(model?: EstatePropertyTypeLanduseModel): string | undefined {
     return model ? model.Title  : undefined;
   }
-  async DataGetAll(text: string | number | any): Promise<EstatePropertyTypeModel[]> {
+  async DataGetAll(text: string | number | any): Promise<EstatePropertyTypeLanduseModel[]> {
     const filteModel = new FilterModel();
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
@@ -102,7 +102,7 @@ export class EstatePropertyTypeSelectorComponent implements OnInit {
         })
       ).toPromise();
   }
-  onActionSelect(model: EstatePropertyTypeModel): void {
+  onActionSelect(model: EstatePropertyTypeLanduseModel): void {
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
   }
@@ -111,7 +111,7 @@ export class EstatePropertyTypeSelectorComponent implements OnInit {
     this.optionSelect.emit(null);
   }
 
-  push(newvalue: EstatePropertyTypeModel): Observable<EstatePropertyTypeModel[]> {
+  push(newvalue: EstatePropertyTypeLanduseModel): Observable<EstatePropertyTypeLanduseModel[]> {
     return this.filteredOptions.pipe(map(items => {
       if (items.find(x => x.Id === newvalue.Id)) {
         return items;
@@ -121,7 +121,7 @@ export class EstatePropertyTypeSelectorComponent implements OnInit {
     }));
 
   }
-  onActionSelectForce(id: string | EstatePropertyTypeModel): void {
+  onActionSelectForce(id: string | EstatePropertyTypeLanduseModel): void {
     if (typeof id === 'string' && id.length > 0) {
       if (this.dataModelSelect && this.dataModelSelect.Id === id) {
         return;
@@ -142,9 +142,9 @@ export class EstatePropertyTypeSelectorComponent implements OnInit {
       });
       return;
     }
-    if (typeof id === typeof EstatePropertyTypeModel) {
-      this.filteredOptions = this.push((id as EstatePropertyTypeModel));
-      this.dataModelSelect = (id as EstatePropertyTypeModel);
+    if (typeof id === typeof EstatePropertyTypeLanduseModel) {
+      this.filteredOptions = this.push((id as EstatePropertyTypeLanduseModel));
+      this.dataModelSelect = (id as EstatePropertyTypeLanduseModel);
       this.formControl.setValue(id);
       return;
     }
@@ -155,8 +155,8 @@ export class EstatePropertyTypeSelectorComponent implements OnInit {
     // if (this.dataModelSelect && this.dataModelSelect.Id > 0) {
     //   this.onActionSelect(null);
     // }
-    this.dataModelSelect = new EstatePropertyTypeModel();
-    // this.optionsData.Select = new EstatePropertyTypeModel();
+    this.dataModelSelect = new EstatePropertyTypeLanduseModel();
+    // this.optionsData.Select = new EstatePropertyTypeLanduseModel();
     this.DataGetAll(null);
   }
 }

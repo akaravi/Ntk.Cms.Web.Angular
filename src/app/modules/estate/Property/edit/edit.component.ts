@@ -7,7 +7,7 @@ import {
   EnumModel,
   ErrorExceptionResult,
   FormInfoModel,
-  EstatePropertyTypeModel,
+  EstatePropertyTypeLanduseModel,
   DataFieldInfoModel,
   EstateAccountUserModel,
   CoreUserModel,
@@ -17,6 +17,7 @@ import {
   EstateContractTypeService,
   EnumInputDataType,
   EstatePropertyDetailValueModel,
+  EstatePropertyTypeUsageModel,
 } from 'ntk-cms-api';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
@@ -73,7 +74,7 @@ export class EstatePropertyEditComponent implements OnInit {
   fileManagerOpenForm = false;
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
   contractTypeSelected: EstateContractTypeModel;
-  PropertyTypeSelected: EstatePropertyTypeModel;
+  PropertyTypeSelected: EstatePropertyTypeLanduseModel;
   contractSelected: EstateContractModel;
   contractDataModel = new EstateContractModel();
   optionActionTitle = 'اضافه به لیست';
@@ -242,14 +243,21 @@ export class EstatePropertyEditComponent implements OnInit {
   }
   receiveZoom(zoom: number): void {
   }
-  onActionSelectorSelect(model: EstatePropertyTypeModel | null): void {
+  onActionSelectorSelectUsage(model: EstatePropertyTypeUsageModel | null): void {
     if (!model || !model.Id || model.Id.length <= 0) {
       const message = 'دسته بندی اطلاعات مشخص نیست';
       this.cmsToastrService.typeErrorSelected(message);
       return;
     }
-    this.PropertyTypeSelected = model;
-    this.dataModel.LinkPropertyTypeId = model.Id;
+    this.dataModel.LinkPropertyTypeUsageId = model.Id;
+  }
+  onActionSelectorSelectLanduse(model: EstatePropertyTypeLanduseModel | null): void {
+    if (!model || !model.Id || model.Id.length <= 0) {
+      const message = 'دسته بندی اطلاعات مشخص نیست';
+      this.cmsToastrService.typeErrorSelected(message);
+      return;
+    }
+    this.dataModel.LinkPropertyTypeLanduseId = model.Id;
   }
   onActionSelectorCmsUser(model: CoreUserModel | null): void {
     if (!model || !model.Id || model.Id <= 0) {

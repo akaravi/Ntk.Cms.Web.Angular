@@ -17,10 +17,10 @@
           Title is <strong>required</strong>
         </mat-error>
       </mat-form-field>
-      <!-- LinkPropertyTypeId Field -->
-      <app-estate-propertytype-selector (optionSelect)="onActionSelectorSelect($event)"
-        [optionSelectForce]="dataModel.LinkPropertyTypeId" [optionPlaceholder]="'دسته بندی'">
-      </app-estate-propertytype-selector>
+      <!-- LinkPropertyTypeLanduseId Field -->
+      <app-estate-propertytypelanduse-selector (optionSelect)="onActionSelectorSelect($event)"
+        [optionSelectForce]="dataModel.LinkPropertyTypeLanduseId" [optionPlaceholder]="'دسته بندی'" [disabled]="true">
+      </app-estate-propertytypelanduse-selector>
       <!-- IconFont Field -->
       <mat-form-field class="example-full-width" *ngIf="fieldsInfo['IconFont']?.AccessWatchField">
         <mat-label> {{fieldsInfo['IconFont']?.FieldTitle}}</mat-label>

@@ -20,44 +20,36 @@
 
 
 
-      <!-- TitleCreatedYaer Field -->
-      <mat-form-field class="example-full-width">
-        <mat-label>{{fieldsInfo['TitleCreatedYaer']?.FieldTitle}}</mat-label>
-        <input matInput [(ngModel)]="dataModel.TitleCreatedYaer" name="dataModel.TitleCreatedYaer" #TitleCreatedYaer
-          type="text" placeholder="{{fieldsInfo['TitleCreatedYaer']?.FieldTitle}}" minlength="3" maxlength="100" required />
-        <mat-icon matSuffix *ngIf="dataModel.TitleCreatedYaer" matSuffix mat-icon-button aria-label="Clear"
-          (click)="dataModel.TitleCreatedYaer = ''">close</mat-icon>
+      <!-- IconFont Field -->
+      <mat-form-field class="example-full-width" *ngIf="fieldsInfo['IconFont']?.AccessWatchField">
+        <mat-label> {{fieldsInfo['IconFont']?.FieldTitle}}</mat-label>
+        <input matInput [(ngModel)]="dataModel.IconFont" name="dataModel.IconFont" #IconFont
+          [iconPicker]="dataModel.IconFont" [ipIconPack]="['fa']" [ipPosition]="'top'"
+          (iconPickerSelect)="onIconPickerSelect($event)" type="text"
+          [disabled]="!fieldsInfo['IconFont']?.AccessEditField" placeholder="{{fieldsInfo['IconFont']?.FieldTitle}}" />
+        <span class="input-group-addon"><i [ngClass]="dataModel.IconFont"></i></span>
+        <mat-icon>{{dataModel.IconFont}}</mat-icon>
+        <mat-icon matSuffix *ngIf="dataModel.IconFont" matSuffix mat-icon-button aria-label="Clear"
+          (click)="dataModel.IconFont = ''">close</mat-icon>
         <mat-icon matSuffix>mode_edit</mat-icon>
-        <mat-hint align="end">{{ TitleCreatedYaer.value.length }} / 100</mat-hint>
-        <mat-error *ngIf="TitleCreatedYaer.errors?.required">
-          TitleCreatedYaer is <strong>required</strong>
-        </mat-error>
       </mat-form-field>
-
-      <!-- LinkLocationId Field -->
-      <app-cms-location-selector (optionSelect)="onActionSelectorLocation($event)"
-        [optionSelectForce]="dataModel.LinkLocationId" [optionPlaceholder]="'منطقه'"></app-cms-location-selector>
-
-      <!-- TitlePartition Field -->
-      <mat-form-field class="example-full-width">
-        <mat-label>{{fieldsInfo['TitlePartition']?.FieldTitle}}</mat-label>
-        <input matInput [(ngModel)]="dataModel.TitlePartition" name="dataModel.TitlePartition" #TitlePartition
-          type="text" placeholder="{{fieldsInfo['TitlePartition']?.FieldTitle}}" minlength="3" maxlength="100" required />
-        <mat-icon matSuffix *ngIf="dataModel.TitlePartition" matSuffix mat-icon-button aria-label="Clear"
-          (click)="dataModel.TitlePartition = ''">close</mat-icon>
+      <!-- IconColor Field -->
+      <mat-form-field class="example-full-width" *ngIf="fieldsInfo['IconColor']?.AccessWatchField">
+        <mat-label> {{fieldsInfo['IconColor']?.FieldTitle}}</mat-label>
+        <input matInput [(ngModel)]="dataModel.IconColor" name="dataModel.IconColor" #IconColor
+          [value]="dataModel.IconColor" [style.background]="dataModel.IconColor" [(colorPicker)]="dataModel.IconColor"
+          type="text" [disabled]="!fieldsInfo['IconColor']?.AccessEditField"
+          placeholder="{{fieldsInfo['IconColor']?.FieldTitle}}" />
+        <mat-icon matSuffix *ngIf="dataModel.IconColor" matSuffix mat-icon-button aria-label="Clear"
+          (click)="dataModel.IconColor = ''">close</mat-icon>
         <mat-icon matSuffix>mode_edit</mat-icon>
-        <mat-hint align="end">{{ TitlePartition.value.length }} / 100</mat-hint>
-        <mat-error *ngIf="TitlePartition.errors?.required">
-          TitlePartition is <strong>required</strong>
-        </mat-error>
       </mat-form-field>
-
-
       <!-- Description Field -->
       <mat-form-field class="example-full-width">
         <mat-label>{{fieldsInfo['Description']?.FieldTitle}}</mat-label>
         <textarea matInput [(ngModel)]="dataModel.Description" name="dataModel.Description" #Description type="text"
-          placeholder="{{fieldsInfo['Description']?.FieldTitle}}" minlength="1" maxlength="500" required rows=5></textarea>
+          placeholder="{{fieldsInfo['Description']?.FieldTitle}}" minlength="1" maxlength="500" required
+          rows=5></textarea>
         <mat-icon matSuffix *ngIf="dataModel.Description" matSuffix mat-icon-button aria-label="Clear"
           (click)="dataModel.Description = ''">close</mat-icon>
         <mat-icon matSuffix>mode_edit</mat-icon>
