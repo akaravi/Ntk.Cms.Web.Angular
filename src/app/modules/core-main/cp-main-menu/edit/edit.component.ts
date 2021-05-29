@@ -147,7 +147,7 @@ export class CoreCpMainMenuEditComponent implements OnInit {
     const filteModelContent = new FilterModel();
     const filter = new FilterDataModel();
     filter.PropertyName = 'CmsCpMainMenu_Id';
-    filter.Value = this.dataModel.Id;
+    filter.Value = this.requestId;
     filteModelContent.Filters.push(filter);
 
     this.coreCpMainMenuCmsUserGroupService.ServiceGetAll(filteModelContent).subscribe(

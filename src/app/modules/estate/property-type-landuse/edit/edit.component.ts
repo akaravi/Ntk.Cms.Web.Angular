@@ -129,8 +129,8 @@ export class EstatePropertyTypeLanduseEditComponent implements OnInit {
     this.loading.display = true;
     const filteModelContent = new FilterModel();
     const filter = new FilterDataModel();
-    filter.PropertyName = 'LinkPropertyTypeLanduse';
-    filter.Value = this.dataModel.Id;
+    filter.PropertyName = 'LinkPropertyTypeLanduseId';
+    filter.Value = this.requestId;
     filteModelContent.Filters.push(filter);
 
     this.estatePropertyTypeService.ServiceGetAll(filteModelContent).subscribe(
@@ -183,11 +183,9 @@ export class EstatePropertyTypeLanduseEditComponent implements OnInit {
     );
   }
   onActionSelectorUserCategorySelect(model: EstatePropertyTypeUsageModel[]): void {
-    debugger;
     this.dataEstatePropertyTypeUsageModel = model;
   }
   onActionSelectorUserCategorySelectAdded(model: EstatePropertyTypeUsageModel): void {
-    debugger;
     const entity = new EstatePropertyTypeModel();
     entity.LinkPropertyTypeUsageId = model.Id;
     entity.LinkPropertyTypeLanduseId = this.dataModel.Id;
@@ -213,7 +211,6 @@ export class EstatePropertyTypeLanduseEditComponent implements OnInit {
     );
   }
   onActionSelectorUserCategorySelectRemoved(model: EstatePropertyTypeUsageModel): void {
-    debugger;
     const entity = new EstatePropertyTypeModel();
     entity.LinkPropertyTypeUsageId = model.Id;
     entity.LinkPropertyTypeLanduseId = this.dataModel.Id;
