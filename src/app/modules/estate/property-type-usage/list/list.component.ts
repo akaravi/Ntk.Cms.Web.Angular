@@ -247,16 +247,7 @@ export class EstatePropertyTypeUsageListComponent implements OnInit, OnDestroy {
       );
 
   }
-  onActionbuttonContentDetailList(model: EstatePropertyTypeUsageModel = this.tableRowSelected): void {
-    if (!model || !model.Id || model.Id.length === 0) {
-      const message = 'ردیفی برای نمایش انتخاب نشده است';
-      this.cmsToastrService.typeErrorSelected(message);
-      return;
-    }
-    this.tableRowSelected = model;
 
-    this.router.navigate(['/estate/property-detail/LinkPropertyTypeLanduseId/', this.tableRowSelected.Id]);
-  }
 
   onActionbuttonStatist(): void {
     this.optionsStatist.data.show = !this.optionsStatist.data.show;

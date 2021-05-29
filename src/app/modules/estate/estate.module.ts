@@ -29,7 +29,8 @@ import {
   EstatePropertyShareSiteService,
   EstateContractService,
   EstatePropertyDetailService,
-  EstatePropertyTypeUsageService
+  EstatePropertyTypeUsageService,
+  EstatePropertyTypeService
 } from 'ntk-cms-api';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -88,6 +89,7 @@ import { EstatePropertyTypeUsageEditComponent } from './property-type-usage/edit
 import { EstatePropertyTypeUsageListComponent } from './property-type-usage/list/list.component';
 import { EstatePropertyTypeUsageSelectorComponent } from './property-type-usage/selector/selector.component';
 import { EstatePropertyTypeUsageTreeComponent } from './property-type-usage/tree/tree.component';
+import { EstatePropertyTypeUsageChecklistComponent } from './property-type-usage/checklist/checklist.component';
 
 @NgModule({
   declarations: [
@@ -108,6 +110,7 @@ import { EstatePropertyTypeUsageTreeComponent } from './property-type-usage/tree
     EstatePropertyTypeUsageListComponent,
     EstatePropertyTypeUsageSelectorComponent,
     EstatePropertyTypeUsageTreeComponent,
+    EstatePropertyTypeUsageChecklistComponent,
     /* */
     EstatePropertyAddComponent,
     EstatePropertyEditComponent,
@@ -195,6 +198,7 @@ import { EstatePropertyTypeUsageTreeComponent } from './property-type-usage/tree
     EstatePropertyShareSiteService,
     EstatePropertyTypeLanduseService,
     EstatePropertyTypeUsageService,
+    EstatePropertyTypeService,
     /** */
     CmsConfirmationDialogService,
     CoreModuleTagService,

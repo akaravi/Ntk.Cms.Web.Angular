@@ -4,7 +4,7 @@ import { AuthRenewTokenModel, CoreAuthService, NtkCmsApiStoreService, TokenInfoM
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
-import { TranslationService } from '../../../../../core/i18n/translation.service';
+import { TranslationService } from '../../core/i18n/translation.service';
 
 interface LanguageFlag {
   lang: string;
@@ -68,7 +68,7 @@ export class LanguageSelectorComponent implements OnInit, OnDestroy {
 
     this.cmsApiStoreSubscribe = this.cmsApiStore.getState((state) => state.ntkCmsAPiState.tokenInfo).subscribe((value) => {
       this.tokenInfo = value;
-        this.setLanguage(value.Language);
+      this.setLanguage(value.Language);
     });
   }
   cmsApiStoreSubscribe: Subscription;
@@ -89,36 +89,38 @@ export class LanguageSelectorComponent implements OnInit, OnDestroy {
   setLanguageWithRefresh(lang): void {
     this.setLanguage(lang);
     /** */
-    const authModel: AuthRenewTokenModel = new AuthRenewTokenModel();
-    authModel.UserAccessAdminAllowToProfessionalData = this.tokenInfo.UserAccessAdminAllowToProfessionalData;
-    authModel.UserAccessAdminAllowToAllData = this.tokenInfo.UserAccessAdminAllowToAllData;
-    authModel.UserId = this.tokenInfo.UserId;
-    authModel.SiteId = this.tokenInfo.SiteId;
-    authModel.Lang = lang;
+    if (this.tokenInfo && this.tokenInfo.UserId > 0) {
+      const authModel: AuthRenewTokenModel = new AuthRenewTokenModel();
+      authModel.UserAccessAdminAllowToProfessionalData = this.tokenInfo.UserAccessAdminAllowToProfessionalData;
+      authModel.UserAccessAdminAllowToAllData = this.tokenInfo.UserAccessAdminAllowToAllData;
+      authModel.UserId = this.tokenInfo.UserId;
+      authModel.SiteId = this.tokenInfo.SiteId;
+      authModel.Lang = lang;
 
-    const title = 'اطلاعات ';
-    const message = 'درخواست تغییر زبان به سرور ارسال شد';
-    this.cmsToastrService.toastr.info(message, title);
-    // this.loadingStatus = true;
-    this.coreAuthService.ServiceRenewToken(authModel).subscribe(
-      (next) => {
-        // this.loadingStatus = false;
-        if (next.IsSuccess) {
-          if (next.Item.Language === lang) {
-            this.cmsToastrService.toastr.success('دسترسی به زبان جدید تایید شد', title);
-            window.location.reload();
+      const title = 'اطلاعات ';
+      const message = 'درخواست تغییر زبان به سرور ارسال شد';
+      this.cmsToastrService.toastr.info(message, title);
+      // this.loadingStatus = true;
+      this.coreAuthService.ServiceRenewToken(authModel).subscribe(
+        (next) => {
+          // this.loadingStatus = false;
+          if (next.IsSuccess) {
+            if (next.Item.Language === lang) {
+              this.cmsToastrService.toastr.success('دسترسی به زبان جدید تایید شد', title);
+              window.location.reload();
+            } else {
+              this.cmsToastrService.toastr.warning('دسترسی به زبان جدید تایید نشد', title);
+            }
           } else {
-            this.cmsToastrService.toastr.warning('دسترسی به زبان جدید تایید نشد', title);
+            this.cmsToastrService.typeErrorAccessChange(next.ErrorMessage);
           }
-        } else {
-          this.cmsToastrService.typeErrorAccessChange(next.ErrorMessage);
-        }
 
-      },
-      (error) => {
-        this.cmsToastrService.typeErrorAccessChange(error);
-      }
-    );
+        },
+        (error) => {
+          this.cmsToastrService.typeErrorAccessChange(error);
+        }
+      );
+    }
     /** */
   }
 

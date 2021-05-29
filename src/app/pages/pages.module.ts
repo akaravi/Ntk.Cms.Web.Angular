@@ -11,7 +11,7 @@ import {HeaderMenuComponent} from './_layout/components/header/header-menu/heade
 import {HeaderComponent} from './_layout/components/header/header.component';
 import {HeaderMenuDynamicComponent} from './_layout/components/header/header-menu-dynamic/header-menu-dynamic.component';
 import {TopbarComponent} from './_layout/components/topbar/topbar.component';
-import {LanguageSelectorComponent} from './_layout/components/topbar/language-selector/language-selector.component';
+import {LanguageSelectorComponent} from '../shared/language-selector/language-selector.component';
 import {HeaderMobileComponent} from './_layout/components/header-mobile/header-mobile.component';
 import {ExtrasModule} from './partials/layout/extras/extras.module';
 import {TranslationModule} from '../core/i18n/translation.module';
@@ -31,7 +31,7 @@ import { SharedModule } from '../shared/shared.module';
     HeaderComponent,
     HeaderMenuComponent,
     TopbarComponent,
-    LanguageSelectorComponent,
+    // LanguageSelectorComponent,
     AsideDynamicComponent,
     HeaderMenuDynamicComponent,
   ],

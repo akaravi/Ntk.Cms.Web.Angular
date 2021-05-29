@@ -61,6 +61,8 @@ import { BooleanComponent } from '../core/dynamic-input-builder/boolean/boolean.
 import { FloatComponent } from '../core/dynamic-input-builder/float/float.component';
 import { DateComponent } from '../core/dynamic-input-builder/date/date.component';
 import { TextAreaComponent } from '../core/dynamic-input-builder/text-area/text-area.component';
+import { LanguageSelectorComponent } from './language-selector/language-selector.component';
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -77,6 +79,7 @@ import { TextAreaComponent } from '../core/dynamic-input-builder/text-area/text-
     NgxQueryBuilderModule,
     LeafletModule,
     TagInputModule,
+    NgbDropdownModule,
   ],
   entryComponents: [
     // All components about to be loaded "dynamically" need to be declared in the entryComponents section.
@@ -92,6 +95,7 @@ import { TextAreaComponent } from '../core/dynamic-input-builder/text-area/text-
     BoolStatusClassPipe,
     ValueArrayPipe,
     ValueBooleanPipe,
+    LanguageSelectorComponent,
     CmsSearchListComponent,
     CmsStatistListComponent,
     CmsExportListComponent,
@@ -144,6 +148,7 @@ import { TextAreaComponent } from '../core/dynamic-input-builder/text-area/text-
     ValueBooleanPipe,
     PersianDate,
     PersianDateFull,
+    LanguageSelectorComponent,
     CmsSearchListComponent,
     CmsStatistListComponent,
     CmsExportListComponent,

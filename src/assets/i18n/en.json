@@ -1,7 +1,8 @@
 {
   "lang": "en",
   "TRANSLATOR": {
-    "SELECT": "Select your language"
+    "SELECT": "Select your language",
+    "WELCOME": "WELCOME"
   },
   "ERRORMESSAGE": {
     "TITLE": {
