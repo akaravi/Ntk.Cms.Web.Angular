@@ -71,13 +71,13 @@
         <textarea matInput [(ngModel)]="dataModel.ThemeConfigBuilderJsonValues"
           [disabled]="!fieldsInfo['ThemeConfigBuilderJsonValues']?.AccessAddField"
           name="dataModel.ThemeConfigBuilderJsonValues" #ThemeConfigBuilderJsonValues type="text"
-          placeholder="ThemeConfigBuilderJsonValues" row="6" minlength="0" maxlength="10000"></textarea>
+          placeholder="ThemeConfigBuilderJsonValues" row="6" minlength="0" maxlength="100000"></textarea>
         <mat-icon matSuffix
           *ngIf="dataModel.ThemeConfigBuilderJsonValues && fieldsInfo['ThemeConfigBuilderJsonValues']?.AccessAddField"
           matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.ThemeConfigBuilderJsonValues = ''">close
         </mat-icon>
         <mat-icon *ngIf="fieldsInfo['ThemeConfigBuilderJsonValues']?.AccessAddField" matSuffix>mode_edit</mat-icon>
-        <mat-hint align="start">{{ ThemeConfigBuilderJsonValues.value.length }} / 10000</mat-hint>
+        <mat-hint align="start">{{ ThemeConfigBuilderJsonValues.value.length }} / 100000</mat-hint>
       </mat-form-field>
       <!-- ThemeConfigRuntimeJsonValues Field -->
       <mat-form-field class="example-full-width" *ngIf="fieldsInfo['ThemeConfigRuntimeJsonValues']?.AccessWatchField">
@@ -85,13 +85,13 @@
         <textarea matInput [(ngModel)]="dataModel.ThemeConfigRuntimeJsonValues"
           [disabled]="!fieldsInfo['ThemeConfigRuntimeJsonValues']?.AccessAddField"
           name="dataModel.ThemeConfigRuntimeJsonValues" #ThemeConfigRuntimeJsonValues type="text"
-          placeholder="ThemeConfigRuntimeJsonValues" row="6" minlength="0" maxlength="10000"></textarea>
+          placeholder="ThemeConfigRuntimeJsonValues" row="6" minlength="0" maxlength="100000"></textarea>
         <mat-icon matSuffix
           *ngIf="dataModel.ThemeConfigRuntimeJsonValues && fieldsInfo['ThemeConfigRuntimeJsonValues']?.AccessAddField"
           matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.ThemeConfigRuntimeJsonValues = ''">close
         </mat-icon>
         <mat-icon *ngIf="fieldsInfo['ThemeConfigRuntimeJsonValues']?.AccessAddField" matSuffix>mode_edit</mat-icon>
-        <mat-hint align="start">{{ ThemeConfigRuntimeJsonValues.value.length }} / 10000</mat-hint>
+        <mat-hint align="start">{{ ThemeConfigRuntimeJsonValues.value.length }} / 100000</mat-hint>
       </mat-form-field>
       <!-- ThemeConfigLayoutJsonValues Field -->
       <mat-form-field class="example-full-width" *ngIf="fieldsInfo['ThemeConfigLayoutJsonValues']?.AccessWatchField">
@@ -99,13 +99,13 @@
         <textarea matInput [(ngModel)]="dataModel.ThemeConfigLayoutJsonValues"
           [disabled]="!fieldsInfo['ThemeConfigLayoutJsonValues']?.AccessAddField"
           name="dataModel.ThemeConfigLayoutJsonValues" #ThemeConfigLayoutJsonValues type="text"
-          placeholder="ThemeConfigLayoutJsonValues" row="6" minlength="0" maxlength="10000"></textarea>
+          placeholder="ThemeConfigLayoutJsonValues" row="6" minlength="0" maxlength="100000"></textarea>
         <mat-icon matSuffix
           *ngIf="dataModel.ThemeConfigLayoutJsonValues && fieldsInfo['ThemeConfigLayoutJsonValues']?.AccessAddField"
           matSuffix mat-icon-button aria-label="Clear" (click)="dataModel.ThemeConfigLayoutJsonValues = ''">close
         </mat-icon>
         <mat-icon *ngIf="fieldsInfo['ThemeConfigLayoutJsonValues']?.AccessAddField" matSuffix>mode_edit</mat-icon>
-        <mat-hint align="start">{{ ThemeConfigLayoutJsonValues.value.length }} / 10000</mat-hint>
+        <mat-hint align="start">{{ ThemeConfigLayoutJsonValues.value.length }} / 100000</mat-hint>
       </mat-form-field>
       <!-- ThemeConfigJsonValues Field -->
       <mat-form-field class="example-full-width" *ngIf="fieldsInfo['ThemeConfigJsonValues']?.AccessWatchField">
@@ -113,12 +113,12 @@
         <textarea matInput [(ngModel)]="dataModel.ThemeConfigJsonValues"
           [disabled]="!fieldsInfo['ThemeConfigJsonValues']?.AccessAddField" name="dataModel.ThemeConfigJsonValues"
           #ThemeConfigJsonValues type="text" placeholder="ThemeConfigJsonValues" row="6" minlength="0"
-          maxlength="10000"></textarea>
+          maxlength="100000"></textarea>
         <mat-icon matSuffix
           *ngIf="dataModel.ThemeConfigJsonValues && fieldsInfo['ThemeConfigJsonValues']?.AccessAddField" matSuffix
           mat-icon-button aria-label="Clear" (click)="dataModel.ThemeConfigJsonValues = ''">close</mat-icon>
         <mat-icon *ngIf="fieldsInfo['ThemeConfigJsonValues']?.AccessAddField" matSuffix>mode_edit</mat-icon>
-        <mat-hint align="start">{{ ThemeConfigJsonValues.value.length }} / 10000</mat-hint>
+        <mat-hint align="start">{{ ThemeConfigJsonValues.value.length }} / 100000</mat-hint>
       </mat-form-field>
       <!-- LinkMainImageId Field -->
       <div class="mb-3">
