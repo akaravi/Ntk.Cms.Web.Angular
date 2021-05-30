@@ -77,7 +77,7 @@ export class ApplicationThemeConfigListComponent implements OnInit, OnDestroy {
     'LinkMainImageIdSrc',
     'Id',
     'RecordStatus',
-    'Title',
+    'TitleML',
     'LinkSourceId',
     'TypeId',
     'CreatedDate',
@@ -134,10 +134,19 @@ export class ApplicationThemeConfigListComponent implements OnInit, OnDestroy {
               'LinkSiteId',
               0
             );
+            this.tabledisplayedColumns = this.publicHelper.listAddIfNotExist(
+              this.tabledisplayedColumns,
+              'Title',
+              0
+            );
           } else {
             this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
               this.tabledisplayedColumns,
               'LinkSiteId'
+            );
+            this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
+              this.tabledisplayedColumns,
+              'Title'
             );
           }
           if (this.requestLinkSourceId === 0) {

@@ -30,6 +30,36 @@
               {{ fieldsInfo['RecordStatus']?.FieldTitle }} is <strong>required</strong>
             </mat-error>
           </mat-form-field>
+
+          <!-- Title Field -->
+          <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Title']?.AccessWatchField">
+            <mat-label>{{ fieldsInfo['Title']?.FieldTitle }}</mat-label>
+            <input matInput [(ngModel)]="dataModel.Title" [disabled]="!fieldsInfo['Title']?.AccessAddField"
+              name="dataModel.Title" #Title type="text" placeholder="{{fieldsInfo['Title']?.FieldTitle}}" minlength="3"
+              maxlength="100" required />
+            <mat-icon matSuffix *ngIf="dataModel.Title && fieldsInfo['Title']?.AccessAddField" matSuffix mat-icon-button
+              aria-label="Clear" (click)="dataModel.Title = ''">close</mat-icon>
+            <mat-icon *ngIf="fieldsInfo['Title']?.AccessAddField" matSuffix>mode_edit</mat-icon>
+            <mat-hint align="start">{{ Title.value.length }} / 100</mat-hint>
+            <mat-error *ngIf="Title.errors?.required">
+              {{ fieldsInfo['Title']?.FieldTitle }} is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+          <!-- TitleResourceLanguage Field -->
+          <mat-form-field class="example-full-width" *ngIf="fieldsInfo['TitleResourceLanguage']?.AccessWatchField">
+            <mat-label> {{fieldsInfo['TitleResourceLanguage']?.FieldTitle}}</mat-label>
+            <input matInput [(ngModel)]="dataModel.TitleResourceLanguage" name="dataModel.TitleResourceLanguage"
+              #TitleResourceLanguage type="text" [disabled]="!fieldsInfo['TitleResourceLanguage']?.AccessEditField"
+              placeholder="{{fieldsInfo['TitleResourceLanguage']?.FieldTitle}}" minlength="3" maxlength="100"
+              required />
+            <mat-icon matSuffix *ngIf="dataModel.TitleResourceLanguage" matSuffix mat-icon-button aria-label="Clear"
+              (click)="dataModel.TitleResourceLanguage = ''">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
+            <mat-hint align="end">{{ TitleResourceLanguage.value.length }} / 100</mat-hint>
+            <mat-error *ngIf="TitleResourceLanguage.errors?.required">
+              TitleResourceLanguage is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
           <!-- OSType Field -->
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['OSType']?.AccessWatchField">
             <mat-select placeholder="{{fieldsInfo['OSType']?.FieldTitle}}" [(ngModel)]="dataModel.OSType"
@@ -44,25 +74,12 @@
               {{ fieldsInfo['OSType']?.FieldTitle }} is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-          <!-- Title Field -->
-          <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Title']?.AccessWatchField">
-            <mat-label>{{ fieldsInfo['Title']?.FieldTitle }}</mat-label>
-            <input matInput [(ngModel)]="dataModel.Title" [disabled]="!fieldsInfo['Title']?.AccessAddField"
-              name="dataModel.Title" #Title type="text" placeholder="{{fieldsInfo['Title']?.FieldTitle}}" minlength="3" maxlength="100" required />
-            <mat-icon matSuffix *ngIf="dataModel.Title && fieldsInfo['Title']?.AccessAddField" matSuffix mat-icon-button
-              aria-label="Clear" (click)="dataModel.Title = ''">close</mat-icon>
-            <mat-icon *ngIf="fieldsInfo['Title']?.AccessAddField" matSuffix>mode_edit</mat-icon>
-            <mat-hint align="start">{{ Title.value.length }} / 100</mat-hint>
-            <mat-error *ngIf="Title.errors?.required">
-              {{ fieldsInfo['Title']?.FieldTitle }} is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
           <!-- ClassName Field -->
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['ClassName']?.AccessWatchField">
             <mat-label>{{fieldsInfo['ClassName']?.FieldTitle}}</mat-label>
             <input matInput [(ngModel)]="dataModel.ClassName" [disabled]="!fieldsInfo['ClassName']?.AccessAddField"
-              name="dataModel.ClassName" #ClassName type="text" placeholder="{{fieldsInfo['Title']?.FieldTitle}}" minlength="3" maxlength="100"
-              required />
+              name="dataModel.ClassName" #ClassName type="text" placeholder="{{fieldsInfo['Title']?.FieldTitle}}"
+              minlength="3" maxlength="100" required />
             <mat-icon matSuffix *ngIf="dataModel.ClassName && fieldsInfo['ClassName']?.AccessAddField" matSuffix
               mat-icon-button aria-label="Clear" (click)="dataModel.ClassName = ''">close</mat-icon>
             <mat-icon *ngIf="fieldsInfo['ClassName']?.AccessAddField" matSuffix>mode_edit</mat-icon>
@@ -75,8 +92,8 @@
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['PackageName']?.AccessWatchField">
             <mat-label>{{fieldsInfo['PackageName']?.FieldTitle}}</mat-label>
             <input matInput [(ngModel)]="dataModel.PackageName" [disabled]="!fieldsInfo['PackageName']?.AccessAddField"
-              name="dataModel.PackageName" #PackageName type="text" placeholder="{{fieldsInfo['Title']?.FieldTitle}}" minlength="3" maxlength="100"
-              required />
+              name="dataModel.PackageName" #PackageName type="text" placeholder="{{fieldsInfo['Title']?.FieldTitle}}"
+              minlength="3" maxlength="100" required />
             <mat-icon matSuffix *ngIf="dataModel.PackageName && fieldsInfo['PackageName']?.AccessAddField" matSuffix
               mat-icon-button aria-label="Clear" (click)="dataModel.PackageName = ''">close</mat-icon>
             <mat-icon *ngIf="fieldsInfo['PackageName']?.AccessAddField" matSuffix>mode_edit</mat-icon>
@@ -430,8 +447,8 @@
             <mat-label>{{fieldsInfo['LastSuccessfullyBuildDate']?.FieldTitle}}</mat-label>
             <textarea matInput [(ngModel)]="dataModel.LastSuccessfullyBuildDate"
               [disabled]="!fieldsInfo['LastSuccessfullyBuildDate']?.AccessAddField"
-              name="dataModel.LastSuccessfullyBuildDate" #LastSuccessfullyBuildDate type="text" placeholder="{{fieldsInfo['Title']?.FieldTitle}}"
-              rows="5"></textarea>
+              name="dataModel.LastSuccessfullyBuildDate" #LastSuccessfullyBuildDate type="text"
+              placeholder="{{fieldsInfo['Title']?.FieldTitle}}" rows="5"></textarea>
             <mat-icon matSuffix *ngIf="dataModel.LastSuccessfullyBuildDate" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.LastSuccessfullyBuildDate = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>

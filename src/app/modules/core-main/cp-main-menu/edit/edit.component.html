@@ -40,20 +40,7 @@
           </mat-error>
         </mat-form-field>
 
-        <!-- TitleEn Field -->
-        <mat-form-field class="example-full-width" *ngIf="fieldsInfo['TitleEn']?.AccessWatchField">
-          <mat-label> {{fieldsInfo['TitleEn']?.FieldTitle}}</mat-label>
-          <input matInput [(ngModel)]="dataModel.TitleEn" name="dataModel.TitleEn" #TitleEn type="text"
-            [disabled]="!fieldsInfo['TitleEn']?.AccessEditField" placeholder="{{fieldsInfo['TitleEn']?.FieldTitle}}"
-            minlength="3" maxlength="100" required />
-          <mat-icon matSuffix *ngIf="dataModel.TitleEn" matSuffix mat-icon-button aria-label="Clear"
-            (click)="dataModel.TitleEn = ''">close</mat-icon>
-          <mat-icon matSuffix>mode_edit</mat-icon>
-          <mat-hint align="end">{{ TitleEn.value.length }} / 100</mat-hint>
-          <mat-error *ngIf="TitleEn.errors?.required">
-            {{fieldsInfo['TitleEn']?.FieldTitle}} is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
+
         <!-- TitleResourceLanguage Field -->
         <mat-form-field class="example-full-width" *ngIf="fieldsInfo['TitleResourceLanguage']?.AccessWatchField">
           <mat-label> {{fieldsInfo['TitleResourceLanguage']?.FieldTitle}}</mat-label>

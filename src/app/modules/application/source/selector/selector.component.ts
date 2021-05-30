@@ -60,10 +60,10 @@ export class ApplicationSourceSelectorComponent implements OnInit {
   }
 
   displayFn(model?: ApplicationSourceModel): string | undefined {
-    return model ? model.Title : undefined;
+    return model ? model.TitleML : undefined;
   }
   displayOption(model?: ApplicationSourceModel): string | undefined {
-    return model ? model.Title : undefined;
+    return model ? model.TitleML : undefined;
   }
   async DataGetAll(text: string | number | any): Promise<ApplicationSourceModel[]> {
     const filteModel = new FilterModel();

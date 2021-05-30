@@ -62,6 +62,11 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Title']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Title}} </mat-cell>
         </ng-container>
+            <!-- TitleML Column -->
+        <ng-container matColumnDef="TitleML">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['TitleML']?.FieldTitle}} </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.TitleML}} </mat-cell>
+        </ng-container>
         <!-- PackageName Column -->
         <ng-container matColumnDef="PackageName">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['PackageName']?.FieldTitle}}  </mat-header-cell>

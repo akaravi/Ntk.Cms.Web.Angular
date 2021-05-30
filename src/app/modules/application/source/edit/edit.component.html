@@ -23,25 +23,13 @@
               {{ fieldsInfo['RecordStatus']?.FieldTitle }} is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-          <!-- OSType Field -->
-          <mat-form-field class="example-full-width" *ngIf="fieldsInfo['OSType']?.AccessWatchField">
-            <mat-select placeholder="{{fieldsInfo['OSType']?.FieldTitle}}" [(ngModel)]="dataModel.OSType"
-              name="dataModel.OSType" #OSType="ngModel" required>
-              <mat-option *ngFor="
-                let item of dataModelEnumOsTypeResult.ListItems;
-                index as i
-              " [value]="item.Value">{{ item.Description }}</mat-option>
-            </mat-select>
-            <mat-hint align="end">{{ 'Application.Source.OSType_hint' | translate }}</mat-hint>
-            <mat-error *ngIf="OSType.errors?.required">
-              {{ fieldsInfo['OSType']?.FieldTitle }} is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
+
           <!-- Title Field -->
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Title']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['Title']?.FieldTitle }}</mat-label>
             <input matInput [(ngModel)]="dataModel.Title" [disabled]="!fieldsInfo['Title']?.AccessEditField"
-              name="dataModel.Title" #Title type="text" placeholder="{{fieldsInfo['Title']?.FieldTitle}}" minlength="3" maxlength="100" required />
+              name="dataModel.Title" #Title type="text" placeholder="{{fieldsInfo['Title']?.FieldTitle}}" minlength="3"
+              maxlength="100" required />
             <mat-icon matSuffix *ngIf="dataModel.Title && fieldsInfo['Title']?.AccessEditField" matSuffix
               mat-icon-button aria-label="Clear" (click)="dataModel.Title = ''">close</mat-icon>
             <mat-icon *ngIf="fieldsInfo['Title']?.AccessEditField" matSuffix>mode_edit</mat-icon>
@@ -50,12 +38,41 @@
               {{ fieldsInfo['Title']?.FieldTitle }} is <strong>required</strong>
             </mat-error>
           </mat-form-field>
+          <!-- TitleResourceLanguage Field -->
+          <mat-form-field class="example-full-width" *ngIf="fieldsInfo['TitleResourceLanguage']?.AccessWatchField">
+            <mat-label> {{fieldsInfo['TitleResourceLanguage']?.FieldTitle}}</mat-label>
+            <input matInput [(ngModel)]="dataModel.TitleResourceLanguage" name="dataModel.TitleResourceLanguage"
+              #TitleResourceLanguage type="text" [disabled]="!fieldsInfo['TitleResourceLanguage']?.AccessEditField"
+              placeholder="{{fieldsInfo['TitleResourceLanguage']?.FieldTitle}}" minlength="3" maxlength="100"
+              required />
+            <mat-icon matSuffix *ngIf="dataModel.TitleResourceLanguage" matSuffix mat-icon-button aria-label="Clear"
+              (click)="dataModel.TitleResourceLanguage = ''">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
+            <mat-hint align="end">{{ TitleResourceLanguage.value.length }} / 100</mat-hint>
+            <mat-error *ngIf="TitleResourceLanguage.errors?.required">
+              TitleResourceLanguage is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+          <!-- OSType Field -->
+          <mat-form-field class="example-full-width" *ngIf="fieldsInfo['OSType']?.AccessWatchField">
+            <mat-select placeholder="{{fieldsInfo['OSType']?.FieldTitle}}" [(ngModel)]="dataModel.OSType"
+              name="dataModel.OSType" #OSType="ngModel" required>
+              <mat-option *ngFor="
+                        let item of dataModelEnumOsTypeResult.ListItems;
+                        index as i
+                      " [value]="item.Value">{{ item.Description }}</mat-option>
+            </mat-select>
+            <mat-hint align="end">{{ 'Application.Source.OSType_hint' | translate }}</mat-hint>
+            <mat-error *ngIf="OSType.errors?.required">
+              {{ fieldsInfo['OSType']?.FieldTitle }} is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
           <!-- ClassName Field -->
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['ClassName']?.AccessWatchField">
             <mat-label>{{fieldsInfo['ClassName']?.FieldTitle}}</mat-label>
             <input matInput [(ngModel)]="dataModel.ClassName" [disabled]="!fieldsInfo['ClassName']?.AccessEditField"
-              name="dataModel.ClassName" #ClassName type="text" placeholder="{{fieldsInfo['Title']?.FieldTitle}}" minlength="3" maxlength="100"
-              required />
+              name="dataModel.ClassName" #ClassName type="text" placeholder="{{fieldsInfo['Title']?.FieldTitle}}"
+              minlength="3" maxlength="100" required />
             <mat-icon matSuffix *ngIf="dataModel.ClassName && fieldsInfo['ClassName']?.AccessEditField" matSuffix
               mat-icon-button aria-label="Clear" (click)="dataModel.ClassName = ''">close</mat-icon>
             <mat-icon *ngIf="fieldsInfo['ClassName']?.AccessEditField" matSuffix>mode_edit</mat-icon>
@@ -68,8 +85,8 @@
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['PackageName']?.AccessWatchField">
             <mat-label>{{fieldsInfo['PackageName']?.FieldTitle}}</mat-label>
             <input matInput [(ngModel)]="dataModel.PackageName" [disabled]="!fieldsInfo['PackageName']?.AccessEditField"
-              name="dataModel.PackageName" #PackageName type="text" placeholder="{{fieldsInfo['Title']?.FieldTitle}}" minlength="3" maxlength="100"
-              required />
+              name="dataModel.PackageName" #PackageName type="text" placeholder="{{fieldsInfo['Title']?.FieldTitle}}"
+              minlength="3" maxlength="100" required />
             <mat-icon matSuffix *ngIf="dataModel.PackageName && fieldsInfo['PackageName']?.AccessEditField" matSuffix
               mat-icon-button aria-label="Clear" (click)="dataModel.PackageName = ''">close</mat-icon>
             <mat-icon *ngIf="fieldsInfo['PackageName']?.AccessEditField" matSuffix>mode_edit</mat-icon>
@@ -449,8 +466,8 @@
             <mat-label>{{fieldsInfo['LastSuccessfullyBuildDate']?.FieldTitle}}</mat-label>
             <textarea matInput [(ngModel)]="dataModel.LastSuccessfullyBuildDate"
               [disabled]="!fieldsInfo['LastSuccessfullyBuildDate']?.AccessEditField"
-              name="dataModel.LastSuccessfullyBuildDate" #LastSuccessfullyBuildDate type="text" placeholder="{{fieldsInfo['Title']?.FieldTitle}}"
-              rows="5"></textarea>
+              name="dataModel.LastSuccessfullyBuildDate" #LastSuccessfullyBuildDate type="text"
+              placeholder="{{fieldsInfo['Title']?.FieldTitle}}" rows="5"></textarea>
             <mat-icon matSuffix *ngIf="dataModel.LastSuccessfullyBuildDate" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.LastSuccessfullyBuildDate = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>

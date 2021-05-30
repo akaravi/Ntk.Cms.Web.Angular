@@ -65,10 +65,10 @@ export class ApplicationThemeConfigSelectorComponent implements OnInit {
   }
 
   displayFn(model?: ApplicationThemeConfigModel): string | undefined {
-    return model ? model.Title : undefined;
+    return model ? model.TitleML : undefined;
   }
   displayOption(model?: ApplicationThemeConfigModel): string | undefined {
-    return model ? model.Title : undefined;
+    return model ? model.TitleML : undefined;
   }
   async DataGetAll(text: string | number | any): Promise<ApplicationThemeConfigModel[]> {
     const filteModel = new FilterModel();
