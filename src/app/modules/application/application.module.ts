@@ -25,7 +25,8 @@ import {
   CoreEnumService,
   ApplicationEnumService,
   CoreModuleTagService,
-  ApplicationConfigurationService
+  ApplicationConfigurationService,
+  ApplicationSourceSiteCategoryService
 } from 'ntk-cms-api';
 import { ApplicationSourceTreeComponent } from './source/tree/tree.component';
 import { ApplicationAppTreeComponent } from './content/tree/tree.component';
@@ -125,6 +126,7 @@ import { CmsFileUploaderModule } from 'src/app/shared/cms-file-uploader/cms-file
     ApplicationLogNotificationService,
     ApplicationThemeConfigService,
     ApplicationConfigurationService,
+    ApplicationSourceSiteCategoryService,
   ]
 })
 export class ApplicationModule { }

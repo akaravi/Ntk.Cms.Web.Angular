@@ -6,6 +6,11 @@ import {
   CoreSiteCategoryService,
   CoreSiteCategoryModel,
   DataFieldInfoModel,
+  CoreModuleModel,
+  CoreSiteCategoryCmsModuleService,
+  CoreSiteCategoryCmsModuleModel,
+  FilterModel,
+  FilterDataModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -38,6 +43,7 @@ export class CoreSiteCategoryEditComponent implements OnInit {
     private dialogRef: MatDialogRef<CoreSiteCategoryEditComponent>,
     public coreEnumService: CoreEnumService,
     public coreSiteCategoryService: CoreSiteCategoryService,
+    public coreSiteCategoryCmsModuleService: CoreSiteCategoryCmsModuleService,
     private cmsToastrService: CmsToastrService,
     public publicHelper: PublicHelper,
   ) {
@@ -64,17 +70,20 @@ export class CoreSiteCategoryEditComponent implements OnInit {
 
   fileManagerOpenForm = false;
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
-
+  dataCoreCpMainMenuModel: CoreModuleModel[];
+  dataCoreCpMainMenuIds: number[] = [];
+  dataCoreSiteCategoryCmsModuleModel: CoreSiteCategoryCmsModuleModel[];
   ngOnInit(): void {
     if (this.requestId > 0) {
       this.formInfo.FormTitle = 'ویرایش  ';
-      this.DataGetOneContent();
+
     } else {
       this.cmsToastrService.typeErrorComponentAction();
       this.dialogRef.close({ dialogChangedDate: false });
       return;
     }
-
+    this.DataGetOneContent();
+    this.DataGetAllSiteCategoryCmsModule();
     this.getEnumRecordStatus();
   }
   getEnumRecordStatus(): void {
@@ -105,10 +114,10 @@ export class CoreSiteCategoryEditComponent implements OnInit {
         if (next.IsSuccess) {
           this.formInfo.FormTitle = this.formInfo.FormTitle + ' ' + next.Item.Title;
           this.formInfo.FormAlert = '';
-              } else {
+        } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
-          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
         }
         this.loading.display = false;
       },
@@ -118,7 +127,45 @@ export class CoreSiteCategoryEditComponent implements OnInit {
       }
     );
   }
+  DataGetAllSiteCategoryCmsModule(): void {
 
+    if (this.requestId <= 0) {
+      this.cmsToastrService.typeErrorEditRowIsNull();
+      return;
+    }
+
+    this.formInfo.FormAlert = 'در دریافت ارسال اطلاعات از سرور';
+    this.formInfo.FormError = '';
+    this.loading.display = true;
+    const filteModelContent = new FilterModel();
+    const filter = new FilterDataModel();
+    filter.PropertyName = 'LinkCmsSiteCategoryId';
+    filter.Value = this.requestId;
+    filteModelContent.Filters.push(filter);
+
+    this.coreSiteCategoryCmsModuleService.ServiceGetAll(filteModelContent).subscribe(
+      (next) => {
+        this.dataCoreSiteCategoryCmsModuleModel = next.ListItems;
+        const listG: number[] = [];
+        this.dataCoreSiteCategoryCmsModuleModel.forEach(element => {
+          listG.push(element.LinkCmsModuleId);
+        });
+        this.dataCoreCpMainMenuIds = listG;
+        if (next.IsSuccess) {
+          this.formInfo.FormAlert = '';
+        } else {
+          this.formInfo.FormAlert = 'برروز خطا';
+          this.formInfo.FormError = next.ErrorMessage;
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
+        }
+        this.loading.display = false;
+      },
+      (error) => {
+        this.cmsToastrService.typeError(error);
+        this.loading.display = false;
+      }
+    );
+  }
   DataEditContent(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
@@ -132,10 +179,10 @@ export class CoreSiteCategoryEditComponent implements OnInit {
           this.cmsToastrService.typeSuccessEdit();
           this.dialogRef.close({ dialogChangedDate: true });
 
-              } else {
+        } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
-          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
         }
         this.loading.display = false;
       },
@@ -143,6 +190,57 @@ export class CoreSiteCategoryEditComponent implements OnInit {
         this.formInfo.FormSubmitAllow = true;
         this.cmsToastrService.typeError(error);
         this.loading.display = false;
+      }
+    );
+  }
+  onActionSelectorUserCategorySelect(model: CoreModuleModel[]): void {
+    this.dataCoreCpMainMenuModel = model;
+  }
+  onActionSelectorUserCategorySelectAdded(model: CoreModuleModel): void {
+    const entity = new CoreSiteCategoryCmsModuleModel();
+    entity.LinkCmsModuleId = model.Id;
+    entity.LinkCmsSiteCategoryId = this.dataModel.Id;
+
+    this.coreSiteCategoryCmsModuleService.ServiceAdd(entity).subscribe(
+      (next) => {
+        if (next.IsSuccess) {
+          this.formInfo.FormAlert = 'ثبت در این گروه با موفقیت انجام شد';
+          this.cmsToastrService.typeSuccessEdit();
+          // this.dialogRef.close({ dialogChangedDate: true });
+        } else {
+          this.formInfo.FormAlert = 'برروز خطا';
+          this.formInfo.FormError = next.ErrorMessage;
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
+        }
+
+      },
+      (error) => {
+        this.formInfo.FormSubmitAllow = true;
+        this.cmsToastrService.typeError(error);
+
+      }
+    );
+  }
+  onActionSelectorUserCategorySelectRemoved(model: CoreModuleModel): void {
+    const entity = new CoreSiteCategoryCmsModuleModel();
+    entity.LinkCmsModuleId = model.Id;
+    entity.LinkCmsSiteCategoryId = this.dataModel.Id;
+
+    this.coreSiteCategoryCmsModuleService.ServiceDeleteEntity(entity).subscribe(
+      (next) => {
+        if (next.IsSuccess) {
+          this.formInfo.FormAlert = 'حذف از این گروه با موفقیت انجام شد';
+          this.cmsToastrService.typeSuccessEdit();
+          // this.dialogRef.close({ dialogChangedDate: true });
+        } else {
+          this.formInfo.FormAlert = 'برروز خطا';
+          this.formInfo.FormError = next.ErrorMessage;
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
+        }
+      },
+      (error) => {
+        this.formInfo.FormSubmitAllow = true;
+        this.cmsToastrService.typeError(error);
       }
     );
   }

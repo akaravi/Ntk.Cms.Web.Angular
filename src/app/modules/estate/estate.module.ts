@@ -89,7 +89,7 @@ import { EstatePropertyTypeUsageEditComponent } from './property-type-usage/edit
 import { EstatePropertyTypeUsageListComponent } from './property-type-usage/list/list.component';
 import { EstatePropertyTypeUsageSelectorComponent } from './property-type-usage/selector/selector.component';
 import { EstatePropertyTypeUsageTreeComponent } from './property-type-usage/tree/tree.component';
-import { EstatePropertyTypeUsageChecklistComponent } from './property-type-usage/checklist/checklist.component';
+import { EstatePropertyTypeUsageSelectionlistComponent } from './property-type-usage/selectionlist/selectionlist.component';
 
 @NgModule({
   declarations: [
@@ -110,7 +110,7 @@ import { EstatePropertyTypeUsageChecklistComponent } from './property-type-usage
     EstatePropertyTypeUsageListComponent,
     EstatePropertyTypeUsageSelectorComponent,
     EstatePropertyTypeUsageTreeComponent,
-    EstatePropertyTypeUsageChecklistComponent,
+    EstatePropertyTypeUsageSelectionlistComponent,
     /* */
     EstatePropertyAddComponent,
     EstatePropertyEditComponent,

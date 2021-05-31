@@ -5,8 +5,9 @@
     <div *ngIf="!loading.display" class="form-body">
       <!-- RecordStatus Field -->
       <mat-form-field class="example-full-width">
-        <mat-select placeholder="{{fieldsInfo['RecordStatus']?.FieldTitle}}" [(ngModel)]="dataModel.RecordStatus" name="dataModel.RecordStatus"
-          #RecordStatus="ngModel" panelClass="recordStatus-{{ dataModel.RecordStatus }}" required>
+        <mat-select placeholder="{{fieldsInfo['RecordStatus']?.FieldTitle}}" [(ngModel)]="dataModel.RecordStatus"
+          name="dataModel.RecordStatus" #RecordStatus="ngModel" panelClass="recordStatus-{{ dataModel.RecordStatus }}"
+          required>
           <mat-option *ngFor="
                 let item of dataModelEnumRecordStatusResult.ListItems;
                 index as i
@@ -20,8 +21,8 @@
       <!-- Title Field -->
       <mat-form-field class="example-full-width">
         <mat-label>{{fieldsInfo['Title']?.FieldTitle}}</mat-label>
-        <input matInput [(ngModel)]="dataModel.Title" name="dataModel.Title" #Title type="text" placeholder="{{fieldsInfo['Title']?.FieldTitle}}"
-          minlength="3" maxlength="100" required />
+        <input matInput [(ngModel)]="dataModel.Title" name="dataModel.Title" #Title type="text"
+          placeholder="{{fieldsInfo['Title']?.FieldTitle}}" minlength="3" maxlength="100" required />
         <mat-icon matSuffix *ngIf="dataModel.Title" matSuffix mat-icon-button aria-label="Clear"
           (click)="dataModel.Title = ''">close</mat-icon>
         <mat-icon matSuffix>mode_edit</mat-icon>
@@ -43,7 +44,8 @@
       <mat-form-field class="example-full-width">
         <mat-label>{{fieldsInfo['Description']?.FieldTitle}}</mat-label>
         <textarea matInput [(ngModel)]="dataModel.Description" name="dataModel.Description" #Description type="text"
-          placeholder="{{fieldsInfo['Description']?.FieldTitle}}" minlength="1" maxlength="500" required rows=5></textarea>
+          placeholder="{{fieldsInfo['Description']?.FieldTitle}}" minlength="1" maxlength="500" required
+          rows=5></textarea>
         <mat-icon matSuffix *ngIf="dataModel.Description" matSuffix mat-icon-button aria-label="Clear"
           (click)="dataModel.Description = ''">close</mat-icon>
         <mat-icon matSuffix>mode_edit</mat-icon>
@@ -52,9 +54,11 @@
           Description is <strong>required</strong>
         </mat-error>
       </mat-form-field>
-
-
-
+      ماژل های قابل دسترس
+      <app-core-module-selectionlist [optionSelectForce]="dataCoreCpMainMenuIds" [disabled]="false"
+        (optionSelect)="onActionSelectorUserCategorySelect($event)"
+        (optionSelectAdded)="onActionSelectorUserCategorySelectAdded($event)"
+        (optionSelectRemoved)="onActionSelectorUserCategorySelectRemoved($event)"></app-core-module-selectionlist>
     </div>
 
   </form>

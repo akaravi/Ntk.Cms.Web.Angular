@@ -5,11 +5,14 @@
   <div [ngClass]="(requestHeaderId===0)?'col-xl-9':'col-xl-12'">
     <div class="button-row">
       <button *ngIf="dataModelResult.Access.AccessAddRow " (click)="onActionbuttonNewRow()" type="button"
-        class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">{{'ACTION.ADD' | translate}}</button>
+        class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">{{'ACTION.ADD' |
+        translate}}</button>
       <button *ngIf="dataModelResult.Access.AccessEditRow && tableRowSelected.Id>0" (click)="onActionbuttonEditRow()"
-        type="button" class="btn btn-warning ml-2" data-toggle="modal" data-target="#categoryModal">{{'ACTION.EDIT' | translate}}</button>
+        type="button" class="btn btn-warning ml-2" data-toggle="modal" data-target="#categoryModal">{{'ACTION.EDIT' |
+        translate}}</button>
       <button *ngIf="dataModelResult.Access.AccessDeleteRow && tableRowSelected.Id>0"
-        (click)="onActionbuttonDeleteRow()" type="button" class="btn btn-danger  ml-2">{{'ACTION.DELETE' | translate}}</button>
+        (click)="onActionbuttonDeleteRow()" type="button" class="btn btn-danger  ml-2">{{'ACTION.DELETE' |
+        translate}}</button>
 
       <a class="btn btn-secondary btn-sm BTN">
         <mat-slide-toggle [(ngModel)]="optionsSearch.data.show">{{'ACTION.SEARCH' | translate}}</mat-slide-toggle>
@@ -23,7 +26,8 @@
         <mat-slide-toggle (click)="onActionbuttonExport()">{{'ACTION.EXPORTFILE' | translate}}
         </mat-slide-toggle>
       </a>
-      <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">{{'ACTION.RELOAD' | translate}}</button>
+      <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">{{'ACTION.RELOAD' |
+        translate}}</button>
       <app-cms-search-list [(options)]="optionsSearch"></app-cms-search-list>
       <app-cms-export-list [(options)]="optionsExport"></app-cms-export-list>
       <app-cms-statist-list [(options)]="optionsStatist"></app-cms-statist-list>
@@ -48,32 +52,46 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Id']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Id}} </mat-cell>
         </ng-container>
-        <!-- linkCreatedBySiteId Column -->
-        <ng-container matColumnDef="linkCreatedBySiteId">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['linkCreatedBySiteId']?.FieldTitle}}
+        <!-- SerialNumber Column -->
+        <ng-container matColumnDef="SerialNumber">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['SerialNumber']?.FieldTitle}}
           </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.linkCreatedBySiteId}} </mat-cell>
+          <mat-cell *matCellDef="let row"> {{row.SerialNumber}} </mat-cell>
         </ng-container>
+
         <!-- RecordStatus Column -->
         <ng-container matColumnDef="RecordStatus">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['RecordStatus']?.FieldTitle}}
           </mat-header-cell>
           <mat-cell *matCellDef="let row"> <i [ngClass]="row.RecordStatus|statusClass"></i> </mat-cell>
         </ng-container>
-        <!-- Title Column -->
-        <ng-container matColumnDef="Title">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Title']?.FieldTitle}} </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.Title}} </mat-cell>
+        <!-- HasUsed Column -->
+        <ng-container matColumnDef="HasUsed">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{fieldsInfo['HasUsed']?.FieldTitle}}</mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <i [ngClass]="row.HasUsed | boolclass"></i>
+          </mat-cell>
         </ng-container>
-        <!-- SubDomain Column -->
-        <ng-container matColumnDef="SubDomain">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['SubDomain']?.FieldTitle}}  </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.SubDomain}} </mat-cell>
+        <!-- HasDemo Column -->
+        <ng-container matColumnDef="HasDemo">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{fieldsInfo['HasDemo']?.FieldTitle}}</mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <i [ngClass]="row.HasDemo | boolclass"></i>
+          </mat-cell>
         </ng-container>
-        <!-- Domain Column -->
-        <ng-container matColumnDef="Domain">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>  {{fieldsInfo['Domain']?.FieldTitle}}  </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.Domain}} </mat-cell>
+        <!-- NumberOfMaxUse Column -->
+        <ng-container matColumnDef="NumberOfMaxUse">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['NumberOfMaxUse']?.FieldTitle}}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.NumberOfMaxUse}} </mat-cell>
+        </ng-container>
+        <!-- NumberOfRegistered Column -->
+        <ng-container matColumnDef="NumberOfRegistered">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['NumberOfRegistered']?.FieldTitle}}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.NumberOfRegistered}} </mat-cell>
         </ng-container>
         <!-- CreatedDate Column -->
         <ng-container matColumnDef="CreatedDate">

@@ -183,10 +183,10 @@
           [optionSelectForce]="dataModel.LinkModuleId" [optionPlaceholder]="'ماژول'">
         </app-core-module-selector>
 
-        <app-core-usercategory-checklist [optionSelectForce]="dataCoreCpMainMenuIds" [disabled]="false"
+        <app-core-usercategory-selectionlist [optionSelectForce]="dataCoreCpMainMenuIds" [disabled]="false"
           (optionSelect)="onActionSelectorUserCategorySelect($event)"
           (optionSelectAdded)="onActionSelectorUserCategorySelectAdded($event)"
-          (optionSelectRemoved)="onActionSelectorUserCategorySelectRemoved($event)"></app-core-usercategory-checklist>
+          (optionSelectRemoved)="onActionSelectorUserCategorySelectRemoved($event)"></app-core-usercategory-selectionlist>
         <div *ngIf="formInfo.FormSubmitAllow">
           <button type="button" mat-button matStepperPrevious
             class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">

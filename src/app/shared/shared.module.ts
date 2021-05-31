@@ -63,6 +63,7 @@ import { DateComponent } from '../core/dynamic-input-builder/date/date.component
 import { TextAreaComponent } from '../core/dynamic-input-builder/text-area/text-area.component';
 import { LanguageSelectorComponent } from './language-selector/language-selector.component';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { CmsSiteCategorySelectionListComponent } from './cms-site-category-selection-list/cmsSiteCategorySelectionList.component';
 
 
 
@@ -104,6 +105,7 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
     CmsLocationSelectorComponent,
     CmsApplicationSelectorComponent,
     CmsSiteCategorySelectorComponent,
+    CmsSiteCategorySelectionListComponent,
     CmsUserSelectorComponent,
     CmsUserGroupSelectorComponent,
     CmsMemberSelectorComponent,
@@ -157,6 +159,7 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
     CmsLocationSelectorComponent,
     CmsApplicationSelectorComponent,
     CmsSiteCategorySelectorComponent,
+    CmsSiteCategorySelectionListComponent,
     CmsUserSelectorComponent,
     CmsUserGroupSelectorComponent,
     CmsMemberSelectorComponent,

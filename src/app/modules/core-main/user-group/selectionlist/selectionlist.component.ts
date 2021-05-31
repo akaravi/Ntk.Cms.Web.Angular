@@ -9,11 +9,11 @@ import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 
 
 @Component({
-  selector: 'app-core-usercategory-checklist',
-  templateUrl: './checklist.component.html',
-  styleUrls: ['./checklist.component.scss']
+  selector: 'app-core-usercategory-selectionlist',
+  templateUrl: './selectionlist.component.html',
+  styleUrls: ['./selectionlist.component.scss']
 })
-export class CoreUserGroupChecklistComponent implements OnInit {
+export class CoreUserGroupSelectionlistComponent implements OnInit {
 
   constructor(
     public coreEnumService: CoreEnumService,

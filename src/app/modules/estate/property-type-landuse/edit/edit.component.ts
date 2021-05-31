@@ -67,9 +67,8 @@ export class EstatePropertyTypeLanduseEditComponent implements OnInit {
   fileManagerOpenForm = false;
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
   dataEstatePropertyTypeUsageModel: EstatePropertyTypeUsageModel[];
-
-    dataEstatePropertyTypeUsageIds: string[] = [];
-    dataEstatePropertyTypeModel: EstatePropertyTypeModel[];
+  dataEstatePropertyTypeUsageIds: string[] = [];
+  dataEstatePropertyTypeModel: EstatePropertyTypeModel[];
 
   ngOnInit(): void {
     this.formInfo.FormTitle = 'ویرایش  ';

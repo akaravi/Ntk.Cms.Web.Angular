@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter } from '@angular/core';
-import { CoreEnumService, ErrorExceptionResult, FilterDataModel, FilterModel, EstatePropertyTypeUsageModel, EstatePropertyTypeUsageService } from 'ntk-cms-api';
+import { CoreEnumService, ErrorExceptionResult, FilterDataModel, FilterModel, CoreModuleModel, CoreModuleService } from 'ntk-cms-api';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
@@ -9,32 +9,32 @@ import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 
 
 @Component({
-  selector: 'app-estate-propertytypeusage-checklist',
-  templateUrl: './checklist.component.html',
-  styleUrls: ['./checklist.component.scss']
+  selector: 'app-core-module-selectionlist',
+  templateUrl: './selectionlist.component.html',
+  styleUrls: ['./selectionlist.component.scss']
 })
-export class EstatePropertyTypeUsageChecklistComponent implements OnInit {
+export class CoreModuleSelectionlistComponent implements OnInit {
 
   constructor(
     public coreEnumService: CoreEnumService,
-    public categoryService: EstatePropertyTypeUsageService,
+    public categoryService: CoreModuleService,
     private cmsToastrService: CmsToastrService) {
   }
-  dataModelResult: ErrorExceptionResult<EstatePropertyTypeUsageModel> = new ErrorExceptionResult<EstatePropertyTypeUsageModel>();
-  dataModelSelect: EstatePropertyTypeUsageModel[] = [];
-  dataIdsSelect: string[] = [];
+  dataModelResult: ErrorExceptionResult<CoreModuleModel> = new ErrorExceptionResult<CoreModuleModel>();
+  dataModelSelect: CoreModuleModel[] = [];
+  dataIdsSelect: number[] = [];
   loading = new ProgressSpinnerModel();
   formControl = new FormControl();
-  fieldsStatus: Map<string, boolean> = new Map<string, boolean>();
+  fieldsStatus: Map<number, boolean> = new Map<number, boolean>();
 
-  @Input() disabled = new EventEmitter<boolean>();
+    @Input() disabled = new EventEmitter<boolean>();
   @Input() optionSelectFirstItem = false;
   @Input() optionPlaceholder = new EventEmitter<string>();
-  @Output() optionSelect = new EventEmitter<EstatePropertyTypeUsageModel[]>();
+  @Output() optionSelect = new EventEmitter<CoreModuleModel[]>();
   @Output() optionSelectAdded = new EventEmitter();
   @Output() optionSelectRemoved = new EventEmitter();
   @Input() optionReload = () => this.onActionReload();
-  @Input() set optionSelectForce(x: string[] | EstatePropertyTypeUsageModel[]) {
+  @Input() set optionSelectForce(x: number[] | CoreModuleModel[]) {
     this.onActionSelectForce(x);
   }
 
@@ -52,7 +52,7 @@ export class EstatePropertyTypeUsageChecklistComponent implements OnInit {
     this.loading.display = true;
     this.categoryService.ServiceGetAll(filteModel).subscribe(
       (next) => {
-        this.fieldsStatus = new Map<string, boolean>();
+        this.fieldsStatus = new Map<number, boolean>();
         if (next.IsSuccess) {
           this.dataModelResult = next;
           this.dataModelResult.ListItems.forEach((el) => this.fieldsStatus.set(el.Id, false));
@@ -72,7 +72,7 @@ export class EstatePropertyTypeUsageChecklistComponent implements OnInit {
       }
     );
   }
-  onActionSelect(value: EstatePropertyTypeUsageModel): void {
+  onActionSelect(value: CoreModuleModel): void {
     const item = this.dataModelSelect.filter((obj) => {
       return obj.Id === value.Id;
     }).shift();
@@ -89,12 +89,12 @@ export class EstatePropertyTypeUsageChecklistComponent implements OnInit {
   }
 
 
-  onActionSelectForce(ids: string[] | EstatePropertyTypeUsageModel[]): void {
-    if (typeof ids === typeof Array(String)) {
+  onActionSelectForce(ids: number[] | CoreModuleModel[]): void {
+    if (typeof ids === typeof Array(Number)) {
       ids.forEach(element => {
         this.dataIdsSelect.push(element);
       });
-    } else if (typeof ids === typeof Array(EstatePropertyTypeUsageModel)) {
+    } else if (typeof ids === typeof Array(CoreModuleModel)) {
       ids.forEach(element => {
         this.dataIdsSelect.push(element.Id);
       });
@@ -103,7 +103,7 @@ export class EstatePropertyTypeUsageChecklistComponent implements OnInit {
   }
 
   onActionReload(): void {
-    // this.dataModelSelect = new EstatePropertyTypeUsageModel();
+    // this.dataModelSelect = new CoreModuleModel();
     this.DataGetAll();
   }
 }

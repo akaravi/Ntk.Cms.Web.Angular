@@ -84,6 +84,7 @@ export class CoreCpMainMenuEditComponent implements OnInit {
 
     this.getEnumRecordStatus();
     this.getEnumMenuPlaceType();
+    this.DataGetAllMenuCoreUserGroup();
   }
   getEnumMenuPlaceType(): void {
     this.coreEnumService.ServiceEnumMenuPlaceType().subscribe((next) => {
@@ -118,7 +119,7 @@ export class CoreCpMainMenuEditComponent implements OnInit {
         this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
         this.dataModel = next.Item;
         if (next.IsSuccess) {
-          this.DataGetAllMenuCoreUserGroup();
+
           this.formInfo.FormTitle = this.formInfo.FormTitle + ' ' + next.Item.Title;
           this.formInfo.FormAlert = '';
         } else {

@@ -7,10 +7,15 @@ import {
   AccessModel, ApplicationEnumService,
   ApplicationSourceModel,
   ApplicationSourceService,
+  ApplicationSourceSiteCategoryModel,
+  ApplicationSourceSiteCategoryService,
   CoreEnumService,
+  CoreSiteCategoryModel,
   DataFieldInfoModel,
   EnumModel,
   ErrorExceptionResult,
+  FilterDataModel,
+  FilterModel,
   FormInfoModel,
 } from 'ntk-cms-api';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -34,6 +39,7 @@ export class ApplicationSourceEditComponent implements OnInit {
     public coreEnumService: CoreEnumService,
     public applicationEnumService: ApplicationEnumService,
     private applicationSourceService: ApplicationSourceService,
+    private applicationSourceSiteCategoryService: ApplicationSourceSiteCategoryService,
     private cmsToastrService: CmsToastrService,
     private router: Router) {
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
@@ -55,6 +61,9 @@ export class ApplicationSourceEditComponent implements OnInit {
 
   fileManagerTree: TreeModel;
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
+  dataCoreSiteCategoryModel: CoreSiteCategoryModel[];
+  dataCoreSiteCategoryIds: number[] = [];
+  dataApplicationSourceSiteCategoryModel: ApplicationSourceSiteCategoryModel[];
   ngOnInit(): void {
     this.requestId = + Number(this.activatedRoute.snapshot.paramMap.get('Id'));
     if (this.requestId === 0) {
@@ -62,6 +71,7 @@ export class ApplicationSourceEditComponent implements OnInit {
       return;
     }
     this.DataGetOne(this.requestId);
+    this.DataGetAllSourceSiteCategory();
     this.getEnumRecordStatus();
     this.getEnumOsType();
   }
@@ -120,6 +130,39 @@ export class ApplicationSourceEditComponent implements OnInit {
         }
       );
   }
+  DataGetAllSourceSiteCategory(): void {
+    this.formInfo.FormAlert = 'در دریافت ارسال اطلاعات از سرور';
+    this.formInfo.FormError = '';
+    this.loading.display = true;
+    const filteModelContent = new FilterModel();
+    const filter = new FilterDataModel();
+    filter.PropertyName = 'LinkSourceId';
+    filter.Value = this.requestId;
+    filteModelContent.Filters.push(filter);
+
+    this.applicationSourceSiteCategoryService.ServiceGetAll(filteModelContent).subscribe(
+      (next) => {
+         this.dataApplicationSourceSiteCategoryModel = next.ListItems;
+        const listG: number[] = [];
+        this.dataApplicationSourceSiteCategoryModel.forEach(element => {
+          listG.push(element.LinkSiteCagegoryId);
+        });
+        this.dataCoreSiteCategoryIds = listG;
+        if (next.IsSuccess) {
+          this.formInfo.FormAlert = '';
+        } else {
+          this.formInfo.FormAlert = 'برروز خطا';
+          this.formInfo.FormError = next.ErrorMessage;
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
+        }
+        this.loading.display = false;
+      },
+      (error) => {
+        this.cmsToastrService.typeError(error);
+        this.loading.display = false;
+      }
+    );
+  }
   DataEditContent(): void {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
@@ -149,6 +192,58 @@ export class ApplicationSourceEditComponent implements OnInit {
       );
   }
 
+
+  onActionSelectorUserCategorySelect(model: CoreSiteCategoryModel[]): void {
+    this.dataCoreSiteCategoryModel = model;
+  }
+  onActionSelectorUserCategorySelectAdded(model: CoreSiteCategoryModel): void {
+    const entity = new ApplicationSourceSiteCategoryModel();
+    entity.LinkSiteCagegoryId = model.Id;
+    entity.LinkSourceId = this.dataModel.Id;
+
+    this.applicationSourceSiteCategoryService.ServiceAdd(entity).subscribe(
+      (next) => {
+        if (next.IsSuccess) {
+          this.formInfo.FormAlert = 'ثبت در این گروه با موفقیت انجام شد';
+          this.cmsToastrService.typeSuccessEdit();
+          // this.dialogRef.close({ dialogChangedDate: true });
+        } else {
+          this.formInfo.FormAlert = 'برروز خطا';
+          this.formInfo.FormError = next.ErrorMessage;
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
+        }
+
+      },
+      (error) => {
+        this.formInfo.FormSubmitAllow = true;
+        this.cmsToastrService.typeError(error);
+
+      }
+    );
+  }
+  onActionSelectorUserCategorySelectRemoved(model: CoreSiteCategoryModel): void {
+    const entity = new ApplicationSourceSiteCategoryModel();
+    entity.LinkSiteCagegoryId = model.Id;
+    entity.LinkSourceId = this.dataModel.Id;
+
+    this.applicationSourceSiteCategoryService.ServiceDeleteEntity(entity).subscribe(
+      (next) => {
+        if (next.IsSuccess) {
+          this.formInfo.FormAlert = 'حذف از این گروه با موفقیت انجام شد';
+          this.cmsToastrService.typeSuccessEdit();
+          // this.dialogRef.close({ dialogChangedDate: true });
+        } else {
+          this.formInfo.FormAlert = 'برروز خطا';
+          this.formInfo.FormError = next.ErrorMessage;
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
+        }
+      },
+      (error) => {
+        this.formInfo.FormSubmitAllow = true;
+        this.cmsToastrService.typeError(error);
+      }
+    );
+  }
   onStepClick(event: StepperSelectionEvent, stepper: MatStepper): void {
     if (event.previouslySelectedIndex < event.selectedIndex) {
       // if (!this.formGroup.valid) {

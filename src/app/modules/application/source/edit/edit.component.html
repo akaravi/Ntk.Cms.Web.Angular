@@ -258,6 +258,15 @@
         <mat-step label="تنظیمات قالب و ساخت" state="otherinfo">
           <p>تنظیمات پیش فرض مدیریت کل در ساخت</p>
 
+          در سایت ها با دسته بندی زیر قالب بکار گیری باشد:
+          <br>
+          <app-cms-sitecategory-selectionlist [optionSelectForce]="dataCoreSiteCategoryIds" [disabled]="false"
+            (optionSelect)="onActionSelectorUserCategorySelect($event)"
+            (optionSelectAdded)="onActionSelectorUserCategorySelectAdded($event)"
+            (optionSelectRemoved)="onActionSelectorUserCategorySelectRemoved($event)">
+          </app-cms-sitecategory-selectionlist>
+
+          <hr>
           <mat-form-field class="example-full-width"
             *ngIf="fieldsInfo['DefaultConfigBuilderAdminJsonValues']?.AccessWatchField">
             <mat-label>{{fieldsInfo['DefaultConfigBuilderAdminJsonValues']?.FieldTitle}}</mat-label>
