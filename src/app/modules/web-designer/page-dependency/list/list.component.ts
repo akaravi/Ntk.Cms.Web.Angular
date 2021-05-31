@@ -1,5 +1,5 @@
 
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
@@ -37,6 +37,7 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-di
   styleUrls: ['./list.component.scss']
 })
 export class WebDesignerMainPageDependencyListComponent implements OnInit, OnDestroy {
+  requestLinkModuleId = 0;
   constructor(
     private bankPaymentPublicConfigService: WebDesignerMainPageDependencyService,
     private cmsApiStore: NtkCmsApiStoreService,
@@ -44,8 +45,11 @@ export class WebDesignerMainPageDependencyListComponent implements OnInit, OnDes
     private cmsToastrService: CmsToastrService,
     private cmsConfirmationDialogService: CmsConfirmationDialogService,
     private coreModuleService: CoreModuleService,
+    private activatedRoute: ActivatedRoute,
     private router: Router,
     public dialog: MatDialog) {
+    this.requestLinkModuleId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkModuleId'));
+
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
@@ -77,7 +81,7 @@ export class WebDesignerMainPageDependencyListComponent implements OnInit, OnDes
   tableSource: MatTableDataSource<WebDesignerMainPageDependencyModel> = new MatTableDataSource<WebDesignerMainPageDependencyModel>();
   dataModelCoreModuleResult: ErrorExceptionResult<CoreModuleModel> = new ErrorExceptionResult<CoreModuleModel>();
 
-
+  categoryModelSelected = new CoreModuleModel();
   tabledisplayedColumns: string[] = [
     'Id',
     'RecordStatus',
@@ -121,9 +125,15 @@ export class WebDesignerMainPageDependencyListComponent implements OnInit, OnDes
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
+    const filter = new FilterDataModel();
     /*filter CLone*/
     const filterModel = JSON.parse(JSON.stringify(this.filteModelContent));
     /*filter CLone*/
+    if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
+      filter.PropertyName = 'LinkModuleId';
+      filter.Value = this.categoryModelSelected.Id;
+      filterModel.Filters.push(filter);
+    }
     this.bankPaymentPublicConfigService.ServiceGetAll(filterModel).subscribe(
       (next) => {
         if (next.IsSuccess) {
@@ -339,6 +349,12 @@ export class WebDesignerMainPageDependencyListComponent implements OnInit, OnDes
     );
   }
 
+  onActionSelectorSelect(model: CoreModuleModel | null): void {
+    this.filteModelContent = new FilterModel();
+    this.categoryModelSelected = model;
+
+    this.DataGetAll();
+  }
   onActionbuttonReload(): void {
     this.DataGetAll();
   }

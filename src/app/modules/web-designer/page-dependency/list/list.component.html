@@ -1,5 +1,8 @@
 <div class="row">
-  <div class="col-xl-12">
+  <div *ngIf="requestLinkModuleId===0 " class="col-xl-3">
+    <app-core-module-tree (optionSelect)="onActionSelectorSelect($event)"></app-core-module-tree>
+  </div>
+  <div [ngClass]="(requestLinkModuleId===0 )?'col-xl-9':'col-xl-12'">
     <div class="button-row">
       <button *ngIf="dataModelResult.Access.AccessAddRow " (click)="onActionbuttonNewRow()" type="button"
         class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">{{'ACTION.ADD' | translate}}</button>

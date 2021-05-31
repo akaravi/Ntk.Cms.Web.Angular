@@ -57,6 +57,7 @@ import { WebDesignerMainPageTemplateListComponent } from './page-template/list/l
 import { WebDesignerMainPageTemplateSelectorComponent } from './page-template/selector/selector.component';
 import { WebDesignerMainPageTemplateTreeComponent } from './page-template/tree/tree.component';
 import { WebDesignerMainPageTemplateHeaderComponent } from './page-template/header/header.component';
+import { CoreModuleModule } from '../core-main/module/coreModule.module';
 
 @NgModule({
   declarations: [
@@ -117,7 +118,8 @@ import { WebDesignerMainPageTemplateHeaderComponent } from './page-template/head
     MatStepperModule,
     ColorPickerModule,
     IconPickerModule,
-    DragDropModule
+    DragDropModule,
+    CoreModuleModule,
   ],
   providers: [
     CoreEnumService,
