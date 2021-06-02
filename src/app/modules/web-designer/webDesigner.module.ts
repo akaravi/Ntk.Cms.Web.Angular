@@ -20,7 +20,8 @@ import {
   WebDesignerMainMenuService,
   WebDesignerMainPageDependencyService,
   WebDesignerMainPageService,
-  WebDesignerMainPageTemplateService
+  WebDesignerMainPageTemplateService,
+  WebDesignerMainPageTemplateSiteCategoryService
 } from 'ntk-cms-api';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -135,7 +136,8 @@ import { CoreModuleModule } from '../core-main/module/coreModule.module';
     WebDesignerMainPageService,
     WebDesignerMainPageDependencyService,
     WebDesignerMainPageTemplateService,
-    WebDesignerEnumService
+    WebDesignerMainPageTemplateSiteCategoryService,
+    WebDesignerEnumService,
   ]
 })
 export class WebDesignerModule { }

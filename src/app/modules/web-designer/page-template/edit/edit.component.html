@@ -74,7 +74,15 @@
           Description is <strong>required</strong>
         </mat-error>
       </mat-form-field>
+      در سایت ها با دسته بندی زیر قالب بکار گیری باشد:
+      <br>
+      <app-cms-sitecategory-selectionlist [optionSelectForce]="dataCoreSiteCategoryIds" [disabled]="false"
+        (optionSelect)="onActionSelectorUserCategorySelect($event)"
+        (optionSelectAdded)="onActionSelectorUserCategorySelectAdded($event)"
+        (optionSelectRemoved)="onActionSelectorUserCategorySelectRemoved($event)">
+      </app-cms-sitecategory-selectionlist>
 
+      <hr>
     </div>
 
   </form>

@@ -7,6 +7,11 @@ import {
   WebDesignerMainPageTemplateModel,
   DataFieldInfoModel,
   CoreModuleModel,
+  CoreSiteCategoryModel,
+  WebDesignerMainPageTemplateSiteCategoryModel,
+  WebDesignerMainPageTemplateSiteCategoryService,
+  FilterModel,
+  FilterDataModel,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -38,6 +43,7 @@ export class WebDesignerMainPageTemplateEditComponent implements OnInit {
     private dialogRef: MatDialogRef<WebDesignerMainPageTemplateEditComponent>,
     public coreEnumService: CoreEnumService,
     public webDesignerMainPageTemplateService: WebDesignerMainPageTemplateService,
+    public webDesignerMainPageTemplateSiteCategoryService: WebDesignerMainPageTemplateSiteCategoryService,
     private cmsToastrService: CmsToastrService,
     public publicHelper: PublicHelper,
   ) {
@@ -62,7 +68,9 @@ export class WebDesignerMainPageTemplateEditComponent implements OnInit {
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   fileManagerOpenForm = false;
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
-
+  dataCoreSiteCategoryModel: CoreSiteCategoryModel[];
+  dataCoreSiteCategoryIds: number[] = [];
+  dataWebDesignerMainPageTemplateSiteCategoryModel: WebDesignerMainPageTemplateSiteCategoryModel[];
   ngOnInit(): void {
     if (this.requestId.length > 0) {
       this.formInfo.FormTitle = 'ویرایش  ';
@@ -140,7 +148,90 @@ export class WebDesignerMainPageTemplateEditComponent implements OnInit {
       }
     );
   }
+  DataGetAllSourceSiteCategory(): void {
+    this.formInfo.FormAlert = 'در دریافت ارسال اطلاعات از سرور';
+    this.formInfo.FormError = '';
+    this.loading.display = true;
+    const filteModelContent = new FilterModel();
+    const filter = new FilterDataModel();
+    filter.PropertyName = 'LinkPageTemplateId';
+    filter.Value = this.requestId;
+    filteModelContent.Filters.push(filter);
 
+    this.webDesignerMainPageTemplateSiteCategoryService.ServiceGetAll(filteModelContent).subscribe(
+      (next) => {
+        this.dataWebDesignerMainPageTemplateSiteCategoryModel = next.ListItems;
+        const listG: number[] = [];
+        this.dataWebDesignerMainPageTemplateSiteCategoryModel.forEach(element => {
+          listG.push(element.LinkSiteCagegoryId);
+        });
+        this.dataCoreSiteCategoryIds = listG;
+        if (next.IsSuccess) {
+          this.formInfo.FormAlert = '';
+        } else {
+          this.formInfo.FormAlert = 'برروز خطا';
+          this.formInfo.FormError = next.ErrorMessage;
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
+        }
+        this.loading.display = false;
+      },
+      (error) => {
+        this.cmsToastrService.typeError(error);
+        this.loading.display = false;
+      }
+    );
+  }
+  onActionSelectorUserCategorySelect(model: CoreSiteCategoryModel[]): void {
+    this.dataCoreSiteCategoryModel = model;
+  }
+  onActionSelectorUserCategorySelectAdded(model: CoreSiteCategoryModel): void {
+    const entity = new WebDesignerMainPageTemplateSiteCategoryModel();
+    entity.LinkSiteCagegoryId = model.Id;
+    entity.LinkPageTemplateId = this.dataModel.Id;
+
+    this.webDesignerMainPageTemplateSiteCategoryService.ServiceAdd(entity).subscribe(
+      (next) => {
+        if (next.IsSuccess) {
+          this.formInfo.FormAlert = 'ثبت در این گروه با موفقیت انجام شد';
+          this.cmsToastrService.typeSuccessEdit();
+          // this.dialogRef.close({ dialogChangedDate: true });
+        } else {
+          this.formInfo.FormAlert = 'برروز خطا';
+          this.formInfo.FormError = next.ErrorMessage;
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
+        }
+
+      },
+      (error) => {
+        this.formInfo.FormSubmitAllow = true;
+        this.cmsToastrService.typeError(error);
+
+      }
+    );
+  }
+  onActionSelectorUserCategorySelectRemoved(model: CoreSiteCategoryModel): void {
+    const entity = new WebDesignerMainPageTemplateSiteCategoryModel();
+    entity.LinkSiteCagegoryId = model.Id;
+    entity.LinkPageTemplateId = this.dataModel.Id;
+
+    this.webDesignerMainPageTemplateSiteCategoryService.ServiceDeleteEntity(entity).subscribe(
+      (next) => {
+        if (next.IsSuccess) {
+          this.formInfo.FormAlert = 'حذف از این گروه با موفقیت انجام شد';
+          this.cmsToastrService.typeSuccessEdit();
+          // this.dialogRef.close({ dialogChangedDate: true });
+        } else {
+          this.formInfo.FormAlert = 'برروز خطا';
+          this.formInfo.FormError = next.ErrorMessage;
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
+        }
+      },
+      (error) => {
+        this.formInfo.FormSubmitAllow = true;
+        this.cmsToastrService.typeError(error);
+      }
+    );
+  }
   onFormSubmit(): void {
     if (!this.formGroup.valid) {
       return;
