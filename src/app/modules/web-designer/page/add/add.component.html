@@ -52,11 +52,12 @@
 
       <app-webdesigner-pagetemplate-selector (optionSelect)="onActionSelectTemplate($event)"
         [disabled]="!fieldsInfo['LinkPageTemplateGuId']?.AccessAddField"
-        [optionSelectForce]="dataModel.LinkPageTemplateGuId" [optionPlaceholder]="'قالب صفحه '">
+        [optionSelectForce]="dataModel.LinkPageTemplateGuId" [optionPlaceholder]="'قالب صفحه '"  [optionSelectFirstItem]="true">
       </app-webdesigner-pagetemplate-selector>
 
       <app-webdesigner-page-selector (optionSelect)="onActionSelectParent($event)"
         [disabled]="!fieldsInfo['LinkCmsPageGuId']?.AccessAddField" [optionSelectForce]="dataModel.LinkCmsPageGuId"
+        [optionMasterPage]="true"
         [optionPlaceholder]="'صفحه والد'">
       </app-webdesigner-page-selector>
 

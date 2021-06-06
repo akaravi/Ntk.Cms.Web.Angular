@@ -127,6 +127,7 @@
   },
   "ACTION": {
     "ADD": "Add",
+    "AUTOADD": "Auto Add",
     "SAVE": "Save",
     "CANCEL": "Cancel",
     "DELETE": "Delete",

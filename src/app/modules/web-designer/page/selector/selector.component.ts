@@ -7,7 +7,8 @@ import {
   WebDesignerMainPageModel,
   WebDesignerMainPageService,
   EnumFilterDataModelSearchTypes,
-  EnumClauseType
+  EnumClauseType,
+  EnumPageAbilityType
 } from 'ntk-cms-api';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -34,6 +35,7 @@ export class WebDesignerMainPageSelectorComponent implements OnInit {
   filteredOptions: Observable<WebDesignerMainPageModel[]>;
   @Input() disabled = new EventEmitter<boolean>();
   @Input() optionSelectFirstItem = false;
+  @Input() optionMasterPage = false;
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Output() optionSelect = new EventEmitter<WebDesignerMainPageModel>();
   @Input() optionReload = () => this.onActionReload();
@@ -69,17 +71,29 @@ export class WebDesignerMainPageSelectorComponent implements OnInit {
     filteModel.AccessLoad = true;
     // this.loading.backdropEnabled = false;
     let filter = new FilterDataModel();
-    filter.PropertyName = 'Title';
-    filter.Value = text;
-    filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
-    filter.ClauseType = EnumClauseType.Or;
-    filteModel.Filters.push(filter);
+    let filterChild = new FilterDataModel();
+    if (text && text.length > 0) {
+      filter.PropertyName = 'Title';
+      filter.Value = text;
+      filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
+      filter.ClauseType = EnumClauseType.Or;
+      filterChild.Filters.push(filter);
+    }
     if (text && typeof +text === 'number' && +text > 0) {
       filter = new FilterDataModel();
       filter.PropertyName = 'Id';
       filter.Value = text;
       filter.SearchType = EnumFilterDataModelSearchTypes.Equal;
       filter.ClauseType = EnumClauseType.Or;
+      filterChild.Filters.push(filter);
+    }
+    filteModel.Filters.push(filterChild);
+    if (this.optionMasterPage) {
+      filter = new FilterDataModel();
+      filter.PropertyName = 'PageAbilityType';
+      filter.Value = EnumPageAbilityType.Master;
+      filter.SearchType = EnumFilterDataModelSearchTypes.Equal;
+      filter.ClauseType = EnumClauseType.And;
       filteModel.Filters.push(filter);
     }
     this.loading.Globally = false;

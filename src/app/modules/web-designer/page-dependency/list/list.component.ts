@@ -30,6 +30,8 @@ import { Subscription } from 'rxjs';
 import { WebDesignerMainPageDependencyEditComponent } from '../edit/edit.component';
 import { WebDesignerMainPageDependencyAddComponent } from '../add/add.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-webdesigner-pagedependency-list',
@@ -39,7 +41,7 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-di
 export class WebDesignerMainPageDependencyListComponent implements OnInit, OnDestroy {
   requestLinkModuleId = 0;
   constructor(
-    private bankPaymentPublicConfigService: WebDesignerMainPageDependencyService,
+    private webDesignerMainPageDependencyService: WebDesignerMainPageDependencyService,
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
@@ -47,6 +49,7 @@ export class WebDesignerMainPageDependencyListComponent implements OnInit, OnDes
     private coreModuleService: CoreModuleService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
+    public http: HttpClient,
     public dialog: MatDialog) {
     this.requestLinkModuleId = + Number(this.activatedRoute.snapshot.paramMap.get('LinkModuleId'));
 
@@ -134,7 +137,7 @@ export class WebDesignerMainPageDependencyListComponent implements OnInit, OnDes
       filter.Value = this.categoryModelSelected.Id;
       filterModel.Filters.push(filter);
     }
-    this.bankPaymentPublicConfigService.ServiceGetAll(filterModel).subscribe(
+    this.webDesignerMainPageDependencyService.ServiceGetAll(filterModel).subscribe(
       (next) => {
         if (next.IsSuccess) {
           this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
@@ -195,13 +198,32 @@ export class WebDesignerMainPageDependencyListComponent implements OnInit, OnDes
       return;
     }
     const dialogRef = this.dialog.open(WebDesignerMainPageDependencyAddComponent, {
-      data: {}
+      data: {LinkModuleId:this.categoryModelSelected.Id}
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.dialogChangedDate) {
         this.DataGetAll();
       }
     });
+  }
+  onActionbuttonNewRowAuto(): any {
+    return this.http.get('http://localhost:2391/api/v1/HtmlBuilder/AutoAdd', {
+       headers: this.webDesignerMainPageDependencyService.getHeaders(),
+    })
+    .pipe(
+      map((ret: any) => {
+        var retOut= this.webDesignerMainPageDependencyService.errorExceptionResultCheck<WebDesignerMainPageDependencyAddComponent>(ret);
+        if(retOut.IsSuccess){
+          this.cmsToastrService.typeSuccessAdd();
+          this.DataGetAll();
+        }
+        else{
+          this.cmsToastrService.typeErrorAccessAdd();
+        }
+        return retOut;
+      }),
+    ).toPromise();
+
   }
 
   onActionbuttonEditRow(model: WebDesignerMainPageDependencyModel = this.tableRowSelected): void {
@@ -252,7 +274,7 @@ export class WebDesignerMainPageDependencyListComponent implements OnInit, OnDes
       .then((confirmed) => {
         if (confirmed) {
           this.loading.display = true;
-          this.bankPaymentPublicConfigService.ServiceDelete(this.tableRowSelected.Id).subscribe(
+          this.webDesignerMainPageDependencyService.ServiceDelete(this.tableRowSelected.Id).subscribe(
             (next) => {
               if (next.IsSuccess) {
                 this.cmsToastrService.typeSuccessRemove();
@@ -296,7 +318,7 @@ export class WebDesignerMainPageDependencyListComponent implements OnInit, OnDes
     const statist = new Map<string, number>();
     statist.set('Active', 0);
     statist.set('All', 0);
-    this.bankPaymentPublicConfigService.ServiceGetCount(this.filteModelContent).subscribe(
+    this.webDesignerMainPageDependencyService.ServiceGetCount(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('All', next.TotalRowCount);
@@ -313,7 +335,7 @@ export class WebDesignerMainPageDependencyListComponent implements OnInit, OnDes
     fastfilter.PropertyName = 'RecordStatus';
     fastfilter.Value = EnumRecordStatus.Available;
     filterStatist1.Filters.push(fastfilter);
-    this.bankPaymentPublicConfigService.ServiceGetCount(filterStatist1).subscribe(
+    this.webDesignerMainPageDependencyService.ServiceGetCount(filterStatist1).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('Active', next.TotalRowCount);
@@ -336,7 +358,7 @@ export class WebDesignerMainPageDependencyListComponent implements OnInit, OnDes
   onSubmitOptionExport(model: FilterModel): void {
     const exportlist = new Map<string, string>();
     exportlist.set('Download', 'loading ... ');
-    this.bankPaymentPublicConfigService.ServiceExportFile(model).subscribe(
+    this.webDesignerMainPageDependencyService.ServiceExportFile(model).subscribe(
       (next) => {
         if (next.IsSuccess) {
           exportlist.set('Download', next.LinkFile);

@@ -73,7 +73,7 @@
       <mat-form-field class="example-full-width">
         <mat-label>{{fieldsInfo['ClassActionName']?.FieldTitle}}</mat-label>
         <input matInput [(ngModel)]="dataModel.ClassActionName" name="dataModel.ClassActionName" #ClassActionName
-          type="text" placeholder="{{fieldsInfo['Title']?.FieldTitle}}" minlength="3" maxlength="100" required [disabled]="!fieldsInfo['ClassActionName']?.AccessAddField" />
+          type="text" placeholder="{{fieldsInfo['Title']?.FieldTitle}}"  [disabled]="!fieldsInfo['ClassActionName']?.AccessAddField" />
         <mat-icon matSuffix *ngIf="dataModel.ClassActionName" matSuffix mat-icon-button aria-label="Clear"
           (click)="dataModel.ClassActionName = ''">close</mat-icon>
         <mat-icon matSuffix>mode_edit</mat-icon>

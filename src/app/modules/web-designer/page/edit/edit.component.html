@@ -57,6 +57,7 @@
 
       <app-webdesigner-page-selector (optionSelect)="onActionSelectParent($event)"
         [disabled]="!fieldsInfo['LinkCmsPageGuId']?.AccessEditField" [optionSelectForce]="dataModel.LinkCmsPageGuId"
+        [optionMasterPage]="true"
         [optionPlaceholder]="'صفحه والد'">
       </app-webdesigner-page-selector>
 
