@@ -4,11 +4,16 @@
   </div>
   <div [ngClass]="(requestLinkModuleId===0 )?'col-xl-9':'col-xl-12'">
     <div class="button-row">
-      <button *ngIf="dataModelResult.Access.AccessAddRow && this.categoryModelSelected.Id>0" (click)="onActionbuttonNewRow()" type="button"
-        class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">{{'ACTION.ADD' | translate}}</button>
+      <button *ngIf="dataModelResult.Access.AccessAddRow && this.categoryModelSelected.Id>0"
+        (click)="onActionbuttonNewRow()" type="button" class="btn btn-primary" id="openModalButton" data-toggle="modal"
+        data-target="#categoryModal">{{'ACTION.ADD' | translate}}</button>
 
-        <button *ngIf="dataModelResult.Access.AccessAddRow" (click)="onActionbuttonNewRowAuto()" type="button"
-          class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">{{'ACTION.AUTOADD' | translate}}</button>
+      <button *ngIf="dataModelResult.Access.AccessAddRow" (click)="onActionbuttonNewRowAuto()" type="button"
+        class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">{{'ACTION.AUTOADD'| translate}} Dependency</button>
+
+        <button *ngIf="dataModelResult.Access.AccessAddRow" (click)="onActionbuttonNewRowAutoPage()" type="button"
+        class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">{{'ACTION.AUTOADD'| translate}} Page</button>
+
       <button *ngIf="dataModelResult.Access.AccessEditRow && tableRowSelected?.Id?.length>0"
         (click)="onActionbuttonEditRow()" type="button" class="btn btn-warning ml-2" data-toggle="modal"
         data-target="#categoryModal">{{'ACTION.EDIT' | translate}}</button>
@@ -27,7 +32,8 @@
         <mat-slide-toggle (click)="onActionbuttonExport()">{{'ACTION.EXPORTFILE' | translate}}
         </mat-slide-toggle>
       </a>
-      <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">{{'ACTION.RELOAD' | translate}}</button>
+      <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">{{'ACTION.RELOAD' |
+        translate}}</button>
       <app-cms-search-list [(options)]="optionsSearch"></app-cms-search-list>
       <app-cms-export-list [(options)]="optionsExport"></app-cms-export-list>
       <app-cms-statist-list [(options)]="optionsStatist"></app-cms-statist-list>
@@ -63,7 +69,7 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Title']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Title}} </mat-cell>
         </ng-container>
-          <!-- TitleML Column -->
+        <!-- TitleML Column -->
         <ng-container matColumnDef="TitleML">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['TitleML']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.TitleML}} </mat-cell>
@@ -72,7 +78,8 @@
         <ng-container matColumnDef="LinkModuleId">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkModuleId']?.FieldTitle}}
           </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.LinkModuleId | cmstitle : dataModelCoreModuleResult.ListItems}} </mat-cell>
+          <mat-cell *matCellDef="let row"> {{row.LinkModuleId | cmstitle : dataModelCoreModuleResult.ListItems}}
+          </mat-cell>
         </ng-container>
         <!-- CmsModuleClassName Column -->
         <ng-container matColumnDef="CmsModuleClassName">

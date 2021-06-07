@@ -41,7 +41,7 @@ import { DOCUMENT } from '@angular/common';
   styleUrls: ['./list.component.scss']
 })
 export class WebDesignerMainPageListComponent implements OnInit, OnDestroy {
-  requestLinkCmsPageGuId = '';
+  requestLinkPageParentGuId = '';
   requestLinkPageTemplateGuId = '';
   requestLinkPageDependencyGuId = '';
   constructor(
@@ -61,8 +61,8 @@ export class WebDesignerMainPageListComponent implements OnInit, OnDestroy {
     if (this.activatedRoute.snapshot.paramMap.get('LinkPageDependencyGuId')) {
       this.requestLinkPageDependencyGuId = this.activatedRoute.snapshot.paramMap.get('LinkPageDependencyGuId');
     }
-    if (this.activatedRoute.snapshot.paramMap.get('LinkCmsPageGuId')) {
-      this.requestLinkCmsPageGuId = this.activatedRoute.snapshot.paramMap.get('LinkCmsPageGuId');
+    if (this.activatedRoute.snapshot.paramMap.get('LinkPageParentGuId')) {
+      this.requestLinkPageParentGuId = this.activatedRoute.snapshot.paramMap.get('LinkPageParentGuId');
     }
 
     this.optionsSearch.parentMethods = {
@@ -86,10 +86,10 @@ export class WebDesignerMainPageListComponent implements OnInit, OnDestroy {
       filter.Value = this.requestLinkPageDependencyGuId;
       this.filteModelContent.Filters.push(filter);
     }
-    if (this.requestLinkCmsPageGuId.length > 0) {
+    if (this.requestLinkPageParentGuId.length > 0) {
       const filter = new FilterDataModel();
-      filter.PropertyName = 'LinkCmsPageGuId';
-      filter.Value = this.requestLinkCmsPageGuId;
+      filter.PropertyName = 'LinkPageParentGuId';
+      filter.Value = this.requestLinkPageParentGuId;
       this.filteModelContent.Filters.push(filter);
     }
   }
@@ -119,7 +119,7 @@ export class WebDesignerMainPageListComponent implements OnInit, OnDestroy {
     'Id',
     'RecordStatus',
     'Title',
-    'LinkCmsPageGuId',
+    'LinkPageParentGuId',
     'LinkPageDependencyGuId',
     'LinkPageTemplateGuId',
     'PageDependencyIsDefualtPage',

@@ -32,6 +32,7 @@ import { WebDesignerMainPageDependencyAddComponent } from '../add/add.component'
 import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { WebDesignerMainPageDependencyAutoAddPageComponent } from '../auto-add-page/auto-add-page.component';
 
 @Component({
   selector: 'app-webdesigner-pagedependency-list',
@@ -188,7 +189,6 @@ export class WebDesignerMainPageDependencyListComponent implements OnInit, OnDes
 
 
   onActionbuttonNewRow(): void {
-
     if (
       this.dataModelResult == null ||
       this.dataModelResult.Access == null ||
@@ -198,6 +198,24 @@ export class WebDesignerMainPageDependencyListComponent implements OnInit, OnDes
       return;
     }
     const dialogRef = this.dialog.open(WebDesignerMainPageDependencyAddComponent, {
+      data: {LinkModuleId:this.categoryModelSelected.Id}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.dialogChangedDate) {
+        this.DataGetAll();
+      }
+    });
+  }
+  onActionbuttonNewRowAutoPage(): void {
+    if (
+      this.dataModelResult == null ||
+      this.dataModelResult.Access == null ||
+      !this.dataModelResult.Access.AccessAddRow
+    ) {
+      this.cmsToastrService.typeErrorAccessAdd();
+      return;
+    }
+    const dialogRef = this.dialog.open(WebDesignerMainPageDependencyAutoAddPageComponent, {
       data: {LinkModuleId:this.categoryModelSelected.Id}
     });
     dialogRef.afterClosed().subscribe(result => {

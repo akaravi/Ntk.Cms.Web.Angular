@@ -59,6 +59,7 @@ import { WebDesignerMainPageTemplateSelectorComponent } from './page-template/se
 import { WebDesignerMainPageTemplateTreeComponent } from './page-template/tree/tree.component';
 import { WebDesignerMainPageTemplateHeaderComponent } from './page-template/header/header.component';
 import { CoreModuleModule } from '../core-main/module/coreModule.module';
+import { WebDesignerMainPageDependencyAutoAddPageComponent } from './page-dependency/auto-add-page/auto-add-page.component';
 
 @NgModule({
   declarations: [
@@ -94,6 +95,7 @@ import { CoreModuleModule } from '../core-main/module/coreModule.module';
     WebDesignerMainPageDependencySelectorComponent,
     WebDesignerMainPageDependencyTreeComponent,
     WebDesignerMainPageDependencyHeaderComponent,
+    WebDesignerMainPageDependencyAutoAddPageComponent,
     /** */
     /** */
     WebDesignerMainPageAddComponent,

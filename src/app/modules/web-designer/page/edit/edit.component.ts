@@ -161,7 +161,7 @@ export class WebDesignerMainPageEditComponent implements OnInit {
   }
   onActionSelectParent(model: WebDesignerMainPageModel | null): void {
 
-    this.dataModel.LinkCmsPageGuId = model.Id;
+    this.dataModel.LinkPageParentGuId = model.Id;
   }
   onActionSelectDependency(model: WebDesignerMainPageDependencyModel | null): void {
     if (!model || model.Id?.length <= 0) {

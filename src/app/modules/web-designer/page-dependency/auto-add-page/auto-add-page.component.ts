@@ -3,12 +3,15 @@ import {
   EnumModel,
   ErrorExceptionResult,
   FormInfoModel,
-  WebDesignerMainPageService,
-  WebDesignerMainPageModel,
-  DataFieldInfoModel,
-  WebDesignerEnumService,
+  WebDesignerMainPageDependencyService,
   WebDesignerMainPageDependencyModel,
+  DataFieldInfoModel,
+  CoreModuleModel,
+  WebDesignerPageAutoAddDtoModel,
+  WebDesignerMainPageModel,
+  WebDesignerMainPageService,
   WebDesignerMainPageTemplateModel,
+  ErrorExceptionResultBase,
 } from 'ntk-cms-api';
 import {
   Component,
@@ -28,82 +31,44 @@ import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
 @Component({
-  selector: 'app-webdesigner-page-add',
-  templateUrl: './add.component.html',
-  styleUrls: ['./add.component.scss'],
+  selector: 'app-webdesigner-pagedependency-autoaddpage',
+  templateUrl: './auto-add-page.component.html',
+  styleUrls: ['./auto-add-page.component.scss'],
 })
-export class WebDesignerMainPageAddComponent implements OnInit {
-  requestLinkPageDependencyGuId = '';
+export class WebDesignerMainPageDependencyAutoAddPageComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
-    private dialogRef: MatDialogRef<WebDesignerMainPageAddComponent>,
-    public webDesignerEnumService: WebDesignerEnumService,
+    private dialogRef: MatDialogRef<WebDesignerMainPageDependencyAutoAddPageComponent>,
+    public coreEnumService: CoreEnumService,
     public webDesignerMainPageService: WebDesignerMainPageService,
     private cmsToastrService: CmsToastrService,
     public publicHelper: PublicHelper,
   ) {
-    if (data) {
-      this.requestLinkPageDependencyGuId = data.LinkPageDependencyGuId + '';
-    }
-
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
-    if (this.requestLinkPageDependencyGuId.length > 0) {
-      this.dataModel.LinkPageDependencyGuId = this.requestLinkPageDependencyGuId;
-    }
   }
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
+
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
-  keywordDataModel = [];
 
   fileManagerTree: TreeModel;
   appLanguage = 'fa';
 
   loading = new ProgressSpinnerModel();
-  dataModelResult: ErrorExceptionResult<WebDesignerMainPageModel> = new ErrorExceptionResult<WebDesignerMainPageModel>();
-  dataModel: WebDesignerMainPageModel = new WebDesignerMainPageModel();
-
-
+  dataModelResult: ErrorExceptionResultBase = new ErrorExceptionResultBase();
+  dataModel: WebDesignerPageAutoAddDtoModel = new WebDesignerPageAutoAddDtoModel();
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
-  dataModelEnumPageAbilityTypeResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
-
   fileManagerOpenForm = false;
-
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
 
 
   ngOnInit(): void {
-
-    this.formInfo.FormTitle = 'اضافه کردن  ';
+    this.formInfo.FormTitle = 'اضافه کردن خود کار کلیه صفحات  ';
     this.getEnumRecordStatus();
-    this.DataGetAccess();
-    this.getEnumPageAbilityType();
-  }
-  getEnumPageAbilityType(): void {
-    this.webDesignerEnumService.ServiceEnumPageAbilityType().subscribe((next) => {
-      this.dataModelEnumPageAbilityTypeResult = next;
-    });
   }
 
-  DataGetAccess(): void {
-    this.webDesignerMainPageService
-      .ServiceViewModel()
-      .subscribe(
-        async (next) => {
-          if (next.IsSuccess) {
-            // this.dataAccessModel = next.Access;
-            this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
-          } else {
-            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
-          }
-        },
-        (error) => {
-          this.cmsToastrService.typeErrorGetAccess(error);
-        }
-      );
-  }
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
       this.storeSnapshot.EnumRecordStatus &&
@@ -120,7 +85,7 @@ export class WebDesignerMainPageAddComponent implements OnInit {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.webDesignerMainPageService.ServiceAdd(this.dataModel).subscribe(
+    this.webDesignerMainPageService.ServiceAutoAdd(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormSubmitAllow = true;
         this.dataModelResult = next;
@@ -143,22 +108,11 @@ export class WebDesignerMainPageAddComponent implements OnInit {
       }
     );
   }
-
-  onActionSelectDependency(model: WebDesignerMainPageDependencyModel | null): void {
-    if (!model || model.Id?.length <= 0) {
-      this.cmsToastrService.typeErrorMessage(
-        'محل نمایش را مشخص کنید',
-        'صفحه نمایش  اطلاعات مشخص نیست'
-      );
-      return;
-    }
-    this.dataModel.LinkPageDependencyGuId = model.Id;
-  }
-  onActionSelectTemplate(model: WebDesignerMainPageTemplateModel | null): void {
-    if (!model || model.Id?.length <= 0) {
+  onActionSelectModule(model: WebDesignerMainPageTemplateModel | null): void {
+    if (!model || model.Id.length <= 0) {
       this.cmsToastrService.typeErrorMessage(
         'قالب را مشخص کنید',
-        'قالب صفحه مشخص نیست'
+        'قالب اطلاعات مشخص نیست'
       );
       return;
     }
@@ -170,17 +124,17 @@ export class WebDesignerMainPageAddComponent implements OnInit {
       this.dataModel.LinkPageParentGuId = model.Id;
     }
   }
-
   onFormSubmit(): void {
     if (!this.formGroup.valid) {
       return;
     }
     this.formInfo.FormSubmitAllow = false;
-    if (this.keywordDataModel && this.keywordDataModel.length > 0) {
-      const listKeyword = this.keywordDataModel.map(x => x.display);
-      if (listKeyword && listKeyword.length > 0) {
-        this.dataModel.Keyword = listKeyword.join(',');
-      }
+    if (!this.dataModel.LinkPageTemplateGuId || this.dataModel.LinkPageTemplateGuId.length <= 0) {
+      this.cmsToastrService.typeErrorMessage(
+        'قالب را مشخص کنید',
+        'قالب اطلاعات مشخص نیست'
+      );
+      return;
     }
     this.DataAddContent();
 

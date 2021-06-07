@@ -61,11 +61,11 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Title']?.FieldTitle}} </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Title}} </mat-cell>
         </ng-container>
-        <!-- LinkCmsPageGuId Column -->
-        <ng-container matColumnDef="LinkCmsPageGuId">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkCmsPageGuId']?.FieldTitle}}
+        <!-- LinkPageParentGuId Column -->
+        <ng-container matColumnDef="LinkPageParentGuId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['LinkPageParentGuId']?.FieldTitle}}
           </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.LinkCmsPageGuId}} </mat-cell>
+          <mat-cell *matCellDef="let row"> {{row.LinkPageParentGuId}} </mat-cell>
         </ng-container>
         <!-- LinkPageDependencyGuId Column -->
         <ng-container matColumnDef="LinkPageDependencyGuId">
@@ -127,7 +127,7 @@
                 <mat-icon>view_module</mat-icon>
                 <span>نمایش صفحه</span>
               </button>
-              <button mat-menu-item (click)="onActionbuttonHtmlViewWithOutParent(row)" *ngIf="row.LinkCmsPageGuId?.length>0">
+              <button mat-menu-item (click)="onActionbuttonHtmlViewWithOutParent(row)" *ngIf="row.LinkPageParentGuId?.length>0">
                 <mat-icon>view_module</mat-icon>
                 <span>نمایش صفحه بدون والد</span>
               </button>

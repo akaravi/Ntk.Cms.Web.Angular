@@ -11,9 +11,9 @@ export class CmsTitlePipe implements PipeTransform {
     if (!find) {
       return value;
     }
-    if (!find.TitleML && find.TitleML.length > 0) {
-      return find.TitleML;
+    if (!find.TitleML || find.TitleML.length === 0) {
+      return find.Title;
     }
-    return find.Title;
+    return find.TitleML;
   }
 }

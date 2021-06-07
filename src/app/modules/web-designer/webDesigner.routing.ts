@@ -78,7 +78,7 @@ const routes: Routes = [
         component: WebDesignerMainPageListComponent
       },
            {
-        path: 'page/LinkCmsPageGuId/:LinkCmsPageGuId',
+        path: 'page/LinkPageParentGuId/:LinkPageParentGuId',
         component: WebDesignerMainPageListComponent
       },
       {
