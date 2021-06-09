@@ -34,7 +34,7 @@
                   <mat-form-field class="example-full-width">
                     <mat-label>توضیحات کوتاه در باره این سامانه</mat-label>
                     <textarea matInput [(ngModel)]="dataModel.Description" name="dataModel.Description" #Description
-                      type="text" placeholder="{{fieldsInfo['Description']?.FieldTitle}}" minlength="1" maxlength="500" required rows=5></textarea>
+                      type="text" placeholder="{{fieldsInfo['Description']?.FieldTitle}}" minlength="1" maxlength="500" rows=5></textarea>
                     <mat-icon matSuffix *ngIf="dataModel.Description" matSuffix mat-icon-button aria-label="Clear"
                       (click)="dataModel.Description = ''">close</mat-icon>
                     <mat-icon matSuffix>mode_edit</mat-icon>

@@ -54,7 +54,7 @@
       <mat-form-field class="example-full-width">
         <mat-label>{{fieldsInfo['Description']?.FieldTitle}}</mat-label>
         <textarea matInput [(ngModel)]="dataModel.Memo" name="dataModel.Memo" #Memo type="text"
-          placeholder="{{fieldsInfo['Description']?.FieldTitle}}" minlength="1" maxlength="500" required rows=5></textarea>
+          placeholder="{{fieldsInfo['Description']?.FieldTitle}}" minlength="1" maxlength="500" rows=5></textarea>
         <mat-icon matSuffix *ngIf="dataModel.Memo" matSuffix mat-icon-button aria-label="Clear"
           (click)="dataModel.Memo = ''">close</mat-icon>
         <mat-icon matSuffix>mode_edit</mat-icon>
