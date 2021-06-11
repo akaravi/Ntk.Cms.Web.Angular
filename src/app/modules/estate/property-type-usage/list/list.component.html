@@ -2,12 +2,14 @@
   <div class="col-xl-12">
     <div class="button-row">
       <button *ngIf="dataModelResult.Access.AccessAddRow " (click)="onActionbuttonNewRow()" type="button"
-        class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">{{'ACTION.ADD' | translate}}</button>
+        class="btn btn-primary" id="openModalButton" data-toggle="modal" data-target="#categoryModal">{{'ACTION.ADD' |
+        translate}}</button>
       <button *ngIf="dataModelResult.Access.AccessEditRow && tableRowSelected.Id &&  tableRowSelected.Id.length>0"
         (click)="onActionbuttonEditRow()" type="button" class="btn btn-warning ml-2" data-toggle="modal"
         data-target="#categoryModal">{{'ACTION.EDIT' | translate}}</button>
       <button *ngIf="dataModelResult.Access.AccessDeleteRow && tableRowSelected.Id &&  tableRowSelected.Id.length>0"
-        (click)="onActionbuttonDeleteRow()" type="button" class="btn btn-danger  ml-2">{{'ACTION.DELETE' | translate}}</button>
+        (click)="onActionbuttonDeleteRow()" type="button" class="btn btn-danger  ml-2">{{'ACTION.DELETE' |
+        translate}}</button>
 
       <a class="btn btn-secondary btn-sm BTN">
         <mat-slide-toggle [(ngModel)]="optionsSearch.data.show">{{'ACTION.SEARCH' | translate}}</mat-slide-toggle>
@@ -21,7 +23,8 @@
         <mat-slide-toggle (click)="onActionbuttonExport()">{{'ACTION.EXPORTFILE' | translate}}
         </mat-slide-toggle>
       </a>
-      <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">{{'ACTION.RELOAD' | translate}}</button>
+      <button (click)="onActionbuttonReload()" type="button" class="btn btn-warning BTN">{{'ACTION.RELOAD' |
+        translate}}</button>
       <app-cms-search-list [(options)]="optionsSearch"></app-cms-search-list>
       <app-cms-export-list [(options)]="optionsExport"></app-cms-export-list>
       <app-cms-statist-list [(options)]="optionsStatist"></app-cms-statist-list>
@@ -41,6 +44,12 @@
 
           </mat-cell>
         </ng-container>
+        <!-- IconFont Column -->
+        <ng-container matColumnDef="IconFont">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['IconFont']?.FieldTitle}} </mat-header-cell>
+          <mat-cell *matCellDef="let row"><i [ngClass]="row.IconFont" [style.color]="row.Color" aria-hidden="true"></i>
+          </mat-cell>
+        </ng-container>
         <!-- ID Column -->
         <ng-container matColumnDef="Id">
           <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Id']?.FieldTitle}} </mat-header-cell>
@@ -55,7 +64,8 @@
 
         <!-- Description Column -->
         <ng-container matColumnDef="Description">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Description']?.FieldTitle}} </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{fieldsInfo['Description']?.FieldTitle}}
+          </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{row.Description}} </mat-cell>
         </ng-container>
 

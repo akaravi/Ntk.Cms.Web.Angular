@@ -405,6 +405,6 @@ export class EstatePropertyDetailListComponent implements OnInit, OnDestroy {
     this.tableRowSelected = row;
   }
   onActionBackToParent(): void {
-    this.router.navigate(['/estate/property-type/']);
+    this.router.navigate(['/estate/property-type-landuse/']);
   }
 }
