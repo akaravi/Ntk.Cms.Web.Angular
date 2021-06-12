@@ -143,8 +143,9 @@ export class EstatePropertyEditComponent implements OnInit {
           this.dataModel.PropertyDetailGroups.forEach(itemGroup => {
             itemGroup.PropertyDetails.forEach(element => {
               this.propertyDetails[element.Id] = 0;
+              
               if (this.dataModel.PropertyDetailValues) {
-                const value = this.dataModel.PropertyDetailValues.find(x => x.PropertyDetail.Id == element.Id)
+                const value = this.dataModel.PropertyDetailValues.find(x =>x.LinkPropertyDetailId == element.Id)
                 if (value) {
                   this.propertyDetails[element.Id] = value.Value;
                 }

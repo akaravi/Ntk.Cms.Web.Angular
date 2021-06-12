@@ -26,8 +26,6 @@ export class EstatePropertyTypeLanduseSelectorComponent implements OnInit {
   constructor(
     public coreEnumService: CoreEnumService,
     public categoryService: EstatePropertyTypeLanduseService) {
-
-
   }
   dataModelResult: ErrorExceptionResult<EstatePropertyTypeLanduseModel> = new ErrorExceptionResult<EstatePropertyTypeLanduseModel>();
   dataModelSelect: EstatePropertyTypeLanduseModel = new EstatePropertyTypeLanduseModel();
@@ -42,8 +40,17 @@ export class EstatePropertyTypeLanduseSelectorComponent implements OnInit {
   @Input() set optionSelectForce(x: string | EstatePropertyTypeLanduseModel) {
     this.onActionSelectForce(x);
   }
+  @Input() set optionTypeUsageId(x: string) {
+    this.typeUsageId = x;
+    this.loadOptions();
+  }
+  @Input() optionTypeView=1;
 
+  typeUsageId = '';
   ngOnInit(): void {
+    this.loadOptions();
+  }
+  loadOptions(): void {
     this.filteredOptions = this.formControl.valueChanges
       .pipe(
         startWith(''),
@@ -58,32 +65,46 @@ export class EstatePropertyTypeLanduseSelectorComponent implements OnInit {
         // tap(() => this.myControl.setValue(this.options[0]))
       );
   }
-
   displayFn(model?: EstatePropertyTypeLanduseModel): string | undefined {
-    return model ? model.Title  : undefined;
+    return model ? model.Title : undefined;
   }
   displayOption(model?: EstatePropertyTypeLanduseModel): string | undefined {
-    return model ? model.Title  : undefined;
+    return model ? model.Title : undefined;
   }
   async DataGetAll(text: string | number | any): Promise<EstatePropertyTypeLanduseModel[]> {
     const filteModel = new FilterModel();
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
-    // this.loading.backdropEnabled = false;
-    if (typeof text === 'string' && text.length > 0) {
-      let filter = new FilterDataModel();
-      filter.PropertyName = 'Name';
+    let filter = new FilterDataModel();
+    let filterChild = new FilterDataModel();
+    if (text && text.length > 0) {
+      filter.PropertyName = 'Title';
       filter.Value = text;
       filter.SearchType = EnumFilterDataModelSearchTypes.Contains;
-      filteModel.Filters.push(filter);
-      /* */
+      filter.ClauseType = EnumClauseType.Or;
+      filterChild.Filters.push(filter);
+
       filter = new FilterDataModel();
       filter.PropertyName = 'Id';
       filter.Value = text;
       filter.SearchType = EnumFilterDataModelSearchTypes.Equal;
       filter.ClauseType = EnumClauseType.Or;
+      filterChild.Filters.push(filter);
+      filteModel.Filters.push(filterChild);
+    }
+
+    if (this.typeUsageId && this.typeUsageId.length > 0) {
+      filter = new FilterDataModel();
+      filter.PropertyName = 'PropertyTypes';
+      filter.PropertyAnyName = 'LinkPropertyTypeUsageId';
+      filter.Value = this.typeUsageId;
+      filter.SearchType = EnumFilterDataModelSearchTypes.Equal;
+      filter.ClauseType = EnumClauseType.And;
       filteModel.Filters.push(filter);
     }
+
+
+
     this.loading.Globally = false;
     this.loading.display = true;
     return await this.categoryService.ServiceGetAll(filteModel)

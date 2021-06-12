@@ -36,8 +36,9 @@ export class WebDesignerMainPageSelectorComponent implements OnInit {
   @Input() disabled = new EventEmitter<boolean>();
   @Input() optionSelectFirstItem = false;
   @Input() optionMasterPage = false;
-  @Input() set optionMasterTemplateId(x:string){
-    this.masterTemplateId=x;
+  @Input() set optionMasterTemplateId(x: string) {
+    this.masterTemplateId = x;
+    this.loadOptions();
   }
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Output() optionSelect = new EventEmitter<WebDesignerMainPageModel>();
@@ -45,8 +46,11 @@ export class WebDesignerMainPageSelectorComponent implements OnInit {
   @Input() set optionSelectForce(x: string | WebDesignerMainPageModel) {
     this.onActionSelectForce(x);
   }
-  masterTemplateId='';
+  masterTemplateId = '';
   ngOnInit(): void {
+    this.loadOptions();
+  }
+  loadOptions(): void {
     this.filteredOptions = this.formControl.valueChanges
       .pipe(
         startWith(''),
@@ -99,7 +103,7 @@ export class WebDesignerMainPageSelectorComponent implements OnInit {
       filter.ClauseType = EnumClauseType.And;
       filteModel.Filters.push(filter);
     }
-     if (this.masterTemplateId && this.masterTemplateId.length>0) {
+    if (this.masterTemplateId && this.masterTemplateId.length > 0) {
       filter = new FilterDataModel();
       filter.PropertyName = 'LinkPageTemplateGuId';
       filter.Value = this.masterTemplateId;

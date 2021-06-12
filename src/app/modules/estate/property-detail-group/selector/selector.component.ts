@@ -42,8 +42,12 @@ export class EstatePropertyDetailGroupSelectorComponent implements OnInit {
   @Input() set optionSelectForce(x: string | EstatePropertyDetailGroupModel) {
     this.onActionSelectForce(x);
   }
+  @Input() optionTypeView=1;
 
-  ngOnInit(): void {
+ngOnInit(): void {
+    this.loadOptions();
+  }
+  loadOptions(): void {
     this.filteredOptions = this.formControl.valueChanges
       .pipe(
         startWith(''),

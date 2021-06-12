@@ -37,16 +37,23 @@
               Title is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-      <!-- LinkPropertyTypeUsageId Field -->
-      <app-estate-propertytypeusage-selector (optionSelect)="onActionSelectorSelectUsage($event)"
-      [disabled]="!fieldsInfo['LinkPropertyTypeUsageId']?.AccessAddField"
-      [optionSelectForce]="dataModel.LinkPropertyTypeUsageId" [optionPlaceholder]="'نوع کاربری'">
-    </app-estate-propertytypeusage-selector>
-    <!-- LinkPropertyTypeLanduseId Field -->
-    <app-estate-propertytypelanduse-selector (optionSelect)="onActionSelectorSelectLanduse($event)"
-      [disabled]="!fieldsInfo['LinkPropertyTypeLanduseId']?.AccessAddField"
-      [optionSelectForce]="dataModel.LinkPropertyTypeLanduseId" [optionPlaceholder]="'نوع ملک'">
-    </app-estate-propertytypelanduse-selector>
+          <!-- LinkPropertyTypeUsageId Field -->
+          <app-estate-propertytypeusage-selector (optionSelect)="onActionSelectorSelectUsage($event)"
+            [disabled]="!fieldsInfo['LinkPropertyTypeUsageId']?.AccessEditField"
+            [optionTypeView]="2"
+            [optionSelectForce]="dataModel.LinkPropertyTypeUsageId" [optionPlaceholder]="'نوع کاربری'">
+          </app-estate-propertytypeusage-selector>
+          <br>
+
+          <!-- LinkPropertyTypeLanduseId Field -->
+          <app-estate-propertytypelanduse-selector (optionSelect)="onActionSelectorSelectLanduse($event)"
+            *ngIf="dataModel.LinkPropertyTypeUsageId && dataModel.LinkPropertyTypeUsageId.length>0"
+            [disabled]="!fieldsInfo['LinkPropertyTypeLanduseId']?.AccessEditField"
+            [optionTypeView]="2"
+            [optionSelectForce]="dataModel.LinkPropertyTypeLanduseId" [optionPlaceholder]="'نوع ملک'"
+            [optionTypeUsageId]="dataModel.LinkPropertyTypeUsageId">
+          </app-estate-propertytypelanduse-selector>
+          <br>
           <!-- LinkEstateUserId Field -->
           <app-estate-accountuser-selector (optionSelect)="onActionSelectorEstateUser($event)"
             [disabled]="!fieldsInfo['LinkEstateUserId']?.AccessEditField"
@@ -66,8 +73,7 @@
           <mat-form-field class="example-full-width">
             <mat-label>{{fieldsInfo['Description']?.FieldTitle}}</mat-label>
             <textarea matInput [(ngModel)]="dataModel.Description" name="dataModel.Description" #Description type="text"
-              placeholder="{{fieldsInfo['Description']?.FieldTitle}}" minlength="1" maxlength="500"
-              rows=5></textarea>
+              placeholder="{{fieldsInfo['Description']?.FieldTitle}}" minlength="1" maxlength="500" rows=5></textarea>
             <mat-icon matSuffix *ngIf="dataModel.Description" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.Description = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
@@ -119,7 +125,8 @@
                   </div>
                   <!-- ngSwitchCase-->
                   <div *ngSwitchCase="2" class="example-full-width">
-                    <app-input-boolean [(model)]="propertyDetails[itemDetail.Id]">{{itemDetail.Title}}</app-input-boolean>
+                    <app-input-boolean [(model)]="propertyDetails[itemDetail.Id]">{{itemDetail.Title}}
+                    </app-input-boolean>
                   </div>
                   <!-- ngSwitchCase-->
                   <div *ngSwitchCase="3" class="example-full-width">
@@ -229,19 +236,19 @@
               <!-- SalePrice Column -->
               <ng-container matColumnDef="SalePrice">
                 <mat-header-cell *matHeaderCellDef> Sale Price </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.SalePrice | number}} ( {{row.ContractType.UnitSalePrice}} )
+                <mat-cell *matCellDef="let row"> {{row.SalePrice | number}} ( {{row.ContractType?.UnitSalePrice}} )
                 </mat-cell>
               </ng-container>
               <!-- RentPrice Column -->
               <ng-container matColumnDef="RentPrice">
                 <mat-header-cell *matHeaderCellDef> Rent Price </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.RentPrice| number}} ( {{row.ContractType.UnitRentPrice}} )
+                <mat-cell *matCellDef="let row"> {{row.RentPrice| number}} ( {{row.ContractType?.UnitRentPrice}} )
                 </mat-cell>
               </ng-container>
               <!-- DepositPrice Column -->
               <ng-container matColumnDef="DepositPrice">
                 <mat-header-cell *matHeaderCellDef> Deposit Price </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.DepositPrice| number}} ( {{row.ContractType.UnitDepositPrice}} )
+                <mat-cell *matCellDef="let row"> {{row.DepositPrice| number}} ( {{row.ContractType?.UnitDepositPrice}} )
                 </mat-cell>
               </ng-container>
 

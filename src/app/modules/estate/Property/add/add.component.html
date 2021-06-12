@@ -39,13 +39,15 @@
           </mat-form-field>
           <!-- LinkPropertyTypeUsageId Field -->
           <app-estate-propertytypeusage-selector (optionSelect)="onActionSelectorSelectUsage($event)"
-            [disabled]="!fieldsInfo['LinkPropertyTypeUsageId']?.AccessAddField"
+            [disabled]="!fieldsInfo['LinkPropertyTypeUsageId']?.AccessEditField"
             [optionSelectForce]="dataModel.LinkPropertyTypeUsageId" [optionPlaceholder]="'نوع کاربری'">
           </app-estate-propertytypeusage-selector>
           <!-- LinkPropertyTypeLanduseId Field -->
           <app-estate-propertytypelanduse-selector (optionSelect)="onActionSelectorSelectLanduse($event)"
-            [disabled]="!fieldsInfo['LinkPropertyTypeLanduseId']?.AccessAddField"
-            [optionSelectForce]="dataModel.LinkPropertyTypeLanduseId" [optionPlaceholder]="'نوع ملک'">
+            *ngIf="dataModel.LinkPropertyTypeUsageId && dataModel.LinkPropertyTypeUsageId.length>0"
+            [disabled]="!fieldsInfo['LinkPropertyTypeLanduseId']?.AccessEditField"
+            [optionSelectForce]="dataModel.LinkPropertyTypeLanduseId" [optionPlaceholder]="'نوع ملک'"
+            [optionTypeUsageId]="dataModel.LinkPropertyTypeUsageId">
           </app-estate-propertytypelanduse-selector>
           <!-- LinkEstateUserId Field -->
           <app-estate-accountuser-selector (optionSelect)="onActionSelectorEstateUser($event)"

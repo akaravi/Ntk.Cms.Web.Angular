@@ -42,7 +42,10 @@ export class NewsContentSelectorComponent implements OnInit {
   @Input() set optionSelectForce(x: number | NewsContentModel) {
     this.onActionSelectForce(x);
   }
-  ngOnInit(): void {
+ngOnInit(): void {
+    this.loadOptions();
+  }
+  loadOptions(): void {
     this.filteredOptions = this.formControl.valueChanges
       .pipe(
         startWith(''),

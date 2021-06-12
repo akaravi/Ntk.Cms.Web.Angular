@@ -48,7 +48,10 @@ export class ApplicationThemeConfigSelectorComponent implements OnInit {
   @Output() optionSelect = new EventEmitter<ApplicationThemeConfigModel>();
 
   @Input() optionReload = () => this.onActionReload();
-  ngOnInit(): void {
+ngOnInit(): void {
+    this.loadOptions();
+  }
+  loadOptions(): void {
     this.filteredOptions = this.formControl.valueChanges
       .pipe(
         startWith(''),

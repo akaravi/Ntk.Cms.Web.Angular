@@ -38,7 +38,10 @@ export class FileContentSelectorComponent implements OnInit {
   @Input() set optionSelectForce(x: number | FileContentModel) {
     this.onActionSelectForce(x);
   }
-  ngOnInit(): void {
+ngOnInit(): void {
+    this.loadOptions();
+  }
+  loadOptions(): void {
     this.filteredOptions = this.formControl.valueChanges
       .pipe(
         startWith(''),

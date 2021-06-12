@@ -42,8 +42,11 @@ export class EstatePropertyTypeUsageSelectorComponent implements OnInit {
   @Input() set optionSelectForce(x: string | EstatePropertyTypeUsageModel) {
     this.onActionSelectForce(x);
   }
-
+  @Input() optionTypeView=1;
   ngOnInit(): void {
+    this.loadOptions();
+  }
+  loadOptions(): void {
     this.filteredOptions = this.formControl.valueChanges
       .pipe(
         startWith(''),
@@ -60,10 +63,10 @@ export class EstatePropertyTypeUsageSelectorComponent implements OnInit {
   }
 
   displayFn(model?: EstatePropertyTypeUsageModel): string | undefined {
-    return model ? model.Title  : undefined;
+    return model ? model.Title : undefined;
   }
   displayOption(model?: EstatePropertyTypeUsageModel): string | undefined {
-    return model ? model.Title  : undefined;
+    return model ? model.Title : undefined;
   }
   async DataGetAll(text: string | number | any): Promise<EstatePropertyTypeUsageModel[]> {
     const filteModel = new FilterModel();
@@ -103,6 +106,10 @@ export class EstatePropertyTypeUsageSelectorComponent implements OnInit {
       ).toPromise();
   }
   onActionSelect(model: EstatePropertyTypeUsageModel): void {
+    // if(this.disabled && this.disabled===true)
+    // {
+    //   return;
+    // }
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
   }
