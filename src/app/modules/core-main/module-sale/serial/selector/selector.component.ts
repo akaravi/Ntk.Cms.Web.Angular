@@ -32,7 +32,7 @@ export class CoreModuleSaleSerialSelectorComponent implements OnInit {
   loading = new ProgressSpinnerModel();
   formControl = new FormControl();
   filteredOptions: Observable<CoreModuleSaleSerialModel[]>;
-  @Input() disabled = new EventEmitter<boolean>();
+  @Input() optionDisabled = false;
   @Input() optionSelectFirstItem = false;
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Output() optionSelect = new EventEmitter<CoreModuleSaleSerialModel>();
@@ -104,10 +104,18 @@ ngOnInit(): void {
       ).toPromise();
   }
   onActionSelect(model: CoreModuleSaleSerialModel): void {
+    if(!this.optionDisabled)
+    {
+      return;
+    }
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
   }
   onActionSelectClear(): void {
+    if(!this.optionDisabled)
+    {
+      return;
+    }
     this.formControl.setValue(null);
     this.optionSelect.emit(null);
   }

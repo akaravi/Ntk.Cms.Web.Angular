@@ -32,7 +32,7 @@ export class CmsMemberSelectorComponent implements OnInit {
   loading = new ProgressSpinnerModel();
   formControl = new FormControl();
   filteredOptions: Observable<MemberUserModel[]>;
-  @Input() disabled = new EventEmitter<boolean>();
+  @Input() optionDisabled = false;
   @Input() optionSelectFirstItem = false;
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Output() optionSelect = new EventEmitter<MemberUserModel>();
@@ -122,10 +122,18 @@ export class CmsMemberSelectorComponent implements OnInit {
       ).toPromise();
   }
   onActionSelect(model: MemberUserModel): void {
+    if(!this.optionDisabled)
+    {
+      return;
+    }
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
   }
   onActionSelectClear(): void {
+    if(!this.optionDisabled)
+    {
+      return;
+    }
     this.formControl.setValue(null);
     this.optionSelect.emit(null);
   }

@@ -20,13 +20,13 @@
       <!-- LinkUserGroupId Field -->
       <app-cms-usergroup-selector (optionSelect)="onActionSelectUserGroup($event)"
         [optionSelectForce]="this.dataModel.LinkUserGroupId" [optionPlaceholder]="'دسته بندی کاربر'"
-        [disabled]="!fieldsInfo['LinkUserGroupId']?.AccessEditField">
+        [optionDisabled]="!fieldsInfo['LinkUserGroupId']?.AccessEditField">
       </app-cms-usergroup-selector>
 
       <!-- LinkCmsSiteCategoryId Field -->
       <app-cms-sitecategory-selector (optionSelect)="onActionSelectSiteCategory($event)"
         [optionSelectForce]="this.dataModel.LinkCmsSiteCategoryId" [optionPlaceholder]="'دسته بندی سایت'"
-        [disabled]="!fieldsInfo['LinkCmsSiteCategoryId']?.AccessEditField">
+        [optionDisabled]="!fieldsInfo['LinkCmsSiteCategoryId']?.AccessEditField">
       </app-cms-sitecategory-selector>
 
 

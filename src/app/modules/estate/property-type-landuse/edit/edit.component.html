@@ -109,7 +109,7 @@
           [(openForm)]="fileManagerOpenForm" [tree]="fileManagerTree" [openFilemanagerButtonLabelKey]="'select'"
           [selectFileType]="selectFileTypeMainImage" [openFilemanagerButtonView]="false"></cms-file-manager>
       </div>
-      <app-estate-propertytypeusage-selectionlist [optionSelectForce]="dataEstatePropertyTypeUsageIds" [disabled]="false"
+      <app-estate-propertytypeusage-selectionlist [optionSelectForce]="dataEstatePropertyTypeUsageIds" [optionDisabled]="false"
       (optionSelect)="onActionSelectorUserCategorySelect($event)"
       (optionSelectAdded)="onActionSelectorUserCategorySelectAdded($event)"
       (optionSelectRemoved)="onActionSelectorUserCategorySelectRemoved($event)"></app-estate-propertytypeusage-selectionlist>

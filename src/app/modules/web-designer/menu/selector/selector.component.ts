@@ -32,7 +32,7 @@ export class WebDesignerMainMenuSelectorComponent implements OnInit {
   loading = new ProgressSpinnerModel();
   formControl = new FormControl();
   filteredOptions: Observable<WebDesignerMainMenuModel[]>;
-    @Input() disabled = new EventEmitter<boolean>();
+    @Input() optionDisabled = false;
   @Input() optionSelectFirstItem = false;
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Output() optionSelect = new EventEmitter<WebDesignerMainMenuModel>();

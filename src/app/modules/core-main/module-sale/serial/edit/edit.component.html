@@ -47,7 +47,7 @@
       <!-- LinkModuleSaleHeaderId Field -->
       <app-core-modulesaleheader-selector (optionSelect)="onActionSelectHeader($event)"
         [optionSelectForce]="this.dataModel.LinkModuleSaleHeaderId" [optionPlaceholder]="'دسته بندی'"
-        [disabled]="!fieldsInfo['LinkModuleSaleHeaderId']?.AccessEditField">
+        [optionDisabled]="!fieldsInfo['LinkModuleSaleHeaderId']?.AccessEditField">
       </app-core-modulesaleheader-selector>
       <!-- HasDemo Field -->
       <div class="example-full-width">

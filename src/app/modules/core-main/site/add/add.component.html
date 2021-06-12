@@ -46,11 +46,11 @@
           <!-- LinkSiteCategoryId Field -->
           <app-core-sitecategory-selector (optionSelect)="onActionSelectCategory($event)"
             [optionSelectForce]="this.dataModel.LinkSiteCategoryId" [optionPlaceholder]="'نوع وب سایت'"
-            [disabled]="!fieldsInfo['LinkSiteCategoryId']?.AccessAddField"></app-core-sitecategory-selector>
+            [optionDisabled]="!fieldsInfo['LinkSiteCategoryId']?.AccessAddField"></app-core-sitecategory-selector>
           <!-- linkCreatedBySiteId Field -->
           <app-core-site-selector (optionSelect)="onActionSelectCategory($event)"
             [optionSelectForce]="this.dataModel.linkCreatedBySiteId" [optionPlaceholder]="'سایت والد'"
-            [disabled]="!fieldsInfo['linkCreatedBySiteId']?.AccessAddField"></app-core-site-selector>
+            [optionDisabled]="!fieldsInfo['linkCreatedBySiteId']?.AccessAddField"></app-core-site-selector>
           <!-- Title Field -->
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Title']?.AccessWatchField">
             <mat-label>{{ fieldsInfo['Title']?.FieldTitle }}</mat-label>

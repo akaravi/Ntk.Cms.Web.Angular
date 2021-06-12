@@ -32,7 +32,7 @@ export class CoreUserGroupSelectorComponent implements OnInit {
   loading = new ProgressSpinnerModel();
   formControl = new FormControl();
   filteredOptions: Observable<CoreUserGroupModel[]>;
-    @Input() disabled = new EventEmitter<boolean>();
+    @Input() optionDisabled = false;
   @Input() optionSelectFirstItem = false;
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Output() optionSelect = new EventEmitter<CoreUserGroupModel>();

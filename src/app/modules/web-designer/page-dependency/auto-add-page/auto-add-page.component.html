@@ -6,14 +6,14 @@
       <!-- LinkPageTemplateGuId Field -->
       <app-webdesigner-pagetemplate-selector (optionSelect)="onActionSelectModule($event)"
         [optionSelectForce]="this.dataModel.LinkPageTemplateGuId" [optionPlaceholder]="'قالب را انتحاب کنید'"
-        [disabled]="false">
+        [optionDisabled]="false">
       </app-webdesigner-pagetemplate-selector>
       <!-- LinkPageParentGuId Field -->
       <app-webdesigner-page-selector (optionSelect)="onActionSelectParent($event)" *ngIf="dataModel.LinkPageTemplateGuId && dataModel.LinkPageTemplateGuId.length>0"
         [optionMasterPage]="true"
         [optionMasterTemplateId]="dataModel.LinkPageTemplateGuId"
         [optionPlaceholder]="'صفحه والد'"
-        [disabled]="false">
+        [optionDisabled]="false">
       </app-webdesigner-page-selector>
 
       <!-- PageDependencyIsDefualtPage Field -->

@@ -308,8 +308,6 @@
         <mat-step label="مطالب مشابه" state="info">
           <p>مطالب مرتبط را مشخص کنید</p>
           <app-article-content-selector (optionSelect)="onActionContentSimilarSelect($event)" [optionPlaceholder]="'محتوای مشابه'"  >
-
-
               <button *ngIf="contentSimilarSelected && contentSimilarSelected.Id" (click)="onActionContentSimilarAddToLIst()" type="button" mat-button
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
               اضافه به لیست ...

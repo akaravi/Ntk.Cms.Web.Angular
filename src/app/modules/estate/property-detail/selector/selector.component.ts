@@ -15,26 +15,22 @@ import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'r
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { Output } from '@angular/core';
 
-
 @Component({
-  selector: 'app-estate-Detail-selector',
+  selector: 'app-estate-detail-selector',
   templateUrl: './selector.component.html',
   styleUrls: ['./selector.component.scss']
 })
 export class EstatePropertyDetailSelectorComponent implements OnInit {
-
   constructor(
     public coreEnumService: CoreEnumService,
     public categoryService: EstatePropertyDetailService) {
-
-
   }
   dataModelResult: ErrorExceptionResult<EstatePropertyDetailModel> = new ErrorExceptionResult<EstatePropertyDetailModel>();
   dataModelSelect: EstatePropertyDetailModel = new EstatePropertyDetailModel();
   loading = new ProgressSpinnerModel();
   formControl = new FormControl();
   filteredOptions: Observable<EstatePropertyDetailModel[]>;
-  @Input() disabled = new EventEmitter<boolean>();
+  @Input() optionDisabled = false;
   @Input() optionSelectFirstItem = false;
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Output() optionSelect = new EventEmitter<EstatePropertyDetailModel>();
@@ -43,7 +39,7 @@ export class EstatePropertyDetailSelectorComponent implements OnInit {
     this.onActionSelectForce(x);
   }
 
-ngOnInit(): void {
+  ngOnInit(): void {
     this.loadOptions();
   }
   loadOptions(): void {
@@ -63,10 +59,10 @@ ngOnInit(): void {
   }
 
   displayFn(model?: EstatePropertyDetailModel): string | undefined {
-    return model ? model.Title  : undefined;
+    return model ? model.Title : undefined;
   }
   displayOption(model?: EstatePropertyDetailModel): string | undefined {
-    return model ? model.Title  : undefined;
+    return model ? model.Title : undefined;
   }
   async DataGetAll(text: string | number | any): Promise<EstatePropertyDetailModel[]> {
     const filteModel = new FilterModel();
@@ -106,10 +102,16 @@ ngOnInit(): void {
       ).toPromise();
   }
   onActionSelect(model: EstatePropertyDetailModel): void {
+    if (!this.optionDisabled) {
+      return;
+    }
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
   }
   onActionSelectClear(): void {
+    if (!this.optionDisabled) {
+      return;
+    }
     this.formControl.setValue(null);
     this.optionSelect.emit(null);
   }

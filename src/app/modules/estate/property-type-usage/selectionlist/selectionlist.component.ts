@@ -27,7 +27,7 @@ export class EstatePropertyTypeUsageSelectionlistComponent implements OnInit {
   formControl = new FormControl();
   fieldsStatus: Map<string, boolean> = new Map<string, boolean>();
 
-  @Input() disabled = new EventEmitter<boolean>();
+  @Input() optionDisabled = false;
   @Input() optionSelectFirstItem = false;
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Output() optionSelect = new EventEmitter<EstatePropertyTypeUsageModel[]>();

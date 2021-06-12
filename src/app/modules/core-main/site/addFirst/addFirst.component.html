@@ -45,7 +45,7 @@
                   </mat-form-field>
                   <!-- sitecategory Field -->
                   <app-core-sitecategory-selector (optionSelect)="onActionSelectorSelect($event)"
-                    [optionPlaceholder]="'نوع سامانه'" [disabled]="false"></app-core-sitecategory-selector>
+                    [optionPlaceholder]="'نوع سامانه'" [optionDisabled]="false"></app-core-sitecategory-selector>
 
                   <div *ngIf="formInfo.FormSubmitAllow">
                     <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext

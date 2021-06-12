@@ -34,7 +34,7 @@ export class HyperShopCategorySelectorComponent implements OnInit {
   loading = new ProgressSpinnerModel();
   formControl = new FormControl();
   filteredOptions: Observable<HyperShopCategoryModel[]>;
-  @Input() disabled = new EventEmitter<boolean>();
+  @Input() optionDisabled = false;
   @Input() optionSelectFirstItem = false;
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Output() optionSelect = new EventEmitter<HyperShopCategoryModel>();
@@ -105,10 +105,18 @@ ngOnInit(): void {
       ).toPromise();
   }
   onActionSelect(model: HyperShopCategoryModel): void {
+    if(!this.optionDisabled)
+    {
+      return;
+    }
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
   }
   onActionSelectClear(): void {
+    if(!this.optionDisabled)
+    {
+      return;
+    }
     this.formControl.setValue(null);
     this.optionSelect.emit(null);
   }

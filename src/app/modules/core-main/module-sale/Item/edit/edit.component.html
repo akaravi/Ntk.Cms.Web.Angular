@@ -35,12 +35,12 @@
       <!-- LinkModuleId Field -->
       <app-cms-module-selector (optionSelect)="onActionSelectModule($event)"
         [optionSelectForce]="this.dataModel.LinkModuleId" [optionPlaceholder]="'ماژول'"
-        [disabled]="!fieldsInfo['LinkModuleId']?.AccessEditField">
+        [optionDisabled]="!fieldsInfo['LinkModuleId']?.AccessEditField">
       </app-cms-module-selector>
       <!-- LinkModuleSaleHeader Field -->
       <app-core-modulesaleheader-selector (optionSelect)="onActionSelectHeader($event)"
         [optionSelectForce]="this.dataModel.LinkModuleSaleHeader" [optionPlaceholder]="'دسته بندی'"
-        [disabled]="!fieldsInfo['LinkModuleSaleHeader']?.AccessEditField">
+        [optionDisabled]="!fieldsInfo['LinkModuleSaleHeader']?.AccessEditField">
       </app-core-modulesaleheader-selector>
 
       <!-- MonthLength Field -->

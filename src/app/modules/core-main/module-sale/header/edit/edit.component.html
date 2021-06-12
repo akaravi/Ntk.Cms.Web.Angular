@@ -21,7 +21,7 @@
       <!-- LinkModuleSaleHeaderGroupId Field -->
       <app-core-modulesaleheadergroup-selector (optionSelect)="onActionSelectHeaderGroup($event)"
         [optionSelectForce]="this.dataModel.LinkModuleSaleHeaderGroupId" [optionPlaceholder]="'دسته بندی'"
-        [disabled]="!fieldsInfo['LinkModuleSaleHeaderGroupId']?.AccessEditField">
+        [optionDisabled]="!fieldsInfo['LinkModuleSaleHeaderGroupId']?.AccessEditField">
       </app-core-modulesaleheadergroup-selector>
 
       <!-- Title Field -->

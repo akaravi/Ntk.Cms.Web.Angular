@@ -19,14 +19,14 @@
       </mat-form-field>
 
       <!-- LinkCmsSiteId Field -->
-      <app-core-site-selector (optionSelect)="onActionSelectorSiteSelect($event)" [disabled]="false"
+      <app-core-site-selector (optionSelect)="onActionSelectorSiteSelect($event)" [optionDisabled]="false"
         [optionSelectForce]="dataModel.LinkSiteId" [optionPlaceholder]="'وب سایت'"></app-core-site-selector>
       <!-- LinkuserId Field -->
-      <app-core-user-selector (optionSelect)="onActionSelectorUserSelect($event)" [disabled]="false"
+      <app-core-user-selector (optionSelect)="onActionSelectorUserSelect($event)" [optionDisabled]="false"
         [optionSelectForce]="dataModel.LinkUserId" [optionPlaceholder]="'کاربر'">
       </app-core-user-selector>
       <!-- LinkUserGroupId Field -->
-      <app-core-usercategory-selector (optionSelect)="onActionSelectorUserGroupSelect($event)" [disabled]="false"
+      <app-core-usercategory-selector (optionSelect)="onActionSelectorUserGroupSelect($event)" [optionDisabled]="false"
         [optionSelectForce]="dataModel.LinkUserGroupId" [optionPlaceholder]="'نوع حساب'">
       </app-core-usercategory-selector>
 

@@ -54,7 +54,7 @@
       <!-- LinkModuleId Field -->
       <app-cms-module-selector (optionSelect)="onActionSelectModule($event)"
         [optionSelectForce]="this.dataModel.LinkModuleId" [optionPlaceholder]="'ماژول'"
-        [disabled]="!fieldsInfo['LinkModuleId']?.AccessEditField">
+        [optionDisabled]="!fieldsInfo['LinkModuleId']?.AccessEditField">
       </app-cms-module-selector>
       <!-- CmsModuleClassName Field -->
       <mat-form-field class="example-full-width">

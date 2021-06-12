@@ -42,7 +42,7 @@ export class BankPaymentPrivateSiteConfigSelectorComponent implements OnInit {
   formControl = new FormControl();
   filteredOptions: Observable<BankPaymentPrivateSiteConfigModel[]>;
   parentId = 0;
-  @Input() disabled = new EventEmitter<boolean>();
+  @Input() optionDisabled = false;
   @Input() optionSelectFirstItem = false;
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Output() optionSelect = new EventEmitter<BankPaymentPrivateSiteConfigModel>();
@@ -129,10 +129,18 @@ ngOnInit(): void {
       ).toPromise();
   }
   onActionSelect(model: BankPaymentPrivateSiteConfigModel): void {
+    if(!this.optionDisabled)
+    {
+      return;
+    }
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
   }
   onActionSelectClear(): void {
+    if(!this.optionDisabled)
+    {
+      return;
+    }
     this.formControl.setValue(null);
     this.optionSelect.emit(null);
   }

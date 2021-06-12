@@ -20,7 +20,7 @@
       </mat-form-field>
       <!-- LinkCmsUserId Field -->
       <app-cms-user-selector (optionSelect)="onActionSelectorUser($event)" [optionSelectForce]="dataModel.LinkCmsUserId"
-        [optionPlaceholder]="'کاربر'" [disabled]="!fieldsInfo['LinkCmsUserId']?.AccessAddField"></app-cms-user-selector>
+        [optionPlaceholder]="'کاربر'" [optionDisabled]="!fieldsInfo['LinkCmsUserId']?.AccessAddField"></app-cms-user-selector>
 
       <!-- Description Field -->
       <mat-form-field class="example-full-width">

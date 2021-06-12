@@ -25,7 +25,7 @@ export class CmsSiteCategorySelectionListComponent implements OnInit {
   formControl = new FormControl();
   fieldsStatus: Map<number, boolean> = new Map<number, boolean>();
 
-  @Input() disabled = new EventEmitter<boolean>();
+  @Input() optionDisabled = false;
   @Input() optionSelectFirstItem = false;
   @Input() optionPlaceholder = new EventEmitter<number>();
   @Output() optionSelect = new EventEmitter<CoreSiteCategoryModel[]>();

@@ -32,7 +32,7 @@ export class CoreCpMainMenuSelectorComponent implements OnInit {
   loading = new ProgressSpinnerModel();
   formControl = new FormControl();
   filteredOptions: Observable<CoreCpMainMenuModel[]>;
-    @Input() disabled = new EventEmitter<boolean>();
+    @Input() optionDisabled = false;
   @Input() optionSelectFirstItem = false;
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Output() optionSelect = new EventEmitter<CoreCpMainMenuModel>();

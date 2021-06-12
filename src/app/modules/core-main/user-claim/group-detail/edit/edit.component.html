@@ -21,13 +21,13 @@
       <!-- LinkUserClaimGroupId Field -->
       <app-core-userclaimgroup-selector (optionSelect)="onActionSelectClaimGroup($event)"
         [optionSelectForce]="this.dataModel.LinkUserClaimGroupId" [optionPlaceholder]="'گروه مدارک'"
-        [disabled]="!fieldsInfo['LinkUserClaimGroupId']?.AccessEditField">
+        [optionDisabled]="!fieldsInfo['LinkUserClaimGroupId']?.AccessEditField">
       </app-core-userclaimgroup-selector>
 
       <!-- LinkUserClaimTypeId Field -->
       <app-core-userclaimtype-selector (optionSelect)="onActionSelectClaimType($event)"
         [optionSelectForce]="this.dataModel.LinkUserClaimTypeId" [optionPlaceholder]="'دسته مدارک'"
-        [disabled]="!fieldsInfo['LinkUserClaimTypeId']?.AccessEditField">
+        [optionDisabled]="!fieldsInfo['LinkUserClaimTypeId']?.AccessEditField">
       </app-core-userclaimtype-selector>
 
 

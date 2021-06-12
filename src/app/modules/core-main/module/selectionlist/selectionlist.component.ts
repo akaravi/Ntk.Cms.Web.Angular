@@ -27,7 +27,7 @@ export class CoreModuleSelectionlistComponent implements OnInit {
   formControl = new FormControl();
   fieldsStatus: Map<number, boolean> = new Map<number, boolean>();
 
-    @Input() disabled = new EventEmitter<boolean>();
+    @Input() optionDisabled = false;
   @Input() optionSelectFirstItem = false;
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Output() optionSelect = new EventEmitter<CoreModuleModel[]>();
