@@ -123,7 +123,7 @@ export class CmsSiteSelectorComponent implements OnInit {
       ).toPromise();
   }
   onActionSelect(model: CoreSiteModel): void {
-    if(!this.optionDisabled)
+    if(this.optionDisabled)
     {
       return;
     }
@@ -131,7 +131,7 @@ export class CmsSiteSelectorComponent implements OnInit {
     this.optionSelect.emit(this.dataModelSelect);
   }
   onActionSelectClear(): void {
-    if(!this.optionDisabled)
+    if(this.optionDisabled)
     {
       return;
     }

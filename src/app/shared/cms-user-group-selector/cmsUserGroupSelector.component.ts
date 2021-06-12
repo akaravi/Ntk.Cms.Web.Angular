@@ -130,7 +130,7 @@ export class CmsUserGroupSelectorComponent implements OnInit {
       ).toPromise();
   }
   onActionSelect(model: CoreUserGroupModel): void {
-    if(!this.optionDisabled)
+    if(this.optionDisabled)
     {
       return;
     }
@@ -138,7 +138,7 @@ export class CmsUserGroupSelectorComponent implements OnInit {
     this.optionSelect.emit(this.dataModelSelect);
   }
   onActionSelectClear(): void {
-    if(!this.optionDisabled)
+    if(this.optionDisabled)
     {
       return;
     }

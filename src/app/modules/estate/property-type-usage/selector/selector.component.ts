@@ -106,11 +106,7 @@ export class EstatePropertyTypeUsageSelectorComponent implements OnInit {
       ).toPromise();
   }
   onActionSelect(model: EstatePropertyTypeUsageModel): void {
-    // if(this.disabled && this.disabled===true)
-    // {
-    //   return;
-    // }
-    if(!this.optionDisabled)
+    if(this.optionDisabled)
     {
       return;
     }
@@ -118,7 +114,7 @@ export class EstatePropertyTypeUsageSelectorComponent implements OnInit {
     this.optionSelect.emit(this.dataModelSelect);
   }
   onActionSelectClear(): void {
-    if(!this.optionDisabled)
+    if(this.optionDisabled)
     {
       return;
     }

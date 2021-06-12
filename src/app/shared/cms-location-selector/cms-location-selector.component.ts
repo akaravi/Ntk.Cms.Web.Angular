@@ -115,7 +115,7 @@ export class CmsLocationSelectorComponent implements OnInit {
       ).toPromise();
   }
   onActionSelect(model: CoreLocationModel): void {
-    if(!this.optionDisabled)
+    if(this.optionDisabled)
     {
       return;
     }
@@ -123,7 +123,7 @@ export class CmsLocationSelectorComponent implements OnInit {
     this.optionSelect.emit(this.dataModelSelect);
   }
   onActionSelectClear(): void {
-    if(!this.optionDisabled)
+    if(this.optionDisabled)
     {
       return;
     }

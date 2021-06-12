@@ -122,7 +122,7 @@ export class CmsMemberSelectorComponent implements OnInit {
       ).toPromise();
   }
   onActionSelect(model: MemberUserModel): void {
-    if(!this.optionDisabled)
+    if(this.optionDisabled)
     {
       return;
     }
@@ -130,7 +130,7 @@ export class CmsMemberSelectorComponent implements OnInit {
     this.optionSelect.emit(this.dataModelSelect);
   }
   onActionSelectClear(): void {
-    if(!this.optionDisabled)
+    if(this.optionDisabled)
     {
       return;
     }

@@ -123,7 +123,7 @@ export class CmsSiteCategorySelectorComponent implements OnInit {
       ).toPromise();
   }
   onActionSelect(model: CoreSiteCategoryModel): void {
-    if(!this.optionDisabled)
+    if(this.optionDisabled)
     {
       return;
     }
@@ -131,7 +131,7 @@ export class CmsSiteCategorySelectorComponent implements OnInit {
     this.optionSelect.emit(this.dataModelSelect);
   }
   onActionSelectClear(): void {
-    if(!this.optionDisabled)
+    if(this.optionDisabled)
     {
       return;
     }

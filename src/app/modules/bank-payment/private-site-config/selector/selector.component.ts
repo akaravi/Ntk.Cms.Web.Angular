@@ -129,7 +129,7 @@ ngOnInit(): void {
       ).toPromise();
   }
   onActionSelect(model: BankPaymentPrivateSiteConfigModel): void {
-    if(!this.optionDisabled)
+    if(this.optionDisabled)
     {
       return;
     }
@@ -137,7 +137,7 @@ ngOnInit(): void {
     this.optionSelect.emit(this.dataModelSelect);
   }
   onActionSelectClear(): void {
-    if(!this.optionDisabled)
+    if(this.optionDisabled)
     {
       return;
     }

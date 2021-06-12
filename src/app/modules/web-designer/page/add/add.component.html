@@ -46,17 +46,17 @@
       </mat-form-field>
 
       <app-webdesigner-pagedependency-selector (optionSelect)="onActionSelectDependency($event)"
-        [disabled]="!fieldsInfo['LinkPageDependencyGuId']?.AccessAddField"
+        [optionDisabled]="!fieldsInfo['LinkPageDependencyGuId']?.AccessAddField"
         [optionSelectForce]="dataModel.LinkPageDependencyGuId" [optionPlaceholder]="'محل نمایش '">
       </app-webdesigner-pagedependency-selector>
 
       <app-webdesigner-pagetemplate-selector (optionSelect)="onActionSelectTemplate($event)"
-        [disabled]="!fieldsInfo['LinkPageTemplateGuId']?.AccessAddField"
+        [optionDisabled]="!fieldsInfo['LinkPageTemplateGuId']?.AccessAddField"
         [optionSelectForce]="dataModel.LinkPageTemplateGuId" [optionPlaceholder]="'قالب صفحه '"  [optionSelectFirstItem]="true">
       </app-webdesigner-pagetemplate-selector>
 
       <app-webdesigner-page-selector (optionSelect)="onActionSelectParent($event)" *ngIf="dataModel.LinkPageTemplateGuId && dataModel.LinkPageTemplateGuId.length>0"
-        [disabled]="!fieldsInfo['LinkPageParentGuId']?.AccessAddField" [optionSelectForce]="dataModel.LinkPageParentGuId"
+        [optionDisabled]="!fieldsInfo['LinkPageParentGuId']?.AccessAddField" [optionSelectForce]="dataModel.LinkPageParentGuId"
         [optionMasterPage]="true"
         [optionMasterTemplateId]="dataModel.LinkPageTemplateGuId"
         [optionPlaceholder]="'صفحه والد'">

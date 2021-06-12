@@ -115,7 +115,7 @@ export class CmsCurrencySelectorComponent implements OnInit {
       ).toPromise();
   }
   onActionSelect(model: CoreCurrencyModel): void {
-    if(!this.optionDisabled)
+    if(this.optionDisabled)
     {
       return;
     }
@@ -123,7 +123,7 @@ export class CmsCurrencySelectorComponent implements OnInit {
     this.optionSelect.emit(this.dataModelSelect);
   }
   onActionSelectClear(): void {
-    if(!this.optionDisabled)
+    if(this.optionDisabled)
     {
       return;
     }

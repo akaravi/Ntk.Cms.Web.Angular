@@ -130,7 +130,7 @@ export class CmsModuleSelectorComponent implements OnInit {
       ).toPromise();
   }
   onActionSelect(model: CoreModuleModel): void {
-    if(!this.optionDisabled)
+    if(this.optionDisabled)
     {
       return;
     }
@@ -138,7 +138,7 @@ export class CmsModuleSelectorComponent implements OnInit {
     this.optionSelect.emit(this.dataModelSelect);
   }
   onActionSelectClear(): void {
-    if(!this.optionDisabled)
+    if(this.optionDisabled)
     {
       return;
     }
