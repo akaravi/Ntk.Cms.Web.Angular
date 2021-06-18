@@ -26,7 +26,7 @@
           <!-- LinkApplicationId Field -->
           <app-application-app-selector (optionSelect)="onActionSelectApplication($event)"
             [optionSelectForce]="this.dataModel.LinkApplicationId" [optionPlaceholder]="' اپلیکیشن'"
-            [disabled]="!fieldsInfo['LinkApplicationId']?.AccessEditField"></app-application-app-selector>
+            [optionDisabled]="!fieldsInfo['LinkApplicationId']?.AccessEditField"></app-application-app-selector>
 
           <!-- Title Field -->
           <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Title']?.AccessWatchField">
