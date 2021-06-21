@@ -51,12 +51,15 @@ export function CreateTranslateLoader(http: HttpClient): any {
     SharedModule.forRoot(),
     NtkSmartModalModule.forRoot(),
     ToastrModule.forRoot({
-      timeOut: 0,
+      // timeOut: 0,
+      timeOut: 5000,
       enableHtml: true,
-      positionClass: 'toast-top-right',
+      positionClass: 'toast-bottom-right',
+      // positionClass: "toast-bottom-full-width",
       preventDuplicates: true,
       closeButton: true,
-      extendedTimeOut: 0,
+      // extendedTimeOut: 0,
+      extendedTimeOut: 1000,
     }),
     TranslateModule.forRoot({
       loader: {

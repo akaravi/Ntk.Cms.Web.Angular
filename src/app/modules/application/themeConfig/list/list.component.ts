@@ -198,14 +198,14 @@ export class ApplicationThemeConfigListComponent implements OnInit, OnDestroy {
 
 
   onActionbuttonNewRow(): void {
-    let ApplicationId = 0;
+    let sourceId = 0;
     if (this.requestLinkSourceId > 0) {
-      ApplicationId = this.requestLinkSourceId;
+      sourceId = this.requestLinkSourceId;
     }
     if (this.categoryModelSelected && this.categoryModelSelected.Id && this.categoryModelSelected.Id > 0) {
-      ApplicationId = this.categoryModelSelected.Id;
+      sourceId = this.categoryModelSelected.Id;
     }
-    if (ApplicationId <= 0) {
+    if (sourceId <= 0) {
       const message = 'سورسی انتخاب نشده است';
       this.cmsToastrService.typeErrorSelected(message);
       return;
@@ -219,7 +219,7 @@ export class ApplicationThemeConfigListComponent implements OnInit, OnDestroy {
       return;
     }
     const dialogRef = this.dialog.open(ApplicationThemeConfigAddComponent, {
-      data: { contentId: ApplicationId }
+      data: { LinkSourceId: sourceId }
     });
     dialogRef.afterClosed().subscribe(result => {
       // console.log(`Dialog result: ${result}`);

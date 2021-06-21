@@ -53,7 +53,7 @@ export class ApplicationThemeConfigAddComponent implements OnInit {
       this.dataModel.LinkSourceId = this.requestLinkSourceId;
     }
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
-
+    this.DataGetAccess();
   }
   @ViewChild('vform', { static: false }) formGroup: FormGroup;
   selectFileTypeMainImage = ['jpg', 'jpeg', 'png'];
@@ -120,10 +120,10 @@ export class ApplicationThemeConfigAddComponent implements OnInit {
           this.cmsToastrService.typeSuccessAdd();
           this.dialogRef.close({ dialogChangedDate: true });
 
-              } else {
+        } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
-          this.cmsToastrService.typeErrorMessage( next.ErrorMessage);
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
         }
         this.loading.display = false;
       },

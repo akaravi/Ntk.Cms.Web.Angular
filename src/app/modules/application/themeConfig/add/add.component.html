@@ -6,7 +6,7 @@
       <!-- RecordStatus Field -->
       <mat-form-field class="example-full-width" *ngIf="fieldsInfo['RecordStatus']?.AccessWatchField">
         <mat-select placeholder="{{fieldsInfo['RecordStatus']?.FieldTitle}}" [(ngModel)]="dataModel.RecordStatus"
-          [disabled]="!fieldsInfo['RecordStatus']?.AccessEditField" name="dataModel.RecordStatus"
+          [disabled]="!fieldsInfo['RecordStatus']?.AccessAddField" name="dataModel.RecordStatus"
           #RecordStatus="ngModel" panelClass="recordStatus-{{ dataModel.RecordStatus }}" required>
           <mat-option *ngFor="
             let item of dataModelEnumRecordStatusResult.ListItems;
@@ -23,12 +23,12 @@
       <!-- Title Field -->
       <mat-form-field class="example-full-width" *ngIf="fieldsInfo['Title']?.AccessWatchField">
         <mat-label>{{ fieldsInfo['Title']?.FieldTitle }}</mat-label>
-        <input matInput [(ngModel)]="dataModel.Title" [disabled]="!fieldsInfo['Title']?.AccessEditField"
+        <input matInput [(ngModel)]="dataModel.Title" [disabled]="!fieldsInfo['Title']?.AccessAddField"
           name="dataModel.Title" #Title type="text" placeholder="{{fieldsInfo['Title']?.FieldTitle}}" minlength="3"
           maxlength="100" required />
-        <mat-icon matSuffix *ngIf="dataModel.Title && fieldsInfo['Title']?.AccessEditField" matSuffix mat-icon-button
+        <mat-icon matSuffix *ngIf="dataModel.Title && fieldsInfo['Title']?.AccessAddField" matSuffix mat-icon-button
           aria-label="Clear" (click)="dataModel.Title = ''">close</mat-icon>
-        <mat-icon *ngIf="fieldsInfo['Title']?.AccessEditField" matSuffix>mode_edit</mat-icon>
+        <mat-icon *ngIf="fieldsInfo['Title']?.AccessAddField" matSuffix>mode_edit</mat-icon>
         <mat-hint align="start">{{ Title.value.length }} / 100</mat-hint>
         <mat-error *ngIf="Title.errors?.required">
           {{ fieldsInfo['Title']?.FieldTitle }} is <strong>required</strong>
@@ -38,7 +38,7 @@
       <mat-form-field class="example-full-width" *ngIf="fieldsInfo['TitleResourceLanguage']?.AccessWatchField">
         <mat-label> {{fieldsInfo['TitleResourceLanguage']?.FieldTitle}}</mat-label>
         <input matInput [(ngModel)]="dataModel.TitleResourceLanguage" name="dataModel.TitleResourceLanguage"
-          #TitleResourceLanguage type="text" [disabled]="!fieldsInfo['TitleResourceLanguage']?.AccessEditField"
+          #TitleResourceLanguage type="text" [disabled]="!fieldsInfo['TitleResourceLanguage']?.AccessAddField"
           placeholder="{{fieldsInfo['TitleResourceLanguage']?.FieldTitle}}" minlength="3" maxlength="100" required />
         <mat-icon matSuffix *ngIf="dataModel.TitleResourceLanguage" matSuffix mat-icon-button aria-label="Clear"
           (click)="dataModel.TitleResourceLanguage = ''">close</mat-icon>
@@ -50,18 +50,18 @@
       </mat-form-field>
       <!-- LinkSourceId Field -->
       <app-application-source-selector (optionSelect)="onActionSelectSource($event)"
-        [optionDisabled]="!fieldsInfo['LinkSourceId']?.AccessEditField" [optionSelectForce]="dataModel.LinkSourceId"
+        [optionDisabled]="!fieldsInfo['LinkSourceId']?.AccessAddField" [optionSelectForce]="dataModel.LinkSourceId"
         [optionPlaceholder]="'سورس اپلیکیشن'">
       </app-application-source-selector>
 
       <!-- TypeId Field -->
       <mat-form-field class="example-full-width" *ngIf="fieldsInfo['TypeId']?.AccessWatchField">
         <mat-label>{{ fieldsInfo['TypeId']?.FieldTitle }}</mat-label>
-        <input matInput [(ngModel)]="dataModel.TypeId" [disabled]="!fieldsInfo['TypeId']?.AccessEditField"
+        <input matInput [(ngModel)]="dataModel.TypeId" [disabled]="!fieldsInfo['TypeId']?.AccessAddField"
           name="dataModel.TypeId" #TypeId type="text" placeholder="Type Id" minlength="0" maxlength="100" />
-        <mat-icon matSuffix *ngIf="dataModel.TypeId && fieldsInfo['TypeId']?.AccessEditField" matSuffix mat-icon-button
+        <mat-icon matSuffix *ngIf="dataModel.TypeId && fieldsInfo['TypeId']?.AccessAddField" matSuffix mat-icon-button
           aria-label="Clear" (click)="dataModel.TypeId = ''">close</mat-icon>
-        <mat-icon *ngIf="fieldsInfo['TypeId']?.AccessEditField" matSuffix>mode_edit</mat-icon>
+        <mat-icon *ngIf="fieldsInfo['TypeId']?.AccessAddField" matSuffix>mode_edit</mat-icon>
         <mat-hint align="start">{{ TypeId.value.length }} / 100</mat-hint>
 
       </mat-form-field>

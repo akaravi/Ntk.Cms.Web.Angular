@@ -165,7 +165,13 @@
     "Default_access": "دسترسی پیش فرض",
     "Default_website_access_to_this_module": "دسترسی های پیش فرض این وب سایت به این ماژول",
     "System_management_settings": "تنظیمات مدیریت سامانه",
-    "The_whole_system_management_settings_for_this_module": "تنظیمات مدیریت کل سامانه نسبت به این ماژول"
+    "The_whole_system_management_settings_for_this_module": "تنظیمات مدیریت کل سامانه نسبت به این ماژول",
+    "User_Profile":"حساب کاربری",
+    "User_Id":"شناسه کاربر",
+    "Site_Id":"شناسه سایت",
+    "Access_Type":"نوع دسترسی",
+    "User_Profile_Edit":"ویرایش",
+    "Sing_Out":"خروج"
   },
   "MESSAGE": {
     "Specify_the_source_code_of_the_program": "سورس کد برنامه مشخص  کنید",
