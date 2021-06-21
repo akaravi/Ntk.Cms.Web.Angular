@@ -22,7 +22,8 @@ import {
   BlogContentTagService,
   BlogShareMainAdminSettingService,
   BlogShareReciverCategoryService,
-  BlogShareServerCategoryService
+  BlogShareServerCategoryService,
+  BlogContentCategoryService
 } from 'ntk-cms-api';
 import { BlogCategoryEditComponent } from './category/edit/edit.component';
 import { BlogCategoryDeleteComponent } from './category/delete/delete.component';
@@ -45,6 +46,7 @@ import { BlogCategoryAddComponent } from './category/add/add.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
 import { BlogConfigMainAdminComponent } from './config/mainAdmin/configMainAdmin.component';
 import { BlogConfigSiteComponent } from './config/site/configSite.component';
+import { BlogCategoryTreeSelectorComponent } from './category/tree-selector/tree-selector.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +67,7 @@ import { BlogConfigSiteComponent } from './config/site/configSite.component';
     BlogCategoryDeleteComponent,
     BlogCommentListComponent,
     BlogCommentEditComponent,
+    BlogCategoryTreeSelectorComponent,
   ],
   imports: [
     CommonModule,
@@ -88,6 +91,7 @@ import { BlogConfigSiteComponent } from './config/site/configSite.component';
     BlogCommentService,
     BlogConfigurationService,
     BlogContentService,
+    BlogContentCategoryService,
     BlogContentAndParameterValueService,
     BlogContentOtherInfoService,
     BlogContentParameterService,

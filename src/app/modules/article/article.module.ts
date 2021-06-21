@@ -19,7 +19,8 @@ import {
   ArticleContentTagService,
   ArticleShareMainAdminSettingService,
   ArticleShareReciverCategoryService,
-  ArticleShareServerCategoryService
+  ArticleShareServerCategoryService,
+  ArticleContentCategoryService
 } from 'ntk-cms-api';
 import { ArticleCategoryEditComponent } from './category/edit/edit.component';
 import { ArticleCategoryDeleteComponent } from './category/delete/delete.component';
@@ -42,6 +43,7 @@ import { ArticleCategoryAddComponent } from './category/add/add.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
 import { ArticleConfigSiteComponent } from './config/site/configSite.component';
 import { ArticleConfigMainAdminComponent } from './config/mainAdmin/configMainAdmin.component';
+import { ArticleCategoryTreeSelectorComponent } from './category/tree-selector/tree-selector.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +64,7 @@ import { ArticleConfigMainAdminComponent } from './config/mainAdmin/configMainAd
     ArticleCategoryDeleteComponent,
     ArticleCommentListComponent,
     ArticleCommentEditComponent,
+    ArticleCategoryTreeSelectorComponent,
   ],
   imports: [
     ArticleRouting,
@@ -85,6 +88,7 @@ import { ArticleConfigMainAdminComponent } from './config/mainAdmin/configMainAd
     ArticleCommentService,
     ArticleConfigurationService,
     ArticleContentService,
+    ArticleContentCategoryService,
     ArticleContentAndParameterValueService,
     ArticleContentOtherInfoService,
     ArticleContentParameterService,

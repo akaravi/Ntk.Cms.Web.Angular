@@ -84,6 +84,21 @@
           </div>
         </mat-step>
 
+        <mat-step label="دسته بندی ها" state="seo">
+          <app-biography-category-treeselector [(optionModel)]="dataContentCategoryModel"
+            (optionSelectChecked)="onActionCategorySelectChecked($event)"
+            (optionSelectDisChecked)="onActionCategorySelectDisChecked($event)"></app-biography-category-treeselector>
+          <br>
+          <div *ngIf="formInfo.FormSubmitAllow">
+            <button type="button" mat-button (click)="onActionBackToParent()"
+              class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
+              {{'ACTION.BACK' | translate}}
+            </button> <button type="button" [disabled]="!vform.form.valid" mat-button matStepperNext
+              class="btn btn-primary font-weight-bold text-uppercase px-9 py-4">
+              {{'ACTION.NEXT' | translate}}
+            </button>
+          </div>
+        </mat-step>
         <mat-step label="موتور های سرچ" state="seo">
           <p>این بخش کمک می کند موتورهای سرچ بهتر مطالب را ایندکس کنند</p>
           <mat-form-field class="example-full-width">

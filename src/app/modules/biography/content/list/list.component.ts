@@ -13,6 +13,7 @@ import {
   NtkCmsApiStoreService,
   TokenInfoModel,
   DataFieldInfoModel,
+  EnumClauseType,
 } from 'ntk-cms-api';
 import { PublicHelper } from '../../../../core/helpers/publicHelper';
 import { CmsToastrService } from '../../../../core/services/cmsToastr.service';
@@ -103,12 +104,24 @@ export class BiographyContentListComponent implements OnInit, OnDestroy {
     /*filter CLone*/
     const filterModel = JSON.parse(JSON.stringify(this.filteModelContent));
     /*filter CLone*/
+    /** filter Category */
     if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
-      const filter = new FilterDataModel();
-      filter.PropertyName = 'LinkCategoryId';
-      filter.Value = this.categoryModelSelected.Id;
-      filterModel.Filters.push(filter);
+      const filterChild = new FilterDataModel();
+      let fastfilter = new FilterDataModel();
+      fastfilter.PropertyName = 'LinkCategoryId';
+      fastfilter.Value = this.categoryModelSelected.Id;
+      fastfilter.ClauseType = EnumClauseType.Or;
+      filterChild.Filters.push(fastfilter);
+      /** N to N */
+      fastfilter = new FilterDataModel();
+      fastfilter.PropertyName = 'ContentCategores';
+      fastfilter.PropertyAnyName = 'LinkCategoryId';
+      fastfilter.Value = this.categoryModelSelected.Id;
+      fastfilter.ClauseType = EnumClauseType.Or;
+      filterChild.Filters.push(fastfilter);
+      filterModel.Filters.push(filterChild);
     }
+    /** filter Category */
     this.biographyContentService.ServiceGetAll(filterModel).subscribe(
       (next) => {
         this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);

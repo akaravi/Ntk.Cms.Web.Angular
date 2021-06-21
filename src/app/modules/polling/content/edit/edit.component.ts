@@ -192,7 +192,7 @@ export class PollingContentEditComponent implements OnInit, AfterViewInit {
 
     const filter = new FilterDataModel();
     filter.PropertyName = 'LinkPollingContentId';
-    filter.Value = this.dataModelResult.Item.Id;
+    filter.Value = this.requestId;
     filteModel.Filters.push(filter);
     this.pollingOptionService
       .ServiceGetAll(filteModel)
@@ -308,7 +308,7 @@ export class PollingContentEditComponent implements OnInit, AfterViewInit {
         });
     }
     else {
-      this.optionSelected.LinkPollingContentId = this.dataModelResult.Item.Id;
+      this.optionSelected.LinkPollingContentId = this.requestId;
       this.pollingOptionService.ServiceAdd(this.optionSelected).subscribe(
         (next) => {
           if (next.IsSuccess) {

@@ -19,7 +19,9 @@ import {
   ArticleContentSimilarModel,
   AccessModel,
   DataFieldInfoModel,
-  EnumClauseType
+  EnumClauseType,
+  ArticleContentCategoryService,
+  ArticleContentCategoryModel
 } from 'ntk-cms-api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
@@ -46,11 +48,12 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
     private cmsStoreService: CmsStoreService,
     public coreEnumService: CoreEnumService,
     public publicHelper: PublicHelper,
-    private articleContentService: ArticleContentService,
-    private articleContentTagService: ArticleContentTagService,
-    private articleContentSimilarService: ArticleContentSimilarService,
-    private articleContentOtherInfoService: ArticleContentOtherInfoService,
+    private contentService: ArticleContentService,
+    private contentTagService: ArticleContentTagService,
+    private contentSimilarService: ArticleContentSimilarService,
+    private contentOtherInfoService: ArticleContentOtherInfoService,
     private cmsToastrService: CmsToastrService,
+    private contentCategoryService: ArticleContentCategoryService,
     private router: Router,
 
   ) {
@@ -66,6 +69,7 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
   dataContentOtherInfoModelResult: ErrorExceptionResult<ArticleContentOtherInfoModel>
     = new ErrorExceptionResult<ArticleContentOtherInfoModel>();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
+  dataContentCategoryModel: number[] = [];
   similarDataModel = new Array<ArticleContentModel>();
   otherInfoDataModel = new Array<ArticleContentOtherInfoModel>();
   contentSimilarSelected: ArticleContentModel = new ArticleContentModel();
@@ -109,6 +113,7 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
       return;
     }
     this.DataGetOne();
+    this.DataCategoryGetAll();
     this.getEnumRecordStatus();
   }
   ngAfterViewInit(): void {
@@ -163,8 +168,8 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
     this.formInfo.FormError = '';
     this.loading.display = true;
     /*َAccess Field*/
-    this.articleContentService.setAccessLoad();
-    this.articleContentService
+    this.contentService.setAccessLoad();
+    this.contentService
       .ServiceGetOneById(this.requestId)
       .subscribe(
         async (next) => {
@@ -209,12 +214,12 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
     const filteModel = new FilterModel();
     const filter = new FilterDataModel();
     filter.PropertyName = 'LinkContentId';
-    filter.Value = this.dataModelResult.Item.Id;
+    filter.Value = this.requestId;
     filter.ClauseType = EnumClauseType.And;
     filteModel.Filters.push(filter);
 
     this.tagIdsData = [];
-    this.articleContentTagService
+    this.contentTagService
       .ServiceGetAll(filteModel)
       .subscribe(
         async (next) => {
@@ -252,11 +257,11 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
     const filteModel = new FilterModel();
     const filter = new FilterDataModel();
     filter.PropertyName = 'LinkContentId';
-    filter.Value = this.dataModelResult.Item.Id;
+    filter.Value = this.requestId;
     filter.ClauseType = EnumClauseType.And;
     filteModel.Filters.push(filter);
 
-    this.articleContentOtherInfoService
+    this.contentOtherInfoService
       .ServiceGetAll(filteModel)
       .subscribe(
         async (next) => {
@@ -287,16 +292,16 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
     const filteModel = new FilterModel();
     const filter = new FilterDataModel();
     filter.PropertyName = 'LinkSourceId';
-    filter.Value = this.dataModelResult.Item.Id;
+    filter.Value = this.requestId;
     filter.ClauseType = EnumClauseType.Or;
     filteModel.Filters.push(filter);
 
     filter.PropertyName = 'LinkDestinationId';
-    filter.Value = this.dataModelResult.Item.Id;
+    filter.Value = this.requestId;
     filter.ClauseType = EnumClauseType.Or;
     filteModel.Filters.push(filter);
 
-    this.articleContentSimilarService
+    this.contentSimilarService
       .ServiceGetAll(filteModel)
       .subscribe(
         async (next) => {
@@ -306,7 +311,7 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
           if (next.IsSuccess) {
             const listIds = Array<number>();
             next.ListItems.forEach(x => {
-              if (x.LinkDestinationId === this.dataModelResult.Item.Id) {
+              if (x.LinkDestinationId === this.requestId) {
                 listIds.push(x.LinkSourceId);
               } else {
                 listIds.push(x.LinkDestinationId);
@@ -347,7 +352,7 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
         filteModel.Filters.push(filter);
       }
     });
-    this.articleContentService
+    this.contentService
       .ServiceGetAll(filteModel)
       .subscribe(
         async (next) => {
@@ -374,7 +379,7 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
     this.formInfo.FormError = '';
     this.loading.display = true;
 
-    this.articleContentService
+    this.contentService
       .ServiceEdit(this.dataModel)
       .subscribe(
         async (next) => {
@@ -500,6 +505,101 @@ export class ArticleContentEditComponent implements OnInit, AfterViewInit {
       return;
     }
     this.dataModel.LinkCategoryId = model.Id;
+  }
+  DataCategoryGetAll(): void {
+    this.formInfo.FormSubmitAllow = false;
+    this.formInfo.FormAlert = 'در حال دریافت اطلاعات دسته بندی از سرور';
+    this.formInfo.FormError = '';
+    this.loading.display = true;
+
+    const filteModel = new FilterModel();
+    const filter = new FilterDataModel();
+    filter.PropertyName = 'LinkContentId';
+    filter.Value = this.requestId;
+    filter.ClauseType = EnumClauseType.And;
+    filteModel.Filters.push(filter);
+
+
+    this.tagIdsData = [];
+    this.contentCategoryService
+      .ServiceGetAll(filteModel)
+      .subscribe(
+        async (next) => {
+          this.loading.display = false;
+          const itemList = []
+          next.ListItems.forEach(element => {
+            itemList.push(element.LinkCategoryId);
+          });
+          this.dataContentCategoryModel = itemList;
+          this.formInfo.FormSubmitAllow = true;
+
+        },
+        (error) => {
+          this.loading.display = false;
+          this.formInfo.FormSubmitAllow = true;
+          this.cmsToastrService.typeErrorGetAll(error);
+        }
+      );
+  }
+  onActionCategorySelectChecked(model: number): void {
+
+    if (!model || model <= 0) {
+      const message = 'دسته بندی اطلاعات مشخص نیست';
+      this.cmsToastrService.typeErrorSelected(message);
+      return;
+    }
+    const entity = new ArticleContentCategoryModel();
+    entity.LinkCategoryId = model;
+    entity.LinkContentId = this.dataModel.Id;
+    this.contentCategoryService.ServiceAdd(entity).subscribe(
+      (next) => {
+        if (next.IsSuccess) {
+          this.formInfo.FormAlert = 'ثبت در این گروه با موفقیت انجام شد';
+          this.cmsToastrService.typeSuccessEdit();
+          // this.dialogRef.close({ dialogChangedDate: true });
+        } else {
+          this.formInfo.FormAlert = 'برروز خطا';
+          this.formInfo.FormError = next.ErrorMessage;
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
+        }
+      },
+      (error) => {
+        this.formInfo.FormSubmitAllow = true;
+        this.cmsToastrService.typeError(error);
+
+      }
+    );
+
+
+  }
+  onActionCategorySelectDisChecked(model: number): void {
+
+    if (!model || model <= 0) {
+      const message = 'دسته بندی اطلاعات مشخص نیست';
+      this.cmsToastrService.typeErrorSelected(message);
+      return;
+    }
+    const entity = new ArticleContentCategoryModel();
+    entity.LinkCategoryId = model;
+    entity.LinkContentId = this.dataModel.Id;
+    this.contentCategoryService.ServiceDeleteEntity(entity).subscribe(
+      (next) => {
+        if (next.IsSuccess) {
+          this.formInfo.FormAlert = 'ثبت در این گروه با موفقیت انجام شد';
+          this.cmsToastrService.typeSuccessEdit();
+          // this.dialogRef.close({ dialogChangedDate: true });
+        } else {
+          this.formInfo.FormAlert = 'برروز خطا';
+          this.formInfo.FormError = next.ErrorMessage;
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
+        }
+      },
+      (error) => {
+        this.formInfo.FormSubmitAllow = true;
+        this.cmsToastrService.typeError(error);
+
+      }
+    );
   }
   onActionTagChange(ids: number[]): void {
     this.tagIdsData = ids;

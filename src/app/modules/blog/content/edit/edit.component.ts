@@ -18,7 +18,10 @@ import {
   BlogContentOtherInfoModel,
   BlogContentSimilarModel,
   AccessModel,
-  DataFieldInfoModel
+  DataFieldInfoModel,
+  EnumClauseType,
+  BlogContentCategoryModel,
+  BlogContentCategoryService
 } from 'ntk-cms-api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
@@ -45,10 +48,11 @@ export class BlogContentEditComponent implements OnInit, AfterViewInit {
     private cmsStoreService: CmsStoreService,
     public coreEnumService: CoreEnumService,
     public publicHelper: PublicHelper,
-    private blogContentService: BlogContentService,
-    private blogContentTagService: BlogContentTagService,
-    private blogContentSimilarService: BlogContentSimilarService,
-    private blogContentOtherInfoService: BlogContentOtherInfoService,
+    private contentService: BlogContentService,
+    private contentCategoryService: BlogContentCategoryService,
+    private contentTagService: BlogContentTagService,
+    private contentSimilarService: BlogContentSimilarService,
+    private contentOtherInfoService: BlogContentOtherInfoService,
     private cmsToastrService: CmsToastrService,
     private router: Router,
 
@@ -64,6 +68,7 @@ export class BlogContentEditComponent implements OnInit, AfterViewInit {
   dataContentSimilarModelResult: ErrorExceptionResult<BlogContentSimilarModel> = new ErrorExceptionResult<BlogContentSimilarModel>();
   dataContentOtherInfoModelResult: ErrorExceptionResult<BlogContentOtherInfoModel> = new ErrorExceptionResult<BlogContentOtherInfoModel>();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
+  dataContentCategoryModel: number[] = [];
   similarDataModel = new Array<BlogContentModel>();
   otherInfoDataModel = new Array<BlogContentOtherInfoModel>();
   contentSimilarSelected: BlogContentModel = new BlogContentModel();
@@ -103,6 +108,7 @@ export class BlogContentEditComponent implements OnInit, AfterViewInit {
       return;
     }
     this.DataGetOne();
+    this.DataCategoryGetAll();
     this.getEnumRecordStatus();
   }
   ngAfterViewInit(): void {
@@ -158,8 +164,8 @@ export class BlogContentEditComponent implements OnInit, AfterViewInit {
     this.formInfo.FormError = '';
     this.loading.display = true;
     /*َAccess Field*/
-    this.blogContentService.setAccessLoad();
-    this.blogContentService
+    this.contentService.setAccessLoad();
+    this.contentService
       .ServiceGetOneById(this.requestId)
       .subscribe(
         async (next) => {
@@ -206,11 +212,11 @@ export class BlogContentEditComponent implements OnInit, AfterViewInit {
 
     const aaa3 = {
       PropertyName: 'LinkContentId',
-      Value: this.dataModelResult.Item.Id + '',
+      Value: this.requestId ,
     };
     filteModel.Filters.push(aaa3 as FilterDataModel);
     this.tagIdsData = [];
-    this.blogContentTagService
+    this.contentTagService
       .ServiceGetAll(filteModel)
       .subscribe(
         async (next) => {
@@ -249,10 +255,10 @@ export class BlogContentEditComponent implements OnInit, AfterViewInit {
 
     const aaa3 = {
       PropertyName: 'LinkContentId',
-      Value: this.dataModelResult.Item.Id + '',
+      Value: this.requestId ,
     };
     filteModel.Filters.push(aaa3 as FilterDataModel);
-    this.blogContentOtherInfoService
+    this.contentOtherInfoService
       .ServiceGetAll(filteModel)
       .subscribe(
         async (next) => {
@@ -284,18 +290,18 @@ export class BlogContentEditComponent implements OnInit, AfterViewInit {
 
     const aaa1 = {
       PropertyName: 'LinkSourceId',
-      Value: this.dataModelResult.Item.Id + '',
+      Value: this.requestId ,
       ClauseType: 1
     };
     const aaa2 = {
       PropertyName: 'LinkDestinationId',
-      Value: this.dataModelResult.Item.Id + '',
+      Value: this.requestId ,
       ClauseType: 1
     };
     filteModel.Filters.push(aaa1 as FilterDataModel);
     filteModel.Filters.push(aaa2 as FilterDataModel);
 
-    this.blogContentSimilarService
+    this.contentSimilarService
       .ServiceGetAll(filteModel)
       .subscribe(
         async (next) => {
@@ -305,7 +311,7 @@ export class BlogContentEditComponent implements OnInit, AfterViewInit {
           if (next.IsSuccess) {
             const listIds = Array<number>();
             next.ListItems.forEach(x => {
-              if (x.LinkDestinationId === this.dataModelResult.Item.Id) {
+              if (x.LinkDestinationId === this.requestId) {
                 listIds.push(x.LinkSourceId);
               } else {
                 listIds.push(x.LinkDestinationId);
@@ -344,7 +350,7 @@ export class BlogContentEditComponent implements OnInit, AfterViewInit {
       };
       filteModel.Filters.push(aaa3 as FilterDataModel);
     });
-    this.blogContentService
+    this.contentService
       .ServiceGetAll(filteModel)
       .subscribe(
         async (next) => {
@@ -371,7 +377,7 @@ export class BlogContentEditComponent implements OnInit, AfterViewInit {
     this.formInfo.FormError = '';
     this.loading.display = true;
 
-    this.blogContentService
+    this.contentService
       .ServiceEdit(this.dataModel)
       .subscribe(
         async (next) => {
@@ -497,6 +503,101 @@ export class BlogContentEditComponent implements OnInit, AfterViewInit {
       return;
     }
     this.dataModel.LinkCategoryId = model.Id;
+  }
+  DataCategoryGetAll(): void {
+    this.formInfo.FormSubmitAllow = false;
+    this.formInfo.FormAlert = 'در حال دریافت اطلاعات دسته بندی از سرور';
+    this.formInfo.FormError = '';
+    this.loading.display = true;
+
+    const filteModel = new FilterModel();
+    const filter = new FilterDataModel();
+    filter.PropertyName = 'LinkContentId';
+    filter.Value = this.requestId;
+    filter.ClauseType = EnumClauseType.And;
+    filteModel.Filters.push(filter);
+
+
+    this.tagIdsData = [];
+    this.contentCategoryService
+      .ServiceGetAll(filteModel)
+      .subscribe(
+        async (next) => {
+          this.loading.display = false;
+          const itemList = []
+          next.ListItems.forEach(element => {
+            itemList.push(element.LinkCategoryId);
+          });
+          this.dataContentCategoryModel = itemList;
+          this.formInfo.FormSubmitAllow = true;
+
+        },
+        (error) => {
+          this.loading.display = false;
+          this.formInfo.FormSubmitAllow = true;
+          this.cmsToastrService.typeErrorGetAll(error);
+        }
+      );
+  }
+  onActionCategorySelectChecked(model: number): void {
+
+    if (!model || model <= 0) {
+      const message = 'دسته بندی اطلاعات مشخص نیست';
+      this.cmsToastrService.typeErrorSelected(message);
+      return;
+    }
+    const entity = new BlogContentCategoryModel();
+    entity.LinkCategoryId = model;
+    entity.LinkContentId = this.dataModel.Id;
+    this.contentCategoryService.ServiceAdd(entity).subscribe(
+      (next) => {
+        if (next.IsSuccess) {
+          this.formInfo.FormAlert = 'ثبت در این گروه با موفقیت انجام شد';
+          this.cmsToastrService.typeSuccessEdit();
+          // this.dialogRef.close({ dialogChangedDate: true });
+        } else {
+          this.formInfo.FormAlert = 'برروز خطا';
+          this.formInfo.FormError = next.ErrorMessage;
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
+        }
+      },
+      (error) => {
+        this.formInfo.FormSubmitAllow = true;
+        this.cmsToastrService.typeError(error);
+
+      }
+    );
+
+
+  }
+  onActionCategorySelectDisChecked(model: number): void {
+
+    if (!model || model <= 0) {
+      const message = 'دسته بندی اطلاعات مشخص نیست';
+      this.cmsToastrService.typeErrorSelected(message);
+      return;
+    }
+    const entity = new BlogContentCategoryModel();
+    entity.LinkCategoryId = model;
+    entity.LinkContentId = this.dataModel.Id;
+    this.contentCategoryService.ServiceDeleteEntity(entity).subscribe(
+      (next) => {
+        if (next.IsSuccess) {
+          this.formInfo.FormAlert = 'ثبت در این گروه با موفقیت انجام شد';
+          this.cmsToastrService.typeSuccessEdit();
+          // this.dialogRef.close({ dialogChangedDate: true });
+        } else {
+          this.formInfo.FormAlert = 'برروز خطا';
+          this.formInfo.FormError = next.ErrorMessage;
+          this.cmsToastrService.typeErrorMessage(next.ErrorMessage);
+        }
+      },
+      (error) => {
+        this.formInfo.FormSubmitAllow = true;
+        this.cmsToastrService.typeError(error);
+
+      }
+    );
   }
   onActionTagChange(ids: number[]): void {
     this.tagIdsData = ids;

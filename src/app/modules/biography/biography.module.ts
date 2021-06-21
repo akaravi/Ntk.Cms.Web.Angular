@@ -22,7 +22,8 @@ import {
   BiographyContentTagService,
   BiographyShareMainAdminSettingService,
   BiographyShareReciverCategoryService,
-  BiographyShareServerCategoryService
+  BiographyShareServerCategoryService,
+  BiographyContentCategoryService
 } from 'ntk-cms-api';
 import { BiographyCategoryEditComponent } from './category/edit/edit.component';
 import { BiographyCategoryDeleteComponent } from './category/delete/delete.component';
@@ -45,6 +46,7 @@ import { BiographyCategoryAddComponent } from './category/add/add.component';
 import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-dialog/cmsConfirmationDialog.service';
 import { BiographyConfigSiteComponent } from './config/site/configSite.component';
 import { BiographyConfigMainAdminComponent } from './config/mainAdmin/configMainAdmin.component';
+import { BiographyCategoryTreeSelectorComponent } from './category/tree-selector/tree-selector.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +67,7 @@ import { BiographyConfigMainAdminComponent } from './config/mainAdmin/configMain
     BiographyCategoryDeleteComponent,
     BiographyCommentListComponent,
     BiographyCommentEditComponent,
+    BiographyCategoryTreeSelectorComponent,
   ],
   imports: [
     CommonModule,
@@ -88,6 +91,7 @@ import { BiographyConfigMainAdminComponent } from './config/mainAdmin/configMain
     BiographyCommentService,
     BiographyConfigurationService,
     BiographyContentService,
+    BiographyContentCategoryService,
     BiographyContentAndParameterValueService,
     BiographyContentOtherInfoService,
     BiographyContentParameterService,

@@ -27,6 +27,13 @@ export class EstatePropertyTypeLanduseSelectorComponent implements OnInit {
     public coreEnumService: CoreEnumService,
     public categoryService: EstatePropertyTypeLanduseService) {
   }
+  @Input() set optionSelectForce(x: string | EstatePropertyTypeLanduseModel) {
+    this.onActionSelectForce(x);
+  }
+  @Input() set optionTypeUsageId(x: string) {
+    this.typeUsageId = x;
+    this.loadOptions();
+  }
   dataModelResult: ErrorExceptionResult<EstatePropertyTypeLanduseModel> = new ErrorExceptionResult<EstatePropertyTypeLanduseModel>();
   dataModelSelect: EstatePropertyTypeLanduseModel = new EstatePropertyTypeLanduseModel();
   loading = new ProgressSpinnerModel();
@@ -36,17 +43,10 @@ export class EstatePropertyTypeLanduseSelectorComponent implements OnInit {
   @Input() optionSelectFirstItem = false;
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Output() optionSelect = new EventEmitter<EstatePropertyTypeLanduseModel>();
-  @Input() optionReload = () => this.onActionReload();
-  @Input() set optionSelectForce(x: string | EstatePropertyTypeLanduseModel) {
-    this.onActionSelectForce(x);
-  }
-  @Input() set optionTypeUsageId(x: string) {
-    this.typeUsageId = x;
-    this.loadOptions();
-  }
   @Input() optionTypeView=1;
 
   typeUsageId = '';
+  @Input() optionReload = () => this.onActionReload();
   ngOnInit(): void {
     this.loadOptions();
   }
@@ -76,7 +76,7 @@ export class EstatePropertyTypeLanduseSelectorComponent implements OnInit {
     filteModel.RowPerPage = 20;
     filteModel.AccessLoad = true;
     let filter = new FilterDataModel();
-    let filterChild = new FilterDataModel();
+    const filterChild = new FilterDataModel();
     if (text && text.length > 0) {
       filter.PropertyName = 'Title';
       filter.Value = text;
