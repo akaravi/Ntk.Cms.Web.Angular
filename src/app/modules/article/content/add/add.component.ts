@@ -46,12 +46,12 @@ export class ArticleContentAddComponent implements OnInit, AfterViewInit {
     private cmsStoreService: CmsStoreService,
     public coreEnumService: CoreEnumService,
     public publicHelper: PublicHelper,
-    private articleContentService: ArticleContentService,
-    private articleContentSimilarService: ArticleContentSimilarService,
-    private articleContentOtherInfoService: ArticleContentOtherInfoService,
+    private contentService: ArticleContentService,
+    private contentSimilarService: ArticleContentSimilarService,
+    private contentOtherInfoService: ArticleContentOtherInfoService,
     private cmsToastrService: CmsToastrService,
     private router: Router,
-    private articleContentTagService: ArticleContentTagService
+    private contentTagService: ArticleContentTagService
   ) {
     this.fileManagerTree = this.publicHelper.GetfileManagerTreeConfig();
   }
@@ -113,7 +113,7 @@ export class ArticleContentAddComponent implements OnInit, AfterViewInit {
     // };
   }
   DataGetAccess(): void {
-    this.articleContentService
+    this.contentService
       .ServiceViewModel()
       .subscribe(
         async (next) => {
@@ -204,7 +204,7 @@ export class ArticleContentAddComponent implements OnInit, AfterViewInit {
     this.formInfo.FormError = '';
     this.loading.display = true;
 
-    this.articleContentService
+    this.contentService
       .ServiceAdd(this.dataModel)
       .subscribe(
         async (next) => {
@@ -242,7 +242,7 @@ export class ArticleContentAddComponent implements OnInit, AfterViewInit {
       row.LinkTagId = x.Id;
       dataListAdd.push(row);
     });
-    return this.articleContentTagService.ServiceAddBatch(dataListAdd).pipe(
+    return this.contentTagService.ServiceAddBatch(dataListAdd).pipe(
       map(response => {
         if (response.IsSuccess) {
           this.cmsToastrService.typeSuccessAddTag();
@@ -259,7 +259,7 @@ export class ArticleContentAddComponent implements OnInit, AfterViewInit {
     this.otherInfoDataModel.forEach(x => {
       x.LinkContentId = model.Id;
     });
-    return this.articleContentOtherInfoService.ServiceAddBatch(this.otherInfoDataModel).pipe(
+    return this.contentOtherInfoService.ServiceAddBatch(this.otherInfoDataModel).pipe(
       map(response => {
         if (response.IsSuccess) {
           this.cmsToastrService.typeSuccessAddOtherInfo();
@@ -286,7 +286,7 @@ export class ArticleContentAddComponent implements OnInit, AfterViewInit {
       row.LinkDestinationId = x.Id;
       dataList.push(row);
     });
-    return this.articleContentSimilarService.ServiceAddBatch(dataList).pipe(
+    return this.contentSimilarService.ServiceAddBatch(dataList).pipe(
       map(response => {
         if (response.IsSuccess) {
           this.cmsToastrService.typeSuccessAddSimilar();

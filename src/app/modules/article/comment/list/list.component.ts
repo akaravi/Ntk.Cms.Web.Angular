@@ -43,7 +43,7 @@ import { CmsConfirmationDialogService } from 'src/app/shared/cms-confirmation-di
 })
 export class ArticleCommentListComponent implements OnInit, OnDestroy {
   constructor(
-    private articleCommentService: ArticleCommentService,
+    private commentService: ArticleCommentService,
     private activatedRoute: ActivatedRoute,
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
@@ -123,7 +123,7 @@ export class ArticleCommentListComponent implements OnInit, OnDestroy {
       filter.Value = this.requestContentId;
       filterModel.Filters.push(filter);
     }
-    this.articleCommentService.ServiceGetAll(filterModel).subscribe(
+    this.commentService.ServiceGetAll(filterModel).subscribe(
       (next) => {
         this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
 
@@ -195,7 +195,7 @@ export class ArticleCommentListComponent implements OnInit, OnDestroy {
   //     comment: this.comment,
   //     author: this.author
   //   };
-  //   this.articleCommentService.ServiceAdd(model).subscribe((res) => {
+  //   this.commentService.ServiceAdd(model).subscribe((res) => {
 
   //   });
   // }
@@ -210,7 +210,7 @@ export class ArticleCommentListComponent implements OnInit, OnDestroy {
   //     comment: element.Comment,
   //     author: element.Writer
   //   };
-  //   this.articleCommentService.ServiceEdit(model).subscribe();
+  //   this.commentService.ServiceEdit(model).subscribe();
   // }
 
   onActionbuttonNewRow(): void {
@@ -290,7 +290,7 @@ export class ArticleCommentListComponent implements OnInit, OnDestroy {
       .then((confirmed) => {
         if (confirmed) {
           this.loading.display = true;
-          this.articleCommentService.ServiceDelete(this.tableRowSelected.Id).subscribe(
+          this.commentService.ServiceDelete(this.tableRowSelected.Id).subscribe(
             (next) => {
               if (next.IsSuccess) {
                 this.cmsToastrService.typeSuccessRemove();
@@ -321,7 +321,7 @@ export class ArticleCommentListComponent implements OnInit, OnDestroy {
     const statist = new Map<string, number>();
     statist.set('Active', 0);
     statist.set('All', 0);
-    this.articleCommentService.ServiceGetCount(this.filteModelContent).subscribe(
+    this.commentService.ServiceGetCount(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('All', next.TotalRowCount);
@@ -338,7 +338,7 @@ export class ArticleCommentListComponent implements OnInit, OnDestroy {
     fastfilter.PropertyName = 'RecordStatus';
     fastfilter.Value = EnumRecordStatus.Available;
     filterStatist1.Filters.push(fastfilter);
-    this.articleCommentService.ServiceGetCount(filterStatist1).subscribe(
+    this.commentService.ServiceGetCount(filterStatist1).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('Active', next.TotalRowCount);
@@ -359,7 +359,7 @@ export class ArticleCommentListComponent implements OnInit, OnDestroy {
   onSubmitOptionExport(model: FilterModel): void {
     const exportlist = new Map<string, string>();
     exportlist.set('Download', 'loading ... ');
-    this.articleCommentService.ServiceExportFile(model).subscribe(
+    this.commentService.ServiceExportFile(model).subscribe(
       (next) => {
         if (next.IsSuccess) {
           exportlist.set('Download', next.LinkFile);

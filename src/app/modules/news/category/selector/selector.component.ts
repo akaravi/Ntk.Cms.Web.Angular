@@ -25,8 +25,6 @@ export class NewsCategorySelectorComponent implements OnInit {
   constructor(
     public coreEnumService: CoreEnumService,
     public categoryService: NewsCategoryService) {
-
-
   }
   dataModelResult: ErrorExceptionResult<NewsCategoryModel> = new ErrorExceptionResult<NewsCategoryModel>();
   dataModelSelect: NewsCategoryModel = new NewsCategoryModel();

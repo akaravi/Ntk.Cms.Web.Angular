@@ -24,7 +24,7 @@ export class NewsContentDeleteComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<NewsContentDeleteComponent>,
     private publicHelper: PublicHelper,
-    private newsContentService: NewsContentService,
+    private contentService: NewsContentService,
     private cmsToastrService: CmsToastrService
   ) {
     if (data) {
@@ -53,8 +53,8 @@ export class NewsContentDeleteComponent implements OnInit {
     }
     this.formInfo.FormAlert = 'در حال لود اطلاعات';
     this.loading.display = true;
-    this.newsContentService.setAccessLoad();
-    this.newsContentService
+    this.contentService.setAccessLoad();
+    this.contentService
       .ServiceGetOneById(this.requestId)
       .subscribe(
         (next) => {
@@ -92,7 +92,7 @@ export class NewsContentDeleteComponent implements OnInit {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.ButtonSubmittedEnabled = false;
     this.loading.display = true;
-    this.newsContentService
+    this.contentService
       .ServiceDelete(this.requestId)
       .subscribe(
         (next) => {

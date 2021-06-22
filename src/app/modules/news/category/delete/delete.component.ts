@@ -19,7 +19,7 @@ export class NewsCategoryDeleteComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<NewsCategoryDeleteComponent>,
     private publicHelper: PublicHelper,
-    private newsCategoryService: NewsCategoryService,
+    private categoryService: NewsCategoryService,
     private cmsToastrService: CmsToastrService
   ) {
     if (data) {
@@ -52,7 +52,7 @@ export class NewsCategoryDeleteComponent implements OnInit {
     }
     this.formInfo.FormAlert = 'در حال لود اطلاعات';
     this.loading.display = true;
-    this.newsCategoryService
+    this.categoryService
       .ServiceGetOneById(this.requestId)
       .subscribe(
         (next) => {
@@ -82,7 +82,7 @@ export class NewsCategoryDeleteComponent implements OnInit {
     const filterModel: FilterModel = new FilterModel();
     filterModel.RowPerPage = 100;
     this.loading.display = true;
-    this.newsCategoryService
+    this.categoryService
       .ServiceGetAll(filterModel)
       .subscribe(
         (next) => {
@@ -124,7 +124,7 @@ export class NewsCategoryDeleteComponent implements OnInit {
 
     this.formInfo.ButtonSubmittedEnabled = false;
     this.loading.display = true;
-    this.newsCategoryService
+    this.categoryService
       .ServiceMove(this.requestId, this.dataModel.NewCatId)
       .subscribe(
         (next) => {
@@ -158,7 +158,7 @@ export class NewsCategoryDeleteComponent implements OnInit {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.ButtonSubmittedEnabled = false;
     this.loading.display = true;
-    this.newsCategoryService
+    this.categoryService
       .ServiceDelete(this.requestId)
       .subscribe(
         (next) => {

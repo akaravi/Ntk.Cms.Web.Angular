@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {
-  CoreAuthService,
   EnumSortType,
   ErrorExceptionResult,
   FilterDataModel,
@@ -18,7 +17,6 @@ import {
 import { PublicHelper } from '../../../../core/helpers/publicHelper';
 import { CmsToastrService } from '../../../../core/services/cmsToastr.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ArticleContentAddComponent } from '../add/add.component';
 import { ProgressSpinnerModel } from '../../../../core/models/progressSpinnerModel';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { ComponentOptionStatistModel } from 'src/app/core/cmsComponentModels/base/componentOptionStatistModel';
@@ -39,15 +37,11 @@ export class ArticleContentListComponent implements OnInit, OnDestroy {
   constructor(
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
-    private articleContentService: ArticleContentService,
+    private contentService: ArticleContentService,
     private cmsToastrService: CmsToastrService,
     private router: Router,
     public dialog: MatDialog
   ) {
-    // this.optionsCategoryTree.parentMethods = {
-    //   onActionSelect: (x) => this.onActionSelectorSelect(x),
-    // };
-
     this.optionsSearch.parentMethods = {
       onSubmit: (model) => this.onSubmitOptionsSearch(model),
     };
@@ -100,61 +94,101 @@ export class ArticleContentListComponent implements OnInit, OnDestroy {
     this.tableRowsSelected = [];
     this.tableRowSelected = new ArticleContentModel();
 
+
     this.loading.display = true;
     this.loading.Globally = false;
     this.filteModelContent.AccessLoad = true;
     /*filter CLone*/
     const filterModel = JSON.parse(JSON.stringify(this.filteModelContent));
     /*filter CLone*/
-    /** filter Category */
-    if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
-      const filterChild = new FilterDataModel();
-      let fastfilter = new FilterDataModel();
-      fastfilter.PropertyName = 'LinkCategoryId';
-      fastfilter.Value = this.categoryModelSelected.Id;
-      fastfilter.ClauseType = EnumClauseType.Or;
-      filterChild.Filters.push(fastfilter);
-      /** N to N */
-      fastfilter = new FilterDataModel();
-      fastfilter.PropertyName = 'ContentCategores';
-      fastfilter.PropertyAnyName = 'LinkCategoryId';
-      fastfilter.Value = this.categoryModelSelected.Id;
-      fastfilter.ClauseType = EnumClauseType.Or;
-      filterChild.Filters.push(fastfilter);
-      filterModel.Filters.push(filterChild);
-    }
-    /** filter Category */
-    this.articleContentService.ServiceGetAll(filterModel).subscribe(
-      (next) => {
-        this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
 
-        if (next.IsSuccess) {
-          this.dataModelResult = next;
-          this.tableSource.data = next.ListItems;
-          if (this.tokenInfo.UserAccessAdminAllowToAllData) {
-            this.tabledisplayedColumns = this.publicHelper.listAddIfNotExist(
-              this.tabledisplayedColumns,
-              'LinkSiteId',
-              0
-            );
-          } else {
-            this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
-              this.tabledisplayedColumns,
-              'LinkSiteId'
-            );
+    if (this.GetAllWithHierarchyCategoryId) {
+      /** GetAllWithHierarchyCategoryId */
+      this.contentService.ServiceGetAllWithHierarchyCategoryId(this.categoryModelSelected.Id, filterModel).subscribe(
+        (next) => {
+          this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+          if (next.IsSuccess) {
+            this.dataModelResult = next;
+            this.tableSource.data = next.ListItems;
+            if (this.tokenInfo.UserAccessAdminAllowToAllData) {
+              this.tabledisplayedColumns = this.publicHelper.listAddIfNotExist(
+                this.tabledisplayedColumns,
+                'LinkSiteId',
+                0
+              );
+            } else {
+              this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
+                this.tabledisplayedColumns,
+                'LinkSiteId'
+              );
+            }
+            if (this.optionsSearch.childMethods) {
+              this.optionsSearch.childMethods.setAccess(next.Access);
+            }
           }
-          if (this.optionsSearch.childMethods) {
-            this.optionsSearch.childMethods.setAccess(next.Access);
-          }
+          this.loading.display = false;
+        },
+        (error) => {
+          this.cmsToastrService.typeError(error);
+
+          this.loading.display = false;
         }
-        this.loading.display = false;
-      },
-      (error) => {
-        this.cmsToastrService.typeError(error);
-
-        this.loading.display = false;
+      );
+      /** GetAllWithHierarchyCategoryId */
+    } else {
+      /** Normal */
+      /** filter Category */
+      if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
+        const filterChild = new FilterDataModel();
+        let fastfilter = new FilterDataModel();
+        fastfilter.PropertyName = 'LinkCategoryId';
+        fastfilter.Value = this.categoryModelSelected.Id;
+        fastfilter.ClauseType = EnumClauseType.Or;
+        filterChild.Filters.push(fastfilter);
+        /** N to N */
+        fastfilter = new FilterDataModel();
+        fastfilter.PropertyName = 'ContentCategores';
+        fastfilter.PropertyAnyName = 'LinkCategoryId';
+        fastfilter.Value = this.categoryModelSelected.Id;
+        fastfilter.ClauseType = EnumClauseType.Or;
+        filterChild.Filters.push(fastfilter);
+        filterModel.Filters.push(filterChild);
       }
-    );
+      /** filter Category */
+      this.contentService.ServiceGetAll(filterModel).subscribe(
+        (next) => {
+          this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
+
+
+          if (next.IsSuccess) {
+            this.dataModelResult = next;
+            this.tableSource.data = next.ListItems;
+            if (this.tokenInfo.UserAccessAdminAllowToAllData) {
+              this.tabledisplayedColumns = this.publicHelper.listAddIfNotExist(
+                this.tabledisplayedColumns,
+                'LinkSiteId',
+                0
+              );
+            } else {
+              this.tabledisplayedColumns = this.publicHelper.listRemoveIfExist(
+                this.tabledisplayedColumns,
+                'LinkSiteId'
+              );
+            }
+            if (this.optionsSearch.childMethods) {
+              this.optionsSearch.childMethods.setAccess(next.Access);
+            }
+          }
+          this.loading.display = false;
+        },
+        (error) => {
+          this.cmsToastrService.typeError(error);
+
+          this.loading.display = false;
+        }
+      );
+      /** Normal */
+    }
   }
 
   onTableSortData(sort: MatSort): void {
@@ -258,7 +292,7 @@ export class ArticleContentListComponent implements OnInit, OnDestroy {
     const statist = new Map<string, number>();
     statist.set('Active', 0);
     statist.set('All', 0);
-    this.articleContentService.ServiceGetCount(this.filteModelContent).subscribe(
+    this.contentService.ServiceGetCount(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('All', next.TotalRowCount);
@@ -275,7 +309,7 @@ export class ArticleContentListComponent implements OnInit, OnDestroy {
     fastfilter.PropertyName = 'RecordStatus';
     fastfilter.Value = EnumRecordStatus.Available;
     filterStatist1.Filters.push(fastfilter);
-    this.articleContentService.ServiceGetCount(filterStatist1).subscribe(
+    this.contentService.ServiceGetCount(filterStatist1).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('Active', next.TotalRowCount);
@@ -300,7 +334,7 @@ export class ArticleContentListComponent implements OnInit, OnDestroy {
   onSubmitOptionExport(model: FilterModel): void {
     const exportlist = new Map<string, string>();
     exportlist.set('Download', 'loading ... ');
-    this.articleContentService.ServiceExportFile(model).subscribe(
+    this.contentService.ServiceExportFile(model).subscribe(
       (next) => {
         if (next.IsSuccess) {
           exportlist.set('Download', next.LinkFile);

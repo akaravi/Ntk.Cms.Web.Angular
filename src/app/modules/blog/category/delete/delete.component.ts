@@ -26,7 +26,7 @@ export class BlogCategoryDeleteComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<BlogCategoryDeleteComponent>,
     private publicHelper: PublicHelper,
-    private blogCategoryService: BlogCategoryService,
+    private categoryService: BlogCategoryService,
     private cmsToastrService: CmsToastrService
   ) {
     if (data) {
@@ -59,8 +59,8 @@ export class BlogCategoryDeleteComponent implements OnInit {
     }
     this.formInfo.FormAlert = 'در حال لود اطلاعات';
     this.loading.display = true;
-    this.blogCategoryService.setAccessLoad();
-    this.blogCategoryService
+    this.categoryService.setAccessLoad();
+    this.categoryService
       .ServiceGetOneById(this.requestId)
       .subscribe(
         (next) => {
@@ -91,7 +91,7 @@ export class BlogCategoryDeleteComponent implements OnInit {
     const filterModel: FilterModel = new FilterModel();
     filterModel.RowPerPage = 100;
     this.loading.display = true;
-    this.blogCategoryService
+    this.categoryService
       .ServiceGetAll(filterModel)
       .subscribe(
         (next) => {
@@ -133,7 +133,7 @@ export class BlogCategoryDeleteComponent implements OnInit {
 
     this.formInfo.ButtonSubmittedEnabled = false;
     this.loading.display = true;
-    this.blogCategoryService
+    this.categoryService
       .ServiceMove(this.requestId, this.dataModel.NewCatId)
       .subscribe(
         (next) => {
@@ -167,7 +167,7 @@ export class BlogCategoryDeleteComponent implements OnInit {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.ButtonSubmittedEnabled = false;
     this.loading.display = true;
-    this.blogCategoryService
+    this.categoryService
       .ServiceDelete(this.requestId)
       .subscribe(
         (next) => {

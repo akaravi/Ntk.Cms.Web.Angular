@@ -36,7 +36,7 @@ export class BlogCommentEditComponent implements OnInit {
     private cmsStoreService: CmsStoreService,
     private dialogRef: MatDialogRef<BlogCommentEditComponent>,
     public coreEnumService: CoreEnumService,
-    public blogCommentService: BlogCommentService,
+    public commentService: BlogCommentService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService
   ) {
@@ -103,8 +103,8 @@ export class BlogCommentEditComponent implements OnInit {
     this.formInfo.FormAlert = 'در دریافت ارسال اطلاعات از سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.blogCommentService.setAccessLoad();
-    this.blogCommentService.ServiceGetOneById(this.requestId).subscribe(
+    this.commentService.setAccessLoad();
+    this.commentService.ServiceGetOneById(this.requestId).subscribe(
       (next) => {
         this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
 
@@ -130,7 +130,7 @@ export class BlogCommentEditComponent implements OnInit {
     this.loading.display = true;
 
     this.dataModel.LinkContentId = this.requestContentId;
-    this.blogCommentService.ServiceAdd(this.dataModel).subscribe(
+    this.commentService.ServiceAdd(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormSubmitAllow = true;
         this.dataModelResult = next;
@@ -156,7 +156,7 @@ export class BlogCommentEditComponent implements OnInit {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.blogCommentService.ServiceEdit(this.dataModel).subscribe(
+    this.commentService.ServiceEdit(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormSubmitAllow = true;
         this.dataModelResult = next;

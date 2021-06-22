@@ -11,11 +11,9 @@ import {
   Component,
   OnInit,
   ViewChild,
-  ChangeDetectorRef,
   Inject,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
@@ -23,7 +21,6 @@ import {
   TreeModel,
   NodeInterface,
 } from 'ntk-cms-filemanager';
-import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
@@ -39,7 +36,7 @@ export class ArticleCategoryEditComponent implements OnInit {
     private cmsStoreService: CmsStoreService,
     private dialogRef: MatDialogRef<ArticleCategoryEditComponent>,
     public coreEnumService: CoreEnumService,
-    public articleCategoryService: ArticleCategoryService,
+    public categoryService: ArticleCategoryService,
     private cmsToastrService: CmsToastrService,
     public publicHelper: PublicHelper,
 
@@ -106,8 +103,8 @@ export class ArticleCategoryEditComponent implements OnInit {
     this.formInfo.FormAlert = 'در دریافت ارسال اطلاعات از سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.articleCategoryService.setAccessLoad();
-    this.articleCategoryService.ServiceGetOneById(this.requestId).subscribe(
+    this.categoryService.setAccessLoad();
+    this.categoryService.ServiceGetOneById(this.requestId).subscribe(
       (next) => {
         this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
 
@@ -133,7 +130,7 @@ export class ArticleCategoryEditComponent implements OnInit {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.articleCategoryService.ServiceEdit(this.dataModel).subscribe(
+    this.categoryService.ServiceEdit(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormSubmitAllow = true;
         this.dataModelResult = next;

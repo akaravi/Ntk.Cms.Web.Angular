@@ -13,7 +13,7 @@ import {
   ViewChild,
   Inject,
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
@@ -21,7 +21,6 @@ import {
   TreeModel,
   NodeInterface,
 } from 'ntk-cms-filemanager';
-import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
@@ -38,7 +37,7 @@ export class ArticleCategoryAddComponent implements OnInit {
     private dialogRef: MatDialogRef<ArticleCategoryAddComponent>,
     public publicHelper: PublicHelper,
     public coreEnumService: CoreEnumService,
-    public articleCategoryService: ArticleCategoryService,
+    public categoryService: ArticleCategoryService,
     private cmsToastrService: CmsToastrService
   ) {
     if (data) {
@@ -91,7 +90,7 @@ export class ArticleCategoryAddComponent implements OnInit {
     }
   }
   DataGetAccess(): void {
-    this.articleCategoryService
+    this.categoryService
       .ServiceViewModel()
       .subscribe(
         async (next) => {
@@ -112,7 +111,7 @@ export class ArticleCategoryAddComponent implements OnInit {
     this.formInfo.FormError = '';
     this.loading.display = true;
 
-    this.articleCategoryService.ServiceAdd(this.dataModel).subscribe(
+    this.categoryService.ServiceAdd(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormSubmitAllow = true;
         this.dataModelResult = next;

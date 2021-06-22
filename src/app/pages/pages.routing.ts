@@ -85,6 +85,12 @@ const routes: Routes = [
       },
 
       {
+        path: 'chart',
+        loadChildren: () =>
+          import('../modules/chart/chart.module').then(m => m.ChartModule)
+      },
+
+      {
         path: 'filemanager',
         loadChildren: () =>
           import('../modules/file-manager/filemanager.module').then(m => m.FileManagerModule)

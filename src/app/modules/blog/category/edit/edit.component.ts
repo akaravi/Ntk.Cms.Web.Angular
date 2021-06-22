@@ -39,7 +39,7 @@ export class BlogCategoryEditComponent implements OnInit {
     private cmsStoreService: CmsStoreService,
     private dialogRef: MatDialogRef<BlogCategoryEditComponent>,
     public coreEnumService: CoreEnumService,
-    public blogCategoryService: BlogCategoryService,
+    public categoryService: BlogCategoryService,
     private cmsToastrService: CmsToastrService,
     public publicHelper: PublicHelper,
   ) {
@@ -104,8 +104,8 @@ export class BlogCategoryEditComponent implements OnInit {
     this.formInfo.FormAlert = 'در دریافت ارسال اطلاعات از سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.blogCategoryService.setAccessLoad();
-    this.blogCategoryService.ServiceGetOneById(this.requestId).subscribe(
+    this.categoryService.setAccessLoad();
+    this.categoryService.ServiceGetOneById(this.requestId).subscribe(
       (next) => {
         this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
 
@@ -131,7 +131,7 @@ export class BlogCategoryEditComponent implements OnInit {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.blogCategoryService.ServiceEdit(this.dataModel).subscribe(
+    this.categoryService.ServiceEdit(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormSubmitAllow = true;
         this.dataModelResult = next;

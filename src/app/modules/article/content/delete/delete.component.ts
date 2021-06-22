@@ -27,7 +27,7 @@ export class ArticleContentDeleteComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<ArticleContentDeleteComponent>,
     private publicHelper: PublicHelper,
-    private articleContentService: ArticleContentService,
+    private contentService: ArticleContentService,
     private cmsToastrService: CmsToastrService
   ) {
     if (data) {
@@ -56,7 +56,7 @@ export class ArticleContentDeleteComponent implements OnInit {
     }
     this.formInfo.FormAlert = 'در حال لود اطلاعات';
     this.loading.display = true;
-    this.articleContentService
+    this.contentService
       .ServiceGetOneById(this.requestId)
       .subscribe(
         (next) => {
@@ -94,7 +94,7 @@ export class ArticleContentDeleteComponent implements OnInit {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.ButtonSubmittedEnabled = false;
     this.loading.display = true;
-    this.articleContentService
+    this.contentService
       .ServiceDelete(this.requestId)
       .subscribe(
         (next) => {

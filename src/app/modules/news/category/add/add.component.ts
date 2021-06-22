@@ -5,18 +5,15 @@ import {
   FormInfoModel,
   NewsCategoryService,
   NewsCategoryModel,
-  CmsStore,
   DataFieldInfoModel,
 } from 'ntk-cms-api';
 import {
   Component,
   OnInit,
   ViewChild,
-  ChangeDetectorRef,
   Inject,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
@@ -24,7 +21,6 @@ import {
   TreeModel,
   NodeInterface,
 } from 'ntk-cms-filemanager';
-import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 
@@ -39,7 +35,7 @@ export class NewsCategoryAddComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<NewsCategoryAddComponent>,
     public coreEnumService: CoreEnumService,
-    public newsCategoryService: NewsCategoryService,
+    public categoryService: NewsCategoryService,
     private cmsToastrService: CmsToastrService,
     private cmsStoreService: CmsStoreService,
     public publicHelper: PublicHelper,
@@ -95,7 +91,7 @@ export class NewsCategoryAddComponent implements OnInit {
 
 
   DataGetAccess(): void {
-    this.newsCategoryService
+    this.categoryService
       .ServiceViewModel()
       .subscribe(
         async (next) => {
@@ -117,7 +113,7 @@ export class NewsCategoryAddComponent implements OnInit {
     this.formInfo.FormError = '';
     this.loading.display = true;
 
-    this.newsCategoryService.ServiceAdd(this.dataModel).subscribe(
+    this.categoryService.ServiceAdd(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormSubmitAllow = true;
         this.dataModelResult = next;

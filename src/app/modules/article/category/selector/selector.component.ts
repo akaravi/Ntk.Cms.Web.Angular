@@ -28,7 +28,6 @@ export class ArticleCategorySelectorComponent implements OnInit {
     public coreEnumService: CoreEnumService,
     public categoryService: ArticleCategoryService) {
 
-
   }
   dataModelResult: ErrorExceptionResult<ArticleCategoryModel> = new ErrorExceptionResult<ArticleCategoryModel>();
   dataModelSelect: ArticleCategoryModel = new ArticleCategoryModel();

@@ -38,7 +38,7 @@ export class BlogCategoryAddComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<BlogCategoryAddComponent>,
     public coreEnumService: CoreEnumService,
-    public blogCategoryService: BlogCategoryService,
+    public categoryService: BlogCategoryService,
     private cmsToastrService: CmsToastrService,
     private cmsStoreService: CmsStoreService,
     public publicHelper: PublicHelper,
@@ -97,7 +97,7 @@ export class BlogCategoryAddComponent implements OnInit {
 
 
   DataGetAccess(): void {
-    this.blogCategoryService
+    this.categoryService
       .ServiceViewModel()
       .subscribe(
         async (next) => {
@@ -118,7 +118,7 @@ export class BlogCategoryAddComponent implements OnInit {
     this.formInfo.FormError = '';
     this.loading.display = true;
 
-    this.blogCategoryService.ServiceAdd(this.dataModel).subscribe(
+    this.categoryService.ServiceAdd(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormSubmitAllow = true;
         this.dataModelResult = next;

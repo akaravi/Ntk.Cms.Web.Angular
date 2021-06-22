@@ -7,9 +7,9 @@ import {ErrorExceptionResult, FilterModel, NewsContentModel, NewsContentService}
 export class ContentResolver implements Resolve<ErrorExceptionResult<NewsContentModel>>{
 
   filterModelContent = new FilterModel();
-  constructor(private newsContentService: NewsContentService) { }
+  constructor(private contentService: NewsContentService) { }
 
   resolve(): Observable<ErrorExceptionResult<NewsContentModel>> {
-    return this.newsContentService.ServiceGetAll(this.filterModelContent);
+    return this.contentService.ServiceGetAll(this.filterModelContent);
   }
 }

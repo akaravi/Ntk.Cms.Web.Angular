@@ -35,7 +35,7 @@ export class ArticleCommentEditComponent implements OnInit {
     private cmsStoreService: CmsStoreService,
     private dialogRef: MatDialogRef<ArticleCommentEditComponent>,
     public coreEnumService: CoreEnumService,
-    public articleCommentService: ArticleCommentService,
+    public commentService: ArticleCommentService,
     private cmsToastrService: CmsToastrService,
     private publicHelper: PublicHelper
   ) {
@@ -102,7 +102,7 @@ export class ArticleCommentEditComponent implements OnInit {
     this.formInfo.FormAlert = 'در دریافت ارسال اطلاعات از سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.articleCommentService.ServiceGetOneById(this.requestId).subscribe(
+    this.commentService.ServiceGetOneById(this.requestId).subscribe(
       (next) => {
         this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
 
@@ -128,7 +128,7 @@ export class ArticleCommentEditComponent implements OnInit {
     this.loading.display = true;
 
     this.dataModel.LinkContentId = this.requestContentId;
-    this.articleCommentService.ServiceAdd(this.dataModel).subscribe(
+    this.commentService.ServiceAdd(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormSubmitAllow = true;
         this.dataModelResult = next;
@@ -154,7 +154,7 @@ export class ArticleCommentEditComponent implements OnInit {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-    this.articleCommentService.ServiceEdit(this.dataModel).subscribe(
+    this.commentService.ServiceEdit(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormSubmitAllow = true;
         this.dataModelResult = next;

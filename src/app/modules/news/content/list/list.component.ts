@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import {
   CoreAuthService,
   DataFieldInfoModel,
+  EnumClauseType,
   EnumRecordStatus,
   EnumSortType,
   ErrorExceptionResult,
@@ -37,7 +38,7 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
   constructor(
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
-    private newsContentService: NewsContentService,
+    private contentService: NewsContentService,
     private cmsToastrService: CmsToastrService,
     private router: Router,
     public dialog: MatDialog
@@ -98,13 +99,12 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
     /*filter CLone*/
     const filterModel = JSON.parse(JSON.stringify(this.filteModelContent));
     /*filter CLone*/
+
     if (this.GetAllWithHierarchyCategoryId) {
       /** GetAllWithHierarchyCategoryId */
-      this.newsContentService.ServiceGetAllWithHierarchyCategoryId(this.categoryModelSelected.Id, filterModel).subscribe(
+      this.contentService.ServiceGetAllWithHierarchyCategoryId(this.categoryModelSelected.Id, filterModel).subscribe(
         (next) => {
           this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
-
-
           if (next.IsSuccess) {
             this.dataModelResult = next;
             this.tableSource.data = next.ListItems;
@@ -135,13 +135,25 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
       /** GetAllWithHierarchyCategoryId */
     } else {
       /** Normal */
+      /** filter Category */
       if (this.categoryModelSelected && this.categoryModelSelected.Id > 0) {
-        const filter = new FilterDataModel();
-        filter.PropertyName = 'LinkCategoryId';
-        filter.Value = this.categoryModelSelected.Id;
-        filterModel.Filters.push(filter);
+        const filterChild = new FilterDataModel();
+        let fastfilter = new FilterDataModel();
+        fastfilter.PropertyName = 'LinkCategoryId';
+        fastfilter.Value = this.categoryModelSelected.Id;
+        fastfilter.ClauseType = EnumClauseType.Or;
+        filterChild.Filters.push(fastfilter);
+        /** N to N */
+        fastfilter = new FilterDataModel();
+        fastfilter.PropertyName = 'ContentCategores';
+        fastfilter.PropertyAnyName = 'LinkCategoryId';
+        fastfilter.Value = this.categoryModelSelected.Id;
+        fastfilter.ClauseType = EnumClauseType.Or;
+        filterChild.Filters.push(fastfilter);
+        filterModel.Filters.push(filterChild);
       }
-      this.newsContentService.ServiceGetAll(filterModel).subscribe(
+      /** filter Category */
+      this.contentService.ServiceGetAll(filterModel).subscribe(
         (next) => {
           this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);
 
@@ -277,7 +289,7 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
     const statist = new Map<string, number>();
     statist.set('Active', 0);
     statist.set('All', 0);
-    this.newsContentService.ServiceGetCount(this.filteModelContent).subscribe(
+    this.contentService.ServiceGetCount(this.filteModelContent).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('All', next.TotalRowCount);
@@ -294,7 +306,7 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
     fastfilter.PropertyName = 'RecordStatus';
     fastfilter.Value = EnumRecordStatus.Available;
     filterStatist1.Filters.push(fastfilter);
-    this.newsContentService.ServiceGetCount(filterStatist1).subscribe(
+    this.contentService.ServiceGetCount(filterStatist1).subscribe(
       (next) => {
         if (next.IsSuccess) {
           statist.set('Active', next.TotalRowCount);
@@ -319,7 +331,7 @@ export class NewsContentListComponent implements OnInit, OnDestroy {
   onSubmitOptionExport(model: FilterModel): void {
     const exportlist = new Map<string, string>();
     exportlist.set('Download', 'loading ... ');
-    this.newsContentService.ServiceExportFile(model).subscribe(
+    this.contentService.ServiceExportFile(model).subscribe(
       (next) => {
         if (next.IsSuccess) {
           exportlist.set('Download', next.LinkFile);

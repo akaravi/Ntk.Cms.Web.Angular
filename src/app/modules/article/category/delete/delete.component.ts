@@ -26,7 +26,7 @@ export class ArticleCategoryDeleteComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<ArticleCategoryDeleteComponent>,
     private publicHelper: PublicHelper,
-    private articleCategoryService: ArticleCategoryService,
+    private categoryService: ArticleCategoryService,
     private cmsToastrService: CmsToastrService
   ) {
     if (data) {
@@ -61,8 +61,8 @@ export class ArticleCategoryDeleteComponent implements OnInit {
     }
     this.formInfo.FormAlert = 'در حال لود اطلاعات';
     this.loading.display = true;
-    this.articleCategoryService.setAccessLoad();
-    this.articleCategoryService
+    this.categoryService.setAccessLoad();
+    this.categoryService
       .ServiceGetOneById(this.requestId)
       .subscribe(
         (next) => {
@@ -93,7 +93,7 @@ export class ArticleCategoryDeleteComponent implements OnInit {
     const filterModel: FilterModel = new FilterModel();
     filterModel.RowPerPage = 100;
     this.loading.display = true;
-    this.articleCategoryService
+    this.categoryService
       .ServiceGetAll(filterModel)
       .subscribe(
         (next) => {
@@ -135,7 +135,7 @@ export class ArticleCategoryDeleteComponent implements OnInit {
 
     this.formInfo.ButtonSubmittedEnabled = false;
     this.loading.display = true;
-    this.articleCategoryService
+    this.categoryService
       .ServiceMove(this.requestId, this.dataModel.NewCatId)
       .subscribe(
         (next) => {
@@ -169,7 +169,7 @@ export class ArticleCategoryDeleteComponent implements OnInit {
     this.formInfo.FormSubmitAllow = false;
     this.formInfo.ButtonSubmittedEnabled = false;
     this.loading.display = true;
-    this.articleCategoryService
+    this.categoryService
       .ServiceDelete(this.requestId)
       .subscribe(
         (next) => {
