@@ -66,26 +66,26 @@
             <mat-datepicker touchUi #dataSiteStorageModel_UpdatedContent></mat-datepicker>
           </mat-form-field>
 
-          <!-- UpdatedNewsCategory Field -->
+          <!-- UpdatedChartCategory Field -->
           <mat-form-field class="example-full-width">
-            <mat-label>UpdatedNewsCategory</mat-label>
-            <input matInput [matDatepicker]="dataSiteStorageModel_UpdatedNewsCategory"
-              [(ngModel)]="dataSiteStorageModel.UpdatedNewsCategory" name="dataSiteStorageModel.UpdatedNewsCategory" />
-            <mat-icon matSuffix *ngIf="dataSiteStorageModel.UpdatedNewsCategory " matSuffix mat-icon-button
-              aria-label="Clear" (click)="dataSiteStorageModel.UpdatedNewsCategory = null">close</mat-icon>
-            <mat-datepicker-toggle matSuffix [for]="dataSiteStorageModel_UpdatedNewsCategory"></mat-datepicker-toggle>
-            <mat-datepicker touchUi #dataSiteStorageModel_UpdatedNewsCategory></mat-datepicker>
+            <mat-label>UpdatedChartCategory</mat-label>
+            <input matInput [matDatepicker]="dataSiteStorageModel_UpdatedChartCategory"
+              [(ngModel)]="dataSiteStorageModel.UpdatedChartCategory" name="dataSiteStorageModel.UpdatedChartCategory" />
+            <mat-icon matSuffix *ngIf="dataSiteStorageModel.UpdatedChartCategory " matSuffix mat-icon-button
+              aria-label="Clear" (click)="dataSiteStorageModel.UpdatedChartCategory = null">close</mat-icon>
+            <mat-datepicker-toggle matSuffix [for]="dataSiteStorageModel_UpdatedChartCategory"></mat-datepicker-toggle>
+            <mat-datepicker touchUi #dataSiteStorageModel_UpdatedChartCategory></mat-datepicker>
           </mat-form-field>
 
-          <!-- UpdatedNewsContent Field -->
+          <!-- UpdatedChartContent Field -->
           <mat-form-field class="example-full-width">
-            <mat-label>UpdatedNewsContent</mat-label>
-            <input matInput [matDatepicker]="dataSiteStorageModel_UpdatedNewsContent"
-              [(ngModel)]="dataSiteStorageModel.UpdatedNewsContent" name="dataSiteStorageModel.UpdatedNewsContent" />
-            <mat-icon matSuffix *ngIf="dataSiteStorageModel.UpdatedNewsContent " matSuffix mat-icon-button
-              aria-label="Clear" (click)="dataSiteStorageModel.UpdatedNewsContent = null">close</mat-icon>
-            <mat-datepicker-toggle matSuffix [for]="dataSiteStorageModel_UpdatedNewsContent"></mat-datepicker-toggle>
-            <mat-datepicker touchUi #dataSiteStorageModel_UpdatedNewsContent></mat-datepicker>
+            <mat-label>UpdatedChartContent</mat-label>
+            <input matInput [matDatepicker]="dataSiteStorageModel_UpdatedChartContent"
+              [(ngModel)]="dataSiteStorageModel.UpdatedChartContent" name="dataSiteStorageModel.UpdatedChartContent" />
+            <mat-icon matSuffix *ngIf="dataSiteStorageModel.UpdatedChartContent " matSuffix mat-icon-button
+              aria-label="Clear" (click)="dataSiteStorageModel.UpdatedChartContent = null">close</mat-icon>
+            <mat-datepicker-toggle matSuffix [for]="dataSiteStorageModel_UpdatedChartContent"></mat-datepicker-toggle>
+            <mat-datepicker touchUi #dataSiteStorageModel_UpdatedChartContent></mat-datepicker>
           </mat-form-field>
 
           <div *ngIf="tokenInfo.UserAccessAdminAllowToProfessionalData">

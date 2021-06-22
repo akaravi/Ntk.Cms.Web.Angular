@@ -22,9 +22,9 @@
             </mat-error>
           </mat-form-field>
           <!-- LinkCategoryId Field -->
-          <app-news-category-selector (optionSelect)="onActionSelectorSelect($event)"
+          <app-chart-category-selector (optionSelect)="onActionSelectorSelect($event)"
             [optionSelectForce]="dataModel.LinkCategoryId" [optionPlaceholder]="'دسته بندی'">
-          </app-news-category-selector>
+          </app-chart-category-selector>
           <!-- Title Field -->
           <mat-form-field class="example-full-width">
             <mat-label>{{fieldsInfo['Title']?.FieldTitle}}</mat-label>
@@ -280,14 +280,14 @@
         <mat-step label="مطالب مشابه" state="info">
           <p>مطالب مرتبط را مشخص کنید</p>
           <!-- contentSimilarSelected Field -->
-          <app-news-content-selector (optionSelect)="onActionContentSimilarSelect($event)"
+          <app-chart-content-selector (optionSelect)="onActionContentSimilarSelect($event)"
             [optionPlaceholder]="'محتوای مشابه'">
             <button *ngIf="contentSimilarSelected && contentSimilarSelected.Id"
               (click)="onActionContentSimilarAddToLIst()" type="button" mat-button
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
               اضافه به لیست ...
             </button>
-          </app-news-content-selector>
+          </app-chart-content-selector>
 
 
           <!-- TABLE  -->

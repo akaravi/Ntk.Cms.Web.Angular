@@ -23,9 +23,9 @@
               RecordStatus is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-          <app-news-category-selector (optionSelect)="onActionSelectorSelect($event)"
+          <app-chart-category-selector (optionSelect)="onActionSelectorSelect($event)"
             [optionSelectForce]="dataModel.LinkCategoryId" [optionPlaceholder]="'دسته بندی'">
-          </app-news-category-selector>
+          </app-chart-category-selector>
           <mat-form-field class="example-full-width">
             <mat-label>{{fieldsInfo['Title']?.FieldTitle}}</mat-label>
             <input matInput [(ngModel)]="dataModel.Title" name="dataModel.Title" #Title type="text"
@@ -87,9 +87,9 @@
         </mat-step>
 
         <mat-step label="دسته بندی ها" state="seo">
-          <app-news-category-treeselector [(optionModel)]="dataContentCategoryModel"
+          <app-chart-category-treeselector [(optionModel)]="dataContentCategoryModel"
             (optionSelectChecked)="onActionCategorySelectChecked($event)"
-            (optionSelectDisChecked)="onActionCategorySelectDisChecked($event)"></app-news-category-treeselector>
+            (optionSelectDisChecked)="onActionCategorySelectDisChecked($event)"></app-chart-category-treeselector>
           <br>
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button (click)="onActionBackToParent()"
@@ -301,7 +301,7 @@
         </mat-step>
         <mat-step label="مطالب مشابه" state="info">
           <p>مطالب مرتبط را مشخص کنید</p>
-          <app-news-content-selector (optionSelect)="onActionContentSimilarSelect($event)"
+          <app-chart-content-selector (optionSelect)="onActionContentSimilarSelect($event)"
             [optionPlaceholder]="'محتوای مشابه'">
 
 
@@ -310,7 +310,7 @@
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
               اضافه به لیست ...
             </button>
-          </app-news-content-selector>
+          </app-chart-content-selector>
 
 
           <!-- TABLE  -->

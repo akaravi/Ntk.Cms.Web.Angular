@@ -9,6 +9,7 @@ import {
   ApplicationAppService,
   ApplicationMemberInfoService,
   ArticleContentService,
+  ChartContentService,
   CoreSiteService,
   CoreUserService,
   NewsContentService
@@ -21,6 +22,7 @@ import { CoreSiteWidgetCountComponent } from 'src/app/modules/core-main/site/wid
 import { CoreSiteWidgetStatusComponent } from 'src/app/modules/core-main/site/widget/status/widget.component';
 import { CoreUserWidgetComponent } from 'src/app/modules/core-main/user/widget/widget.component';
 import { CoreSiteWidgetModuleComponent } from 'src/app/modules/core-main/site/widget/module/widget.component';
+import { ChartContentWidgetComponent } from 'src/app/modules/chart/content/widget/widget.component';
 
 
 @NgModule({
@@ -31,6 +33,7 @@ import { CoreSiteWidgetModuleComponent } from 'src/app/modules/core-main/site/wi
     ApplicationAppWidgetComponent,
     ApplicationMemberInfoWidgetComponent,
     NewsContentWidgetComponent,
+    ChartContentWidgetComponent,
     ArticleContentWidgetComponent,
     CoreSiteWidgetCountComponent,
     CoreSiteWidgetStatusComponent,
@@ -47,6 +50,7 @@ import { CoreSiteWidgetModuleComponent } from 'src/app/modules/core-main/site/wi
     ApplicationAppService,
     ApplicationMemberInfoService,
     NewsContentService,
+    ChartContentService,
     ArticleContentService,
     CoreSiteService,
     CoreUserService,
