@@ -8,9 +8,21 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class DateComponent implements OnInit {
 
   constructor() { }
-  @Input() model: Date;
+  @Input()
+  set model(value: Date) {
+    this.privateModelDate = value;
+  }
   @Output() modelChange: EventEmitter<Date> = new EventEmitter<Date>();
+  private privateModelDate: Date;
+  get modelDate(): Date {
+    return this.privateModelDate;
+  }
+  set modelDate(value: Date) {
+    this.privateModelDate = value;
+    this.modelChange.emit(value);
+  }
   ngOnInit(): void {
   }
+
 
 }

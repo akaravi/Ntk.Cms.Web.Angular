@@ -18,6 +18,9 @@ import {
   EnumInputDataType,
   EstatePropertyDetailValueModel,
   EstatePropertyTypeUsageModel,
+  FilterModel,
+  FilterDataModel,
+  EstatePropertyDetailGroupService,
 } from 'ntk-cms-api';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
@@ -35,20 +38,19 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
-  selector: 'app-estate-Property-edit',
+  selector: 'app-estate-property-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.scss']
 })
 export class EstatePropertyEditComponent implements OnInit {
   requestId = '';
   constructor(
-    // @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
-    // private dialogRef: MatDialogRef<EstatePropertyAddComponent>,
     private activatedRoute: ActivatedRoute,
     public coreEnumService: CoreEnumService,
     public estateContractTypeService: EstateContractTypeService,
     public estatePropertyService: EstatePropertyService,
+    public estatePropertyDetailGroupService: EstatePropertyDetailGroupService,
     private cmsToastrService: CmsToastrService,
     private router: Router,
     public publicHelper: PublicHelper,
@@ -139,20 +141,8 @@ export class EstatePropertyEditComponent implements OnInit {
         this.dataModel = next.Item;
         if (next.IsSuccess) {
           this.optionTabledataSource.data = this.dataModel.Contracts;
-          //** load Value */
-          this.dataModel.PropertyDetailGroups.forEach(itemGroup => {
-            itemGroup.PropertyDetails.forEach(element => {
-              this.propertyDetails[element.Id] = 0;
+          this.DataGetPropertyDetailGroup(this.dataModel.LinkPropertyTypeLanduseId);
 
-              if (this.dataModel.PropertyDetailValues) {
-                const value = this.dataModel.PropertyDetailValues.find(x => x.LinkPropertyDetailId === element.Id);
-                if (value) {
-                  this.propertyDetails[element.Id] = value.Value;
-                }
-              }
-            });
-          });
-          //** load Value */
 
           const lat = this.dataModel.Geolocationlatitude;
           const lon = this.dataModel.Geolocationlongitude;
@@ -176,6 +166,40 @@ export class EstatePropertyEditComponent implements OnInit {
     );
   }
 
+  DataGetPropertyDetailGroup(id: string): void {
+    const filteModelProperty = new FilterModel();
+    const filter = new FilterDataModel();
+    filter.PropertyName = 'LinkPropertyTypeLanduseId';
+    filter.Value = id;
+    filteModelProperty.Filters.push(filter);
+    this.estatePropertyDetailGroupService.ServiceGetAll(filteModelProperty)
+      .subscribe(
+        async (next) => {
+          if (next.IsSuccess) {
+            this.dataModel.PropertyDetailGroups = next.ListItems;
+            //** load Value */
+            this.dataModel.PropertyDetailGroups.forEach(itemGroup => {
+              itemGroup.PropertyDetails.forEach(element => {
+                this.propertyDetails[element.Id] = 0;
+
+                if (this.dataModel.PropertyDetailValues) {
+                  const value = this.dataModel.PropertyDetailValues.find(x => x.LinkPropertyDetailId === element.Id);
+                  if (value) {
+                    this.propertyDetails[element.Id] = value.Value;
+                  }
+                }
+              });
+            });
+            //** load Value */
+          } else {
+            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
+          }
+        },
+        (error) => {
+          this.cmsToastrService.typeErrorGetAccess(error);
+        }
+      );
+  }
   DataEdit(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';

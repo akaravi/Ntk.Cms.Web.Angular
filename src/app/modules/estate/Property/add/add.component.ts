@@ -24,7 +24,6 @@ import {
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { NodeInterface, TreeModel } from 'ntk-cms-filemanager';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CmsFormsErrorStateMatcher } from 'src/app/core/pipe/cmsFormsErrorStateMatcher';
 import { CmsStoreService } from 'src/app/core/reducers/cmsStore.service';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -45,9 +44,7 @@ export class EstatePropertyAddComponent implements OnInit {
   requestLinkPropertyTypeLanduseId = '';
   requestLinkPropertyTypeUsageId = '';
   constructor(
-    // @Inject(MAT_DIALOG_DATA) public data: any,
     private cmsStoreService: CmsStoreService,
-    // private dialogRef: MatDialogRef<EstatePropertyAddComponent>,
     private activatedRoute: ActivatedRoute,
     public coreEnumService: CoreEnumService,
     public estateContractTypeService: EstateContractTypeService,
@@ -151,7 +148,6 @@ export class EstatePropertyAddComponent implements OnInit {
   }
 
   DataGetPropertyDetailGroup(id: string): void {
-
     const filteModelProperty = new FilterModel();
     const filter = new FilterDataModel();
     filter.PropertyName = 'LinkPropertyTypeLanduseId';

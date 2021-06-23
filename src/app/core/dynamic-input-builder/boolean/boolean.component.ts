@@ -12,7 +12,7 @@ export class BooleanComponent implements OnInit {
   @Output() modelChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   ngOnInit(): void {
   }
-  setValueToggle( e) {
+  setValueToggle(e): void {
     if (e.checked) {
       this.modelChange.emit(true);
     } else {

@@ -8,9 +8,21 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class FloatComponent implements OnInit {
 
   constructor() { }
-  @Input() model: number;
+  @Input()
+  set model(value: number) {
+    this.privateModelDate = value;
+  }
   @Output() modelChange: EventEmitter<number> = new EventEmitter<number>();
+  private privateModelDate: number;
+  get modelDate(): number {
+    return this.privateModelDate;
+  }
+  set modelDate(value: number) {
+    this.privateModelDate = value;
+    this.modelChange.emit(value);
+  }
   ngOnInit(): void {
   }
+
 
 }
