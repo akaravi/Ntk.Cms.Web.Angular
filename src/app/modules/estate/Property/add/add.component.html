@@ -99,8 +99,70 @@
 
         <mat-step label="جزئیات" state="seo">
           <p>جزئیات ملک نسبت به نوع ملک</p>
-          سسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسس
-          سسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسس
+          <mat-accordion class="example-headers-align">
+            <mat-expansion-panel *ngFor="let itemGroup of dataModel.PropertyDetailGroups ; index as i"
+              [expanded]="step === i" (opened)="setStep(i)" hideToggle>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{itemGroup.Title}}
+                </mat-panel-title>
+                <mat-panel-description>
+                  {{itemGroup.Description}}
+                  <mat-icon>{{itemGroup.IconFont}}</mat-icon>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <!-- value-->
+              <ng-container *ngFor="let itemDetail of itemGroup.PropertyDetails">
+                <ng-container [ngSwitch]="itemDetail.InputDataType">
+                  <!-- ngSwitchCase-->
+                  <div *ngSwitchCase="0" class="example-full-width">
+                    <label style="color:'{{itemDetail.IconColor}}';">{{itemDetail.Title}}</label>
+                    <app-input-string [(model)]="propertyDetails[itemDetail.Id]"></app-input-string>
+                  </div>
+                  <!-- ngSwitchCase-->
+                  <div *ngSwitchCase="1" class="example-full-width">
+                    <label style="color:'{{itemDetail.IconColor}}';">{{itemDetail.Title}}</label>
+                    <app-input-int [(model)]="propertyDetails[itemDetail.Id]"></app-input-int>
+                  </div>
+                  <!-- ngSwitchCase-->
+                  <div *ngSwitchCase="2" class="example-full-width">
+                    <app-input-boolean [(model)]="propertyDetails[itemDetail.Id]">{{itemDetail.Title}}
+                    </app-input-boolean>
+                  </div>
+                  <!-- ngSwitchCase-->
+                  <div *ngSwitchCase="3" class="example-full-width">
+                    <label style="color:'{{itemDetail.IconColor}}';">{{itemDetail.Title}}</label>
+                    <app-input-float [(model)]="propertyDetails[itemDetail.Id]"></app-input-float>
+                  </div>
+                  <!-- ngSwitchCase-->
+                  <div *ngSwitchCase="4" class="example-full-width">
+                    <label style="color:'{{itemDetail.IconColor}}';">{{itemDetail.Title}}</label>
+                    <app-input-date [(model)]="propertyDetails[itemDetail.Id]"></app-input-date>
+                  </div>
+                  <!-- ngSwitchCase-->
+                  <div *ngSwitchCase="5" class="example-full-width">
+                    <label style="color:'{{itemDetail.IconColor}}';">{{itemDetail.Title}}</label>
+                    <app-input-textarea [(model)]="propertyDetails[itemDetail.Id]"></app-input-textarea>
+                  </div>
+                  <!-- ngSwitchCase-->
+                  <div *ngSwitchDefault>
+                    <label style="color:'{{itemDetail.IconColor}}';">{{itemDetail.Title}}</label>
+                    <app-input-string [(model)]="propertyDetails[itemDetail.Id]"></app-input-string>
+                  </div>
+                </ng-container>
+              </ng-container>
+              <mat-action-row>
+                <button mat-button type="button" color="warn" *ngIf="i>0" (click)="prevStep()">Previous</button>
+                <button mat-button type="button" color="primary" *ngIf="(i+1)<dataModel.PropertyDetailGroups.length"
+                  (click)="nextStep()">Next</button>
+                <button mat-button type="button" color="primary" *ngIf="(i+1)==dataModel.PropertyDetailGroups.length"
+                  (click)="nextStep()">End</button>
+
+              </mat-action-row>
+            </mat-expansion-panel>
+            <br>
+
+          </mat-accordion>
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">

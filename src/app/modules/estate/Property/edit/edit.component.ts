@@ -143,9 +143,9 @@ export class EstatePropertyEditComponent implements OnInit {
           this.dataModel.PropertyDetailGroups.forEach(itemGroup => {
             itemGroup.PropertyDetails.forEach(element => {
               this.propertyDetails[element.Id] = 0;
-              
+
               if (this.dataModel.PropertyDetailValues) {
-                const value = this.dataModel.PropertyDetailValues.find(x =>x.LinkPropertyDetailId == element.Id)
+                const value = this.dataModel.PropertyDetailValues.find(x => x.LinkPropertyDetailId === element.Id);
                 if (value) {
                   this.propertyDetails[element.Id] = value.Value;
                 }
@@ -237,9 +237,9 @@ export class EstatePropertyEditComponent implements OnInit {
   }
   setValueToggle(i, e) {
     if (e.checked) {
-      this.propertyDetails[i] = 'true'
+      this.propertyDetails[i] = 'true';
     } else {
-      this.propertyDetails[i] = 'false'
+      this.propertyDetails[i] = 'false';
     }
   }
   receiveZoom(zoom: number): void {
@@ -302,13 +302,14 @@ export class EstatePropertyEditComponent implements OnInit {
       return;
     }
     this.formInfo.FormSubmitAllow = false;
-    this.dataModel.PropertyDetailValues = [];
     //** Save Value */
+    this.dataModel.PropertyDetailValues = [];
     this.dataModel.PropertyDetailGroups.forEach(itemGroup => {
       itemGroup.PropertyDetails.forEach(element => {
         const value = new EstatePropertyDetailValueModel();
         value.LinkPropertyDetailId = element.Id;
         value.Value = this.propertyDetails[element.Id];
+
         this.dataModel.PropertyDetailValues.push(value);
       });
     });

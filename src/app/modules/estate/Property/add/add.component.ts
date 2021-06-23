@@ -16,6 +16,10 @@ import {
   EstateContractModel,
   EstateContractTypeService,
   EstatePropertyTypeUsageModel,
+  EstatePropertyDetailGroupService,
+  FilterDataModel,
+  FilterModel,
+  EstatePropertyDetailValueModel,
 } from 'ntk-cms-api';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
@@ -48,6 +52,7 @@ export class EstatePropertyAddComponent implements OnInit {
     public coreEnumService: CoreEnumService,
     public estateContractTypeService: EstateContractTypeService,
     public estatePropertyService: EstatePropertyService,
+    public estatePropertyDetailGroupService: EstatePropertyDetailGroupService,
     private cmsToastrService: CmsToastrService,
     private router: Router,
     public publicHelper: PublicHelper,
@@ -87,6 +92,7 @@ export class EstatePropertyAddComponent implements OnInit {
   loadingOption = new ProgressSpinnerModel();
   optionTabledataSource = new MatTableDataSource<EstateContractModel>();
   optionTabledisplayedColumns = ['LinkEstateContractTypeId', 'SalePrice', 'RentPrice', 'DepositPrice', 'Action'];
+  propertyDetails: Map<string, string> = new Map<string, string>();
 
   /** map */
   viewMap = false;
@@ -144,7 +150,28 @@ export class EstatePropertyAddComponent implements OnInit {
       );
   }
 
-  DataAddProperty(): void {
+  DataGetPropertyDetailGroup(id: string): void {
+
+    const filteModelProperty = new FilterModel();
+    const filter = new FilterDataModel();
+    filter.PropertyName = 'LinkPropertyTypeLanduseId';
+    filter.Value = id;
+    filteModelProperty.Filters.push(filter);
+    this.estatePropertyDetailGroupService.ServiceGetAll(filteModelProperty)
+      .subscribe(
+        async (next) => {
+          if (next.IsSuccess) {
+            this.dataModel.PropertyDetailGroups = next.ListItems;
+          } else {
+            this.cmsToastrService.typeErrorGetAccess(next.ErrorMessage);
+          }
+        },
+        (error) => {
+          this.cmsToastrService.typeErrorGetAccess(error);
+        }
+      );
+  }
+  DataAdd(): void {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
@@ -172,6 +199,7 @@ export class EstatePropertyAddComponent implements OnInit {
       }
     );
   }
+
   receiveMap(model: leafletMap): void {
     this.mapModel = model;
 
@@ -220,6 +248,7 @@ export class EstatePropertyAddComponent implements OnInit {
       return;
     }
     this.dataModel.LinkPropertyTypeLanduseId = model.Id;
+    this.DataGetPropertyDetailGroup(model.Id);
   }
   onActionSelectorCmsUser(model: CoreUserModel | null): void {
     if (!model || !model.Id || model.Id <= 0) {
@@ -263,8 +292,18 @@ export class EstatePropertyAddComponent implements OnInit {
       return;
     }
     this.formInfo.FormSubmitAllow = false;
-
-    this.DataAddProperty();
+    //** Save Value */
+    this.dataModel.PropertyDetailValues = [];
+    this.dataModel.PropertyDetailGroups.forEach(itemGroup => {
+      itemGroup.PropertyDetails.forEach(element => {
+        const value = new EstatePropertyDetailValueModel();
+        value.LinkPropertyDetailId = element.Id;
+        value.Value = this.propertyDetails[element.Id];
+        this.dataModel.PropertyDetailValues.push(value);
+      });
+    });
+    //** Save Value */
+    this.DataAdd();
 
   }
   onFormCancel(): void {
@@ -330,4 +369,18 @@ export class EstatePropertyAddComponent implements OnInit {
   onActionBackToParent(): void {
     this.router.navigate(['/estate/property/']);
   }
+  // ** Accardon */
+  step = 0;
+  setStep(index: number): void {
+    this.step = index;
+  }
+
+  nextStep(): void {
+    this.step++;
+  }
+
+  prevStep(): void {
+    this.step--;
+  }
+  // ** Accardon */
 }
