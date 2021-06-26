@@ -153,6 +153,7 @@ export class EstatePropertyAddComponent implements OnInit {
     filter.PropertyName = 'LinkPropertyTypeLanduseId';
     filter.Value = id;
     filteModelProperty.Filters.push(filter);
+    this.dataModel.PropertyDetailGroups = [];
     this.estatePropertyDetailGroupService.ServiceGetAll(filteModelProperty)
       .subscribe(
         async (next) => {

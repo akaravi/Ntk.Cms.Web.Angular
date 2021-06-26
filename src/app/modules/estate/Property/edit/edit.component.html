@@ -39,8 +39,7 @@
           </mat-form-field>
           <!-- LinkPropertyTypeUsageId Field -->
           <app-estate-propertytypeusage-selector (optionSelect)="onActionSelectorSelectUsage($event)"
-            [optionDisabled]="!fieldsInfo['LinkPropertyTypeUsageId']?.AccessEditField"
-            [optionTypeView]="2"
+            [optionDisabled]="!fieldsInfo['LinkPropertyTypeUsageId']?.AccessEditField" [optionTypeView]="2"
             [optionSelectForce]="dataModel.LinkPropertyTypeUsageId" [optionPlaceholder]="'نوع کاربری'">
           </app-estate-propertytypeusage-selector>
           <br>
@@ -48,8 +47,7 @@
           <!-- LinkPropertyTypeLanduseId Field -->
           <app-estate-propertytypelanduse-selector (optionSelect)="onActionSelectorSelectLanduse($event)"
             *ngIf="dataModel.LinkPropertyTypeUsageId && dataModel.LinkPropertyTypeUsageId.length>0"
-            [optionDisabled]="!fieldsInfo['LinkPropertyTypeLanduseId']?.AccessEditField"
-            [optionTypeView]="2"
+            [optionDisabled]="!fieldsInfo['LinkPropertyTypeLanduseId']?.AccessEditField" [optionTypeView]="2"
             [optionSelectForce]="dataModel.LinkPropertyTypeLanduseId" [optionPlaceholder]="'نوع ملک'"
             [optionTypeUsageId]="dataModel.LinkPropertyTypeUsageId">
           </app-estate-propertytypelanduse-selector>
@@ -61,13 +59,13 @@
           </app-estate-accountuser-selector>
           <!-- LinkCmsUserId Field -->
           <app-cms-user-selector (optionSelect)="onActionSelectorCmsUser($event)"
-            [optionDisabled]="!fieldsInfo['LinkCmsUserId']?.AccessEditField" [optionSelectForce]="dataModel.LinkCmsUserId"
-            [optionPlaceholder]="'مالک ملک'">
+            [optionDisabled]="!fieldsInfo['LinkCmsUserId']?.AccessEditField"
+            [optionSelectForce]="dataModel.LinkCmsUserId" [optionPlaceholder]="'مالک ملک'">
           </app-cms-user-selector>
           <!-- LinkLocationId Field -->
           <app-cms-location-selector (optionSelect)="onActionSelectorLocation($event)"
-            [optionDisabled]="!fieldsInfo['LinkLocationId']?.AccessEditField" [optionSelectForce]="dataModel.LinkLocationId"
-            [optionPlaceholder]="'منطقه'">
+            [optionDisabled]="!fieldsInfo['LinkLocationId']?.AccessEditField"
+            [optionSelectForce]="dataModel.LinkLocationId" [optionPlaceholder]="'منطقه'">
           </app-cms-location-selector>
           <!-- Description Field -->
           <mat-form-field class="example-full-width">
@@ -116,11 +114,14 @@
                   <!-- ngSwitchCase-->
                   <div *ngSwitchCase="0" class="example-full-width">
                     <label style="color:'{{itemDetail.IconColor}}';">{{itemDetail.Title}}</label>
-                    <app-input-string [(model)]="propertyDetails[itemDetail.Id]"></app-input-string>
+                    <app-input-string [(model)]="propertyDetails[itemDetail.Id]"
+                      [optionForceUseDefaultValue]="itemDetail.ConfigValueForceUseDefaultValue"
+                      [optionMultipleChoice]="itemDetail.ConfigValueMultipleChoice"
+                      [optionDefaultValue]="itemDetail.ConfigValueDefaultValue"></app-input-string>
                   </div>
                   <!-- ngSwitchCase-->
                   <div *ngSwitchCase="1" class="example-full-width">
-                    <label style="color:'{{itemDetail.IconColor}}';">{{itemDetail.Title}}</label>
+                    <label style="color:'{{itemDetail.IconColor}}';" >{{itemDetail.Title}}</label>
                     <app-input-int [(model)]="propertyDetails[itemDetail.Id]"></app-input-int>
                   </div>
                   <!-- ngSwitchCase-->
@@ -144,7 +145,7 @@
                     <app-input-textarea [(model)]="propertyDetails[itemDetail.Id]"></app-input-textarea>
                   </div>
                   <!-- ngSwitchCase-->
-                  <div *ngSwitchDefault>
+                  <div *ngSwitchDefault class="example-full-width">
                     <label style="color:'{{itemDetail.IconColor}}';">{{itemDetail.Title}}</label>
                     <app-input-string [(model)]="propertyDetails[itemDetail.Id]"></app-input-string>
                   </div>
@@ -175,8 +176,8 @@
         </mat-step>
         <mat-step label="معامله" state="seo">
           <p>نوع معامله این ملک را مشخص کنید</p>
-          <app-estate-contracttype-selector (optionSelect)="onActionSelectorContractType($event)" [optionDisabled]="false"
-            [optionPlaceholder]="'نوع معامله'">
+          <app-estate-contracttype-selector (optionSelect)="onActionSelectorContractType($event)"
+            [optionDisabled]="false" [optionPlaceholder]="'نوع معامله'">
           </app-estate-contracttype-selector>
           <div *ngIf="contractTypeSelected && contractTypeSelected.Id.length>0">
 

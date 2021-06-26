@@ -117,7 +117,10 @@
                   <!-- ngSwitchCase-->
                   <div *ngSwitchCase="0" class="example-full-width">
                     <label style="color:'{{itemDetail.IconColor}}';">{{itemDetail.Title}}</label>
-                    <app-input-string [(model)]="propertyDetails[itemDetail.Id]"></app-input-string>
+                    <app-input-string [(model)]="propertyDetails[itemDetail.Id]"
+                    [optionForceUseDefaultValue]="itemDetail.ConfigValueForceUseDefaultValue"
+                    [optionMultipleChoice]="itemDetail.ConfigValueMultipleChoice"
+                    [optionDefaultValue]="itemDetail.ConfigValueDefaultValue"></app-input-string>
                   </div>
                   <!-- ngSwitchCase-->
                   <div *ngSwitchCase="1" class="example-full-width">

@@ -172,6 +172,7 @@ export class EstatePropertyEditComponent implements OnInit {
     filter.PropertyName = 'LinkPropertyTypeLanduseId';
     filter.Value = id;
     filteModelProperty.Filters.push(filter);
+    this.dataModel.PropertyDetailGroups = [];
     this.estatePropertyDetailGroupService.ServiceGetAll(filteModelProperty)
       .subscribe(
         async (next) => {
@@ -283,6 +284,7 @@ export class EstatePropertyEditComponent implements OnInit {
       return;
     }
     this.dataModel.LinkPropertyTypeLanduseId = model.Id;
+    this.DataGetPropertyDetailGroup(model.Id);
   }
   onActionSelectorCmsUser(model: CoreUserModel | null): void {
     if (!model || !model.Id || model.Id <= 0) {

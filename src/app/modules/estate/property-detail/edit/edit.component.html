@@ -131,28 +131,27 @@
           {{fieldsInfo['IsHistoryable']?.FieldTitle}}
         </mat-slide-toggle>
       </div>
-      <!-- ConfigValueMultipleChoice Field -->
-      <div class="example-full-width">
-        <mat-slide-toggle [(ngModel)]="dataModel.ConfigValueMultipleChoice"
-          *ngIf="fieldsInfo['ConfigValueMultipleChoice']?.AccessWatchField"
-          [disabled]="!fieldsInfo['ConfigValueMultipleChoice']?.AccessEditField"
-          name="dataModel.ConfigValueMultipleChoice">
-          {{fieldsInfo['ConfigValueMultipleChoice']?.FieldTitle}}
-        </mat-slide-toggle>
-      </div>
+
       <!-- ConfigValueForceUseDefaultValue Field -->
       <div class="example-full-width">
         <mat-slide-toggle [(ngModel)]="dataModel.ConfigValueForceUseDefaultValue"
-          *ngIf="dataModel.ConfigValueMultipleChoice && fieldsInfo['ConfigValueForceUseDefaultValue']?.AccessWatchField"
+          *ngIf="fieldsInfo['ConfigValueForceUseDefaultValue']?.AccessWatchField"
           [disabled]="!fieldsInfo['ConfigValueForceUseDefaultValue']?.AccessEditField"
           name="dataModel.ConfigValueForceUseDefaultValue">
           {{fieldsInfo['ConfigValueForceUseDefaultValue']?.FieldTitle}}
         </mat-slide-toggle>
       </div>
+      <!-- ConfigValueMultipleChoice Field -->
+      <div class="example-full-width">
+        <mat-slide-toggle [(ngModel)]="dataModel.ConfigValueMultipleChoice"
+          *ngIf="dataModel.ConfigValueForceUseDefaultValue && fieldsInfo['ConfigValueMultipleChoice']?.AccessWatchField"
+          [disabled]="!fieldsInfo['ConfigValueMultipleChoice']?.AccessEditField"
+          name="dataModel.ConfigValueMultipleChoice">
+          {{fieldsInfo['ConfigValueMultipleChoice']?.FieldTitle}}
+        </mat-slide-toggle>
+      </div>
 
-
-
-      <tag-input [(ngModel)]="keywordDataModel" *ngIf="dataModel.ConfigValueMultipleChoice" name="keywordDataModel"
+      <tag-input [(ngModel)]="keywordDataModel" *ngIf="dataModel.ConfigValueForceUseDefaultValue" name="keywordDataModel"
         [placeholder]="'+ کلمه کلیدی'" [secondaryPlaceholder]="'مقادیر'" [identifyBy]="'display'">
 
       </tag-input>

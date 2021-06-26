@@ -10,9 +10,17 @@ export class StringComponent implements OnInit {
   constructor() { }
   @Input()
   set model(value: string) {
+    if (value) {
+      value.split(',').forEach(element => {
+        this.itemSelected[element] = true;
+      });
+    }
     this.privateModelDate = value;
   }
   @Output() modelChange: EventEmitter<string> = new EventEmitter<string>();
+  @Input() optionMultipleChoice = false;
+  @Input() optionForceUseDefaultValue = false;
+  @Input() optionDefaultValue: string[] = [];
   private privateModelDate = '';
   get modelDate(): string {
     return this.privateModelDate;
@@ -21,8 +29,18 @@ export class StringComponent implements OnInit {
     this.privateModelDate = value;
     this.modelChange.emit(value);
   }
+  itemSelected: Map<string, boolean> = new Map<string, boolean>();
 
   ngOnInit(): void {
   }
 
+  onActionSelect(value: string): void {
+    const retOut = [];
+    this.optionDefaultValue.forEach(element => {
+      if (this.itemSelected[element] && this.itemSelected[element] === true) {
+        retOut.push(element);
+      }
+    });
+    this.modelDate = retOut.join(',');
+  }
 }
