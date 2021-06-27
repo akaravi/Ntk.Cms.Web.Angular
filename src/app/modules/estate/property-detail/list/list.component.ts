@@ -65,7 +65,7 @@ export class EstatePropertyDetailListComponent implements OnInit, OnDestroy {
     this.filteModelContent.SortColumn = 'Id';
     this.filteModelContent.SortType = EnumSortType.Descending;
     const filter = new FilterDataModel();
-    if (this.requestLinkPropertyTypeLanduseId.length > 0) {
+    if (this.requestLinkPropertyTypeLanduseId && this.requestLinkPropertyTypeLanduseId.length > 0) {
       filter.PropertyName = 'LinkPropertyTypeLanduseId';
       filter.Value = this.requestLinkPropertyTypeLanduseId;
       this.filteModelContent.Filters.push(filter);
@@ -126,7 +126,7 @@ export class EstatePropertyDetailListComponent implements OnInit, OnDestroy {
       this.dataModelEstatePropertyTypeLanduseResult = next;
     });
   }
-   getPropertyDetailGroup(): void {
+  getPropertyDetailGroup(): void {
     const filter = new FilterModel();
     filter.RowPerPage = 100;
     this.estatePropertyDetailGroupService.ServiceGetAll(filter).subscribe((next) => {

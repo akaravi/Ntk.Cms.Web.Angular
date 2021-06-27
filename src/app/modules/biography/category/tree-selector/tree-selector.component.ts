@@ -137,20 +137,17 @@ export class BiographyCategoryTreeSelectorComponent implements OnInit, OnDestroy
 
   /** Whether all the descendants of the node are selected */
   descendantsAllSelected(node: BiographyCategoryModel): boolean {
-    // debugger;
     const descendants = this.treeControl.getDescendants(node);
     return descendants.every(child => this.checklistSelection.isSelected(child));
   }
   /** Whether part of the descendants are selected */
   descendantsPartiallySelected(node: BiographyCategoryModel): boolean {
-    // debugger;
     const descendants = this.treeControl.getDescendants(node);
     const result = descendants.some(child => this.checklistSelection.isSelected(child));
     return result && !this.descendantsAllSelected(node);
   }
   /** Toggle the to-do item selection. Select/deselect all the descendants node */
   todoItemSelectionToggle(node: BiographyCategoryModel): void {
-    // debugger;
     this.checklistSelection.toggle(node);
     const descendants = this.treeControl.getDescendants(node);
     this.checklistSelection.isSelected(node)

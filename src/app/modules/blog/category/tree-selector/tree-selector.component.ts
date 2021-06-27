@@ -137,20 +137,17 @@ export class BlogCategoryTreeSelectorComponent implements OnInit, OnDestroy {
 
   /** Whether all the descendants of the node are selected */
   descendantsAllSelected(node: BlogCategoryModel): boolean {
-    // debugger;
     const descendants = this.treeControl.getDescendants(node);
     return descendants.every(child => this.checklistSelection.isSelected(child));
   }
   /** Whether part of the descendants are selected */
   descendantsPartiallySelected(node: BlogCategoryModel): boolean {
-    // debugger;
     const descendants = this.treeControl.getDescendants(node);
     const result = descendants.some(child => this.checklistSelection.isSelected(child));
     return result && !this.descendantsAllSelected(node);
   }
   /** Toggle the to-do item selection. Select/deselect all the descendants node */
   todoItemSelectionToggle(node: BlogCategoryModel): void {
-    // debugger;
     this.checklistSelection.toggle(node);
     const descendants = this.treeControl.getDescendants(node);
     this.checklistSelection.isSelected(node)

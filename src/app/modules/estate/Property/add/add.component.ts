@@ -83,7 +83,7 @@ export class EstatePropertyAddComponent implements OnInit {
   fileManagerOpenForm = false;
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
   contractTypeSelected: EstateContractTypeModel;
-  contractSelected: EstateContractModel;
+  // contractSelected: EstateContractModel;
   contractDataModel = new EstateContractModel();
   optionActionTitle = 'اضافه به لیست';
   loadingOption = new ProgressSpinnerModel();
@@ -300,6 +300,11 @@ export class EstatePropertyAddComponent implements OnInit {
       });
     });
     //** Save Value */
+    if (!this.dataModel.Contracts || this.dataModel.Contracts.length === 0) {
+      const message = 'نوع معامله ملک مشخص نیست';
+      this.cmsToastrService.typeErrorSelected(message);
+      return;
+    }
     this.DataAdd();
 
   }
@@ -310,43 +315,32 @@ export class EstatePropertyAddComponent implements OnInit {
   }
 
   onActionOptionAddToList(): void {
-
     if (!this.contractTypeSelected || this.contractTypeSelected.Id.length === 0) {
+      const message = 'نوع معامله ملک مشخص نیست';
+      this.cmsToastrService.typeErrorSelected(message);
       return;
     }
     if (!this.dataModel.Contracts) {
       this.dataModel.Contracts = [];
     }
     this.dataModel.Contracts.push(this.contractDataModel);
-    this.contractSelected = new EstateContractModel();
+    // this.contractSelected = new EstateContractModel();
     this.optionTabledataSource.data = this.dataModel.Contracts;
   }
   onActionOptionRemoveFromList(index: number): void {
-
     if (index < 0) {
       return;
     }
     if (!this.dataModel.Contracts || this.dataModel.Contracts.length === 0) {
       return;
     }
-    this.contractSelected = this.dataModel.Contracts[index];
-    this.dataModel.Contracts = this.dataModel.Contracts.splice(index, 1);
-    this.contractSelected = new EstateContractModel();
+    this.contractDataModel = this.dataModel.Contracts[index];
+    this.dataModel.Contracts = this.dataModel.Contracts.splice(index, 0);
+    // this.contractSelected = new EstateContractModel();
+    this.contractDataModel = new EstateContractModel();
     this.optionTabledataSource.data = this.dataModel.Contracts;
   }
-  onActionOptionEditFromList(index: number): void {
 
-    if (index < 0) {
-      return;
-    }
-    if (!this.dataModel.Contracts || this.dataModel.Contracts.length === 0) {
-      return;
-    }
-    this.contractSelected = this.dataModel.Contracts[index];
-    this.dataModel.Contracts = this.dataModel.Contracts.splice(index, 1);
-    this.optionActionTitle = 'ویرایش';
-    this.optionTabledataSource.data = this.dataModel.Contracts;
-  }
 
   onActionFileSelectedLinkMainImageId(model: NodeInterface): void {
     this.dataModel.LinkMainImageId = model.id;

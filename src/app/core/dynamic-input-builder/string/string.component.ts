@@ -21,6 +21,7 @@ export class StringComponent implements OnInit {
   @Input() optionMultipleChoice = false;
   @Input() optionForceUseDefaultValue = false;
   @Input() optionDefaultValue: string[] = [];
+  @Input() optionRequired = false;
   private privateModelDate = '';
   get modelDate(): string {
     return this.privateModelDate;

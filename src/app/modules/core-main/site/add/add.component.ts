@@ -110,8 +110,16 @@ export class CoreSiteAddComponent implements OnInit {
 
       return;
     }
+    this.dataModel.Keyword = '';
     if (this.keywordDataModel && this.keywordDataModel.length > 0) {
-      const listKeyword = this.keywordDataModel.map(x => x.display);
+      const listKeyword = [];
+      this.keywordDataModel.forEach(element => {
+        if (element.display) {
+          listKeyword.push(element.display);
+        } else {
+          listKeyword.push(element);
+        }
+      });
       if (listKeyword && listKeyword.length > 0) {
         this.dataModel.Keyword = listKeyword.join(',');
       }

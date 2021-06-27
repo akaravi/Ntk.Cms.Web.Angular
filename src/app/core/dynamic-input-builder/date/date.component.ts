@@ -13,6 +13,7 @@ export class DateComponent implements OnInit {
     this.privateModelDate = value;
   }
   @Output() modelChange: EventEmitter<Date> = new EventEmitter<Date>();
+  @Input() optionRequired = false;
   private privateModelDate: Date;
   get modelDate(): Date {
     return this.privateModelDate;

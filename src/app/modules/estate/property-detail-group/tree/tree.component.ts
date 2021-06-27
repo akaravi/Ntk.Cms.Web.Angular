@@ -61,7 +61,7 @@ export class EstatePropertyDetailGroupTreeComponent implements OnInit, OnDestroy
   @Input() set optionLinkPropertyTypeLanduseId(id: string) {
     this.requestLinkPropertyTypeLanduseId = id;
     this.filteModel = new FilterModel();
-    if (id.length > 0) {
+    if (id && id.length > 0) {
       const filter = new FilterDataModel();
       filter.PropertyName = 'LinkPropertyTypeLanduseId';
       filter.Value = id;

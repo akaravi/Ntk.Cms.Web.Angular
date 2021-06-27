@@ -13,6 +13,7 @@ export class TextAreaComponent implements OnInit {
     this.privateModelDate = value;
   }
   @Output() modelChange: EventEmitter<string> = new EventEmitter<string>();
+  @Input() optionRequired = false;
   private privateModelDate = '';
   get modelDate(): string {
     return this.privateModelDate;

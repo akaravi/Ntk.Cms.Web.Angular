@@ -39,8 +39,7 @@
           </mat-form-field>
           <!-- LinkPropertyTypeUsageId Field -->
           <app-estate-propertytypeusage-selector (optionSelect)="onActionSelectorSelectUsage($event)"
-            [optionDisabled]="!fieldsInfo['LinkPropertyTypeUsageId']?.AccessAddField"
-            [optionTypeView]="2"
+            [optionDisabled]="!fieldsInfo['LinkPropertyTypeUsageId']?.AccessAddField" [optionTypeView]="2"
             [optionSelectForce]="dataModel.LinkPropertyTypeUsageId" [optionPlaceholder]="'نوع کاربری'">
           </app-estate-propertytypeusage-selector>
           <br>
@@ -48,8 +47,7 @@
           <!-- LinkPropertyTypeLanduseId Field -->
           <app-estate-propertytypelanduse-selector (optionSelect)="onActionSelectorSelectLanduse($event)"
             *ngIf="dataModel.LinkPropertyTypeUsageId && dataModel.LinkPropertyTypeUsageId.length>0"
-            [optionDisabled]="!fieldsInfo['LinkPropertyTypeLanduseId']?.AccessAddField"
-            [optionTypeView]="2"
+            [optionDisabled]="!fieldsInfo['LinkPropertyTypeLanduseId']?.AccessAddField" [optionTypeView]="2"
             [optionSelectForce]="dataModel.LinkPropertyTypeLanduseId" [optionPlaceholder]="'نوع ملک'"
             [optionTypeUsageId]="dataModel.LinkPropertyTypeUsageId">
           </app-estate-propertytypelanduse-selector>
@@ -61,20 +59,19 @@
           </app-estate-accountuser-selector>
           <!-- LinkCmsUserId Field -->
           <app-cms-user-selector (optionSelect)="onActionSelectorCmsUser($event)"
-            [optionDisabled]="!fieldsInfo['LinkCmsUserId']?.AccessAddField" [optionSelectForce]="dataModel.LinkCmsUserId"
-            [optionPlaceholder]="'مالک ملک'">
+            [optionDisabled]="!fieldsInfo['LinkCmsUserId']?.AccessAddField"
+            [optionSelectForce]="dataModel.LinkCmsUserId" [optionPlaceholder]="'مالک ملک'">
           </app-cms-user-selector>
           <!-- LinkLocationId Field -->
           <app-cms-location-selector (optionSelect)="onActionSelectorLocation($event)"
-            [optionDisabled]="!fieldsInfo['LinkLocationId']?.AccessAddField" [optionSelectForce]="dataModel.LinkLocationId"
-            [optionPlaceholder]="'منطقه'">
+            [optionDisabled]="!fieldsInfo['LinkLocationId']?.AccessAddField"
+            [optionSelectForce]="dataModel.LinkLocationId" [optionPlaceholder]="'منطقه'">
           </app-cms-location-selector>
           <!-- Description Field -->
           <mat-form-field class="example-full-width">
             <mat-label>{{fieldsInfo['Description']?.FieldTitle}}</mat-label>
             <textarea matInput [(ngModel)]="dataModel.Description" name="dataModel.Description" #Description type="text"
-              placeholder="{{fieldsInfo['Description']?.FieldTitle}}" minlength="1" maxlength="500"
-              rows=5></textarea>
+              placeholder="{{fieldsInfo['Description']?.FieldTitle}}" minlength="1" maxlength="500" rows=5></textarea>
             <mat-icon matSuffix *ngIf="dataModel.Description" matSuffix mat-icon-button aria-label="Clear"
               (click)="dataModel.Description = ''">close</mat-icon>
             <mat-icon matSuffix>mode_edit</mat-icon>
@@ -97,7 +94,7 @@
           </div>
         </mat-step>
 
-        <mat-step label="جزئیات" state="seo">
+        <mat-step label="جزئیات" state="seo" *ngIf="dataModel.PropertyDetailGroups && dataModel.PropertyDetailGroups.length>0">
           <p>جزئیات ملک نسبت به نوع ملک</p>
           <mat-accordion class="example-headers-align">
             <mat-expansion-panel *ngFor="let itemGroup of dataModel.PropertyDetailGroups ; index as i"
@@ -118,9 +115,9 @@
                   <div *ngSwitchCase="0" class="example-full-width">
                     <label style="color:'{{itemDetail.IconColor}}';">{{itemDetail.Title}}</label>
                     <app-input-string [(model)]="propertyDetails[itemDetail.Id]"
-                    [optionForceUseDefaultValue]="itemDetail.ConfigValueForceUseDefaultValue"
-                    [optionMultipleChoice]="itemDetail.ConfigValueMultipleChoice"
-                    [optionDefaultValue]="itemDetail.ConfigValueDefaultValue"></app-input-string>
+                      [optionForceUseDefaultValue]="itemDetail.ConfigValueForceUseDefaultValue"
+                      [optionMultipleChoice]="itemDetail.ConfigValueMultipleChoice"
+                      [optionDefaultValue]="itemDetail.ConfigValueDefaultValue"></app-input-string>
                   </div>
                   <!-- ngSwitchCase-->
                   <div *ngSwitchCase="1" class="example-full-width">
@@ -179,8 +176,9 @@
         </mat-step>
         <mat-step label="معامله" state="seo">
           <p>نوع معامله این ملک را مشخص کنید</p>
-          <app-estate-contracttype-selector (optionSelect)="onActionSelectorContractType($event)" [optionDisabled]="false"
-            [optionPlaceholder]="'نوع معامله'">
+          <app-estate-contracttype-selector (optionSelect)="onActionSelectorContractType($event)"
+            [optionDisabled]="false" [optionPlaceholder]="'نوع معامله'"
+            [optionSelectForce]="contractDataModel.LinkEstateContractTypeId">
           </app-estate-contracttype-selector>
           <div *ngIf="contractTypeSelected && contractTypeSelected.Id.length>0">
 
@@ -225,7 +223,8 @@
             class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
             {{optionActionTitle}} ...
           </button>
-          <p>لیست سایر اطلاعات</p>
+          <hr>
+          <p>لیست مشخصات معامله این ملک</p>
           <app-progress-spinner [options]="loadingOption">
           </app-progress-spinner>
           <!-- TABLE  -->
@@ -260,13 +259,11 @@
               <ng-container matColumnDef="Action">
                 <mat-header-cell *matHeaderCellDef> ... </mat-header-cell>
                 <mat-cell *matCellDef="let row; let i = index" class='Action'>
-                  <small (click)="onActionOptionEditFromList(i)">{{'ACTION.EDIT' | translate}}</small>|
-                  <small (click)="onActionOptionRemoveFromList(i)">حذف</small>
+                  <small (click)="onActionOptionRemoveFromList(i)">{{'ACTION.DELETE' | translate}}</small>
                 </mat-cell>
               </ng-container>
               <mat-header-row *matHeaderRowDef="optionTabledisplayedColumns"></mat-header-row>
-              <mat-row *matRowDef="let row; columns: optionTabledisplayedColumns;"
-                [ngStyle]="{'background': row.Id === this.contractSelected.Id ? '#d3d3da' : '' }">
+              <mat-row *matRowDef="let row; columns: optionTabledisplayedColumns;">
               </mat-row>
             </mat-table>
           </div>
@@ -304,8 +301,7 @@
               [openFilemanagerButtonLabelKey]="'select'" [selectFileType]="selectFileTypeMainImage"
               [openFilemanagerButtonView]="false"></cms-file-manager>
           </div>
-
-
+          <br>
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">
