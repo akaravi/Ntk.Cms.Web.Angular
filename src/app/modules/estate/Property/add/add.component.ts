@@ -348,6 +348,14 @@ export class EstatePropertyAddComponent implements OnInit {
   }
   onStepClick(event: StepperSelectionEvent, stepper: MatStepper): void {
     if (event.previouslySelectedIndex < event.selectedIndex) {
+      if (!this.dataModel.LinkPropertyTypeLanduseId || this.dataModel.LinkPropertyTypeLanduseId.length === 0
+        || !this.dataModel.LinkPropertyTypeUsageId || this.dataModel.LinkPropertyTypeUsageId.length === 0) {
+          this.cmsToastrService.typeErrorFormInvalid();
+          setTimeout(() => {
+            stepper.selectedIndex = event.previouslySelectedIndex;
+            // stepper.previous();
+          }, 10);
+      }
       if (!this.formGroup.valid) {
         this.cmsToastrService.typeErrorFormInvalid();
         setTimeout(() => {

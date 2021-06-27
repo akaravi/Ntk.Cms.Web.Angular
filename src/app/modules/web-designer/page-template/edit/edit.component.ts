@@ -82,6 +82,7 @@ export class WebDesignerMainPageTemplateEditComponent implements OnInit {
     }
 
     this.getEnumRecordStatus();
+    this.DataGetAllSourceSiteCategory();
   }
   getEnumRecordStatus(): void {
     if (this.storeSnapshot &&
