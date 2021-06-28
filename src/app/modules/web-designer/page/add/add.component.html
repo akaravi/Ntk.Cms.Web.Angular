@@ -17,20 +17,6 @@
           RecordStatus is <strong>required</strong>
         </mat-error>
       </mat-form-field>
-      <!-- PageAbilityType Field -->
-      <mat-form-field class="example-full-width">
-        <mat-select placeholder="وضعیت" [(ngModel)]="dataModel.PageAbilityType" name="dataModel.PageAbilityType"
-          #PageAbilityType="ngModel" panelClass="PageAbilityType-{{ dataModel.PageAbilityType }}" required>
-          <mat-option *ngFor="
-                let item of dataModelEnumPageAbilityTypeResult.ListItems;
-                index as i
-              " [value]="item.Value">{{ item.Description }}</mat-option>
-        </mat-select>
-        <mat-hint align="end">انتخاب قابلیت این محتوا</mat-hint>
-        <mat-error *ngIf="PageAbilityType.errors?.required">
-          PageAbilityType is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
       <!-- Title Field -->
       <mat-form-field class="example-full-width">
         <mat-label>{{fieldsInfo['Title']?.FieldTitle}}</mat-label>

@@ -42,7 +42,7 @@ export class EstatePropertyTypeUsageSelectorComponent implements OnInit {
   @Input() set optionSelectForce(x: string | EstatePropertyTypeUsageModel) {
     this.onActionSelectForce(x);
   }
-  @Input() optionTypeView = 1;
+  @Input() optionTypeView=1;
   ngOnInit(): void {
     this.loadOptions();
   }
@@ -106,14 +106,16 @@ export class EstatePropertyTypeUsageSelectorComponent implements OnInit {
       ).toPromise();
   }
   onActionSelect(model: EstatePropertyTypeUsageModel): void {
-    if (this.optionDisabled) {
+    if(this.optionDisabled)
+    {
       return;
     }
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
   }
   onActionSelectClear(): void {
-    if (this.optionDisabled) {
+    if(this.optionDisabled)
+    {
       return;
     }
     this.formControl.setValue(null);

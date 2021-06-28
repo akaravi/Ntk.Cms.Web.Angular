@@ -374,6 +374,7 @@ export class EstatePropertyEditComponent implements OnInit {
     if (!this.dataModel.Contracts || this.dataModel.Contracts.length === 0) {
       return;
     }
+    debugger;
     this.contractDataModel = this.dataModel.Contracts[index];
     this.dataModel.Contracts = this.dataModel.Contracts.splice(index, 0);
     // this.contractSelected = new EstateContractModel();

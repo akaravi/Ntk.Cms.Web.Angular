@@ -20,7 +20,7 @@
       <!-- PageAbilityType Field -->
       <mat-form-field class="example-full-width">
         <mat-select placeholder="وضعیت" [(ngModel)]="dataModel.PageAbilityType" name="dataModel.PageAbilityType"
-          #PageAbilityType="ngModel" panelClass="PageAbilityType-{{ dataModel.PageAbilityType }}" required>
+          #PageAbilityType="ngModel" panelClass="PageAbilityType-{{ dataModel.PageAbilityType }}" [disabled]="true" >
           <mat-option *ngFor="
                 let item of dataModelEnumPageAbilityTypeResult.ListItems;
                 index as i
