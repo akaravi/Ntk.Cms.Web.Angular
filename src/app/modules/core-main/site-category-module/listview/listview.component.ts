@@ -35,7 +35,7 @@ export class CoreSiteCategoryCmsModuleListViewComponent implements OnInit, OnDes
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
-    ) {
+  ) {
   }
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
@@ -87,6 +87,7 @@ export class CoreSiteCategoryCmsModuleListViewComponent implements OnInit, OnDes
       fastfilter.Value = this.linkSiteCategoryId;
       filteModel.Filters.push(fastfilter);
     }
+
     this.coreSiteCategoryCmsModuleService.ServiceGetAll(filteModel).subscribe(
       (next) => {
         this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);

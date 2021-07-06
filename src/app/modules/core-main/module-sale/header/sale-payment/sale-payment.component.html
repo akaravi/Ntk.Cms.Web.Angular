@@ -4,23 +4,17 @@
   <app-cms-bankpayment-grid [optionMasterItem]="true" (optionSelect)="onActionSelectCalculate($event)">
   </app-cms-bankpayment-grid>
   <div *ngIf="viewCalculate">
-
-    <mat-form-field class="example-full-width">
-      <mat-label>{{ 'FeeTax' }}</mat-label>
-      <input matInput [(ngModel)]="dataModelCalculateResult.Item.FeeTax" type="number" disabled />
-    </mat-form-field>
-    <mat-form-field class="example-full-width">
-      <mat-label>{{ 'AmountPure' }}</mat-label>
-      <input matInput [(ngModel)]="dataModelCalculateResult.Item.AmountPure" type="number"  disabled/>
-    </mat-form-field>
-    <mat-form-field class="example-full-width">
-      <mat-label>{{ 'FeeTransport' }}</mat-label>
-      <input matInput [(ngModel)]="dataModelCalculateResult.Item.FeeTransport" type="number" disabled />
-    </mat-form-field>
-    <mat-form-field class="example-full-width">
-      <mat-label>{{ 'Amount' }}</mat-label>
-      <input matInput [(ngModel)]="dataModelCalculateResult.Item.Amount" type="number" disabled />
-    </mat-form-field>
+    {{ 'FeeTax' }}:
+     {{dataModelCalculateResult.Item.FeeTax|currency:' '+dataModelCalculateResult.Item.Currency+' '}}
+    <br>
+    {{ 'AmountPure' }}:
+     {{dataModelCalculateResult.Item.AmountPure|currency:' '+dataModelCalculateResult.Item.Currency+' '}}
+    <br>
+    {{ 'FeeTransport' }}:
+    {{dataModelCalculateResult.Item.FeeTransport|currency:' '+dataModelCalculateResult.Item.Currency+' '}}
+    <hr>
+    {{ 'Amount' }}:
+    {{dataModelCalculateResult.Item.Amount|currency:' '+dataModelCalculateResult.Item.Currency+' '}}
   </div>
 
 </mat-dialog-content>

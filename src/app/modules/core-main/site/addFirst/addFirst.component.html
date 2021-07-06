@@ -34,7 +34,8 @@
                   <mat-form-field class="example-full-width">
                     <mat-label>توضیحات کوتاه در باره این سامانه</mat-label>
                     <textarea matInput [(ngModel)]="dataModel.Description" name="dataModel.Description" #Description
-                      type="text" placeholder="{{fieldsInfo['Description']?.FieldTitle}}" minlength="1" maxlength="500" rows=5></textarea>
+                      type="text" placeholder="{{fieldsInfo['Description']?.FieldTitle}}" minlength="1" maxlength="500"
+                      rows=5></textarea>
                     <mat-icon matSuffix *ngIf="dataModel.Description" matSuffix mat-icon-button aria-label="Clear"
                       (click)="dataModel.Description = ''">close</mat-icon>
                     <mat-icon matSuffix>mode_edit</mat-icon>
@@ -81,7 +82,7 @@
                       <mat-option *ngFor="
                 let item of dataModelResultDomains.ListItems;
                 index as i
-              " [value]="item.Domain">{{ item.Domain }}</mat-option>
+              " [value]="item">{{ item }}</mat-option>
                     </mat-select>
                     <mat-hint align="end">انتخاب دامنه برای این سامانه</mat-hint>
                   </mat-form-field>
@@ -93,8 +94,8 @@
                         dataModel.Domain }}</button>
                       <div class="dropdown-menu">
                         <option (click)="domain(item.Domain)" class="cursor-pointer"
-                          *ngFor="let item of dataModelResultDomains.ListItems;let i = index" value="{{item.Domain}}"
-                          [attr.selected]="i==0 ? 'selected' : null">{{item.Domain}}</option>
+                          *ngFor="let item of dataModelResultDomains.ListItems;let i = index" value="{{item}}"
+                          [attr.selected]="i==0 ? 'selected' : null">{{item}}</option>
                       </div>
                     </div>
                     <input [(ngModel)]="dataModel.SubDomain" name="subDomain" placeholder="YourSubDomain" type="text"

@@ -17,6 +17,7 @@ import {
   CoreModuleSaleInvoiceDetailModel,
   CoreModuleSaleInvoiceModel,
   CoreModuleSaleItemModel,
+  CoreSiteService,
 } from 'ntk-cms-api';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
@@ -33,11 +34,11 @@ import { CoreModuleSaleHeaderSalePaymentComponent } from '../sale-payment/sale-p
 export class CoreModuleSaleHeaderSaleListComponent implements OnInit, OnDestroy {
   constructor(
     private coreModuleSaleHeaderService: CoreModuleSaleHeaderService,
+    private coreSiteService: CoreSiteService,
     private cmsApiStore: NtkCmsApiStoreService,
     public publicHelper: PublicHelper,
     private cmsToastrService: CmsToastrService,
     public coreEnumService: CoreEnumService,
-    private activatedRoute: ActivatedRoute,
     private coreModuleService: CoreModuleService,
     private router: Router,
     public dialog: MatDialog) {
@@ -72,6 +73,7 @@ export class CoreModuleSaleHeaderSaleListComponent implements OnInit, OnDestroy 
 
   expandedElement: CoreModuleSaleItemModel | null;
   cmsApiStoreSubscribe: Subscription;
+  currency = '';
 
   ngOnInit(): void {
 
@@ -83,6 +85,19 @@ export class CoreModuleSaleHeaderSaleListComponent implements OnInit, OnDestroy 
     // this.getEnumCmsModuleSaleItemType();
 
     this.DataGetAll();
+    this.DataGetCurrency();
+  }
+  DataGetCurrency(): void {
+    this.coreSiteService.ServiceGetCurrencyMaster().subscribe(
+      (next) => {
+        if (next.IsSuccess) {
+          this.currency = next.Item;
+        }
+      },
+      (error) => {
+        this.cmsToastrService.typeError(error);
+      }
+    );
   }
   getModuleList(): void {
     const filter = new FilterModel();

@@ -98,7 +98,15 @@
             <mat-icon *ngIf="fieldsInfo['Domain']?.AccessEditField" matSuffix>mode_edit</mat-icon>
             <mat-hint align="start">{{ Domain.value.length }} / 20</mat-hint>
           </mat-form-field>
-          <!-- ViewInCmsSiteList Field -->
+          <!-- SSL Field -->
+          <div class="example-full-width">
+            <mat-slide-toggle [(ngModel)]="dataModel.SSL"
+              *ngIf="fieldsInfo['SSL']?.AccessWatchField"
+              [disabled]="!fieldsInfo['SSL']?.AccessEditField" name="dataModel.SSL">
+              {{fieldsInfo['SSL']?.FieldTitle}}
+            </mat-slide-toggle>
+          </div>
+            <!-- ViewInCmsSiteList Field -->
           <div class="example-full-width">
             <mat-slide-toggle [(ngModel)]="dataModel.ViewInCmsSiteList"
               *ngIf="fieldsInfo['ViewInCmsSiteList']?.AccessWatchField"

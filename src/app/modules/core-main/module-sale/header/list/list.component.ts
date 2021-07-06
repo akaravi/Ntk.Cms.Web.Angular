@@ -5,7 +5,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import {
   CoreModuleSaleHeaderModel,
   CoreModuleSaleHeaderService,
-  CoreAuthService,
   EnumSortType,
   ErrorExceptionResult,
   FilterModel,
@@ -14,7 +13,8 @@ import {
   FilterDataModel,
   EnumRecordStatus,
   DataFieldInfoModel,
-  CoreModuleSaleHeaderGroupModel
+  CoreModuleSaleHeaderGroupModel,
+  CoreSiteService
 } from 'ntk-cms-api';
 import { ComponentOptionSearchModel } from 'src/app/core/cmsComponentModels/base/componentOptionSearchModel';
 import { PublicHelper } from 'src/app/core/helpers/publicHelper';
@@ -98,10 +98,8 @@ export class CoreModuleSaleHeaderListComponent implements OnInit, OnDestroy {
   ];
 
 
-
   expandedElement: CoreModuleSaleHeaderModel | null;
   cmsApiStoreSubscribe: Subscription;
-
   ngOnInit(): void {
     this.filteModelContent.SortColumn = 'Title';
     this.DataGetAll();
@@ -114,6 +112,7 @@ export class CoreModuleSaleHeaderListComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.cmsApiStoreSubscribe.unsubscribe();
   }
+
   DataGetAll(): void {
     this.tableRowsSelected = [];
     this.tableRowSelected = new CoreModuleSaleHeaderModel();

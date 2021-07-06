@@ -1,6 +1,5 @@
 import {
   ErrorExceptionResult,
-  FormInfoModel,
   BlogCategoryModel,
   BankPaymentPrivateSiteConfigService,
   BankPaymentPrivateSiteConfigModel,
@@ -8,14 +7,10 @@ import {
 import {
   Component,
   OnInit,
-  ViewChild,
-  Inject,
   Input,
   Output,
   EventEmitter,
 } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CmsToastrService } from 'src/app/core/services/cmsToastr.service';
 import { ProgressSpinnerModel } from 'src/app/core/models/progressSpinnerModel';
 import {

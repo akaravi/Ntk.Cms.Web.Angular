@@ -41,7 +41,7 @@ export class CoreModuleSaleItemListViewComponent implements OnInit, OnDestroy {
     private cmsToastrService: CmsToastrService,
     private coreModuleService: CoreModuleService,
     private coreEnumService: CoreEnumService,
-    ) {
+  ) {
   }
   fieldsInfo: Map<string, DataFieldInfoModel> = new Map<string, DataFieldInfoModel>();
 
@@ -106,6 +106,7 @@ export class CoreModuleSaleItemListViewComponent implements OnInit, OnDestroy {
       fastfilter.Value = this.linkHeaderId;
       filteModel.Filters.push(fastfilter);
     }
+    filteModel.SortColumn = "Id";
     this.coreModuleSaleItemService.ServiceGetAll(filteModel).subscribe(
       (next) => {
         this.fieldsInfo = this.publicHelper.fieldInfoConvertor(next.Access);

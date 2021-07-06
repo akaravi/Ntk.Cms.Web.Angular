@@ -47,7 +47,7 @@ export class CoreSiteAddFirstComponent implements OnInit {
 
   dataModel = new CoreSiteAddFirstSiteDtoModel();
   filterModel = new FilterModel();
-  dataModelResultDomains = new ErrorExceptionResult<DomainModel>();
+  dataModelResultDomains = new ErrorExceptionResult<string>();
   captchaModel: CaptchaModel = new CaptchaModel();
   expireDate: string;
   aoutoCaptchaOrder = 1;
@@ -56,7 +56,7 @@ export class CoreSiteAddFirstComponent implements OnInit {
   modelDateSiteCategory = new CoreSiteCategoryModel();
 
   ngOnInit(): void {
-    this.GetDomainList();
+
     this.onCaptchaOrder();
     this.DataGetAccess();
 
@@ -81,7 +81,7 @@ export class CoreSiteAddFirstComponent implements OnInit {
   }
 
   GetDomainList(): void {
-    this.coreSiteService.ServiceDomains(0).subscribe(
+    this.coreSiteService.ServiceGetRegDomains(this.dataModel.LinkSiteCategoryId).subscribe(
       (next) => {
         if (next.IsSuccess) {
           this.dataModelResultDomains = next;
@@ -194,6 +194,7 @@ export class CoreSiteAddFirstComponent implements OnInit {
     }
     this.modelDateSiteCategory = model;
     this.dataModel.LinkSiteCategoryId = model.Id;
+    this.GetDomainList();
   }
   onStepClick(event: StepperSelectionEvent, stepper: MatStepper): void {
     if (event.previouslySelectedIndex < event.selectedIndex) {
