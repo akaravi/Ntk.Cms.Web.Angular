@@ -8,7 +8,6 @@
       <mat-horizontal-stepper *ngIf="!loading.display" (selectionChange)="onStepClick($event,stepper)" #stepper>
 
         <mat-step label="{{'TITLE.REQUIRED_INFORMATION' | translate}}" state="main">
-
           <!-- RecordStatus Field -->
           <mat-form-field class="example-full-width">
             <mat-select placeholder="{{fieldsInfo['RecordStatus']?.FieldTitle}}" [(ngModel)]="dataModel.RecordStatus"
@@ -94,8 +93,39 @@
           </div>
         </mat-step>
 
-        <mat-step label="جزئیات" state="seo" *ngIf="dataModel.PropertyDetailGroups && dataModel.PropertyDetailGroups.length>0">
+        <mat-step label="جزئیات" state="seo"
+          *ngIf="dataModel.PropertyDetailGroups && dataModel.PropertyDetailGroups.length>0">
           <p>جزئیات ملک نسبت به نوع ملک</p>
+          <!-- CreatedYaer Field -->
+          <mat-form-field class="example-full-width">
+            <mat-label>{{PropertyTypeSelected.TitleCreatedYaer}}</mat-label>
+            <input matInput [(ngModel)]="dataModel.CreatedYaer" name="dataModel.CreatedYaer" #CreatedYaer type="text"
+              placeholder="{{fieldsInfo['CreatedYaer']?.FieldTitle}}" />
+            <mat-icon matSuffix *ngIf="dataModel.CreatedYaer" matSuffix mat-icon-button aria-label="Clear"
+              (click)="dataModel.CreatedYaer = null">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
+
+          </mat-form-field>
+          <!-- Partition Field -->
+          <mat-form-field class="example-full-width">
+            <mat-label>{{PropertyTypeSelected.TitlePartition}}</mat-label>
+            <input matInput [(ngModel)]="dataModel.Partition" name="dataModel.Partition" #Partition type="text"
+              placeholder="{{PropertyTypeSelected.TitlePartition}}" />
+            <mat-icon matSuffix *ngIf="dataModel.Partition" matSuffix mat-icon-button aria-label="Clear"
+              (click)="dataModel.Partition = 0">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
+
+          </mat-form-field>
+          <!-- Area Field -->
+          <mat-form-field class="example-full-width">
+            <mat-label>{{fieldsInfo['Area']?.FieldTitle}}</mat-label>
+            <input matInput [(ngModel)]="dataModel.Area" name="dataModel.Area" #Area type="text"
+              placeholder="{{fieldsInfo['Area']?.FieldTitle}}" />
+            <mat-icon matSuffix *ngIf="dataModel.Area" matSuffix mat-icon-button aria-label="Clear"
+              (click)="dataModel.Area = 0">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
+          </mat-form-field>
+
           <mat-accordion class="example-headers-align">
             <mat-expansion-panel *ngFor="let itemGroup of dataModel.PropertyDetailGroups ; index as i"
               [expanded]="step === i" (opened)="setStep(i)" hideToggle>
@@ -117,34 +147,37 @@
                     <app-input-string [(model)]="propertyDetails[itemDetail.Id]"
                       [optionForceUseDefaultValue]="itemDetail.ConfigValueForceUseDefaultValue"
                       [optionMultipleChoice]="itemDetail.ConfigValueMultipleChoice"
-                      [optionDefaultValue]="itemDetail.ConfigValueDefaultValue"
-                      [optionRequired]="itemDetail.Required"
-                      ></app-input-string>
+                      [optionDefaultValue]="itemDetail.ConfigValueDefaultValue" [optionRequired]="itemDetail.Required">
+                    </app-input-string>
                   </div>
                   <!-- ngSwitchCase-->
                   <div *ngSwitchCase="1" class="example-full-width">
                     <label style="color:'{{itemDetail.IconColor}}';">{{itemDetail.Title}}</label>
-                    <app-input-int [(model)]="propertyDetails[itemDetail.Id]" [optionRequired]="itemDetail.Required"></app-input-int>
+                    <app-input-int [(model)]="propertyDetails[itemDetail.Id]" [optionRequired]="itemDetail.Required">
+                    </app-input-int>
                   </div>
                   <!-- ngSwitchCase-->
                   <div *ngSwitchCase="2" class="example-full-width">
-                    <app-input-boolean [(model)]="propertyDetails[itemDetail.Id]" >{{itemDetail.Title}}
+                    <app-input-boolean [(model)]="propertyDetails[itemDetail.Id]">{{itemDetail.Title}}
                     </app-input-boolean>
                   </div>
                   <!-- ngSwitchCase-->
                   <div *ngSwitchCase="3" class="example-full-width">
                     <label style="color:'{{itemDetail.IconColor}}';">{{itemDetail.Title}}</label>
-                    <app-input-float [(model)]="propertyDetails[itemDetail.Id]" [optionRequired]="itemDetail.Required"></app-input-float>
+                    <app-input-float [(model)]="propertyDetails[itemDetail.Id]" [optionRequired]="itemDetail.Required">
+                    </app-input-float>
                   </div>
                   <!-- ngSwitchCase-->
                   <div *ngSwitchCase="4" class="example-full-width">
                     <label style="color:'{{itemDetail.IconColor}}';">{{itemDetail.Title}}</label>
-                    <app-input-date [(model)]="propertyDetails[itemDetail.Id]" [optionRequired]="itemDetail.Required"></app-input-date>
+                    <app-input-date [(model)]="propertyDetails[itemDetail.Id]" [optionRequired]="itemDetail.Required">
+                    </app-input-date>
                   </div>
                   <!-- ngSwitchCase-->
                   <div *ngSwitchCase="5" class="example-full-width">
                     <label style="color:'{{itemDetail.IconColor}}';">{{itemDetail.Title}}</label>
-                    <app-input-textarea [(model)]="propertyDetails[itemDetail.Id]" [optionRequired]="itemDetail.Required"></app-input-textarea>
+                    <app-input-textarea [(model)]="propertyDetails[itemDetail.Id]"
+                      [optionRequired]="itemDetail.Required"></app-input-textarea>
                   </div>
                   <!-- ngSwitchCase-->
                   <div *ngSwitchDefault class="example-full-width">
@@ -152,9 +185,8 @@
                     <app-input-string [(model)]="propertyDetails[itemDetail.Id]"
                       [optionForceUseDefaultValue]="itemDetail.ConfigValueForceUseDefaultValue"
                       [optionMultipleChoice]="itemDetail.ConfigValueMultipleChoice"
-                      [optionDefaultValue]="itemDetail.ConfigValueDefaultValue"
-                      [optionRequired]="itemDetail.Required"
-                      ></app-input-string>
+                      [optionDefaultValue]="itemDetail.ConfigValueDefaultValue" [optionRequired]="itemDetail.Required">
+                    </app-input-string>
                   </div>
                 </ng-container>
               </ng-container>

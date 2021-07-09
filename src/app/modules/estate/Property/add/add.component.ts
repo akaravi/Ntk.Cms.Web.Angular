@@ -83,7 +83,7 @@ export class EstatePropertyAddComponent implements OnInit {
   fileManagerOpenForm = false;
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
   contractTypeSelected: EstateContractTypeModel;
-  // contractSelected: EstateContractModel;
+  PropertyTypeSelected = new EstatePropertyTypeLanduseModel();
   contractDataModel = new EstateContractModel();
   optionActionTitle = 'اضافه به لیست';
   loadingOption = new ProgressSpinnerModel();
@@ -244,6 +244,7 @@ export class EstatePropertyAddComponent implements OnInit {
       this.cmsToastrService.typeErrorSelected(message);
       return;
     }
+    this.PropertyTypeSelected = model;
     this.dataModel.LinkPropertyTypeLanduseId = model.Id;
     this.DataGetPropertyDetailGroup(model.Id);
   }

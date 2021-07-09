@@ -70,13 +70,14 @@ export class EstatePropertyEditComponent implements OnInit {
   dataModelResult: ErrorExceptionResult<EstatePropertyModel> = new ErrorExceptionResult<EstatePropertyModel>();
   dataModelEstateContractTypeResult: ErrorExceptionResult<EstateContractTypeModel> = new ErrorExceptionResult<EstateContractTypeModel>();
   dataModel: EstatePropertyModel = new EstatePropertyModel();
+
   dataFileModel = new Map<number, string>();
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   fileManagerOpenForm = false;
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
   contractTypeSelected: EstateContractTypeModel;
-  PropertyTypeSelected: EstatePropertyTypeLanduseModel;
+  PropertyTypeSelected = new EstatePropertyTypeLanduseModel();
   // contractSelected: EstateContractModel;
   contractDataModel = new EstateContractModel();
   optionActionTitle = 'اضافه به لیست';
@@ -283,6 +284,7 @@ export class EstatePropertyEditComponent implements OnInit {
       this.cmsToastrService.typeErrorSelected(message);
       return;
     }
+    this.PropertyTypeSelected = model;
     this.dataModel.LinkPropertyTypeLanduseId = model.Id;
     this.DataGetPropertyDetailGroup(model.Id);
   }
@@ -390,11 +392,11 @@ export class EstatePropertyEditComponent implements OnInit {
     if (event.previouslySelectedIndex < event.selectedIndex) {
       if (!this.dataModel.LinkPropertyTypeLanduseId || this.dataModel.LinkPropertyTypeLanduseId.length === 0
         || !this.dataModel.LinkPropertyTypeUsageId || this.dataModel.LinkPropertyTypeUsageId.length === 0) {
-          this.cmsToastrService.typeErrorFormInvalid();
-          setTimeout(() => {
-            stepper.selectedIndex = event.previouslySelectedIndex;
-            // stepper.previous();
-          }, 10);
+        this.cmsToastrService.typeErrorFormInvalid();
+        setTimeout(() => {
+          stepper.selectedIndex = event.previouslySelectedIndex;
+          // stepper.previous();
+        }, 10);
       }
       if (!this.formGroup.valid) {
         this.cmsToastrService.typeErrorFormInvalid();
