@@ -85,6 +85,7 @@
       "typeSuccessSelected": "با موفقیت انتخاب شد",
       "typeSuccessAppBuild": "دستور ساخت اپ ثبت شد",
       "typeSuccessAppUpload": "با موفقیت آپلود شد",
+      "typeSuccessCopedToClipboard": "در حافظ کپی شد",
       "typeErrorInternetConnection": "خطا در اتصال به اینترنت.لطفا اتصال به اینترنت را بررسی کنید",
       "typeErrorUserToken": "حساب کاربری شما مورد تایید نمی باشد.لطفا مجدد وارد حساب کاربری شوید",
       "typeErrorAccessChange": "دسترسی جدید تایید نشد",

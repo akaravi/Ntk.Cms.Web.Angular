@@ -94,37 +94,38 @@
           </div>
         </mat-step>
 
-        <mat-step label="جزئیات" state="seo" *ngIf="dataModel.PropertyDetailGroups && dataModel.PropertyDetailGroups.length>0">
+        <mat-step label="جزئیات" state="seo"
+          *ngIf="dataModel.PropertyDetailGroups && dataModel.PropertyDetailGroups.length>0">
           <p>جزئیات ملک نسبت به نوع ملک</p>
-                 <!-- CreatedYaer Field -->
-                 <mat-form-field class="example-full-width">
-                  <mat-label>{{PropertyTypeSelected.TitleCreatedYaer}}</mat-label>
-                  <input matInput [(ngModel)]="dataModel.CreatedYaer" name="dataModel.CreatedYaer" #CreatedYaer type="text"
-                    placeholder="{{fieldsInfo['CreatedYaer']?.FieldTitle}}" />
-                  <mat-icon matSuffix *ngIf="dataModel.CreatedYaer" matSuffix mat-icon-button aria-label="Clear"
-                    (click)="dataModel.CreatedYaer = null">close</mat-icon>
-                  <mat-icon matSuffix>mode_edit</mat-icon>
+          <!-- CreatedYaer Field -->
+          <mat-form-field class="example-full-width">
+            <mat-label>{{PropertyTypeSelected.TitleCreatedYaer}}</mat-label>
+            <input matInput [(ngModel)]="dataModel.CreatedYaer" name="dataModel.CreatedYaer" #CreatedYaer type="text"
+              placeholder="{{fieldsInfo['CreatedYaer']?.FieldTitle}}" />
+            <mat-icon matSuffix *ngIf="dataModel.CreatedYaer" matSuffix mat-icon-button aria-label="Clear"
+              (click)="dataModel.CreatedYaer = null">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
 
-                </mat-form-field>
-                <!-- Partition Field -->
-                <mat-form-field class="example-full-width">
-                  <mat-label>{{PropertyTypeSelected.TitlePartition}}</mat-label>
-                  <input matInput [(ngModel)]="dataModel.Partition" name="dataModel.Partition" #Partition type="text"
-                    placeholder="{{PropertyTypeSelected.TitlePartition}}" />
-                  <mat-icon matSuffix *ngIf="dataModel.Partition" matSuffix mat-icon-button aria-label="Clear"
-                    (click)="dataModel.Partition = 0">close</mat-icon>
-                  <mat-icon matSuffix>mode_edit</mat-icon>
+          </mat-form-field>
+          <!-- Partition Field -->
+          <mat-form-field class="example-full-width">
+            <mat-label>{{PropertyTypeSelected.TitlePartition}}</mat-label>
+            <input matInput [(ngModel)]="dataModel.Partition" name="dataModel.Partition" #Partition type="text"
+              placeholder="{{PropertyTypeSelected.TitlePartition}}" />
+            <mat-icon matSuffix *ngIf="dataModel.Partition" matSuffix mat-icon-button aria-label="Clear"
+              (click)="dataModel.Partition = 0">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
 
-                </mat-form-field>
-                <!-- Area Field -->
-                <mat-form-field class="example-full-width">
-                  <mat-label>{{fieldsInfo['Area']?.FieldTitle}}</mat-label>
-                  <input matInput [(ngModel)]="dataModel.Area" name="dataModel.Area" #Area type="text"
-                    placeholder="{{fieldsInfo['Area']?.FieldTitle}}" />
-                  <mat-icon matSuffix *ngIf="dataModel.Area" matSuffix mat-icon-button aria-label="Clear"
-                    (click)="dataModel.Area = 0">close</mat-icon>
-                  <mat-icon matSuffix>mode_edit</mat-icon>
-                </mat-form-field>
+          </mat-form-field>
+          <!-- Area Field -->
+          <mat-form-field class="example-full-width">
+            <mat-label>{{fieldsInfo['Area']?.FieldTitle}}</mat-label>
+            <input matInput [(ngModel)]="dataModel.Area" name="dataModel.Area" #Area type="text"
+              placeholder="{{fieldsInfo['Area']?.FieldTitle}}" />
+            <mat-icon matSuffix *ngIf="dataModel.Area" matSuffix mat-icon-button aria-label="Clear"
+              (click)="dataModel.Area = 0">close</mat-icon>
+            <mat-icon matSuffix>mode_edit</mat-icon>
+          </mat-form-field>
 
           <mat-accordion class="example-headers-align">
             <mat-expansion-panel *ngFor="let itemGroup of dataModel.PropertyDetailGroups ; index as i"
@@ -331,6 +332,12 @@
               [openFilemanagerButtonLabelKey]="'select'" [selectFileType]="selectFileTypeMainImage"
               [openFilemanagerButtonView]="false"></cms-file-manager>
           </div>
+          <hr>
+          <p>لیست عکس های پیوست</p>
+          <app-cms-files-selector [(dataFileModel)]="dataFileModelImgaes" [optionFileType]="selectFileTypeMainImage"></app-cms-files-selector>
+          <hr>
+          <p>لیست فایل های پیوست</p>
+          <app-cms-files-selector [(dataFileModel)]="dataFileModelFiles"></app-cms-files-selector>
           <br>
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious

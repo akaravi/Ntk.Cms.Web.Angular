@@ -71,7 +71,8 @@ export class EstatePropertyEditComponent implements OnInit {
   dataModelEstateContractTypeResult: ErrorExceptionResult<EstateContractTypeModel> = new ErrorExceptionResult<EstateContractTypeModel>();
   dataModel: EstatePropertyModel = new EstatePropertyModel();
 
-  dataFileModel = new Map<number, string>();
+  dataFileModelImgaes = new Map<number, string>();
+  dataFileModelFiles = new Map<number, string>();
   formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   fileManagerOpenForm = false;
@@ -93,14 +94,7 @@ export class EstatePropertyEditComponent implements OnInit {
   private mapMarkerPoints: Array<PoinModel> = [];
   mapOptonCenter = {};
 
-  onActionFileSelected(model: NodeInterface): void {
-    this.dataFileModel.set(model.id, model.downloadLinksrc);
-  }
-  onActionFileSelectedRemove(key: number): void {
-    if (this.dataFileModel.has(key)) {
-      this.dataFileModel.delete(key);
-    }
-  }
+
   ngOnInit(): void {
     if (this.requestId.length <= 0) {
       this.cmsToastrService.typeErrorComponentAction();
@@ -152,7 +146,27 @@ export class EstatePropertyEditComponent implements OnInit {
           }
           this.formInfo.FormTitle = this.formInfo.FormTitle + ' ' + next.Item.Title;
           this.formInfo.FormAlert = '';
-
+          /**
+          * check file attach list
+          */
+          if (this.dataModel.LinkFileIds && this.dataModel.LinkFileIds.length > 0) {
+            this.dataModel.LinkFileIds.split(',').forEach((element, index) => {
+              let link = '';
+              if (this.dataModel.LinkFileIdsSrc.length >= this.dataModel.LinkFileIdsSrc.length) {
+                link = this.dataModel.LinkFileIdsSrc[index];
+              }
+              this.dataFileModelFiles.set(+element, link);
+            });
+          }
+          if (this.dataModel.LinkExtraImageIdsSrc && this.dataModel.LinkExtraImageIdsSrc.length > 0) {
+            this.dataModel.LinkExtraImageIds.split(',').forEach((element, index) => {
+              let link = '';
+              if (this.dataModel.LinkExtraImageIdsSrc.length >= this.dataModel.LinkExtraImageIdsSrc.length) {
+                link = this.dataModel.LinkExtraImageIdsSrc[index];
+              }
+              this.dataFileModelImgaes.set(+element, link);
+            });
+          }
         } else {
           this.formInfo.FormAlert = 'برروز خطا';
           this.formInfo.FormError = next.ErrorMessage;
@@ -206,7 +220,18 @@ export class EstatePropertyEditComponent implements OnInit {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-
+    if (this.dataFileModelFiles) {
+      const keys = Array.from(this.dataFileModelFiles.keys());
+      if (keys && keys.length > 0) {
+        this.dataModel.LinkFileIds = keys.join(',');
+      }
+    }
+    if (this.dataFileModelImgaes) {
+      const keys = Array.from(this.dataFileModelImgaes.keys());
+      if (keys && keys.length > 0) {
+        this.dataModel.LinkExtraImageIds = keys.join(',');
+      }
+    }
     this.estatePropertyService.ServiceEdit(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormSubmitAllow = true;
@@ -376,9 +401,8 @@ export class EstatePropertyEditComponent implements OnInit {
     if (!this.dataModel.Contracts || this.dataModel.Contracts.length === 0) {
       return;
     }
-    debugger;
     this.contractDataModel = this.dataModel.Contracts[index];
-    this.dataModel.Contracts = this.dataModel.Contracts.splice(index, 0);
+    this.dataModel.Contracts.splice(index, 1);
     // this.contractSelected = new EstateContractModel();
     this.optionTabledataSource.data = this.dataModel.Contracts;
   }

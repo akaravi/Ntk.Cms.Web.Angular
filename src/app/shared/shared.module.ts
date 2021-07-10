@@ -64,6 +64,9 @@ import { TextAreaComponent } from '../core/dynamic-input-builder/text-area/text-
 import { LanguageSelectorComponent } from './language-selector/language-selector.component';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { CmsSiteCategorySelectionListComponent } from './cms-site-category-selection-list/cmsSiteCategorySelectionList.component';
+import { CmsFilesSelectorComponent } from './cms-files-selector/cms-files-selector.component';
+import { CmsFileManagerModule } from 'ntk-cms-filemanager';
+import { ClipboardModule } from 'ngx-clipboard';
 
 
 
@@ -81,6 +84,8 @@ import { CmsSiteCategorySelectionListComponent } from './cms-site-category-selec
     LeafletModule,
     TagInputModule,
     NgbDropdownModule,
+    CmsFileManagerModule,
+    ClipboardModule,
   ],
   entryComponents: [
     // All components about to be loaded "dynamically" need to be declared in the entryComponents section.
@@ -120,6 +125,7 @@ import { CmsSiteCategorySelectionListComponent } from './cms-site-category-selec
     CmsGuideComponent,
     CmsFormBuilderPropertiesComponent,
     CmsBankpaymentGridComponent,
+    CmsFilesSelectorComponent,
     /**input */
     StringComponent,
     IntComponent,
@@ -138,7 +144,9 @@ import { CmsSiteCategorySelectionListComponent } from './cms-site-category-selec
     FormsModule,
     HttpClientModule,
     MaterialModule,
+    CmsFileManagerModule,
     TreeModule,
+    ClipboardModule,
     TruncatePipe,
     KeysPipe,
     EnumsPipe,
@@ -172,6 +180,7 @@ import { CmsSiteCategorySelectionListComponent } from './cms-site-category-selec
     CmsGuideComponent,
     CmsFormBuilderPropertiesComponent,
     CmsBankpaymentGridComponent,
+    CmsFilesSelectorComponent,
     /**input */
     StringComponent,
     IntComponent,

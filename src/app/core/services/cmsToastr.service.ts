@@ -35,7 +35,11 @@ export class CmsToastrService {
   typeSuccessMessage(message: string): void {
     this.toastr.success(message, this.now() + 'Success!');
   }
-  typeSuccessAdd(): void {
+  typeSuccessCopedToClipboard(): void {
+    // this.toastr.success('با موفقیت اضافه شد', this.now() + 'Success!');
+    this.toastr.success(this.translate.instant('ERRORMESSAGE.MESSAGE.typeSuccessCopedToClipboard'), this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeSuccessAdd'));
+  }
+   typeSuccessAdd(): void {
     // this.toastr.success('با موفقیت اضافه شد', this.now() + 'Success!');
     this.toastr.success(this.translate.instant('ERRORMESSAGE.MESSAGE.typeSuccessAdd'), this.now() + this.translate.instant('ERRORMESSAGE.TITLE.typeSuccessAdd'));
   }

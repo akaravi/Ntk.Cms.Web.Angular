@@ -77,8 +77,9 @@ export class EstatePropertyAddComponent implements OnInit {
   dataModelResult: ErrorExceptionResult<EstatePropertyModel> = new ErrorExceptionResult<EstatePropertyModel>();
   dataModelEstateContractTypeResult: ErrorExceptionResult<EstateContractTypeModel> = new ErrorExceptionResult<EstateContractTypeModel>();
   dataModel: EstatePropertyModel = new EstatePropertyModel();
-  dataFileModel = new Map<number, string>();
-  formInfo: FormInfoModel = new FormInfoModel();
+  dataFileModelImgaes = new Map<number, string>();
+  dataFileModelFiles = new Map<number, string>();
+    formInfo: FormInfoModel = new FormInfoModel();
   dataModelEnumRecordStatusResult: ErrorExceptionResult<EnumModel> = new ErrorExceptionResult<EnumModel>();
   fileManagerOpenForm = false;
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
@@ -98,14 +99,6 @@ export class EstatePropertyAddComponent implements OnInit {
   private mapMarkerPoints: Array<PoinModel> = [];
   mapOptonCenter = {};
 
-  onActionFileSelected(model: NodeInterface): void {
-    this.dataFileModel.set(model.id, model.downloadLinksrc);
-  }
-  onActionFileSelectedRemove(key: number): void {
-    if (this.dataFileModel.has(key)) {
-      this.dataFileModel.delete(key);
-    }
-  }
   ngOnInit(): void {
 
     this.formInfo.FormTitle = 'ثبت محتوای جدید';
@@ -172,7 +165,18 @@ export class EstatePropertyAddComponent implements OnInit {
     this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
     this.formInfo.FormError = '';
     this.loading.display = true;
-
+    if (this.dataFileModelFiles) {
+      const keys = Array.from(this.dataFileModelFiles.keys());
+      if (keys && keys.length > 0) {
+        this.dataModel.LinkFileIds = keys.join(',');
+      }
+    }
+    if (this.dataFileModelImgaes) {
+      const keys = Array.from(this.dataFileModelImgaes.keys());
+      if (keys && keys.length > 0) {
+        this.dataModel.LinkExtraImageIds = keys.join(',');
+      }
+    }
     this.estatePropertyService.ServiceAdd(this.dataModel).subscribe(
       (next) => {
         this.formInfo.FormSubmitAllow = true;
@@ -336,7 +340,7 @@ export class EstatePropertyAddComponent implements OnInit {
       return;
     }
     this.contractDataModel = this.dataModel.Contracts[index];
-    this.dataModel.Contracts = this.dataModel.Contracts.splice(index, 0);
+    this.dataModel.Contracts.splice(index, 1);
     // this.contractSelected = new EstateContractModel();
     this.contractDataModel = new EstateContractModel();
     this.optionTabledataSource.data = this.dataModel.Contracts;

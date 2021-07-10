@@ -341,8 +341,13 @@
               [openFilemanagerButtonLabelKey]="'select'" [selectFileType]="selectFileTypeMainImage"
               [openFilemanagerButtonView]="false"></cms-file-manager>
           </div>
-
-
+          <hr>
+          <p>لیست عکس های پیوست</p>
+          <app-cms-files-selector [(dataFileModel)]="dataFileModelImgaes" [optionFileType]="selectFileTypeMainImage"></app-cms-files-selector>
+          <hr>
+          <p>لیست فایل های پیوست</p>
+          <app-cms-files-selector [(dataFileModel)]="dataFileModelFiles"></app-cms-files-selector>
+          <br>
           <div *ngIf="formInfo.FormSubmitAllow">
             <button type="button" mat-button matStepperPrevious
               class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4">

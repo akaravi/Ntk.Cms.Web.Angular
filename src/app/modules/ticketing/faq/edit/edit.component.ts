@@ -62,14 +62,7 @@ export class TicketingFaqEditComponent implements OnInit {
   fileManagerOpenForm = false;
 
   storeSnapshot = this.cmsStoreService.getStateSnapshot();
-  onActionFileSelected(model: NodeInterface): void {
-    this.dataFileModel.set(model.id, model.downloadLinksrc);
-  }
-  onActionFileSelectedRemove(key: number): void {
-    if (this.dataFileModel.has(key)) {
-      this.dataFileModel.delete(key);
-    }
-  }
+
   ngOnInit(): void {
     this.formInfo.FormTitle = 'ویرایش  ';
     if (this.requestId <= 0) {
