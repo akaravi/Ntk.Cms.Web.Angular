@@ -54,7 +54,7 @@ export class AuthForgotPasswordComponent implements OnInit {
     this.errorState = ErrorStates.NotSubmitted;
     this.dataModelforgetPasswordBySms.CaptchaKey = this.captchaModel.Key;
     this.dataModelforgetPasswordEntryPinCode.Email = '';
-    this.dataModelforgetPasswordEntryPinCode.Mobile = this.dataModelforgetPasswordByEmail.Mobile;
+    this.dataModelforgetPasswordEntryPinCode.Mobile = this.dataModelforgetPasswordBySms.Mobile;
     this.coreAuthService
       .ServiceForgetPassword(this.dataModelforgetPasswordBySms)
       .subscribe((res) => {

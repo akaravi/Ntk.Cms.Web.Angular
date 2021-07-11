@@ -12,7 +12,7 @@ git push -u origin main
 
 
 npm run build-prod
-
+ng serve  --open
 ===================RTL
 npm run rtl
 

@@ -62,6 +62,7 @@ export class PublicHelper {
   };
   fileManagerTreeConfig: TreeModel = new TreeModel();
   GetfileManagerTreeConfig(): TreeModel {
+    this.fileManagerTreeConfig.config.baseURL = environment.cmsServerConfig.configApiServerPath;
     this.fileManagerTreeConfig.config.baseUploadURL = environment.cmsServerConfig.configRouteUploadFileContent;
     return this.fileManagerTreeConfig;
   }

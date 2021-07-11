@@ -43,7 +43,7 @@ export class EstatePropertyTypeLanduseSelectorComponent implements OnInit {
   @Input() optionSelectFirstItem = false;
   @Input() optionPlaceholder = new EventEmitter<string>();
   @Output() optionSelect = new EventEmitter<EstatePropertyTypeLanduseModel>();
-  @Input() optionTypeView=1;
+  @Input() optionTypeView = 1;
 
   typeUsageId = '';
   @Input() optionReload = () => this.onActionReload();
@@ -124,16 +124,14 @@ export class EstatePropertyTypeLanduseSelectorComponent implements OnInit {
       ).toPromise();
   }
   onActionSelect(model: EstatePropertyTypeLanduseModel): void {
-    if(this.optionDisabled)
-    {
+    if (this.optionDisabled) {
       return;
     }
     this.dataModelSelect = model;
     this.optionSelect.emit(this.dataModelSelect);
   }
   onActionSelectClear(): void {
-    if(this.optionDisabled)
-    {
+    if (this.optionDisabled) {
       return;
     }
     this.formControl.setValue(null);
